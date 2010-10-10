@@ -1,0 +1,84 @@
+@charset "utf-8";
+
+/** This file contains definitions for overall data tables used when listing data from database **/
+
+@media screen, projection {
+  table.dataTable {
+    border: none;
+    background: #fff;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  table.dataTable tr {
+  }
+
+  table.dataTable thead {
+    background: #dcf2f5 url(images/datatable-header-bg.gif) left bottom repeat-x;
+    text-align: left;
+    border-bottom: solid 1px #ccc;
+  }
+  table.dataTable thead th {
+    padding: 7px 5px 1px;
+    text-align: left;
+  }
+  table.dataTable tr td
+  {
+    padding: 3px 5px 1px;
+  }
+
+  table.dataTable tr td {
+    border-bottom: solid 1px #ebebeb;
+    background-color: #fafafa;
+  }
+  table.dataTable tr:hover td {
+    background-color: #f3f3f3;
+    background-color: inherit\9;  /** this line is correct - it uses ie8 hack because ie8 does not display the hover effect correctly **/
+  }
+
+  div.emptyDataTable {
+    text-align: center;
+    border: solid 1px #d5d5d5;
+    padding: 20px;
+    margin: 10px 0;
+    background: url(images/value-table-title-bg.gif) left top repeat-x;
+    color: #666;
+  }
+
+  .listOfPersonsDataTable  {
+
+  }
+}
+
+@media print {
+    table.dataTable {
+        border: solid 2px #000;
+        background: #fff;
+        border-collapse: collapse;
+        width: 100%;
+        margin: 10px 0;
+    }
+
+    table.dataTable tr {
+    }
+
+    table.dataTable thead {
+        background: #eee;
+        text-align: left;
+        border: solid 2px #000;
+    }
+    table.dataTable thead th {
+        padding: 7px 5px 1px;
+        text-align: left;
+    }
+
+    table.dataTable tr {
+        border: solid 1px #000;
+    }
+
+    table.dataTable tr td {
+        padding: 3px 5px 1px;
+        background-color: #fff;
+    }
+}

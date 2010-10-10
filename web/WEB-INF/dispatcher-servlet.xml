@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
+
+
+
+
+  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+
+  <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+    <property name="prefix" value="/WEB-INF/jsp/"/>
+    <property name="suffix" value=".jsp"/>
+  </bean>
+
+  <bean id="downloadMetadataZipView" class="cz.zcu.kiv.eegdatabase.view.DownloadMetadataZipView" />
+
+  <bean id="binaryView" class="cz.zcu.kiv.eegdatabase.view.MeasurationDataView" />
+
+  <bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>
+
+
+  <bean name="/captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService" id="imageCaptchaService"/>
+  <bean name="indexController"
+        class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+        p:viewName="home" />
+</beans>
