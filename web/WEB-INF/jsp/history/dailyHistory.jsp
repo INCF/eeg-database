@@ -56,12 +56,14 @@
   <table class="standardValueTable">
     <thead>
       <tr>
+        <th><fmt:message key="dataTable.heading.fileType"/></th>
         <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
         <th style="width: 5px;"><fmt:message key="dataTable.heading.count"/></th>
       </tr>
     </thead>
     <c:forEach items="${topDownloadedFilesList}" var="topDownloadedFilesList">
       <tr>
+        <td>${topDownloadedFilesList.fileType}</td>
         <td>${topDownloadedFilesList.title}</td>
         <td>${topDownloadedFilesList.count}</td>
       </tr>

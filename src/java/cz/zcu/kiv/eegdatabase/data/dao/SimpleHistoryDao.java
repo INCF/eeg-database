@@ -11,6 +11,7 @@ import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -45,22 +46,37 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return lastHistoryList;
   }
 
-  public List<DownloadStatistic> getTopDownloadHistory() {
+  public List<DownloadStatistic> getDailyTopDownloadHistory() {
     int maxResults = 5;
     List<DownloadStatistic> topHistory = null;
 
     String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" +
-            " from History as h" +
-            " where h.dateOfDownload > trunc(sysdate)" +
-            " group by h.scenario.scenarioId, h.scenario.title"+
-            " order by count(h.scenario.scenarioId) desc";
-    
-      getHibernateTemplate().setMaxResults(maxResults);
-      topHistory = getHibernateTemplate().find(HQLselect);
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload > trunc(sysdate)"
+            + " group by h.scenario.scenarioId, h.scenario.title"
+            + " order by count(h.scenario.scenarioId) desc";
+    topHistory = getHibernateTemplate().find(HQLselect);
+    HQLselect =
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload > trunc(sysdate)"
+            + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title"
+            + " order by count(h.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+    HQLselect =
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload > trunc(sysdate)"
+            + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename"
+            + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+    Collections.sort(topHistory);
+    if(topHistory.size() > maxResults) {
+      topHistory.subList(maxResults, topHistory.size()).clear();
+    }
 
-    
     return topHistory;
   }
-}
 
+}

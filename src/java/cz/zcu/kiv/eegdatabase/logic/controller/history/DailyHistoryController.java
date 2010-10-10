@@ -38,11 +38,14 @@ public class DailyHistoryController extends AbstractController {
   protected ModelAndView handleRequestInternal(HttpServletRequest arg0, HttpServletResponse arg1) throws Exception {
     log.debug("Processing daily download history");
     String countOfDownloadedFiles;
+    List<History> historyList = null;
+    List<History> lastDownloadedFilesHistoryList = null;
+    List<DownloadStatistic> topDownloadedFilesList = null;
     ModelAndView mav = new ModelAndView("history/dailyHistory");
-    List<History> historyList = historyDao.getDailyHistory();
-    List<History> lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory();
-    List<DownloadStatistic> topDownloadedFilesList = historyDao.getTopDownloadHistory();
-    
+    historyList = historyDao.getDailyHistory();
+    lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory();
+    topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
+
     countOfDownloadedFiles = "" + historyList.size();
     mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);
     mav.addObject("historyList", historyList);
