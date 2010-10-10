@@ -4,7 +4,7 @@
   <head>
     <title>Error 404 &ndash; EEGbase</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <link rel="stylesheet" href="/EEGDatabase/files/style.css" type="text/css" />
+    <link rel="stylesheet" href="files/style.css" type="text/css" />
   </head>
   <body>
     <div class="page">
