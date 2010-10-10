@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 30.9.2010 12:53:32 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.History" schema="JPERGLER" table="HISTORY">
+    <id name="historyId" type="int">
+      <column name="HISTORY_ID" precision="22" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" name="experiment">
+      <column name="EXPERIMENT_ID" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" fetch="select" name="scenario">
+      <column name="SCENARIO_ID" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" fetch="select" name="dataFile">
+      <column name="DATA_FILE_ID" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
+      <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <property name="dateOfDownload" type="java.sql.Timestamp">
+      <column length="7" name="DATE_OF_DOWNLOAD" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

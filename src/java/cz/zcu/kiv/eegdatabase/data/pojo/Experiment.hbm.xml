@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" schema="JPERGLER" table="EXPERIMENT">
+    <id name="experimentId" type="int">
+      <column name="EXPERIMENT_ID" precision="22" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Weather" fetch="select" name="weather">
+      <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="personBySubjectPersonId">
+      <column name="SUBJECT_PERSON_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" fetch="select" name="scenario">
+      <column name="SCENARIO_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="personByOwnerId">
+      <column name="OWNER_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
+      <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <property name="startTime" type="java.sql.Timestamp">
+      <column length="7" name="START_TIME"/>
+    </property>
+    <property name="endTime" type="java.sql.Timestamp">
+      <column length="7" name="END_TIME"/>
+    </property>
+    <property name="temperature" type="int">
+      <column name="TEMPERATURE" precision="22" scale="0"/>
+    </property>
+    <property name="privateExperiment" type="boolean">
+      <column name="PRIVATE" precision="1" scale="0"/>
+    </property>
+    <property name="weathernote" type="string">
+      <column name="WEATHERNOTE"/>
+    </property>
+    <set inverse="true" name="persons" table="COEXPERIMENTER_REL">
+      <key>
+        <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Person">
+        <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+      </many-to-many>
+    </set>
+    <set inverse="true" name="hardwares" table="HARDWARE_USAGE_REL">
+      <key>
+        <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Hardware">
+        <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
+      </many-to-many>
+    </set>
+    <set inverse="true" name="dataFiles">
+      <key>
+        <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile"/>
+    </set>
+    <set inverse="true" name="histories">
+      <key>
+        <column name="EXPERIMENT_ID" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
+    </set>
+    <set inverse="true" name="experimentOptParamVals">
+      <key>
+        <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal"/>
+    </set>
+  </class>
+</hibernate-mapping>
