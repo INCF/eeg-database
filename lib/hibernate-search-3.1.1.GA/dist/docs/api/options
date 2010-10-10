@@ -1,0 +1,24 @@
+-classpath
+'/Users/hardy/work/hibernate/search/tags/v3_1_1_GA/target/classes:/Users/hardy/tmp/m2/org/hibernate/hibernate-commons-annotations/3.1.0.GA/hibernate-commons-annotations-3.1.0.GA.jar:/Users/hardy/tmp/m2/org/hibernate/hibernate-entitymanager/3.4.0.GA/hibernate-entitymanager-3.4.0.GA.jar:/Users/hardy/tmp/m2/xml-apis/xml-apis/1.0.b2/xml-apis-1.0.b2.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-spellchecker/1.3.0/solr-lucene-spellchecker-1.3.0.jar:/Users/hardy/tmp/m2/org/apache/lucene/lucene-analyzers/2.4.1/lucene-analyzers-2.4.1.jar:/Users/hardy/tmp/m2/commons-collections/commons-collections/3.1/commons-collections-3.1.jar:/Users/hardy/tmp/m2/org/hibernate/hibernate-annotations/3.4.0.GA/hibernate-annotations-3.4.0.GA.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-queries/1.3.0/solr-lucene-queries-1.3.0.jar:/Users/hardy/tmp/m2/dom4j/dom4j/1.6.1/dom4j-1.6.1.jar:/Users/hardy/tmp/m2/javassist/javassist/3.4.GA/javassist-3.4.GA.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-snowball/1.3.0/solr-lucene-snowball-1.3.0.jar:/Users/hardy/tmp/m2/org/apache/commons/commons-io/1.3.2/commons-io-1.3.2.jar:/Users/hardy/tmp/m2/org/apache/commons/commons-codec/1.3/commons-codec-1.3.jar:/Users/hardy/tmp/m2/antlr/antlr/2.7.6/antlr-2.7.6.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-core/1.3.0/solr-lucene-core-1.3.0.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-highlighter/1.3.0/solr-lucene-highlighter-1.3.0.jar:/Users/hardy/tmp/m2/org/apache/lucene/lucene-snowball/2.4.1/lucene-snowball-2.4.1.jar:/Users/hardy/tmp/m2/org/apache/geronimo/specs/geronimo-stax-api_1.0_spec/1.0.1/geronimo-stax-api_1.0_spec-1.0.1.jar:/Users/hardy/tmp/m2/javax/annotation/jsr250-api/1.0/jsr250-api-1.0.jar:/Users/hardy/tmp/m2/hsqldb/hsqldb/1.8.0.2/hsqldb-1.8.0.2.jar:/Users/hardy/tmp/m2/org/apache/lucene/lucene-core/2.4.1/lucene-core-2.4.1.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-core/1.3.0/solr-core-1.3.0.jar:/Users/hardy/tmp/m2/org/slf4j/slf4j-api/1.4.2/slf4j-api-1.4.2.jar:/Users/hardy/tmp/m2/org/hibernate/hibernate-core/3.3.1.GA/hibernate-core-3.3.1.GA.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-lucene-analyzers/1.3.0/solr-lucene-analyzers-1.3.0.jar:/Users/hardy/tmp/m2/org/hibernate/ejb3-persistence/1.0.2.GA/ejb3-persistence-1.0.2.GA.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-common/1.3.0/solr-common-1.3.0.jar:/Users/hardy/tmp/m2/javax/jms/jms/1.1/jms-1.1.jar:/Users/hardy/tmp/m2/javax/transaction/jta/1.1/jta-1.1.jar:/Users/hardy/tmp/m2/commons-codec/commons-codec/1.3/commons-codec-1.3.jar:/Users/hardy/tmp/m2/org/apache/solr/solr-commons-csv/1.3.0/solr-commons-csv-1.3.0.jar'
+-encoding
+'MacRoman'
+-protected
+-sourcepath
+'/Users/hardy/work/hibernate/search/tags/v3_1_1_GA/src/main/java:/Users/hardy/work/hibernate/search/tags/v3_1_1_GA/src/main/javadoc'
+-author
+-bottom
+'Copyright &#169; 2009 <a href="http://www.hibernate.org">Hibernate</a>. All Rights Reserved.'
+-charset
+'UTF-8'
+-d
+'/Users/hardy/work/hibernate/search/tags/v3_1_1_GA/target/site/apidocs'
+-docencoding
+'UTF-8'
+-doctitle
+'Hibernate Search 3.1.1.GA API'
+-stylesheetfile
+'/Users/hardy/work/hibernate/search/tags/v3_1_1_GA/src/main/javadoc/jdstyle.css'
+-use
+-version
+-windowtitle
+'Hibernate Search 3.1.1.GA API'

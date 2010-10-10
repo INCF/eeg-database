@@ -1,0 +1,182 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>2.2.&nbsp;Back end</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="search-architecture.html" title="Chapter&nbsp;2.&nbsp;Architecture">
+      <link rel="prev" href="search-architecture.html" title="Chapter&nbsp;2.&nbsp;Architecture">
+      <link rel="next" href="search-architecture-readerstrategy.html" title="2.3.&nbsp;Reader strategy">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">2.2.&nbsp;Back end</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="search-architecture.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">Chapter&nbsp;2.&nbsp;Architecture</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="search-architecture-readerstrategy.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="d0e576"></a>2.2.&nbsp;Back end
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>Hibernate Search offers the ability to let the scoped work being
+            processed by different back ends. Two back ends are provided out of the
+                box for two different scenarios.
+         </p>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="d0e581"></a>2.2.1.&nbsp;Back end types
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="d0e584"></a>2.2.1.1.&nbsp;Lucene
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>In this mode, all index update operations applied on a given
+                          node (JVM) will be executed to the Lucene directories (through the
+                          directory providers) by the same node. This mode is typically used in
+                          non clustered environment or in clustered environments where the
+                          directory store is shared.
+               </p>
+               <div class="mediaobject" align="center"><img src="lucene-backend.png" align="middle"><div class="caption">
+                     <p>Lucene back end configuration.</p>
+                  </div>
+               </div>
+               <p>This mode targets non clustered applications, or clustered
+                          applications where the Directory is taking care of the locking
+                          strategy.
+               </p>
+               <p>The main advantage is simplicity and immediate visibility of the
+                          changes in Lucene queries (a requirement in some applications).
+               </p>
+            </div>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="d0e601"></a>2.2.1.2.&nbsp;JMS
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>All index update operations applied on a given node are sent to
+                          a JMS queue. A unique reader will then process the queue and update
+                          the master index. The master index is then replicated on a regular
+                          basis to the slave copies. This is known as the master/slaves pattern.
+                          The master is the sole responsible for updating the Lucene index. The
+                          slaves can accept read as well as write operations. However, they only
+                          process the read operation on their local index copy and delegate the
+                          update operations to the master.
+               </p>
+               <div class="mediaobject" align="center"><img src="jms-backend.png" align="middle"><div class="caption">
+                     <p>JMS back end configuration.</p>
+                  </div>
+               </div>
+               <p>This mode targets clustered environments where throughput is
+                          critical, and index update delays are affordable. Reliability is
+                          ensured by the JMS provider and by having the slaves working on a
+                          local copy of the index.
+               </p>
+            </div>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Note</h3>Hibernate Search is an extensible architecture. Feel free to drop
+                     ideas for other third party back ends to
+                     <code class="literal">hibernate-dev@lists.jboss.org</code>.
+            </div>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="d0e621"></a>2.2.2.&nbsp;Work execution
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>The indexing work (done by the back end) can be executed
+                     synchronously with the transaction commit (or update operation if out of
+                     transaction), or asynchronously.
+            </p>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="d0e626"></a>2.2.2.1.&nbsp;Synchronous
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This is the safe mode where the back end work is executed in
+                          concert with the transaction commit. Under highly concurrent
+                          environment, this can lead to throughput limitations (due to the
+                          Apache Lucene lock mechanism) and it can increase the system response
+                          time if the backend is significantly slower than the transactional
+                          process and if a lot of IO operations are involved.
+               </p>
+            </div>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h4 class="title"><a name="d0e631"></a>2.2.2.2.&nbsp;Asynchronous
+                        </h4>
+                     </div>
+                  </div>
+               </div>
+               <p>This mode delegates the work done by the back end to a different
+                          thread. That way, throughput and response time are (to a certain
+                          extend) decorrelated from the back end performance. The drawback is
+                          that a small delay appears between the transaction commit and the
+                          index update and a small overhead is introduced to deal with thread
+                          management.
+               </p>
+               <p>It is recommended to use synchronous execution first and
+                          evaluate asynchronous execution if performance problems occur and
+                          after having set up a proper benchmark (ie not a lonely cowboy hitting
+                          the system in a completely unrealistic way).
+               </p>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="search-architecture.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="search-architecture.html">Up</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="search-architecture-readerstrategy.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Chapter&nbsp;2.&nbsp;Architecture&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;2.3.&nbsp;Reader strategy</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

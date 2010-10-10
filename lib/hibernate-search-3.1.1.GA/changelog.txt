@@ -1,0 +1,393 @@
+Hibernate Search Changelog
+==========================
+
+3.1.1.GA (28-05-2009)
+---------------------
+
+** Bug
+    * [HSEARCH-178] - Out of transaction work causes collection lazy loading to throw AssertionFailure
+    * [HSEARCH-310] - Out of Memory on ScrollableResults
+    * [HSEARCH-325] - FullTextQuery.iterate() skips last result.
+    * [HSEARCH-330] - NegativeArraySizeException if you use FullTextQuery.setMaxResults(Integer.MAX_VALUE)
+    * [HSEARCH-338] - ScrollableResults initial position not coherent to core Hibernate
+    * [HSEARCH-339] - ScrollableResults may return unmanaged entities from it's own cache
+    * [HSEARCH-342] - Delete on unindexed entities referenced by indexed entities with ContainedIn annotation failed
+    * [HSEARCH-355] - FilterOptimizationHelper was improperly using method overloading
+    * [HSEARCH-357] - IdBridge being applied on null entity during purgeAll()
+    * [HSEARCH-360] - Hibernate Search 3.1.0GA Bugs after HSEARCH-160
+
+
+** Improvement
+    * [HSEARCH-340] - ScrollableResults exploits batch loading for backwards and random order scrolling
+    * [HSEARCH-369] - typos in documentation
+
+
+** Task
+    * [HSEARCH-348] - Upgrade to Lucene 2.4.1
+
+
+3.1.0.GA (4-12-2008)
+--------------------
+
+** Bug
+    * [HSEARCH-233] - EntityNotFoundException during indexing
+    * [HSEARCH-280] - Make FSSlaveAndMasterDPTest pass against postgresql
+    * [HSEARCH-297] - Allow PatternTokenizerFactory to be used
+    * [HSEARCH-309] - PurgeAllLuceneWork duplicates in work queue
+
+** Improvement
+    * [HSEARCH-221] - Get Lucene Analyzer runtime (indexing)
+    * [HSEARCH-265] - Raise warnings when an abstract class is marked @Indexed
+    * [HSEARCH-285] - Refactor DocumentBuilder to support containedIn only and regular Indexed entities
+    * [HSEARCH-298] - Warn for dangerous IndexWriter settings
+    * [HSEARCH-299] - Use of faster Bit operations when possible to chain Filters
+    * [HSEARCH-302] - Utilize pagination settings when retrieving TopDocs from the Lucene query to only retrieve required TopDocs
+    * [HSEARCH-308] - getResultSize() implementation should not load documents
+    * [HSEARCH-311] - Add a close() method to BackendQueueProcessorFactory
+    * [HSEARCH-312] - Rename hibernate.search.filter.cache_bit_results.size to hibernate.search.filter.cache_docidresults.size
+
+** New Feature
+    * [HSEARCH-160] - Truly polymorphic queries
+    * [HSEARCH-268] - Apply changes to different indexes in parallel
+    * [HSEARCH-296] - Expose managed entity class via a Projection constant
+
+** Task
+    * [HSEARCH-303] - Review reference documentation
+
+
+3.1.0.CR1 (17-10-2008)
+------------------------
+
+** Bug
+    * [HSEARCH-250] - In ReaderStrategies, ensure that the reader is current AND that the directory returned by the DirectoryProvider are the same
+    * [HSEARCH-293] - AddLuceneWork is not being removed from the queue when DeleteLuceneWork is added for the same entity
+    * [HSEARCH-300] - Fix documentation on use_compound_file
+
+** Improvement
+    * [HSEARCH-213] - Use FieldSelector and doc(int, fieldSelector) to only select the necessary fields
+    * [HSEARCH-224] - Use MultiClassesQueryLoader in ProjectionLoader
+    * [HSEARCH-255] - Create a extensive Analyzer testing suite
+    * [HSEARCH-266] - Do not switch to the current directory in FSSlaveDirectoryProvider if no file has been copied
+    * [HSEARCH-274] - Use Lucene's new readonly IndexReader
+    * [HSEARCH-281] - Work should be Work<T>
+    * [HSEARCH-283] - Replace deprecated Classes and methods calls to Lucene 2.4
+
+** New Feature
+    * [HSEARCH-104] - Make @DocumentId optional and rely on @Id
+    * [HSEARCH-290] - Use IndexReader = readonly on Reader strategies (see Lucene 2.4)
+    * [HSEARCH-294] - Rename INSTANCE_AND_BITSETRESULTS to INSTANCE_AND_DOCIDSETRESULTS
+
+** Task
+    * [HSEARCH-288] - Evaluate changes in Lucene 2.4.0
+    * [HSEARCH-289] - Move to new Lucene Filter DocIdSet
+    * [HSEARCH-291] - improve documentation about thread safety requirements of Bridges.
+    
+
+3.1.0.Beta2 (27-10-2008)
+------------------------
+
+** Bug
+    * [HSEARCH-142] - Modifications on objects indexed via @IndexedEmbedded not updated when not annotated @Indexed
+    * [HSEARCH-162] - NPE on queries when no entity is marked as @Indexed
+    * [HSEARCH-222] - Entities not found during concurrent update
+    * [HSEARCH-225] - Avoid using IndexReader.deleteDocument when index is not shared amongst several entity types
+    * [HSEARCH-232] - Using SnowballPorterFilterFactory throws NoClassDefFoundError
+    * [HSEARCH-237] - IdHashShardingStrategy fails on IDs having negative hashcode
+    * [HSEARCH-241] - initialize methods taking Properties cannot list available properties
+    * [HSEARCH-247] - Hibernate Search cannot run without apache-solr-analyzer.jar
+    * [HSEARCH-253] - Inconsistent detection of EventListeners during autoregistration into Hibernate listeners
+    * [HSEARCH-257] - Ignore delete operation when Core does update then delete on the same entity
+    * [HSEARCH-259] - Filter were not isolated by name in the cache
+    * [HSEARCH-262] - fullTextSession.purgeAll(Class<?>) does not consider subclasses
+    * [HSEARCH-263] - Wrong analyzers used in IndexWriter
+    * [HSEARCH-267] - Inheritance of annotations and analyzer
+    * [HSEARCH-271] - wrong Similarity used when sharing index among entities
+    * [HSEARCH-287] - master.xml is mistakenly copied to the distribution
+
+** Deprecation
+    * [HSEARCH-279] - deprecate SharedReaderProvider replaced by SharingBufferReaderProvider as default ReaderProvider
+
+** Improvement
+    * [HSEARCH-145] - Document a configuration property
+    * [HSEARCH-226] - Use Lucene ability to delete by query in IndexWriter
+    * [HSEARCH-240] - Generify the IndexShardingStrategy
+    * [HSEARCH-245] - Add ReaderStratregy.destroy() method
+    * [HSEARCH-256] - Remove CacheBitResults.YES
+    * [HSEARCH-260] - Simplify the Filter Caching definition: cache=FilterCacheModeType.[MODE]
+    * [HSEARCH-272] - Improve contention on DirectoryProviders in lucene backend
+    * [HSEARCH-273] - Make LuceneOptions an interface
+    * [HSEARCH-282] - Make the API more Generics friendly
+
+** New Feature
+    * [HSEARCH-170] - Support @Boost in @Field
+    * [HSEARCH-235] - provide a destroy() method in ReaderProvider
+    * [HSEARCH-252] - Document Solr integration
+    * [HSEARCH-258] - Add configuration option for Lucene's UseCompoundFile
+
+** Patch
+    * [HSEARCH-20] - Lucene extensions
+
+** Task
+    * [HSEARCH-231] - Update the getting started guide with Solr analyzers
+    * [HSEARCH-236] - Find whether or not indexWriter.optimize() requires an index lock
+    * [HSEARCH-244] - Abiltiy to ask SearchFactory for the scoped analyzer of a given class
+    * [HSEARCH-254] - Migrate to Solr 1.3
+    * [HSEARCH-276] - upgrade to Lucene 2.4
+    * [HSEARCH-286] - Align to GA versions of all dependencies
+    * [HSEARCH-292] - Document the new Filter caching approach
+
+
+3.1.0.Beta1 (17-07-2008)
+------------------------
+
+** Bug
+    * [HSEARCH-166] - documentation error : hibernate.search.worker.batch_size vs hibernate.worker.batch_size
+    * [HSEARCH-171] - Do not log missing objects when using QueryLoader
+    * [HSEARCH-173] - CachingWrapperFilter loses its WeakReference making filter caching inefficient
+    * [HSEARCH-194] - Inconsistent performance between hibernate search and pure lucene access
+    * [HSEARCH-196] - ObjectNotFoundException not caught in FullTextSession
+    * [HSEARCH-198] - Documentation out of sync with implemented/released features
+    * [HSEARCH-203] - Counter of index modification operations not always incremented
+    * [HSEARCH-204] - Improper calls to Session during a projection not involving THIS
+    * [HSEARCH-205] - Out of Memory on copy of large indexes
+    * [HSEARCH-217] - Proper errors on parsing of all numeric configuration parameters
+    * [HSEARCH-227] - Criteria based fetching is not used when objects are loaded one by one (iterate())
+
+
+** Improvement
+    * [HSEARCH-19] - Do not filter classes on queries when we know that all Directories only contains the targeted classes
+    * [HSEARCH-156] - Retrofit FieldBridge.set lucene parameters into a LuceneOptions class
+    * [HSEARCH-157] - Make explicit in FAQ and doc that query.list() followed by query.getResultSize() triggers only one query
+    * [HSEARCH-163] - Enhance error messages when @FieldBridge is wrongly used (no impl or impl not implementing the right interfaces)
+    * [HSEARCH-176] - Permits alignment properties to lucene default (Sanne Grinovero)
+    * [HSEARCH-179] - Documentation should be explicit that @FulltextFilter filters every object, regardless which object is annotated
+    * [HSEARCH-181] - Better management of file-based index directories (Sanne Grinovero)
+    * [HSEARCH-189] - Thread management improvements for Master/Slave DirectoryProviders
+    * [HSEARCH-197] - Move to slf4j
+    * [HSEARCH-199] - Property close Search resources on SessionFactory.close()
+    * [HSEARCH-202] - Avoid many maps lookup in Workspace
+    * [HSEARCH-207] - Make DateBridge TwoWay to facilitate projection
+    * [HSEARCH-208] - Raise exception on index and purge when the entity is not an indexed entity
+    * [HSEARCH-209] - merge FullTextIndexCollectionEventListener into FullTextIndexEventListener
+    * [HSEARCH-215] - Rename Search.createFTS to Search.getFTS deprecating the old method
+    * [HSEARCH-223] - Use multiple criteria queries rather than ObjectLoader in most cases
+    * [HSEARCH-230] - Ensure initialization safety in a multi-core machine
+
+** New Feature
+    * [HSEARCH-133] - Allow overriding DefaultSimilarity for indexing and searching (Nick Vincent)
+    * [HSEARCH-141] - Allow term position information to be stored in an index
+    * [HSEARCH-153] - Provide the possibility to configure writer.setRAMBufferSizeMB()  (Lucene 2.3)
+    * [HSEARCH-154] - Provide a facility to access Lucene query explanations
+    * [HSEARCH-164] - Built-in bridge to index java.lang.Class
+    * [HSEARCH-165] - URI and URL built-in bridges
+    * [HSEARCH-174] - Improve transparent filter caching by wrapping filters into our own CachingWrapperFilter
+    * [HSEARCH-186] - Enhance analyzer to support the Solr model
+    * [HSEARCH-190] - Add pom
+    * [HSEARCH-191] - Make build independent of Hibernate Core structure
+    * [HSEARCH-192] - Move to Hibernate Core 3.3
+    * [HSEARCH-193] - Use dependency on Solr-analyzer JAR rather than the full Solr JAR
+    * [HSEARCH-195] - Expose Analyzers instance by name: searchFactory.getAnalyzer(String)
+    * [HSEARCH-200] - Expose IndexWriter setting MAX_FIELD_LENGTH via IndexWriterSetting
+    * [HSEARCH-212] - Added ReaderProvider strategy reusing unchanged segments (using reader.reopen())
+    * [HSEARCH-220] - introduce session.flushToIndexes API and deprecate batch_size
+
+
+** Task
+    * [HSEARCH-169] - Migrate to Lucene 2.3.1 (index corruption possiblity in 2.3.0)
+    * [HSEARCH-187] - Clarify which directories need read-write access, verify readonly behaviour on others.
+    * [HSEARCH-214] - Upgrade Lucene to 2.3.2
+    * [HSEARCH-229] - Deprecate FullTextQuery.BOOST
+
+
+3.0.1.GA (20-02-2008)
+---------------------
+
+** Bug
+    * [HSEARCH-56] - Updating a collection does not reindex
+    * [HSEARCH-123] - Use mkdirs instead of mkdir to create necessary parent directory in the DirectoryProviderHelper
+    * [HSEARCH-128] - Indexing embedded children's child
+    * [HSEARCH-136] - CachingWrapperFilter does not cache
+    * [HSEARCH-137] - Wrong class name in Exception when a FieldBridge does not implement TwoWayFieldBridge for a document id property
+    * [HSEARCH-138] - JNDI Property names have first character cut off
+    * [HSEARCH-140] - @IndexedEmbedded default depth is effectively 1 due to integer overflow
+    * [HSEARCH-146] - ObjectLoader doesn't catch javax.persistence.EntityNotFoundException
+    * [HSEARCH-149] - Default FieldBridge for enums passing wrong class to EnumBridge constructor
+
+
+** Improvement
+    * [HSEARCH-125] - Add support for fields declared by interface or unmapped superclass
+    * [HSEARCH-127] - Wrong prefix for worker configurations
+    * [HSEARCH-129] - IndexedEmbedded for Collections Documentation
+    * [HSEARCH-130] - Should provide better log infos (on the indexBase parameter for the FSDirectoryProvider)
+    * [HSEARCH-144] - Keep indexer running till finished on VM shutdown
+    * [HSEARCH-147] - Allow projection of Lucene DocId
+
+** New Feature
+    * [HSEARCH-114] - Introduce ResultTransformer to the query API
+    * [HSEARCH-150] - Migrate to Lucene 2.3
+
+** Patch
+    * [HSEARCH-126] - Better diagnostic when Search index directory cannot be opened (Ian)
+
+
+3.0.0.GA (23-09-2007)
+---------------------
+
+** Bug
+    * [HSEARCH-116] - FullTextEntityManager acessing getDelegate() in the constructor leads to NPE in JBoss AS + Seam
+    * [HSEARCH-117] - FullTextEntityManagerImpl and others should implement Serializable
+
+** Deprecation
+    * [HSEARCH-122] - Remove query.setIndexProjection (replaced by query.setProjection)
+
+** Improvement
+    * [HSEARCH-118] - Add ClassBridges (plural) functionality
+
+** New Feature
+    * [HSEARCH-81] - Create a @ClassBridge Annotation (John Griffin)
+
+
+** Task
+    * [HSEARCH-98] - Add a Getting started section to the reference documentation
+
+
+3.0.0.CR1 (4-09-2007)
+---------------------
+
+** Bug
+    * [HSEARCH-108] - id of embedded object is not indexed when using @IndexedEmbedded
+    * [HSEARCH-109] - Lazy loaded entity could not be indexed
+    * [HSEARCH-110] - ScrollableResults does not obey out of bounds rules (John Griffin)
+    * [HSEARCH-112] - Unkown @FullTextFilter  when attempting to associate a filter
+
+** Deprecation
+    * [HSEARCH-113] - Remove @Text, @Keyword and @Unstored (old mapping annotations)
+
+** Improvement
+    * [HSEARCH-107] - DirectoryProvider should have a start() method
+
+** New Feature
+    * [HSEARCH-14] - introduce fetch_size for Hibernate Search scrollable resultsets (John Griffin)
+    * [HSEARCH-69] - Ability to purge an index by class (John Griffin)
+    * [HSEARCH-111] - Ability to disable event based indexing (for read only or batch based indexing)
+
+
+3.0.0.Beta4 (1-08-2007)
+-----------------------
+
+** Bug
+    * [HSEARCH-88] - Unable to update 2 entity types in the same transaction if they share the same index
+    * [HSEARCH-90] - Use of setFirstResult / setMaxResults can lead to a list with negative capacity (John Griffin)
+    * [HSEARCH-92] - NPE for null fields on projection
+    * [HSEARCH-99] - Avoid returning non initialized proxies in scroll() and iterate() (loader.load(EntityInfo))
+
+
+** Improvement
+    * [HSEARCH-79] - Recommend to use FlushMode.APPLICATION on massive indexing
+    * [HSEARCH-84] - Migrate to Lucene 2.2
+    * [HSEARCH-91] - Avoid wrapping a Session object if the Session is already FullTextSession
+    * [HSEARCH-100] - Rename fullTextSession.setIndexProjection() to fullTextSession.setProjection()
+    * [HSEARCH-102] - Default index operation in @Field to TOKENIZED
+    * [HSEARCH-106] - Use the shared reader strategy as the default strategy
+
+** New Feature
+    * [HSEARCH-6] - Provide access to the Hit.getScore() and potentially the Document on a query
+    * [HSEARCH-15] - Notion of Filtered Lucene queries (Hardy Ferentschik)
+    * [HSEARCH-41] - Allow fine grained analyzers (Entity, attribute, @Field)
+    * [HSEARCH-45] - Support @Fields() for multiple indexing per property (useful for sorting)
+    * [HSEARCH-58] - Support named Filters (and caching)
+    * [HSEARCH-67] - Expose mergeFactor, maxMergeDocs and minMergeDocs (Hardy Ferentschik)
+    * [HSEARCH-73] - IncrementalOptimizerStrategy triggered on transactions or operations limits
+    * [HSEARCH-74] - Ability to project Lucene meta information (Score, Boost, Document, Id, This) (John Griffin)
+    * [HSEARCH-83] - Introduce OptimizerStrategy
+    * [HSEARCH-86] - Index sharding: multiple Lucene indexes per entity type
+    * [HSEARCH-89] - FullText wrapper for JPA APIs
+    * [HSEARCH-103] - Ability to override the indexName in the FSDirectoryProviders family
+
+
+** Task
+    * [HSEARCH-94] - Deprecate ContextHelper
+
+
+3.0.0.Beta3 (6-06-2007)
+-----------------------
+
+** Bug
+    * [HSEARCH-64] - Exception Thrown If Index Directory Does Not Exist
+    * [HSEARCH-66] - Some results not returned in some circumstances (Brandon Munroe)
+
+
+** Improvement
+    * [HSEARCH-60] - Introduce SearchFactory / SearchFactoryImpl
+    * [HSEARCH-68] - Set index copy threads as daemon
+    * [HSEARCH-70] - Create the index base directory if it does not exists
+
+** New Feature
+    * [HSEARCH-11] - Provide access to IndexWriter.optimize()
+    * [HSEARCH-33] - hibernate.search.worker.batch_size to prevent OutOfMemoryException while inserting many objects
+    * [HSEARCH-71] - Provide fullTextSession.getSearchFactory()
+    * [HSEARCH-72] - searchFactory.optimize() and searchFactory.optimize(Class) (Andrew Hahn)
+
+
+3.0.0.Beta2 (31-05-2007)
+------------------------
+
+** Bug
+    * [HSEARCH-37] - Verify that Serializable return type are not resolved by StringBridge built in type
+    * [HSEARCH-39] - event listener declaration example is wrong
+    * [HSEARCH-44] - Build the Lucene Document in the beforeComplete transaction phase
+    * [HSEARCH-50] - Null Booleans lead to NPE
+    * [HSEARCH-59] - Unable to index @indexEmbedded object through session.index when object is lazy and field access is used in object
+
+
+** Improvement
+    * [HSEARCH-36] - Meaningful exception message when Search Listeners are not initialized
+    * [HSEARCH-38] - Make the @IndexedEmbedded documentation example easier to understand
+    * [HSEARCH-51] - Optimization: Use a query rather than batch-size to load objects when a single entity (hierarchy) is expected
+    * [HSEARCH-63] - rename query.resultSize() to getResultSize()
+
+** New Feature
+    * [HSEARCH-4] - Be able to use a Lucene Sort on queries (Hardy Ferentschik)
+    * [HSEARCH-13] - Cache IndexReaders per SearchFactory
+    * [HSEARCH-40] - Be able to embed collections in lucene index (@IndexedEmbeddable in collections)
+    * [HSEARCH-43] - Expose resultSize and do not load object when only resultSize is retrieved
+    * [HSEARCH-52] - Ability to load more efficiently an object graph from a lucene query by customizing the fetch modes
+    * [HSEARCH-53] - Add support for projection (ie read the data from the index only)
+    * [HSEARCH-61] - Move from MultiSearcher to MultiReader
+    * [HSEARCH-62] - Support pluggable ReaderProvider strategies
+    
+
+** Task
+    * [HSEARCH-65] - Update to JBoss Embedded beta2
+
+
+3.0.0.Beta1 (19-03-2007)
+------------------------
+
+Initial release as a standalone product (see Hibernate Annotations changelog for previous informations)
+
+
+Release Notes - Hibernate Search - Version 3.0.0.beta1
+
+** Bug
+    * [HSEARCH-7] - Ignore object found in the index but no longer present in the database (for out of date indexes)
+    * [HSEARCH-21] - NPE in SearchFactory while using different threads
+    * [HSEARCH-22] - Enum value Index.UN_TOKENISED is misspelled
+    * [HSEARCH-24] - Potential deadlock when using multiple DirectoryProviders in a highly concurrent index update
+    * [HSEARCH-25] - Class cast exception in org.hibernate.search.impl.FullTextSessionImpl<init>(FullTextSessionImpl.java:54)
+    * [HSEARCH-28] - Wrong indexDir property in Apache Lucene Integration
+
+
+** Improvement
+    * [HSEARCH-29] - Share the initialization state across all Search event listeners instance
+    * [HSEARCH-30] - @FieldBridge now use o.h.s.a.Parameter rather than o.h.a.Parameter
+    * [HSEARCH-31] - Move to Lucene 2.1.0
+
+** New Feature
+    * [HSEARCH-1] - Give access to Directory providers
+    * [HSEARCH-2] - Default FieldBridge for enums (Sylvain Vieujot)
+    * [HSEARCH-3] - Default FieldBridge for booleans (Sylvain Vieujot)
+    * [HSEARCH-9] - Introduce a worker factory and its configuration
+    * [HSEARCH-16] - Cluster capability through JMS
+    * [HSEARCH-23] - Support asynchronous batch worker queue
+    * [HSEARCH-27] - Ability to index associated / embedded objects

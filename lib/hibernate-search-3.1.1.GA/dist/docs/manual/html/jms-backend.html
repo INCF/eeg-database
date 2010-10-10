@@ -1,0 +1,175 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>3.5.&nbsp;JMS Master/Slave configuration</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="search-configuration.html" title="Chapter&nbsp;3.&nbsp;Configuration">
+      <link rel="prev" href="ch03s04.html" title="3.4.&nbsp;Worker configuration">
+      <link rel="next" href="configuration-reader-strategy.html" title="3.6.&nbsp;Reader strategy configuration">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">3.5.&nbsp;JMS Master/Slave configuration</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">Chapter&nbsp;3.&nbsp;Configuration</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="configuration-reader-strategy.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="jms-backend"></a>3.5.&nbsp;JMS Master/Slave configuration
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>This section describes in greater detail how to configure the Master
+                / Slaves Hibernate Search architecture.
+         </p>
+         <div class="mediaobject" align="center"><img src="jms-backend.png" align="middle"><div class="caption">
+               <p>JMS Master/Slave architecture
+                          overview.
+               </p>
+            </div>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="d0e1124"></a>3.5.1.&nbsp;Slave nodes
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Every index update operation is sent to a JMS queue. Index querying
+                     operations are executed on a local index copy.
+            </p>
+            <div class="example"><a name="d0e1129"></a><p class="title"><b>Example&nbsp;3.6.&nbsp;JMS Slave configuration</b></p>
+               <div class="example-contents"><pre class="programlisting">### slave configuration
+
+## DirectoryProvider
+# (remote) master location
+hibernate.search.default.sourceBase = /mnt/mastervolume/lucenedirs/mastercopy
+
+# local copy location
+hibernate.search.default.indexBase = /Users/prod/lucenedirs
+
+# refresh every half hour
+hibernate.search.default.refresh = 1800
+
+# appropriate directory provider
+hibernate.search.default.directory_provider = org.hibernate.search.store.FSSlaveDirectoryProvider
+
+## Backend configuration
+hibernate.search.worker.backend = jms
+hibernate.search.worker.jms.connection_factory = /ConnectionFactory
+hibernate.search.worker.jms.queue = queue/hibernatesearch
+#optional jndi configuration (check your JMS provider for more information)
+
+## Optional asynchronous execution strategy
+# hibernate.search.worker.execution = async
+# hibernate.search.worker.thread_pool.size = 2
+# hibernate.search.worker.buffer_queue.max = 50</pre></div>
+            </div><br class="example-break"><p>A file system local copy is recommended for faster search
+                     results.
+            </p>
+            <p>The refresh period should be higher that the expected time
+                     copy.
+            </p>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h3 class="title"><a name="d0e1138"></a>3.5.2.&nbsp;Master node
+                     </h3>
+                  </div>
+               </div>
+            </div>
+            <p>Every index update operation is taken from a JMS queue and
+                     executed. The master index is copied on a regular basis.
+            </p>
+            <div class="example"><a name="d0e1143"></a><p class="title"><b>Example&nbsp;3.7.&nbsp;JMS Master configuration</b></p>
+               <div class="example-contents"><pre class="programlisting">### master configuration
+
+## DirectoryProvider
+# (remote) master location where information is copied to
+hibernate.search.default.sourceBase = /mnt/mastervolume/lucenedirs/mastercopy
+
+# local master location
+hibernate.search.default.indexBase = /Users/prod/lucenedirs
+
+# refresh every half hour
+hibernate.search.default.refresh = 1800
+
+# appropriate directory provider
+hibernate.search.default.directory_provider = org.hibernate.search.store.FSMasterDirectoryProvider
+
+## Backend configuration
+#Backend is the default lucene one</pre></div>
+            </div><br class="example-break"><p>The refresh period should be higher that the expected time
+                     copy.
+            </p>
+            <p>In addition to the Hibernate Search framework configuration, a
+                     Message Driven Bean should be written and set up to process the index
+                     works queue through JMS.
+            </p>
+            <div class="example"><a name="d0e1152"></a><p class="title"><b>Example&nbsp;3.8.&nbsp;Message Driven Bean processing the indexing queue</b></p>
+               <div class="example-contents"><pre class="programlisting">@MessageDriven(activationConfig = {
+      @ActivationConfigProperty(propertyName="destinationType", propertyValue="javax.jms.Queue"),
+      @ActivationConfigProperty(propertyName="destination", propertyValue="queue/hibernatesearch"),
+      @ActivationConfigProperty(propertyName="DLQMaxResent", propertyValue="1")
+   } )
+public class MDBSearchController extends AbstractJMSHibernateSearchController implements MessageListener {
+    @PersistenceContext EntityManager em;
+    
+    //method retrieving the appropriate session
+    protected Session getSession() {
+        return (Session) em.getDelegate();
+    }
+
+    //potentially close the session opened in #getSession(), not needed here
+    protected void cleanSessionIfNeeded(Session session) 
+    }
+}</pre></div>
+            </div><br class="example-break"><p>This example inherits from the abstract JMS controller class
+                     available in the Hibernate Search source code and implements a JavaEE 5
+                     MDB. This implementation is given as an example and, while most likely
+                     be more complex, can be adjusted to make use of non Java EE Message
+                     Driven Beans. For more information about the
+                     <code class="methodname">getSession()</code> and
+                     <code class="methodname">cleanSessionIfNeeded()</code>, please check
+                     <code class="classname">AbstractJMSHibernateSearchController</code>'s
+                     javadoc.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch03s04.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="search-configuration.html">Up</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="configuration-reader-strategy.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">3.4.&nbsp;Worker configuration&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;3.6.&nbsp;Reader strategy configuration</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

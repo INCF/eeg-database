@@ -1,0 +1,414 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;5.&nbsp;Querying</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="index.html" title="Hibernate Search">
+      <link rel="prev" href="provided-id.html" title="4.3.&nbsp;Providing your own id">
+      <link rel="next" href="ch05s02.html" title="5.2.&nbsp;Retrieving the results">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;5.&nbsp;Querying</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="provided-id.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="search-query"></a>Chapter&nbsp;5.&nbsp;Querying
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>The second most important capability of Hibernate Search is the
+            ability to execute a Lucene query and retrieve entities managed by an
+            Hibernate session, providing the power of Lucene without leaving the
+            Hibernate paradigm, and giving another dimension to the Hibernate classic
+            search mechanisms (HQL, Criteria query, native SQL query). Preparing and
+              executing a query consists of four simple steps:
+         </p>
+         <div class="itemizedlist">
+            <ul type="disc">
+               <li>
+                  <p>Creating a <code class="classname">FullTextSession</code></p>
+               </li>
+               <li>
+                  <p>Creating a Lucene query</p>
+               </li>
+               <li>
+                  <p>Wrapping the Lucene query using a
+                           <code class="classname">org.hibernate.Query</code></p>
+               </li>
+               <li>
+                  <p>Executing the search by calling for example
+                           <code class="methodname">list()</code> or
+                           <code class="methodname">scroll()</code></p>
+               </li>
+            </ul>
+         </div>
+         <p>To access the querying facilities, you have to use an
+              <code class="classname">FullTextSession</code>. This Search specific session wraps a
+              regular <code class="classname">org.hibernate.Session</code> to provide query and
+              indexing capabilities.
+         </p>
+         <div class="example"><a name="d0e2565"></a><p class="title"><b>Example&nbsp;5.1.&nbsp;Creating a FullTextSession</b></p>
+            <div class="example-contents"><pre class="programlisting">Session session = sessionFactory.openSession();
+...
+FullTextSession fullTextSession = Search.getFullTextSession(session);    </pre></div>
+         </div><br class="example-break"><p>The actual search facility is built on native Lucene queries which the
+              following example illustrates.
+         </p>
+         <div class="example"><a name="d0e2572"></a><p class="title"><b>Example&nbsp;5.2.&nbsp;Creating a Lucene query</b></p>
+            <div class="example-contents"><pre class="programlisting">org.apache.lucene.queryParser.QueryParser parser = 
+    new QueryParser("title", new StopAnalyzer() );
+
+org.apache.lucene.search.Query luceneQuery = parser.parse( "summary:Festina Or brand:Seiko" );
+<span class="bold"><strong>org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery );
+        </strong></span>
+List result = fullTextQuery.list(); //return a list of managed objects    </pre></div>
+         </div><br class="example-break"><p>The Hibernate query built on top of the Lucene query is a regular
+              <code class="literal">org.hibernate.Query</code>, which means you are in the same
+              paradigm as the other Hibernate query facilities (HQL, Native or Criteria).
+              The regular <code class="literal">list()</code> , <code class="literal">uniqueResult()</code>,
+              <code class="literal">iterate()</code> and <code class="literal">scroll()</code> methods can be
+              used.
+         </p>
+         <p>In case you are using the Java Persistence APIs of Hibernate (aka EJB
+              3.0 Persistence), the same extensions exist:
+         </p>
+         <div class="example"><a name="d0e2599"></a><p class="title"><b>Example&nbsp;5.3.&nbsp;Creating a Search query using the JPA API</b></p>
+            <div class="example-contents"><pre class="programlisting">EntityManager em = entityManagerFactory.createEntityManager();
+
+FullTextEntityManager fullTextEntityManager = 
+    org.hibernate.hibernate.search.jpa.Search.getFullTextEntityManager(em);
+
+...
+org.apache.lucene.queryParser.QueryParser parser = 
+    new QueryParser("title", new StopAnalyzer() );
+
+org.apache.lucene.search.Query luceneQuery = parser.parse( "summary:Festina Or brand:Seiko" );
+<span class="bold"><strong>javax.persistence.Query fullTextQuery = fullTextEntityManager.createFullTextQuery( luceneQuery );</strong></span>
+
+List result = fullTextQuery.getResultList(); //return a list of managed objects  </pre></div>
+         </div><br class="example-break"><p>The following examples we will use the Hibernate APIs but the same
+              example can be easily rewritten with the Java Persistence API by just
+              adjusting the way the <code class="classname">FullTextQuery</code> is
+              retrieved.
+         </p>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e2612"></a>5.1.&nbsp;Building queries
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>Hibernate Search queries are built on top of Lucene queries which
+                   gives you total freedom on the type of Lucene query you want to execute.
+                   However, once built, Hibernate Search wraps further query processing using
+                   <code class="classname">org.hibernate.Query</code> as your primary query
+                   manipulation API. 
+            </p>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="d0e2620"></a>5.1.1.&nbsp;Building a Lucene query
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <p>It is out of the scope of this documentation on how to exactly
+                        build a Lucene query. Please refer to the online Lucene documentation or
+                        get hold of a copy of either Lucene In Action or Hibernate Search in
+                        Action.
+               </p>
+            </div>
+            <div class="section" lang="en-US">
+               <div class="titlepage">
+                  <div>
+                     <div>
+                        <h3 class="title"><a name="d0e2625"></a>5.1.2.&nbsp;Building a Hibernate Search query
+                        </h3>
+                     </div>
+                  </div>
+               </div>
+               <div class="section" lang="en-US">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="d0e2628"></a>5.1.2.1.&nbsp;Generality
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>Once the Lucene query is built, it needs to be wrapped into an
+                             Hibernate Query.
+                  </p>
+                  <div class="example"><a name="d0e2633"></a><p class="title"><b>Example&nbsp;5.4.&nbsp;Wrapping a Lucene query into a Hibernate Query</b></p>
+                     <div class="example-contents"><pre class="programlisting">FullTextSession fullTextSession = Search.getFullTextSession( session );
+org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery );</pre></div>
+                  </div><br class="example-break"><p>If not specified otherwise, the query will be executed against
+                             all indexed entities, potentially returning all types of indexed
+                             classes. It is advised, from a performance point of view, to restrict
+                             the returned types:
+                  </p>
+                  <div class="example"><a name="d0e2640"></a><p class="title"><b>Example&nbsp;5.5.&nbsp;Filtering the search result by entity type</b></p>
+                     <div class="example-contents"><pre class="programlisting">org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Customer.class );
+// or
+fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Item.class, Actor.class );</pre></div>
+                  </div><br class="example-break"><p>The first example returns only matching
+                             <code class="classname">Customer</code>s, the second returns matching
+                             <code class="classname">Actor</code>s and <code class="classname">Item</code>s. The
+                             type restriction is fully polymorphic which means that if there are
+                             two indexed subclasses <code class="classname">Salesman</code> and
+                             <code class="classname">Customer</code> of the baseclass
+                             <code class="classname">Person</code>, it is possible to just specify
+                             <code class="classname">Person.class</code> in order to filter on result
+                             types. 
+                  </p>
+               </div>
+               <div class="section" lang="en-US">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="d0e2668"></a>5.1.2.2.&nbsp;Pagination
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>Out of performance reasons it is recommended to restrict the
+                             number of returned objects per query. In fact is a very common use
+                             case anyway that the user navigates from one page to an other. The way
+                             to define pagination is exactly the way you would define pagination in
+                             a plain HQL or Criteria query.
+                  </p>
+                  <div class="example"><a name="d0e2673"></a><p class="title"><b>Example&nbsp;5.6.&nbsp;Defining pagination for a search query</b></p>
+                     <div class="example-contents"><pre class="programlisting">org.hibernate.Query fullTextQuery = fullTextSession.createFullTextQuery( luceneQuery, Customer.class );
+fullTextQuery.setFirstResult(15); //start from the 15th element
+fullTextQuery.setMaxResults(10); //return 10 elements</pre></div>
+                  </div><br class="example-break"><div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+                     <h3 class="title">Note</h3>
+                     <p>It is still possible to get the total number of matching
+                                  elements regardless of the pagination via
+                                  <code class="methodname">fulltextQuery.</code><code class="methodname">getResultSize()</code></p>
+                  </div>
+               </div>
+               <div class="section" lang="en-US">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="d0e2685"></a>5.1.2.3.&nbsp;Sorting
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>Apache Lucene provides a very flexible and powerful way to sort
+                             results. While the default sorting (by relevance) is appropriate most
+                             of the time, it can be interesting to sort by one or several other
+                             properties. In order to do so set the Lucene Sort object to apply a
+                             Lucene sorting strategy.
+                  </p>
+                  <div class="example"><a name="d0e2690"></a><p class="title"><b>Example&nbsp;5.7.&nbsp;Specifying a Lucene <code class="classname">Sort</code> in order to
+                                     sort the results</b></p>
+                     <div class="example-contents"><pre class="programlisting">org.hibernate.search.FullTextQuery query = s.createFullTextQuery( query, Book.class );
+org.apache.lucene.search.Sort sort = new Sort(new SortField("title"));
+<span class="bold"><strong>query.setSort(sort);</strong></span>
+List results = query.list();</pre></div>
+                  </div><br class="example-break"><p>One can notice the <code class="classname">FullTextQuery</code>
+                             interface which is a sub interface of
+                             <code class="classname">org.hibernate.Query</code>. Be aware that fields used
+                             for sorting must not be tokenized.
+                  </p>
+               </div>
+               <div class="section" lang="en-US">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="d0e2709"></a>5.1.2.4.&nbsp;Fetching strategy
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>When you restrict the return types to one class, Hibernate
+                             Search loads the objects using a single query. It also respects the
+                             static fetching strategy defined in your domain model.
+                  </p>
+                  <p>It is often useful, however, to refine the fetching strategy for
+                             a specific use case.
+                  </p>
+                  <div class="example"><a name="d0e2716"></a><p class="title"><b>Example&nbsp;5.8.&nbsp;Specifying <code class="classname">FetchMode</code> on a
+                                     query</b></p>
+                     <div class="example-contents"><pre class="programlisting">Criteria criteria = s.createCriteria( Book.class ).setFetchMode( "authors", FetchMode.JOIN );
+s.createFullTextQuery( luceneQuery ).setCriteriaQuery( criteria );</pre></div>
+                  </div><br class="example-break"><p>In this example, the query will return all Books matching the
+                             luceneQuery. The authors collection will be loaded from the same query
+                             using an SQL outer join.
+                  </p>
+                  <p>When defining a criteria query, it is not needed to restrict the
+                             entity types returned while creating the Hibernate Search query from
+                             the full text session: the type is guessed from the criteria query
+                             itself. Only fetch mode can be adjusted, refrain from applying any
+                             other restriction.
+                  </p>
+                  <p>One cannot use <code class="methodname">setCriteriaQuery</code> if more
+                             than one entity type is expected to be returned.
+                  </p>
+               </div>
+               <div class="section" lang="en-US">
+                  <div class="titlepage">
+                     <div>
+                        <div>
+                           <h4 class="title"><a name="projections"></a>5.1.2.5.&nbsp;Projection
+                           </h4>
+                        </div>
+                     </div>
+                  </div>
+                  <p>For some use cases, returning the domain object (graph) is
+                             overkill. Only a small subset of the properties is necessary.
+                             Hibernate Search allows you to return a subset of properties:
+                  </p>
+                  <div class="example"><a name="d0e2738"></a><p class="title"><b>Example&nbsp;5.9.&nbsp;Using projection instead of returning the full domain
+                                     object</b></p>
+                     <div class="example-contents"><pre class="programlisting">org.hibernate.search.FullTextQuery query = s.createFullTextQuery( luceneQuery, Book.class );
+query.<span class="bold"><strong>setProjection( "id", "summary", "body", "mainAuthor.name" )</strong></span>;
+List results = query.list();
+Object[] firstResult = (Object[]) results.get(0);
+Integer id = firstResult[0];
+String summary = firstResult[1];
+String body = firstResult[2];
+String authorName = firstResult[3];</pre></div>
+                  </div><br class="example-break"><p>Hibernate Search extracts the properties from the Lucene index
+                             and convert them back to their object representation, returning a list
+                             of <code class="classname">Object[]</code>. Projections avoid a potential
+                             database round trip (useful if the query response time is critical),
+                             but has some constraints:
+                  </p>
+                  <div class="itemizedlist">
+                     <ul type="disc">
+                        <li>
+                           <p>the properties projected must be stored in the index
+                                          (<code class="literal">@Field(store=Store.YES)</code>), which increase the
+                                          index size
+                           </p>
+                        </li>
+                        <li>
+                           <p>the properties projected must use a
+                                          <code class="literal">FieldBridge</code> implementing
+                                          <code class="classname">org.hibernate.search.bridge.TwoWayFieldBridge</code>
+                                          or
+                                          <code class="literal">org.hibernate.search.bridge.TwoWayStringBridge</code>,
+                                          the latter being the simpler version. All Hibernate Search
+                                          built-in types are two-way.
+                           </p>
+                        </li>
+                        <li>
+                           <p>you can only project simple properties of the indexed entity
+                                          or its embedded associations. This means you cannot project a
+                                          whole embedded entity.
+                           </p>
+                        </li>
+                        <li>
+                           <p>projection does not work on collections or maps which are
+                                          indexed via <code class="classname">@IndexedEmbedded</code></p>
+                        </li>
+                     </ul>
+                  </div>
+                  <p>Projection is useful for another kind of use cases. Lucene
+                             provides some metadata information to the user about the results. By
+                             using some special placeholders, the projection mechanism can retrieve
+                             them:
+                  </p>
+                  <div class="example"><a name="d0e2780"></a><p class="title"><b>Example&nbsp;5.10.&nbsp;Using projection in order to retrieve meta data</b></p>
+                     <div class="example-contents"><pre class="programlisting">org.hibernate.search.FullTextQuery query = s.createFullTextQuery( luceneQuery, Book.class );
+query.<span class="bold"><strong>setProjection( FullTextQuery.SCORE, FullTextQuery.THIS, "mainAuthor.name" )</strong></span>;
+List results = query.list();
+Object[] firstResult = (Object[]) results.get(0);
+float score = firstResult[0];
+Book book = firstResult[1];
+String authorName = firstResult[2];</pre></div>
+                  </div><br class="example-break"><p>You can mix and match regular fields and special placeholders.
+                             Here is the list of available placeholders:
+                  </p>
+                  <div class="itemizedlist">
+                     <ul type="disc">
+                        <li>
+                           <p>FullTextQuery.THIS: returns the initialized and managed
+                                          entity (as a non projected query would have done).
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.DOCUMENT: returns the Lucene Document related
+                                          to the object projected.
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.OBJECT_CLASS: returns the class of the
+                                          indexed entity.
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.SCORE: returns the document score in the
+                                          query. Scores are handy to compare one result against an other for
+                                          a given query but are useless when comparing the result of
+                                          different queries.
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.ID: the id property value of the projected
+                                          object.
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.DOCUMENT_ID: the Lucene document id. Careful,
+                                          Lucene document id can change overtime between two different
+                                          IndexReader opening (this feature is experimental).
+                           </p>
+                        </li>
+                        <li>
+                           <p>FullTextQuery.EXPLANATION: returns the Lucene Explanation
+                                          object for the matching object/document in the given query. Do not
+                                          use if you retrieve a lot of data. Running explanation typically
+                                          is as costly as running the whole Lucene query per matching
+                                          element. Make sure you use projection!
+                           </p>
+                        </li>
+                     </ul>
+                  </div>
+               </div>
+            </div>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="provided-id.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch05s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">4.3.&nbsp;Providing your own id&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;5.2.&nbsp;Retrieving the results</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

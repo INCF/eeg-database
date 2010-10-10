@@ -1,0 +1,260 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>1.3.&nbsp;Configuration</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="getting-started.html" title="Chapter&nbsp;1.&nbsp;Getting started">
+      <link rel="prev" href="ch01s02.html" title="1.2.&nbsp;Using Maven">
+      <link rel="next" href="ch01s04.html" title="1.4.&nbsp;Indexing">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">1.3.&nbsp;Configuration</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">Chapter&nbsp;1.&nbsp;Getting started</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s04.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="section" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title" style="clear: both"><a name="d0e158"></a>1.3.&nbsp;Configuration
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>Once you have downloaded and added all required dependencies to your
+            application you have to add a couple of properties to your hibernate
+                configuration file. If you are using Hibernate directly this can be done
+                in <code class="literal">hibernate.properties</code> or
+                <code class="literal">hibernate.cfg.xml</code>. If you are using Hibernate via JPA
+                you can also add the properties to <code class="literal">persistence.xml</code>. The
+                good news is that for standard use most properties offer a sensible
+                default. An example <code class="filename">persistence.xml</code> configuration
+                could look like this:
+         </p>
+         <div class="example"><a name="d0e175"></a><p class="title"><b>Example&nbsp;1.3.&nbsp;Basic configuration options to be added to
+                        <code class="literal"><code class="filename">hibernate.properties</code></code>,
+                        <code class="literal"><code class="filename">hibernate.cfg.xml</code></code> or
+                        <code class="filename">persistence.xml</code></b></p>
+            <div class="example-contents"><pre class="programlisting">
+...
+&lt;property name="hibernate.search.default.directory_provider" 
+   value="org.hibernate.search.store.FSDirectoryProvider"/&gt; 
+
+&lt;property name="hibernate.search.default.indexBase" value="/var/lucene/indexes"/&gt; 
+...
+    </pre></div>
+         </div><br class="example-break"><p>First you have to tell Hibernate Search which
+                <code class="classname">DirectoryProvider</code> to use. This can be achieved by
+                setting the <code class="literal">hibernate.search.default.directory_provider</code>
+                property. Apache Lucene has the notion of a <code class="literal">Directory</code>
+                to store the index files. Hibernate Search handles the initialization and
+                configuration of a Lucene <code class="literal">Directory</code> instance via a
+                <code class="literal">DirectoryProvider</code>. In this tutorial we will use a
+                subclass of <code class="literal">DirectoryProvider</code> called
+                <code class="classname">FSDirectoryProvider</code>. This will give us the ability
+                to physically inspect the Lucene indexes created by Hibernate Search (eg
+                via <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.getopt.org/luke/" target="_top">Luke</a>). Once you have
+                a working configuration you can start experimenting with other directory
+                providers (see <a href="search-configuration.html#search-configuration-directory" title="3.1.&nbsp;Directory configuration">Section&nbsp;3.1, &#8220;Directory configuration&#8221;</a>). Next to
+                the directory provider you also have to specify the default root directory
+                for all indexes via
+                <code class="literal">hibernate.search.default.indexBase</code>.
+         </p>
+         <p>Lets assume that your application contains the Hibernate managed
+                classes <code class="classname">example.Book</code> and
+                <code class="classname">example.Author</code> and you want to add free text search
+                capabilities to your application in order to search the books contained in
+                your database.
+         </p>
+         <div class="example"><a name="d0e229"></a><p class="title"><b>Example&nbsp;1.4.&nbsp;Example entities Book and Author before adding Hibernate Search
+                        specific annotations</b></p>
+            <div class="example-contents"><pre class="programlisting">
+package example;
+...
+@Entity
+public class Book {
+
+  @Id
+  @GeneratedValue
+  private Integer id; 
+
+  private String title;  
+
+  private String subtitle; 
+
+  @ManyToMany 
+  private Set&lt;Author&gt; authors = new HashSet&lt;Author&gt;();
+
+  private Date publicationDate;
+  
+  public Book() {
+  } 
+  
+  // standard getters/setters follow here
+  ...
+} 
+    </pre><pre class="programlisting">
+package example;
+...
+@Entity
+public class Author {
+
+  @Id
+  @GeneratedValue
+  private Integer id;
+
+  private String name;
+
+  public Author() {
+  } 
+ 
+  // standard getters/setters follow here
+  ...
+}
+
+</pre></div>
+         </div><br class="example-break"><p>To achieve this you have to add a few annotations to the
+                <code class="classname">Book</code> and <code class="classname">Author</code> class. The
+                first annotation <code class="literal">@Indexed</code> marks
+                <code class="classname">Book</code> as indexable. By design Hibernate Search needs
+                to store an untokenized id in the index to ensure index unicity for a
+                given entity. <code class="literal">@DocumentId</code> marks the property to use for
+                this purpose and is in most cases the same as the database primary key. In
+                fact since the 3.1.0 release of Hibernate Search
+                <code class="literal">@DocumentId</code> is optional in the case where an
+                <code class="classname">@Id</code> annotation exists.
+         </p>
+         <p>Next you have to mark the fields you want to make searchable. Let's
+                start with <code class="literal">title</code> and <code class="literal">subtitle</code> and
+                annotate both with <code class="literal">@Field</code>. The parameter
+                <code class="literal">index=Index.TOKENIZED</code> will ensure that the text will be
+                tokenized using the default Lucene analyzer. Usually, tokenizing means
+                chunking a sentence into individual words and potentially excluding common
+                words like <code class="literal">'a'</code> or '<code class="literal">the</code>'. We will
+                talk more about analyzers a little later on. The second parameter we
+                specify within <code class="literal">@Field</code>,<code class="literal">
+                   store=Store.NO</code>, ensures that the actual data will not be stored
+                in the index. Whether this data is stored in the index or not has nothing
+                to do with the ability to search for it. From Lucene's perspective it is
+                not necessary to keep the data once the index is created. The benefit of
+                storing it is the ability to retrieve it via projections (<a href="search-query.html#projections" title="5.1.2.5.&nbsp;Projection">Section&nbsp;5.1.2.5, &#8220;Projection&#8221;</a>). 
+         </p>
+         <p>Without projections, Hibernate Search will per default execute a
+                Lucene query in order to find the database identifiers of the entities
+                matching the query critera and use these identifiers to retrieve managed
+                objects from the database. The decision for or against projection has to
+                be made on a case to case basis. The default behaviour -
+                <code class="literal">Store.NO</code> - is recommended since it returns managed
+                objects whereas projections only return object arrays.
+         </p>
+         <p>After this short look under the hood let's go back to annotating the
+                <code class="classname">Book</code> class. Another annotation we have not yet
+                discussed is <code class="literal">@DateBridge</code>. This annotation is one of the
+                built-in field bridges in Hibernate Search. The Lucene index is purely
+                string based. For this reason Hibernate Search must convert the data types
+                of the indexed fields to strings and vice versa. A range of predefined
+                bridges are provided, including the <code class="classname">DateBridge</code>
+                which will convert a <code class="classname">java.util.Date</code> into a
+                <code class="classname">String</code> with the specified resolution. For more
+                details see <a href="search-mapping-bridge.html" title="4.2.&nbsp;Property/Field Bridge">Section&nbsp;4.2, &#8220;Property/Field Bridge&#8221;</a>.
+         </p>
+         <p>This leaves us with <code class="literal">@IndexedEmbedded. </code>This
+                annotation is used to index associated entities
+                (<code class="literal">@ManyToMany</code>, <code class="literal">@*ToOne</code> and
+                <code class="literal">@Embedded</code>) as part of the owning entity. This is needed
+                since a Lucene index document is a flat data structure which does not know
+                anything about object relations. To ensure that the authors' name wil be
+                searchable you have to make sure that the names are indexed as part of the
+                book itself. On top of <code class="literal">@IndexedEmbedded</code> you will also
+                have to mark all fields of the associated entity you want to have included
+                in the index with <code class="literal">@Indexed</code>. For more details see <a href="search-mapping.html#search-mapping-associated" title="4.1.3.&nbsp;Embedded and associated objects">Section&nbsp;4.1.3, &#8220;Embedded and associated objects&#8221;</a>.
+         </p>
+         <p>These settings should be sufficient for now. For more details on
+                entity mapping refer to <a href="search-mapping.html#search-mapping-entity" title="4.1.&nbsp;Mapping an entity">Section&nbsp;4.1, &#8220;Mapping an entity&#8221;</a>.
+         </p>
+         <div class="example"><a name="d0e337"></a><p class="title"><b>Example&nbsp;1.5.&nbsp;Example entities after adding Hibernate Search
+                        annotations</b></p>
+            <div class="example-contents"><pre class="programlisting">
+package example;
+...
+@Entity
+<span class="bold"><strong>@Indexed</strong></span>
+public class Book {
+
+  @Id
+  @GeneratedValue
+  <span class="bold"><strong>@DocumentId</strong></span>
+  private Integer id;
+  
+  <span class="bold"><strong>@Field(index=Index.TOKENIZED, store=Store.NO)</strong></span>
+  private String title;
+  
+  <span class="bold"><strong>@Field(index=Index.TOKENIZED, store=Store.NO)</strong></span>
+  private String subtitle; 
+
+  <span class="bold"><strong>@IndexedEmbedded</strong></span>
+  @ManyToMany 
+  private Set&lt;Author&gt; authors = new HashSet&lt;Author&gt;();
+
+<span class="bold"><strong>  @Field(index = Index.UN_TOKENIZED, store = Store.YES)
+  @DateBridge(resolution = Resolution.DAY)</strong></span>
+  private Date publicationDate;
+  
+  public Book() {
+  } 
+  
+  // standard getters/setters follow here
+  ... 
+}
+  </pre><pre class="programlisting">
+package example;
+...
+@Entity
+public class Author {
+
+  @Id
+  @GeneratedValue
+  private Integer id;
+
+  <span class="bold"><strong>@Field(index=Index.TOKENIZED, store=Store.NO)</strong></span>
+  private String name;
+
+  public Author() {
+  } 
+ 
+  // standard getters/setters follow here
+  ...
+}
+  </pre></div>
+         </div><br class="example-break"></div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch01s02.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center"><a accesskey="u" href="getting-started.html">Up</a></td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s04.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">1.2.&nbsp;Using Maven&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;1.4.&nbsp;Indexing</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>
