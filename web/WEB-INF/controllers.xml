@@ -654,9 +654,11 @@
   </bean>
 
   <bean name="weeklyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController" >
+    <property name="historyDao" ref="historyDao" />
   </bean>
 
   <bean name="monthlyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.MonthlyHistoryController" >
+    <property name="historyDao" ref="historyDao" />
   </bean>
 
    <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >

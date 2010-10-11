@@ -16,7 +16,7 @@
 
   <h1><fmt:message key="pageTitle.dailyDownloadHistory"/></h1>
 
-  <table class="dataTable measurationListDataTable">
+  <table class="dataTable">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
