@@ -95,6 +95,7 @@
         <prop key="/history/weekly-history.html">weeklyHistoryController</prop>
         <prop key="/history/monthly-history.html">monthlyHistoryController</prop>
         <prop key="/history/search.html">searchHistoryController</prop>
+         <prop key="/history/graph.html">graphController</prop>
 
       </props>
     </property>

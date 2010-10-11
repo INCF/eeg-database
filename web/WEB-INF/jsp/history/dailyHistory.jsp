@@ -8,6 +8,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
+
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
 
@@ -69,6 +70,7 @@
       </tr>
     </c:forEach>
   </table>
+      <input type="image" src="<c:url value='/history/graph.html'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
   <table class="standardValueTable">
     <thead>
@@ -98,5 +100,5 @@
       </tr>
     </c:forEach>
   </table>
-
+       
 </ui:historyTemplate>

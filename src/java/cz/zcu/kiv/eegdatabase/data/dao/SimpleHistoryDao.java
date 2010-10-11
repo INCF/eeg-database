@@ -30,6 +30,11 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return getHibernateTemplate().find(HQLselect);
   }
 
+  public long getCountOfFilesDailyHistory() {
+    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate)";
+    return getHibernateTemplate().find(HQLselect).size();
+  }
+
   public List<History> getWeeklyHistory() {
     String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate)";
     return getHibernateTemplate().find(HQLselect);

@@ -22,7 +22,7 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
    this.scenarioId = scenarioId;
    this.title = title;
    this.count = count;
-   this.fileType = "Scenario(*.xml)";
+   this.fileType = "Scenario-"+scenarioId+"(*.xml)";
  }
 
   public DownloadStatistic(int scenarioId,String title, String fileName, long count) {

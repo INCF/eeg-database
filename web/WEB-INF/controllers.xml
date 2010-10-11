@@ -41,6 +41,11 @@
     </property>
   </bean>
 
+  <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
+     <property name="historyDao" ref="historyDao" />
+  </bean>
+
+
   <bean id="captchaController" class="cz.zcu.kiv.eegdatabase.logic.CaptchaImageGenerator">
     <property name="captchaService"><ref bean="captchaService"/></property>
   </bean>
