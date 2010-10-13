@@ -7,11 +7,11 @@
 @insert_into_PERSON.sql
 @insert_into_RESEARCH_GROUP.sql
 @insert_into_VISUAL_IMPAIRMENT_REL.sql
-@insert_into_HEARING_IMPAIRMENT_REL.sql
+@insert_into_HEARING_IMPAIRMENT.sql
 @insert_into_RESEARCH_GROUP_MEMBERSHIP.sql
 @insert_into_SCENARIO.sql
 @insert_into_EXPERIMENT.sql
-@insert_into_COEXPERIMENTER_REL.sql
+@insert_into_COEXPERIMENT_REL.sql
 @insert_into_HARDWARE_USAGE_REL.sql
 @insert_into_DATA_FILE.sql
 @insert_into_NEWS.sql
