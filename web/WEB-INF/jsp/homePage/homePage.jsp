@@ -64,7 +64,6 @@
                 <th class="columnDate"><fmt:message key="dataTable.heading.date"/></th>
                 <th class="columnId"><fmt:message key="dataTable.heading.id"/></th>
                 <th class="columnScenarioTitle"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-                <th class="columnGroup"><fmt:message key="dataTable.heading.groupTitle"/></th>
                 <th></th>
               </tr>
             </thead>
@@ -74,7 +73,6 @@
                   <td><f:dateTime value="${experiment.startTime}"/></td>
                   <td>${experiment.experimentId}</td>
                   <td>${experiment.scenario.title}</td>
-                  <td>${experiment.researchGroup.title}</td>
                   <td><a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
                 </tr>
               </c:forEach>

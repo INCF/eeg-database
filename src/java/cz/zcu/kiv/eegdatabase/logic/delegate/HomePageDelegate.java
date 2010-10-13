@@ -88,24 +88,24 @@ public class HomePageDelegate {
 
     Person person = personDao.getLoggedPerson();
     if (person != null) {
-      List<Experiment> myExperiments = new ArrayList<Experiment>();
-      myExperiments.clear();
-      int defaultGroupId = 0;
-      // List myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
-      if (person.getDefaultGroup() != null) {
-        myExperiments = experimentDao.getExperimentsWhereMember(person.getDefaultGroup().getResearchGroupId());
-        defaultGroupId = person.getDefaultGroup().getResearchGroupId();
-      }
-      Set<ResearchGroupMembership> rgm = person.getResearchGroupMemberships();
-      int groupId;
-      List<Experiment> groupExp;
-      for (ResearchGroupMembership groupMember : rgm) {
-        groupId = groupMember.getResearchGroup().getResearchGroupId();
-        if (groupId != defaultGroupId) {
-          groupExp = experimentDao.getExperimentsWhereMember(groupId);
-          myExperiments.addAll(groupExp);
-        }
-      }
+//      List<Experiment> myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
+//      myExperiments.clear();
+//      int defaultGroupId = 0;
+//      if (person.getDefaultGroup() != null) {
+////        myExperiments = experimentDao.getExperimentsWhereMember(person.getDefaultGroup().getResearchGroupId(), LIMIT);
+//        defaultGroupId = person.getDefaultGroup().getResearchGroupId();
+//      }
+//      Set<ResearchGroupMembership> rgm = person.getResearchGroupMemberships();
+//      int groupId;
+//      List<Experiment> groupExp;
+//      for (ResearchGroupMembership groupMember : rgm) {
+//        groupId = groupMember.getResearchGroup().getResearchGroupId();
+//        if (groupId != defaultGroupId) {
+//          groupExp = experimentDao.getExperimentsWhereMember(groupId);
+//          myExperiments.addAll(groupExp);
+//        }
+//      }
+      List myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
       mav.addObject("myExperiments", myExperiments);
       mav.addObject("myExperimentsEmpty", myExperiments.isEmpty());
 
