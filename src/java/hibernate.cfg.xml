@@ -14,8 +14,8 @@
     <property name="hibernate.connection.url">
             jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students
     </property>
-    <property name="hibernate.connection.username">jpergler</property>
-    <property name="hibernate.connection.password">jpergler</property>
+    <property name="hibernate.connection.username">moucek</property>
+    <property name="hibernate.connection.password">moucek</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider
     </property>
