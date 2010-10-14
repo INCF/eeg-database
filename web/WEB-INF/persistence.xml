@@ -48,6 +48,7 @@
         <value>cz/zcu/kiv/eegdatabase/data/pojo/Weather.hbm.xml</value>
         <value>cz/zcu/kiv/eegdatabase/data/pojo/GroupPermissionRequest.hbm.xml</value>
         <value>cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml</value>
+        <value>cz/zcu/kiv/eegdatabase/data/pojo/ArticleComment.hbm.xml</value>
         <value>cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml</value>
       </list>
     </property>

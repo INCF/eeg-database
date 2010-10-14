@@ -1,9 +1,11 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import java.util.List;
@@ -26,6 +28,7 @@ public class ArticleMultiController extends MultiActionController {
   private AuthorizationManager auth;
   private PersonDao personDao;
   private ArticleDao articleDao;
+  private ArticleCommentDao articleCommentDao;
   
   public ArticleMultiController() {
   }
@@ -63,6 +66,8 @@ public class ArticleMultiController extends MultiActionController {
     }
     mav.addObject("userCanEdit", canEdit(loggedUser, article));
     mav.addObject("article", article);
+    Set<ArticleComment> articleComments = article.getArticleComments();
+    mav.addObject("commentsList", articleComments);
     return mav;
   }
 
@@ -159,4 +164,14 @@ public class ArticleMultiController extends MultiActionController {
   public void setAuth(AuthorizationManager auth) {
     this.auth = auth;
   }
+
+  public ArticleCommentDao getArticleCommentDao() {
+    return articleCommentDao;
+  }
+
+  public void setArticleCommentDao(ArticleCommentDao articleCommentDao) {
+    this.articleCommentDao = articleCommentDao;
+  }
+
+
 }

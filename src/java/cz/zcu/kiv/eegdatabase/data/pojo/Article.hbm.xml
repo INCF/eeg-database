@@ -22,5 +22,11 @@
     <property name="title" type="string">
       <column name="TITLE"/>
     </property>
+    <set inverse="true" name="articleComments">
+      <key>
+        <column name="ARTICLE_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment"/>
+    </set>
   </class>
 </hibernate-mapping>

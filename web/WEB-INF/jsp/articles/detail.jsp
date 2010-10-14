@@ -31,13 +31,34 @@
       <span class="author">
         <c:out value="${article.person.username}" />
       </span>
+      |
+      <span class="comment">
+        <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.comment" /></a>
+      </span>
       <c:if test="${userCanEdit}">
         | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
         | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}" />"><fmt:message key="label.delete" /> </a>
       </c:if>
+
     </div>
     <div class="content">
       <c:out value="${article.text}" escapeXml="false" />
     </div>
+
+    <h2><fmt:message key="heading.comments" /></h2>
+    <ul class="comments">
+      <c:forEach items="${commentsList}" var="comment" varStatus="status">
+        <li class="comment">
+          <span class="date"><fmt:formatDate value="${comment.time}" /></span> |
+          <span class="author"><c:out value="${comment.person.username}" /></span>
+          <!--|
+          <span class="comment">
+            <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
+          </span> -->
+          <br />
+          <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>
+        </li>
+      </c:forEach>
+    </ul>
   </div>
 </ui:articlesTemplate>

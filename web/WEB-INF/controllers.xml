@@ -33,7 +33,9 @@
     <property name="messageSource" ref="messageSource"/>
     <property name="domain" value="${app.domain}" />
     <property name="mailSender" ref="mailSender"/>
-    <property name="captchaService"><ref bean="captchaService"/></property>
+    <property name="captchaService">
+      <ref bean="captchaService"/>
+    </property>
     <property name="validator">
       <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.RegistrationValidator">
         <property name="personDao" ref="personDao" />
@@ -42,12 +44,14 @@
   </bean>
 
   <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
-     <property name="historyDao" ref="historyDao" />
+    <property name="historyDao" ref="historyDao" />
   </bean>
 
 
   <bean id="captchaController" class="cz.zcu.kiv.eegdatabase.logic.CaptchaImageGenerator">
-    <property name="captchaService"><ref bean="captchaService"/></property>
+    <property name="captchaService">
+      <ref bean="captchaService"/>
+    </property>
   </bean>
 
 
@@ -70,6 +74,13 @@
   <bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
     <constructor-arg>
       <value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>
+    </constructor-arg>
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+
+  <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+    <constructor-arg>
+      <value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
     </constructor-arg>
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
@@ -254,6 +265,7 @@
   <!-- Articles -->
   <bean name="articleMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleMultiController">
     <property name="articleDao" ref="articleDao" />
+    <property name="articleCommentDao" ref="articleCommentDao" />
     <property name="personDao" ref="personDao" />
     <property name="auth" ref="authorizationManager" />
     <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
@@ -266,6 +278,16 @@
     <property name="researchGroupDao" ref="researchGroupDao" />
     <property name="personDao" ref="personDao" />
     <property name="auth" ref="authorizationManager"/>
+  </bean>
+  
+  <bean name="addArticleCommentController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleCommentController">
+    <property name="formView" value="articles/addArticleCommentForm" />
+    <property name="successView" value="redirect:/articles/list.html" /> <!-- don't need special view after successfull adding -->
+    <property name="articleDao" ref="articleDao" />
+    <property name="articleCommentDao" ref="articleCommentDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
+    <property name="personDao" ref="personDao" />
+    <property name="auth" ref="authorizationManager" />
   </bean>
 
   <bean name="scenariosMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.ScenarioMultiController">
@@ -649,8 +671,8 @@
 
  <!-- Download history  -->
 
- <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController" >
-   <property name="historyDao" ref="historyDao" />
+  <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController" >
+    <property name="historyDao" ref="historyDao" />
   </bean>
 
   <bean name="weeklyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController" >
@@ -661,7 +683,7 @@
     <property name="historyDao" ref="historyDao" />
   </bean>
 
-   <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
+  <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
   </bean>
 
   <!-- Advanced search  -->

@@ -4,8 +4,6 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
-import com.octo.captcha.service.CaptchaServiceException;
-import com.octo.captcha.service.image.ImageCaptchaService;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
@@ -13,12 +11,10 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.validation.BindException;
@@ -29,13 +25,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.ObjectError;
 
 /**
  *
  * @author Jiri Vlasimsky
  */
-public class AddArticleController extends SimpleFormController {
+public class AddArticleCommentController extends SimpleFormController {
 
   private AuthorizationManager auth;
   private GenericDao<Article, Integer> articleDao;
@@ -44,9 +39,9 @@ public class AddArticleController extends SimpleFormController {
   private ResearchGroupDao researchGroupDao;
   private Log log = LogFactory.getLog(getClass());
 
-  public AddArticleController() {
-    setCommandClass(ArticleCommand.class);
-    setCommandName("addArticle");
+  public AddArticleCommentController() {
+    setCommandClass(ArticleCommentCommand.class);
+    setCommandName("addArticleComment");
   }
 
   @Override
@@ -58,37 +53,52 @@ public class AddArticleController extends SimpleFormController {
 
   @Override
   protected Object formBackingObject(HttpServletRequest request) throws Exception {
-    ArticleCommand data = (ArticleCommand) super.formBackingObject(request);
-    String articleIdString = request.getParameter("articleId");
-    if (articleIdString != null) {
-      int articleId = Integer.parseInt(articleIdString);
-      if (articleId > 0) {  // it is a form for editing
+    ArticleCommentCommand data = (ArticleCommentCommand) super.formBackingObject(request);
 
-        data.setArticleId(articleId);
+    String articleIdCommentString = request.getParameter("articleCommentId");
+    int articleId = 0;
+    int parentId = 0;
 
-        log.debug("Filling backing object with data from article object #" + articleId);
-        data.setArticleId(articleId);
-        Article article = articleDao.read(articleId);
-
-        log.debug("Setting article title");
-        data.setTitle(article.getTitle());
-
-        log.debug("Setting article text");
-        data.setText(article.getText());
-      }
+    try {
+      articleId = Integer.parseInt(request.getParameter("articleId"));
+      parentId = Integer.parseInt(request.getParameter("parentId"));
+    } catch (Exception e) {
     }
+
+    if (articleIdCommentString != null) {
+      int articleCommentId = Integer.parseInt(articleIdCommentString);
+      if (articleCommentId > 0) {  // it is a form for editing
+
+        log.debug("Filling backing object with data from articleComment object #" + articleCommentId);
+        data.setCommentId(articleCommentId);
+
+
+        ArticleComment articleComment = articleCommentDao.read(articleCommentId);
+
+
+        log.debug("Setting article comment´s parent comment");
+        data.setParentId(articleComment.getParent().getCommentId());
+
+        log.debug("Setting article comment´s text");
+        data.setText(articleComment.getText());
+
+        log.debug("Setting article comment´s parent article");
+        data.setArticleId(articleComment.getArticle().getArticleId());
+      }
+
+
+    }
+    log.debug("Setting comment´s parent article");
+    data.setArticleId(articleId);
+
+    log.debug("Setting comment´s parent comment");
+    data.setParentId(parentId);
     return data;
   }
 
   @Override
   protected Map referenceData(HttpServletRequest request) throws Exception {
     Map map = new HashMap<String, Object>();
-    List<ResearchGroup> researchGroupList =
-            researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
-    ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
-    int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
-    map.put("defaultGroupId", defaultGroupId);
-    map.put("researchGroupList", researchGroupList);
     return map;
   }
 
@@ -96,51 +106,39 @@ public class AddArticleController extends SimpleFormController {
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
     ModelAndView mav = new ModelAndView(getSuccessView());
 
-    ArticleCommand data = (ArticleCommand) command;
+    ArticleCommentCommand data = (ArticleCommentCommand) command;
+    ArticleComment comment;
 
-    Article article;
-
-    if (data.getArticleId() > 0) {
-      log.debug("Processing article form - editing existing article");
-      log.debug("Checking the permission level.");
-      article = articleDao.read(data.getArticleId());
-      Person loggedUser = personDao.getLoggedPerson();
-
-      if (!canEdit(loggedUser, article)) {
-        log.debug("User is not group or system admininstrator - unable to edit article. Returning MAV.");
-        mav.setViewName("article/unableToEditArticle");
-        return mav;
-      }
+    if (data.getCommentId() > 0) {
+      log.debug("Processing article comment form - editing existing comment");
+      log.debug("Checking the permission level");
     } else {
-      article = new Article();
+      comment = new ArticleComment();
+//      String articleIdCommentString = request.getParameter("articleCommentId");
 
-      log.debug("Setting the owner to the logged user.");
-      article.setPerson(personDao.getLoggedPerson());
+      log.debug("Setting comment owner to logged user");
+      comment.setPerson(personDao.getLoggedPerson());
 
-      log.debug("Setting the group to which is the new article assigned");
-      ResearchGroup researchGroup = new ResearchGroup();
-      if (data.getResearchGroup() != 0) {
-        researchGroup.setResearchGroupId(data.getResearchGroup());
-        article.setResearchGroup(researchGroup);
-      }
+      log.debug("Setting comment´s parent comment");
+      comment.setParent(articleCommentDao.read(data.getParentId()));
 
-      log.debug("Setting article time");
+      log.debug("Setting comment parent article");
+      comment.setArticle(articleDao.read(data.getArticleId()));
+
+      log.debug("Setting comment text");
+      comment.setText(data.getText());
+
+      log.debug("Setting comment time");
       Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-      article.setTime(currentTimestamp);
-    }
+      comment.setTime(currentTimestamp);
 
-    log.debug("Setting article title");
-    article.setTitle(data.getTitle());
-
-    log.debug("Setting article text");
-    article.setText(data.getText());
-
-    if (data.getArticleId() > 0) {
-      log.debug("Processing an article form - editing an existing article");
-      articleDao.update(article);
-    } else {
-      log.debug("Processing an article form - adding a new article");
-      articleDao.create(article);
+      if (data.getCommentId() > 0) {
+        log.debug("Processing an article comment form - editing an existing comment");
+        articleCommentDao.create(comment);
+      } else {
+        log.debug("Processing an article comment form - adding a new article");
+        articleCommentDao.create(comment);
+      }
     }
 
 
@@ -246,6 +244,4 @@ public class AddArticleController extends SimpleFormController {
   public void setArticleCommentDao(GenericDao<ArticleComment, Integer> articleCommentDao) {
     this.articleCommentDao = articleCommentDao;
   }
-
-
 }
