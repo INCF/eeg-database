@@ -38,14 +38,14 @@ public class WeeklyHistoryController extends AbstractController {
 
 
       historyList = historyDao.getWeeklyHistory();
-//      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory();
-//      topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
+      lastDownloadedFilesHistoryList = historyDao.getLastWeeklyDownloadHistory();
+      topDownloadedFilesList = historyDao.getWeeklyTopDownloadHistory();
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);
       mav.addObject("historyList", historyList);
-//      mav.addObject("topDownloadedFilesList", topDownloadedFilesList);
-//      mav.addObject("lastDownloadedFilesHistoryList", lastDownloadedFilesHistoryList);
+      mav.addObject("topDownloadedFilesList", topDownloadedFilesList);
+      mav.addObject("lastDownloadedFilesHistoryList", lastDownloadedFilesHistoryList);
       return mav;
     }
 
@@ -56,8 +56,4 @@ public class WeeklyHistoryController extends AbstractController {
   public void setHistoryDao(SimpleHistoryDao<History, Integer> historyDao) {
     this.historyDao = historyDao;
   }
-
-  
-
-
 }

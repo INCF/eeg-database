@@ -35,13 +35,18 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return getHibernateTemplate().find(HQLselect).size();
   }
 
+   public long getCountOfFilesWeeklyHistory() {
+    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw')";
+    return getHibernateTemplate().find(HQLselect).size();
+  }
+
   public long getCountOfFilesMonthlyHistory() {
     String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate,'mm')";
     return getHibernateTemplate().find(HQLselect).size();
   }
 
   public List<History> getWeeklyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload <= sysdate and history.dateOfDownload >= (sysdate - 7)";
+    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw')";
     return getHibernateTemplate().find(HQLselect);
   }
 
@@ -54,6 +59,17 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     int maxResults = 5;
     List<History> lastHistoryList = null;
     String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate) order by history.dateOfDownload desc ";
+    lastHistoryList = getHibernateTemplate().find(HQLselect);
+    if (lastHistoryList.size() > maxResults) {
+      lastHistoryList.subList(maxResults, lastHistoryList.size()).clear();
+    }
+    return lastHistoryList;
+  }
+
+  public List<History> getLastWeeklyDownloadHistory() {
+    int maxResults = 5;
+    List<History> lastHistoryList = null;
+    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw') order by history.dateOfDownload desc ";
     lastHistoryList = getHibernateTemplate().find(HQLselect);
     if (lastHistoryList.size() > maxResults) {
       lastHistoryList.subList(maxResults, lastHistoryList.size()).clear();
@@ -104,6 +120,54 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
 
     return topHistory;
   }
+
+  public List<DownloadStatistic> getWeeklyTopDownloadHistory() {
+    int maxResults = 5;
+    List<DownloadStatistic> topHistory = null;
+
+    String HQLselect =
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
+            + " group by h.scenario.scenarioId, h.scenario.title"
+            + " order by count(h.scenario.scenarioId) desc";
+    topHistory = getHibernateTemplate().find(HQLselect);
+    HQLselect =
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
+            + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title"
+            + " order by count(h.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+    HQLselect =
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))"
+            + " from History as h"
+            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
+            + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename"
+            + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+    Collections.sort(topHistory);
+    if(topHistory.size() > maxResults) {
+      topHistory.subList(maxResults, topHistory.size()).clear();
+    }
+
+    return topHistory;
+  }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   public List<DownloadStatistic> getMonthlyTopDownloadHistory() {
     int maxResults = 5;
