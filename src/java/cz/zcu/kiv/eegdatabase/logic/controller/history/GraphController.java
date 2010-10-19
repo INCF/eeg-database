@@ -37,12 +37,21 @@ public class GraphController extends AbstractController {
           HttpServletRequest request,
           HttpServletResponse response) throws Exception {
     log.debug("Processing creating graph");
+    String graphType ="";
+    graphType = request.getParameter("graphType");
     List<DownloadStatistic> topDownloadedFilesList = null;
 
     long countFile = 0;
     int topFiles = 5;
     response.setContentType("image/png");
-    topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
+    if(graphType.equals("daily")) {
+      topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
+    } else if(graphType.equals("weekly")){
+      topDownloadedFilesList = historyDao.getWeeklyTopDownloadHistory();
+    } else if(graphType.equals("monthly")) {
+      topDownloadedFilesList = historyDao.getMonthlyTopDownloadHistory();
+    }
+
     DefaultPieDataset dataset = new DefaultPieDataset();
     for (int i = 0; i < topDownloadedFilesList.size(); i++) {
       dataset.setValue(topDownloadedFilesList.get(i).getFileType(), new Long(topDownloadedFilesList.get(i).getCount()));

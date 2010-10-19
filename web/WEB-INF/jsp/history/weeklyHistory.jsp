@@ -69,7 +69,7 @@
       </tr>
     </c:forEach>
   </table>
-     
+     <input type="image" src="<c:url value='/history/graph.html?graphType=weekly'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
   <table class="standardValueTable">
     <thead>
