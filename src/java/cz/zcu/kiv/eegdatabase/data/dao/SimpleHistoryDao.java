@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return getHibernateTemplate().find(HQLselect).size();
   }
 
-   public long getCountOfFilesWeeklyHistory() {
+  public long getCountOfFilesWeeklyHistory() {
     String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw')";
     return getHibernateTemplate().find(HQLselect).size();
   }
@@ -50,7 +51,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return getHibernateTemplate().find(HQLselect);
   }
 
-   public List<History> getMonthlyHistory() {
+  public List<History> getMonthlyHistory() {
     String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate,'mm')";
     return getHibernateTemplate().find(HQLselect);
   }
@@ -114,7 +115,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
             + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
-    if(topHistory.size() > maxResults) {
+    if (topHistory.size() > maxResults) {
       topHistory.subList(maxResults, topHistory.size()).clear();
     }
 
@@ -147,27 +148,12 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
             + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
-    if(topHistory.size() > maxResults) {
+    if (topHistory.size() > maxResults) {
       topHistory.subList(maxResults, topHistory.size()).clear();
     }
 
     return topHistory;
   }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
   public List<DownloadStatistic> getMonthlyTopDownloadHistory() {
     int maxResults = 5;
@@ -195,11 +181,37 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
             + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
-    if(topHistory.size() > maxResults) {
+    if (topHistory.size() > maxResults) {
       topHistory.subList(maxResults, topHistory.size()).clear();
     }
 
     return topHistory;
   }
 
+  public List<History> getHistorySearchResults(List<SearchRequest> requests) {
+    String hqlQuery = "from History where ";
+    for (SearchRequest request : requests) {
+      if (request.getCondition().equals("")) {
+        throw new RuntimeException("Empty field: " + request.getSource());
+      }
+      if (request.getSource().endsWith("DateOfDownload")) {
+        hqlQuery += request.getChoice() + "dateOfDownload" + getCondition(request.getSource()) + "'"+request.getCondition()+"'";
+      } else {
+        hqlQuery += request.getChoice() + request.getSource() + " like '%" + request.getCondition() + "%'";
+      }
+    }
+    List<History> results;
+    results = getHibernateTemplate().find(hqlQuery);
+    return results;
+  }
+
+  private String getCondition(String choice) {
+    if (choice.equals("fromDateOfDownload")) {
+      return ">=";
+    }
+    if (choice.equals("toDateOfDownload")) {
+      return "<=";
+    }
+    return " like ";
+  }
 }

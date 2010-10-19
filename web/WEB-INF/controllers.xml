@@ -684,6 +684,10 @@
   </bean>
 
   <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
+     <property name="formView" value="history/search" />
+    <property name="successView" value="history/searchResults" />
+    <property name="historyDao" ref="historyDao" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.HistorySearcherCommand"/>
   </bean>
 
   <!-- Advanced search  -->
@@ -714,6 +718,8 @@
     <property name="successView" value="experiments/searchResults" />
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ExperimentsSearcherCommand"/>
   </bean>
+
+  
 
   <!-- Full text search  -->
   <bean name="fullTextSearchController" class="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchController">

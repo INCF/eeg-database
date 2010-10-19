@@ -93,11 +93,13 @@
         <prop key="/people/search-results.html">peopleSearcherController</prop>
         <prop key="/experiments/search.html">experimentsSearcherController</prop>
         <prop key="/experiments/search-results.html">experimentsSearcherController</prop>
+      
        
         <prop key="/history/daily-history.html">dailyHistoryController</prop>
         <prop key="/history/weekly-history.html">weeklyHistoryController</prop>
         <prop key="/history/monthly-history.html">monthlyHistoryController</prop>
         <prop key="/history/search.html">searchHistoryController</prop>
+          <prop key="/history/search-results.html">searchHistoryController</prop>
         <prop key="/history/graph.html">graphController</prop>
 
       </props>

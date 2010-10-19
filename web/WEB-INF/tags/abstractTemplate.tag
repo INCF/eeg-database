@@ -6,6 +6,7 @@
 <%@attribute name="dateOfBirthCalendar" %>
 <%@attribute name="allowJQuery" %>
 <%@attribute name="mainPage" %>
+<%@attribute name="history" %>
 <%@attribute name="search" %>
 <%@attribute name="allowWYSIWYG" %>
 
@@ -26,7 +27,9 @@
     <c:if test="${mainPage}">
       <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
-
+    <c:if test="${history}">
+      <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
+    </c:if>
 
     <c:if test="${allowWYSIWYG}">
       <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>

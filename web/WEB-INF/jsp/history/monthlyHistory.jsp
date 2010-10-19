@@ -14,8 +14,8 @@
 <ui:historyTemplate pageTitle="pageTitle.monthlyDownloadHistory">
 
   <h1><fmt:message key="pageTitle.monthlyDownloadHistory"/></h1>
-
-  <table class="dataTable">
+  <a class="showAll" id="history">Show all</a>
+  <table class="dataTable" id="monthlyHistory">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
@@ -28,27 +28,29 @@
       </tr>
     </thead>
     <c:forEach items="${historyList}" var="historyList">
-      <tr>
+      
+      <tr class="1" id="data">
         <td><fmt:formatDate value="${historyList.dateOfDownload}" pattern="dd.MM.yyyy, HH:mm" /></td>
         <td><c:out value="${historyList.historyId}" /></td>
         <c:if test="${historyList.scenario != null}">
           <td><fmt:message key="description.fileType.scenario"/></td>
-          <td><c:out value="${historyList.scenario.title}" /></td>
+          <td ><c:out value="${historyList.scenario.title}" /></td>
         </c:if><c:if test="${historyList.experiment != null}">
           <td><fmt:message key="description.fileType.experiment"/></td>
-          <td><c:out value="${historyList.experiment.scenario.title}" /></td>
+          <td ><c:out value="${historyList.experiment.scenario.title}" /></td>
         </c:if>
         <c:if test="${historyList.dataFile != null}">
-          <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${historyList.dataFile.filename}" /></td>
-          <td><c:out value="${historyList.dataFile.experiment.scenario.title}" /></td>
+          <td ><fmt:message key="description.fileType.dataFile"/> - <c:out value="${historyList.dataFile.filename}" /></td>
+          <td ><c:out value="${historyList.dataFile.experiment.scenario.title}" /></td>
         </c:if>
 
 
-        <td><c:out value="${historyList.person.username}" /></td>
-        <td><a href="<c:url value='/people/detail.html?personId=${historyList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
+        <td ><c:out value="${historyList.person.username}" /></td>
+        <td ><a href="<c:url value='/people/detail.html?personId=${historyList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
       </tr>
     </c:forEach>
   </table>
+      
   <h2><fmt:message key="pageTitle.dailyStatistic"/></h2>
 
   <h3><fmt:message key="text.downloadFiles"/><b>${countOfDownloadedFiles}</b></h3>
