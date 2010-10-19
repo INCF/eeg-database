@@ -63,7 +63,7 @@ public class FullTextSearchController extends SimpleFormController {
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
     String fullTextQuery = fullTextSearchCommand.getSearchTI();
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
-      String[] ScenFields = {"TITLE", "DESCRIPTION"};
+      String[] ScenFields = {"title", "description"};
       List<Scenario> results = scenarioDao.getFullTextResult(fullTextQuery, ScenFields);
       String[] ExFields = {"WEATHERNOTE"};
       List<Experiment> exResults = experimentDao.getFullTextResult(fullTextQuery, ExFields);
