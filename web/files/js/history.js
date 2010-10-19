@@ -1,4 +1,4 @@
-$(document).ready(function() {
+//$(document).ready(function() {
    // $("#history").hide();
    // $("#monthlyHistory").hide();
    // var md = document.getElementById("data");
@@ -10,6 +10,5 @@ $(document).ready(function() {
     //}
    // $("#monthlyHistory").hide();
 
-});
 
 
