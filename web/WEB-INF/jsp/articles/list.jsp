@@ -35,6 +35,10 @@
           <span class="author">
             <c:out value="${article.person.username}" />
           </span>
+          |
+          <span class="commentsCount">
+            <c:out value="${fn:length(article.articleComments)}" /> <fmt:message key="heading.comments" />
+          </span>
           <c:if test="${article.userIsOwnerOrAdmin}">
             | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
             | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}" />"><fmt:message key="label.delete" /> </a>

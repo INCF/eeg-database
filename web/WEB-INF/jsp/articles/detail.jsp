@@ -11,7 +11,7 @@
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 
 <ui:articlesTemplate pageTitle="pageTitle.experimentDetail">
-  
+
   <div class="articleDetail">
     <h1>${article.title}</h1>
     <div class="subheading">
@@ -33,7 +33,7 @@
       </span>
       |
       <span class="comment">
-        <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.comment" /></a>
+        <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.addComment" /></a>
       </span>
       <c:if test="${userCanEdit}">
         | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
@@ -46,11 +46,16 @@
     </div>
 
     <h2><fmt:message key="heading.comments" /></h2>
+    <span class="comment">
+      <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.addComment" /></a>
+    </span>
     <ul class="comments">
       <c:forEach items="${commentsList}" var="comment" varStatus="status">
         <li class="comment">
-          <span class="date"><fmt:formatDate value="${comment.time}" /></span> |
-          <span class="author"><c:out value="${comment.person.username}" /></span>
+          <span class="subheading">
+            <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
+            <span class="author"><c:out value="${comment.person.username}" /></span>
+          </span>
           <!--|
           <span class="comment">
             <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>

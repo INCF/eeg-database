@@ -25,6 +25,7 @@
             <th class="columnDate"><fmt:message key="dataTable.heading.date"/></th>
             <th class="columnTitle"><fmt:message key="dataTable.heading.articleTitle"/></th>
             <th class="columnGroup"><fmt:message key="dataTable.heading.groupTitle"/></th>
+            <th class="columnCommentsCount"><fmt:message key="heading.comments" /></th>
           </tr>
         </thead>
 
@@ -42,6 +43,9 @@
                   <c:if test="${article.researchGroup == null}">
                     Public article
                   </c:if>
+                </td>
+                <td>
+                  <c:out value="${fn:length(article.articleComments)}" />
                 </td>
               </tr>
             </c:if>
