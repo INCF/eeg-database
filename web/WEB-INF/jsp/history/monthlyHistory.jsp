@@ -14,7 +14,7 @@
 <ui:historyTemplate pageTitle="pageTitle.monthlyDownloadHistory">
 
   <h1><fmt:message key="pageTitle.monthlyDownloadHistory"/></h1>
-  <a class="showAll" id="history">Show all</a>
+  <a class="showAll" id="history"><fmt:message key="seeAll"/></a>
   <table class="dataTable" id="monthlyHistory">
     <thead>
       <tr>
