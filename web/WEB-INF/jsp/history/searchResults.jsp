@@ -29,8 +29,7 @@
             <th><fmt:message key="dataTable.heading.fileType"/></th>
             <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
             <th><fmt:message key="dataTable.heading.username"/></th>
-
-            <th style="width: 80px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
+            <th><fmt:message key="dataTable.heading.detailOfUser"/></th>
           </tr>
         </thead>
         <tbody>
