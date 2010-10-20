@@ -31,8 +31,7 @@ public class SimplePersonDao
    * @return Person with searched userName
    */
   public Person getPerson(String userName) {
-    String HQLselect = "from Person person "
-            + "where person.username = :userName";
+    String HQLselect = "from Person person " + "where person.username = :userName";
 
     Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "userName", userName));
     return foundUser;
@@ -50,23 +49,18 @@ public class SimplePersonDao
    * @return Person with searched hashCode
    */
   public Person getPersonByHash(String hashCode) {
-    String HQLselect = "from Person person "
-            + "where person.authenticationHash = :hashCode";
+    String HQLselect = "from Person person " + "where person.authenticationHash = :hashCode";
 
     Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "hashCode", hashCode));
     return foundUser;
   }
-
-
 
   /**
    * Method doesn't used now.
    * @return
    */
   public List<Person> getPersonsWherePendingRequirement() {
-    String HQLselect = "from Person person "
-            + "where person.requiresWriting = 'T' "
-            + "and person.authority = 'ROLE_READER'";
+    String HQLselect = "from Person person " + "where person.requiresWriting = 'T' " + "and person.authority = 'ROLE_READER'";
     return getHibernateTemplate().find(HQLselect);
   }
 
@@ -79,8 +73,7 @@ public class SimplePersonDao
    * else return false
    */
   public boolean usernameExists(String userName) {
-    String HQLselect = "from Person person "
-            + "where person.username = :userName";
+    String HQLselect = "from Person person " + "where person.username = :userName";
     List<Person> list = getHibernateTemplate().
             findByNamedParam(HQLselect, "userName", userName);
     return (!list.isEmpty());
@@ -92,8 +85,7 @@ public class SimplePersonDao
    * @return list of Person with supervisor's authority.
    */
   public List<Person> getSupervisors() {
-    String HQLselect = "from Person person "
-            + "where person.authority = 'ROLE_SUPERVISOR'";
+    String HQLselect = "from Person person " + "where person.authority = 'ROLE_SUPERVISOR'";
     return getHibernateTemplate().find(HQLselect);
   }
 
@@ -108,12 +100,7 @@ public class SimplePersonDao
   }
 
   public Map getInfoForAccountOverview(Person loggedPerson) {
-    String hqlSelect = "select new map("
-            + "p.username as username, "
-            + "p.givenname as givenname, "
-            + "p.surname as surname, "
-            + "p.authority as authority"
-            + ") from Person p where p.personId = :personId";
+    String hqlSelect = "select new map(" + "p.username as username, " + "p.givenname as givenname, " + "p.surname as surname, " + "p.authority as authority" + ") from Person p where p.personId = :personId";
     Map info;
     List list = getHibernateTemplate().
             findByNamedParam(hqlSelect, "personId", loggedPerson.getPersonId());
@@ -126,11 +113,7 @@ public class SimplePersonDao
   }
 
   public boolean userNameInGroup(String userName, int groupId) {
-    String hqlQuery = "select p.personId "
-            + "from Person p "
-            + "left join p.researchGroupMemberships rgm "
-            + "where p.username = :userName "
-            + "and rgm.researchGroup.researchGroupId = :groupId";
+    String hqlQuery = "select p.personId " + "from Person p " + "left join p.researchGroupMemberships rgm " + "where p.username = :userName " + "and rgm.researchGroup.researchGroupId = :groupId";
 
     String[] paramNames = {"userName", "groupId"};
     Object[] values = {userName, groupId};
@@ -139,30 +122,41 @@ public class SimplePersonDao
   }
 
   public List<Person> getPersonSearchResults(List<SearchRequest> requests) throws NumberFormatException {
+    boolean ignoreChoice = false;
     String hqlQuery = "from Person where ";
-    for (SearchRequest request: requests) {
-     
-      if (request.getCondition().equals("")) {
-        throw new RuntimeException("Empty field: "+ request.getSource());
+    for (SearchRequest request : requests) {
+
+      if ((request.getCondition().equals("")) && (!request.getSource().equals("defect"))) {
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
+        }
+        continue;
+      }
+      if (!ignoreChoice) {
+        hqlQuery += request.getChoice();
+
       }
       if (request.getSource().startsWith("age")) {
-        hqlQuery += request.getChoice()+"dateOfBirth"+getCondition(request.getSource())+
-            "'"+getPersonYearOfBirth(request.getCondition())+"'";
+        hqlQuery += "dateOfBirth" + getCondition(request.getSource()) +
+                "'" + getPersonYearOfBirth(request.getCondition()) + "'";
       } else if (request.getSource().equals("defect")) {
-        hqlQuery += request.getChoice()+
-                "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
-      }
-        else {
-        hqlQuery += request.getChoice()+request.getSource()+
-            getCondition(request.getSource())+"'%"+request.getCondition()+"%'";
+        hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
+      } else {
+        hqlQuery += request.getSource() +
+                getCondition(request.getSource()) + "'%" + request.getCondition() + "%'";
       }
     }
-    List<Person> results = getHibernateTemplate().find(hqlQuery);
-
+    System.out.println(hqlQuery);
+    List<Person> results;
+    try {
+      results = getHibernateTemplate().find(hqlQuery);
+    } catch (Exception e) {
+      return new ArrayList<Person>();
+    }
     return results;
   }
 
-   private String getCondition(String choice) {
+  private String getCondition(String choice) {
     if (choice.equals("ageMax")) {
       return ">=";
     }
@@ -171,6 +165,7 @@ public class SimplePersonDao
     }
     return " like ";
   }
+
   private String getPersonYearOfBirth(String age) throws NumberFormatException {
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
@@ -179,6 +174,6 @@ public class SimplePersonDao
     Calendar dateOfBirth = new GregorianCalendar(yearOfBirth, Calendar.JANUARY, Integer.parseInt(age));
 
 
-    return "01-01-"+yearOfBirth;
+    return "01-01-" + yearOfBirth;
   }
 }

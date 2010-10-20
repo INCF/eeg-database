@@ -22,7 +22,7 @@ $(document).ready(function(){
     '<option value="startTime">Start date and time</option>'+
     '<option value="endTime">End date and time</option>'+
     '<option value="usedHardware">Used hardware</option>'+
-    '<option value="scenario.title">Scenario</option>'+
+    '<option value="scenario.title">Scenario title</option>'+
     '<option value="personBySubjectPersonId.gender">Gender</option>'+
     '<option value="weather.title">Weather</option>'+
     '<option value="ageMin">Minimum age</option>'+
@@ -77,14 +77,14 @@ $(document).ready(function(){
       '<td><a class="delete" onClick="deleteRow(' + fieldCounter + ')">delete</a></td>'+
       '</tr>'
       );
-    $("tr."+fieldCounter).hide();
-    $("tr."+fieldCounter).fadeIn();
+   // $("tr."+fieldCounter).hide();
+  //  $("tr."+fieldCounter).fadeIn();
 
   });
 
 });
 function deleteRow(rowNumber) {
-  $("tr."+rowNumber).fadeOut();
+  $("tr."+rowNumber).remove();
 }
 
 

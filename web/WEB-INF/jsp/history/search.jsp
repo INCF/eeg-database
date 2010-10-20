@@ -21,9 +21,10 @@
         <td>&nbsp;<fmt:message key="label.in"/>&nbsp;</td>
         <td>
           <select name="source_1">
-            <option value="fromDateOfDownload"><fmt:message key="label.startDateTime"/></option>
-            <option value="toDateOfDownload"><fmt:message key="label.endDateTime"/></option>
-            <option value="scenario.title"><fmt:message key="label.scenario"/></option>
+            <option value="scenario.title"><fmt:message key="label.scenarioTitle"/></option>
+            <option value="fromDateOfDownload"><fmt:message key="label.startDate"/></option>
+            <option value="toDateOfDownload"><fmt:message key="label.endDate"/></option>
+            
           </select>
         </td>
         <td>&nbsp;</td>

@@ -33,30 +33,37 @@ public class SimpleScenarioDao
   }
 
   public List<Scenario> getScenarioSearchResults(List<SearchRequest> requests) throws NumberFormatException {
- 
+
+    boolean ignoreChoice = false;
     String hqlQuery = "from Scenario where ";
-    for (SearchRequest request: requests) {
+    for (SearchRequest request : requests) {
       if (request.getCondition().equals("")) {
-        throw new RuntimeException("Empty field: " + request.getSource());
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
+        }
+        continue;
+      }
+      if (!ignoreChoice) {
+        hqlQuery += request.getChoice();
+
       }
       if (request.getSource().endsWith("ScenarioLength")) {
-         Integer.parseInt(request.getCondition());
-         hqlQuery += request.getChoice()+"scenarioLength"+getCondition(request.getSource())+request.getCondition();
-      } 
-      else if (request.getSource().equals("person")){
-         hqlQuery += request.getChoice()+getAuthor(request.getCondition());
+        Integer.parseInt(request.getCondition());
+        hqlQuery += "scenarioLength" + getCondition(request.getSource()) + request.getCondition();
+      } else if (request.getSource().equals("person")) {
+        hqlQuery += getAuthor(request.getCondition());
+      } else {
+        hqlQuery += request.getSource() + " like '%" + request.getCondition() + "%'";
       }
-      else {
-        hqlQuery += request.getChoice()+request.getSource()+" like '%"+request.getCondition()+"%'";
-      }
+      ignoreChoice = false;
     }
     List<Scenario> results;
-  //  try {
+    
+    try {
       results = getHibernateTemplate().find(hqlQuery);
-   // } catch (Exception e) {
-  //    results = new ArrayList<Scenario>();
-   //   results.clear();
-   // }
+    } catch (Exception e) {
+      return new ArrayList<Scenario>();
+    }
 
     return results;
   }
@@ -71,14 +78,12 @@ public class SimpleScenarioDao
     return " like ";
   }
 
-  
   private String getAuthor(String name) {
     String[] words = name.split(" ");
     if (words.length == 1) {
-      return "(person.givenname like '%"+words[0]+"%' or person.surname like '%"+words[0]+"%')";
-    }
-    else {
-      return "(person.givenname like '%"+words[0]+"%' and person.surname like '%"+words[1]+"%')";
+      return "(person.givenname like '%" + words[0] + "%' or person.surname like '%" + words[0] + "%')";
+    } else {
+      return "(person.givenname like '%" + words[0] + "%' and person.surname like '%" + words[1] + "%')";
     }
   }
 }

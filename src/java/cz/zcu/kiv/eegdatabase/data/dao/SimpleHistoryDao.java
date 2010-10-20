@@ -94,25 +94,13 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     List<DownloadStatistic> topHistory = null;
 
     String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate)"
-            + " group by h.scenario.scenarioId, h.scenario.title"
-            + " order by count(h.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
     topHistory = getHibernateTemplate().find(HQLselect);
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate)"
-            + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title"
-            + " order by count(h.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate)"
-            + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename"
-            + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
     if (topHistory.size() > maxResults) {
@@ -127,25 +115,13 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     List<DownloadStatistic> topHistory = null;
 
     String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
-            + " group by h.scenario.scenarioId, h.scenario.title"
-            + " order by count(h.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
     topHistory = getHibernateTemplate().find(HQLselect);
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
-            + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title"
-            + " order by count(h.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload >= trunc(sysdate, 'iw')"
-            + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename"
-            + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
     if (topHistory.size() > maxResults) {
@@ -160,25 +136,13 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     List<DownloadStatistic> topHistory = null;
 
     String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate,'mm')"
-            + " group by h.scenario.scenarioId, h.scenario.title"
-            + " order by count(h.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
     topHistory = getHibernateTemplate().find(HQLselect);
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate,'mm')"
-            + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title"
-            + " order by count(h.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))"
-            + " from History as h"
-            + " where h.dateOfDownload > trunc(sysdate,'mm')"
-            + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename"
-            + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
     topHistory.addAll(getHibernateTemplate().find(HQLselect));
     Collections.sort(topHistory);
     if (topHistory.size() > maxResults) {
@@ -189,19 +153,31 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
   }
 
   public List<History> getHistorySearchResults(List<SearchRequest> requests) {
+    boolean ignoreChoice = false;
     String hqlQuery = "from History where ";
     for (SearchRequest request : requests) {
       if (request.getCondition().equals("")) {
-        throw new RuntimeException("Empty field: " + request.getSource());
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
+        }
+        continue;
+      }
+      if (!ignoreChoice) {
+        hqlQuery += request.getChoice();
+
       }
       if (request.getSource().endsWith("DateOfDownload")) {
-        hqlQuery += request.getChoice() + "dateOfDownload" + getCondition(request.getSource()) + "'"+request.getCondition()+"'";
+        hqlQuery += "dateOfDownload" + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
       } else {
-        hqlQuery += request.getChoice() + request.getSource() + " like '%" + request.getCondition() + "%'";
+        hqlQuery += request.getSource() + " like '%" + request.getCondition() + "%'";
       }
     }
     List<History> results;
-    results = getHibernateTemplate().find(hqlQuery);
+    try {
+      results = getHibernateTemplate().find(hqlQuery);
+    } catch (Exception e) {
+      return new ArrayList<History>();
+    }
     return results;
   }
 

@@ -24,7 +24,7 @@
             <option value="startTime"><fmt:message key="label.startDateTime"/></option>
             <option value="endTime"><fmt:message key="label.endDateTime"/></option>
             <option value="usedHardware"><fmt:message key="label.usedHardware"/></option>
-            <option value="scenario.title"><fmt:message key="label.scenario"/></option>
+            <option value="scenario.title"><fmt:message key="label.scenarioTitle"/></option>
             <option value="personBySubjectPersonId.gender"><fmt:message key="label.gender"/></option>
             <option value="weather.title"><fmt:message key="label.weather"/></option>
             <option value="ageMin"><fmt:message key="label.ageMin"/></option>
