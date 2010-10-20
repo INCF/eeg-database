@@ -10,6 +10,11 @@
 <%@attribute name="search" %>
 <%@attribute name="allowWYSIWYG" %>
 <%@attribute name="tableSorter" %>
+<%@attribute name="jqueryLatest" %>
+<%@attribute name="tableSort" %>
+<%@attribute name="tableSortMin" %>
+<%@attribute name="jMetadata" %>
+
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -36,6 +41,20 @@
  <c:if test="${tableSorter}">
       <script type="text/javascript" src="<c:url value='/files/js/jquery.tablesorter.js' />"></script>
     </c:if>
+
+      <c:if test="${jqueryLatest}">
+      <script type="text/javascript" src="<c:url value='/files/js/jquery-latest.js' />"></script>
+    </c:if>
+      <c:if test="${tableSort}">
+      <script type="text/javascript" src="<c:url value='/files/js/table-sort.js' />"></script>
+    </c:if>
+      <c:if test="${tableSortMin}">
+      <script type="text/javascript" src="<c:url value='/files/js/jquery.tablesorter.min.js' />"></script>
+    </c:if>
+       <c:if test="${jMetadata}">
+      <script type="text/javascript" src="<c:url value='/files/js/jquery.metadata.js' />"></script>
+    </c:if>
+
     <c:if test="${allowWYSIWYG}">
       <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
       <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
