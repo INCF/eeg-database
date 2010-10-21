@@ -53,12 +53,11 @@ public class SimpleScenarioDao
       } else if (request.getSource().equals("person")) {
         hqlQuery += getAuthor(request.getCondition());
       } else {
-        hqlQuery += request.getSource() + " like '%" + request.getCondition() + "%'";
+        hqlQuery += "lower(" + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
       }
       ignoreChoice = false;
     }
     List<Scenario> results;
-    
     try {
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {
@@ -81,9 +80,11 @@ public class SimpleScenarioDao
   private String getAuthor(String name) {
     String[] words = name.split(" ");
     if (words.length == 1) {
-      return "(person.givenname like '%" + words[0] + "%' or person.surname like '%" + words[0] + "%')";
+      return "(lower(person.givenname) like lower('%" + words[0] + "%')" +
+              " or lower(person.surname) like lower('%" + words[0] + "%'))";
     } else {
-      return "(person.givenname like '%" + words[0] + "%' and person.surname like '%" + words[1] + "%')";
+      return "(lower(person.givenname) like lower('%" + words[0] + "%')" +
+              " and lower(person.surname) like lower('%" + words[1] + "%'))";
     }
   }
 }

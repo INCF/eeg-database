@@ -169,7 +169,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
       if (request.getSource().endsWith("DateOfDownload")) {
         hqlQuery += "dateOfDownload" + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
       } else {
-        hqlQuery += request.getSource() + " like '%" + request.getCondition() + "%'";
+        hqlQuery += "lower("+request.getSource() + ") like lower('%" + request.getCondition() + "%')";
       }
     }
     List<History> results;

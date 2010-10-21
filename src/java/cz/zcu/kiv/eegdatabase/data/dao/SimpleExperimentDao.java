@@ -67,8 +67,8 @@ public class SimpleExperimentDao<T, PK extends Serializable>
           hardwareQuery += request.getChoice();
         }
         hardwareQuery +=
-                " (hw.title like '%" + request.getCondition() +
-                "%' or hw.type like '%" + request.getCondition() + "%')";
+                " (lower(hw.title) like lower('%" + request.getCondition() +
+                "%'} or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
         andOr = request.getChoice();
         countHw++;
         continue;
@@ -90,8 +90,11 @@ public class SimpleExperimentDao<T, PK extends Serializable>
           continue;
         }
 
+      } else if (request.getSource().endsWith("gender")) {
+        hqlQuery += "personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
       } else {
-        hqlQuery += request.getSource() + getCondition(request.getSource()) + "'%" + request.getCondition() + "%'";
+        hqlQuery += "lower(" + request.getSource() + ")" + getCondition(request.getSource()) +
+                "lower('%" + request.getCondition() + "%')";
       }
     }
     List<Experiment> hardwares = new ArrayList<Experiment>();
@@ -108,7 +111,6 @@ public class SimpleExperimentDao<T, PK extends Serializable>
       // System.out.println(andOr);
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {
-
     } finally {
       results = connectList(andOr, results, hardwares);
     }

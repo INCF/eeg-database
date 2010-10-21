@@ -141,12 +141,13 @@ public class SimplePersonDao
                 "'" + getPersonYearOfBirth(request.getCondition()) + "'";
       } else if (request.getSource().equals("defect")) {
         hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
+      } else if (request.getSource().equals("gender")){
+        hqlQuery += "gender = '"+request.getCondition().toUpperCase().charAt(0)+"'";
       } else {
-        hqlQuery += request.getSource() +
-                getCondition(request.getSource()) + "'%" + request.getCondition() + "%'";
+        hqlQuery += "lower("+ request.getSource() + ")" +
+                getCondition(request.getSource()) + "lower('%" + request.getCondition() + "%')";
       }
     }
-    System.out.println(hqlQuery);
     List<Person> results;
     try {
       results = getHibernateTemplate().find(hqlQuery);
