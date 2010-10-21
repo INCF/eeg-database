@@ -149,7 +149,7 @@ public class SimplePersonDao
       }
     }
     List<Person> results;
-    System.out.println(hqlQuery);
+    
     try {
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {
