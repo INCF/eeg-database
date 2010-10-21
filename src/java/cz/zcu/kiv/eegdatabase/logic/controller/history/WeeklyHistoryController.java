@@ -34,12 +34,13 @@ public class WeeklyHistoryController extends AbstractController {
       List<History> historyList = null;
       List<History> lastDownloadedFilesHistoryList = null;
       List<DownloadStatistic> topDownloadedFilesList = null;
+      String historyType="weekly";
       ModelAndView mav = new ModelAndView("history/weeklyHistory");
 
 
-      historyList = historyDao.getWeeklyHistory();
-      lastDownloadedFilesHistoryList = historyDao.getLastWeeklyDownloadHistory();
-      topDownloadedFilesList = historyDao.getWeeklyTopDownloadHistory();
+      historyList = historyDao.getHistory(historyType);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType);
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

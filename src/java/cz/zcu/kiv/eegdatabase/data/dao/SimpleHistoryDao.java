@@ -15,6 +15,9 @@ import java.util.Calendar;
 import java.util.Collections;
 import java.util.Date;
 import java.util.List;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.hibernate.impl.QueryImpl;
 
 /**
  *
@@ -26,129 +29,92 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     super(type);
   }
 
-  public List<History> getDailyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate)";
+  public List<History> getHistory(String historyType) {
+    String whereCondition = "";
+    whereCondition = getWhereCondition(historyType);
+    String HQLselect = " from History as h" +whereCondition;
     return getHibernateTemplate().find(HQLselect);
   }
 
-  public long getCountOfFilesDailyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate)";
-    return getHibernateTemplate().find(HQLselect).size();
+  public long getCountOfFilesHistory(String historyType) {
+    String whereCondition = "";
+    List<DownloadStatistic> dCount = null;
+    whereCondition = getWhereCondition(historyType);
+    String HQLselect = "select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(count(h.historyId)) from History as h"+whereCondition;
+    dCount = getHibernateTemplate().find(HQLselect);
+    return dCount.get(0).getCount();
   }
 
-  public long getCountOfFilesWeeklyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw')";
-    return getHibernateTemplate().find(HQLselect).size();
-  }
 
-  public long getCountOfFilesMonthlyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate,'mm')";
-    return getHibernateTemplate().find(HQLselect).size();
-  }
-
-  public List<History> getWeeklyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw')";
-    return getHibernateTemplate().find(HQLselect);
-  }
-
-  public List<History> getMonthlyHistory() {
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate,'mm')";
-    return getHibernateTemplate().find(HQLselect);
-  }
-
-  public List<History> getLastDownloadHistory() {
+  public List<History> getLastDownloadHistory(String historyType) {
     int maxResults = 5;
+    Session session = null;
+    String whereCondition = "";
     List<History> lastHistoryList = null;
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate) order by history.dateOfDownload desc ";
-    lastHistoryList = getHibernateTemplate().find(HQLselect);
+    whereCondition = getWhereCondition(historyType);
+    session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+    String HQLselect = "from History as h"+whereCondition+" order by h.dateOfDownload desc ";
+    lastHistoryList = getTopFiveLastDownloadedHistory(session, maxResults, HQLselect);
     if (lastHistoryList.size() > maxResults) {
       lastHistoryList.subList(maxResults, lastHistoryList.size()).clear();
     }
     return lastHistoryList;
   }
 
-  public List<History> getLastWeeklyDownloadHistory() {
-    int maxResults = 5;
-    List<History> lastHistoryList = null;
-    String HQLselect = "from History history where history.dateOfDownload >= trunc(sysdate, 'iw') order by history.dateOfDownload desc ";
-    lastHistoryList = getHibernateTemplate().find(HQLselect);
-    if (lastHistoryList.size() > maxResults) {
-      lastHistoryList.subList(maxResults, lastHistoryList.size()).clear();
-    }
-    return lastHistoryList;
-  }
-
-  public List<History> getLastMonthlyDownloadHistory() {
-    int maxResults = 5;
-    List<History> lastHistoryList = null;
-    String HQLselect = "from History history where history.dateOfDownload > trunc(sysdate,'mm') order by history.dateOfDownload desc ";
-    lastHistoryList = getHibernateTemplate().find(HQLselect);
-    if (lastHistoryList.size() > maxResults) {
-      lastHistoryList.subList(maxResults, lastHistoryList.size()).clear();
-    }
-    return lastHistoryList;
-  }
-
-  public List<DownloadStatistic> getDailyTopDownloadHistory() {
-    int maxResults = 5;
-    List<DownloadStatistic> topHistory = null;
-
-    String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
-    topHistory = getHibernateTemplate().find(HQLselect);
-    HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
-    HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate)" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
-    Collections.sort(topHistory);
-    if (topHistory.size() > maxResults) {
-      topHistory.subList(maxResults, topHistory.size()).clear();
-    }
-
+   public List<History> getTopFiveLastDownloadedHistory(Session session, int maxResults, String HQLselect) {
+    Query query = null;
+    List<History> topHistory = null;
+    query = session.createQuery(HQLselect);
+    query.setMaxResults(maxResults);
+    topHistory = query.list();
     return topHistory;
   }
 
-  public List<DownloadStatistic> getWeeklyTopDownloadHistory() {
-    int maxResults = 5;
+  public List<DownloadStatistic> getTopFiveHistory(Session session, int maxResults, String HQLselect) {
+    Query query = null;
     List<DownloadStatistic> topHistory = null;
-
-    String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
-    topHistory = getHibernateTemplate().find(HQLselect);
-    HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
-    HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload >= trunc(sysdate, 'iw')" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
-    Collections.sort(topHistory);
-    if (topHistory.size() > maxResults) {
-      topHistory.subList(maxResults, topHistory.size()).clear();
-    }
-
+    query = session.createQuery(HQLselect);
+    query.setMaxResults(maxResults);
+    topHistory = query.list();
     return topHistory;
   }
 
-  public List<DownloadStatistic> getMonthlyTopDownloadHistory() {
+  public String getWhereCondition(String historyType) {
+    String whereCondition = "";
+    if (historyType.equals("daily")) {
+      whereCondition = " where h.dateOfDownload > trunc(sysdate)";
+    } else if (historyType.equals("weekly")) {
+      whereCondition = " where h.dateOfDownload >= trunc(sysdate, 'iw')";
+    } else {
+      whereCondition = " where h.dateOfDownload > trunc(sysdate,'mm')";
+    }
+    return whereCondition;
+  }
+
+  public List<DownloadStatistic> getTopDownloadHistory(String historyType) {
     int maxResults = 5;
+   
+    Session session = null;
+    String whereCondition = "";
+    String fromTable = " from History as h";
     List<DownloadStatistic> topHistory = null;
+    String selectAndCreateObject = " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic";
+    session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+    whereCondition = getWhereCondition(historyType);
 
     String HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
-    topHistory = getHibernateTemplate().find(HQLselect);
+            selectAndCreateObject + "(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + fromTable + whereCondition + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
+    topHistory = getTopFiveHistory(session, maxResults, HQLselect);
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+            selectAndCreateObject + "(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + fromTable + whereCondition + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getTopFiveHistory(session, maxResults, HQLselect));
     HQLselect =
-            " select new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + " from History as h" + " where h.dateOfDownload > trunc(sysdate,'mm')" + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getHibernateTemplate().find(HQLselect));
+            selectAndCreateObject + "(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + fromTable + whereCondition + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
+    topHistory.addAll(getTopFiveHistory(session, maxResults, HQLselect));
     Collections.sort(topHistory);
     if (topHistory.size() > maxResults) {
       topHistory.subList(maxResults, topHistory.size()).clear();
     }
-
     return topHistory;
   }
 
@@ -169,7 +135,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
       if (request.getSource().endsWith("DateOfDownload")) {
         hqlQuery += "dateOfDownload" + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
       } else {
-        hqlQuery += "lower("+request.getSource() + ") like lower('%" + request.getCondition() + "%')";
+        hqlQuery += "lower(" + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
       }
     }
     List<History> results;

@@ -41,10 +41,11 @@ public class DailyHistoryController extends AbstractController {
     List<History> historyList = null;
     List<History> lastDownloadedFilesHistoryList = null;
     List<DownloadStatistic> topDownloadedFilesList = null;
+    String historyType="daily";
     ModelAndView mav = new ModelAndView("history/dailyHistory");
-    historyList = historyDao.getDailyHistory();
-    lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory();
-    topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
+    historyList = historyDao.getHistory(historyType);
+    lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType);
+    topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType);
 
     countOfDownloadedFiles = "" + historyList.size();
     mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

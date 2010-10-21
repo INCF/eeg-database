@@ -37,42 +37,36 @@ public class GraphController extends AbstractController {
           HttpServletRequest request,
           HttpServletResponse response) throws Exception {
     log.debug("Processing creating graph");
-    String graphType ="";
+    String graphType = "";
     graphType = request.getParameter("graphType");
     List<DownloadStatistic> topDownloadedFilesList = null;
 
     long countFile = 0;
     int topFiles = 5;
     response.setContentType("image/png");
-    if(graphType.equals("daily")) {
-      topDownloadedFilesList = historyDao.getDailyTopDownloadHistory();
-    } else if(graphType.equals("weekly")){
-      topDownloadedFilesList = historyDao.getWeeklyTopDownloadHistory();
-    } else if(graphType.equals("monthly")) {
-      topDownloadedFilesList = historyDao.getMonthlyTopDownloadHistory();
-    }
+    topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType);
+
 
     DefaultPieDataset dataset = new DefaultPieDataset();
     for (int i = 0; i < topDownloadedFilesList.size(); i++) {
       dataset.setValue(topDownloadedFilesList.get(i).getFileType(), new Long(topDownloadedFilesList.get(i).getCount()));
       countFile = countFile + topDownloadedFilesList.get(i).getCount();
     }
-    if (historyDao.getCountOfFilesDailyHistory() > countFile) {
-      dataset.setValue("Other", new Long((historyDao.getCountOfFilesDailyHistory()- countFile)));
+    if (historyDao.getCountOfFilesHistory(graphType) > countFile) {
+      dataset.setValue("Other", historyDao.getCountOfFilesHistory(graphType) - countFile);
     }
     JFreeChart chart = ChartFactory.createPieChart3D(
-            "Daily downloads",  // chart title
-            dataset,                // data
-            true,                   // include legend
+            "Daily downloads", // chart title
+            dataset, // data
+            true, // include legend
             true,
-            false
-        );
+            false);
 
-        PiePlot3D plot = (PiePlot3D) chart.getPlot();
-        plot.setStartAngle(290);
-        plot.setDirection(Rotation.CLOCKWISE);
-        plot.setForegroundAlpha(0.5f);
-        plot.setNoDataMessage("No data to display");
+    PiePlot3D plot = (PiePlot3D) chart.getPlot();
+    plot.setStartAngle(290);
+    plot.setDirection(Rotation.CLOCKWISE);
+    plot.setForegroundAlpha(0.5f);
+    plot.setNoDataMessage("No data to display");
 
 //    JFreeChart chart = ChartFactory.createPieChart("Daily downloads",
 //            dataset,

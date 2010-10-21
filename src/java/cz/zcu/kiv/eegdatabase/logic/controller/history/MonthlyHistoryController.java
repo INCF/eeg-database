@@ -33,14 +33,12 @@ public class MonthlyHistoryController extends AbstractController {
     ModelAndView mav = new ModelAndView("history/monthlyHistory");
     String countOfDownloadedFiles;
     List<History> historyList = null;
+    String historyType="monthly";
     List<History> lastDownloadedFilesHistoryList = null;
     List<DownloadStatistic> topDownloadedFilesList = null;
-
-
-
-    historyList = historyDao.getMonthlyHistory();
-    lastDownloadedFilesHistoryList = historyDao.getLastMonthlyDownloadHistory();
-    topDownloadedFilesList = historyDao.getMonthlyTopDownloadHistory();
+    historyList = historyDao.getHistory(historyType);
+    lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType);
+    topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType);
 
     countOfDownloadedFiles = "" + historyList.size();
     mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

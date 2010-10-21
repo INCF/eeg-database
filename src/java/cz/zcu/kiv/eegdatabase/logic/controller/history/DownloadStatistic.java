@@ -18,6 +18,9 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
  private String title;
  private long count;
 
+  public DownloadStatistic(long count) {
+   this.count = count;
+ }
  public DownloadStatistic(int scenarioId,String title, long count) {
    this.scenarioId = scenarioId;
    this.title = title;
