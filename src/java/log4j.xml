@@ -7,10 +7,12 @@
 -->
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="all">
 
-	<appender name="appender" class="org.apache.log4j.RollingFileAppender">
-		<param name="File" value="c:/logs/eeg_database_pergler.log"/>
+	<appender name="appender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="c:/logs/eeg_database.log"/>
 		<param name="Append" value="true"/>
-        <param name="MaxFileSize" value="5000KB"/>
+                <param name="DatePattern" value=".yyyy-MM-dd" />
+                <param name="maxBackupIndex" value="90" />
+        <param name="MaxFileSize" value="30000KB"/>
 		<layout class="org.apache.log4j.PatternLayout">
 			<param name="ConversionPattern" value="%d [%t] %C %p - %m%n"/>
 
