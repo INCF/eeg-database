@@ -138,17 +138,18 @@ public class SimplePersonDao
       }
       if (request.getSource().startsWith("age")) {
         hqlQuery += "dateOfBirth" + getCondition(request.getSource()) +
-                "'" + getPersonYearOfBirth(request.getCondition()) + "'";
+                "'" + getPersonDateOfBirth(request.getCondition()) + "'";
       } else if (request.getSource().equals("defect")) {
         hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
-      } else if (request.getSource().equals("gender")){
-        hqlQuery += "gender = '"+request.getCondition().toUpperCase().charAt(0)+"'";
+      } else if (request.getSource().equals("gender")) {
+        hqlQuery += "gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
       } else {
-        hqlQuery += "lower("+ request.getSource() + ")" +
+        hqlQuery += "lower(" + request.getSource() + ")" +
                 getCondition(request.getSource()) + "lower('%" + request.getCondition() + "%')";
       }
     }
     List<Person> results;
+    System.out.println(hqlQuery);
     try {
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {
@@ -167,14 +168,11 @@ public class SimplePersonDao
     return " like ";
   }
 
-  private String getPersonYearOfBirth(String age) throws NumberFormatException {
+  private String getPersonDateOfBirth(String age) throws NumberFormatException {
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
     int yearOfBirth = today.get(Calendar.YEAR) - Integer.parseInt(age);
-    // Create a calendar object with the date of birth
-    Calendar dateOfBirth = new GregorianCalendar(yearOfBirth, Calendar.JANUARY, Integer.parseInt(age));
 
-
-    return "01-01-" + yearOfBirth;
+    return today.get(Calendar.DAY_OF_MONTH) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
   }
 }

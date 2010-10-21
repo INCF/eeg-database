@@ -84,7 +84,9 @@ public class SimpleScenarioDao
               " or lower(person.surname) like lower('%" + words[0] + "%'))";
     } else {
       return "(lower(person.givenname) like lower('%" + words[0] + "%')" +
-              " and lower(person.surname) like lower('%" + words[1] + "%'))";
+              " and lower(person.surname) like lower('%" + words[1] + "%')) or " +
+              "(lower(person.givenname) like lower('%" + words[1] + "%')" +
+              " and lower(person.surname) like lower('%" + words[0] + "%'))";
     }
   }
 }
