@@ -14,6 +14,58 @@
 
   <h1><fmt:message key="pageTitle.weeklyDownloadHistory"/></h1>
 
+  <h2><fmt:message key="title.weeklyStatistic"/></h2>
+
+  <h3><fmt:message key="text.downloadFiles"/><b>${countOfDownloadedFiles}</b></h3>
+
+  <h2><fmt:message key="title.topDownloads"/></h2>
+  <table class="standardValueTable">
+    <thead>
+      <tr>
+        <th><fmt:message key="dataTable.heading.fileType"/></th>
+        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
+        <th style="width: 5px;"><fmt:message key="dataTable.heading.count"/></th>
+      </tr>
+    </thead>
+    <c:forEach items="${topDownloadedFilesList}" var="topDownloadedFilesList">
+      <tr>
+        <td>${topDownloadedFilesList.fileType}</td>
+        <td>${topDownloadedFilesList.title}</td>
+        <td>${topDownloadedFilesList.count}</td>
+      </tr>
+    </c:forEach>
+  </table>
+  <input type="image" src="<c:url value='/history/graph.html?graphType=weekly'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
+  <h2><fmt:message key="title.lastDownloaded"/></h2>
+  <table class="standardValueTable">
+    <thead>
+      <tr>
+        <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
+        <th><fmt:message key="dataTable.heading.fileType"/></th>
+        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
+        <th style="width: 80px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
+      </tr>
+    </thead>
+    <c:forEach items="${lastDownloadedFilesHistoryList}" var="lastDownloadedFilesHistoryList">
+      <tr>
+        <td><fmt:formatDate value="${lastDownloadedFilesHistoryList.dateOfDownload}" pattern="dd.MM.yyyy, HH:mm"/></td>
+        <c:if test="${lastDownloadedFilesHistoryList.scenario != null}">
+          <td><fmt:message key="description.fileType.scenario"/></td>
+          <td><c:out value="${lastDownloadedFilesHistoryList.scenario.title}" /></td>
+        </c:if>
+        <c:if test="${lastDownloadedFilesHistoryList.experiment != null}">
+          <td><fmt:message key="description.fileType.experiment"/></td>
+          <td><c:out value="${lastDownloadedFilesHistoryList.experiment.scenario.title}" /></td>
+        </c:if>
+        <c:if test="${lastDownloadedFilesHistoryList.dataFile != null}">
+          <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${lastDownloadedFilesHistoryList.dataFile.filename}" /></td>
+          <td><c:out value="${lastDownloadedFilesHistoryList.dataFile.experiment.scenario.title}" /></td>
+        </c:if>
+        <td><a href="<c:url value='/people/detail.html?personId=${lastDownloadedFilesHistoryList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
+      </tr>
+    </c:forEach>
+  </table>
+  <h2><fmt:message key="title.allWeeklyRecords"/></h2>
   <table class="dataTable">
     <thead>
       <tr>
@@ -48,57 +100,7 @@
       </tr>
     </c:forEach>
   </table>
-  <h2><fmt:message key="pageTitle.dailyStatistic"/></h2>
 
-  <h3><fmt:message key="text.downloadFiles"/><b>${countOfDownloadedFiles}</b></h3>
 
-   <h2><fmt:message key="title.topDownloads"/></h2>
-  <table class="standardValueTable">
-    <thead>
-      <tr>
-        <th><fmt:message key="dataTable.heading.fileType"/></th>
-        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-        <th style="width: 5px;"><fmt:message key="dataTable.heading.count"/></th>
-      </tr>
-    </thead>
-    <c:forEach items="${topDownloadedFilesList}" var="topDownloadedFilesList">
-      <tr>
-        <td>${topDownloadedFilesList.fileType}</td>
-        <td>${topDownloadedFilesList.title}</td>
-        <td>${topDownloadedFilesList.count}</td>
-      </tr>
-    </c:forEach>
-  </table>
-     <input type="image" src="<c:url value='/history/graph.html?graphType=weekly'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
-  <h2><fmt:message key="title.lastDownloaded"/></h2>
-  <table class="standardValueTable">
-    <thead>
-      <tr>
-        <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
-         <th><fmt:message key="dataTable.heading.fileType"/></th>
-        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-        <th style="width: 80px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
-      </tr>
-    </thead>
-    <c:forEach items="${lastDownloadedFilesHistoryList}" var="lastDownloadedFilesHistoryList">
-      <tr>
-        <td><fmt:formatDate value="${lastDownloadedFilesHistoryList.dateOfDownload}" pattern="dd.MM.yyyy, HH:mm"/></td>
-        <c:if test="${lastDownloadedFilesHistoryList.scenario != null}">
-          <td><fmt:message key="description.fileType.scenario"/></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.scenario.title}" /></td>
-        </c:if>
-        <c:if test="${lastDownloadedFilesHistoryList.experiment != null}">
-          <td><fmt:message key="description.fileType.experiment"/></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.experiment.scenario.title}" /></td>
-        </c:if>
-        <c:if test="${lastDownloadedFilesHistoryList.dataFile != null}">
-          <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${lastDownloadedFilesHistoryList.dataFile.filename}" /></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.dataFile.experiment.scenario.title}" /></td>
-        </c:if>
-        <td><a href="<c:url value='/people/detail.html?personId=${lastDownloadedFilesHistoryList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
-      </tr>
-    </c:forEach>
-  </table>
- 
 
 </ui:historyTemplate>

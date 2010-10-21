@@ -24,12 +24,12 @@
       <table id="myTable" class="tablesorter">
         <thead>
           <tr>
-            <th><fmt:message key="dataTable.heading.date"/></th>
-            <th><fmt:message key="dataTable.heading.id"/></th>
-            <th><fmt:message key="dataTable.heading.fileType"/></th>
-            <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-            <th><fmt:message key="dataTable.heading.username"/></th>
-            <th><fmt:message key="dataTable.heading.detailOfUser"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.date"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.id"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.fileType"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.username"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
           </tr>
         </thead>
         <tbody>
