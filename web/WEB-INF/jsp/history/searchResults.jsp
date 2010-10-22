@@ -29,6 +29,7 @@
             <th style="height: 20px;"><fmt:message key="dataTable.heading.fileType"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.username"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.usersDefaultGroup"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
           </tr>
         </thead>
@@ -48,9 +49,13 @@
                 <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${historyResults.dataFile.filename}" /></td>
                 <td><c:out value="${historyResults.dataFile.experiment.scenario.title}" /></td>
               </c:if>
-
-
-              <td><c:out value="${historyResults.person.username}" /></td>
+                <td><c:out value="${historyResults.person.username}" /></td>
+                 <c:if test="${historyResults.person.defaultGroup != null}">
+                <td><c:out value="${historyResults.person.defaultGroup.title}" /></td>
+                 </c:if>
+                 <c:if test="${historyResults.person.defaultGroup == null}">
+                <td><fmt:message key="table.text.noGroup"/></td>
+                 </c:if>
               <td><a href="<c:url value='/people/detail.html?personId=${historyResults.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
             </tr>
           </c:forEach>
