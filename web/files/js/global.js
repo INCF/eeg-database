@@ -1,8 +1,16 @@
 $(document).ready(function() {
 
-  $("a.prompt").click(function() {
+  /**
+   * Display confirmation dialog on all elements (not only links) with class="confirm"
+   **/
+  $(".confirm").click(function() {
     return confirm("Do you really want to continue?")
   });
+
+  /**
+   * Enables table sorting for all tables with class="tableSorter"
+   **/
+  $("table.tableSorter").tablesorter();
 
 });
 

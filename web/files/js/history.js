@@ -3,7 +3,6 @@ $(document).ready(function() {
   $("a#history.showAll").click(function(){
     $("#monthlyHistory tr td").show();
   });
-  $("#monthlyHistory").tablesorter();
 });
 
 

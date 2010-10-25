@@ -27,14 +27,14 @@
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
     <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
+
 
     <c:if test="${mainPage}">
       <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
-    <c:if test="${tableSort}">
-      <script type="text/javascript" src="<c:url value='/files/js/table-sort.js' />"></script>
-    </c:if>
+
     <c:if test="${history}">
       <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
     </c:if>

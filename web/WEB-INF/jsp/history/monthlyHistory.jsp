@@ -67,7 +67,7 @@
   </table>
   <h2><fmt:message key="title.allMonthlyRecords"/></h2>
   <a class="showAll" id="history"><fmt:message key="seeAll"/></a>
-  <table class="dataTable" id="monthlyHistory">
+  <table class="dataTable tableSorter" id="monthlyHistory">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
