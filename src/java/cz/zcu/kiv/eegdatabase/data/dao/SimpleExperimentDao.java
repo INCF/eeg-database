@@ -54,66 +54,44 @@ public class SimpleExperimentDao<T, PK extends Serializable>
   }
 
   public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) {
-    boolean hardware = false;
-    int countHw = 0;
-    int countNonHw = 0;
-    String hardwareQuery = "";
-    String andOr = "";
-    String hqlQuery = "from Experiment where ";
+
+    boolean ignoreChoice = false;
+    String hqlQuery = "from Experiment e left join fetch e.hardwares hw where ";
     for (SearchRequest request : requests) {
-      if (request.getSource().equals("usedHardware")) {
-        hardware = true;
-        if (countHw > 0) {
-          hardwareQuery += request.getChoice();
+      if (request.getCondition().equals("")) {
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
         }
-        hardwareQuery +=
-                " (lower(hw.title) like lower('%" + request.getCondition() +
-                "%'} or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
-        andOr = request.getChoice();
-        countHw++;
         continue;
       }
-      if (countNonHw > 0) {
+      if (!ignoreChoice) {
         hqlQuery += request.getChoice();
-      }
-      countNonHw++;
-      if (andOr.equals("")) {
-        andOr = request.getChoice();
-      }
-      if (request.getSource().endsWith("Time")) {
-        hqlQuery += request.getSource() + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
-      } else if (request.getSource().startsWith("age")) {
-        try {
-          hqlQuery += "personBySubjectPersonId.dateOfBirth" +
-                  getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
-        } catch (Exception e) {
-          continue;
-        }
 
+      }
+      if (request.getSource().equals("usedHardware")) {
+        hqlQuery += " (lower(hw.title) like lower('%" + request.getCondition() +
+                "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
+      } else if (request.getSource().endsWith("Time")) {
+        hqlQuery += "e." + request.getSource() + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
+      } else if (request.getSource().startsWith("age")) {
+        hqlQuery += "e.personBySubjectPersonId.dateOfBirth" +
+                getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
       } else if (request.getSource().endsWith("gender")) {
-        hqlQuery += "personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
+        hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
       } else {
-        hqlQuery += "lower(" + request.getSource() + ")" + getCondition(request.getSource()) +
+        hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
                 "lower('%" + request.getCondition() + "%')";
       }
     }
-    List<Experiment> hardwares = new ArrayList<Experiment>();
-    if (hardware) {
-      hardwareQuery = "from Experiment e" +
-              " left join fetch e.hardwares hw where" + hardwareQuery;
 
-      System.out.println(hardwareQuery);
-      hardwares = getHibernateTemplate().find(hardwareQuery);
-    }
-    List<Experiment> results = new ArrayList<Experiment>();
+    // System.out.println(hqlQuery);
+    List<Experiment> results;
     try {
-      System.out.println(hqlQuery);
-      // System.out.println(andOr);
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {
-    } finally {
-      results = connectList(andOr, results, hardwares);
+      return new ArrayList<Experiment>();
     }
+
     return results;
   }
 
@@ -131,32 +109,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
     int yearOfBirth = today.get(Calendar.YEAR) - Integer.parseInt(age);
-    // Create a calendar object with the date of birth 
-    Calendar dateOfBirth = new GregorianCalendar(yearOfBirth, Calendar.JANUARY, Integer.parseInt(age));
 
-
-    return "01-01-" + yearOfBirth;
-  }
-
-  private List<Experiment> connectList(String condition, List<Experiment> results, List<Experiment> hardware) {
-    if (hardware.isEmpty()) {
-      return results;
-    }
-    if (results.isEmpty()) {
-      return hardware;
-    }
-    if (condition.equals(" or ")) {
-      results.addAll(hardware);
-      return results;
-    }
-    List<Experiment> newResults = new ArrayList<Experiment>();
-    for (int i = 0; i < results.size(); i++) {
-      for (int j = 0; j < hardware.size(); j++) {
-        if (results.get(i).getExperimentId() == hardware.get(j).getExperimentId()) {
-          newResults.add(results.get(i));
-        }
-      }
-    }
-    return newResults;
+    return today.get(Calendar.DATE) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
   }
 }
