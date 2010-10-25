@@ -26,27 +26,19 @@
 
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
-    <c:if test="${addExperimentCalendar || dateOfBirthCalendar || allowJQuery}">
-      <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
-    </c:if>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
+
     <c:if test="${mainPage}">
       <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
-            <c:if test="${tableSort}">
+    <c:if test="${tableSort}">
       <script type="text/javascript" src="<c:url value='/files/js/table-sort.js' />"></script>
     </c:if>
     <c:if test="${history}">
       <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
     </c:if>
-    <c:if test="${jqueryLatest}">
-      <script type="text/javascript" src="<c:url value='/files/js/jquery-latest.js' />"></script>
-    </c:if>
-
-      <c:if test="${tableSortMin}">
-      <script type="text/javascript" src="<c:url value='/files/js/jquery.tablesorter.min.js' />"></script>
-    </c:if>
-       <c:if test="${jMetadata}">
+    <c:if test="${jMetadata}">
       <script type="text/javascript" src="<c:url value='/files/js/jquery.metadata.js' />"></script>
     </c:if>
 

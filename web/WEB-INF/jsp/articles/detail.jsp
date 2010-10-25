@@ -37,7 +37,7 @@
       </span>
       <c:if test="${userCanEdit}">
         | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-        | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}" />"><fmt:message key="label.delete" /> </a>
+        | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}"  />" class="prompt"><fmt:message key="label.delete" /> </a>
       </c:if>
 
     </div>
