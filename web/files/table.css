@@ -14,14 +14,17 @@
   table.dataTable tr {
   }
 
-  table.dataTable thead {
-    background: #dcf2f5 url(images/datatable-header-bg.gif) left bottom repeat-x;
+  table.dataTable th, table.dataTable th.header  {
+    background: #dcf2f5 url(images/datatable-header-bg.gif) left bottom repeat-x; height: inherit;
     text-align: left;
     border-bottom: solid 1px #ccc;
   }
-  table.dataTable thead th {
+  table.dataTable th, table.dataTable th.header {
     padding: 7px 5px 1px;
     text-align: left;
+  }
+  table#monthlyHistory th  {
+    cursor: pointer;
   }
   table.dataTable tr td
   {

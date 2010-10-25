@@ -33,21 +33,16 @@
     <c:if test="${mainPage}">
       <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
+            <c:if test="${tableSort}">
+      <script type="text/javascript" src="<c:url value='/files/js/table-sort.js' />"></script>
+    </c:if>
     <c:if test="${history}">
       <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
     </c:if>
-
-
- <c:if test="${tableSorter}">
-      <script type="text/javascript" src="<c:url value='/files/js/jquery.tablesorter.js' />"></script>
-    </c:if>
-
-      <c:if test="${jqueryLatest}">
+    <c:if test="${jqueryLatest}">
       <script type="text/javascript" src="<c:url value='/files/js/jquery-latest.js' />"></script>
     </c:if>
-      <c:if test="${tableSort}">
-      <script type="text/javascript" src="<c:url value='/files/js/table-sort.js' />"></script>
-    </c:if>
+
       <c:if test="${tableSortMin}">
       <script type="text/javascript" src="<c:url value='/files/js/jquery.tablesorter.min.js' />"></script>
     </c:if>
