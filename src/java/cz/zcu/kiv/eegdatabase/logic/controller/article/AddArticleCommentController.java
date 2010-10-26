@@ -141,6 +141,7 @@ public class AddArticleCommentController extends SimpleFormController {
       }
     }
 
+    mav = new ModelAndView("redirect:/articles/detail.html?articleId=" + data.getArticleId());
 
     return mav;
   }

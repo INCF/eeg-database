@@ -284,7 +284,6 @@
   
   <bean name="addArticleCommentController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleCommentController">
     <property name="formView" value="articles/addArticleCommentForm" />
-    <property name="successView" value="redirect:/articles/list.html" /> <!-- don't need special view after successfull adding -->
     <property name="articleDao" ref="articleDao" />
     <property name="articleCommentDao" ref="articleCommentDao" />
     <property name="researchGroupDao" ref="researchGroupDao" />

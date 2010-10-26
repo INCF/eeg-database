@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -12,6 +14,8 @@ public class ArticleComment {
   private int commentId;
   private Person person;
   private ArticleComment parent;
+  private Set<ArticleComment> children = new HashSet<ArticleComment>(0);
+
   private String text;
   private Timestamp time;
   private Article article;
@@ -87,6 +91,18 @@ public class ArticleComment {
   public void setArticle(Article article) {
     this.article = article;
   }
+
+  public Set<ArticleComment> getChildren() {
+    return children;
+  }
+
+  public void setChildren(Set<ArticleComment> children) {
+    this.children = children;
+  }
+
+  
+  
+
 
   
 

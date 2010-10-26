@@ -1,3 +1,4 @@
+
 <%-- 
     Document   : detail
     Created on : 4.5.2010, 20:45:54
@@ -9,6 +10,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <ui:articlesTemplate pageTitle="pageTitle.experimentDetail">
 
@@ -49,6 +51,8 @@
     <span class="comment">
       <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.addComment" /></a>
     </span>
+
+
     <ul class="comments">
       <c:forEach items="${commentsList}" var="comment" varStatus="status">
         <li class="comment">
@@ -56,12 +60,19 @@
             <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
             <span class="author"><c:out value="${comment.person.username}" /></span>
           </span>
-          <!--|
+
           <span class="comment">
             <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
-          </span> -->
+            | <c:out value="${fn:length(comment.children)}" />
+          </span> 
           <br />
           <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>
+
+
+          <c:if test="${fn:length(comment.children) > 0}">
+            <c:set var="node" value="${comment}" scope="request"/>
+            <c:import url="node.jsp"/>
+          </c:if>
         </li>
       </c:forEach>
     </ul>
