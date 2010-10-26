@@ -36,11 +36,15 @@ public class Experiment implements java.io.Serializable {
   private Timestamp startTime;
   @DateBridge(resolution = Resolution.DAY)//Precision stored in the index: day
   private Timestamp endTime;
+    @Fields({
+    @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
+    @Field(store = Store.YES), // weathernote value is stored in the index
+    @Field(name = "temperature")})   // use a different field name
   private int temperature;
   @Fields({
     @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
     @Field(store = Store.YES), // weathernote value is stored in the index
-    @Field(name = "WEATHERNOTE")})   // use a different field name
+    @Field(name = "weathernote")})   // use a different field name
   //@Boost(2)//Boost weathernote field
   private String weathernote;
   private Set<Person> persons = new HashSet<Person>(0);

@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.FulltextResult;
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
@@ -120,20 +121,14 @@ public class SimpleGenericDao<T, PK extends Serializable>
     //return getHibernateTemplate().loadAll(type).size();
   }
 
-  public List<T> getFullTextResult(String fullTextQuery, String[] fields) throws ParseException {
+  public List<FulltextResult> getFullTextResult(String fullTextQuery, String[] fields) throws ParseException {
 
     Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 
     MultiFieldQueryParser parser = null;
     parser = new MultiFieldQueryParser(fields, new StandardAnalyzer(new HashSet()));
 
-
     FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
-//    List<Object> entities = fts.createCriteria(type).list();
-//
-//    for (Object entity : entities) {
-//        fts.index(entity);  //manually index an item instance
-//    }
 
     org.apache.lucene.search.Query luceneQuery;
     try {
@@ -160,77 +155,50 @@ public class SimpleGenericDao<T, PK extends Serializable>
       throw new RuntimeException("Unable to read index directory");
     }
 
-
-
     Fragmenter fragmenter = new SimpleFragmenter(100);
     QueryScorer scorer = new QueryScorer(luceneQuery);
     Encoder encoder = new SimpleHTMLEncoder();
-    Formatter formatter = new SimpleHTMLFormatter("<b>", "</b>");
+    Formatter formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
 
     Analyzer analyzer = new StandardAnalyzer();
     Highlighter ht = new Highlighter(formatter, encoder, scorer);
     ht.setTextFragmenter(fragmenter);
-    List<T> result = query.list();
-//    try {
-
-    if (!result.isEmpty()) {
-
-      for (T t : result) {
+    List<T> TypeResult = query.list();
+    List<FulltextResult> results = new ArrayList<FulltextResult>();
+    if (!TypeResult.isEmpty()) {
+      Field[] field = new Field[fields.length];
+      String text;
+      for (T t : TypeResult) {
+        text = "";
         try {
-          //    String highlightedText = ht.getBestFragment(analyzer, "WEATHERNOTE", "");
-          //   System.out.println(hl.getBestFragment());
-          if (t instanceof Scenario) {
-            Scenario scenario = (Scenario) t;
-            String title = ht.getBestFragment(analyzer, "title", scenario.getTitle());
-            String description = ht.getBestFragment(analyzer, "description", scenario.getDescription());
-////
-           // System.out.println(title + " " + description);
+          for (int i = 0; i < field.length; i++) {
+
+            field[i] = t.getClass().getDeclaredField(fields[i]);
+            field[i].setAccessible(true);
+            if (field[i].get(t) != null) {
+              String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
+              if (fragment == null) {
+                text += field[i].get(t)+ " ";
+              } else {
+                text += fragment + " ";
+              }
+            }
+            
+
           }
-////          if (t instanceof Experiment) {
-////            experiment = (Experiment) t;
-////            String weatherNote = ht.getBestFragment(analyzer, "WEATHERNOTE", experiment.getWeathernote());
-////
-////            //System.out.println(weatherNote);
-////          }
-////          if (t instanceof Person) {
-////            person = (Person) t;
-////            String note = ht.getBestFragment(analyzer, "NOTE", person.getNote());
-////            // System.out.println(note);
-////          }
-////
-////          if (t instanceof Scenario) {
-////            scenario = (Scenario) t;
-////            String title = ht.getBestFragment(analyzer, "TITLE", scenario.getTitle());
-////            String description = ht.getBestFragment(analyzer, "DESCRIPTION", scenario.getDescription());
-////
-////            //System.out.println(title + " " + description);
-////          }
-////          if (t instanceof Experiment) {
-////            experiment = (Experiment) t;
-////            String weatherNote = ht.getBestFragment(analyzer, "WEATHERNOTE", experiment.getWeathernote());
-////
-////            //System.out.println(weatherNote);
-////          }
-////          if (t instanceof Person) {
-////            person = (Person) t;
-////            String note = ht.getBestFragment(analyzer, "NOTE", person.getNote());
-////            // System.out.println(note);
-////          }
-        } catch (IOException ex) {
-          throw new RuntimeException("Unable to highlight");
+          String[] className = type.getName().split("[.]");
+          Field idF = t.getClass().getDeclaredField(className[className.length - 1].substring(0, 1).toLowerCase()
+                  + className[className.length - 1].substring(1) + "Id");
+          idF.setAccessible(true);
+          int id = Integer.parseInt(""+idF.get(t));
+          results.add(new FulltextResult(id, text, className[className.length - 1]));
+        } catch (Exception ex) {
+          ex.printStackTrace();
+          throw new RuntimeException("Unable to highlight results");
         }
-       
       }
     }
-
-//      } catch  (IOException ex) {
-//      log.debug(ex);
-//    }
-
-
-    //execute the query
-
-    return result;
+    return results;
   }
 }
 

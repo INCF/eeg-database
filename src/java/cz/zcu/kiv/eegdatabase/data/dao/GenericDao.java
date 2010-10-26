@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.search.FulltextResult;
 import java.io.Serializable;
 import java.util.List;
 import org.apache.lucene.queryParser.ParseException;
@@ -61,5 +62,5 @@ public interface GenericDao <T, PK extends Serializable>{
      */
     int getCountRecords();
 
-    List<T> getFullTextResult(String fullTextQuery,String[] fields) throws ParseException;
+    List<FulltextResult> getFullTextResult(String fullTextQuery,String[] fields) throws ParseException;
 }

@@ -26,12 +26,13 @@
     </thead>
     <c:forEach items="${searchResults}" var="sceresult">
       <tr>
-        <td><c:out value="${sceresult.class}" /></td>
-        <td><c:out value="${sceresult.title}" /><%--<c:out value="${sceresult.description}" />--%></td>
-        <td><a href="<c:url value='/scenarios/detail.html?scenarioId=${sceresult.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
+        <td><c:out value="${sceresult.section}" escapeXml="false" /></td>
+        <td><c:out value="${sceresult.foundString}" escapeXml="false" /></td>
+        <%--  <td><a href="<c:url value='/scenarios/detail.html?scenarioId=${sceresult.id}' />"><fmt:message key="link.detail"/></a></td> --%>
       </tr>
     </c:forEach>
-    <c:forEach items="${exResults}" var="exresult">
+  </table>
+    <%-- <c:forEach items="${exResults}" var="exresult">
       <tr>
         <td><c:out value="${exresult.class}" /></td>
         <td><c:out value="${exresult.weathernote}" /></td>
@@ -50,8 +51,6 @@
       <tr>
         <td><c:out value="${hardResults.class}" /></td>
         <td><c:out value="${hardResults.title}" /></td>
-       <%-- <td><c:out value="${hardResults.type}" /></td>--%>
-       <%-- <td><c:out value="${hardResults.description}" /></td>--%>
         <td><a href="<c:url value='/lists/hardware/list.html'/>"><fmt:message key="link.detail"/></a></td>
       </tr>
     </c:forEach>
@@ -74,7 +73,6 @@
       <tr>
         <td><c:out value="${weatherResults.class}" /></td>
         <td><c:out value="${weatherResults.title}" /></td>
-       <%-- <td><c:out value="${weatherResults.description}" /></td>--%>
       </tr>
     </c:forEach>
 
@@ -83,7 +81,6 @@
       <tr>
         <td><c:out value="${expOptParDefResults.class}" /></td>
         <td><c:out value="${expOptParDefResults.paramName}" /></td>
-       <%-- <td><c:out value="${expOptParDefResults.paramDataType}" /></td>--%>
       </tr>
     </c:forEach>
 
@@ -94,8 +91,7 @@
     <c:forEach items="${articleResults}" var="artresult">
       <h3><a href="<c:url value='/articles/detail.html?articleId=${artresult.articleId}' />"><c:out value="${artresult.title}" /></a></h3>
       <div><c:out value="${artresult.text}" escapeXml="false"/></div>
-     <%-- <div>Found in:<c:out value="${artresult.class}" /></div>--%>
       <h4>http://eegdatabase.kiv.zcu.cz<c:url value='/articles/detail.html?articleId=${artresult.articleId}' /></h4>
-    </c:forEach>
+    </c:forEach> --%>
   </fieldset>
 </ui:experimentsTemplate>

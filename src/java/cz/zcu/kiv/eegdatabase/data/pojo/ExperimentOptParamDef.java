@@ -20,12 +20,12 @@ public class ExperimentOptParamDef implements java.io.Serializable {
   private int experimentOptParamDefId;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "EXPARAMNAME")}) //use a different field name
+    @Field(name = "paramName")}) //use a different field name
   private String paramName;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
     // @Field(store=Store.YES),
-    @Field(name = "EXPARAMDATATYPE")}) //use a different field name
+    @Field(name = "paramDataType")}) //use a different field name
   private String paramDataType;
   private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 

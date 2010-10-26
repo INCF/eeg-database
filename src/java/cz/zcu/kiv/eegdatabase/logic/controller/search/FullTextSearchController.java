@@ -63,40 +63,29 @@ public class FullTextSearchController extends SimpleFormController {
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
     String fullTextQuery = fullTextSearchCommand.getSearchTI();
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
+      List<FulltextResult> results;
       String[] ScenFields = {"title", "description"};
-      List<Scenario> results = scenarioDao.getFullTextResult(fullTextQuery, ScenFields);
-      String[] ExFields = {"WEATHERNOTE"};
-      List<Experiment> exResults = experimentDao.getFullTextResult(fullTextQuery, ExFields);
-      String[] PerFields = {"NOTE"};
-      List<Person> personResults = personDao.getFullTextResult(fullTextQuery, PerFields);
-      String[] ArtFields = {"ARTICLETITLE", "ARTICLETEXT"};
-      List<Article> articleResults = articleDao.getFullTextResult(fullTextQuery, ArtFields);
-      String[] HardFields = {"HARDWARETITLE", "TYPE", "HARDWAREDESCRIPTION"};
-      List<Hardware> hardwareResults = hardwareDao.getFullTextResult(fullTextQuery, HardFields);
-      String[] VisualImpairmentFields = {"VISUALIMPAIRMENTDESCRIPTION"};
-      List<VisualImpairment> visualImpairmentResults = eyesDefectDao.getFullTextResult(fullTextQuery, VisualImpairmentFields);
-      String[] HearingFields = {"HEARINGDESCRIPTION"};
-      List<HearingImpairment> hearingImpairmentResults = hearingImpairmentDao.getFullTextResult(fullTextQuery, HearingFields);
-      String[] WeatherFields = {"WEATHERTITLE", "WEATHERDESCRIPTION"};
-      List<Weather> weatherResults = weatherDao.getFullTextResult(fullTextQuery, WeatherFields);
-      String[] ExOptParamDefFields = {"EXPARAMNAME", "EXPARAMDATATYPE"};
-      List<ExperimentOptParamDef> experimentOptParamDefResults = experimentOptParamDef.getFullTextResult(fullTextQuery, ExOptParamDefFields);
+      results = scenarioDao.getFullTextResult(fullTextQuery, ScenFields);
+      String[] ExFields = {"weathernote", "temperature"};
+      results.addAll(experimentDao.getFullTextResult(fullTextQuery, ExFields));
+      String[] PerFields = {"note", "email"};
+      results.addAll(personDao.getFullTextResult(fullTextQuery, PerFields));
+      String[] ArtFields = {"title", "text"};
+      results.addAll(articleDao.getFullTextResult(fullTextQuery, ArtFields));
+      String[] HardFields = {"title", "type", "description"};
+      results.addAll(hardwareDao.getFullTextResult(fullTextQuery, HardFields));
+      String[] VisualImpairmentFields = {"description"};
+      results.addAll(eyesDefectDao.getFullTextResult(fullTextQuery, VisualImpairmentFields));
+      String[] HearingFields = {"decription"};
+      results.addAll(hearingImpairmentDao.getFullTextResult(fullTextQuery, HearingFields));
+      String[] WeatherFields = {"title", "description"};
+      results.addAll(weatherDao.getFullTextResult(fullTextQuery, WeatherFields));
+      String[] ExOptParamDefFields = {"paramName", "paramDataType"};
+      results.addAll(experimentOptParamDef.getFullTextResult(fullTextQuery, ExOptParamDefFields));
       logger.debug("I have results: " + results);
-      if (results != null) {
-        for (Scenario meas : results) {
-          logger.debug("Results: " + meas);
-        }
-      }
+      
       mav.addObject("searchedString", fullTextQuery);
       mav.addObject("searchResults", results);
-      mav.addObject("exResults", exResults);
-      mav.addObject("personResults", personResults);
-      mav.addObject("articleResults", articleResults);
-      mav.addObject("hardwareResults", hardwareResults);
-      mav.addObject("hearingImpairmentResults", hearingImpairmentResults);
-      mav.addObject("visualImpairmentResults", visualImpairmentResults);
-      mav.addObject("weatherResults", weatherResults);
-      mav.addObject("expOptParDefResults", experimentOptParamDefResults);
     } else {
       mistakes.add("Unable to parse query: " + fullTextQuery);
       logger.debug("Unable to parse query: " + fullTextQuery);

@@ -25,11 +25,11 @@ public class DataFile implements java.io.Serializable {
   private Blob fileContent;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "MIMETYPE")}) //use a different field name
+    @Field(name = "mimetype")}) //use a different field name
   private String mimetype;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "FILENAME")}) //use a different field name
+    @Field(name = "filename")}) //use a different field name
   private String filename;
   private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(0);
   private Set<History> histories = new HashSet<History>(0);

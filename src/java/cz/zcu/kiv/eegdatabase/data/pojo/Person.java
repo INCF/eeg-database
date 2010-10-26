@@ -29,6 +29,10 @@ public class Person implements java.io.Serializable {
   private String surname;
   private Timestamp dateOfBirth;
   private char gender;
+    @Fields({
+    @Field(index = Index.TOKENIZED), //same property indexed multiple times
+    @Field(name = "email"),
+    @Field(store = Store.YES)}) //use a different field name
   private String email;
   private String phoneNumber;
   private Timestamp registrationDate;
@@ -36,7 +40,7 @@ public class Person implements java.io.Serializable {
   private boolean confirmed;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "NOTE"),
+    @Field(name = "note"),
     @Field(store = Store.YES)}) //use a different field name
   private String note;
   private String username;

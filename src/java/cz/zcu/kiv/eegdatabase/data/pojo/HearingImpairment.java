@@ -20,7 +20,7 @@ public class HearingImpairment implements java.io.Serializable {
   private int hearingImpairmentId;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "HEARINGDESCRIPTION")}) //use a different field name
+    @Field(name = "description")}) //use a different field name
   private String description;
   private Set<Person> persons = new HashSet<Person>(0);
 

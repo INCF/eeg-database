@@ -22,6 +22,6 @@
     <property name="text" type="string">
       <column name="TEXT"/>
     </property>
-    
+
   </class>
 </hibernate-mapping>
