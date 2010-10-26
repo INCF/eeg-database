@@ -11,7 +11,6 @@
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
 <ui:historyTemplate pageTitle="pageTitle.weeklyDownloadHistory">
-
   <h1><fmt:message key="pageTitle.weeklyDownloadHistory"/></h1>
 
   <h2><fmt:message key="title.weeklyStatistic"/></h2>
@@ -100,7 +99,4 @@
       </tr>
     </c:forEach>
   </table>
-
-
-
 </ui:historyTemplate>

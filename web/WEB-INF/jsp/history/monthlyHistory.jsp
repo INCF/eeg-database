@@ -1,4 +1,4 @@
-<%-- 
+<%--
     Document   : monthlyHistory
     Created on : 28.9.2010, 14:31:52
     Author     : pbruha
@@ -12,7 +12,6 @@
   "http://www.w3.org/TR/html4/loose.dtd">
 
 <ui:historyTemplate pageTitle="pageTitle.monthlyDownloadHistory">
-
   <h1><fmt:message key="pageTitle.monthlyDownloadHistory"/></h1>
   <h2><fmt:message key="title.monthlyStatistic"/></h2>
 
@@ -102,7 +101,6 @@
       </tr>
     </c:forEach>
   </table>
-
 
 
 </ui:historyTemplate>

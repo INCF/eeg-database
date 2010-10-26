@@ -2,12 +2,18 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cz.zcu.kiv.eegdatabase.logic.controller.history;
 
+import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import javax.servlet.http.HttpServletRequest;
@@ -20,27 +26,50 @@ import org.springframework.web.servlet.mvc.AbstractController;
  * @author pbruha
  */
 public class WeeklyHistoryController extends AbstractController {
-   private Log log = LogFactory.getLog(getClass());
-   private SimpleHistoryDao<History, Integer> historyDao;
 
-    public WeeklyHistoryController() {
-    }
-    
-    protected ModelAndView handleRequestInternal(
-            HttpServletRequest request, 
-            HttpServletResponse response) throws Exception {
-      log.debug("Processing weekly download history");
-      String countOfDownloadedFiles;
-      List<History> historyList = null;
-      List<History> lastDownloadedFilesHistoryList = null;
-      List<DownloadStatistic> topDownloadedFilesList = null;
-      String historyType="weekly";
-      ModelAndView mav = new ModelAndView("history/weeklyHistory");
+  private Log log = LogFactory.getLog(getClass());
+  private SimpleHistoryDao<History, Integer> historyDao;
+  private AuthorizationManager auth;
+  private PersonDao personDao;
 
+  public WeeklyHistoryController() {
+  }
 
-      historyList = historyDao.getHistory(historyType);
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType);
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType);
+  protected ModelAndView handleRequestInternal(
+          HttpServletRequest request,
+          HttpServletResponse response) throws Exception {
+    log.debug("Processing weekly download history");
+    String countOfDownloadedFiles;
+    int userId;
+    Person user = null;
+    String authority = null;
+    List<History> historyList = null;
+    String roleAdmin = "ROLE_ADMIN";
+    boolean isGroupAdmin;
+    List<History> lastDownloadedFilesHistoryList = null;
+    List<DownloadStatistic> topDownloadedFilesList = null;
+    String historyType = "weekly";
+    userId = personDao.getLoggedPerson().getPersonId();
+    user = personDao.getPerson(ControllerUtils.getLoggedUserName());
+    authority = user.getAuthority();
+    isGroupAdmin = auth.userIsGroupAdmin();
+    ModelAndView mav = new ModelAndView("history/weeklyHistory");
+    if (authority.equals(roleAdmin) || isGroupAdmin) {
+      if (authority.equals(roleAdmin)) {
+        isGroupAdmin = false;
+      }
+      Set<ResearchGroupMembership> rgm = user.getResearchGroupMemberships();
+      List<Integer> groupsId = new ArrayList<Integer>();
+
+      for (ResearchGroupMembership member : rgm) {
+        if (member.getAuthority().equals("GROUP_ADMIN")) {
+          groupsId.add(member.getResearchGroup().getResearchGroupId());
+        }
+      }
+
+      historyList = historyDao.getHistory(historyType, isGroupAdmin, userId, groupsId);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType, isGroupAdmin, groupsId);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType, isGroupAdmin, groupsId);
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);
@@ -49,6 +78,9 @@ public class WeeklyHistoryController extends AbstractController {
       mav.addObject("lastDownloadedFilesHistoryList", lastDownloadedFilesHistoryList);
       return mav;
     }
+    mav.setViewName("system/accessDeniedNotAdmin");
+    return mav;
+  }
 
   public SimpleHistoryDao<History, Integer> getHistoryDao() {
     return historyDao;
@@ -56,5 +88,21 @@ public class WeeklyHistoryController extends AbstractController {
 
   public void setHistoryDao(SimpleHistoryDao<History, Integer> historyDao) {
     this.historyDao = historyDao;
+  }
+
+  public AuthorizationManager getAuth() {
+    return auth;
+  }
+
+  public void setAuth(AuthorizationManager auth) {
+    this.auth = auth;
+  }
+
+  public PersonDao getPersonDao() {
+    return personDao;
+  }
+
+  public void setPersonDao(PersonDao personDao) {
+    this.personDao = personDao;
   }
 }

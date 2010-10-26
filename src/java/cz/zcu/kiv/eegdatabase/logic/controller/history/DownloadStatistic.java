@@ -14,7 +14,6 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
  private int experimentId;
  private String fileType;
 
-
  private String title;
  private long count;
 
@@ -88,5 +87,4 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
   public void setFileType(String fileType) {
     this.fileType = fileType;
   }
-
 }
