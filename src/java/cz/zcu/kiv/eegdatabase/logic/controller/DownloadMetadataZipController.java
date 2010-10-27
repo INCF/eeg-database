@@ -66,6 +66,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
     MetadataCommand mc = (MetadataCommand) command;
     int id = Integer.parseInt(request.getParameter("id"));
     Experiment fromDB = experimentDao.read(id);
+    String scenarioName = fromDB.getScenario().getTitle();
     Experiment meas = setChoosenMetadata(mc, experimentDao.read(id));
 
     Set<DataFile> files = fromDB.getDataFiles();
@@ -107,20 +108,19 @@ public class DownloadMetadataZipController extends SimpleFormController {
         if (params != null) {
           for (FileMetadataParamVal paramVal : item.getFileMetadataParamVals()) {
             for (FileMetadataParamValId paramId : params) {
-              if (paramVal.getId().getDataFileId() == paramId.getDataFileId()
-               && paramVal.getId().getFileMetadataParamDefId() == paramId.getFileMetadataParamDefId()) {
+              if (paramVal.getId().getDataFileId() == paramId.getDataFileId() && paramVal.getId().getFileMetadataParamDefId() == paramId.getFileMetadataParamDefId()) {
                 newVals.add(paramVal);
               }
             }
           }
         }
-        if(!newVals.isEmpty()) {
-          if(newItem == null) {
+        if (!newVals.isEmpty()) {
+          if (newItem == null) {
             newItem = new DataFile();
           }
           newItem.setFileMetadataParamVals(newVals);
         }
-        if(newItem != null) {
+        if (newItem != null) {
           newFiles.add(newItem);
         }
       }
@@ -137,14 +137,25 @@ public class DownloadMetadataZipController extends SimpleFormController {
     history.setDateOfDownload(currentTimestamp);
     log.debug("Saving download history");
     historyDao.create(history);
-    
+
     List<Experiment> meases = new ArrayList<Experiment>();
     meases.add(meas);
     OutputStream out = getZipGenerator().generate(meases, mc.isTitle());
     ByteArrayOutputStream bout = null;
 
     response.setHeader("Content-Type", "application/zip");
-    response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.zip");
+    if (scenarioName == null) {
+      response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.zip");
+    } else {
+      String[] names = scenarioName.split(" ");
+      scenarioName = names[0];
+      for (int i = 1; i < names.length; i++) {
+        scenarioName += "_"+ names[i];
+
+      }
+      response.setHeader("Content-Disposition", "attachment;filename="+scenarioName+".zip");
+    }
+    
     if (out instanceof ByteArrayOutputStream) {
       bout = (ByteArrayOutputStream) out;
       response.getOutputStream().write(bout.toByteArray());
@@ -163,164 +174,135 @@ public class DownloadMetadataZipController extends SimpleFormController {
     scen.setTitle(fromDB.getScenario().getTitle());
     meas.setScenario(scen);
 
-//        if (mc.isTitle()) {
-//          meas.getScenario().setTitle(fromDB.getScenario().getTitle());
-//        }
-        if (mc.isDescription()) {
-          meas.getScenario().setDescription(fromDB.getScenario().getDescription());
-        }
-        if (mc.isLength()) {
-          meas.getScenario().setScenarioLength(fromDB.getScenario().getScenarioLength());
-        }
-        else {
-          meas.getScenario().setScenarioLength(Integer.MIN_VALUE);
-        }
-        if (mc.isScenFile())  {
-          meas.getScenario().setScenarioXml(fromDB.getScenario().getScenarioXml());
-        }
 
-        Set<Person> persons = new HashSet<Person>();
-        for (Person inDB: fromDB.getPersons()) {
-          Person person = new Person();
-          person.setDateOfBirth(inDB.getDateOfBirth());
-          person.setEmail(inDB.getEmail());
-          person.setGender(inDB.getGender());
-          person.setGivenname(inDB.getGivenname());
-          person.setHearingImpairments(inDB.getHearingImpairments());
-          person.setNote(inDB.getNote());
-          person.setPhoneNumber(inDB.getPhoneNumber());
-          person.setSurname(inDB.getSurname());
-          person.setVisualImpairments(inDB.getVisualImpairments());
-          person.setPersonOptParamVals(inDB.getPersonOptParamVals());
-          persons.add(person);
-        }
-        if (mc.isName()) {
-          meas.getPersonBySubjectPersonId().setSurname
-                  (fromDB.getPersonBySubjectPersonId().getSurname());
-          meas.getPersonBySubjectPersonId().setGivenname
-                  (fromDB.getPersonBySubjectPersonId().getGivenname());
+    if (mc.isDescription()) {
+      meas.getScenario().setDescription(fromDB.getScenario().getDescription());
+    }
+    if (mc.isLength()) {
+      meas.getScenario().setScenarioLength(fromDB.getScenario().getScenarioLength());
+    } else {
+      meas.getScenario().setScenarioLength(Integer.MIN_VALUE);
+    }
+    if (mc.isScenFile()) {
+      meas.getScenario().setScenarioXml(fromDB.getScenario().getScenarioXml());
+    }
 
-        } else {
-            for (Person per: persons) {
-              per.setSurname(null);
-              per.setGivenname(null);
-          }
-        }
-        if (mc.isBirth()) {
-          meas.getPersonBySubjectPersonId().setDateOfBirth
-                  (fromDB.getPersonBySubjectPersonId().getDateOfBirth());
+    Set<Person> persons = new HashSet<Person>();
+    for (Person inDB : fromDB.getPersons()) {
+      Person person = new Person();
+      person.setDateOfBirth(inDB.getDateOfBirth());
+      person.setEmail(inDB.getEmail());
+      person.setGender(inDB.getGender());
+      person.setGivenname(inDB.getGivenname());
+      person.setHearingImpairments(inDB.getHearingImpairments());
+      person.setNote(inDB.getNote());
+      person.setPhoneNumber(inDB.getPhoneNumber());
+      person.setSurname(inDB.getSurname());
+      person.setVisualImpairments(inDB.getVisualImpairments());
+      person.setPersonOptParamVals(inDB.getPersonOptParamVals());
+      persons.add(person);
+    }
+    if (mc.isName()) {
+      meas.getPersonBySubjectPersonId().setSurname(fromDB.getPersonBySubjectPersonId().getSurname());
+      meas.getPersonBySubjectPersonId().setGivenname(fromDB.getPersonBySubjectPersonId().getGivenname());
 
-        } else {
-          for (Person per : persons) {
-            per.setDateOfBirth(null);
-          }
-        }
-        if (mc.isEmail()) {
-          meas.getPersonBySubjectPersonId().setEmail
-                  (fromDB.getPersonBySubjectPersonId().getEmail());
-
-        } else {
-          for (Person person : persons) {
-            person.setEmail(null);
-          }
-        }
-        if (mc.isGender()) {
-          meas.getPersonBySubjectPersonId().setGender
-                  (fromDB.getPersonBySubjectPersonId().getGender());
-        } else {
-          meas.getPersonBySubjectPersonId().setGender(' ');
-          for (Person person : persons) {
-            person.setGender(' ');
-          }
-        }
-        if (mc.isPhoneNumber()) {
-          meas.getPersonBySubjectPersonId().setPhoneNumber
-                  (fromDB.getPersonBySubjectPersonId().getPhoneNumber());
-        } else {
-          for (Person person : persons) {
-            person.setPhoneNumber(null);
-          }
-        }
-        if (mc.isNote()) {
-          meas.getPersonBySubjectPersonId().setNote
-                  (fromDB.getPersonBySubjectPersonId().getNote());
-
-        } else {
-          for (Person person : persons) {
-            person.setNote(null);
-          }
-        }
-        if (mc.isHearingDefects()) {
-          meas.getPersonBySubjectPersonId().setHearingImpairments
-                  (fromDB.getPersonBySubjectPersonId().getHearingImpairments());
-
-        } else {
-          for (Person person : persons) {
-            person.setHearingImpairments(null);
-          }
-        }
-        if (mc.isEyesDefects()) {
-          meas.getPersonBySubjectPersonId().setVisualImpairments
-                  (fromDB.getPersonBySubjectPersonId().getVisualImpairments());
-
-        } else {
-           for (Person person : persons) {
-            person.setVisualImpairments(null);
-          }
-        }
-        if (mc.isPersonAddParams()) {
-          meas.getPersonBySubjectPersonId().setPersonOptParamVals
-                  (fromDB.getPersonBySubjectPersonId().getPersonOptParamVals());
-
-        } else {
-           for (Person person : persons) {
-            person.setPersonOptParamVals(null);
-          }
-        }
-        meas.setPersons(persons);
-
-      if (!mc.isMeasuration()) {
-        if (mc.isTimes()) {
-          meas.setEndTime(fromDB.getEndTime());
-          meas.setStartTime(fromDB.getStartTime());
-        }
-        if (mc.isTemperature()) {
-          meas.setTemperature(meas.getTemperature());
-        } else {
-          meas.setTemperature(Integer.MIN_VALUE);
-        }
-        if (mc.isWeather()) {
-          meas.setWeather(fromDB.getWeather());
-        }
-        if (mc.isWeatherNote()) {
-          meas.setWeathernote(fromDB.getWeathernote());
-        }
-        if (mc.isHardware()) {
-          meas.setHardwares(fromDB.getHardwares());
-        }
-//        meas.setDataFiles(fromDB.getDataFiles());
-//        if (!mc.isSamplingRate()) {
-//          for (DataFile data : meas.getDataFiles()) {
-//            data.setSamplingRate(-1);
-//          }
-//        }
-//        if (!mc.isFileName()) {
-//          for (DataFile data : meas.getDataFiles()) {
-//            data.setFilename(null);
-//          }
-//        }
-//        if (!mc.isFileMetadata()) {
-//          for (DataFile data : meas.getDataFiles()) {
-//            data.setFileMetadataParamVals(null);
-//          }
-//        }
-        if (mc.isMeasurationAddParams()) {
-          meas.setExperimentOptParamVals(fromDB.getExperimentOptParamVals());
-        }
+    } else {
+      for (Person per : persons) {
+        per.setSurname(null);
+        per.setGivenname(null);
       }
+    }
+    if (mc.isBirth()) {
+      meas.getPersonBySubjectPersonId().setDateOfBirth(fromDB.getPersonBySubjectPersonId().getDateOfBirth());
+
+    } else {
+      for (Person per : persons) {
+        per.setDateOfBirth(null);
+      }
+    }
+    if (mc.isEmail()) {
+      meas.getPersonBySubjectPersonId().setEmail(fromDB.getPersonBySubjectPersonId().getEmail());
+
+    } else {
+      for (Person person : persons) {
+        person.setEmail(null);
+      }
+    }
+    if (mc.isGender()) {
+      meas.getPersonBySubjectPersonId().setGender(fromDB.getPersonBySubjectPersonId().getGender());
+    } else {
+      meas.getPersonBySubjectPersonId().setGender(' ');
+      for (Person person : persons) {
+        person.setGender(' ');
+      }
+    }
+    if (mc.isPhoneNumber()) {
+      meas.getPersonBySubjectPersonId().setPhoneNumber(fromDB.getPersonBySubjectPersonId().getPhoneNumber());
+    } else {
+      for (Person person : persons) {
+        person.setPhoneNumber(null);
+      }
+    }
+    if (mc.isNote()) {
+      meas.getPersonBySubjectPersonId().setNote(fromDB.getPersonBySubjectPersonId().getNote());
+
+    } else {
+      for (Person person : persons) {
+        person.setNote(null);
+      }
+    }
+    if (mc.isHearingDefects()) {
+      meas.getPersonBySubjectPersonId().setHearingImpairments(fromDB.getPersonBySubjectPersonId().getHearingImpairments());
+
+    } else {
+      for (Person person : persons) {
+        person.setHearingImpairments(null);
+      }
+    }
+    if (mc.isEyesDefects()) {
+      meas.getPersonBySubjectPersonId().setVisualImpairments(fromDB.getPersonBySubjectPersonId().getVisualImpairments());
+
+    } else {
+      for (Person person : persons) {
+        person.setVisualImpairments(null);
+      }
+    }
+    if (mc.isPersonAddParams()) {
+      meas.getPersonBySubjectPersonId().setPersonOptParamVals(fromDB.getPersonBySubjectPersonId().getPersonOptParamVals());
+
+    } else {
+      for (Person person : persons) {
+        person.setPersonOptParamVals(null);
+      }
+    }
+    meas.setPersons(persons);
+
+    if (!mc.isMeasuration()) {
+      if (mc.isTimes()) {
+        meas.setEndTime(fromDB.getEndTime());
+        meas.setStartTime(fromDB.getStartTime());
+      }
+      if (mc.isTemperature()) {
+        meas.setTemperature(meas.getTemperature());
+      } else {
+        meas.setTemperature(Integer.MIN_VALUE);
+      }
+      if (mc.isWeather()) {
+        meas.setWeather(fromDB.getWeather());
+      }
+      if (mc.isWeatherNote()) {
+        meas.setWeathernote(fromDB.getWeathernote());
+      }
+      if (mc.isHardware()) {
+        meas.setHardwares(fromDB.getHardwares());
+      }
+
+      if (mc.isMeasurationAddParams()) {
+        meas.setExperimentOptParamVals(fromDB.getExperimentOptParamVals());
+      }
+    }
     return meas;
   }
-
 
   /**
    * @return the zipGenerator
