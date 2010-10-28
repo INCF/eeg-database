@@ -20,8 +20,15 @@ import org.hibernate.Session;
  */
 public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericDao<T, PK> implements HistoryDao<T, PK> {
 
+  private final int maxResults = 5;
+
   public SimpleHistoryDao(Class<T> type) {
     super(type);
+  }
+
+  public enum Choice {
+
+    DAILY, WEEKLY, MONTHLY
   }
 
   public List<History> getHistory(String historyType, boolean isGroupAdmin, int personId, List<Integer> groupsId) {
@@ -40,14 +47,14 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return results;
   }
 
-  public String getLeftJoin(boolean isGroupAdmin) {
+  private String getLeftJoin(boolean isGroupAdmin) {
     if (isGroupAdmin) {
       return " left join h.person.researchGroupMemberships m";
     }
     return "";
   }
 
-  public String getGroupCondition(boolean isGroupAdmin, List<Integer> groupsId) {
+  private String getGroupCondition(boolean isGroupAdmin, List<Integer> groupsId) {
     if (isGroupAdmin) {
       boolean first = true;
       String query = " and (";
@@ -80,7 +87,6 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
   }
 
   public List<History> getLastDownloadHistory(String historyType, boolean isGroupAdmin, List<Integer> groupsId) {
-    int maxResults = 5;
     Session session = null;
     String whereCondition = "";
     List<History> lastHistoryList = null;
@@ -91,11 +97,11 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     groupCondition = getGroupCondition(isGroupAdmin, groupsId);
     session = getHibernateTemplate().getSessionFactory().getCurrentSession();
     String HQLselect = "select distinct h from History as h" + leftJoin + whereCondition + groupCondition + " order by h.dateOfDownload desc ";
-    lastHistoryList = getTopFiveLastDownloadedHistory(session, maxResults, HQLselect);
+    lastHistoryList = getTopFiveLastDownloadedHistory(session, HQLselect);
     return lastHistoryList;
   }
 
-  public List<History> getTopFiveLastDownloadedHistory(Session session, int maxResults, String HQLselect) {
+  private List<History> getTopFiveLastDownloadedHistory(Session session, String HQLselect) {
     Query query = null;
     List<History> topHistory = null;
     query = session.createQuery(HQLselect);
@@ -104,7 +110,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return topHistory;
   }
 
-  public List<DownloadStatistic> getTopFiveHistory(Session session, int maxResults, String HQLselect) {
+  private List<DownloadStatistic> getTopFiveHistory(Session session, String HQLselect) {
     Query query = null;
     List<DownloadStatistic> topHistory = null;
     query = session.createQuery(HQLselect);
@@ -113,20 +119,30 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return topHistory;
   }
 
-  public String getWhereCondition(String historyType) {
+  private String getWhereCondition(String historyType) {
     String whereCondition = "";
-    if (historyType.equals("daily")) {
-      whereCondition = " where h.dateOfDownload > trunc(sysdate)";
-    } else if (historyType.equals("weekly")) {
-      whereCondition = " where h.dateOfDownload >= trunc(sysdate, 'iw')";
-    } else {
-      whereCondition = " where h.dateOfDownload > trunc(sysdate,'mm')";
+    switch (Choice.valueOf(historyType)) {
+      case DAILY:
+        whereCondition = " where h.dateOfDownload > trunc(sysdate)";
+        break;
+
+      case WEEKLY:
+        whereCondition = " where h.dateOfDownload >= trunc(sysdate, 'iw')";
+        break;
+
+      case MONTHLY:
+        whereCondition = " where h.dateOfDownload > trunc(sysdate,'mm')";
+        break;
+
+      default:
+        whereCondition = "";
+        break;
     }
+
     return whereCondition;
   }
 
   public List<DownloadStatistic> getTopDownloadHistory(String historyType, boolean isGroupAdmin, List<Integer> groupsId) {
-    int maxResults = 5;
 
     Session session = null;
     String whereCondition = "";
@@ -134,23 +150,21 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     List<DownloadStatistic> topHistory = null;
     String leftJoin = "";
     String groupCondition = "";
-    if (isGroupAdmin) {
-      leftJoin = " left join h.person.researchGroupMemberships m";
-    }
+    leftJoin = getLeftJoin(isGroupAdmin);
     groupCondition = getGroupCondition(isGroupAdmin, groupsId);
-    String selectAndCreateObject = " select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic";
+    String selectAndCreateObject = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic";
     session = getHibernateTemplate().getSessionFactory().getCurrentSession();
     whereCondition = getWhereCondition(historyType);
 
     String HQLselect =
             selectAndCreateObject + "(h.scenario.scenarioId, h.scenario.title, count(h.scenario.scenarioId))" + fromTable + leftJoin + whereCondition + groupCondition + " group by h.scenario.scenarioId, h.scenario.title" + " order by count(h.scenario.scenarioId) desc";
-    topHistory = getTopFiveHistory(session, maxResults, HQLselect);
+    topHistory = getTopFiveHistory(session, HQLselect);
     HQLselect =
             selectAndCreateObject + "(h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title, count(h.experiment.scenario.scenarioId))" + fromTable + leftJoin + whereCondition + groupCondition + " group by h.experiment.scenario.scenarioId, h.experiment.experimentId, h.experiment.scenario.title" + " order by count(h.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getTopFiveHistory(session, maxResults, HQLselect));
+    topHistory.addAll(getTopFiveHistory(session, HQLselect));
     HQLselect =
             selectAndCreateObject + "(h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename, count(h.dataFile.experiment.scenario.scenarioId))" + fromTable + leftJoin + whereCondition + groupCondition + " group by h.dataFile.experiment.scenario.scenarioId, h.dataFile.experiment.scenario.title, h.dataFile.filename" + " order by count(h.dataFile.experiment.scenario.scenarioId) desc";
-    topHistory.addAll(getTopFiveHistory(session, maxResults, HQLselect));
+    topHistory.addAll(getTopFiveHistory(session, HQLselect));
     Collections.sort(topHistory);
     if (topHistory.size() > maxResults) {
       topHistory.subList(maxResults, topHistory.size()).clear();
@@ -183,11 +197,11 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     hqlQuery += getGroupCondition(isGroupAdmin, groupsId);
     System.out.println(hqlQuery);
     List<History> results;
-     try {
-    results = getHibernateTemplate().find(hqlQuery);
-    System.out.println(results.size());
-     } catch (Exception e) {
-       return new ArrayList<History>();
+    try {
+      results = getHibernateTemplate().find(hqlQuery);
+      System.out.println(results.size());
+    } catch (Exception e) {
+      return new ArrayList<History>();
     }
     return results;
   }

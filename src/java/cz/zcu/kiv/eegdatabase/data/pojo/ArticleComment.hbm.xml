@@ -13,9 +13,9 @@
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment" fetch="select" name="parent">
       <column name="PARENT_ID" precision="22" scale="0"/>
     </many-to-one>
-    <set name="children" inverse="true">
-      <key column = "PARENT_ID" />
-      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment" />
+    <set inverse="true" name="children">
+      <key column="PARENT_ID"/>
+      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment"/>
     </set>
     <property name="time" type="java.sql.Timestamp">
       <column length="7" name="TIME"/>
@@ -26,6 +26,5 @@
     <property name="text" type="string">
       <column name="TEXT"/>
     </property>
-
   </class>
 </hibernate-mapping>

@@ -53,7 +53,6 @@ public class DailyHistoryController extends AbstractController {
     boolean isGroupAdmin;
     List<History> lastDownloadedFilesHistoryList = null;
     List<DownloadStatistic> topDownloadedFilesList = null;
-    String historyType = "daily";
     userId = personDao.getLoggedPerson().getPersonId();
     ModelAndView mav = new ModelAndView("history/dailyHistory");
     user = personDao.getPerson(ControllerUtils.getLoggedUserName());
@@ -73,9 +72,9 @@ public class DailyHistoryController extends AbstractController {
         }
       }
 
-      historyList = historyDao.getHistory(historyType, isGroupAdmin, userId, groupsId);
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType, isGroupAdmin, groupsId);
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType, isGroupAdmin, groupsId);
+      historyList = historyDao.getHistory(SimpleHistoryDao.Choice.DAILY.toString(), isGroupAdmin, userId, groupsId);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(SimpleHistoryDao.Choice.DAILY.toString(), isGroupAdmin, groupsId);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(SimpleHistoryDao.Choice.DAILY.toString(), isGroupAdmin, groupsId);
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

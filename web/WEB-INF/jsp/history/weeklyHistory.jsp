@@ -21,27 +21,24 @@
   <table class="standardValueTable">
     <thead>
       <tr>
-        <th><fmt:message key="dataTable.heading.fileType"/></th>
-        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
+        <th><fmt:message key="dataTable.heading.fileName"/></th>
         <th style="width: 5px;"><fmt:message key="dataTable.heading.count"/></th>
       </tr>
     </thead>
     <c:forEach items="${topDownloadedFilesList}" var="topDownloadedFilesList">
       <tr>
-        <td>${topDownloadedFilesList.fileType}</td>
-        <td>${topDownloadedFilesList.title}</td>
+        <td>${topDownloadedFilesList.fileName}</td>
         <td>${topDownloadedFilesList.count}</td>
       </tr>
     </c:forEach>
   </table>
-  <input type="image" src="<c:url value='/history/graph.html?graphType=weekly'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
+  <input type="image" src="<c:url value='/history/graph.html?graphType=WEEKLY'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
   <table class="standardValueTable">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
-        <th><fmt:message key="dataTable.heading.fileType"/></th>
-        <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
+        <th><fmt:message key="dataTable.heading.fileName"/></th>
         <th style="width: 80px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
       </tr>
     </thead>
@@ -49,16 +46,13 @@
       <tr>
         <td><fmt:formatDate value="${lastDownloadedFilesHistoryList.dateOfDownload}" pattern="dd.MM.yyyy, HH:mm"/></td>
         <c:if test="${lastDownloadedFilesHistoryList.scenario != null}">
-          <td><fmt:message key="description.fileType.scenario"/></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.scenario.title}" /></td>
+          <td><c:out value="${lastDownloadedFilesHistoryList.scenario.title}" />-<c:out value="${lastDownloadedFilesHistoryList.scenario.scenarioId}" /><fmt:message key="text.fileTypeXml" /></td>
         </c:if>
         <c:if test="${lastDownloadedFilesHistoryList.experiment != null}">
-          <td><fmt:message key="description.fileType.experiment"/></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.experiment.scenario.title}" /></td>
+          <td><c:out value="${lastDownloadedFilesHistoryList.experiment.scenario.title}" /><fmt:message key="text.fileTypeZip" /></td>
         </c:if>
         <c:if test="${lastDownloadedFilesHistoryList.dataFile != null}">
           <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${lastDownloadedFilesHistoryList.dataFile.filename}" /></td>
-          <td><c:out value="${lastDownloadedFilesHistoryList.dataFile.experiment.scenario.title}" /></td>
         </c:if>
         <td><a href="<c:url value='/people/detail.html?personId=${lastDownloadedFilesHistoryList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
       </tr>
@@ -70,7 +64,7 @@
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
         <th style="width: 60px;"><fmt:message key="dataTable.heading.id"/></th>
-        <th><fmt:message key="dataTable.heading.fileType"/></th>
+        <th><fmt:message key="dataTable.heading.fileName"/></th>
         <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
         <th><fmt:message key="dataTable.heading.username"/></th>
 
@@ -82,14 +76,14 @@
         <td><fmt:formatDate value="${historyList.dateOfDownload}" pattern="dd.MM.yyyy, HH:mm" /></td>
         <td><c:out value="${historyList.historyId}" /></td>
         <c:if test="${historyList.scenario != null}">
-          <td><fmt:message key="description.fileType.scenario"/></td>
+          <td><c:out value="${historyList.scenario.title}" />-<c:out value="${historyList.scenario.scenarioId}" /><fmt:message key="text.fileTypeXml" /></td>
           <td><c:out value="${historyList.scenario.title}" /></td>
         </c:if><c:if test="${historyList.experiment != null}">
-          <td><fmt:message key="description.fileType.experiment"/></td>
+          <td><c:out value="${historyList.experiment.scenario.title}" /><fmt:message key="text.fileTypeZip" /></td>
           <td><c:out value="${historyList.experiment.scenario.title}" /></td>
         </c:if>
         <c:if test="${historyList.dataFile != null}">
-          <td><fmt:message key="description.fileType.dataFile"/> - <c:out value="${historyList.dataFile.filename}" /></td>
+          <td><c:out value="${historyList.dataFile.filename}" /></td>
           <td><c:out value="${historyList.dataFile.experiment.scenario.title}" /></td>
         </c:if>
 

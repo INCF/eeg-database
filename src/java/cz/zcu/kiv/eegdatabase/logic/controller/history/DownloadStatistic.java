@@ -12,7 +12,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.history;
 public class DownloadStatistic implements Comparable<DownloadStatistic>{
  private int scenarioId;
  private int experimentId;
- private String fileType;
+ private String fileName;
 
  private String title;
  private long count;
@@ -24,21 +24,21 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
    this.scenarioId = scenarioId;
    this.title = title;
    this.count = count;
-   this.fileType = "Scenario-"+scenarioId+"(*.xml)";
+   this.fileName = title+"-"+scenarioId+".xml";
  }
 
   public DownloadStatistic(int scenarioId,String title, String fileName, long count) {
    this.scenarioId = scenarioId;
    this.title = title;
    this.count = count;
-   this.fileType = "Data file" + "- " +fileName;
+   this.fileName = fileName;
  }
 
    public DownloadStatistic(int scenarioId, int experimentId, String title, long count) {
    this.scenarioId = scenarioId;
    this.title = title;
    this.count = count;
-   this.fileType = "Experimet data(*.zip)";
+   this.fileName = title+".zip";
  }
 
   public long getCount() {
@@ -80,11 +80,11 @@ public class DownloadStatistic implements Comparable<DownloadStatistic>{
     this.experimentId = experimentId;
   }
 
-  public String getFileType() {
-    return fileType;
+  public String getFileName() {
+    return fileName;
   }
 
-  public void setFileType(String fileType) {
-    this.fileType = fileType;
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
   }
 }

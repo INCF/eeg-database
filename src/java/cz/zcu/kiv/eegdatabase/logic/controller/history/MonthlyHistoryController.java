@@ -49,7 +49,6 @@ public class MonthlyHistoryController extends AbstractController {
     List<History> historyList = null;
     List<History> lastDownloadedFilesHistoryList = null;
     List<DownloadStatistic> topDownloadedFilesList = null;
-    String historyType = "monthly";
     userId = personDao.getLoggedPerson().getPersonId();
     user = personDao.getPerson(ControllerUtils.getLoggedUserName());
     authority = user.getAuthority();
@@ -66,9 +65,9 @@ public class MonthlyHistoryController extends AbstractController {
           groupsId.add(member.getResearchGroup().getResearchGroupId());
         }
       }
-      historyList = historyDao.getHistory(historyType, isGroupAdmin, userId,groupsId);
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType, isGroupAdmin, groupsId);
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType, isGroupAdmin, groupsId);
+      historyList = historyDao.getHistory(SimpleHistoryDao.Choice.MONTHLY.toString(), isGroupAdmin, userId,groupsId);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(SimpleHistoryDao.Choice.MONTHLY.toString(), isGroupAdmin, groupsId);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(SimpleHistoryDao.Choice.MONTHLY.toString(), isGroupAdmin, groupsId);
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

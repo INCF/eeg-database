@@ -76,7 +76,7 @@ public class GraphController extends AbstractController {
 
     DefaultPieDataset dataset = new DefaultPieDataset();
     for (int i = 0; i < topDownloadedFilesList.size(); i++) {
-      dataset.setValue(topDownloadedFilesList.get(i).getFileType(), new Long(topDownloadedFilesList.get(i).getCount()));
+      dataset.setValue(topDownloadedFilesList.get(i).getFileName(), new Long(topDownloadedFilesList.get(i).getCount()));
       countFile = countFile + topDownloadedFilesList.get(i).getCount();
     }
 
