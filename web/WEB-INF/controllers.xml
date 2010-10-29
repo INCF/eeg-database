@@ -741,6 +741,7 @@
     <property name="eyesDefectDao" ref="eyesDefectDao" />
     <property name="weatherDao" ref="weatherDao" />
     <property name="experimentOptParamDef" ref="experimentOptParamDefDao" />
+    <property name="commentDao" ref="articleCommentDao" />
 
     <!-- <property name="successView" value="redirect:/home"/>-->
     <property name="successView" value="experiments/fulltext"/>

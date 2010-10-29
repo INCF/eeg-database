@@ -4,30 +4,43 @@ import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.hibernate.annotations.Entity;
+import org.hibernate.search.annotations.Analyzer;
+import org.hibernate.search.annotations.DocumentId;
+import org.hibernate.search.annotations.Field;
+import org.hibernate.search.annotations.Fields;
+import org.hibernate.search.annotations.Index;
+import org.hibernate.search.annotations.Indexed;
+import org.hibernate.search.annotations.Store;
 
 /**
  *
  * @author Jiri Vlasimsky
  */
+@Entity
+@Indexed//Mark for indexing
+@Analyzer(impl = StandardAnalyzer.class)
 public class ArticleComment {
 
+  @DocumentId
   private int commentId;
   private Person person;
   private ArticleComment parent;
   private Set<ArticleComment> children = new HashSet<ArticleComment>(0);
-
+  @Fields({
+    @Field(index = Index.TOKENIZED), // same property indexed multiple times
+    @Field(store = Store.YES), // text value is stored in the index
+    @Field(name = "text")})
   private String text;
   private Timestamp time;
   private Article article;
-  
   private boolean userMemberOfGroup; // changes dynamically from app
   private boolean userIsOwnerOrAdmin; // changes dynamically from app
 
   public ArticleComment() {
   }
 
-
-  
   public int getCommentId() {
     return commentId;
   }
@@ -99,11 +112,4 @@ public class ArticleComment {
   public void setChildren(Set<ArticleComment> children) {
     this.children = children;
   }
-
-  
-  
-
-
-  
-
 }

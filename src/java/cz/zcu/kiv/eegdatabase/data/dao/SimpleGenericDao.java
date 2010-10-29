@@ -187,11 +187,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
 
           }
           String[] className = type.getName().split("[.]");
-          Field idF = t.getClass().getDeclaredField(className[className.length - 1].substring(0, 1).toLowerCase()
-                  + className[className.length - 1].substring(1) + "Id");
-          idF.setAccessible(true);
-          int id = Integer.parseInt(""+idF.get(t));
-          results.add(new FulltextResult(id, text, className[className.length - 1]));
+          results.add(new FulltextResult(t, text, className[className.length - 1]));
         } catch (Exception ex) {
           ex.printStackTrace();
           throw new RuntimeException("Unable to highlight results");

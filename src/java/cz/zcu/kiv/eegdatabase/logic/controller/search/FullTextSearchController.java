@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
@@ -42,6 +43,7 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<VisualImpairment, Integer> eyesDefectDao;
   private GenericDao<Weather, Integer> weatherDao;
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
+  private GenericDao<ArticleComment, Integer> commentDao;
 
   public FullTextSearchController() {
     setCommandClass(FullTextSearchCommand.class);
@@ -82,8 +84,11 @@ public class FullTextSearchController extends SimpleFormController {
       results.addAll(weatherDao.getFullTextResult(fullTextQuery, WeatherFields));
       String[] ExOptParamDefFields = {"paramName", "paramDataType"};
       results.addAll(experimentOptParamDef.getFullTextResult(fullTextQuery, ExOptParamDefFields));
+      String[] commentPar = {"text"};
+      results.addAll(commentDao.getFullTextResult(fullTextQuery, commentPar));
+
       logger.debug("I have results: " + results);
-      
+
       mav.addObject("searchedString", fullTextQuery);
       mav.addObject("searchResults", results);
     } else {
@@ -94,13 +99,6 @@ public class FullTextSearchController extends SimpleFormController {
     return mav;
   }
 
-//  public GenericDao<Object, Integer> getGenericDao() {
-//    return genericDao;
-//  }
-//
-//  public void setGenericDao(GenericDao<Object, Integer> genericDao) {
-//    this.genericDao = genericDao;
-//  }
   public GenericDao<Person, Integer> getPersonDao() {
     return personDao;
   }
@@ -171,5 +169,13 @@ public class FullTextSearchController extends SimpleFormController {
 
   public void setExperimentOptParamDef(GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef) {
     this.experimentOptParamDef = experimentOptParamDef;
+  }
+
+  public GenericDao<ArticleComment, Integer> getCommentDao() {
+    return commentDao;
+  }
+
+  public void setCommentDao(GenericDao<ArticleComment, Integer> commentDao) {
+    this.commentDao = commentDao;
   }
 }

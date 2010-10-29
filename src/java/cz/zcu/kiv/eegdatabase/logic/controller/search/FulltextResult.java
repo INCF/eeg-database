@@ -4,23 +4,26 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
+
 /**
  *
- * @author pbruha
+ * @author Honza
  */
 public class FulltextResult {
 
-  private int id;
+  private Object obj;
   private String foundString;
   private String section;
+  private String path;
 
-  public FulltextResult(int id, String foundString) {
-    this.id = id;
+
+  public FulltextResult(Object obj, String foundString) {
+    this.obj = obj;
     this.foundString = foundString;
   }
 
-  public FulltextResult(int id, String foundString, String section) {
-    this.id = id;
+  public FulltextResult(Object obj, String foundString, String section) {
+    this.obj = obj;
     this.foundString = foundString;
     this.section = section;
   }
@@ -41,11 +44,19 @@ public class FulltextResult {
     this.foundString = foundString;
   }
 
-  public int getId() {
-    return id;
+  public Object getObj() {
+    return obj;
   }
 
-  public void setId(int id) {
-    this.id = id;
+  public void setObj(Object obj) {
+    this.obj = obj;
+  }
+
+  public String getPath() {
+    return path;
+  }
+
+  public void setPath(String path) {
+    this.path = path;
   }
 }
