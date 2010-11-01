@@ -8,12 +8,15 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import java.net.BindException;
 import java.util.List;
 import java.util.Set;
+import javax.servlet.ServletRequest;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -29,7 +32,7 @@ public class ArticleMultiController extends MultiActionController {
   private PersonDao personDao;
   private ArticleDao articleDao;
   private ArticleCommentDao articleCommentDao;
-  
+
   public ArticleMultiController() {
   }
 
@@ -50,7 +53,16 @@ public class ArticleMultiController extends MultiActionController {
     return mav;
   }
 
+  @Override
+  protected Object newCommandObject(Class myClass)
+          throws Exception {
+    return new ArticleCommentCommand();
+  }
+
+
   public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
+    ArticleCommentCommand command = new ArticleCommentCommand();
+    
     ModelAndView mav = new ModelAndView("articles/detail");
     setPermissionsToView(mav);
     Person loggedUser = personDao.getLoggedPerson();
@@ -64,6 +76,8 @@ public class ArticleMultiController extends MultiActionController {
     if (article.getResearchGroup() != null) {
       mav.addObject("userIsMemberOfGroup", canView(loggedUser, article));
     }
+    command.setArticleId(id);
+    mav.addObject("command", command);
     mav.addObject("userCanEdit", canEdit(loggedUser, article));
     mav.addObject("article", article);
     List<ArticleComment> articleComments = articleCommentDao.getAll(article);
@@ -76,7 +90,7 @@ public class ArticleMultiController extends MultiActionController {
     setPermissionsToView(mav);
     Person loggedUser = personDao.getLoggedPerson();
     int id = 0;
-    try { 
+    try {
       id = Integer.parseInt(request.getParameter("articleId"));
     } catch (Exception e) {
       log.debug("Unable to determine article id");
@@ -128,14 +142,14 @@ public class ArticleMultiController extends MultiActionController {
     // isAdmin
     Person loggedUser = personDao.getLoggedPerson();
     if (loggedUser.getAuthority().equals("ROLE_ADMIN")) {
-      mav.addObject("userIsAdminInAnyGroup",true);
+      mav.addObject("userIsAdminInAnyGroup", true);
       return;
     }
     // check all groups for admin role
     Set<ResearchGroupMembership> researchGroupMemberShips = loggedUser.getResearchGroupMemberships();
     for (ResearchGroupMembership member : researchGroupMemberShips) {
       if (auth.userIsAdminInGroup(member.getResearchGroup().getResearchGroupId())) {
-        mav.addObject("userIsAdminInAnyGroup",true);
+        mav.addObject("userIsAdminInAnyGroup", true);
         return;
       }
     }
@@ -172,6 +186,7 @@ public class ArticleMultiController extends MultiActionController {
   public void setArticleCommentDao(ArticleCommentDao articleCommentDao) {
     this.articleCommentDao = articleCommentDao;
   }
+
 
 
 }

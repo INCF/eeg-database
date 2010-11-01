@@ -11,6 +11,7 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <ui:articlesTemplate pageTitle="pageTitle.experimentDetail">
 
@@ -33,10 +34,6 @@
       <span class="author">
         <c:out value="${article.person.username}" />
       </span>
-      |
-      <span class="comment">
-        <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.addComment" /></a>
-      </span>
       <c:if test="${userCanEdit}">
         | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
         | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
@@ -47,11 +44,20 @@
       <c:out value="${article.text}" escapeXml="false" />
     </div>
 
-    <h2><fmt:message key="heading.comments" /></h2>
-    <span class="comment">
-      <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}" />"><fmt:message key="label.addComment" /></a>
-    </span>
 
+    <h2><fmt:message key="label.addComment" /></h2>
+    <form:form action="/EEGDatabase/articles/edit-article-comment.html" method="post" commandName="command" cssClass="standardInputForm" name="addArticleComment">
+      <form:hidden path="articleId" />
+
+      <div class="itemBox">
+        <form:textarea path="text" cssClass="textAreaSmall"  />
+        <form:errors path="text" cssClass="errorBox" />
+      </div>
+      <div class="itemBox">
+        <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
+      </div>
+    </form:form>
+    <h2><fmt:message key="heading.comments" /></h2>
 
     <ul class="comments">
       <c:forEach items="${commentsList}" var="comment" varStatus="status">
