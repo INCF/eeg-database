@@ -331,11 +331,12 @@
     <property name="auth" ref="authorizationManager"/>
   </bean>
 
-
-
-
   <bean name="accessDeniedController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
     <property name="viewName" value="system/accessDenied" />
+  </bean>
+
+  <bean name="accessDeniedNotAdminController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
+    <property name="viewName" value="system/accessDeniedNotAdmin" />
   </bean>
 
   <bean name="loginController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
@@ -673,21 +674,33 @@
  <!-- Download history  -->
 
   <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController" >
+    <property name="formView" value="history/dailyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/dailyHistory" />
     <property name="historyDao" ref="historyDao" />
     <property name="auth" ref="authorizationManager"/>
     <property name="personDao" ref="personDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
   </bean>
 
   <bean name="weeklyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController" >
+    <property name="formView" value="history/weeklyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/weeklyHistory" />
     <property name="historyDao" ref="historyDao" />
     <property name="auth" ref="authorizationManager"/>
+    <property name="researchGroupDao" ref="researchGroupDao" />
     <property name="personDao" ref="personDao" />
   </bean>
 
   <bean name="monthlyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.MonthlyHistoryController" >
+    <property name="formView" value="history/monthlyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/monthlyHistory" />
     <property name="historyDao" ref="historyDao" />
     <property name="auth" ref="authorizationManager"/>
     <property name="personDao" ref="personDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
   </bean>
 
   <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
@@ -727,9 +740,6 @@
     <property name="successView" value="experiments/searchResults" />
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ExperimentsSearcherCommand"/>
   </bean>
-
-  
-
   <!-- Full text search  -->
   <bean name="fullTextSearchController" class="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchController">
     <property name="scenarioDao" ref="scenarioDao" />
@@ -747,9 +757,4 @@
     <property name="successView" value="experiments/fulltext"/>
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand"/>
   </bean>
-
-
-
-
-
 </beans>

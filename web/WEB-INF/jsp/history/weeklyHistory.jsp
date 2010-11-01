@@ -7,11 +7,29 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
   "http://www.w3.org/TR/html4/loose.dtd">
 <ui:historyTemplate pageTitle="pageTitle.weeklyDownloadHistory">
+  <c:if test="${!access}">
+    <c:redirect url="/access-denied-not-admin.html"/>
+  </c:if>
   <h1><fmt:message key="pageTitle.weeklyDownloadHistory"/></h1>
+
+  <c:url value="/history/weekly-history.html" var="formUrl" />
+  <form:form action="${formUrl}" method="post" commandName="changeDefaultGroup" name="changeDefaultGroup" cssClass="standardInputForm">
+    <form:select path="defaultGroup" cssClass="selectBox">
+      <option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></option>
+      <c:if test="${isAdmin}"><option value="0" <c:if test="${defaultGroupId==0}"> selected </c:if> ><fmt:message key="select.option.allWeeklyRecords"/></option></c:if>
+       <c:forEach items="${researchGroupList}" var="researchGroup">
+         <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
+        <c:out value="${researchGroup.title}" />
+      </option>
+      </c:forEach>
+    </form:select>
+    <input type="submit" value="<fmt:message key='button.show'/>" class="submitButton lightButtonLink" />
+  </form:form>
 
   <h2><fmt:message key="title.weeklyStatistic"/></h2>
 
@@ -32,7 +50,7 @@
       </tr>
     </c:forEach>
   </table>
-  <input type="image" src="<c:url value='/history/graph.html?graphType=WEEKLY'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
+  <input type="image" src="<c:url value='/history/graph.html?graphType=WEEKLY&groupId=${defaultGroupId}'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
   <table class="standardValueTable">
     <thead>

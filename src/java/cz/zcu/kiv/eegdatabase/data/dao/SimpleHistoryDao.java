@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.logic.controller.history.Choice;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import java.io.Serializable;
@@ -26,19 +27,14 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     super(type);
   }
 
-  public enum Choice {
-
-    DAILY, WEEKLY, MONTHLY
-  }
-
-  public List<History> getHistory(String historyType, boolean isGroupAdmin, int personId, List<Integer> groupsId) {
+  public List<History> getHistory(Choice historyType, boolean isGroupAdmin, int personId, int groupId) {
     String whereCondition = "";
     String leftJoin = "";
     String groupCondition = "";
     List<History> results = null;
-    leftJoin = getLeftJoin(isGroupAdmin);
+    leftJoin = getLeftJoin(isGroupAdmin, groupId);
     whereCondition = getWhereCondition(historyType);
-    groupCondition = getGroupCondition(isGroupAdmin, groupsId);
+    groupCondition = getGroupCondition(isGroupAdmin, groupId);
     String HQLselect = "select distinct h from History as h" + leftJoin + whereCondition + groupCondition;
     if (!isGroupAdmin) {
       return getHibernateTemplate().find(HQLselect);
@@ -47,38 +43,28 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return results;
   }
 
-  private String getLeftJoin(boolean isGroupAdmin) {
-    if (isGroupAdmin) {
+  private String getLeftJoin(boolean isGroupAdmin, int groupId) {
+    if (isGroupAdmin && groupId > 0) {
       return " left join h.person.researchGroupMemberships m";
     }
     return "";
   }
 
-  private String getGroupCondition(boolean isGroupAdmin, List<Integer> groupsId) {
-    if (isGroupAdmin) {
-      boolean first = true;
-      String query = " and (";
-      for (int groupId : groupsId) {
-        if (first) {
-          query += " m.researchGroup.researchGroupId =" + groupId;
-          first = false;
-        } else {
-          query += " or m.researchGroup.researchGroupId =" + groupId;
-        }
-      }
-      return query + ")";
+  private String getGroupCondition(boolean isGroupAdmin, int groupId) {
+    if (isGroupAdmin && groupId > 0) {
+      return " and ( m.researchGroup.researchGroupId =" + groupId + ")";
     }
     return "";
   }
 
-  public long getCountOfFilesHistory(String historyType, boolean isGroupAdmin, List<Integer> groupsId) {
+  public long getCountOfFilesHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
     String whereCondition = "";
     List<DownloadStatistic> dCount = null;
     String leftJoin = "";
     String groupCondition = "";
-    leftJoin = getLeftJoin(isGroupAdmin);
+    leftJoin = getLeftJoin(isGroupAdmin, groupId);
     whereCondition = getWhereCondition(historyType);
-    groupCondition = getGroupCondition(isGroupAdmin, groupsId);
+    groupCondition = getGroupCondition(isGroupAdmin, groupId);
 
     String HQLselect = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic(count(h.historyId)) from History as h" + leftJoin + whereCondition + groupCondition;
 
@@ -86,15 +72,15 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return dCount.get(0).getCount();
   }
 
-  public List<History> getLastDownloadHistory(String historyType, boolean isGroupAdmin, List<Integer> groupsId) {
+  public List<History> getLastDownloadHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
     Session session = null;
     String whereCondition = "";
     List<History> lastHistoryList = null;
     String leftJoin = "";
     String groupCondition = "";
-    leftJoin = getLeftJoin(isGroupAdmin);
+    leftJoin = getLeftJoin(isGroupAdmin, groupId);
     whereCondition = getWhereCondition(historyType);
-    groupCondition = getGroupCondition(isGroupAdmin, groupsId);
+    groupCondition = getGroupCondition(isGroupAdmin, groupId);
     session = getHibernateTemplate().getSessionFactory().getCurrentSession();
     String HQLselect = "select distinct h from History as h" + leftJoin + whereCondition + groupCondition + " order by h.dateOfDownload desc ";
     lastHistoryList = getTopFiveLastDownloadedHistory(session, HQLselect);
@@ -119,9 +105,9 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return topHistory;
   }
 
-  private String getWhereCondition(String historyType) {
+  private String getWhereCondition(Choice historyType) {
     String whereCondition = "";
-    switch (Choice.valueOf(historyType)) {
+    switch (historyType) {
       case DAILY:
         whereCondition = " where h.dateOfDownload > trunc(sysdate)";
         break;
@@ -142,7 +128,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return whereCondition;
   }
 
-  public List<DownloadStatistic> getTopDownloadHistory(String historyType, boolean isGroupAdmin, List<Integer> groupsId) {
+  public List<DownloadStatistic> getTopDownloadHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
 
     Session session = null;
     String whereCondition = "";
@@ -150,8 +136,8 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     List<DownloadStatistic> topHistory = null;
     String leftJoin = "";
     String groupCondition = "";
-    leftJoin = getLeftJoin(isGroupAdmin);
-    groupCondition = getGroupCondition(isGroupAdmin, groupsId);
+    leftJoin = getLeftJoin(isGroupAdmin, groupId);
+    groupCondition = getGroupCondition(isGroupAdmin, groupId);
     String selectAndCreateObject = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic";
     session = getHibernateTemplate().getSessionFactory().getCurrentSession();
     whereCondition = getWhereCondition(historyType);
@@ -175,7 +161,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
   public List<History> getHistorySearchResults(List<SearchRequest> requests, boolean isGroupAdmin, List<Integer> groupsId) {
     boolean ignoreChoice = false;
     String leftJoin = "";
-    leftJoin = getLeftJoin(isGroupAdmin);
+    leftJoin = getLeftJoin(isGroupAdmin, groupsId.get(0));
     String hqlQuery = "select distinct h from History as h" + leftJoin + " where ";
     for (SearchRequest request : requests) {
       if (request.getCondition().equals("")) {
@@ -194,8 +180,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
         hqlQuery += "lower(h." + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
       }
     }
-    hqlQuery += getGroupCondition(isGroupAdmin, groupsId);
-    System.out.println(hqlQuery);
+    hqlQuery += getGroupsCondition(isGroupAdmin, groupsId);
     List<History> results;
     try {
       results = getHibernateTemplate().find(hqlQuery);
@@ -204,6 +189,23 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
       return new ArrayList<History>();
     }
     return results;
+  }
+
+  private String getGroupsCondition(boolean isGroupAdmin, List<Integer> groupsId) {
+    if (isGroupAdmin) {
+      boolean first = true;
+      String query = " and (";
+      for (int groupId : groupsId) {
+        if (first) {
+          query += " m.researchGroup.researchGroupId =" + groupId;
+          first = false;
+        } else {
+          query += " or m.researchGroup.researchGroupId =" + groupId;
+        }
+      }
+      return query + ")";
+    }
+    return "";
   }
 
   private String getCondition(String choice) {

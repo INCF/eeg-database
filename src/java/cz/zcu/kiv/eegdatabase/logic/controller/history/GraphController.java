@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
 import org.apache.commons.logging.Log;
@@ -47,41 +48,29 @@ public class GraphController extends AbstractController {
           HttpServletResponse response) throws Exception {
     log.debug("Processing creating graph");
     String graphType = "";
-    
+
     List<DownloadStatistic> topDownloadedFilesList = null;
-    Person user = null;
-    String authority = null;
     boolean isGroupAdmin;
-    String roleAdmin = "ROLE_ADMIN";
     long countFile = 0;
-    
+
     graphType = request.getParameter("graphType");
-    user = personDao.getPerson(ControllerUtils.getLoggedUserName());
-    authority = user.getAuthority();
+    int groupId = Integer.parseInt(request.getParameter("groupId"));
     isGroupAdmin = auth.userIsGroupAdmin();
     response.setContentType("image/png");
-    Set<ResearchGroupMembership> rgm = user.getResearchGroupMemberships();
-    List<Integer> groupsId = new ArrayList<Integer>();
 
-    for (ResearchGroupMembership member : rgm) {
-      if (member.getAuthority().equals("GROUP_ADMIN")) {
-        groupsId.add(member.getResearchGroup().getResearchGroupId());
-      }
-    }
-    if (authority.equals(roleAdmin)) {
-        isGroupAdmin = false;
-      }
-    topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, groupsId);
+    topDownloadedFilesList = historyDao.getTopDownloadHistory(Choice.valueOf(graphType), isGroupAdmin, groupId);
 
 
     DefaultPieDataset dataset = new DefaultPieDataset();
-    for (int i = 0; i < topDownloadedFilesList.size(); i++) {
-      dataset.setValue(topDownloadedFilesList.get(i).getFileName(), new Long(topDownloadedFilesList.get(i).getCount()));
-      countFile = countFile + topDownloadedFilesList.get(i).getCount();
-    }
+    if (groupId != -1) {
+      for (int i = 0; i < topDownloadedFilesList.size(); i++) {
+        dataset.setValue(topDownloadedFilesList.get(i).getFileName(), new Long(topDownloadedFilesList.get(i).getCount()));
+        countFile = countFile + topDownloadedFilesList.get(i).getCount();
+      }
 
-    if (historyDao.getCountOfFilesHistory(graphType, isGroupAdmin, groupsId) > countFile) {
-      dataset.setValue("Other", historyDao.getCountOfFilesHistory(graphType, isGroupAdmin, groupsId) - countFile);
+      if (historyDao.getCountOfFilesHistory(Choice.valueOf(graphType), isGroupAdmin, groupId) > countFile) {
+        dataset.setValue("Other", historyDao.getCountOfFilesHistory(Choice.valueOf(graphType), isGroupAdmin, groupId) - countFile);
+      }
     }
     JFreeChart chart = ChartFactory.createPieChart3D(
             "Daily downloads", // chart title
@@ -96,13 +85,6 @@ public class GraphController extends AbstractController {
     plot.setForegroundAlpha(0.5f);
     plot.setNoDataMessage("No data to display");
 
-//    JFreeChart chart = ChartFactory.createPieChart("Daily downloads",
-//            dataset,
-//            true, // legend?
-//            true, // tooltips?
-//            false // URLs?
-//            );
-//    // Assume that we have the chart
     ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, 600, 400);
     response.getOutputStream().close();
     return null;

@@ -95,4 +95,17 @@ public class SimpleResearchGroupDao
     List list = getHibernateTemplate().findByNamedParam(hqlQuery, "groupId", groupId);
     return list;
   }
+
+  public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person) {
+    String hqlQuery = "from ResearchGroup researchGroup "
+            + "left join fetch researchGroup.researchGroupMemberships as membership "
+            + "where membership.person.personId = :personId "
+            + "and (membership.authority = :admin) "
+            + "order by researchGroup.title";
+
+    String[] names = {"personId", "admin"};
+    Object[] params = {person.getPersonId(), Util.GROUP_ADMIN};
+    List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, params);
+    return list;
+  }
 }
