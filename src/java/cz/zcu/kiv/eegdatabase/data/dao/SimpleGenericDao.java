@@ -1,39 +1,17 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.FulltextResult;
-import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Field;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
-import org.apache.lucene.search.IndexSearcher;
-import org.apache.lucene.search.highlight.Encoder;
-import org.apache.lucene.search.highlight.Formatter;
-import org.apache.lucene.search.highlight.Fragmenter;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleFragmenter;
-import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-import org.apache.lucene.store.Directory;
-import org.hibernate.Session;
+import org.apache.lucene.search.Query;
+
 import org.hibernate.criterion.DetachedCriteria;
-import org.hibernate.search.FullTextQuery;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.store.DirectoryProvider;
+
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -121,80 +99,23 @@ public class SimpleGenericDao<T, PK extends Serializable>
     //return getHibernateTemplate().loadAll(type).size();
   }
 
-  public List<FulltextResult> getFullTextResult(String fullTextQuery, String[] fields) throws ParseException {
+  public Query getLuceneQuery(String fullTextQuery, String[] fields) throws ParseException {
 
-    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+//    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 
     MultiFieldQueryParser parser = null;
     parser = new MultiFieldQueryParser(fields, new StandardAnalyzer(new HashSet()));
 
-    FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
+//    FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
 
-    org.apache.lucene.search.Query luceneQuery;
+    Query luceneQuery;
     try {
       luceneQuery = parser.parse(fullTextQuery);
     } catch (ParseException e) {
       throw new RuntimeException("Unable to parse query: " + fullTextQuery, e);
     }
 
-    FullTextQuery query = fts.createFullTextQuery(luceneQuery, type);  //return matching Items
-    query.setFirstResult(0).setMaxResults(20);                 //Use pagination
-
-    //gets directory with indexes
-    DirectoryProvider[] providers = fts.getSearchFactory().getDirectoryProviders(type);
-
-    Directory d = providers[0].getDirectory();
-
-    IndexSearcher searcher;
-    try {
-      searcher = new IndexSearcher(d);
-      luceneQuery = searcher.rewrite(luceneQuery);
-    } catch (CorruptIndexException ex) {
-      throw new RuntimeException("Unable to index.");
-    } catch (IOException ex) {
-      throw new RuntimeException("Unable to read index directory");
-    }
-
-    Fragmenter fragmenter = new SimpleFragmenter(100);
-    QueryScorer scorer = new QueryScorer(luceneQuery);
-    Encoder encoder = new SimpleHTMLEncoder();
-    Formatter formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
-
-    Analyzer analyzer = new StandardAnalyzer();
-    Highlighter ht = new Highlighter(formatter, encoder, scorer);
-    ht.setTextFragmenter(fragmenter);
-    List<T> TypeResult = query.list();
-    List<FulltextResult> results = new ArrayList<FulltextResult>();
-    if (!TypeResult.isEmpty()) {
-      Field[] field = new Field[fields.length];
-      String text;
-      for (T t : TypeResult) {
-        text = "";
-        try {
-          for (int i = 0; i < field.length; i++) {
-
-            field[i] = t.getClass().getDeclaredField(fields[i]);
-            field[i].setAccessible(true);
-            if (field[i].get(t) != null) {
-              String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
-              if (fragment == null) {
-                text += field[i].get(t)+ " ";
-              } else {
-                text += fragment + " ";
-              }
-            }
-            
-
-          }
-          String[] className = type.getName().split("[.]");
-          results.add(new FulltextResult(t, text, className[className.length - 1]));
-        } catch (Exception ex) {
-          ex.printStackTrace();
-          throw new RuntimeException("Unable to highlight results");
-        }
-      }
-    }
-    return results;
+    return luceneQuery;
   }
 }
 

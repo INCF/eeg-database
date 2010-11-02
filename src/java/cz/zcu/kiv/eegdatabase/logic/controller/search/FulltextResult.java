@@ -11,21 +11,24 @@ package cz.zcu.kiv.eegdatabase.logic.controller.search;
  */
 public class FulltextResult {
 
-  private Object obj;
+  private int id;
   private String foundString;
   private String section;
   private String path;
+  private String title;
 
 
-  public FulltextResult(Object obj, String foundString) {
-    this.obj = obj;
+  public FulltextResult(int id, String foundString) {
+    this.id = id;
     this.foundString = foundString;
   }
 
-  public FulltextResult(Object obj, String foundString, String section) {
-    this.obj = obj;
+  public FulltextResult(int id, String foundString, String section, String path, String title) {
+    this.id = id;
     this.foundString = foundString;
     this.section = section;
+    this.path = path;
+    this.title = title;
   }
 
   public String getSection() {
@@ -44,12 +47,12 @@ public class FulltextResult {
     this.foundString = foundString;
   }
 
-  public Object getObj() {
-    return obj;
+  public int getId() {
+    return id;
   }
 
-  public void setObj(Object obj) {
-    this.obj = obj;
+  public void setId(int id) {
+    this.id = id;
   }
 
   public String getPath() {
@@ -59,4 +62,30 @@ public class FulltextResult {
   public void setPath(String path) {
     this.path = path;
   }
+    public String getTitle() {
+    return title;
+  }
+
+  public void setTitle(String title) {
+    this.title = title;
+  }
+
+  @Override
+  public boolean equals(Object obj) {
+    if (obj == this) return true;
+    if (!(obj instanceof FulltextResult)) return false;
+    FulltextResult fr = (FulltextResult) obj;
+    if ((this.section.equals(fr.section))&&(this.id == fr.id)) return true;
+    return false;
+  }
+
+  @Override
+  public int hashCode() {
+    int hash = 5;
+    hash = 97 * hash + this.id;
+    hash = 97 * hash + (this.section != null ? this.section.hashCode() : 0);
+    return hash;
+  }
+
+
 }
