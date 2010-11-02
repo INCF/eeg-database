@@ -66,9 +66,9 @@ public abstract class AbstractHistoryController extends SimpleFormController {
         defaultGroupId = 0;
         isGroupAdmin = false;
       }
-      historyList = historyDao.getHistory(Choice.DAILY, isGroupAdmin, userId, defaultGroupId);
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(Choice.DAILY, isGroupAdmin, defaultGroupId);
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(Choice.DAILY, isGroupAdmin, defaultGroupId);
+      historyList = historyDao.getHistory(graphType, isGroupAdmin, userId, defaultGroupId);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(graphType, isGroupAdmin, defaultGroupId);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, defaultGroupId);
 
       countOfDownloadedFiles = "" + historyList.size();
       map.put("countOfDownloadedFiles", countOfDownloadedFiles);
@@ -116,9 +116,9 @@ protected ModelAndView onSubmit(Choice graphType, ChangeDefaultGroupCommand chan
         return mav;
       }
 
-      historyList = historyDao.getHistory(Choice.DAILY, isGroupAdmin, userId, changeDefaultGroupCommand.getDefaultGroup());
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(Choice.DAILY, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(Choice.DAILY, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
+      historyList = historyDao.getHistory(graphType, isGroupAdmin, userId, changeDefaultGroupCommand.getDefaultGroup());
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);
