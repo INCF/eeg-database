@@ -15,6 +15,6 @@ import java.util.List;
  * @author Jiriik
  */
 public interface ArticleCommentDao<T, PK extends Serializable> extends GenericDao<T, PK> {
-  public List<ArticleComment> getAll(Article article);
+  public List<ArticleComment> getAllWithNoParent(Article article);
 }
 

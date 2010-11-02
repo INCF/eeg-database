@@ -18,8 +18,8 @@
   </c:choose>
   <c:if test="${userIsAdminInAnyGroup}">
     <form:form action="${formUrl}" method="post" commandName="addArticleComment" cssClass="standardInputForm" name="addArticleComment">
-      <form:hidden path="articleId" /> <c:out value="${articleId}" />
-      <form:hidden path="commentId" /> <c:out value="${commentId}" />
+      <form:hidden path="articleId" /> 
+      <form:hidden path="parentId" /> 
       <h3><fmt:message key="label.text"/></h3>
       <div class="itemBox">
         <form:textarea path="text" cssClass="textAreaBig"  />

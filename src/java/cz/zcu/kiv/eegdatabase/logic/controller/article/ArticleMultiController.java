@@ -80,7 +80,7 @@ public class ArticleMultiController extends MultiActionController {
     mav.addObject("command", command);
     mav.addObject("userCanEdit", canEdit(loggedUser, article));
     mav.addObject("article", article);
-    List<ArticleComment> articleComments = articleCommentDao.getAll(article);
+    List<ArticleComment> articleComments = articleCommentDao.getAllWithNoParent(article);
     mav.addObject("commentsList", articleComments);
     return mav;
   }

@@ -316,9 +316,17 @@ div.articleDetail .content {
   color:gray;
 }
 
-ul.comments { width: 700px; list-style: none; list-style-position: outside; margin:0; padding: 0;}
+ul.comments { width:680px; list-style: none; list-style-position: outside; margin:0; padding: 0; list-style: none;}
 
-  li.comment { background: #f3f3f3; margin-top: 5px; padding: 5px; border-top: 1px solid lightblue;}
+  li.comment { background: #f0f3f3; margin-top: 5px; padding: 5px; border-top: 1px solid lightblue; clear: both;  margin: 10px; }
+  li.comment ul {list-style: none; margin-left: 10px; padding: 0;}
+  li.comment li {border-top: 1px solid #add8e6; border-left: 4px solid #add8e6;  padding-left: 5px; margin: 10px; margin-left: 0; padding-bottom: 10px;}
+  li.comment li {background: #ffffff;}
+  li.comment li li {background: #f0f3f3; }
+  li.comment li li li {background: #ffffff; }
+  li.comment li li li {background: #f0f3f3}
+
+
 
 @media print {
   .leftMenu {

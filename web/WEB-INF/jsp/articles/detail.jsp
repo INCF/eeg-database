@@ -58,7 +58,6 @@
       </div>
     </form:form>
     <h2><fmt:message key="heading.comments" /></h2>
-
     <ul class="comments">
       <c:forEach items="${commentsList}" var="comment" varStatus="status">
         <li class="comment">
@@ -69,7 +68,6 @@
 
           <span class="comment">
             <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
-            | <c:out value="${fn:length(comment.children)}" />
           </span> 
           <br />
           <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>

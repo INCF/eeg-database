@@ -20,9 +20,9 @@ public class SimpleArticleCommentDao<T, PK extends Serializable>
     super(type);
   }
 
-  public List<ArticleComment> getAll(Article article) {
+  public List<ArticleComment> getAllWithNoParent(Article article) {
     int id = article.getArticleId();
-    String HQLselect = "from ArticleComment as comment where comment.article.id = "+id+" order by time desc";
+    String HQLselect = "from ArticleComment as comment where comment.article.id = "+id+" and comment.parent is null order by time desc";
 
     List<ArticleComment> comments = getHibernateTemplate().find(HQLselect);
     return comments;
