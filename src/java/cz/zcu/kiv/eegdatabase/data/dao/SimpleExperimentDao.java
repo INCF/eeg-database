@@ -53,7 +53,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     return getHibernateTemplate().findByNamedParam(HQLselect, "researchGroupId", groupId);
   }
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) {
+  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException{
 
     boolean ignoreChoice = false;
     String hqlQuery = "from Experiment e left join fetch e.hardwares hw where ";
@@ -105,10 +105,14 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     return " like ";
   }
 
-  private String getPersonYearOfBirth(String age) {
+  private String getPersonYearOfBirth(String age) throws NumberFormatException {
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
-    int yearOfBirth = today.get(Calendar.YEAR) - Integer.parseInt(age);
+    int year = Integer.parseInt(age);
+    if (year < 0) {
+      throw new RuntimeException("Invalid age value. It has to be non-negative number");
+    }
+    int yearOfBirth = today.get(Calendar.YEAR) - year;
 
     return today.get(Calendar.DATE) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
   }

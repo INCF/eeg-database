@@ -48,7 +48,9 @@ public class SimpleScenarioDao
 
       }
       if (request.getSource().endsWith("ScenarioLength")) {
-        Integer.parseInt(request.getCondition());
+        if (Integer.parseInt(request.getCondition()) < 0) {
+          throw new RuntimeException("Invalid length value. It has to be non-negative number");
+        }
         hqlQuery += "scenarioLength" + getCondition(request.getSource()) + request.getCondition();
       } else if (request.getSource().equals("person")) {
         hqlQuery += getAuthor(request.getCondition());

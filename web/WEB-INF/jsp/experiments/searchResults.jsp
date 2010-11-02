@@ -21,6 +21,9 @@
           <fmt:message key="emptyTable.noItems"/>
         </div>
       </c:when>
+      <c:when test="${error}">
+        <c:out value="${mistake}"/>
+      </c:when>
       <c:otherwise>
     <table class="dataTable">
         <thead>

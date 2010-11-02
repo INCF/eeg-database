@@ -171,7 +171,11 @@ public class SimplePersonDao
   private String getPersonDateOfBirth(String age) throws NumberFormatException {
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
-    int yearOfBirth = today.get(Calendar.YEAR) - Integer.parseInt(age);
+    int year = Integer.parseInt(age);
+    if (year < 0) {
+      throw new RuntimeException("Invalid age value. It has to be non-negative number");
+    }
+    int yearOfBirth = today.get(Calendar.YEAR) - year;
 
     return today.get(Calendar.DAY_OF_MONTH) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
   }
