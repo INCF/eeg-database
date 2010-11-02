@@ -7,6 +7,7 @@
   <li><a href="<c:url value='/groups/list.html'/>"><fmt:message key="menuItem.listOfGroups"/></a></li>
   <li><a href="<c:url value='/groups/my-groups.html'/>"><fmt:message key="menuItem.myGroups"/></a></li>
   <li><a href="<c:url value='/groups/edit-group-role.html'/>"><fmt:message key="menuItem.editGroupRole"/></a></li>
+  <li><a href="<c:url value='/groups/book-room.html'/>"><fmt:message key="menuItem.bookingRoom"/></a></li>
 </ul>
 
 <ul class="commonButtonMenu">

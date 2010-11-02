@@ -61,6 +61,7 @@
         <prop key="/groups/accept-role-request.html">acceptRoleRequestController</prop>
         <prop key="/groups/add-member.html">addMemberToGroupController</prop>
         <prop key="/groups/edit-group-role.html">editGroupRoleController</prop>
+        <prop key="/groups/book-room.html">editGroupRoleController</prop>
         
         <prop key="/groups/*.html">groupsMultiController</prop>
 
