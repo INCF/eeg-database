@@ -20,10 +20,10 @@
         <prop key="/forgotten-password.html">forgottenPasswordController</prop>
         <prop key="/registration-confirmation.html">confirmController</prop>
 
-        <prop key="/my-account/change-password.html">changePasswordController</prop>
-        <prop key="/my-account/change-default-group.html">changeDefaultGroupController</prop>
-        <prop key="/my-account/apply-for-writing-permission.html">applyForWritingPermission</prop>
-        <prop key="/my-account/*.html">myAccountMultiController</prop>
+        <prop key="my-account/change-password.html">changePasswordController</prop>
+        <prop key="my-account/change-default-group.html">changeDefaultGroupController</prop>
+        <prop key="my-account/apply-for-writing-permission.html">applyForWritingPermission</prop>
+        <prop key="my-account/*.html">myAccountMultiController</prop>
 
         <prop key="/system/grant-permission.html">grantPermissionController</prop>
 

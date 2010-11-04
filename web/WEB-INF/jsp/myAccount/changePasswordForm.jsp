@@ -7,7 +7,7 @@
 
     <h1><fmt:message key='pageTitle.changePassword'/></h1>
     
-    <c:url value="/my-account/change-password.html" var="formUrl"/>
+    <c:url value="change-password.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="myAccount" cssClass="standardInputForm">
         
         <fieldset>

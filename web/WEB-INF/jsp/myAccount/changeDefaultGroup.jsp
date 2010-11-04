@@ -7,7 +7,7 @@
 <ui:myAccountTemplate pageTitle="pageTitle.changeDefaultGroup">
 
     <h1><fmt:message key='pageTitle.changeDefaultGroup'/></h1>
-    <c:url value="/my-account/change-default-group.html" var="formUrl" />
+    <c:url value="change-default-group.html" var="formUrl" />
     <form:form action="${formUrl}" method="post" commandName="changeDefaultGroup" name="changeDefaultGroup" cssClass="standardInputForm">
       <form:select path="defaultGroup" cssClass="selectBox">
         <form:option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></form:option>
