@@ -1,17 +1,26 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.search.Queries;
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
 import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 
+import org.apache.lucene.store.Directory;
+import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 
+import org.hibernate.search.FullTextQuery;
+import org.hibernate.search.FullTextSession;
+import org.hibernate.search.store.DirectoryProvider;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -99,23 +108,39 @@ public class SimpleGenericDao<T, PK extends Serializable>
     //return getHibernateTemplate().loadAll(type).size();
   }
 
-  public Query getLuceneQuery(String fullTextQuery, String[] fields) throws ParseException {
+  public Queries getLuceneQuery(String fullTextQuery, String[] fields) throws ParseException {
 
-//    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
 
     MultiFieldQueryParser parser = null;
     parser = new MultiFieldQueryParser(fields, new StandardAnalyzer(new HashSet()));
+    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
+    FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
 
-//    FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
 
+    DirectoryProvider[] providers = fts.getSearchFactory().getDirectoryProviders(type);
+
+    Directory d = providers[0].getDirectory();
     Query luceneQuery;
     try {
       luceneQuery = parser.parse(fullTextQuery);
     } catch (ParseException e) {
       throw new RuntimeException("Unable to parse query: " + fullTextQuery, e);
     }
+    FullTextQuery fQuery = fts.createFullTextQuery(luceneQuery, type);
+        IndexSearcher searcher;
+    
+    try {
+      searcher = new IndexSearcher(d);
+      
+      luceneQuery = searcher.rewrite(luceneQuery);
+    } catch (CorruptIndexException ex) {
+      throw new RuntimeException("Unable to index.");
+    } catch (IOException ex) {
+      throw new RuntimeException("Unable to read index directory");
+    }
+    return new Queries(luceneQuery, fQuery);
 
-    return luceneQuery;
+  //  return luceneQuery;
   }
 }
 

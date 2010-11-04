@@ -18,8 +18,8 @@ import org.apache.lucene.search.Query;
 public class ArticleSection extends SectionCreator {
 
   @Override
-  public Set<FulltextResult> createSection(Query query, Class type, String[] fields) {
-    List<Object> list = super.getFulltextResults(query, type);
+  public Set<FulltextResult> createSection(Queries queries, Class type, String[] fields) {
+    List<Object> list = super.getFulltextResults(queries, type);
     Set<FulltextResult> results = new HashSet<FulltextResult>();
     String path = "/articles/detail.html?articleId=";
     if (!list.isEmpty()) {

@@ -2,7 +2,6 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import java.io.IOException;
@@ -33,7 +32,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  *
  * @author Honza
  */
-public abstract class SectionCreator extends HibernateDaoSupport {
+public abstract class SectionCreator {
 
   protected final int MAIN_OBJECT = 0;
   protected final int ONE_REL = 1;
@@ -41,51 +40,35 @@ public abstract class SectionCreator extends HibernateDaoSupport {
   protected Highlighter ht;
   protected Analyzer analyzer = new StandardAnalyzer();
   protected Encoder encoder = new SimpleHTMLEncoder();
-  protected Formatter formatter = new SimpleHTMLFormatter("<strong>", "</strong>");
+  protected Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
   protected Fragmenter fragmenter = new SimpleFragmenter(150);
 
-  public abstract Set<FulltextResult> createSection(Query query, Class type, String[] fields);
+  public abstract Set<FulltextResult> createSection(Queries queries, Class type, String[] fields);
 
-  
-  protected List<Object> getFulltextResults(Query query, Class type) {
-    Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-    FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
-    FullTextQuery fQuery = fts.createFullTextQuery(query, type);
-    DirectoryProvider[] providers = fts.getSearchFactory().getDirectoryProviders(type);
+  protected List<Object> getFulltextResults(Queries queries, Class type) {
 
-    Directory d = providers[0].getDirectory();
-
-    IndexSearcher searcher;
-    try {
-      searcher = new IndexSearcher(d);
-      query = searcher.rewrite(query);
-    } catch (CorruptIndexException ex) {
-      throw new RuntimeException("Unable to index.");
-    } catch (IOException ex) {
-      throw new RuntimeException("Unable to read index directory");
-    }
+    Query query = queries.getLuceneQuery();
     QueryScorer scorer = new QueryScorer(query);
     ht = new Highlighter(formatter, encoder, scorer);
     ht.setTextFragmenter(fragmenter);
-    return fQuery.list();
+    return queries.getFullTextQuery().list();
   }
 
-  protected String getHighlightedText(String[] fields, Object t) throws Exception{
+  protected String getHighlightedText(String[] fields, Object t) throws Exception {
     Field[] field = new Field[fields.length];
-     String text = "";
-          for (int i = 0; i < field.length; i++) {
-            field[i] = t.getClass().getDeclaredField(fields[i]);
-            field[i].setAccessible(true);
-            if (field[i].get(t) != null) {
-              String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
-              if (fragment == null) {
-                text += field[i].get(t)+ " ";
-              } else {
-                text += fragment + " ";
-              }
-            }
-          }
+    String text = "";
+    for (int i = 0; i < field.length; i++) {
+      field[i] = t.getClass().getDeclaredField(fields[i]);
+      field[i].setAccessible(true);
+      if (field[i].get(t) != null) {
+        String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
+        if (fragment == null) {
+          text += field[i].get(t) + " ";
+        } else {
+          text += fragment + " ";
+        }
+      }
+    }
     return text;
   }
-
 }

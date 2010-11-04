@@ -764,19 +764,15 @@
   </bean>
 
   <bean name="scenarioSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSection">
-    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
   <bean name="experimentSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentSection">
-    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
   <bean name="personSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.PersonSection">
-    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
   <bean name="articleSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ArticleSection">
-    <property name="sessionFactory" ref="sessionFactory"/>
   </bean>
 
 

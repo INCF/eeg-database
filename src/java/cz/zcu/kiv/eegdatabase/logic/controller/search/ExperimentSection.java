@@ -19,8 +19,8 @@ import org.apache.lucene.search.Query;
 public class ExperimentSection extends SectionCreator {
 
   @Override
-  public Set<FulltextResult> createSection(Query query, Class type, String[] fields) {
-    List<Object> list = super.getFulltextResults(query, type);
+  public Set<FulltextResult> createSection(Queries queries, Class type, String[] fields) {
+    List<Object> list = super.getFulltextResults(queries, type);
     Set<FulltextResult> results = new HashSet<FulltextResult>();
     String path = "/experiments/detail.html?experimentId=";
     if (!list.isEmpty()) {
