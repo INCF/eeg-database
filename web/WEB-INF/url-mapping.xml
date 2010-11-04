@@ -53,12 +53,12 @@
         <prop key="/scenarios/add-scenario.html">addScenarioController</prop>
         <prop key="/scenarios/*.html">scenariosMultiController</prop>
 
-        <prop key="/groups/create-group.html">createGroupController</prop>
-        <prop key="/groups/accept-role-request.html">acceptRoleRequestController</prop>
-        <prop key="/groups/add-member.html">addMemberToGroupController</prop>
-        <prop key="/groups/edit-group-role.html">editGroupRoleController</prop>
+        <prop key="groups/create-group.html">createGroupController</prop>
+        <prop key="groups/accept-role-request.html">acceptRoleRequestController</prop>
+        <prop key="groups/add-member.html">addMemberToGroupController</prop>
+        <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
         
-        <prop key="/groups/*.html">groupsMultiController</prop>
+        <prop key="groups/*.html">groupsMultiController</prop>
 
 
         <prop key="/lists/index.html">listsIndexController</prop>

@@ -204,12 +204,12 @@
 
 
   <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    <property name="host" value="smtp.zcu.cz"/>
+    <property name="host" value="localhost"/>
 
   </bean>
 
   <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-    <property name="from" value="pborik@students.zcu.cz"/>
+    <property name="from" value="jezekp@kiv.zcu.cz"/>
     <property name="subject" value="EEGbase"/>
   </bean>
 
