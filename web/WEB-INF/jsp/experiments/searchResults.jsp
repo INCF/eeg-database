@@ -41,7 +41,7 @@
                <td><fmt:formatDate value="${experiment.startTime}" pattern="dd.MM.yyyy, HH:mm" /></td>
                 <td><c:out value="${experiment.experimentId}" />(${experiment.researchGroup.researchGroupId})</td>
                 <td><c:out value="${experiment.scenario.title}" /></td>
-                <td><a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
+                <td><a href="<c:url value='detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
             </tr>
          </c:if>
         </c:forEach>
@@ -57,7 +57,7 @@
             <td><c:out value="${result.scenario.title}" /></td>
             <td><c:out value="${result.weathernote}"/></td>
 
-             <td><a href="<c:url value='/experiments/detail.html?experimentId=${result.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
+             <td><a href="<c:url value='detail.html?experimentId=${result.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
             </tr> 
         </c:forEach>--%>
 </ui:experimentsTemplate>

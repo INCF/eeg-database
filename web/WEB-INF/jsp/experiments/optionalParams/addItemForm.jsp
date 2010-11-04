@@ -8,7 +8,7 @@
 <ui:experimentsTemplate pageTitle="pageTitle.addExperimentOptionalParameter">
   <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
 
-  <c:url value="/experiments/add-optional-parameter.html?experimentId=${measurationDetail.experimentId}" var="formUrl"/>
+  <c:url value="add-optional-parameter.html?experimentId=${measurationDetail.experimentId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParameter" cssClass="standardInputForm">
     <fieldset>
 
