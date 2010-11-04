@@ -16,7 +16,7 @@
     <c:if test="${article.userMemberOfGroup}">
       <div class="article">
         <div class="heading">
-          <h2><a href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></h2>
+          <h2><a href="<c:url value="detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></h2>
         </div>
         <div class="subheading">
           <span class="researchGroup">
@@ -40,8 +40,8 @@
             <c:out value="${fn:length(article.articleComments)}" /> <fmt:message key="heading.comments" />
           </span>
           <c:if test="${article.userIsOwnerOrAdmin}">
-            | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-            | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}" />" class="confirm"><fmt:message key="label.delete" /> </a>
+            | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
+            | <a href="<c:url value="delete.html?articleId=${article.articleId}" />" class="confirm"><fmt:message key="label.delete" /> </a>
           </c:if>
         </div>
 

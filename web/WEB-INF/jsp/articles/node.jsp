@@ -12,7 +12,7 @@
       </span>
 
       <span class="comment">
-        <a href="<c:url value="/articles/add-article-comment.html?articleId=${comment.article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
+        <a href="<c:url value="add-article-comment.html?articleId=${comment.article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
       </span>
       <br />
       <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>

@@ -9,11 +9,11 @@
   <c:choose>
     <c:when test="${addArticle.articleId > 0}">
       <h1><fmt:message key="pageTitle.editArticle" /></h1>
-      <c:url value="/articles/add-article-comment.html" var="formUrl" />
+      <c:url value="add-article-comment.html" var="formUrl" />
     </c:when>
     <c:otherwise>
       <h1><fmt:message key="pageTitle.addArticle" /></h1>
-      <c:url value="/articles/edit-article-comment.html" var="formUrl" />
+      <c:url value="edit-article-comment.html" var="formUrl" />
     </c:otherwise>
   </c:choose>
   <c:if test="${userIsAdminInAnyGroup}">

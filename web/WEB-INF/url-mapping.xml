@@ -27,15 +27,15 @@
 
         <prop key="/system/grant-permission.html">grantPermissionController</prop>
 
-        <prop key="/articles/add-article.html">addArticleController</prop>
-        <prop key="/articles/edit.html">addArticleController</prop>
-        <prop key="/articles/detail.html">articleMultiController</prop>
-        <prop key="/articles/delete.html">articleMultiController</prop>
-        <prop key="/articles/*.html">articleMultiController</prop>
+        <prop key="articles/add-article.html">addArticleController</prop>
+        <prop key="articles/edit.html">addArticleController</prop>
+        <prop key="articles/detail.html">articleMultiController</prop>
+        <prop key="articles/delete.html">articleMultiController</prop>
+        <prop key="articles/*.html">articleMultiController</prop>
 
-        <prop key="/articles/add-article-comment.html">addArticleCommentController</prop>
-        <prop key="/articles/edit-article-comment.html">addArticleCommentController</prop>
-        <prop key="/articles/delete-article-comment.html">addArticleCommentController</prop>
+        <prop key="articles/add-article-comment.html">addArticleCommentController</prop>
+        <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
+        <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
 
         <prop key="/experiments/add-experiment.html">addExperimentController</prop>
         <prop key="/experiments/edit.html">addExperimentController</prop>

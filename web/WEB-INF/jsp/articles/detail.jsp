@@ -35,8 +35,8 @@
         <c:out value="${article.person.username}" />
       </span>
       <c:if test="${userCanEdit}">
-        | <a href="<c:url value="/articles/edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-        | <a href="<c:url value="/articles/delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
+        | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
+        | <a href="<c:url value="delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
       </c:if>
 
     </div>
@@ -67,7 +67,7 @@
           </span>
 
           <span class="comment">
-            <a href="<c:url value="/articles/add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
+            <a href="<c:url value="add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
           </span> 
           <br />
           <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>
