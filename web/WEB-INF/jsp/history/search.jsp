@@ -10,7 +10,7 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <ui:historyTemplate pageTitle="pageTitle.advancedSearch">
-  <c:url value="/history/search-results.html" var="formUrl"/>
+  <c:url value="search-results.html" var="formUrl"/>
   <h1><fmt:message key="pageTitle.advancedSearch"/></h1>
 
  <form:form action="${formUrl}" method="post" commandName="historySearcherCommand" cssClass="standardInputForm" name="searchMeasuration">

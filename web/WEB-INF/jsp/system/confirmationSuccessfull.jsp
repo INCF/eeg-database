@@ -6,6 +6,6 @@
 
     <h1><fmt:message key='pageTitle.confirmationSuccessfull'/></h1>
 
-    <p><fmt:message key='text.registrationSuccessfull.youCanLogIn.part1'/> <a href="<c:url value='/login.html' />" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a> <fmt:message key='text.registrationSuccessfull.youCanLogIn.part2'/></p>
+    <p><fmt:message key='text.registrationSuccessfull.youCanLogIn.part1'/> <a href="<c:url value='login.html' />" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a> <fmt:message key='text.registrationSuccessfull.youCanLogIn.part2'/></p>
     
 </ui:standardTemplate>

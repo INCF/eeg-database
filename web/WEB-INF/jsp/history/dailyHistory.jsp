@@ -23,7 +23,7 @@
   <h1><fmt:message key="pageTitle.dailyDownloadHistory"/></h1>
   <label><fmt:message key="label.selectResearchGroup"/></label>
 
-  <c:url value="/history/daily-history.html" var="formUrl" />
+  <c:url value="daily-history.html" var="formUrl" />
   <form:form action="${formUrl}" method="post" commandName="changeDefaultGroup" name="changeDefaultGroup" cssClass="standardInputForm">
     <form:select path="defaultGroup" cssClass="selectBox submitOnChange">
       <c:if test="${isAdmin}"><option value="0" <c:if test="${defaultGroupId==0}"> selected </c:if> ><fmt:message key="select.option.allGroups"/></option></c:if>
@@ -52,7 +52,7 @@
       </tr>
     </c:forEach>
   </table>
-  <input type="image" src="<c:url value='/history/graph.html?graphType=DAILY&groupId=${defaultGroupId}'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='/history/graph.html'/>);" />
+  <input type="image" src="<c:url value='graph.html?graphType=DAILY&groupId=${defaultGroupId}'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
   <table class="standardValueTable">
     <thead>

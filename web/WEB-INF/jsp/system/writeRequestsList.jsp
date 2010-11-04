@@ -16,8 +16,8 @@
                 <td>${person.username}</td>
                 <td>${person.requirementReason}</td>
                 <td>
-                    <a href="<c:url value='/system/write-requests.html?grant=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.grant'/>"><fmt:message key='page.writeRequestsList.grant'/></a>
-                    <a href="<c:url value='/system/write-requests.html?reject=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.reject'/>"><fmt:message key='page.writeRequestsList.reject'/></a>
+                    <a href="<c:url value='write-requests.html?grant=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.grant'/>"><fmt:message key='page.writeRequestsList.grant'/></a>
+                    <a href="<c:url value='write-requests.html?reject=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.reject'/>"><fmt:message key='page.writeRequestsList.reject'/></a>
                 </td>
             </tr>
         </c:forEach>

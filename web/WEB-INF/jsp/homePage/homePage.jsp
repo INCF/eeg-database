@@ -196,8 +196,8 @@
     <p><fmt:message key="homePage.description2" /></p>
 
     <div class="homePageActionBoxes">
-      <a href="<c:url value='/login.html'/>" class="homepageLoginLink"><fmt:message key="system.logIn" /></a>
-      <a href="<c:url value='/registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
+      <a href="<c:url value='login.html'/>" class="homepageLoginLink"><fmt:message key="system.logIn" /></a>
+      <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
     </div>
     <a href="<c:url value='/forgotten-password.html'/>"><fmt:message key="system.forgottenPassword" /></a>
   </security:authorize>

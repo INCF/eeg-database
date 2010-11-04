@@ -25,7 +25,7 @@
         <prop key="my-account/apply-for-writing-permission.html">applyForWritingPermission</prop>
         <prop key="my-account/*.html">myAccountMultiController</prop>
 
-        <prop key="/system/grant-permission.html">grantPermissionController</prop>
+        <prop key="system/grant-permission.html">grantPermissionController</prop>
 
         <prop key="articles/add-article.html">addArticleController</prop>
         <prop key="articles/edit.html">addArticleController</prop>
@@ -80,29 +80,29 @@
         <prop key="lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
         <prop key="lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
 
-        <prop key="/administration/change-user-role.html">changeUserRoleController</prop>
+        <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 
         <!-- the url is without extension so the file can be downloaded with whatever file extension (known issue when using e.g. Opera browser -->
-        <prop key="/experiments/data/download">measurationDataOutputController</prop>
-        <prop key="/scenarios/download-xml.html">scenarioXMLDownloadController</prop>
+        <prop key="experiments/data/download">measurationDataOutputController</prop>
+        <prop key="scenarios/download-xml.html">scenarioXMLDownloadController</prop>
 
         <!-- Full text search-->
-        <prop key="/experiments/fulltext.html">fullTextSearchController</prop>
+        <prop key="experiments/fulltext.html">fullTextSearchController</prop>
         <!-- Advanced search-->
-        <prop key="/scenario/search-results.html">scenarioSearcherController</prop>
-        <prop key="/scenario/search.html">scenarioSearcherController</prop>
-        <prop key="/people/search.html">peopleSearcherController</prop>
-        <prop key="/people/search-results.html">peopleSearcherController</prop>
-        <prop key="/experiments/search.html">experimentsSearcherController</prop>
-        <prop key="/experiments/search-results.html">experimentsSearcherController</prop>
+        <prop key="scenario/search-results.html">scenarioSearcherController</prop>
+        <prop key="scenario/search.html">scenarioSearcherController</prop>
+        <prop key="people/search.html">peopleSearcherController</prop>
+        <prop key="people/search-results.html">peopleSearcherController</prop>
+        <prop key="experiments/search.html">experimentsSearcherController</prop>
+        <prop key="experiments/search-results.html">experimentsSearcherController</prop>
       
        
-        <prop key="/history/daily-history.html">dailyHistoryController</prop>
-        <prop key="/history/weekly-history.html">weeklyHistoryController</prop>
-        <prop key="/history/monthly-history.html">monthlyHistoryController</prop>
-        <prop key="/history/search.html">searchHistoryController</prop>
-          <prop key="/history/search-results.html">searchHistoryController</prop>
-        <prop key="/history/graph.html">graphController</prop>
+        <prop key="history/daily-history.html">dailyHistoryController</prop>
+        <prop key="history/weekly-history.html">weeklyHistoryController</prop>
+        <prop key="history/monthly-history.html">monthlyHistoryController</prop>
+        <prop key="history/search.html">searchHistoryController</prop>
+          <prop key="history/search-results.html">searchHistoryController</prop>
+        <prop key="history/graph.html">graphController</prop>
 
       </props>
     </property>

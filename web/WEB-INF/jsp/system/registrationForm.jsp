@@ -7,7 +7,7 @@
 
   <h1><fmt:message key="pageTitle.registration"/></h1>
 
-  <c:url value="/registration.html" var="formUrl"/>
+  <c:url value="registration.html" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="registration" cssClass="standardInputForm" name="registration">
     <fieldset>
 
