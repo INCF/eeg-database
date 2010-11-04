@@ -26,20 +26,13 @@ import org.apache.commons.logging.LogFactory;
  */
 public abstract class AbstractHistoryController extends SimpleFormController {
 
-  private Log log = LogFactory.getLog(getClass());
-  private AuthorizationManager auth;
-  private PersonDao personDao;
-  private HistoryDao historyDao;
-  private ResearchGroupDao researchGroupDao;
+  protected Log log = LogFactory.getLog(getClass());
+  protected AuthorizationManager auth;
+  protected PersonDao personDao;
+  protected HistoryDao historyDao;
+  protected ResearchGroupDao researchGroupDao;
 
-  protected void setDao(ResearchGroupDao researchGroupDao, HistoryDao historyDao, AuthorizationManager auth, PersonDao personDao) {
-    this.researchGroupDao = researchGroupDao;
-    this.historyDao = historyDao;
-    this.auth = auth;
-    this.personDao = personDao;
-  }
-
-  protected Map setReferenceData(Map map, Choice graphType) {
+  protected Map setReferenceData(Map map, ChoiceHistory graphType) {
     int userId;
     Person user = null;
     String authority = null;
@@ -84,7 +77,7 @@ public abstract class AbstractHistoryController extends SimpleFormController {
     return map;
 }
 
-protected ModelAndView onSubmit(Choice graphType, ChangeDefaultGroupCommand changeDefaultGroupCommand, ModelAndView mav) {
+protected ModelAndView onSubmit(ChoiceHistory graphType, ChangeDefaultGroupCommand changeDefaultGroupCommand, ModelAndView mav) {
 
     List<ResearchGroup> researchGroupList =
             researchGroupDao.getResearchGroupsWhereUserIsGroupAdmin(personDao.getLoggedPerson());
@@ -110,12 +103,6 @@ protected ModelAndView onSubmit(Choice graphType, ChangeDefaultGroupCommand chan
     mav.addObject("changeDefaultGroup", changeDefaultGroupCommand);
 
     if ((authority.equals(roleAdmin) || isGroupAdmin)) {
-      if(changeDefaultGroupCommand.getDefaultGroup() == -1) {
-        mav.addObject("access", true);
-        mav.addObject("isAdmin", authority.equals(roleAdmin));
-        return mav;
-      }
-
       historyList = historyDao.getHistory(graphType, isGroupAdmin, userId, changeDefaultGroupCommand.getDefaultGroup());
       lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
       topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
@@ -131,5 +118,36 @@ protected ModelAndView onSubmit(Choice graphType, ChangeDefaultGroupCommand chan
     }
     mav.addObject("access", false);
     return mav;
+  }
+ public HistoryDao getHistoryDao() {
+    return historyDao;
+  }
+
+  public void setHistoryDao(HistoryDao historyDao) {
+    this.historyDao = historyDao;
+  }
+
+  public PersonDao getPersonDao() {
+    return personDao;
+  }
+
+  public void setPersonDao(PersonDao personDao) {
+    this.personDao = personDao;
+  }
+
+  public AuthorizationManager getAuth() {
+    return auth;
+  }
+
+  public void setAuth(AuthorizationManager auth) {
+    this.auth = auth;
+  }
+
+  public ResearchGroupDao getResearchGroupDao() {
+    return researchGroupDao;
+  }
+
+  public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+    this.researchGroupDao = researchGroupDao;
   }
 }

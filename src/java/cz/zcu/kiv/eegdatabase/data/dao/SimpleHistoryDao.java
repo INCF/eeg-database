@@ -5,7 +5,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
-import cz.zcu.kiv.eegdatabase.logic.controller.history.Choice;
+import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import java.io.Serializable;
@@ -27,7 +27,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     super(type);
   }
 
-  public List<History> getHistory(Choice historyType, boolean isGroupAdmin, int personId, int groupId) {
+  public List<History> getHistory(ChoiceHistory historyType, boolean isGroupAdmin, int personId, int groupId) {
     String whereCondition = "";
     String leftJoin = "";
     String groupCondition = "";
@@ -57,7 +57,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return "";
   }
 
-  public long getCountOfFilesHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
+  public long getCountOfFilesHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId) {
     String whereCondition = "";
     List<DownloadStatistic> dCount = null;
     String leftJoin = "";
@@ -72,7 +72,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return dCount.get(0).getCount();
   }
 
-  public List<History> getLastDownloadHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
+  public List<History> getLastDownloadHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId) {
     Session session = null;
     String whereCondition = "";
     List<History> lastHistoryList = null;
@@ -105,7 +105,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return topHistory;
   }
 
-  private String getWhereCondition(Choice historyType) {
+  private String getWhereCondition(ChoiceHistory historyType) {
     String whereCondition = "";
     switch (historyType) {
       case DAILY:
@@ -128,7 +128,7 @@ public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericD
     return whereCondition;
   }
 
-  public List<DownloadStatistic> getTopDownloadHistory(Choice historyType, boolean isGroupAdmin, int groupId) {
+  public List<DownloadStatistic> getTopDownloadHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId) {
 
     Session session = null;
     String whereCondition = "";

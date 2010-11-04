@@ -17,19 +17,17 @@
     <c:redirect url="/access-denied-not-admin.html"/>
   </c:if>
   <h1><fmt:message key="pageTitle.monthlyDownloadHistory"/></h1>
-
+  <label><fmt:message key="label.selectResearchGroup"/></label>
   <c:url value="/history/monthly-history.html" var="formUrl" />
   <form:form action="${formUrl}" method="post" commandName="changeDefaultGroup" name="changeDefaultGroup" cssClass="standardInputForm">
-    <form:select path="defaultGroup" cssClass="selectBox">
-      <option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></option>
-      <c:if test="${isAdmin}"><option value="0" <c:if test="${defaultGroupId==0}"> selected </c:if> ><fmt:message key="select.option.allMonthlyRecords"/></option></c:if>
-       <c:forEach items="${researchGroupList}" var="researchGroup">
-         <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
-        <c:out value="${researchGroup.title}" />
-      </option>
+    <form:select path="defaultGroup" cssClass="selectBox submitOnChange">
+      <c:if test="${isAdmin}"><option value="0" <c:if test="${defaultGroupId==0}"> selected </c:if> ><fmt:message key="select.option.allGroups"/></option></c:if>
+      <c:forEach items="${researchGroupList}" var="researchGroup">
+        <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
+          <c:out value="${researchGroup.title}" />
+        </option>
       </c:forEach>
     </form:select>
-    <input type="submit" value="<fmt:message key='button.show'/>" class="submitButton lightButtonLink" />
   </form:form>
 
   <h2><fmt:message key="title.monthlyStatistic"/></h2>

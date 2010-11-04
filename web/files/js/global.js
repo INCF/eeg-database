@@ -12,5 +12,11 @@ $(document).ready(function() {
    **/
   $("table.tableSorter").tablesorter();
 
+/**
+ * Enables submit on change for all selects with class="submitOnChange"
+ */
+  $(".submitOnChange").change(function() {
+    this.form.submit();
+  });
 });
 

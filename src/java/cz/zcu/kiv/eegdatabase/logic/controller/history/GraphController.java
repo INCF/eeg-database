@@ -58,7 +58,7 @@ public class GraphController extends AbstractController {
     isGroupAdmin = auth.userIsGroupAdmin();
     response.setContentType("image/png");
 
-    topDownloadedFilesList = historyDao.getTopDownloadHistory(Choice.valueOf(graphType), isGroupAdmin, groupId);
+    topDownloadedFilesList = historyDao.getTopDownloadHistory(ChoiceHistory.valueOf(graphType), isGroupAdmin, groupId);
 
 
     DefaultPieDataset dataset = new DefaultPieDataset();
@@ -68,8 +68,8 @@ public class GraphController extends AbstractController {
         countFile = countFile + topDownloadedFilesList.get(i).getCount();
       }
 
-      if (historyDao.getCountOfFilesHistory(Choice.valueOf(graphType), isGroupAdmin, groupId) > countFile) {
-        dataset.setValue("Other", historyDao.getCountOfFilesHistory(Choice.valueOf(graphType), isGroupAdmin, groupId) - countFile);
+      if (historyDao.getCountOfFilesHistory(ChoiceHistory.valueOf(graphType), isGroupAdmin, groupId) > countFile) {
+        dataset.setValue("Other", historyDao.getCountOfFilesHistory(ChoiceHistory.valueOf(graphType), isGroupAdmin, groupId) - countFile);
       }
     }
     JFreeChart chart = ChartFactory.createPieChart3D(

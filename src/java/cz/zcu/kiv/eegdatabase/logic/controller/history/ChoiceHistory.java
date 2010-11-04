@@ -9,6 +9,6 @@ package cz.zcu.kiv.eegdatabase.logic.controller.history;
  *
  * @author pbruha
  */
-public enum Choice {
+public enum ChoiceHistory {
  DAILY, WEEKLY, MONTHLY
 }

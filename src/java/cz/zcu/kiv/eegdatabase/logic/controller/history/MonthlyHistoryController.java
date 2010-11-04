@@ -41,7 +41,7 @@ public class MonthlyHistoryController extends AbstractHistoryController {
     log.debug("Processing daily download history");
     ModelAndView mav = new ModelAndView(getSuccessView());
     ChangeDefaultGroupCommand changeDefaultGroupCommand = (ChangeDefaultGroupCommand) command;
-    mav=super.onSubmit(Choice.MONTHLY,changeDefaultGroupCommand, mav);
+    mav=super.onSubmit(ChoiceHistory.MONTHLY,changeDefaultGroupCommand, mav);
     return mav;
   }
 
@@ -49,41 +49,7 @@ public class MonthlyHistoryController extends AbstractHistoryController {
   protected Map referenceData(HttpServletRequest request) throws Exception {
     log.debug("Processing daily download history");
     Map map = new HashMap<String, Object>();
-    super.setDao(researchGroupDao, historyDao, auth, personDao);
-    map = super.setReferenceData(map, Choice.MONTHLY);
+    map = super.setReferenceData(map, ChoiceHistory.MONTHLY);
     return map;
   }
-
-  public HistoryDao<History, Integer> getHistoryDao() {
-    return historyDao;
-  }
-
-  public void setHistoryDao(HistoryDao<History, Integer> historyDao) {
-    this.historyDao = historyDao;
-  }
-
-  public AuthorizationManager getAuth() {
-    return auth;
-  }
-
-  public void setAuth(AuthorizationManager auth) {
-    this.auth = auth;
-  }
-
-  public PersonDao getPersonDao() {
-    return personDao;
-  }
-
-  public void setPersonDao(PersonDao personDao) {
-    this.personDao = personDao;
-  }
-
-  public ResearchGroupDao getResearchGroupDao() {
-    return researchGroupDao;
-  }
-
-  public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
-    this.researchGroupDao = researchGroupDao;
-  }
-
 }
