@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addEyesDefect">
     <h1><fmt:message key="pageTitle.addEyesDefect"/></h1>
 
-    <c:url value="/lists/eyes-defects/add.html" var="formUrl"/>
+    <c:url value="eyes-defects/add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addEyesDefect" cssClass="standardInputForm">
         <fieldset>
 

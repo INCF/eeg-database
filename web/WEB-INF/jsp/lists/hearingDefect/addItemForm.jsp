@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addHearingDefect">
     <h1><fmt:message key="pageTitle.addHearingDefect"/></h1>
 
-    <c:url value="/lists/hearing-defects/add.html" var="formUrl"/>
+    <c:url value="hearing-defects/add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addHearingDefect" cssClass="standardInputForm">
         <fieldset>
 

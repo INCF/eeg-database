@@ -26,7 +26,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='/lists/file-metadata-names/add.html'/>" class="lightButtonLink"><fmt:message key="link.addFileMetadataParam"/></a>
+      <a href="<c:url value='file-metadata-names/add.html'/>" class="lightButtonLink"><fmt:message key="link.addFileMetadataParam"/></a>
     </div>
   </auth:experimenter>
 

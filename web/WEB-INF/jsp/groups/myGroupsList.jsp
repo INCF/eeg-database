@@ -21,7 +21,7 @@
       <tr>
         <td><c:out value="${group.title}" /></td>
         <td><c:out value="${group.description}" /></td>
-        <td><a href="<c:url value='/groups/detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
+        <td><a href="<c:url value='detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
       </tr>
     </c:forEach>
   </table>
@@ -40,7 +40,7 @@
       <tr>
         <td><c:out value="${group.title}" /></td>
         <td><c:out value="${group.description}" /></td>
-        <td><a href="<c:url value='/groups/detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
+        <td><a href="<c:url value='detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
       </tr>
     </c:forEach>
   </table>

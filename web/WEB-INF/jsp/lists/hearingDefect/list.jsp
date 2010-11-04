@@ -24,7 +24,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='/lists/hearing-defects/add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingDefect"/></a>
+      <a href="<c:url value='hearing-defects/add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingDefect"/></a>
     </div>
   </auth:experimenter>
 

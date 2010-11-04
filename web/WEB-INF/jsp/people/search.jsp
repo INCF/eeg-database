@@ -11,7 +11,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <ui:personsTemplate pageTitle="pageTitle.advancedSearch">
   <h1><fmt:message key="pageTitle.advancedSearch"/></h1>
-  <c:url value="/people/search-results.html" var="formUrl"/>
+  <c:url value="search-results.html" var="formUrl"/>
 
   <form:form action="${formUrl}" method="post" commandName="peopleSearcherCommand" cssClass="standardInputForm" name="searchPeople">
     <table class="formTable">

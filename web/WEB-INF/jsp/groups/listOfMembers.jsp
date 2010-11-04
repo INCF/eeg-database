@@ -6,7 +6,7 @@
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/format/"%>
 <ui:groupsTemplate pageTitle="pageTitle.listOfGroupMembers">
   <h1><fmt:message key="pageTitle.listOfGroupMembers"/></h1>
-    <c:url value="/groups/list-of-members.html" var="formUrl" />
+    <c:url value="list-of-members.html" var="formUrl" />
 
   <h2>${groupTitle}</h2>
 
@@ -31,12 +31,12 @@
         <c:if test="${userIsAdminInGroup}">
           <td>
             <select name="role">
-              <option <c:if test="${item.authority == 'GROUP_READER'}">selected</c:if> onclick="window.location.href='<c:url value='/groups/change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_READER'/>'"><fmt:message key="link.changeGroupRole.reader"/></option>
-              <option <c:if test="${item.authority == 'GROUP_EXPERIMENTER'}">selected</c:if> onclick="window.location.href='<c:url value='/groups/change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_EXPERIMENTER'/>'">Experimenter</option>
+              <option <c:if test="${item.authority == 'GROUP_READER'}">selected</c:if> onclick="window.location.href='<c:url value='change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_READER'/>'"><fmt:message key="link.changeGroupRole.reader"/></option>
+              <option <c:if test="${item.authority == 'GROUP_EXPERIMENTER'}">selected</c:if> onclick="window.location.href='<c:url value='change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_EXPERIMENTER'/>'">Experimenter</option>
 
-             <option <c:if test="${item.authority == 'GROUP_ADMIN'}">selected</c:if> onclick="window.location.href='<c:url value='/groups/change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_ADMIN'/>'">Group administrator</option>
+             <option <c:if test="${item.authority == 'GROUP_ADMIN'}">selected</c:if> onclick="window.location.href='<c:url value='change-role.html?groupId=${groupId}&personId=${item.personId}&role=GROUP_ADMIN'/>'">Group administrator</option>
             </select>
-            <a href="<c:url value='/groups/change-role.html?groupId=${groupId}&personId=${item.personId}&role=REMOVE'/>" onclick="return confirm('<fmt:message key="link.confirm.sureToRemoveUserFromGroup"/>');"><fmt:message key="link.changeGroupRole.remove"/></a>
+            <a href="<c:url value='change-role.html?groupId=${groupId}&personId=${item.personId}&role=REMOVE'/>" onclick="return confirm('<fmt:message key="link.confirm.sureToRemoveUserFromGroup"/>');"><fmt:message key="link.changeGroupRole.remove"/></a>
             
           </td>
          
@@ -48,9 +48,9 @@
   </table>
 
   <div class="actionBox">
-    <a href="<c:url value='/groups/detail.html?groupId=${groupId}'/>" class="lightButtonLink"><fmt:message key="button.backToGroupDetail"/></a>
+    <a href="<c:url value='detail.html?groupId=${groupId}'/>" class="lightButtonLink"><fmt:message key="button.backToGroupDetail"/></a>
     <c:if test="${userIsAdminInGroup}">
-      <a href="<c:url value='/groups/add-member.html?groupId=${groupId}' />" class="lightButtonLink"><fmt:message key="button.addMemberToGroup"/></a>
+      <a href="<c:url value='add-member.html?groupId=${groupId}' />" class="lightButtonLink"><fmt:message key="button.addMemberToGroup"/></a>
     </c:if>
   </div>
 </ui:groupsTemplate>

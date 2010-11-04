@@ -12,9 +12,9 @@
 
   <c:if test="${userIsExperimenterInGroup}">
     <div class="actionBox">
-      <a href="<c:url value='/groups/list-of-members.html?groupId=${researchGroup.researchGroupId}' />" class="lightButtonLink"><fmt:message key="button.listOfMembers"/></a>     
+      <a href="<c:url value='list-of-members.html?groupId=${researchGroup.researchGroupId}' />" class="lightButtonLink"><fmt:message key="button.listOfMembers"/></a>     
       <c:if test="${userIsAdminInGroup}">
-        <a href="<c:url value='/groups/add-member.html?groupId=${researchGroup.researchGroupId}' />" class="lightButtonLink"><fmt:message key="button.addMemberToGroup"/></a>
+        <a href="<c:url value='add-member.html?groupId=${researchGroup.researchGroupId}' />" class="lightButtonLink"><fmt:message key="button.addMemberToGroup"/></a>
       </c:if>
     </div>
   </c:if>

@@ -54,31 +54,31 @@
         <prop key="people/add-hearing-defect.html">addHearingDefectToPersonController</prop>
         <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>
 
-        <prop key="/scenarios/add-scenario.html">addScenarioController</prop>
-        <prop key="/scenarios/*.html">scenariosMultiController</prop>
+        <prop key="scenarios/add-scenario.html">addScenarioController</prop>
+        <prop key="scenarios/*.html">scenariosMultiController</prop>
 
-        <prop key="/groups/create-group.html">createGroupController</prop>
-        <prop key="/groups/accept-role-request.html">acceptRoleRequestController</prop>
-        <prop key="/groups/add-member.html">addMemberToGroupController</prop>
-        <prop key="/groups/edit-group-role.html">editGroupRoleController</prop>
-        <prop key="/groups/book-room.html">editGroupRoleController</prop>
+        <prop key="groups/create-group.html">createGroupController</prop>
+        <prop key="groups/accept-role-request.html">acceptRoleRequestController</prop>
+        <prop key="groups/add-member.html">addMemberToGroupController</prop>
+        <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
+        <prop key="groups/book-room.html">editGroupRoleController</prop>
         
-        <prop key="/groups/*.html">groupsMultiController</prop>
+        <prop key="groups/*.html">groupsMultiController</prop>
 
 
-        <prop key="/lists/index.html">listsIndexController</prop>
-        <prop key="/lists/hearing-defects/list.html">hearingDefectListController</prop>
-        <prop key="/lists/hearing-defects/add.html">addHearingDefectController</prop>
-        <prop key="/lists/eyes-defects/list.html">eyesDefectListController</prop>
-        <prop key="/lists/eyes-defects/add.html">addEyesDefectController</prop>
-        <prop key="/lists/hardware/list.html">hardwareListController</prop>
-        <prop key="/lists/hardware/add.html">addHardwareController</prop>
-        <prop key="/lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
-        <prop key="/lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
-        <prop key="/lists/measuration-optional-parameters/list.html">measurationAdditionalParamsListController</prop>
-        <prop key="/lists/measuration-optional-parameters/add.html">addMeasurationAdditionalParamController</prop>
-        <prop key="/lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
-        <prop key="/lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
+        <prop key="lists/index.html">listsIndexController</prop>
+        <prop key="lists/hearing-defects/list.html">hearingDefectListController</prop>
+        <prop key="lists/hearing-defects/add.html">addHearingDefectController</prop>
+        <prop key="lists/eyes-defects/list.html">eyesDefectListController</prop>
+        <prop key="lists/eyes-defects/add.html">addEyesDefectController</prop>
+        <prop key="lists/hardware/list.html">hardwareListController</prop>
+        <prop key="lists/hardware/add.html">addHardwareController</prop>
+        <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
+        <prop key="lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
+        <prop key="lists/measuration-optional-parameters/list.html">measurationAdditionalParamsListController</prop>
+        <prop key="lists/measuration-optional-parameters/add.html">addMeasurationAdditionalParamController</prop>
+        <prop key="lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
+        <prop key="lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
 
         <prop key="/administration/change-user-role.html">changeUserRoleController</prop>
 

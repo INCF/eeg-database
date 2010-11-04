@@ -9,7 +9,7 @@
 <ui:groupsTemplate pageTitle="pageTitle.createGroup">
   <h1><fmt:message key="pageTitle.createGroup"/></h1>
 
-  <c:url value="/groups/create-group.html" var="formUrl"/>
+  <c:url value="create-group.html" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="createGroup" cssClass="standardForm">
     <fieldset>
 

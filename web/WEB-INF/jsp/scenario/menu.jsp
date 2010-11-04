@@ -10,7 +10,7 @@
 </ul>
 
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/scenario/search.html'/>"><fmt:message key="menuItem.searchScenario"/></a></li>
+  <li><a href="<c:url value='search.html'/>"><fmt:message key="menuItem.searchScenario"/></a></li>
 </ul>
 
 <auth:experimenter>
