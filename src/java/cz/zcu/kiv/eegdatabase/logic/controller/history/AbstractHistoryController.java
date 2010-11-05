@@ -21,7 +21,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 /**
- *
+ * Sets reference data for form view and prepared ModelAndView for action "on submit"(in section history)
  * @author pbruha
  */
 public abstract class AbstractHistoryController extends SimpleFormController {
@@ -31,8 +31,13 @@ public abstract class AbstractHistoryController extends SimpleFormController {
   protected PersonDao personDao;
   protected HistoryDao historyDao;
   protected ResearchGroupDao researchGroupDao;
-
-  protected Map setReferenceData(Map map, ChoiceHistory graphType) {
+/**
+ * Load reference data needed for displaying the form
+ * @param map - map from section History
+ * @param historyType - history type (DAILY, WEEKLY, MONTHLY)
+ * @return map - reference data for view
+ */
+  protected Map setReferenceData(Map map, ChoiceHistory historyType) {
     int userId;
     Person user = null;
     String authority = null;
@@ -59,9 +64,9 @@ public abstract class AbstractHistoryController extends SimpleFormController {
         defaultGroupId = 0;
         isGroupAdmin = false;
       }
-      historyList = historyDao.getHistory(graphType, isGroupAdmin, userId, defaultGroupId);
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(graphType, isGroupAdmin, defaultGroupId);
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, defaultGroupId);
+      historyList = historyDao.getHistory(historyType, isGroupAdmin, defaultGroupId);
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType, isGroupAdmin, defaultGroupId);
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType, isGroupAdmin, defaultGroupId);
 
       countOfDownloadedFiles = "" + historyList.size();
       map.put("countOfDownloadedFiles", countOfDownloadedFiles);
@@ -76,8 +81,14 @@ public abstract class AbstractHistoryController extends SimpleFormController {
     map.put("access", false);
     return map;
 }
-
-protected ModelAndView onSubmit(ChoiceHistory graphType, ChangeDefaultGroupCommand changeDefaultGroupCommand, ModelAndView mav) {
+/**
+ * Prepared ModelAndView for action "on submit" needed for displaying the form
+ * @param historyType -  history type (DAILY, WEEKLY, MONTHLY)
+ * @param changeDefaultGroupCommand - object for form's atributes
+ * @param mav - ModelAndView instance from section History
+ * @return mav - ModelAndView
+ */
+protected ModelAndView onSubmit(ChoiceHistory historyType, ChangeDefaultGroupCommand changeDefaultGroupCommand, ModelAndView mav) {
 
     List<ResearchGroup> researchGroupList =
             researchGroupDao.getResearchGroupsWhereUserIsGroupAdmin(personDao.getLoggedPerson());
@@ -103,9 +114,9 @@ protected ModelAndView onSubmit(ChoiceHistory graphType, ChangeDefaultGroupComma
     mav.addObject("changeDefaultGroup", changeDefaultGroupCommand);
 
     if ((authority.equals(roleAdmin) || isGroupAdmin)) {
-      historyList = historyDao.getHistory(graphType, isGroupAdmin, userId, changeDefaultGroupCommand.getDefaultGroup());
-      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
-      topDownloadedFilesList = historyDao.getTopDownloadHistory(graphType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
+      historyList = historyDao.getHistory(historyType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
+      lastDownloadedFilesHistoryList = historyDao.getLastDownloadHistory(historyType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
+      topDownloadedFilesList = historyDao.getTopDownloadHistory(historyType, isGroupAdmin, changeDefaultGroupCommand.getDefaultGroup());
 
       countOfDownloadedFiles = "" + historyList.size();
       mav.addObject("countOfDownloadedFiles", countOfDownloadedFiles);

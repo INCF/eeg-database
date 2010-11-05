@@ -8,16 +8,9 @@ import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import java.lang.annotation.Annotation;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.jfree.chart.ChartFactory;
@@ -25,13 +18,12 @@ import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
-import org.jfree.util.PublicCloneable;
 import org.jfree.util.Rotation;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
 /**
- *
+ * Creates pie graph TOP download files by graph type(DAILY, WEEKLY, MONTHLY)
  * @author pbruha
  */
 public class GraphController extends AbstractController {
@@ -46,7 +38,7 @@ public class GraphController extends AbstractController {
   protected ModelAndView handleRequestInternal(
           HttpServletRequest request,
           HttpServletResponse response) throws Exception {
-    log.debug("Processing creating graph");
+    log.debug("Processing creating pie graph");
     String graphType = "";
 
     List<DownloadStatistic> topDownloadedFilesList = null;

@@ -13,7 +13,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * Sets reference data for form view and prepared ModelAndView for action "on submit"(for choice daily history )
+ * using object change default group command for saving select group id
  * @author pbruha
  */
 public class DailyHistoryController extends AbstractHistoryController {
@@ -29,6 +30,7 @@ public class DailyHistoryController extends AbstractHistoryController {
     ModelAndView mav = new ModelAndView(getSuccessView());
     ChangeDefaultGroupCommand changeDefaultGroupCommand = (ChangeDefaultGroupCommand) command;
     mav=super.onSubmit(ChoiceHistory.DAILY,changeDefaultGroupCommand, mav);
+    log.debug("Returning MAV");
     return mav;
   }
 

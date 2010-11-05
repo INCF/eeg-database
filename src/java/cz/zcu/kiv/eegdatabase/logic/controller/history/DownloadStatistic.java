@@ -6,7 +6,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.history;
 
 /**
- *
+ * Using for saving download statistic
  * @author pbruha
  */
 public class DownloadStatistic implements Comparable<DownloadStatistic>{

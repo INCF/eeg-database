@@ -24,11 +24,11 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
- *
+ * Prepared search results
+ * using history searcher command for saving searching scenario(by scenario title), date interval (from date of download, to date of download)
  * @author pbruha
  */
 public class SearchHistoryController extends SimpleFormController {
@@ -53,16 +53,11 @@ public class SearchHistoryController extends SimpleFormController {
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
     log.debug("Processing advanced search download history");
     ModelAndView mav = new ModelAndView("history/searchResults");
-    int userId;
-    List<History> historyList = null;
     Person user = null;
     String authority = null;
-    String role = "";
     String roleAdmin = "ROLE_ADMIN";
-    boolean notAdmin;
     boolean isGroupAdmin;
 
-    userId = personDao.getLoggedPerson().getPersonId();
     user = personDao.getPerson(ControllerUtils.getLoggedUserName());
     authority = user.getAuthority();
     isGroupAdmin = auth.userIsGroupAdmin();
@@ -111,15 +106,13 @@ public class SearchHistoryController extends SimpleFormController {
       } catch (NumberFormatException e) {
         mav.addObject("mistake", "Number error");
         mav.addObject("error", true);
-        // System.out.println("Number error");
       } catch (RuntimeException e) {
         mav.addObject("mistake", e.getMessage());
         mav.addObject("error", true);
-        //System.out.println(e.getMessage());
       }
       return mav;
     }
-    mav.setViewName("system/accessDenied");
+    mav.setViewName("system/accessDeniedNotAdmin");
     return mav;
   }
 

@@ -20,7 +20,8 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
 /**
- *
+ * Sets reference data for form view and prepared ModelAndView for action "on submit"(for choice monthly history )
+ * using object change default group command for saving select group id
  * @author pbruha
  */
 public class MonthlyHistoryController extends AbstractHistoryController {
