@@ -21,12 +21,6 @@ import org.apache.lucene.search.highlight.QueryScorer;
 import org.apache.lucene.search.highlight.SimpleFragmenter;
 import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
 import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
-import org.apache.lucene.store.Directory;
-import org.hibernate.Session;
-import org.hibernate.search.FullTextQuery;
-import org.hibernate.search.FullTextSession;
-import org.hibernate.search.store.DirectoryProvider;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
  *
@@ -34,18 +28,15 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public abstract class SectionCreator {
 
-  protected final int MAIN_OBJECT = 0;
-  protected final int ONE_REL = 1;
-  protected final int SET = 2;
   protected Highlighter ht;
   protected Analyzer analyzer = new StandardAnalyzer();
   protected Encoder encoder = new SimpleHTMLEncoder();
   protected Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
   protected Fragmenter fragmenter = new SimpleFragmenter(150);
 
-  public abstract Set<FulltextResult> createSection(Queries queries, Class type, String[] fields);
+  public abstract Set<FulltextResult> createSection(Queries queries, String[] fields, SectionType type);
 
-  protected List<Object> getFulltextResults(Queries queries, Class type) {
+  protected List<Object> getFulltextResults(Queries queries) {
 
     Query query = queries.getLuceneQuery();
     QueryScorer scorer = new QueryScorer(query);

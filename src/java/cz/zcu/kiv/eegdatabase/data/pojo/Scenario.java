@@ -30,6 +30,9 @@ public class Scenario implements java.io.Serializable {
     @Field(name = "title"),
     @Field(store = Store.YES)}) //use a different field name
   private String title;
+  @Fields({
+    @Field(name = "scenarioLength"),
+    @Field(store = Store.YES)})
   private int scenarioLength;
   private Clob scenarioXml;
   @Fields({

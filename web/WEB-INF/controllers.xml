@@ -752,10 +752,7 @@
     <property name="weatherDao" ref="weatherDao" />
     <property name="experimentOptParamDef" ref="experimentOptParamDefDao" />
     <property name="commentDao" ref="articleCommentDao" />
-    <property name="scenarioSection" ref="scenarioSection" />
-    <property name="experimentSection" ref="experimentSection" />
-    <property name="personSection" ref="personSection" />
-    <property name="articleSection" ref="articleSection" />
+    <property name="creator" ref="creator" />
 
 
     <!-- <property name="successView" value="redirect:/home"/>-->
@@ -763,17 +760,9 @@
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand"/>
   </bean>
 
-  <bean name="scenarioSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSection">
+  <bean name="creator" class="cz.zcu.kiv.eegdatabase.logic.controller.search.SimpleSectionCreator">
   </bean>
 
-  <bean name="experimentSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentSection">
-  </bean>
-
-  <bean name="personSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.PersonSection">
-  </bean>
-
-  <bean name="articleSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ArticleSection">
-  </bean>
 
 
 
