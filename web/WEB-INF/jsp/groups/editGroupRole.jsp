@@ -5,7 +5,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <ui:groupsTemplate pageTitle="pageTitle.groupRoleEdit">
   <h1><fmt:message key="pageTitle.groupRoleEdit"/></h1>
-  <c:url value="/groups/edit-group-role.html" var="formUrl" />
+  <c:url value="edit-group-role.html" var="formUrl" />
 
   <form:form action="${formUrl}" method="post" commandName="editGroupRoleCommand" name="editGroupRoleCommand" cssClass="standardInputForm">
     <fieldset>

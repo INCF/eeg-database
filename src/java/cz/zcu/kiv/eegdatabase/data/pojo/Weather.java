@@ -20,11 +20,11 @@ public class Weather implements java.io.Serializable {
   private int weatherId;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "WEATHERDESCRIPTION")}) //use a different field name
+    @Field(name = "description")}) //use a different field name
   private String description;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "WEATHERTITLE")}) //use a different field name
+    @Field(name = "title")}) //use a different field name
   private String title;
   private Set<Experiment> experiments = new HashSet<Experiment>(0);
 

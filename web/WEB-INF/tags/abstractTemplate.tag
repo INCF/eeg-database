@@ -6,8 +6,15 @@
 <%@attribute name="dateOfBirthCalendar" %>
 <%@attribute name="allowJQuery" %>
 <%@attribute name="mainPage" %>
+<%@attribute name="history" %>
 <%@attribute name="search" %>
 <%@attribute name="allowWYSIWYG" %>
+<%@attribute name="tableSorter" %>
+<%@attribute name="jqueryLatest" %>
+<%@attribute name="tableSort" %>
+<%@attribute name="tableSortMin" %>
+<%@attribute name="jMetadata" %>
+
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -19,14 +26,21 @@
 
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
-    <c:if test="${addExperimentCalendar || dateOfBirthCalendar || allowJQuery}">
-      <script src="http://code.jquery.com/jquery-latest.js"></script>
-      <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
-    </c:if>
+    <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
+    <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
+
+
     <c:if test="${mainPage}">
       <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
 
+    <c:if test="${history}">
+      <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
+    </c:if>
+    <c:if test="${jMetadata}">
+      <script type="text/javascript" src="<c:url value='/files/js/jquery.metadata.js' />"></script>
+    </c:if>
 
     <c:if test="${allowWYSIWYG}">
       <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>

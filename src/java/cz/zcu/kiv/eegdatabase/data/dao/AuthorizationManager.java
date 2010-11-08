@@ -23,6 +23,14 @@ public interface AuthorizationManager {
   public boolean userIsExperimenter();
 
   /**
+   * Checks whether the logged user is member with
+   * GROUP_ADMIN role at least in one group.
+   * @return <code>true</code> when able to write data in some group, else
+   *         <code>false</code>
+   */
+  public boolean userIsGroupAdmin();
+
+  /**
    * Checks whether the logged user is owner of or co-experimenter on experiment
    * specified by the experiment id.
    * @param experimentId ID of experiment

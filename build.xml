@@ -69,4 +69,54 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <!--
+	classpath and generating POJO
+	-->
+	<path id="toolslib">
+		<path location="lib/hibernate/asm.jar"/>
+		<path location="lib/hibernate/asm-attrs.jar"/>
+		<path location="lib/hibernate/cglib-2.1.3.jar"/>
+		<path location="lib/hibernate/commons-collections-2.1.1.jar"/>
+		<path location="lib/hibernate/commons-logging-1.1.jar"/>
+		<path location="lib/hibernate/dom4j-1.6.1.jar"/>
+		<path location="lib/hibernate/freemarker.jar"/>
+		<path location="lib/hibernate/hibernate3.jar"/>
+		<path location="lib/hibernate/hibernate-tools.jar"/>
+		<path location="lib/logger/log4j-1.2.14"/>
+		<path location="lib/ojdbc/ojdbc14.jar"/>
+		<path location="lib/hibernate/jtidy-r8-20060801.jar"/>
+		<pathelement path="build/web/WEB-INF/classes" />
+	</path>
+
+
+	<!--
+	hibernatetool task definition, classpath points to previous toolslib
+	-->
+	<taskdef name="hibernatetool"
+	classname = "org.hibernate.tool.ant.HibernateToolTask"
+	classpathref = "toolslib"/>
+
+
+	<!--
+	generating xml
+	-->
+	<target name="generate_xml">
+		<hibernatetool>
+			<jdbcconfiguration configurationfile="src/java/hibernate.cfg.xml"
+			revengfile = "src/java/hibernate.reveng.xml" packagename="cz.zcu.kiv.eegdatabase.data.pojo"
+			reversestrategy="cz.zcu.kiv.eegdatabase.data.persistent.ReverseEngStrategy"/>
+		<hbm2hbmxml destdir="src/java"/>
+		</hibernatetool>
+	</target>
+
+	<!--
+	generating pojo
+	-->
+	<target name="generate_java">
+		<hibernatetool>
+			<jdbcconfiguration configurationfile="src/java/hibernate.cfg.xml"
+			revengfile = "src/java/hibernate.reveng.xml" packagename="cz.zcu.kiv.eegdatabase.data.pojo"/>
+		<hbm2java jdk5="true" ejb3="false" destdir="src/java"/>
+		</hibernatetool>
+	</target>
 </project>

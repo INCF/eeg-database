@@ -5,5 +5,5 @@
 <ui:systemTemplate pageTitle="pageTitle.permissionRejected">
     <h1><fmt:message key="pageTitle.permissionRejected"/></h1>
 
-    <p><a href="<c:url value='/system/write-requests.html'/>" ><fmt:message key='page.permissionGrantedRejected.backToTheList'/></a></p>
+    <p><a href="<c:url value='write-requests.html'/>" ><fmt:message key='page.permissionGrantedRejected.backToTheList'/></a></p>
 </ui:systemTemplate>

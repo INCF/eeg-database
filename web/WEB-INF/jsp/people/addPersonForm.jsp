@@ -6,7 +6,7 @@
 <ui:personsTemplate pageTitle="pageTitle.addPerson" dateOfBirthCalendar="true">
     <h1><fmt:message key="pageTitle.addPerson"/></h1>
 
-    <c:url value="/people/add-person.html" var="formUrl"/>
+    <c:url value="add-person.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addPerson" cssClass="standardInputForm">
         <fieldset>
 

@@ -20,7 +20,7 @@
   </table>
 
   <h2><fmt:message key="heading.metadata"/></h2>
-  <c:url value="/experiments/data/detail.html?fileId=${dataDetail.dataFileId}" var="formUrl"/>
+  <c:url value="data/detail.html?fileId=${dataDetail.dataFileId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addMetadata" cssClass="standardInputForm">
     <fieldset>
 
@@ -68,7 +68,7 @@
   </form:form>
 
   <div class="actionBox">
-    <a href="<c:url value='/experiments/data/download?fileId=${dataDetail.dataFileId}' />" class="lightButtonLink"><fmt:message key="button.downloadFile"/></a>
-    <a href="<c:url value='/experiments/detail.html?experimentId=${dataDetail.experiment.experimentId}' />" class="lightButtonLink"><fmt:message key="button.backToMeasuration"/></a>
+    <a href="<c:url value='data/download?fileId=${dataDetail.dataFileId}' />" class="lightButtonLink"><fmt:message key="button.downloadFile"/></a>
+    <a href="<c:url value='detail.html?experimentId=${dataDetail.experiment.experimentId}' />" class="lightButtonLink"><fmt:message key="button.backToMeasuration"/></a>
   </div>
 </ui:experimentsTemplate>

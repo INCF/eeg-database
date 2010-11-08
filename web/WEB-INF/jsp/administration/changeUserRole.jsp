@@ -6,7 +6,7 @@
 <ui:administrationTemplate pageTitle="pageTitle.changeUserRole">
   <h1><fmt:message key="pageTitle.changeUserRole"/></h1>
 
-  <c:url value="/administration/change-user-role.html" var="formUrl"/>
+  <c:url value="change-user-role.html" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="changeUserRole" cssClass="standardForm">
     <fieldset>
 

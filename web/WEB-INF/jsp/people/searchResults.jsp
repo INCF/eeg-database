@@ -33,7 +33,7 @@
                 <td><c:out value="${person.givenname}" /></td>
                 <td><c:out value="${person.surname}" /></td>
                 <td><c:out value="${person.note}" /></td>
-                <td><a href="<c:url value='/people/detail.html?personId=${person.personId}' />"><fmt:message key="link.detail"/></a></td>
+                <td><a href="<c:url value='detail.html?personId=${person.personId}' />"><fmt:message key="link.detail"/></a></td>
             </tr>
         </c:forEach>
         </c:otherwise>

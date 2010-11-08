@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
@@ -14,9 +15,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import java.util.List;
 import cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand;
 import java.util.ArrayList;
+import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
@@ -42,6 +43,13 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<VisualImpairment, Integer> eyesDefectDao;
   private GenericDao<Weather, Integer> weatherDao;
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
+  private GenericDao<ArticleComment, Integer> commentDao;
+  private SectionCreator scenarioSection;
+  private SectionCreator experimentSection;
+  private SectionCreator personSection;
+  private SectionCreator articleSection;
+
+
 
   public FullTextSearchController() {
     setCommandClass(FullTextSearchCommand.class);
@@ -63,40 +71,54 @@ public class FullTextSearchController extends SimpleFormController {
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
     String fullTextQuery = fullTextSearchCommand.getSearchTI();
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
-      String[] ScenFields = {"TITLE", "DESCRIPTION"};
-      List<Scenario> results = scenarioDao.getFullTextResult(fullTextQuery, ScenFields);
-      String[] ExFields = {"WEATHERNOTE"};
-      List<Experiment> exResults = experimentDao.getFullTextResult(fullTextQuery, ExFields);
-      String[] PerFields = {"NOTE"};
-      List<Person> personResults = personDao.getFullTextResult(fullTextQuery, PerFields);
-      String[] ArtFields = {"ARTICLETITLE", "ARTICLETEXT"};
-      List<Article> articleResults = articleDao.getFullTextResult(fullTextQuery, ArtFields);
-      String[] HardFields = {"HARDWARETITLE", "TYPE", "HARDWAREDESCRIPTION"};
-      List<Hardware> hardwareResults = hardwareDao.getFullTextResult(fullTextQuery, HardFields);
-      String[] VisualImpairmentFields = {"VISUALIMPAIRMENTDESCRIPTION"};
-      List<VisualImpairment> visualImpairmentResults = eyesDefectDao.getFullTextResult(fullTextQuery, VisualImpairmentFields);
-      String[] HearingFields = {"HEARINGDESCRIPTION"};
-      List<HearingImpairment> hearingImpairmentResults = hearingImpairmentDao.getFullTextResult(fullTextQuery, HearingFields);
-      String[] WeatherFields = {"WEATHERTITLE", "WEATHERDESCRIPTION"};
-      List<Weather> weatherResults = weatherDao.getFullTextResult(fullTextQuery, WeatherFields);
-      String[] ExOptParamDefFields = {"EXPARAMNAME", "EXPARAMDATATYPE"};
-      List<ExperimentOptParamDef> experimentOptParamDefResults = experimentOptParamDef.getFullTextResult(fullTextQuery, ExOptParamDefFields);
+      Set<FulltextResult> results = null;
+
+      String[] scenFields = {"title", "description"};
+      results = scenarioSection.createSection(scenarioDao.getLuceneQuery
+              (fullTextQuery, scenFields), Scenario.class, scenFields);
+
+      String[] exFields = {"weathernote", "temperature"};
+      results.addAll(experimentSection.createSection(experimentDao.getLuceneQuery
+              (fullTextQuery, exFields), Experiment.class, exFields));
+
+      String[] perFields = {"note", "email"};
+      results.addAll(personSection.createSection(personDao.getLuceneQuery
+              (fullTextQuery, perFields), Person.class, perFields));
+
+      String[] artFields = {"title", "text"};
+      results.addAll(articleSection.createSection(articleDao.getLuceneQuery
+              (fullTextQuery, artFields), Article.class, artFields));
+
+      String[] hardFields = {"title", "type", "description"};
+      results.addAll(experimentSection.createSection(hardwareDao.getLuceneQuery
+              (fullTextQuery, hardFields), Hardware.class, hardFields));
+
+      String[] visualImpairmentFields = {"description"};
+      results.addAll(personSection.createSection(eyesDefectDao.getLuceneQuery
+              (fullTextQuery, visualImpairmentFields), VisualImpairment.class, visualImpairmentFields));
+
+      String[] hearingFields = {"decription"};
+      results.addAll(personSection.createSection(hearingImpairmentDao.getLuceneQuery
+              (fullTextQuery, hearingFields), HearingImpairment.class, hearingFields));
+
+      String[] weatherFields = {"title", "description"};
+      results.addAll(experimentSection.createSection(weatherDao.getLuceneQuery
+              (fullTextQuery, weatherFields), Weather.class, weatherFields));
+
+//      String[] exOptParamDefFields = {"paramName", "paramDataType"};
+//      results.addAll(scenarioSection.createSection(experimentOptParamDef.getLuceneQuery
+//              (fullTextQuery, exOptParamDefFields), ExperimentOptParamDef.class, exOptParamDefFields));
+
+      String[] commentPar = {"text"};
+      results.addAll(articleSection.createSection(commentDao.getLuceneQuery
+              (fullTextQuery, commentPar), ArticleComment.class, commentPar));
+
+
       logger.debug("I have results: " + results);
-      if (results != null) {
-        for (Scenario meas : results) {
-          logger.debug("Results: " + meas);
-        }
-      }
+
       mav.addObject("searchedString", fullTextQuery);
       mav.addObject("searchResults", results);
-      mav.addObject("exResults", exResults);
-      mav.addObject("personResults", personResults);
-      mav.addObject("articleResults", articleResults);
-      mav.addObject("hardwareResults", hardwareResults);
-      mav.addObject("hearingImpairmentResults", hearingImpairmentResults);
-      mav.addObject("visualImpairmentResults", visualImpairmentResults);
-      mav.addObject("weatherResults", weatherResults);
-      mav.addObject("expOptParDefResults", experimentOptParamDefResults);
+      mav.addObject("resultsEmpty", results.isEmpty());
     } else {
       mistakes.add("Unable to parse query: " + fullTextQuery);
       logger.debug("Unable to parse query: " + fullTextQuery);
@@ -105,13 +127,6 @@ public class FullTextSearchController extends SimpleFormController {
     return mav;
   }
 
-//  public GenericDao<Object, Integer> getGenericDao() {
-//    return genericDao;
-//  }
-//
-//  public void setGenericDao(GenericDao<Object, Integer> genericDao) {
-//    this.genericDao = genericDao;
-//  }
   public GenericDao<Person, Integer> getPersonDao() {
     return personDao;
   }
@@ -182,5 +197,45 @@ public class FullTextSearchController extends SimpleFormController {
 
   public void setExperimentOptParamDef(GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef) {
     this.experimentOptParamDef = experimentOptParamDef;
+  }
+
+  public GenericDao<ArticleComment, Integer> getCommentDao() {
+    return commentDao;
+  }
+
+  public void setCommentDao(GenericDao<ArticleComment, Integer> commentDao) {
+    this.commentDao = commentDao;
+  }
+    public SectionCreator getScenarioSection() {
+    return scenarioSection;
+  }
+
+  public void setScenarioSection(SectionCreator scenarioSection) {
+    this.scenarioSection = scenarioSection;
+  }
+
+
+  public SectionCreator getArticleSection() {
+    return articleSection;
+  }
+
+  public void setArticleSection(SectionCreator articleSection) {
+    this.articleSection = articleSection;
+  }
+
+  public SectionCreator getExperimentSection() {
+    return experimentSection;
+  }
+
+  public void setExperimentSection(SectionCreator experimentSection) {
+    this.experimentSection = experimentSection;
+  }
+
+  public SectionCreator getPersonSection() {
+    return personSection;
+  }
+
+  public void setPersonSection(SectionCreator personSection) {
+    this.personSection = personSection;
   }
 }

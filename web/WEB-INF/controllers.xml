@@ -33,7 +33,9 @@
     <property name="messageSource" ref="messageSource"/>
     <property name="domain" value="${app.domain}" />
     <property name="mailSender" ref="mailSender"/>
-    <property name="captchaService"><ref bean="captchaService"/></property>
+    <property name="captchaService">
+      <ref bean="captchaService"/>
+    </property>
     <property name="validator">
       <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.RegistrationValidator">
         <property name="personDao" ref="personDao" />
@@ -41,8 +43,17 @@
     </property>
   </bean>
 
+  <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
+    <property name="historyDao" ref="historyDao" />
+    <property name="auth" ref="authorizationManager"/>
+    <property name="personDao" ref="personDao" />
+  </bean>
+
+
   <bean id="captchaController" class="cz.zcu.kiv.eegdatabase.logic.CaptchaImageGenerator">
-    <property name="captchaService"><ref bean="captchaService"/></property>
+    <property name="captchaService">
+      <ref bean="captchaService"/>
+    </property>
   </bean>
 
 
@@ -65,6 +76,13 @@
   <bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
     <constructor-arg>
       <value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>
+    </constructor-arg>
+    <property name="sessionFactory" ref="sessionFactory" />
+  </bean>
+
+  <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+    <constructor-arg>
+      <value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
     </constructor-arg>
     <property name="sessionFactory" ref="sessionFactory" />
   </bean>
@@ -249,6 +267,7 @@
   <!-- Articles -->
   <bean name="articleMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleMultiController">
     <property name="articleDao" ref="articleDao" />
+    <property name="articleCommentDao" ref="articleCommentDao" />
     <property name="personDao" ref="personDao" />
     <property name="auth" ref="authorizationManager" />
     <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
@@ -261,6 +280,15 @@
     <property name="researchGroupDao" ref="researchGroupDao" />
     <property name="personDao" ref="personDao" />
     <property name="auth" ref="authorizationManager"/>
+  </bean>
+  
+  <bean name="addArticleCommentController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleCommentController">
+    <property name="formView" value="articles/addArticleCommentForm" />
+    <property name="articleDao" ref="articleDao" />
+    <property name="articleCommentDao" ref="articleCommentDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
+    <property name="personDao" ref="personDao" />
+    <property name="auth" ref="authorizationManager" />
   </bean>
 
   <bean name="scenariosMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.ScenarioMultiController">
@@ -303,11 +331,12 @@
     <property name="auth" ref="authorizationManager"/>
   </bean>
 
-
-
-
   <bean name="accessDeniedController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
     <property name="viewName" value="system/accessDenied" />
+  </bean>
+
+  <bean name="accessDeniedNotAdminController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
+    <property name="viewName" value="system/accessDeniedNotAdmin" />
   </bean>
 
   <bean name="loginController" class="org.springframework.web.servlet.mvc.ParameterizableViewController" >
@@ -644,17 +673,43 @@
 
  <!-- Download history  -->
 
- <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController" >
-   <property name="historyDao" ref="historyDao" />
+  <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController" >
+    <property name="formView" value="history/dailyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/dailyHistory" />
+    <property name="historyDao" ref="historyDao" />
+    <property name="auth" ref="authorizationManager"/>
+    <property name="personDao" ref="personDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
   </bean>
 
   <bean name="weeklyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController" >
+    <property name="formView" value="history/weeklyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/weeklyHistory" />
+    <property name="historyDao" ref="historyDao" />
+    <property name="auth" ref="authorizationManager"/>
+    <property name="researchGroupDao" ref="researchGroupDao" />
+    <property name="personDao" ref="personDao" />
   </bean>
 
   <bean name="monthlyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.MonthlyHistoryController" >
+    <property name="formView" value="history/monthlyHistory" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+    <property name="successView" value="history/monthlyHistory" />
+    <property name="historyDao" ref="historyDao" />
+    <property name="auth" ref="authorizationManager"/>
+    <property name="personDao" ref="personDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
   </bean>
 
-   <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
+  <bean name="searchHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController" >
+    <property name="formView" value="history/search" />
+    <property name="successView" value="history/searchResults" />
+    <property name="historyDao" ref="historyDao" />
+    <property name="auth" ref="authorizationManager"/>
+    <property name="personDao" ref="personDao" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.HistorySearcherCommand"/>
   </bean>
 
   <!-- Advanced search  -->
@@ -685,7 +740,6 @@
     <property name="successView" value="experiments/searchResults" />
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ExperimentsSearcherCommand"/>
   </bean>
-
   <!-- Full text search  -->
   <bean name="fullTextSearchController" class="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchController">
     <property name="scenarioDao" ref="scenarioDao" />
@@ -697,13 +751,29 @@
     <property name="eyesDefectDao" ref="eyesDefectDao" />
     <property name="weatherDao" ref="weatherDao" />
     <property name="experimentOptParamDef" ref="experimentOptParamDefDao" />
+    <property name="commentDao" ref="articleCommentDao" />
+    <property name="scenarioSection" ref="scenarioSection" />
+    <property name="experimentSection" ref="experimentSection" />
+    <property name="personSection" ref="personSection" />
+    <property name="articleSection" ref="articleSection" />
+
 
     <!-- <property name="successView" value="redirect:/home"/>-->
     <property name="successView" value="experiments/fulltext"/>
     <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand"/>
   </bean>
 
+  <bean name="scenarioSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSection">
+  </bean>
 
+  <bean name="experimentSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentSection">
+  </bean>
+
+  <bean name="personSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.PersonSection">
+  </bean>
+
+  <bean name="articleSection" class="cz.zcu.kiv.eegdatabase.logic.controller.search.ArticleSection">
+  </bean>
 
 
 

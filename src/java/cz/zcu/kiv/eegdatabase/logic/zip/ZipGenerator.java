@@ -39,7 +39,7 @@ public class ZipGenerator implements Generator {
   private Log log = LogFactory.getLog(getClass());
 
   @Override
-  public OutputStream generate(List<Experiment> meases, boolean scenName) throws JAXBException, SQLException, IOException {
+  public OutputStream generate(List<Experiment> meases, boolean isScenName) throws JAXBException, SQLException, IOException {
     ZipOutputStream zos = null;
     ByteArrayOutputStream baos = null;
     Map<String, Integer> fileNamesAndCounts = new HashMap<String, Integer>();
@@ -54,7 +54,7 @@ public class ZipGenerator implements Generator {
         log.debug("getting datas from measuration object");
         Set<DataFile> datas = meas.getDataFiles();
         log.debug("transforming metadata from database to xml file");
-        OutputStream meta = getTransformer().transform(meas, scenName);
+        OutputStream meta = getTransformer().transform(meas, isScenName);
         Scenario scen = meas.getScenario();
         log.debug("getting scenario file");
         Clob scenarioXml = scen.getScenarioXml();
@@ -92,7 +92,6 @@ public class ZipGenerator implements Generator {
 //        zos.closeEntry();
         log.debug("creating directory for data files: " + dataDir);
         if (datas != null) {
-          System.out.println(datas.size());
           if (datas.size() > 0) {
             for (DataFile data : datas) {
               Blob blob = data.getFileContent();
@@ -146,8 +145,7 @@ public class ZipGenerator implements Generator {
   /**
    * @return the transformer
    */
-  public // upravit pres beanu
-          DataTransformer getTransformer() {
+  public DataTransformer getTransformer() {
     return transformer;
   }
 

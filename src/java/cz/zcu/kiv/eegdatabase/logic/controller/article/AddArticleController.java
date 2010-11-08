@@ -11,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
@@ -38,6 +39,7 @@ public class AddArticleController extends SimpleFormController {
 
   private AuthorizationManager auth;
   private GenericDao<Article, Integer> articleDao;
+  private GenericDao<ArticleComment, Integer> articleCommentDao;
   private PersonDao personDao;
   private ResearchGroupDao researchGroupDao;
   private Log log = LogFactory.getLog(getClass());
@@ -236,4 +238,14 @@ public class AddArticleController extends SimpleFormController {
   public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
     this.researchGroupDao = researchGroupDao;
   }
+
+  public GenericDao<ArticleComment, Integer> getArticleCommentDao() {
+    return articleCommentDao;
+  }
+
+  public void setArticleCommentDao(GenericDao<ArticleComment, Integer> articleCommentDao) {
+    this.articleCommentDao = articleCommentDao;
+  }
+
+
 }

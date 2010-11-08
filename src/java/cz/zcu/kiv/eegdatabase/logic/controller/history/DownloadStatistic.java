@@ -9,15 +9,36 @@ package cz.zcu.kiv.eegdatabase.logic.controller.history;
  *
  * @author pbruha
  */
-public class DownloadStatistic {
+public class DownloadStatistic implements Comparable<DownloadStatistic>{
  private int scenarioId;
+ private int experimentId;
+ private String fileName;
+
  private String title;
  private long count;
 
+  public DownloadStatistic(long count) {
+   this.count = count;
+ }
  public DownloadStatistic(int scenarioId,String title, long count) {
    this.scenarioId = scenarioId;
    this.title = title;
    this.count = count;
+   this.fileName = title+"-"+scenarioId+".xml";
+ }
+
+  public DownloadStatistic(int scenarioId,String title, String fileName, long count) {
+   this.scenarioId = scenarioId;
+   this.title = title;
+   this.count = count;
+   this.fileName = fileName;
+ }
+
+   public DownloadStatistic(int scenarioId, int experimentId, String title, long count) {
+   this.scenarioId = scenarioId;
+   this.title = title;
+   this.count = count;
+   this.fileName = title+".zip";
  }
 
   public long getCount() {
@@ -28,7 +49,7 @@ public class DownloadStatistic {
     this.count = count;
   }
 
-  
+
   public int getScenarioId() {
     return scenarioId;
   }
@@ -43,5 +64,27 @@ public class DownloadStatistic {
 
   public void setTitle(String title) {
     this.title = title;
+  }
+
+  public int compareTo(DownloadStatistic o) {
+    if (this.count < o.count) return +1;
+        if (this.count > o.count) return -1;
+        return 0;
+  }
+
+  public int getExperimentId() {
+    return experimentId;
+  }
+
+  public void setExperimentId(int experimentId) {
+    this.experimentId = experimentId;
+  }
+
+  public String getFileName() {
+    return fileName;
+  }
+
+  public void setFileName(String fileName) {
+    this.fileName = fileName;
   }
 }

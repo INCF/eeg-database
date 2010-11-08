@@ -22,8 +22,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
   }
 
   public List<Experiment> getExperimentsWhereOwner(int personId) {
-    String HQLselect = "from Experiment experiment "
-            + "where experiment.personByOwnerId.personId = :personId";
+    String HQLselect = "from Experiment experiment " + "where experiment.personByOwnerId.personId = :personId";
     return getHibernateTemplate().
             findByNamedParam(HQLselect, "personId", personId);
   }
@@ -36,8 +35,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
   }
 
   public List<Experiment> getExperimentsWhereSubject(int personId) {
-    String HQLselect = "from Experiment experiment "
-            + "where experiment.personBySubjectPersonId.personId = :personId";
+    String HQLselect = "from Experiment experiment " + "where experiment.personBySubjectPersonId.personId = :personId";
     // find records with item personId = personId
     return getHibernateTemplate().
             findByNamedParam(HQLselect, "personId", personId);
@@ -51,76 +49,49 @@ public class SimpleExperimentDao<T, PK extends Serializable>
   }
 
   public List<Experiment> getExperimentsWhereMember(int groupId) {
-    String HQLselect = "from Experiment experiment "
-            + "where experiment.researchGroup.researchGroupId = :researchGroupId";
+    String HQLselect = "from Experiment experiment " + "where experiment.researchGroup.researchGroupId = :researchGroupId";
     return getHibernateTemplate().findByNamedParam(HQLselect, "researchGroupId", groupId);
   }
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) {
-    boolean hardware = false;
-    int countHw = 0;
-    int countNonHw = 0;
-    String hardwareQuery = "";
-    String andOr = "";
-    String hqlQuery = "from Experiment where ";
-    for (SearchRequest request: requests) {
-      if (request.getSource().equals("usedHardware")) {
-        hardware = true;
-        if (countHw > 0) {
-          hardwareQuery += request.getChoice();
+  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException{
+
+    boolean ignoreChoice = false;
+    String hqlQuery = "from Experiment e left join fetch e.hardwares hw where ";
+    for (SearchRequest request : requests) {
+      if (request.getCondition().equals("")) {
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
         }
-        hardwareQuery +=
-                " (hw.title like '%"+request.getCondition()+
-                "%' or hw.type like '%"+request.getCondition()+"%')";
-        andOr = request.getChoice();
-        countHw++;
         continue;
       }
-      if (countNonHw > 0) {
+      if (!ignoreChoice) {
         hqlQuery += request.getChoice();
-      }
-      countNonHw++;
-      if (andOr.equals("")) {
-        andOr = request.getChoice();
-      }
-      if (request.getSource().endsWith("Time")) {
-        hqlQuery += request.getSource()+getCondition(request.getSource())+"'"+request.getCondition()+"'";
-      }
-      else if (request.getSource().startsWith("age")) {
-        try {
-          hqlQuery += "personBySubjectPersonId.dateOfBirth"+
-                getCondition(request.getSource())+"'"+getPersonYearOfBirth(request.getCondition())+"'";
-        } catch (Exception e) {
-          continue;
-        }
 
       }
-      else if (request.getSource().equals("scenario.title") ||
-               request.getSource().equals("personBySubjectPersonId.gender") ||
-               request.getSource().equals("weather.title")) {
-        hqlQuery += request.getSource()+getCondition(request.getSource())+"'%"+request.getCondition()+"%'";
+      if (request.getSource().equals("usedHardware")) {
+        hqlQuery += " (lower(hw.title) like lower('%" + request.getCondition() +
+                "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
+      } else if (request.getSource().endsWith("Time")) {
+        hqlQuery += "e." + request.getSource() + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
+      } else if (request.getSource().startsWith("age")) {
+        hqlQuery += "e.personBySubjectPersonId.dateOfBirth" +
+                getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
+      } else if (request.getSource().endsWith("gender")) {
+        hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
+      } else {
+        hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
+                "lower('%" + request.getCondition() + "%')";
       }
     }
-    List<Experiment> hardwares = new ArrayList<Experiment>();
-    if (hardware) {
-      hardwareQuery = "from Experiment e" +
-                " left join fetch e.hardwares hw where" + hardwareQuery;
 
-      System.out.println(hardwareQuery);
-      hardwares = getHibernateTemplate().find(hardwareQuery);
+    // System.out.println(hqlQuery);
+    List<Experiment> results;
+    try {
+      results = getHibernateTemplate().find(hqlQuery);
+    } catch (Exception e) {
+      return new ArrayList<Experiment>();
     }
-      List<Experiment> results = new ArrayList();
-     try {
-       System.out.println(hqlQuery);
-       System.out.println(andOr);
-       results = getHibernateTemplate().find(hqlQuery);
-     } catch (Exception e) {
 
-       // results.addAll(hardwares);
-     }
-     finally {
-       results = connectList(andOr, results, hardwares);
-     }
     return results;
   }
 
@@ -133,36 +104,16 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     }
     return " like ";
   }
-  private String getPersonYearOfBirth(String age) {
+
+  private String getPersonYearOfBirth(String age) throws NumberFormatException {
     // Create a calendar object with the date of birth
     Calendar today = Calendar.getInstance(); // Get age based on year
-    int yearOfBirth = today.get(Calendar.YEAR) - Integer.parseInt(age);
-    // Create a calendar object with the date of birth 
-    Calendar dateOfBirth = new GregorianCalendar(yearOfBirth, Calendar.JANUARY, Integer.parseInt(age));
-
-
-    return "01-01-"+yearOfBirth;
-  }
-
-   private List<Experiment> connectList(String condition, List<Experiment> results, List<Experiment> hardware){
-     if (hardware.isEmpty()) {
-       return results;
-     }
-     if (results.isEmpty()) {
-       return hardware;
-     }
-    if (condition.equals(" or ")) {
-      results.addAll(hardware);
-      return results;
+    int year = Integer.parseInt(age);
+    if (year < 0) {
+      throw new RuntimeException("Invalid age value. It has to be non-negative number");
     }
-    List<Experiment> newResults = new ArrayList<Experiment>();
-    for (int i = 0; i < results.size(); i++) {
-      for (int j = 0; j < hardware.size(); j++) {
-        if (results.get(i).getExperimentId() == hardware.get(j).getExperimentId()) {
-          newResults.add(results.get(i));
-        }
-      }
-    }
-    return newResults;
+    int yearOfBirth = today.get(Calendar.YEAR) - year;
+
+    return today.get(Calendar.DATE) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
   }
 }

@@ -7,7 +7,7 @@
 <ui:personsTemplate pageTitle="pageTitle.addEyesDefectToPerson">
     <h1><fmt:message key="pageTitle.addEyesDefectToPerson"/></h1>
 
-    <c:url value="/people/add-eyes-defect.html?personId=${personDetail.personId}" var="formUrl"/>
+    <c:url value="add-eyes-defect.html?personId=${personDetail.personId}" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addDefectToPerson" cssClass="standardInputForm">
         <fieldset>
 

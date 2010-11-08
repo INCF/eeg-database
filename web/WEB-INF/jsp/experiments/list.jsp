@@ -21,7 +21,7 @@
                 <td><fmt:formatDate value="${measuration.startTime}" pattern="dd.MM.yyyy, HH:mm" /></td>
                 <td><c:out value="${measuration.experimentId}" />(${measuration.researchGroup.researchGroupId})</td>
                 <td><c:out value="${measuration.scenario.title}" /></td>
-                <td><a href="<c:url value='/experiments/detail.html?experimentId=${measuration.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
+                <td><a href="<c:url value='detail.html?experimentId=${measuration.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
             </tr>
            </c:if> 
          

@@ -137,6 +137,10 @@
     width: 650px;
     height: 300px;
   }
+  form.standardInputForm .textAreaSmall {
+    width: 650px;
+    height: 150px;
+  }
 
 
 

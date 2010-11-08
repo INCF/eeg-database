@@ -4,17 +4,17 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/experiments/list.html'/>"><fmt:message key='menuItem.experiments.allExperiments'/></a></li>
-  <li><a href="<c:url value='/experiments/my-experiments.html'/>"><fmt:message key='menuItem.experiments.myExperiments'/></a></li>
-  <li><a href="<c:url value='/experiments/me-as-subject.html'/>"><fmt:message key='menuItem.experiments.meAsSubject'/></a></li>
+  <li><a href="<c:url value='list.html'/>"><fmt:message key='menuItem.experiments.allExperiments'/></a></li>
+  <li><a href="<c:url value='my-experiments.html'/>"><fmt:message key='menuItem.experiments.myExperiments'/></a></li>
+  <li><a href="<c:url value='me-as-subject.html'/>"><fmt:message key='menuItem.experiments.meAsSubject'/></a></li>
 </ul>
 
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/experiments/search.html'/>"><fmt:message key="menuItem.searchMeasuration"/></a></li>
+  <li><a href="<c:url value='search.html'/>"><fmt:message key="menuItem.searchMeasuration"/></a></li>
 </ul>
 
 <auth:experimenter>
   <ul class="commonButtonMenu">
-    <li><a href="<c:url value='/experiments/add-experiment.html'/>" title="Add experiment">Add experiment</a></li>
+    <li><a href="<c:url value='add-experiment.html'/>" title="Add experiment">Add experiment</a></li>
   </ul>
 </auth:experimenter>

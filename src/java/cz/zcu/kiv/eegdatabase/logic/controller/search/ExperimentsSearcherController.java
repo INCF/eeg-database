@@ -49,12 +49,12 @@ public class ExperimentsSearcherController extends SimpleFormController {
     return search;
   }
 
-   @Override
+  @Override
   protected Map referenceData(HttpServletRequest request) throws Exception {
     Map map = new HashMap<String, Object>();
     List<Scenario> scenarioList = scenarioDao.getAllRecords();
     List<Hardware> hardwareList = hardwareDao.getAllRecords();
-    map.put("scenarioList",scenarioList);
+    map.put("scenarioList", scenarioList);
     map.put("hardwareList", hardwareList);
     return map;
   }
@@ -65,7 +65,7 @@ public class ExperimentsSearcherController extends SimpleFormController {
     ModelAndView mav = new ModelAndView(getSuccessView());
     ExperimentsSearcherCommand measurationSearchCommand = (ExperimentsSearcherCommand) command;
     logger.debug("I have search experiments command: " + measurationSearchCommand);
-     List<String> source = new ArrayList<String>();
+    List<String> source = new ArrayList<String>();
     List<String> condition = new ArrayList<String>();
     List<String> andOr = new ArrayList<String>();
     Enumeration enumer = request.getParameterNames();
@@ -73,11 +73,9 @@ public class ExperimentsSearcherController extends SimpleFormController {
       String param = (String) enumer.nextElement();
       if (param.startsWith("source")) {
         source.add(param);
-      }
-      else if (param.startsWith("condition")) {
+      } else if (param.startsWith("condition")) {
         condition.add(param);
-      }
-      else {
+      } else {
         andOr.add(param);
       }
     }
@@ -88,23 +86,28 @@ public class ExperimentsSearcherController extends SimpleFormController {
     requests.add(new SearchRequest(request.getParameter(condition.get(0)),
             (request.getParameter(source.get(0))), ""));
     for (int i = 1; i < condition.size(); i++) {
-          requests.add(new SearchRequest(request.getParameter(condition.get(i)),
-            (request.getParameter(source.get(i))),
-            (request.getParameter(andOr.get(i-1)))));
+      requests.add(new SearchRequest(request.getParameter(condition.get(i)),
+              (request.getParameter(source.get(i))),
+              (request.getParameter(andOr.get(i - 1)))));
     }
-     List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests);
-    mav.addObject("experimentsResults", experimentResults);
-    mav.addObject("resultsEmpty", experimentResults.isEmpty());
+    try {
+      List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests);
+      mav.addObject("experimentsResults", experimentResults);
+      mav.addObject("resultsEmpty", experimentResults.isEmpty());
+      
+    } catch (NumberFormatException e) {
+      mav.addObject("mistake", "Number error");
+      mav.addObject("error", true);
+
+    } catch (RuntimeException e) {
+      mav.addObject("mistake", e.getMessage());
+      mav.addObject("error", true);
+
+    }
     return mav;
   }
 
-//  public GenericDao<Object, Integer> getGenericDao() {
-//    return genericDao;
-//  }
-//
-//  public void setGenericDao(GenericDao<Object, Integer> genericDao) {
-//    this.genericDao = genericDao;
-//  }
+
   public GenericDao<Person, Integer> getPersonDao() {
     return personDao;
   }
@@ -136,5 +139,4 @@ public class ExperimentsSearcherController extends SimpleFormController {
   public void setHardwareDao(GenericDao<Hardware, Integer> hardwareDao) {
     this.hardwareDao = hardwareDao;
   }
-  
 }

@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.data.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
@@ -36,7 +37,8 @@ public class IndexingData<T, PK extends Serializable> extends HibernateDaoSuppor
                       Person.class.getName(),Article.class.getName(),
                       Hardware.class.getName(),HearingImpairment.class.getName(),
                       VisualImpairment.class.getName(), Weather.class.getName(),
-                      ExperimentOptParamDef.class.getName(), DataFile.class.getName()};
+                      ExperimentOptParamDef.class.getName(), DataFile.class.getName(),
+                      ArticleComment.class.getName()};
     for (int i = 0; i < types.length; i++) {
       List<T> entities = fts.createCriteria(types[i]).list();
 

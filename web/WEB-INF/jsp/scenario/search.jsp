@@ -12,7 +12,7 @@
 
 
 <ui:scenariosTemplate pageTitle="pageTitle.advancedSearch" >
-  <c:url value="/scenario/search-results.html" var="formUrl"/>
+  <c:url value="search-results.html" var="formUrl"/>
   <h1><fmt:message key="pageTitle.advancedSearch"/></h1>
   <h2><fmt:message key="heading.searchFor"/></h2>
   <form action="${formUrl}" method="post" class="standardInputForm" name="searchScenario">

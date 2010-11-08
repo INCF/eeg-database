@@ -25,6 +25,7 @@
             <th class="columnDate"><fmt:message key="dataTable.heading.date"/></th>
             <th class="columnTitle"><fmt:message key="dataTable.heading.articleTitle"/></th>
             <th class="columnGroup"><fmt:message key="dataTable.heading.groupTitle"/></th>
+            <th class="columnCommentsCount"><fmt:message key="heading.comments" /></th>
           </tr>
         </thead>
 
@@ -42,6 +43,9 @@
                   <c:if test="${article.researchGroup == null}">
                     Public article
                   </c:if>
+                </td>
+                <td>
+                  <c:out value="${fn:length(article.articleComments)}" />
                 </td>
               </tr>
             </c:if>
@@ -64,7 +68,6 @@
                 <th class="columnDate"><fmt:message key="dataTable.heading.date"/></th>
                 <th class="columnId"><fmt:message key="dataTable.heading.id"/></th>
                 <th class="columnScenarioTitle"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-                <th class="columnGroup"><fmt:message key="dataTable.heading.groupTitle"/></th>
                 <th></th>
               </tr>
             </thead>
@@ -74,7 +77,6 @@
                   <td><f:dateTime value="${experiment.startTime}"/></td>
                   <td>${experiment.experimentId}</td>
                   <td>${experiment.scenario.title}</td>
-                  <td>${experiment.researchGroup.title}</td>
                   <td><a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
                 </tr>
               </c:forEach>
@@ -194,8 +196,8 @@
     <p><fmt:message key="homePage.description2" /></p>
 
     <div class="homePageActionBoxes">
-      <a href="<c:url value='/login.html'/>" class="homepageLoginLink"><fmt:message key="system.logIn" /></a>
-      <a href="<c:url value='/registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
+      <a href="<c:url value='login.html'/>" class="homepageLoginLink"><fmt:message key="system.logIn" /></a>
+      <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
     </div>
     <a href="<c:url value='/forgotten-password.html'/>"><fmt:message key="system.forgottenPassword" /></a>
   </security:authorize>

@@ -9,6 +9,7 @@
 
 	<appender name="appender" class="org.apache.log4j.DailyRollingFileAppender">
 		<param name="File" value="/tmp/eeg_database.log"/>
+
 		<param name="Append" value="true"/>
                 <param name="DatePattern" value=".yyyy-MM-dd" />
                 <param name="maxBackupIndex" value="90" />

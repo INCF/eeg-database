@@ -8,7 +8,7 @@
   <div class="preH1"><fmt:message key="pageTitle.addMemberToGroup"/></div>
   <h1>${groupTitle}</h1>
 
-  <c:url value="/groups/add-member.html?groupId=${groupId}" var="formUrl"/>
+  <c:url value="add-member.html?groupId=${groupId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addMemberToGroup" cssClass="standardForm">
     <fieldset>
 

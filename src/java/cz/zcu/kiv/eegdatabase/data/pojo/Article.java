@@ -6,6 +6,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.sql.Timestamp;
+import java.util.HashSet;
+import java.util.Set;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.annotations.Entity;
@@ -32,19 +34,29 @@ public class Article implements java.io.Serializable {
   @Fields({
      @Field(index=Index.TOKENIZED), // same property indexed multiple times
      @Field(store=Store.YES),       // title value is stored in the index
-     @Field(name="ARTICLETITLE")})   // use a different field name
+     @Field(name="title")})   // use a different field name
   private String title;
      @Fields({
      @Field(index=Index.TOKENIZED), // same property indexed multiple times
      @Field(store=Store.YES),       // text value is stored in the index
-     @Field(name="ARTICLETEXT")})   // use a different field name
+     @Field(name="text")})   // use a different field name
   private String text;
   private Timestamp time;
   private boolean userMemberOfGroup; // changes dynamically from app
   private boolean userIsOwnerOrAdmin; // changes dynamically from app
+  private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
   public Article() {
 
   }
+
+  public Set<ArticleComment> getArticleComments() {
+    return articleComments;
+  }
+
+  public void setArticleComments(Set<ArticleComment> articleComments) {
+    this.articleComments = articleComments;
+  }
+
 
   public int getArticleId() {
     return articleId;

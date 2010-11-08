@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addPersonOptionalParameter">
     <h1><fmt:message key="pageTitle.addPersonOptionalParameter"/></h1>
 
-    <c:url value="/lists/person-optional-parameters/add.html" var="formUrl"/>
+    <c:url value="person-optional-parameters/add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addPersonAdditionalParam" cssClass="standardInputForm">
         <fieldset>
 

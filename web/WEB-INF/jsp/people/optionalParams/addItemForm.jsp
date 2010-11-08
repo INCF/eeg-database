@@ -7,7 +7,7 @@
 <ui:personsTemplate pageTitle="pageTitle.addPersonOptionalParameter">
     <h1><fmt:message key="pageTitle.addPersonOptionalParameter"/></h1>
 
-    <c:url value="/people/add-optional-parameter.html?personId=${personDetail.personId}" var="formUrl"/>
+    <c:url value="add-optional-parameter.html?personId=${personDetail.personId}" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addPersonAdditionalParameter" cssClass="standardInputForm">
         <fieldset>
 

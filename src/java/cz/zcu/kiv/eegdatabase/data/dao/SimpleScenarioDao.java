@@ -33,31 +33,40 @@ public class SimpleScenarioDao
   }
 
   public List<Scenario> getScenarioSearchResults(List<SearchRequest> requests) throws NumberFormatException {
- 
-    String hqlQuery = "from Scenario where ";
-    for (SearchRequest request: requests) {
+
+    boolean ignoreChoice = false;
+    String hqlQuery = "from Scenario where (";
+    for (SearchRequest request : requests) {
       if (request.getCondition().equals("")) {
-        throw new RuntimeException("Empty field: " + request.getSource());
+        if (request.getChoice().equals("")) {
+          ignoreChoice = true;
+        }
+        continue;
+      }
+      if (!ignoreChoice) {
+        hqlQuery += request.getChoice();
+
       }
       if (request.getSource().endsWith("ScenarioLength")) {
-         Integer.parseInt(request.getCondition());
-         hqlQuery += request.getChoice()+"scenarioLength"+getCondition(request.getSource())+request.getCondition();
-      } 
-      else if (request.getSource().equals("person")){
-         hqlQuery += request.getChoice()+getAuthor(request.getCondition());
+        if (Integer.parseInt(request.getCondition()) < 0) {
+          throw new RuntimeException("Invalid length value. It has to be non-negative number");
+        }
+        hqlQuery += "scenarioLength" + getCondition(request.getSource()) + request.getCondition();
+      } else if (request.getSource().equals("person")) {
+        hqlQuery += getAuthor(request.getCondition());
+      } else {
+        hqlQuery += "lower(" + request.getSource() + ") like lower('%" + request.getCondition() + "%')";
       }
-      else {
-        hqlQuery += request.getChoice()+request.getSource()+" like '%"+request.getCondition()+"%'";
-      }
+      ignoreChoice = false;
     }
     List<Scenario> results;
-  //  try {
-      results = getHibernateTemplate().find(hqlQuery);
-   // } catch (Exception e) {
-  //    results = new ArrayList<Scenario>();
-   //   results.clear();
-   // }
 
+    hqlQuery += ") and private=0";
+    try {
+      results = getHibernateTemplate().find(hqlQuery);
+    } catch (Exception e) {
+      return new ArrayList<Scenario>();
+    }
     return results;
   }
 
@@ -71,14 +80,16 @@ public class SimpleScenarioDao
     return " like ";
   }
 
-  
   private String getAuthor(String name) {
     String[] words = name.split(" ");
     if (words.length == 1) {
-      return "(person.givenname like '%"+words[0]+"%' or person.surname like '%"+words[0]+"%')";
-    }
-    else {
-      return "(person.givenname like '%"+words[0]+"%' and person.surname like '%"+words[1]+"%')";
+      return "(lower(person.givenname) like lower('%" + words[0] + "%')" +
+              " or lower(person.surname) like lower('%" + words[0] + "%'))";
+    } else {
+      return "(lower(person.givenname) like lower('%" + words[0] + "%')" +
+              " and lower(person.surname) like lower('%" + words[1] + "%')) or " +
+              "(lower(person.givenname) like lower('%" + words[1] + "%')" +
+              " and lower(person.surname) like lower('%" + words[0] + "%'))";
     }
   }
 }

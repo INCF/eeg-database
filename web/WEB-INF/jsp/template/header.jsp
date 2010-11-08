@@ -16,7 +16,7 @@
   <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
     <div class="loggedUserBox">
       <fmt:message key='system.noUserLogged'/>
-      <span><a href="<c:url value='/login.html'/>" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a></span>
+      <span><a href="<c:url value='login.html'/>" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a></span>
     </div>
   </security:authorize>
  <c:url value="/experiments/fulltext.html" var="formUrl"/>
@@ -35,11 +35,10 @@
       <li><a href="<c:url value='/groups/list.html'/>" title="<fmt:message key='menuItem.groups'/>"><fmt:message key='menuItem.groups'/></a></li>
       <li><a href="<c:url value='/people/list.html'/>" title="<fmt:message key='menuItem.people'/>"><fmt:message key='menuItem.people'/></a></li>
       <li><a href="<c:url value='/lists/index.html'/>" title="<fmt:message key='menuItem.lists'/>"><fmt:message key='menuItem.lists'/></a></li>
-
       <security:authorize ifAllGranted="ROLE_ADMIN">
         <li><a href="<c:url value='/administration/change-user-role.html'/>" title="<fmt:message key='menuItem.administration'/>"><fmt:message key='menuItem.administration'/></a></li>
-        <li><a href="<c:url value='/history/daily-history.html'/>" title="<fmt:message key='menuItem.history'/>"><fmt:message key='menuItem.history'/></a></li>
       </security:authorize>
+         <li><a href="<c:url value='/history/daily-history.html'/>" title="<fmt:message key='menuItem.history'/>"><fmt:message key='menuItem.history'/></a></li>
     </security:authorize>
   </ul>
 

@@ -27,13 +27,13 @@ public class Scenario implements java.io.Serializable {
   private Person person;
   private ResearchGroup researchGroup;
   @Fields({
-    @Field(name = "TITLE"),
+    @Field(name = "title"),
     @Field(store = Store.YES)}) //use a different field name
   private String title;
   private int scenarioLength;
   private Clob scenarioXml;
   @Fields({
-    @Field(name = "DESCRIPTION"),
+    @Field(name = "description"),
     @Field(store = Store.YES)}) //use a different field name
   private String description;
   private Set<Experiment> experiments = new HashSet<Experiment>(0);

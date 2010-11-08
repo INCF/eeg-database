@@ -4,11 +4,12 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/groups/list.html'/>"><fmt:message key="menuItem.listOfGroups"/></a></li>
-  <li><a href="<c:url value='/groups/my-groups.html'/>"><fmt:message key="menuItem.myGroups"/></a></li>
-  <li><a href="<c:url value='/groups/edit-group-role.html'/>"><fmt:message key="menuItem.editGroupRole"/></a></li>
+  <li><a href="<c:url value='list.html'/>"><fmt:message key="menuItem.listOfGroups"/></a></li>
+  <li><a href="<c:url value='my-groups.html'/>"><fmt:message key="menuItem.myGroups"/></a></li>
+  <li><a href="<c:url value='edit-group-role.html'/>"><fmt:message key="menuItem.editGroupRole"/></a></li>
+  <li><a href="<c:url value='book-room.html'/>"><fmt:message key="menuItem.bookingRoom"/></a></li>
 </ul>
 
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/groups/create-group.html'/>"><fmt:message key="menuItem.createGroup"/></a></li>
+  <li><a href="<c:url value='create-group.html'/>"><fmt:message key="menuItem.createGroup"/></a></li>
 </ul>

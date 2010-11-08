@@ -58,6 +58,23 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
     return (list.size() > 0);
   }
 
+  public boolean userIsGroupAdmin() {
+    String hqlQuery = "select p.personId "
+            + "from Person as p "
+            + "left join p.researchGroupMemberships m "
+            + "where p.personId = :personId "
+            + "and m.authority in (:authoritiesList)";
+
+    List authorities = new ArrayList();
+    authorities.add(Util.GROUP_ADMIN);
+    String[] paramNames = {"personId", "authoritiesList"};
+    Object[] values = {getLoggedPersonId(), authorities};
+
+    List list = getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);
+
+    return (list.size() > 0);
+  }
+
   public boolean userIsOwnerOrCoexperimenter(int experimentId) {
     String hqlQuery = "select e.experimentId "
             + "from Experiment e "

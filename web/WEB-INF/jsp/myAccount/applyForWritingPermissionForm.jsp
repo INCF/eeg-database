@@ -7,7 +7,7 @@
 
     <h1><fmt:message key='pageTitle.applyForWritingPermission'/></h1>
 
-    <c:url value="/my-account/apply-for-writing-permission.html" var="formUrl"/>
+    <c:url value="apply-for-writing-permission.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="applyForWritingPermission" cssClass="standardInputForm">
 
         <fieldset>

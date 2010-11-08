@@ -20,15 +20,15 @@ public class Hardware implements java.io.Serializable {
   private int hardwareId;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "HARDWARETITLE")}) //use a different field name
+    @Field(name = "title")}) //use a different field name
   private String title;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "TYPE")}) //use a different field name
+    @Field(name = "type")}) //use a different field name
   private String type;
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
-    @Field(name = "HARDWAREDESCRIPTION")}) //use a different field name
+    @Field(name = "description")}) //use a different field name
   private String description;
   private Set<Experiment> experiments = new HashSet<Experiment>(0);
 

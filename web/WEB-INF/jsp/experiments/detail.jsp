@@ -121,7 +121,7 @@
         <tr>
           <td>${dataItem.filename}</td>
           <td>${dataItem.samplingRate}</td>
-          <td><a href="<c:url value='/experiments/data/detail.html?fileId=${dataItem.dataFileId}' />"><fmt:message key="link.detail"/></a></td>
+          <td><a href="<c:url value='data/detail.html?fileId=${dataItem.dataFileId}' />"><fmt:message key="link.detail"/></a></td>
         </tr>
       </c:forEach>
     </tbody>
@@ -129,11 +129,11 @@
 
   <div class="actionBox">
     <c:if test="${userIsOwnerOrCoexperimenter}">
-      <a href="<c:url value='/experiments/add-optional-parameter.html?experimentId=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
-      <a href="<c:url value='/experiments/data/add.html?experimentId=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.addDataFile"/></a>
-      <a href="<c:url value='/experiments/edit.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.editExperiment"/></a>
+      <a href="<c:url value='add-optional-parameter.html?experimentId=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
+      <a href="<c:url value='data/add.html?experimentId=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.addDataFile"/></a>
+      <a href="<c:url value='edit.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.editExperiment"/></a>
     </c:if>
-    <a href="<c:url value='/experiments/choose-metadata.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.downloadMetadataZip"/></a>
+    <a href="<c:url value='choose-metadata.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.downloadMetadataZip"/></a>
   </div>
 
 </ui:experimentsTemplate>
