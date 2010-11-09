@@ -11,6 +11,7 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.Date;
 
 /**
  *
@@ -37,7 +38,10 @@ public class RegistrationValidator implements Validator {
     ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.field");
 
     try {
-      ControllerUtils.getDateFormat().parse(registrationCommand.getDateOfBirth());
+      Date d = ControllerUtils.getDateFormat().parse(registrationCommand.getDateOfBirth());
+      if (d.getTime() >= System.currentTimeMillis()) {
+        errors.rejectValue("dateOfBirth", "invalid.dateOfBirth");
+      }
     } catch (ParseException e) {
       errors.rejectValue("dateOfBirth", "invalid.dateOfBirth");
     }

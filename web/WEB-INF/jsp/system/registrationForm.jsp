@@ -32,6 +32,8 @@
 
         <form:input path="dateOfBirth" cssClass="textField dateField" cssErrorClass="textField dateField errorField" />
 
+        <span class="note"><fmt:message key="form.note.dateFormatDDMMYYYY"/></span>
+
         <form:errors path="dateOfBirth" cssClass="errorBox" />
       </div>
 
