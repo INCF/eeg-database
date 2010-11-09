@@ -15,6 +15,7 @@
 
  <form:form action="${formUrl}" method="post" commandName="experimentsSearcherCommand" cssClass="standardInputForm" name="searchMeasuration">
     <table class="formTable">
+      <span class="note"><fmt:message key="form.note.dateFormatDDMMYYYYHHMM"/></span>
       <tr class="1">
         <td class="dummySearchColumn"></td>
         <td><input type="text" name="condition_1" class="condition"/></td>

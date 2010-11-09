@@ -24,7 +24,6 @@ public class AddScenarioValidator implements Validator {
   public void validate(Object command, Errors errors) {
     log.debug("Validating scenario form");
     AddScenarioCommand data = (AddScenarioCommand) command;
-
     ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors, "length", "required.field");
     ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
@@ -37,7 +36,10 @@ public class AddScenarioValidator implements Validator {
     }
 
     try {
-      Integer.parseInt(data.getLength());
+      int len = Integer.parseInt(data.getLength());
+      if (len < 0) {
+        errors.rejectValue("length", "invalid.lengthValue");
+      }
     } catch (NumberFormatException ex) {
       errors.rejectValue("length", "invalid.scenarioLength");
       log.debug("Scenario length is not in parseable format!");

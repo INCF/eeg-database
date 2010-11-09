@@ -462,7 +462,11 @@
     <property name="scenarioDao" ref="scenarioDao"/>
     <property name="personDao" ref="personDao"/>
     <property name="researchGroupDao" ref="researchGroupDao"/>
-    <property name="validator" ref="addScenarioController"/> <!-- validation by class itself -->
+    <property name="validator">
+      <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddScenarioValidator">
+        <property name="auth" ref="authorizationManager" />
+      </bean>
+    </property> <!-- validation by class itself -->
   </bean>
 
   <bean name="measurationDataOutputController" class="cz.zcu.kiv.eegdatabase.logic.controller.MeasurationDataOutputController">

@@ -5,9 +5,12 @@ import java.io.Serializable;
 import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.GregorianCalendar;
+import java.util.Date;
+import org.hibernate.Query;
+import org.hibernate.Session;
 
 /**
  * This class extends powers (extend from) class SimpleGenericDao.
@@ -53,42 +56,61 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     return getHibernateTemplate().findByNamedParam(HQLselect, "researchGroupId", groupId);
   }
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException{
-
-    boolean ignoreChoice = false;
-    String hqlQuery = "from Experiment e left join fetch e.hardwares hw where ";
-    for (SearchRequest request : requests) {
-      if (request.getCondition().equals("")) {
-        if (request.getChoice().equals("")) {
-          ignoreChoice = true;
-        }
-        continue;
-      }
-      if (!ignoreChoice) {
-        hqlQuery += request.getChoice();
-
-      }
-      if (request.getSource().equals("usedHardware")) {
-        hqlQuery += " (lower(hw.title) like lower('%" + request.getCondition() +
-                "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
-      } else if (request.getSource().endsWith("Time")) {
-        hqlQuery += "e." + request.getSource() + getCondition(request.getSource()) + "'" + request.getCondition() + "'";
-      } else if (request.getSource().startsWith("age")) {
-        hqlQuery += "e.personBySubjectPersonId.dateOfBirth" +
-                getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
-      } else if (request.getSource().endsWith("gender")) {
-        hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
-      } else {
-        hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
-                "lower('%" + request.getCondition() + "%')";
-      }
-    }
-
-    // System.out.println(hqlQuery);
+  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException {
     List<Experiment> results;
+    boolean ignoreChoice = false;
+    int index = 0;
+    List<Date> datas = new ArrayList<Date>();
+    String hqlQuery = "from Experiment e left join fetch e.hardwares hw where ";
     try {
-      results = getHibernateTemplate().find(hqlQuery);
+      for (SearchRequest request : requests) {
+        if (request.getCondition().equals("")) {
+          if (request.getChoice().equals("")) {
+            ignoreChoice = true;
+          }
+          continue;
+        }
+        if (!ignoreChoice) {
+          hqlQuery += request.getChoice();
+
+        }
+        if (request.getSource().equals("usedHardware")) {
+          hqlQuery += " (lower(hw.title) like lower('%" + request.getCondition() +
+                  "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
+
+        } else if (request.getSource().endsWith("Time")) {
+          String[] times = request.getCondition().split(" ");
+          if (times.length == 1) {
+              datas.add(ControllerUtils.getDateFormat().parse(request.getCondition()));
+          }
+          if (times.length > 1) {
+            datas.add(ControllerUtils.getDateFormatWithTime().parse(request.getCondition()));
+          }
+          hqlQuery += "e." + request.getSource() + getCondition(request.getSource()) +" :ts"+index;
+          index++;
+
+        } else if (request.getSource().startsWith("age")) {
+          hqlQuery += "e.personBySubjectPersonId.dateOfBirth" +
+                  getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
+        } else if (request.getSource().endsWith("gender")) {
+          hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
+        } else {
+          hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
+                  "lower('%" + request.getCondition() + "%')";
+        }
+      }
+
+      Session ses = getSession();
+      Query q = ses.createQuery(hqlQuery);
+      int i = 0;
+      for (Date date : datas) {
+        q.setTimestamp("ts"+i, date);
+        i++;
+      }
+      
+      results = q.list();
     } catch (Exception e) {
+      e.printStackTrace();
       return new ArrayList<Experiment>();
     }
 
