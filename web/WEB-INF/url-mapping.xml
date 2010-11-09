@@ -14,11 +14,11 @@
         <prop key="/home.html">homePageController</prop>
         <prop key="/login.html">loginController</prop>
         <prop key="/registration.html">registrationController</prop>
-        <prop key="/captcha.html">captchaController</prop>
+        <prop key="captcha.html">captchaController</prop>
         <prop key="/access-denied.html">accessDeniedController</prop>
         <prop key="/access-denied-not-admin.html">accessDeniedNotAdminController</prop>
         <prop key="/forgotten-password.html">forgottenPasswordController</prop>
-        <prop key="/registration-confirmation.html">confirmController</prop>
+        <prop key="registration-confirmation.html">confirmController</prop>
 
         <prop key="my-account/change-password.html">changePasswordController</prop>
         <prop key="my-account/change-default-group.html">changeDefaultGroupController</prop>

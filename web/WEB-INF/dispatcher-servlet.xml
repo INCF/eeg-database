@@ -25,7 +25,7 @@
   <bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>
 
 
-  <bean name="/captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService" id="imageCaptchaService"/>
+  <bean name="captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService" id="imageCaptchaService"/>
   <bean name="indexController"
         class="org.springframework.web.servlet.mvc.ParameterizableViewController"
         p:viewName="home" />

@@ -54,12 +54,15 @@ public class RegistrationController extends SimpleFormController {
     boolean isResponseCorrect = false;
     String captchaId = request.getSession().getId();
     String response = request.getParameter(captchaResponseParameterName);
+    log.debug("captchaId " + captchaId);
+    log.debug("captha response " + response);
     try {
       if (response != null) {
         isResponseCorrect =
                 captchaService.validateResponseForID(captchaId, response);
       }
     } catch (CaptchaServiceException e) {
+       log.error(e);
     }
     if (!isResponseCorrect) {
       String objectName = "Captcha";

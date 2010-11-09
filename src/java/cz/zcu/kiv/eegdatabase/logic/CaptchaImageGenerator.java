@@ -7,6 +7,9 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
@@ -22,12 +25,14 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 */
 public class CaptchaImageGenerator implements Controller, InitializingBean{
 	private ImageCaptchaService captchaService;
+	private Log log = LogFactory.getLog(getClass());
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
 
         String captchaId = request.getSession().getId();
+        log.debug("captchaId " + captchaId);
     	BufferedImage challenge =
                 captchaService.getImageChallengeForID(captchaId,request.getLocale());
 
