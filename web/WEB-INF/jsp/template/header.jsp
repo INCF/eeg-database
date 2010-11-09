@@ -16,7 +16,7 @@
   <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
     <div class="loggedUserBox">
       <fmt:message key='system.noUserLogged'/>
-      <span><a href="<c:url value='login.html'/>" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a></span>
+      <span><a href="<c:url value='registration.html'/>"><fmt:message key="system.register" /></a></span>
     </div>
   </security:authorize>
  <c:url value="/experiments/fulltext.html" var="formUrl"/>
