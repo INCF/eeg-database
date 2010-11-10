@@ -76,7 +76,7 @@
     </c:forEach>
   </table>
   <h2><fmt:message key="title.allWeeklyRecords"/></h2>
-  <table class="dataTable">
+  <table class="dataTable tableSorter">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>

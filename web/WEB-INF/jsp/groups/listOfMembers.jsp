@@ -10,7 +10,7 @@
 
   <h2>${groupTitle}</h2>
 
-  <table class="dataTable listOfPersonsDataTable">
+  <table class="dataTable listOfPersonsDataTable tableSorter">
     <thead>
       <tr>
         <th><fmt:message key="dataTable.heading.name"/></th>

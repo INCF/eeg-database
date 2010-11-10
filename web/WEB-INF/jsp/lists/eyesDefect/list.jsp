@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.eyesDefectList">
   <h1><fmt:message key="pageTitle.eyesDefectList"/></h1>
 
-  <table class="dataTable">
+  <table class="dataTable tableSorter">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.eyesDefectId"/></th>

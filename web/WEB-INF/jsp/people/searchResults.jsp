@@ -19,7 +19,7 @@
         <c:out value="${mistake}"/>
       </c:when>
       <c:otherwise>
-    <table class="dataTable listOfPersonsDataTable">
+    <table class="dataTable listOfPersonsDataTable tableSorter">
         <thead>
             <tr>
                 <th style="width: 100px;"><fmt:message key="dataTable.heading.name"/></th>

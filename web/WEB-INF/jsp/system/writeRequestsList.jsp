@@ -5,7 +5,7 @@
 <ui:systemTemplate pageTitle="pageTitle.writeRequestsList">
     <h1><fmt:message key="pageTitle.writeRequestsList"/></h1>
 
-    <table class="dataTable measurationListDataTable" style="width: 100%;">
+    <table class="dataTable measurationListDataTable tableSorter" style="width: 100%;">
         <thead>
             <th style="width: 150px;"><fmt:message key="dataTable.heading.username"/></th>
             <th><fmt:message key="dataTable.heading.requirementReason"/></th>

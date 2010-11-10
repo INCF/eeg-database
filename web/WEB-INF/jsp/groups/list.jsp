@@ -6,7 +6,7 @@
 <ui:groupsTemplate pageTitle="pageTitle.listOfGroups">
     <h1><fmt:message key="pageTitle.listOfGroups"/></h1>
 
-      <table class="dataTable listOfResearchGroupsDataTable">
+      <table class="dataTable listOfResearchGroupsDataTable tableSorter">
         <thead>
             <tr>
                 <th class="columnGroupTitle"><fmt:message key="dataTable.heading.groupTitle"/></th>

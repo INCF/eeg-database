@@ -21,7 +21,7 @@
         <c:out value="${mistake}"/>
       </c:when>
       <c:otherwise>
-    <table class="dataTable">
+    <table class="dataTable tableSorter">
         <thead>
             <tr>
                 <th style="width: 300px;"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
