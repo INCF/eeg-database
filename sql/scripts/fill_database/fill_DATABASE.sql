@@ -14,8 +14,8 @@
 @insert_into_COEXPERIMENT_REL.sql
 @insert_into_HARDWARE_USAGE_REL.sql
 @insert_into_DATA_FILE.sql
-@insert_into_NEWS.sql
-@insert_into_OPINION.sql
+@insert_into_ARTICLES.sql
+@insert_into_ARTICLES_COMMENTS.sql
 @insert_into_HISTORY.sql
 @insert_into_EXPERIMENT_OPT_PARAM_VAL.sql
 @insert_into_PERSON_OPT_PARAM_VAL.sql

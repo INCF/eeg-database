@@ -10,8 +10,8 @@
 @create_table_HEARING_IMPAIRMENT.sql
 @create_table_HEARING_IMPAIRMENT_REL.sql
 @create_table_HISTORY.sql
-@create_table_NEWS.sql
-@create_table_OPINION.sql
+@create_table_ARTICLES.sql
+@create_table_ARTICLES_COMMENTS.sql
 @create_table_PERSON.sql
 @create_table_PERSON_OPT_PARAM_DEF.sql
 @create_table_PERSON_OPT_PARAM_VAL.sql
@@ -21,4 +21,5 @@
 @create_table_VISUAL_IMPAIRMENT.sql
 @create_table_VISUAL_IMPAIRMENT_REL.sql
 @create_table_WEATHER.sql
+@create_table_GROUP_PERMISSION_REQUEST.sql
 @create_references.sql
