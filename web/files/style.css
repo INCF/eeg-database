@@ -5,6 +5,7 @@
 @import "common.css";
 @import "table.css";
 @import "jquery-ui.css";
+@import "bookingRoom.css";
 
 @media screen, projection {
   .page {
@@ -244,45 +245,6 @@
 
 .accountOverviewGroupMembershipDataTable .columnGroupName {width: 350px;}
 .accountOverviewGroupMembershipDataTable .columnRole {width: 250px;}
-
-
-/* Styles for layout on groups/bookingRoom page.*/
-
-div#box
-{
-	border: 0px solid lime;
-}
-
-div#left,div#right,div#bottom
-{
-}
-
-div#left
-{
-	float: left;
-	width: 200px;
-}
-
-div#right
-{
-	float: right;
-	width: 500px;
-}
-
-div#bottom
-{
-	clear: both;
-}
-
-div#datePicker
-{
-  float: left;
-}
-
-div#chosenData
-{
-  border: 1px solid red;
-}
 
 
 /* Login form definitions are used also for print */
