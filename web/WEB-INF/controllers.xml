@@ -30,9 +30,10 @@
 
     <property name="successView" value="system/confirmReg" />
     <property name="personDao" ref="personDao" />
-    <property name="messageSource" ref="messageSource"/>
     <property name="domain" value="${app.domain}" />
     <property name="mailSender" ref="mailSender"/>
+    <property name="mailMessage" ref="mailMessage"/>
+    <property name="messageSource" ref="messageSource"/>
     <property name="captchaService">
       <ref bean="captchaService"/>
     </property>
@@ -222,13 +223,12 @@
 
 
   <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-    <property name="host" value="smtp.zcu.cz"/>
-
+    <property name="host" value="${email.smtp}"/>
   </bean>
 
   <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-    <property name="from" value="pborik@students.zcu.cz"/>
-    <property name="subject" value="EEGbase"/>
+    <property name="from" value="${email.from}"/>
+    <property name="subject" value="${email.subject}"/>
   </bean>
 
 
@@ -413,6 +413,7 @@
     <property name="researchGroupDao" ref="researchGroupDao" />
     <property name="successView" value="groups/requestSent" />
     <property name="mailSender" ref="mailSender"/>
+    <property name="mailMessage" ref="mailMessage"/>
     <property name="messageSource" ref="messageSource"/>
     <property name="domain" value="${app.domain}" />
   </bean>
@@ -777,8 +778,5 @@
 
   <bean name="creator" class="cz.zcu.kiv.eegdatabase.logic.controller.search.SimpleSectionCreator">
   </bean>
-
-
-
 
 </beans>
