@@ -417,6 +417,17 @@
     <property name="domain" value="${app.domain}" />
   </bean>
 
+  <bean name="bookingRoomController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
+    <property name="formView" value="groups/bookingRoom" />
+    <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.BookRoomCommand"/>
+    <property name="personDao" ref="personDao" />
+    <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
+    <property name="successView" value="groups/requestSent" />
+    <property name="mailSender" ref="mailSender"/>
+    <property name="messageSource" ref="messageSource"/>
+    <property name="domain" value="${app.domain}" />
+  </bean>
 
 
   <bean name="acceptRoleRequestController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.AcceptRoleRequestController">

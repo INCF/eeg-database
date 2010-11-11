@@ -1,47 +1,47 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<ui:groupsTemplate pageTitle="pageTitle.myGroups">
-  <h1><fmt:message key="pageTitle.myGroups"/></h1>
+<ui:groupsTemplate pageTitle="pageTitle.bookingRoom">
+  <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
+  <c:url value="/groups/book-room.html" var="formUrl" />
 
-  <h2><fmt:message key="heading.ownedGroups"/></h2>
+  <div id="box">
+    <div id="left">
+      <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand" cssClass="standardInputForm">
 
+        <form:select path="selectedGroup" cssClass="selectBox">
+          <c:forEach items="${researchGroupList}" var="researchGroup">
+            <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
+              <c:out value="${researchGroup.title}" />
+            </option>
+          </c:forEach>
+        </form:select>
+      </form:form>
+    </div>
+    <div id="right">
+      CALENDAR
+    </div>
+    <div id="bottom">
+      <table class="dataTable listOfResearchGroupsDataTable">
+        <thead>
+          <tr>
+            <th class="columnGroupTitle"><fmt:message key="bookRoom.day"/></th>
+            <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
+            <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
+          </tr>
+        </thead>
+        <c:forEach items="${ownedList}" var="group">
+          <tr>
+            <td>4.11.2010</td>
+            <td>12:00-13:00</td>
+            <td><c:out value="${group.title}" /></td>
+          </tr>
+        </c:forEach>
+      </table>
+    </div>
+  </div>
 
-  <table class="dataTable listOfResearchGroupsDataTable">
-    <thead>
-      <tr>
-        <th class="columnGroupTitle"><fmt:message key="dataTable.heading.groupTitle"/></th>
-        <th class="columnDescription"><fmt:message key="dataTable.heading.description"/></th>
-        <th></th>
-      </tr>
-    </thead>
-    <c:forEach items="${ownedList}" var="group">
-      <tr>
-        <td><c:out value="${group.title}" /></td>
-        <td><c:out value="${group.description}" /></td>
-        <td><a href="<c:url value='detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
-      </tr>
-    </c:forEach>
-  </table>
-
-  <h2><fmt:message key="heading.memberGroups"/></h2>
-
-  <table class="dataTable listOfResearchGroupsDataTable">
-    <thead>
-      <tr>
-        <th class="columnGroupTitle"><fmt:message key="dataTable.heading.groupTitle"/></th>
-        <th class="columnDescription"><fmt:message key="dataTable.heading.description"/></th>
-        <th></th>
-      </tr>
-    </thead>
-    <c:forEach items="${memberList}" var="group">
-      <tr>
-        <td><c:out value="${group.title}" /></td>
-        <td><c:out value="${group.description}" /></td>
-        <td><a href="<c:url value='detail.html?groupId=${group.researchGroupId}' />"><fmt:message key="link.detail"/></a></td>
-      </tr>
-    </c:forEach>
-  </table>
 </ui:groupsTemplate>

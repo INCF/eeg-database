@@ -246,6 +246,37 @@
 .accountOverviewGroupMembershipDataTable .columnRole {width: 250px;}
 
 
+/* Styles for layout on groups/bookingRoom page.*/
+
+div#box
+{
+	/*width: 700px;*/
+}
+
+div#left,div#right,div#bottom
+{
+	border: 1px solid black;
+}
+
+div#left
+{
+	float: left;
+	width: 200px;
+}
+
+div#right
+{
+	float: right;
+	width: 500px;
+        border: 1px solid black;
+}
+
+div#bottom
+{
+	clear: both;
+}
+
+
 
 
 /* Login form definitions are used also for print */
