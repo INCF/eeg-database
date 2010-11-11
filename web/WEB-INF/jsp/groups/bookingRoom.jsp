@@ -8,10 +8,11 @@
   <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
   <c:url value="/groups/book-room.html" var="formUrl" />
 
+  <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
   <div id="box">
     <div id="left">
       <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand" cssClass="standardInputForm">
-
+        <fmt:message key='label.chooseGroup'/>:<br />
         <form:select path="selectedGroup" cssClass="selectBox">
           <c:forEach items="${researchGroupList}" var="researchGroup">
             <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
@@ -19,12 +20,16 @@
             </option>
           </c:forEach>
         </form:select>
+        <fmt:message key='label.chooseStartTime'/>
+        <fmt:message key='label.chooseEndTime'/>
       </form:form>
     </div>
     <div id="right">
-      CALENDAR
+      <div id="datePicker"></div>
+      <fmt:message key='label.chooseRepeating'/>
     </div>
     <div id="bottom">
+      <div id="chosenData">&nbsp;</div>
       <table class="dataTable listOfResearchGroupsDataTable">
         <thead>
           <tr>
@@ -33,7 +38,7 @@
             <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
           </tr>
         </thead>
-        <c:forEach items="${ownedList}" var="group">
+        <c:forEach items="${researchGroupList}" var="group">
           <tr>
             <td>4.11.2010</td>
             <td>12:00-13:00</td>
@@ -43,5 +48,28 @@
       </table>
     </div>
   </div>
+  <script type="text/javascript">
+    //create datepicker
+    var date;
+
+    $("#datePicker").datepicker({
+      minDate: 0,
+      firstDay: 1,
+      dateFormat: "dd.mm.yy",
+      onSelect: function( selectedDate ) {
+        date = selectedDate;
+        showChosenData();
+      }
+    });
+
+
+
+
+    function showChosenData()
+    {
+      var sel = document.getElementById("selectedGroup");
+      $("#chosenData").html(""+sel.options[sel.selectedIndex].text+" // "+date);
+    }
+  </script>
 
 </ui:groupsTemplate>

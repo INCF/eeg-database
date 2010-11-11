@@ -250,12 +250,11 @@
 
 div#box
 {
-	/*width: 700px;*/
+	border: 0px solid lime;
 }
 
 div#left,div#right,div#bottom
 {
-	border: 1px solid black;
 }
 
 div#left
@@ -268,7 +267,6 @@ div#right
 {
 	float: right;
 	width: 500px;
-        border: 1px solid black;
 }
 
 div#bottom
@@ -276,7 +274,15 @@ div#bottom
 	clear: both;
 }
 
+div#datePicker
+{
+  float: left;
+}
 
+div#chosenData
+{
+  border: 1px solid red;
+}
 
 
 /* Login form definitions are used also for print */
