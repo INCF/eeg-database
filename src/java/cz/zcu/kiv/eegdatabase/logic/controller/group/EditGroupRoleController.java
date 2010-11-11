@@ -21,6 +21,8 @@ import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.mail.MailException;
+import org.springframework.mail.MailSender;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -41,6 +43,7 @@ public class EditGroupRoleController extends SimpleFormController {
   private String domain;
 
   private JavaMailSenderImpl mailSender;
+  private SimpleMailMessage mailMessage;
 
   public EditGroupRoleController() {
     setCommandClass(EditGroupRoleCommand.class);
@@ -96,17 +99,18 @@ public class EditGroupRoleController extends SimpleFormController {
     log.debug("email body: " + emailBody);
 
     log.debug("Composing e-mail message");
-    MimeMessage message = mailSender.createMimeMessage();
+     MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+    message.setFrom(mailMessage.getFrom());
     //message.setContent(confirmLink, "text/html");
-    MimeMessageHelper helper = new MimeMessageHelper(message, true);
-    helper.setTo(emailAdmin);
-    helper.setFrom(messageSource.getMessage("editgrouprole.email.from",null, RequestContextUtils.getLocale(request)));
-    helper.setSubject(messageSource.getMessage("editgrouprole.email.subject",null, RequestContextUtils.getLocale(request)));
-    helper.setText(emailBody, true);
+       message.setTo(emailAdmin);
+    message.setSubject(messageSource.getMessage("editgrouprole.email.subject",null, RequestContextUtils.getLocale(request)));
+    message.setText(emailBody);
    
     try {
       log.debug("Sending e-mail");
-      mailSender.send(message);
+      mailSender.send(mimeMessage);
       log.debug("E-mail was sent");
     } catch (MailException e) {
       log.debug("E-mail was NOT sent");
@@ -193,6 +197,20 @@ public class EditGroupRoleController extends SimpleFormController {
    */
   public void setMessageSource(HierarchicalMessageSource messageSource) {
     this.messageSource = messageSource;
+  }
+
+  /**
+   * @return the mailMessage
+   */
+  public SimpleMailMessage getMailMessage() {
+    return mailMessage;
+  }
+
+  /**
+   * @param mailMessage the mailMessage to set
+   */
+  public void setMailMessage(SimpleMailMessage mailMessage) {
+    this.mailMessage = mailMessage;
   }
 
 

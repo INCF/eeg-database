@@ -11,7 +11,7 @@
   <!-- It is not sure whether this file will be used or not. -->
   <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
     <property name="location">
-      <value>/WEB-INF/jdbc.properties</value>
+      <value>/WEB-INF/project.properties</value>
     </property>
   </bean>
 
