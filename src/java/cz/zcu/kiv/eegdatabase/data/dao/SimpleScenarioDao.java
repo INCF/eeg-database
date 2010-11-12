@@ -32,7 +32,7 @@ public class SimpleScenarioDao
     return list;
   }
 
-  public List<Scenario> getScenarioSearchResults(List<SearchRequest> requests) throws NumberFormatException {
+  public List<Scenario> getScenarioSearchResults(List<SearchRequest> requests, int personId) throws NumberFormatException {
 
     boolean ignoreChoice = false;
     String hqlQuery = "from Scenario where (";
@@ -61,7 +61,7 @@ public class SimpleScenarioDao
     }
     List<Scenario> results;
 
-    hqlQuery += ") and private=0";
+    hqlQuery += ") and (private=0 or person.personId = "+ ")";
     try {
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {

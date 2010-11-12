@@ -4,6 +4,7 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
+import cz.zcu.kiv.eegdatabase.logic.wrapper.IWrapper;
 import java.io.IOException;
 import java.lang.reflect.Field;
 import java.util.List;
@@ -34,7 +35,7 @@ public abstract class SectionCreator {
   protected Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
   protected Fragmenter fragmenter = new SimpleFragmenter(150);
 
-  public abstract Set<FulltextResult> createSection(Queries queries, String[] fields, SectionType type);
+  public abstract Set<FulltextResult> createSection(Queries queries, String[] fields, IWrapper type);
 
   protected List<Object> getFulltextResults(Queries queries) {
 

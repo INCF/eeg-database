@@ -87,22 +87,20 @@ Log log = LogFactory.getLog(getClass());
           requests.add(new SearchRequest(request.getParameter(condition.get(i)),
             (request.getParameter(source.get(i))),
             (request.getParameter(andOr.get(i-1)))));
-         // System.out.println(andOr.get(i-1)+ " " + source.get(i)+ " "+ condition.get(i));
     }
     try {
-   List<Scenario> scenarioResults = scenarioDao.getScenarioSearchResults(requests);
+   List<Scenario> scenarioResults = scenarioDao.getScenarioSearchResults
+           (requests, personDao.getLoggedPerson().getPersonId());
      mav.addObject("scenarioResults", scenarioResults);
      mav.addObject("resultsEmpty", scenarioResults.isEmpty());
     }   
     catch (NumberFormatException e) {
       mav.addObject("mistake", "Number error");
       mav.addObject("error", true);
-     // System.out.println("Number error");
     }
     catch (RuntimeException e) {
       mav.addObject("mistake", e.getMessage());
       mav.addObject("error", true);
-      //System.out.println(e.getMessage());
     }
 
     return mav;

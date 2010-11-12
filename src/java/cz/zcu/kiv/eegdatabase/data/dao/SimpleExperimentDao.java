@@ -6,6 +6,7 @@ import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -109,8 +110,10 @@ public class SimpleExperimentDao<T, PK extends Serializable>
       }
       
       results = q.list();
+    } catch (ParseException e) {
+      throw new RuntimeException("Inserted date and time is not in valid format \n" +
+              "Valid format is DD/MM/YYYY HH:MM or DD/MM/YYYY.");
     } catch (Exception e) {
-      e.printStackTrace();
       return new ArrayList<Experiment>();
     }
 

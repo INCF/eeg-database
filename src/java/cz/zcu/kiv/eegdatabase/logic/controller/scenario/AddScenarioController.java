@@ -18,9 +18,7 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import java.util.HashMap;
 import java.util.List;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
+
 
 /**
  * Controller which processes form for adding a measuration
@@ -29,7 +27,7 @@ import org.springframework.validation.Validator;
  */
 public class AddScenarioController
         extends SimpleFormController
-        implements Validator {
+        {
 
   private Log log = LogFactory.getLog(getClass());
   private AuthorizationManager auth;
@@ -123,37 +121,6 @@ public class AddScenarioController
     return mav;
   }
 
-  public boolean supports(Class clazz) {
-    return clazz.equals(AddScenarioCommand.class);
-  }
-
-  public void validate(Object command, Errors errors) {
-    log.debug("Validating scenario form");
-    AddScenarioCommand data = (AddScenarioCommand) command;
-
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "length", "required.field");
-    ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
-
-    if (data.getResearchGroup() == -1) {
-      // research group not chosen
-      errors.rejectValue("researchGroup", "required.researchGroup");
-    } else if (!auth.personAbleToWriteIntoGroup(data.getResearchGroup())) {
-      errors.rejectValue("researchGroup", "invalid.notAbleToAddExperimentInGroup");
-    }
-
-    try {
-      Integer.parseInt(data.getLength());
-    } catch (NumberFormatException ex) {
-      errors.rejectValue("length", "invalid.scenarioLength");
-      log.debug("Scenario length is not in parseable format!");
-    }
-
-    if (data.getDataFile().isEmpty()) {
-      errors.rejectValue("dataFile", "required.dataFile");
-      log.debug("No data file was inserted!");
-    }
-  }
 
   public ScenarioDao getScenarioDao() {
     return scenarioDao;

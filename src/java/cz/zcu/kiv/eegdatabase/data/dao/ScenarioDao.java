@@ -17,5 +17,5 @@ public interface ScenarioDao extends GenericDao<Scenario, Integer> {
 
   public List getScenariosWhereOwner(Person person, int LIMIT);
 
-  public List<Scenario> getScenarioSearchResults(List<SearchRequest> request);
+  public List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
 }

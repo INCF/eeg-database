@@ -769,6 +769,10 @@
     <property name="experimentOptParamDef" ref="experimentOptParamDefDao" />
     <property name="commentDao" ref="articleCommentDao" />
     <property name="creator" ref="creator" />
+    <property name="personWrapper" ref="personWrapper" />
+    <property name="articleWrapper" ref="articleWrapper" />
+    <property name="scenarioWrapper" ref="scenarioWrapper" />
+    <property name="experimentWrapper" ref="experimentWrapper" />
 
 
     <!-- <property name="successView" value="redirect:/home"/>-->
@@ -777,6 +781,18 @@
   </bean>
 
   <bean name="creator" class="cz.zcu.kiv.eegdatabase.logic.controller.search.SimpleSectionCreator">
+  </bean>
+
+  <bean name="personWrapper" class="cz.zcu.kiv.eegdatabase.logic.wrapper.PersonWrapper">
+  </bean>
+
+  <bean name="articleWrapper" class="cz.zcu.kiv.eegdatabase.logic.wrapper.ArticleWrapper">
+  </bean>
+
+  <bean name="scenarioWrapper" class="cz.zcu.kiv.eegdatabase.logic.wrapper.ScenarioWrapper">
+  </bean>
+
+  <bean name="experimentWrapper" class="cz.zcu.kiv.eegdatabase.logic.wrapper.ExperimentWrapper">
   </bean>
 
 </beans>
