@@ -16,15 +16,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import java.awt.image.BufferedImage;
-import java.io.ByteArrayOutputStream;
-import java.util.HashMap;
-import java.util.Map;
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
-import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
@@ -33,6 +30,7 @@ public class RegistrationController extends SimpleFormController {
   private Log log = LogFactory.getLog(getClass());
   private PersonDao personDao;
   private JavaMailSenderImpl mailSender;
+  private SimpleMailMessage mailMessage;
   private HierarchicalMessageSource messageSource;
   private String domain;
   private static final String DEFAULT_CAPTCHA_RESPONSE_PARAMETER_NAME = "j_captcha_response";
@@ -54,12 +52,15 @@ public class RegistrationController extends SimpleFormController {
     boolean isResponseCorrect = false;
     String captchaId = request.getSession().getId();
     String response = request.getParameter(captchaResponseParameterName);
+    log.debug("captchaId " + captchaId);
+    log.debug("captha response " + response);
     try {
       if (response != null) {
         isResponseCorrect =
                 captchaService.validateResponseForID(captchaId, response);
       }
     } catch (CaptchaServiceException e) {
+       log.error(e);
     }
     if (!isResponseCorrect) {
       String objectName = "Captcha";
@@ -67,7 +68,7 @@ public class RegistrationController extends SimpleFormController {
       Object[] arguments = {};
       String defaultMessage = "Invalid image test entered!";
       ObjectError oe = new ObjectError(objectName, codes, arguments, defaultMessage);
-      errors.addError(oe); 
+      errors.addError(oe);
     }
   }
 
@@ -151,20 +152,26 @@ public class RegistrationController extends SimpleFormController {
 
 
     log.debug("Composing e-mail message");
-    MimeMessage message = mailSender.createMimeMessage();
-    //message.setContent(confirmLink, "text/html");
-    MimeMessageHelper helper = new MimeMessageHelper(message, true);
-    helper.setTo(rc.getEmail());
-    helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
-    helper.setSubject(messageSource.getMessage("registration.email.subject", null, RequestContextUtils.getLocale(request)));
-    helper.setText(emailBody, true);
+     MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+    message.setFrom(mailMessage.getFrom());
+
+  //  message.setContent("text/html");
+    message.setTo(rc.getEmail());
+    //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
+    message.setSubject(messageSource.getMessage("registration.email.subject", null, RequestContextUtils.getLocale(request)));
+    message.setText(emailBody, true);
 
     try {
-      log.debug("Sending e-mail");
-      mailSender.send(message);
+      log.debug("Sending e-mail" + message);
+      log.debug("mailSender" + mailSender);
+      log.debug("smtp " + mailSender.getHost());
+      mailSender.send(mimeMessage);
       log.debug("E-mail was sent");
     } catch (MailException e) {
-      log.debug("E-mail was NOT sent");
+      log.error("E-mail was NOT sent");
+      log.error(e);
       e.printStackTrace();
     }
 
@@ -212,5 +219,19 @@ public class RegistrationController extends SimpleFormController {
 
   public void setCaptchaResponseParameterName(String captchaResponseParameterName) {
     this.captchaResponseParameterName = captchaResponseParameterName;
+  }
+
+  /**
+   * @return the mailMessage
+   */
+  public SimpleMailMessage getMailMessage() {
+    return mailMessage;
+  }
+
+  /**
+   * @param mailMessage the mailMessage to set
+   */
+  public void setMailMessage(SimpleMailMessage mailMessage) {
+    this.mailMessage = mailMessage;
   }
 }
