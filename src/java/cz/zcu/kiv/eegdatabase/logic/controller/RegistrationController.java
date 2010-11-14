@@ -45,15 +45,14 @@ public class RegistrationController extends SimpleFormController {
 
   @Override
   protected void onBindAndValidate(HttpServletRequest request, Object command, BindException errors) throws Exception {
-    validateCaptcha(request, errors, command);
+    validateCaptcha(request, errors);
   }
 
 
   //validates captch image text
-  protected void validateCaptcha(HttpServletRequest request, BindException errors, Object command) {
+  protected void validateCaptcha(HttpServletRequest request, BindException errors) {
     boolean isResponseCorrect = false;
-    RegistrationCommand com = (RegistrationCommand) command;
-    String captchaId = com.getCaptchaId();
+    String captchaId = request.getSession().getId();
     String response = request.getParameter(captchaResponseParameterName);
     log.debug("captchaId " + captchaId);
     log.debug("captha response " + response);

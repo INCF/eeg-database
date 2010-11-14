@@ -15,7 +15,6 @@ public class RegistrationCommand {
     private String password;
     private String password2;
     private String controlText;
-    private String captchaId;
 
   public String getControlText() {
     return controlText;
@@ -89,17 +88,4 @@ public class RegistrationCommand {
         this.username = username;
     }
 
-  /**
-   * @return the captchaId
-   */
-  public String getCaptchaId() {
-    return captchaId;
-  }
-
-  /**
-   * @param captchaId the captchaId to set
-   */
-  public void setCaptchaId(String captchaId) {
-    this.captchaId = captchaId;
-  }
 }

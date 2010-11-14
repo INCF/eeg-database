@@ -51,9 +51,7 @@ public class CaptchaImageGenerator implements Controller, InitializingBean{
         responseOutputStream.write(captchaChallengeAsJpeg);
         responseOutputStream.flush();
         responseOutputStream.close();
-        ModelAndView mav = new ModelAndView("captcha.html");
-        mav.addObject("captchaId", captchaId);
-        return mav;
+        return null;
 	}
 
 
