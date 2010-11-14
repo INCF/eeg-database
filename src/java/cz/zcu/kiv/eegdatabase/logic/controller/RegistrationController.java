@@ -15,6 +15,7 @@ import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.CaptchaImageGenerator;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import javax.mail.internet.MimeMessage;
 import org.springframework.mail.MailException;
@@ -46,6 +47,7 @@ public class RegistrationController extends SimpleFormController {
   protected void onBindAndValidate(HttpServletRequest request, Object command, BindException errors) throws Exception {
     validateCaptcha(request, errors);
   }
+
 
   //validates captch image text
   protected void validateCaptcha(HttpServletRequest request, BindException errors) {

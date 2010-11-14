@@ -87,4 +87,5 @@ public class RegistrationCommand {
     public void setUsername(String username) {
         this.username = username;
     }
+
 }

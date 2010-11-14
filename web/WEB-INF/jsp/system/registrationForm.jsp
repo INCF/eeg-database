@@ -83,9 +83,8 @@
        <form:label path="controlText" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.controlText"/></form:label>
         <input type="text" name="j_captcha_response"/>
       </div>
-
       
-        <img src="captcha.html" align="absmiddle" hspace="150" alt="cap"/>
+        <img src="captcha.html?captchaId=${pageContext.session.id}" align="absmiddle" hspace="150" alt="cap"/>
        <c:forEach items="${status.errorMessages}" var="errorMessage">
           <li style="color:red"><c:out value="${errorMessage}"/></li>
        </c:forEach>
