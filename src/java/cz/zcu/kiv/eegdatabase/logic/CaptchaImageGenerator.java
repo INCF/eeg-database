@@ -17,6 +17,7 @@ import org.springframework.web.servlet.mvc.Controller;
 import com.octo.captcha.service.image.ImageCaptchaService;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
+import cz.zcu.kiv.eegdatabase.logic.controller.RegistrationController;
 
 /**
 *
@@ -26,12 +27,13 @@ import com.sun.image.codec.jpeg.JPEGImageEncoder;
 public class CaptchaImageGenerator implements Controller, InitializingBean{
 	private ImageCaptchaService captchaService;
 	private Log log = LogFactory.getLog(getClass());
+        public static final String CAPTCHA_ID_RESPONSE_PARAMETER = "captchaId";
 
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		byte[] captchaChallengeAsJpeg = null;
         ByteArrayOutputStream jpegOutputStream = new ByteArrayOutputStream();
 
-        String captchaId = request.getSession().getId();
+        String captchaId = request.getParameter(CAPTCHA_ID_RESPONSE_PARAMETER);
         log.debug("captchaId " + captchaId);
     	BufferedImage challenge =
                 captchaService.getImageChallengeForID(captchaId,request.getLocale());
@@ -49,7 +51,9 @@ public class CaptchaImageGenerator implements Controller, InitializingBean{
         responseOutputStream.write(captchaChallengeAsJpeg);
         responseOutputStream.flush();
         responseOutputStream.close();
-        return null;
+        ModelAndView mav = new ModelAndView("captcha.html");
+        mav.addObject("captchaId", captchaId);
+        return mav;
 	}
 
 
