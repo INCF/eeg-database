@@ -12,16 +12,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import java.util.List;
 import cz.zcu.kiv.eegdatabase.logic.commandobjects.ExperimentsSearcherCommand;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 import java.util.HashMap;
 import java.util.Map;
 

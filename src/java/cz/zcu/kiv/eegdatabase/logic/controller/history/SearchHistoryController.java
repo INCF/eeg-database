@@ -11,11 +11,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.logic.commandobjects.HistorySearcherCommand;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.AbstractSearchController;
 import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Enumeration;
 import java.util.List;
 import java.util.Set;
 import org.apache.commons.logging.Log;
@@ -24,16 +22,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
 /**
  * Prepared search results
  * using history searcher command for saving searching scenario(by scenario title), date interval (from date of download, to date of download)
  * @author pbruha
  */
-public class SearchHistoryController extends SimpleFormController {
+public class SearchHistoryController extends AbstractSearchController {
 
-  private Log log = LogFactory.getLog(getClass());
   private AuthorizationManager auth;
   private PersonDao personDao;
   private SimpleHistoryDao<History, Integer> historyDao;
@@ -52,7 +48,7 @@ public class SearchHistoryController extends SimpleFormController {
   @Override
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
     log.debug("Processing advanced search download history");
-    ModelAndView mav = new ModelAndView("history/searchResults");
+    ModelAndView mav = super.onSubmit(request, response, command);
     Person user = null;
     String authority = null;
     String roleAdmin = "ROLE_ADMIN";
@@ -74,31 +70,7 @@ public class SearchHistoryController extends SimpleFormController {
         }
       }
 
-      List<String> source = new ArrayList<String>();
-      List<String> condition = new ArrayList<String>();
-      List<String> andOr = new ArrayList<String>();
-      Enumeration enumer = request.getParameterNames();
-      while (enumer.hasMoreElements()) {
-        String param = (String) enumer.nextElement();
-        if (param.startsWith("source")) {
-          source.add(param);
-        } else if (param.startsWith("condition")) {
-          condition.add(param);
-        } else {
-          andOr.add(param);
-        }
-      }
-      Collections.sort(andOr);
-      Collections.sort(source);
-      Collections.sort(condition);
-      List<SearchRequest> requests = new ArrayList<SearchRequest>();
-      requests.add(new SearchRequest(request.getParameter(condition.get(0)),
-              (request.getParameter(source.get(0))), ""));
-      for (int i = 1; i < condition.size(); i++) {
-        requests.add(new SearchRequest(request.getParameter(condition.get(i)),
-                (request.getParameter(source.get(i))),
-                (request.getParameter(andOr.get(i - 1)))));
-      }
+    
       try {
         List<History> historyResults = historyDao.getHistorySearchResults(requests,isGroupAdmin, groupsId);
         mav.addObject("historyResults", historyResults);

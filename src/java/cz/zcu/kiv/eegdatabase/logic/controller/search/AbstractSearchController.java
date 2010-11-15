@@ -26,16 +26,14 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  */
 public class AbstractSearchController extends SimpleFormController {
 
-  Log log = LogFactory.getLog(getClass());
+  protected Log log = LogFactory.getLog(getClass());
 
   protected List<SearchRequest> requests;
 
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command) throws Exception {
-   // ScenarioSearcherCommand scenarioSearcherCommand = (ScenarioSearcherCommand) command;
     logger.debug("Search scenario controller");
     ModelAndView mav = new ModelAndView(getSuccessView());
 
-   // logger.debug("I have search scenario command: " + scenarioSearcherCommand);
     List<String> source = new ArrayList<String>();
     List<String> condition = new ArrayList<String>();
     List<String> andOr = new ArrayList<String>();
