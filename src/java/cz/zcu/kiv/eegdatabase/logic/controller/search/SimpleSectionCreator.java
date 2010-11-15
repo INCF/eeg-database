@@ -17,11 +17,11 @@ import java.util.Set;
 public class SimpleSectionCreator extends SectionCreator {
 
   @Override
-  public Set<FulltextResult> createSection(Queries queries, String[] fields, IWrapper type) {
+  public Set<FulltextResult> createSection(Queries queries, String[] fields, IWrapper type,
+          RelationshipType relType) {
     List<Object> list = super.getFulltextResults(queries);
     Set<FulltextResult> results = new HashSet<FulltextResult>();
     if (!list.isEmpty()) {
-      RelationshipType relType = getObjectType(list.get(0), type);
       for (Object o : list) {
         try {
           switch (relType) {
@@ -55,36 +55,14 @@ public class SimpleSectionCreator extends SectionCreator {
     return results;
   }
 
-  private RelationshipType getObjectType(Object o, IWrapper type) {
-    Field[] fields = o.getClass().getDeclaredFields();
-    if (o.getClass().getName().endsWith(type.className())) {
-      return RelationshipType.SECTION_OBJ;
-    }
-    for (int i = 0; i < fields.length; i++) {
-      fields[i].setAccessible(true);
-      if (fields[i].getName().equals(type.className().toLowerCase())) {
-        return RelationshipType.SIMPLE_REL;
-      }
-      if (fields[i].getName().equals(type.getSetName())) {
-        return RelationshipType.SET;
-      }
-    }
-    return RelationshipType.NO_DEF;
-  }
 
   private void highlight(Object o, Object main, Set<FulltextResult> results, String[] fields, IWrapper type)
           throws Exception {
     String title = type.getTitle();
-    int id = getId(o, type);
-    results.add(new FulltextResult
-            (id, super.getHighlightedText(fields, main), type.className(), type.getPath(), title));
-  }
-
-
-  private int getId(Object o, IWrapper type) throws NoSuchFieldException,
-          IllegalArgumentException, IllegalAccessException {
     Field f = o.getClass().getDeclaredField(type.className().toLowerCase() + "Id");
     f.setAccessible(true);
-    return (Integer) f.get(o);
+    int id = (Integer) f.get(o);
+    results.add(new FulltextResult
+            (id, super.getHighlightedText(fields, main), type.className(), type.getPath(), title));
   }
 }

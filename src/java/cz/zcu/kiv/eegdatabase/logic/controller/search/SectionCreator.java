@@ -35,7 +35,7 @@ public abstract class SectionCreator {
   protected Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
   protected Fragmenter fragmenter = new SimpleFragmenter(150);
 
-  public abstract Set<FulltextResult> createSection(Queries queries, String[] fields, IWrapper type);
+  public abstract Set<FulltextResult> createSection(Queries queries, String[] fields, IWrapper type, RelationshipType relType);
 
   protected List<Object> getFulltextResults(Queries queries) {
 

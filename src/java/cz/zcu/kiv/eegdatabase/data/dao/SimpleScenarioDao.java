@@ -61,7 +61,7 @@ public class SimpleScenarioDao
     }
     List<Scenario> results;
 
-    hqlQuery += ") and (private=0 or person.personId = "+ ")";
+    hqlQuery += ") and (private=0 or person.personId = "+ personId+ ")";
     try {
       results = getHibernateTemplate().find(hqlQuery);
     } catch (Exception e) {

@@ -89,8 +89,8 @@
         <!-- Full text search-->
         <prop key="experiments/fulltext.html">fullTextSearchController</prop>
         <!-- Advanced search-->
-        <prop key="scenario/search-results.html">scenarioSearcherController</prop>
-        <prop key="scenario/search.html">scenarioSearcherController</prop>
+        <prop key="scenarios/search-results.html">scenarioSearcherController</prop>
+        <prop key="scenarios/search.html">scenarioSearcherController</prop>
         <prop key="people/search.html">peopleSearcherController</prop>
         <prop key="people/search-results.html">peopleSearcherController</prop>
         <prop key="experiments/search.html">experimentsSearcherController</prop>

@@ -27,9 +27,8 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
  *
  * @author pbruha
  */
-public class PeopleSearcherController extends SimpleFormController{
+public class PeopleSearcherController extends AbstractSearchController {
 
-   Log log = LogFactory.getLog(getClass());
   private PersonDao personDao;
   private GenericDao<VisualImpairment, Integer> eyesDefectDao;
   private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
@@ -50,36 +49,8 @@ public class PeopleSearcherController extends SimpleFormController{
   @Override
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
     logger.debug("Search people controller");
-    ModelAndView mav = new ModelAndView(getSuccessView());
-    PeopleSearcherCommand peopleSearcherCommand = (PeopleSearcherCommand) command;
-    logger.debug("I have people searcher command: " + peopleSearcherCommand);
-    List<String> source = new ArrayList<String>();
-    List<String> condition = new ArrayList<String>();
-    List<String> andOr = new ArrayList<String>();
-    Enumeration enumer = request.getParameterNames();
-    while (enumer.hasMoreElements()) {
-      String param = (String) enumer.nextElement();
-      if (param.startsWith("source")) {
-        source.add(param);
-      }
-      else if (param.startsWith("condition")) {
-        condition.add(param);
-      }
-      else {
-        andOr.add(param);
-      }
-    }
-    Collections.sort(andOr);
-    Collections.sort(source);
-    Collections.sort(condition);
-    List<SearchRequest> requests = new ArrayList<SearchRequest>();
-    requests.add(new SearchRequest(request.getParameter(condition.get(0)),
-            (request.getParameter(source.get(0))), ""));
-    for (int i = 1; i < condition.size(); i++) {
-          requests.add(new SearchRequest(request.getParameter(condition.get(i)),
-            (request.getParameter(source.get(i))),
-            (request.getParameter(andOr.get(i-1)))));
-    }
+    ModelAndView mav = super.onSubmit(request, response, command);
+
     try {
     List<Person> personResults = personDao.getPersonSearchResults(requests);
     mav.addObject("personResults", personResults);

@@ -29,9 +29,9 @@ import java.util.Map;
  *
  * @author pbruha
  */
-public class ExperimentsSearcherController extends SimpleFormController {
+public class ExperimentsSearcherController extends AbstractSearchController {
 
-  Log log = LogFactory.getLog(getClass());
+  
   //private GenericDao<Object, Integer> genericDao;
   private GenericDao<Person, Integer> personDao;
   private ExperimentDao experimentDao;
@@ -62,34 +62,7 @@ public class ExperimentsSearcherController extends SimpleFormController {
   @Override
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
     logger.debug("Search experiments controller");
-    ModelAndView mav = new ModelAndView(getSuccessView());
-    ExperimentsSearcherCommand measurationSearchCommand = (ExperimentsSearcherCommand) command;
-    logger.debug("I have search experiments command: " + measurationSearchCommand);
-    List<String> source = new ArrayList<String>();
-    List<String> condition = new ArrayList<String>();
-    List<String> andOr = new ArrayList<String>();
-    Enumeration enumer = request.getParameterNames();
-    while (enumer.hasMoreElements()) {
-      String param = (String) enumer.nextElement();
-      if (param.startsWith("source")) {
-        source.add(param);
-      } else if (param.startsWith("condition")) {
-        condition.add(param);
-      } else {
-        andOr.add(param);
-      }
-    }
-    Collections.sort(andOr);
-    Collections.sort(source);
-    Collections.sort(condition);
-    List<SearchRequest> requests = new ArrayList<SearchRequest>();
-    requests.add(new SearchRequest(request.getParameter(condition.get(0)),
-            (request.getParameter(source.get(0))), ""));
-    for (int i = 1; i < condition.size(); i++) {
-      requests.add(new SearchRequest(request.getParameter(condition.get(i)),
-              (request.getParameter(source.get(i))),
-              (request.getParameter(andOr.get(i - 1)))));
-    }
+    ModelAndView mav = super.onSubmit(request, response, command);
     try {
       List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests);
       mav.addObject("experimentsResults", experimentResults);
