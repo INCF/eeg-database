@@ -138,20 +138,21 @@ public class AddPersonController extends SimpleFormController {
 
 
     log.debug("Composing e-mail message");
-    MimeMessage message = mailSender.createMimeMessage();
+    MimeMessage mimeMessage = mailSender.createMimeMessage();
     //message.setContent(confirmLink, "text/html");
-    MimeMessageHelper helper = new MimeMessageHelper(message, true);
+    MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
     helper.setTo(apc.getEmail());
-    helper.setFrom(messageSource.getMessage("registration.email.from",null, RequestContextUtils.getLocale(request)));
+    //helper.setFrom(messageSource.getMessage("registration.email.from",null, RequestContextUtils.getLocale(request)));
     helper.setSubject(messageSource.getMessage("registration.email.subject",null, RequestContextUtils.getLocale(request)));
     helper.setText(emailBody, true);
 
     try {
       log.debug("Sending e-mail");
-      mailSender.send(message);
+      mailSender.send(mimeMessage);
       log.debug("E-mail was sent");
     } catch (MailException e) {
-      log.debug("E-mail was NOT sent");
+      log.error("E-mail was NOT sent");
+      log.error(e);
       e.printStackTrace();
     }
 
