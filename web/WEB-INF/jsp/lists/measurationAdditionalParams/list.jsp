@@ -26,7 +26,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='measuration-optional-parameters/add.html'/>" class="lightButtonLink"><fmt:message key="link.addMeasurationAdditionalParam"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addMeasurationAdditionalParam"/></a>
     </div>
   </auth:experimenter>
 

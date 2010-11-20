@@ -26,7 +26,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='person-optional-parameters/add.html'/>" class="lightButtonLink"><fmt:message key="link.addPersonAdditionalParam"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addPersonAdditionalParam"/></a>
     </div>
   </auth:experimenter>
 

@@ -24,7 +24,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='eyes-defects/add.html'/>" class="lightButtonLink"><fmt:message key="link.addEyesDefect"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addEyesDefect"/></a>
     </div>
   </auth:experimenter>
 

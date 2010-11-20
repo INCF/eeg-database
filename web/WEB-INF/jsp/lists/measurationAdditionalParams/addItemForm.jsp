@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addExperimentOptionalParameter">
     <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
 
-    <c:url value="measuration-optional-parameters/add.html" var="formUrl"/>
+    <c:url value="add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParam" cssClass="standardInputForm">
         <fieldset>
 
