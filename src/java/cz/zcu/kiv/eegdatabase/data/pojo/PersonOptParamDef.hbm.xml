@@ -15,7 +15,7 @@
     </property>
     <set inverse="true" name="personOptParamVals">
       <key>
-        <column name="PERSON_ADDITIONAL_PARAM_ID" not-null="true" precision="22" scale="0"/>
+        <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal"/>
     </set>

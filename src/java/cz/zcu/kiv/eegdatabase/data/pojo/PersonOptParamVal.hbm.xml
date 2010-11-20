@@ -8,11 +8,11 @@
         <column name="PERSON_ID" precision="22" scale="0"/>
       </key-property>
       <key-property name="personAdditionalParamId" type="int">
-        <column name="PERSON_ADDITIONAL_PARAM_ID" precision="22" scale="0"/>
+        <column name="PERSON_OPT_PARAM_DEF_ID" precision="22" scale="0"/>
       </key-property>
     </composite-id>
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef" fetch="select" insert="false" name="personOptParamDef" update="false">
-      <column name="PERSON_ADDITIONAL_PARAM_ID" not-null="true" precision="22" scale="0"/>
+      <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" insert="false" name="person" update="false">
       <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
