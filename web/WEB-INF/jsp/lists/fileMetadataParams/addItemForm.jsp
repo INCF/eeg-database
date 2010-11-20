@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addFileMetadataParameter">
     <h1><fmt:message key="pageTitle.addFileMetadataParameter"/></h1>
 
-    <c:url value="file-metadata-names/add.html" var="formUrl"/>
+    <c:url value="add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addFileMetadataParam" cssClass="standardInputForm">
         <fieldset>
 

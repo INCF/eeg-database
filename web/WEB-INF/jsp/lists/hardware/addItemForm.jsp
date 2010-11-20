@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.addHardware">
     <h1><fmt:message key="pageTitle.addHardware"/></h1>
 
-    <c:url value="hardware/add.html" var="formUrl"/>
+    <c:url value="add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addHardware" cssClass="standardInputForm">
         <fieldset>
 

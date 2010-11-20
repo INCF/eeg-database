@@ -28,7 +28,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='hardware/add.html'/>" class="lightButtonLink"><fmt:message key="link.addHardware"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHardware"/></a>
     </div>
   </auth:experimenter>
 
