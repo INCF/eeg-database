@@ -10,13 +10,13 @@
       <!-- editation -->
       <h1><fmt:message key="pageTitle.editExperiment"/></h1>
 
-      <c:url value="/edit.html?id=${addMeasuration.measurationId}" var="formUrl"/>
+      <c:url value="edit.html?id=${addMeasuration.measurationId}" var="formUrl"/>
     </c:when>
     <c:otherwise>
       <!-- creating new -->
       <h1><fmt:message key="pageTitle.addExperiment"/></h1>
 
-      <c:url value="/add-experiment.html" var="formUrl"/>
+      <c:url value="add-experiment.html" var="formUrl"/>
     </c:otherwise>
   </c:choose>
 
