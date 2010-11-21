@@ -99,6 +99,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
           hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
                   "lower('%" + request.getCondition() + "%')";
         }
+        ignoreChoice = false;
       }
 
       Session ses = getSession();

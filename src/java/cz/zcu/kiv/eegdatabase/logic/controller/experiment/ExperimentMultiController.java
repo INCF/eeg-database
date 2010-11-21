@@ -49,6 +49,7 @@ public class ExperimentMultiController extends MultiActionController {
     }
     mav.addObject("measurationListTitle", "pageTitle.allExperiments");
     mav.addObject("measurationList", list);
+    mav.addObject("myExperiments", false);
 
     return mav;
   }
@@ -64,6 +65,7 @@ public class ExperimentMultiController extends MultiActionController {
     List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
     mav.addObject("measurationListTitle", "pageTitle.myExperiments");
     mav.addObject("measurationList", list);
+    mav.addObject("myExperiments", true);
 
     return mav;
   }

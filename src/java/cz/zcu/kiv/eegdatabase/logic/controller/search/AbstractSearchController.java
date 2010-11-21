@@ -5,9 +5,6 @@
 
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.ScenarioSearcherCommand;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Enumeration;
@@ -16,7 +13,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
