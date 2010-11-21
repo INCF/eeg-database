@@ -8,7 +8,7 @@
 
   <h1><fmt:message key="pageTitle.addDataFile"/></h1>
 
-  <c:url value="/experiments/data/add.html?experimentId=${addData.measurationId}" var="formUrl"/>
+  <c:url value="add.html?experimentId=${addData.measurationId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addData" cssClass="standardInputForm" name="addData" enctype="multipart/form-data">
     <fieldset>
 
