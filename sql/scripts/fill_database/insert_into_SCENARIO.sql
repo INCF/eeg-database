@@ -2,4 +2,4 @@ INSERT INTO SCENARIO(SCENARIO_ID, TITLE, SCENARIO_LENGTH, SCENARIO_XML, DESCRIPT
 '<?xml version="1.0" encoding="utf-8" ?>
 <testFile>
   <item>Hello</item>
-</testFile>', 'testovac� scenario', 8, 3, 1);
+</testFile>', 'testovac� scenario', 8, 3, 1,'reakce.xml', 'text/xml');

@@ -107,7 +107,7 @@ INSERT INTO SCENARIO(SCENARIO_ID, TITLE, SCENARIO_LENGTH, SCENARIO_XML, DESCRIPT
 '<?xml version="1.0" encoding="utf-8" ?>
 <testFile>
   <item>Hello</item>
-</testFile>', 'testovac� scenario', 8, 3, 1);
+</testFile>', 'testovac� scenario', 8, 3, 1, 'reakce.xml', 'text/xml');
 
 INSERT INTO EXPERIMENT(EXPERIMENT_ID, SCENARIO_ID, START_TIME, END_TIME, TEMPERATURE, WEATHERNOTE, SUBJECT_PERSON_ID, WEATHER_ID, OWNER_ID, RESEARCH_GROUP_ID, PRIVATE)
 VALUES(1,1,TO_DATE ('29.3.2010 10:00:00', 'DD.MM.YYYY HH24:MI:SS'), TO_DATE('29.3.2010 10:05:00', 'DD.MM.YYYY HH24:MI:SS') , 23, 'bio2', 10, 2, 9, 3, 1);
