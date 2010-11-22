@@ -60,8 +60,9 @@ public class ScenarioXMLDownloadController extends AbstractController {
     history.setDateOfDownload(currentTimestamp);
     log.debug("Saving download history");
     historyDao.create(history);
-    response.setHeader("Content-Type", "text/xml");
-    response.setHeader("Content-Disposition", "attachment;filename=scenario-" + scenario.getScenarioId());
+   // System.out.println(scenario.getMimetype());
+    response.setHeader("Content-Type", scenario.getMimetype());
+    response.setHeader("Content-Disposition", "attachment;filename=" + scenario.getScenarioName());
     response.getOutputStream().write(c.getSubString(1, (int) c.length()).getBytes());
     response.flushBuffer();
     // mav.addObject("dataObject", scenarioDao.read(scenarioId));

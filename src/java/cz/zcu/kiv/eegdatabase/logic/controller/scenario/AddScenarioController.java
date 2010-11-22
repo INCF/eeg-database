@@ -81,12 +81,15 @@ public class AddScenarioController
     }
 
     MultipartFile file = data.getDataFile();
+    
 
     if (file == null) {
       log.error("No data file was uploaded!");
     } else {
       log.debug("Creating new scenario object");
       Scenario scenario = new Scenario();
+      scenario.setScenarioName(file.getOriginalFilename());
+      scenario.setMimetype(file.getContentType());
 
       log.debug("Setting owner to the logged user.");
       scenario.setPerson(personDao.getLoggedPerson());
