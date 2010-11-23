@@ -8,7 +8,7 @@ package cz.zcu.kiv.eegdatabase.logic.wrapper;
  *
  * @author Honza
  */
-public interface IWrapper {
+public interface Wrapper {
 
   public void setObject(Object o);
 

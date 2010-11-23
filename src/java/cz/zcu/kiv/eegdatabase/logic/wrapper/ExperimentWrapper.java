@@ -10,7 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
  *
  * @author Honza
  */
-public class ExperimentWrapper implements IWrapper {
+public class ExperimentWrapper implements Wrapper {
 
   private Experiment e;
 

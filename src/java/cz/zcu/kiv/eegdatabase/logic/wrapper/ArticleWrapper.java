@@ -10,7 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Article;
  *
  * @author Honza
  */
-public class ArticleWrapper implements IWrapper {
+public class ArticleWrapper implements Wrapper {
 
   private Article a;
 

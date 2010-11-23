@@ -10,7 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
  *
  * @author Honza
  */
-public class ScenarioWrapper implements IWrapper {
+public class ScenarioWrapper implements Wrapper {
 
   private Scenario s;
 

@@ -10,7 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
  *
  * @author Honza
  */
-public class PersonWrapper implements IWrapper {
+public class PersonWrapper implements Wrapper {
 
   private Person p;
 

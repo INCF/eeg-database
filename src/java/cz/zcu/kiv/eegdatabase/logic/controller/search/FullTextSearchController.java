@@ -16,7 +16,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.IWrapper;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.ArticleWrapper;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.ExperimentWrapper;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.PersonWrapper;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.ScenarioWrapper;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.Wrapper;
 import java.util.ArrayList;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
@@ -46,10 +50,6 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
   private GenericDao<ArticleComment, Integer> commentDao;
   private SectionCreator creator;
-  private IWrapper personWrapper;
-  private IWrapper experimentWrapper;
-  private IWrapper scenarioWrapper;
-  private IWrapper articleWrapper;
 
 
 
@@ -77,35 +77,35 @@ public class FullTextSearchController extends SimpleFormController {
 
       String[] scenFields = {"title", "description", "scenarioLength"};
       results = creator.createSection(scenarioDao.getLuceneQuery
-              (fullTextQuery, scenFields), scenFields, scenarioWrapper, RelationshipType.SECTION_OBJ);
+              (fullTextQuery, scenFields), scenFields, new ScenarioWrapper(), RelationshipType.SECTION_OBJ);
 
       String[] exFields = {"weathernote", "temperature"};
       results.addAll(creator.createSection(experimentDao.getLuceneQuery
-              (fullTextQuery, exFields), exFields, experimentWrapper, RelationshipType.SECTION_OBJ));
+              (fullTextQuery, exFields), exFields, new ExperimentWrapper(), RelationshipType.SECTION_OBJ));
 
       String[] perFields = {"note", "email"};
       results.addAll(creator.createSection(personDao.getLuceneQuery
-              (fullTextQuery, perFields), perFields, personWrapper ,RelationshipType.SECTION_OBJ));
+              (fullTextQuery, perFields), perFields, new PersonWrapper() ,RelationshipType.SECTION_OBJ));
 
       String[] artFields = {"title", "text"};
       results.addAll(creator.createSection(articleDao.getLuceneQuery
-              (fullTextQuery, artFields), artFields, articleWrapper, RelationshipType.SECTION_OBJ));
+              (fullTextQuery, artFields), artFields, new ArticleWrapper(), RelationshipType.SECTION_OBJ));
 
       String[] hardFields = {"title", "type", "description"};
       results.addAll(creator.createSection(hardwareDao.getLuceneQuery
-              (fullTextQuery, hardFields), hardFields, experimentWrapper, RelationshipType.SET));
+              (fullTextQuery, hardFields), hardFields, new ExperimentWrapper(), RelationshipType.SET));
 
       String[] visualImpairmentFields = {"description"};
       results.addAll(creator.createSection(eyesDefectDao.getLuceneQuery
-              (fullTextQuery, visualImpairmentFields), visualImpairmentFields, personWrapper, RelationshipType.SET));
+              (fullTextQuery, visualImpairmentFields), visualImpairmentFields, new PersonWrapper(), RelationshipType.SET));
 
       String[] hearingFields = {"decription"};
       results.addAll(creator.createSection(hearingImpairmentDao.getLuceneQuery
-              (fullTextQuery, hearingFields), hearingFields, personWrapper, RelationshipType.SET));
+              (fullTextQuery, hearingFields), hearingFields, new PersonWrapper(), RelationshipType.SET));
 
       String[] weatherFields = {"title", "description"};
       results.addAll(creator.createSection(weatherDao.getLuceneQuery
-              (fullTextQuery, weatherFields), weatherFields, experimentWrapper, RelationshipType.SET));
+              (fullTextQuery, weatherFields), weatherFields, new ExperimentWrapper(), RelationshipType.SET));
 
 //      String[] exOptParamDefFields = {"paramName", "paramDataType"};
 //      results.addAll(scenarioSection.createSection(experimentOptParamDef.getLuceneQuery
@@ -113,7 +113,7 @@ public class FullTextSearchController extends SimpleFormController {
 
       String[] commentPar = {"text"};
       results.addAll(creator.createSection(commentDao.getLuceneQuery
-              (fullTextQuery, commentPar), commentPar, articleWrapper, RelationshipType.SIMPLE_REL));
+              (fullTextQuery, commentPar), commentPar, new ArticleWrapper(), RelationshipType.SIMPLE_REL));
 
 
       logger.debug("I have results: " + results);
@@ -215,37 +215,6 @@ public class FullTextSearchController extends SimpleFormController {
 
   public void setCreator(SectionCreator creator) {
     this.creator = creator;
-  }
-  public IWrapper getArticleWrapper() {
-    return articleWrapper;
-  }
-
-  public void setArticleWrapper(IWrapper articleWrapper) {
-    this.articleWrapper = articleWrapper;
-  }
-
-  public IWrapper getExperimentWrapper() {
-    return experimentWrapper;
-  }
-
-  public void setExperimentWrapper(IWrapper experimentWrapper) {
-    this.experimentWrapper = experimentWrapper;
-  }
-
-  public IWrapper getPersonWrapper() {
-    return personWrapper;
-  }
-
-  public void setPersonWrapper(IWrapper personWrapper) {
-    this.personWrapper = personWrapper;
-  }
-
-  public IWrapper getScenarioWrapper() {
-    return scenarioWrapper;
-  }
-
-  public void setScenarioWrapper(IWrapper scenarioWrapper) {
-    this.scenarioWrapper = scenarioWrapper;
   }
 
 }
