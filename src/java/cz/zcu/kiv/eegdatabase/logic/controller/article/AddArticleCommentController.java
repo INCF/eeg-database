@@ -161,9 +161,9 @@ public class AddArticleCommentController extends SimpleFormController {
   private void sendNotification(String email, ArticleComment comment, HttpServletRequest request) throws MessagingException {
     System.out.println("!!!!!!!!!!! EMAIL !!!!!!!!!!!");
     String articleURL = "http://"+domain+"/articles/detail.html?articleId="+comment.getArticle().getArticleId();
-    System.out.println(articleURL);
+    //System.out.println(articleURL);
     String subject = messageSource.getMessage("articles.comments.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, RequestContextUtils.getLocale(request));
-    System.out.println(subject);
+    //System.out.println(subject);
     String emailBody = "<html><body>";
       
     emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
@@ -177,7 +177,7 @@ public class AddArticleCommentController extends SimpleFormController {
     
     
     
-    System.out.println(emailBody);
+    //System.out.println(emailBody);
     log.debug("email body: " + emailBody);
 
 
