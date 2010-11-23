@@ -286,6 +286,7 @@
     <property name="formView" value="articles/addArticleCommentForm" />
     <property name="articleDao" ref="articleDao" />
     <property name="articleCommentDao" ref="articleCommentDao" />
+    <property name="messageSource" ref="messageSource"/>
     <property name="mailSender" ref="mailSender"/>
     <property name="mailMessage" ref="mailMessage"/>
     <property name="researchGroupDao" ref="researchGroupDao" />

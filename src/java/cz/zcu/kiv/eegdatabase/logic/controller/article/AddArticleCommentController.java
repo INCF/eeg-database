@@ -159,24 +159,25 @@ public class AddArticleCommentController extends SimpleFormController {
   }
 
   private void sendNotification(String email, ArticleComment comment, HttpServletRequest request) throws MessagingException {
+    System.out.println("!!!!!!!!!!! EMAIL !!!!!!!!!!!");
     String articleURL = "http://"+domain+"/articles/detail.html?articleId="+comment.getArticle().getArticleId();
+    System.out.println(articleURL);
     String subject = messageSource.getMessage("articles.comments.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, RequestContextUtils.getLocale(request));
-
+    System.out.println(subject);
     String emailBody = "<html><body>";
-    
+      
     emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
-            new String[]{comment.getArticle().getTitle()}, RequestContextUtils.getLocale(request)) + "</p>";
-
-    emailBody += "<p><h3>Text:</h3> "+comment.getText()+"</p>";
-    emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
-            new String[]{
-              comment.getArticle().getTitle(),
-              "<a href=\""+articleURL+" target=\"_blank\">"+articleURL+"</a>"
-            },
-            RequestContextUtils.getLocale(request)) + "</p><br />";
+            new String[]{comment.getArticle().getTitle()},
+            RequestContextUtils.getLocale(request)) + "";
+    emailBody +="&nbsp;(<a href=\""+articleURL+" target=\"_blank\">"+articleURL+"</a>)</p><br />";
+    emailBody += "<h3>Text:</h3> <p>"+comment.getText()+"</p><br />";
     emailBody += "<p>"+messageSource.getMessage("articles.comments.email.subscribtion.body.text.part2", null, RequestContextUtils.getLocale(request))+"</p>";
     emailBody += "</body></html>";
 
+    
+    
+    
+    System.out.println(emailBody);
     log.debug("email body: " + emailBody);
 
 
