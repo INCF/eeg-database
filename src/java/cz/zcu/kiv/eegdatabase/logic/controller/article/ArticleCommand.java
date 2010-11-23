@@ -1,6 +1,10 @@
 
 package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.HashSet;
+import java.util.Set;
+
 /**
  *
  * @author Jiri Vlasimsky
@@ -12,7 +16,7 @@ public class ArticleCommand {
   private String title;
   private String text;
   private String time;
-
+  private Set<Person> subscribers = new HashSet<Person>(0);
 
   public int getArticleId() {
     return articleId;
@@ -61,6 +65,17 @@ public class ArticleCommand {
   public void setTitle(String title) {
     this.title = title;
   }
+
+  public Set<Person> getSubscribers() {
+    return subscribers;
+  }
+
+  public void setSubscribers(Set<Person> subscribers) {
+    this.subscribers = subscribers;
+  }
+
+
+  
 
 
 }

@@ -10,7 +10,7 @@ $(document).ready(function() {
   /**
    * Enables table sorting for all tables with class="tableSorter"
    **/
-  $("table.tableSorter").tablesorter();
+  $("table").tablesorter();
 
 /**
  * Enables submit on change for all selects with class="submitOnChange"

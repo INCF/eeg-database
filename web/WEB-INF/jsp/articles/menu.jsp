@@ -14,4 +14,5 @@
   <c:if test="${userIsAdminInAnyGroup}">
     <li><a href="<c:url value='/articles/add-article.html'/>"><fmt:message key='menuItem.articles.addArticle'/></a></li>
   </c:if>
+  <li><a href="<c:url value='/articles/settings.html'/>"><fmt:message key='menuItem.articles.settings'/></a></li>
 </ul>

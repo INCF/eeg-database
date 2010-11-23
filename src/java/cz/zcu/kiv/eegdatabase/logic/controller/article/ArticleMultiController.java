@@ -59,10 +59,9 @@ public class ArticleMultiController extends MultiActionController {
     return new ArticleCommentCommand();
   }
 
-
   public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
     ArticleCommentCommand command = new ArticleCommentCommand();
-    
+
     ModelAndView mav = new ModelAndView("articles/detail");
     setPermissionsToView(mav);
     Person loggedUser = personDao.getLoggedPerson();
@@ -80,8 +79,12 @@ public class ArticleMultiController extends MultiActionController {
     mav.addObject("command", command);
     mav.addObject("userCanEdit", canEdit(loggedUser, article));
     mav.addObject("article", article);
+
     List<ArticleComment> articleComments = articleCommentDao.getAllWithNoParent(article);
     mav.addObject("commentsList", articleComments);
+
+    Set<Person> subscribers = article.getSubscribers();
+    mav.addObject("subscribed", subscribers.contains(loggedUser));
     return mav;
   }
 
@@ -100,6 +103,39 @@ public class ArticleMultiController extends MultiActionController {
     if (canEdit(loggedUser, article)) {
       articleDao.delete(article);
     }
+    return mav;
+  }
+
+  public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView mav = new ModelAndView("articles/articleSettings");
+    setPermissionsToView(mav);
+    Person loggedUser = personDao.getLoggedPerson();
+    int id = 0;
+    return mav;
+  }
+
+  public ModelAndView subscribe(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView mav = new ModelAndView("articles/subscribe");
+    setPermissionsToView(mav);
+    Person loggedUser = personDao.getLoggedPerson();
+    int id = 0;
+    try {
+      id = Integer.parseInt(request.getParameter("articleId"));
+    } catch (NumberFormatException e) {
+      log.debug("Unable to determine article id");
+    }
+    Article article = (Article) articleDao.read(id);
+    Boolean subscribe = Boolean.parseBoolean(request.getParameter("subscribe"));
+    Set<Person> subscribers = article.getSubscribers();
+    if (subscribe) {
+      subscribers.add(loggedUser);
+    } else {
+      subscribers.remove(loggedUser);
+    }
+    article.setSubscribers(subscribers);
+    articleDao.update(article);
+
+    mav = new ModelAndView("redirect:/articles/detail.html?articleId=" + id);
     return mav;
   }
 
@@ -186,7 +222,4 @@ public class ArticleMultiController extends MultiActionController {
   public void setArticleCommentDao(ArticleCommentDao articleCommentDao) {
     this.articleCommentDao = articleCommentDao;
   }
-
-
-
 }

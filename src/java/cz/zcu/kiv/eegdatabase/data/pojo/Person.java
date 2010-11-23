@@ -58,7 +58,7 @@ public class Person implements java.io.Serializable {
   private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
   private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
   private Set<History> histories = new HashSet<History>(0);
-
+  private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
   public Person() {
   }
 
@@ -298,6 +298,19 @@ public class Person implements java.io.Serializable {
   public void setRequests(Set<GroupPermissionRequest> requests) {
     this.requests = requests;
   }
+
+  public Set<Article> getArticlesSubscribtions() {
+    return articlesSubscribtions;
+  }
+
+  public void setArticlesSubscribtions(Set<Article> articlesSubscribtions) {
+    this.articlesSubscribtions = articlesSubscribtions;
+  }
+
+
+
+
+
 }
 
 

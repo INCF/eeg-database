@@ -17,6 +17,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import org.springframework.validation.BindException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -25,6 +27,12 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 /**
  *
@@ -38,6 +46,10 @@ public class AddArticleCommentController extends SimpleFormController {
   private PersonDao personDao;
   private ResearchGroupDao researchGroupDao;
   private Log log = LogFactory.getLog(getClass());
+  private String domain;
+  private JavaMailSenderImpl mailSender;
+  private SimpleMailMessage mailMessage;
+  private HierarchicalMessageSource messageSource;
 
   public AddArticleCommentController() {
     setCommandClass(ArticleCommentCommand.class);
@@ -108,7 +120,8 @@ public class AddArticleCommentController extends SimpleFormController {
 
     ArticleCommentCommand data = (ArticleCommentCommand) command;
     ArticleComment comment;
-
+    Article article = articleDao.read(data.getArticleId());
+    Person loggedUser = personDao.getLoggedPerson();
     if (data.getCommentId() > 0) {
       log.debug("Processing article comment form - editing existing comment");
       log.debug("Checking the permission level");
@@ -123,7 +136,7 @@ public class AddArticleCommentController extends SimpleFormController {
       comment.setParent(articleCommentDao.read(data.getParentId()));
 
       log.debug("Setting comment parent article");
-      comment.setArticle(articleDao.read(data.getArticleId()));
+      comment.setArticle(article);
 
       log.debug("Setting comment text");
       comment.setText(data.getText());
@@ -132,18 +145,64 @@ public class AddArticleCommentController extends SimpleFormController {
       Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
       comment.setTime(currentTimestamp);
 
-      if (data.getCommentId() > 0) {
-        log.debug("Processing an article comment form - editing an existing comment");
-        articleCommentDao.create(comment);
-      } else {
-        log.debug("Processing an article comment form - adding a new article");
-        articleCommentDao.create(comment);
+      log.debug("Processing an article comment form - adding a new article");
+      articleCommentDao.create(comment);
+
+      for (Person subscriber : article.getSubscribers()) {
+        if (!loggedUser.equals(subscriber)) {
+          this.sendNotification(loggedUser.getEmail(), comment, request);
+        }
       }
     }
-
     mav = new ModelAndView("redirect:/articles/detail.html?articleId=" + data.getArticleId());
-
     return mav;
+  }
+
+  private void sendNotification(String email, ArticleComment comment, HttpServletRequest request) throws MessagingException {
+    String articleURL = "http://"+domain+"/articles/detail.html?articleId="+comment.getArticle().getArticleId();
+    String subject = messageSource.getMessage("articles.comments.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, RequestContextUtils.getLocale(request));
+
+    String emailBody = "<html><body>";
+    
+    emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
+            new String[]{comment.getArticle().getTitle()}, RequestContextUtils.getLocale(request)) + "</p>";
+
+    emailBody += "<p><h3>Text:</h3> "+comment.getText()+"</p>";
+    emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
+            new String[]{
+              comment.getArticle().getTitle(),
+              "<a href=\""+articleURL+" target=\"_blank\">"+articleURL+"</a>"
+            },
+            RequestContextUtils.getLocale(request)) + "</p><br />";
+    emailBody += "<p>"+messageSource.getMessage("articles.comments.email.subscribtion.body.text.part2", null, RequestContextUtils.getLocale(request))+"</p>";
+    emailBody += "</body></html>";
+
+    log.debug("email body: " + emailBody);
+
+
+    log.debug("Composing e-mail message");
+    MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+    MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+    message.setFrom(mailMessage.getFrom());
+
+    //  message.setContent("text/html");
+    message.setTo(email);
+    //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
+    message.setSubject(subject);
+    message.setText(emailBody, true);
+
+    try {
+      log.debug("Sending e-mail" + message);
+      log.debug("mailSender" + mailSender);
+      log.debug("smtp " + mailSender.getHost());
+      mailSender.send(mimeMessage);
+      log.debug("E-mail was sent");
+    } catch (MailException e) {
+      log.error("E-mail was NOT sent");
+      log.error(e);
+      e.printStackTrace();
+    }
   }
 
   /**
@@ -245,4 +304,38 @@ public class AddArticleCommentController extends SimpleFormController {
   public void setArticleCommentDao(GenericDao<ArticleComment, Integer> articleCommentDao) {
     this.articleCommentDao = articleCommentDao;
   }
+
+  public SimpleMailMessage getMailMessage() {
+    return mailMessage;
+  }
+
+  public void setMailMessage(SimpleMailMessage mailMessage) {
+    this.mailMessage = mailMessage;
+  }
+
+  public JavaMailSenderImpl getMailSender() {
+    return mailSender;
+  }
+
+  public void setMailSender(JavaMailSenderImpl mailSender) {
+    this.mailSender = mailSender;
+  }
+
+  public HierarchicalMessageSource getMessageSource() {
+    return messageSource;
+  }
+
+  public void setMessageSource(HierarchicalMessageSource messageSource) {
+    this.messageSource = messageSource;
+  }
+
+  public String getDomain() {
+    return domain;
+  }
+
+  public void setDomain(String domain) {
+    this.domain = domain;
+  }
+
+
 }
