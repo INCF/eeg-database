@@ -12,6 +12,7 @@ drop table "HARDWARE";
 drop table "HEARING_IMPAIRMENT";
 drop table "VISUAL_IMPAIRMENT";
 drop table "HISTORY";
+drop table "ARTICLES_SUBSCRIBTIONS";
 drop table "ARTICLES_COMMENTS";
 drop table "ARTICLES";
 drop table "DATA_FILE";
