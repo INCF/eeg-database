@@ -150,7 +150,7 @@ public class AddArticleCommentController extends SimpleFormController {
 
       for (Person subscriber : article.getSubscribers()) {
         if (!loggedUser.equals(subscriber)) {
-          this.sendNotification(loggedUser.getEmail(), comment, request);
+          this.sendNotification(subscriber.getEmail(), comment, request);
         }
       }
     }
