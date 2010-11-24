@@ -27,6 +27,7 @@
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
+    <script src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
     <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
     <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
 
