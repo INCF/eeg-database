@@ -154,7 +154,7 @@ public class AddExperimentController
 
     ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
     int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
-    map.put("defaultGroupId",defaultGroupId);
+    map.put("defaultGroupId", defaultGroupId);
 
     return map;
   }
@@ -169,7 +169,9 @@ public class AddExperimentController
 
     Experiment experiment;
 
-    if (data.getMeasurationId() > 0) {
+    boolean editing = data.getMeasurationId() > 0;
+
+    if (editing) {
       // This is the editation of experiment
       log.debug("Processing measuration form - editing existing measuration");
 
@@ -182,6 +184,17 @@ public class AddExperimentController
 
       log.debug("Loading existing measuration object");
       experiment = experimentDao.read(data.getMeasurationId());
+
+      log.debug("Removing edited experiment from hardwares");
+      for (Hardware hardware : experiment.getHardwares()) {
+        hardware.getExperiments().remove(experiment);
+      }
+
+      log.debug("Removing edited experiment from persons (coexperimenters)");
+      for (Person person : experiment.getPersons()) {
+        person.getExperiments().remove(experiment);
+      }
+
     } else {
       // This is creating of new experiment
       log.debug("Processing measuration form - adding new measuration");
@@ -243,9 +256,7 @@ public class AddExperimentController
     for (int hardwareId : hardwareArray) {
       Hardware tempHardware = hardwareDao.read(hardwareId);
       hardwareSet.add(tempHardware);
-      Set<Experiment> tempMeasurationSet = new HashSet<Experiment>();
-      tempMeasurationSet.add(experiment);
-      tempHardware.setExperiments(tempMeasurationSet);
+      tempHardware.getExperiments().add(experiment);
       log.debug("Added Hardware object - ID " + hardwareId);
     }
     log.debug("Setting Hardware list to Measuration object");
@@ -257,9 +268,7 @@ public class AddExperimentController
     for (int personId : coExperimentersArray) {
       Person tempExperimenter = personDao.read(personId);
       coExperimenterSet.add(tempExperimenter);
-      Set<Experiment> tempMeasurationSet = new HashSet<Experiment>();
-      tempMeasurationSet.add(experiment);
-      tempExperimenter.setExperiments(tempMeasurationSet);
+      tempExperimenter.getExperiments().add(experiment);
       log.debug("Added Person object - ID " + tempExperimenter.getPersonId());
     }
     log.debug("Setting Person list to Measuration object");
