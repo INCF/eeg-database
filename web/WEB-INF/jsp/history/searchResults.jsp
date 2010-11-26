@@ -21,7 +21,7 @@
       <c:out value="${mistake}"/>
     </c:when>
     <c:otherwise>
-      <table id="searchResults" class="dataTable tableSorter">
+      <table id="searchResults" class="dataTable">
         <thead>
           <tr>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.date"/></th>

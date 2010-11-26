@@ -5,7 +5,7 @@
 <ui:personsTemplate pageTitle="pageTitle.listOfPeople">
     <h1><fmt:message key="pageTitle.listOfPeople"/></h1>
 
-    <table class="dataTable listOfPersonsDataTable tableSorter">
+    <table class="dataTable listOfPersonsDataTable">
         <thead>
             <tr>
                 <th style="width: 100px;"><fmt:message key="dataTable.heading.name"/></th>

@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.fileMetadataParamsList">
   <h1><fmt:message key="pageTitle.fileMetadataParamsList"/></h1>
 
-  <table class="dataTable tableSorter">
+  <table class="dataTable">
     <thead>
       <tr>
         <th style="width: 50px;"><fmt:message key="dataTable.heading.fileMetadataParamsId"/></th>

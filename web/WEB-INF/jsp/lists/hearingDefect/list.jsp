@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.hearingDefectList">
   <h1><fmt:message key="pageTitle.hearingDefectList"/></h1>
 
-  <table class="dataTable tableSorter">
+  <table class="dataTable">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.hearingDefectId"/></th>

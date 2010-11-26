@@ -7,7 +7,7 @@
 <ui:listsTemplate pageTitle="pageTitle.personAdditionalParamsList">
   <h1><fmt:message key="pageTitle.personAdditionalParamsList"/></h1>
 
-  <table class="dataTable tableSorter">
+  <table class="dataTable">
     <thead>
       <tr>
         <th style="width: 50px;"><fmt:message key="dataTable.heading.personAdditionalParamsId"/></th>

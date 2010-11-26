@@ -6,7 +6,7 @@
 
   <h1><fmt:message key="${measurationListTitle}"/></h1>
 
-  <table class="dataTable measurationListDataTable tableSorter">
+  <table class="dataTable measurationListDataTable">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>

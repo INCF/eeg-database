@@ -6,7 +6,7 @@
 <ui:scenariosTemplate pageTitle="pageTitle.listOfScenarios">
     <h1><fmt:message key="pageTitle.listOfScenarios"/></h1>
 
-    <table class="dataTable tableSorter">
+    <table class="dataTable">
         <thead>
             <tr>
                 <th style="width: 300px;"><fmt:message key="dataTable.heading.scenarioTitle"/></th>

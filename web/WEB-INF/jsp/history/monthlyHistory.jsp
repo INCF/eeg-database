@@ -35,7 +35,7 @@
   <h3><fmt:message key="text.downloadFiles"/><b>${countOfDownloadedFiles}</b></h3>
 
   <h2><fmt:message key="title.topDownloads"/></h2>
-  <table class="standardValueTable">
+  <table class="dataTable">
     <thead>
       <tr>
         <th><fmt:message key="dataTable.heading.fileName"/></th>
@@ -51,7 +51,7 @@
   </table>
   <input type="image" src="<c:url value='graph.html?graphType=MONTHLY&groupId=${defaultGroupId}'/>" name="testgraph" alt="Graph" onclick="location.href(<c:url value='graph.html'/>);" />
   <h2><fmt:message key="title.lastDownloaded"/></h2>
-  <table class="standardValueTable">
+  <table class="dataTable">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>
@@ -77,7 +77,7 @@
   </table>
   <h2><fmt:message key="title.allMonthlyRecords"/></h2>
   <a class="showAll" id="history"><fmt:message key="seeAll"/></a>
-  <table class="dataTable tableSorter" id="monthlyHistory">
+  <table class="dataTable" id="monthlyHistory">
     <thead>
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.date"/></th>

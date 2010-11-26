@@ -9,7 +9,7 @@
   <h2><fmt:message key="heading.ownedGroups"/></h2>
 
 
-  <table class="dataTable listOfResearchGroupsDataTable tableSorter">
+  <table class="dataTable listOfResearchGroupsDataTable">
     <thead>
       <tr>
         <th class="columnGroupTitle"><fmt:message key="dataTable.heading.groupTitle"/></th>
