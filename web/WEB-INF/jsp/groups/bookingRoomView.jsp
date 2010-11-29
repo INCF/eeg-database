@@ -10,11 +10,14 @@
 
 <%
 
+  out.println(request.getQueryString());
   String date = request.getParameter("date");
   int group = Integer.valueOf(request.getParameter("group"));
   String startTime = request.getParameter("startTime");
   String endTime = request.getParameter("endTime");
+  /*int repTime = Integer.valueOf(request.getParameter("repTime"));
+  int repType = Integer.valueOf(request.getParameter("repType"));
 
-  out.println("<br><br>Selected date:"+date+"<br>Selected group:"+group+"<br>"+startTime+" -> "+endTime);
-
+  out.println("<br/><br/>Selected date:"+date+"<br/>Selected group:"+group+"<br/>"+startTime+" -> "+endTime+"<br/>"+"Repeat for "+repTime+" "+(repType==1?"weeks":"months"));
+*/
 %>

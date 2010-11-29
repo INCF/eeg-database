@@ -23,18 +23,29 @@
           </c:forEach>
         </form:select>
         <br>
-        <fmt:message key='label.chooseStartTime'/>
+        <fmt:message key='label.chooseStartTime'/><br />
         <form:input path="startTime" cssClass="combobox" cssErrorClass="error" />
         <img src="<c:url value='/files/images/combo_arrow.png' />" alt="" class="combo" onclick="changeTime('startTime')"/>
         <br />
-        <fmt:message key='label.chooseEndTime'/>
+        <fmt:message key='label.chooseEndTime'/><br />
         <form:input path="endTime" cssClass="combobox" cssErrorClass="error"/>
         <img src="<c:url value='/files/images/combo_arrow.png' />" alt="" class="combo" onclick="changeTime('endTime')"/>
       </form:form>
     </div>
     <div id="right">
       <div id="datePicker"></div>
-      <fmt:message key='label.chooseRepeating'/>
+      <fmt:message key='label.chooseRepeating'/><br />
+      <fmt:message key='label.repeatFor'/>
+      <select id="repTime">
+        <c:forEach var="d" begin="1" end="5" step="1">
+          <option value="">${d}</option>
+        </c:forEach>
+      </select>
+      <fmt:message key='label.timesEvery'/>
+      <select id="repType">
+        <option value="1">week</option>
+        <option value="2">month</option>
+      </select>
     </div>
     <div id="bottom">
       <div id="chosenData">&nbsp;</div>
@@ -58,7 +69,7 @@
   </div>
   <div id="changeTime">
     <ul>
-      <c:forEach var="hour" begin="7" end="21" step="1">
+      <c:forEach var="hour" begin="6" end="21" step="1">
         <c:forEach var="min" begin="0" end="45" step="15">
           <li onclick="selectTime(this)"><c:if test="${hour==0}">0</c:if><c:out value="${hour}" />:<c:if test="${min==0}">0</c:if><c:out value="${min}" /></li>
         </c:forEach>
@@ -85,17 +96,15 @@
     $("#endTime").attr('value','11:00');
 
 
-
-
     function showChosenData()
     {
       var sel = document.getElementById("selectedGroup");
 
       $.ajax({
         type: "POST",
-        url: "<c:url value='/files/ajax/bookRoom.jsp' />",
+        url: "<c:url value='book-room-view.html' />",
         cache: false,
-        data: "group="+sel.value+"&date="+date+"&startTime="+$("#startTime").attr('value')+"&endTime="+$("#endTime").attr('value'),
+        data: "group="+sel.value+"&date="+date+"&startTime="+$("#startTime").attr('value')+"&endTime="+$("#endTime").attr('value')+"&repTime="+$("#repTime").attr('value')+"&repType="+$("#repType").attr('value'),
         beforeSend: function(){
           $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
 
@@ -103,8 +112,12 @@
         success: function(data){
           
 
-          $("#chosenData").html("Selected time range: "+date+", "+"<br />Selected group:"+sel.options[sel.selectedIndex].text+"<br/>"+data);
-        }
+          $("#chosenData").html("Selected time range: "+date+"; "+$("#startTime").attr('value')+" -> "+$("#endTime").attr('value')+"<br />Selected group:"+sel.options[sel.selectedIndex].text+"<br/>"+data);
+        },
+        error:function (xhr, ajaxOptions, thrownError){
+                    $("#chosenData").html(":-(");
+                    alert(xhr.status);
+                }
       });
     }
 
@@ -147,7 +160,6 @@
       timeElement.value = $(pointer).text();
       showTimeCombobox(false);
     }
-
 
   </script>
 

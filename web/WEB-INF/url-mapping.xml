@@ -63,6 +63,7 @@
         <prop key="groups/add-member.html">addMemberToGroupController</prop>
         <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
         <prop key="groups/book-room.html">bookingRoomController</prop>
+        <prop key="groups/book-room-view.html">bookingRoomView</prop>
         
         <prop key="groups/*.html">groupsMultiController</prop>
 
