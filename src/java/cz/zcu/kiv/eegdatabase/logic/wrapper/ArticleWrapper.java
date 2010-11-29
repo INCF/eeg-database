@@ -14,9 +14,8 @@ public class ArticleWrapper implements Wrapper {
 
   private Article a;
 
-  @Override
-  public void setObject(Object o) {
-    this.a = (Article) o;
+  public ArticleWrapper(Object a) {
+    this.a = (Article) a;
   }
 
   @Override
@@ -29,10 +28,6 @@ public class ArticleWrapper implements Wrapper {
     return "Article";
   }
 
-  @Override
-  public String getSetName() {
-    return "articles";
-  }
 
   @Override
   public String getPath() {

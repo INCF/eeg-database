@@ -14,28 +14,23 @@ public class ScenarioWrapper implements Wrapper {
 
   private Scenario s;
 
-  @Override
-  public void setObject(Object o) {
-    this.s = (Scenario) o;
+  public ScenarioWrapper(Object s) {
+    this.s = (Scenario) s;
   }
+
 
   @Override
   public String getTitle() {
     return s.getTitle();
   }
 
-  @Override
-  public String className() {
-    return "Scenario";
-  }
-
-  @Override
-  public String getSetName() {
-    return "scenarios";
-  }
 
   @Override
   public String getPath() {
     return "/scenarios/detail.html?scenarioId=";
+  }
+
+  public String className() {
+    return "Scenario";
   }
 }

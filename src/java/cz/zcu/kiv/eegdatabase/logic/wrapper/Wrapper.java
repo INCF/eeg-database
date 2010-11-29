@@ -10,13 +10,9 @@ package cz.zcu.kiv.eegdatabase.logic.wrapper;
  */
 public interface Wrapper {
 
-  public void setObject(Object o);
-
   public String getTitle();
 
   public String className();
-
-  public String getSetName();
 
   public String getPath();
 }

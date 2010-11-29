@@ -77,35 +77,35 @@ public class FullTextSearchController extends SimpleFormController {
 
       String[] scenFields = {"title", "description", "scenarioLength"};
       results = creator.createSection(scenarioDao.getLuceneQuery
-              (fullTextQuery, scenFields), scenFields, new ScenarioWrapper(), RelationshipType.SECTION_OBJ);
+              (fullTextQuery, scenFields), scenFields, SectionType.SCENARIO, RelationshipType.SECTION_OBJ);
 
       String[] exFields = {"weathernote", "temperature"};
       results.addAll(creator.createSection(experimentDao.getLuceneQuery
-              (fullTextQuery, exFields), exFields, new ExperimentWrapper(), RelationshipType.SECTION_OBJ));
+              (fullTextQuery, exFields), exFields, SectionType.EXPERIMENT, RelationshipType.SECTION_OBJ));
 
       String[] perFields = {"note", "email"};
       results.addAll(creator.createSection(personDao.getLuceneQuery
-              (fullTextQuery, perFields), perFields, new PersonWrapper() ,RelationshipType.SECTION_OBJ));
+              (fullTextQuery, perFields), perFields, SectionType.PERSON ,RelationshipType.SECTION_OBJ));
 
       String[] artFields = {"title", "text"};
       results.addAll(creator.createSection(articleDao.getLuceneQuery
-              (fullTextQuery, artFields), artFields, new ArticleWrapper(), RelationshipType.SECTION_OBJ));
+              (fullTextQuery, artFields), artFields, SectionType.ARTICLE, RelationshipType.SECTION_OBJ));
 
       String[] hardFields = {"title", "type", "description"};
       results.addAll(creator.createSection(hardwareDao.getLuceneQuery
-              (fullTextQuery, hardFields), hardFields, new ExperimentWrapper(), RelationshipType.SET));
+              (fullTextQuery, hardFields), hardFields, SectionType.EXPERIMENT, RelationshipType.SET));
 
       String[] visualImpairmentFields = {"description"};
       results.addAll(creator.createSection(eyesDefectDao.getLuceneQuery
-              (fullTextQuery, visualImpairmentFields), visualImpairmentFields, new PersonWrapper(), RelationshipType.SET));
+              (fullTextQuery, visualImpairmentFields), visualImpairmentFields, SectionType.PERSON, RelationshipType.SET));
 
       String[] hearingFields = {"decription"};
       results.addAll(creator.createSection(hearingImpairmentDao.getLuceneQuery
-              (fullTextQuery, hearingFields), hearingFields, new PersonWrapper(), RelationshipType.SET));
+              (fullTextQuery, hearingFields), hearingFields, SectionType.PERSON, RelationshipType.SET));
 
       String[] weatherFields = {"title", "description"};
       results.addAll(creator.createSection(weatherDao.getLuceneQuery
-              (fullTextQuery, weatherFields), weatherFields, new ExperimentWrapper(), RelationshipType.SET));
+              (fullTextQuery, weatherFields), weatherFields, SectionType.EXPERIMENT, RelationshipType.SET));
 
 //      String[] exOptParamDefFields = {"paramName", "paramDataType"};
 //      results.addAll(scenarioSection.createSection(experimentOptParamDef.getLuceneQuery
@@ -113,7 +113,7 @@ public class FullTextSearchController extends SimpleFormController {
 
       String[] commentPar = {"text"};
       results.addAll(creator.createSection(commentDao.getLuceneQuery
-              (fullTextQuery, commentPar), commentPar, new ArticleWrapper(), RelationshipType.SIMPLE_REL));
+              (fullTextQuery, commentPar), commentPar, SectionType.ARTICLE, RelationshipType.SIMPLE_REL));
 
 
       logger.debug("I have results: " + results);

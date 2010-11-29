@@ -14,9 +14,8 @@ public class ExperimentWrapper implements Wrapper {
 
   private Experiment e;
 
-  @Override
-  public void setObject(Object o) {
-    this.e = (Experiment) o;
+  public ExperimentWrapper(Object e) {
+    this.e = (Experiment) e;
   }
 
   @Override
@@ -24,15 +23,10 @@ public class ExperimentWrapper implements Wrapper {
     return e.getScenario().getTitle();
   }
 
-  @Override
   public String className() {
     return "Experiment";
   }
 
-  @Override
-  public String getSetName() {
-    return "experiments";
-  }
 
   @Override
   public String getPath() {

@@ -14,28 +14,23 @@ public class PersonWrapper implements Wrapper {
 
   private Person p;
 
-  @Override
-  public void setObject(Object o) {
-    this.p = (Person) o;
+  public PersonWrapper(Object p) {
+    this.p = (Person) p;
   }
+
 
   @Override
   public String getTitle() {
     return p.getNote();
   }
 
-  @Override
-  public String className() {
-    return "Person";
-  }
-
-  @Override
-  public String getSetName() {
-    return "persons";
-  }
 
   @Override
   public String getPath() {
     return "/people/detail.html?personId=";
+  }
+
+  public String className() {
+    return "Person";
   }
 }
