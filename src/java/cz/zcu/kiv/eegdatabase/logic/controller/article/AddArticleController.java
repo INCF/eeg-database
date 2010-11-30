@@ -178,8 +178,8 @@ public class AddArticleController extends SimpleFormController {
     emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
             new String[]{article.getTitle()},
             RequestContextUtils.getLocale(request)) + "";
-    emailBody +="&nbsp;(<a href=\""+articleURL+" target=\"_blank\">"+articleURL+"</a>)</p><br />";
-    emailBody += "<h3>Text:</h3> <p>"+article.getText()+"</p><br />";
+    emailBody +="&nbsp;(<a href=\""+articleURL+"\" target=\"_blank\">"+articleURL+"</a>)</p><br />";
+    emailBody += "<h3>"+article.getTitle()+"</h3> <p>"+article.getText()+"</p><br />";
     emailBody += "<p>"+messageSource.getMessage("articles.comments.email.subscribtion.body.text.part2", null, RequestContextUtils.getLocale(request))+"</p>";
     emailBody += "</body></html>";
 
