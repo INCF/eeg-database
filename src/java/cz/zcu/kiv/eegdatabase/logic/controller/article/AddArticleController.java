@@ -198,17 +198,16 @@ public class AddArticleController extends SimpleFormController {
     //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
     message.setSubject(subject);
     message.setText(emailBody, true);
-    System.out.println(subject+"\n"+emailBody);
+    
     try {
       log.debug("Sending e-mail" + message);
       log.debug("mailSender" + mailSender);
       log.debug("smtp " + mailSender.getHost());
-      //mailSender.send(mimeMessage);
+      mailSender.send(mimeMessage);
       log.debug("E-mail was sent");
     } catch (MailException e) {
       log.error("E-mail was NOT sent");
       log.error(e);
-      e.printStackTrace();
     }
   }
 
