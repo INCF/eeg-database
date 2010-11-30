@@ -135,8 +135,8 @@ public class AddArticleController extends SimpleFormController {
       if (data.getResearchGroup() != 0) {
         researchGroup.setResearchGroupId(data.getResearchGroup());
         article.setResearchGroup(researchGroup);
-
       }
+      
 
       log.debug("Setting article time");
       Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
@@ -155,17 +155,16 @@ public class AddArticleController extends SimpleFormController {
     } else {
       log.debug("Processing an article form - adding a new article");
       articleDao.create(article);
+      
       if (article.getResearchGroup() != null) {
-        for (Person subscriber : article.getResearchGroup().getArticlesSubscribers()) {
-          if (!article.getPerson().equals(subscriber)) {
+        ResearchGroup group = researchGroupDao.read(article.getResearchGroup().getResearchGroupId());
+        for (Person subscriber : group.getArticlesSubscribers()) {
+          if (!subscriber.equals(article.getPerson())) {
             this.sendNotification(subscriber.getEmail(), article, request);
           }
         }
       }
-
     }
-
-
     return mav;
   }
   
