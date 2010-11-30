@@ -14,4 +14,32 @@
   <h1><fmt:message key="heading.ArticlesSettings"/></h1>
   <h2><fmt:message key="heading.ArticlesSubscriptions"/></h2>
 
+  <table class="dataTable" id="ResearchGroupsList">
+    <thead>
+      <tr>
+        <th class="columnTitle"><fmt:message key="dataTable.heading.groupTitle"/></th>
+        <th></th>
+      </tr>
+    </thead>
+    <tbody>
+      <c:forEach items="${researchGroupList}" var="group">
+        <tr>
+          <td><c:out value="${group.title}" /></td>
+          <td>
+            <c:choose>
+              <c:when test="${fn:contains(articlesGroupSubscribtions, group)}">
+                <a href="<c:url value="subscribeGroupArticles.html?groupId=${group.researchGroupId}&amp;subscribe=false" />"><fmt:message key="label.unsubscribe" /> </a>
+              </c:when>
+              <c:otherwise>
+                <a href="<c:url value="subscribeGroupArticles.html?groupId=${group.researchGroupId}&amp;subscribe=true" />"><fmt:message key="label.subscribe" /> </a>
+              </c:otherwise>
+            </c:choose>
+          </td>
+        </tr>
+      </c:forEach>
+    </tbody>
+
+  </table>
+
+
 </ui:articlesTemplate>

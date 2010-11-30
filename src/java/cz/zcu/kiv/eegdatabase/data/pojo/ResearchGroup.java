@@ -32,7 +32,7 @@ public class ResearchGroup implements java.io.Serializable {
   private Set<Experiment> experiments = new HashSet<Experiment>(0);
   private Set<Person> usersWithThisAsDefault = new HashSet<Person>(0);
   private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
-
+  private Set<Person> articlesSubscribers = new HashSet<Person>(0);
 
 
   public ResearchGroup() {
@@ -125,6 +125,16 @@ public class ResearchGroup implements java.io.Serializable {
   public void setRequests(Set<GroupPermissionRequest> requests) {
     this.requests = requests;
   }
+
+  public Set<Person> getArticlesSubscribers() {
+    return articlesSubscribers;
+  }
+
+  public void setArticlesSubscribers(Set<Person> articlesSubscribers) {
+    this.articlesSubscribers = articlesSubscribers;
+  }
+  
+  
 }
 
 

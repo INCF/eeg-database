@@ -4,9 +4,11 @@ import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import java.net.BindException;
 import java.util.List;
@@ -32,6 +34,7 @@ public class ArticleMultiController extends MultiActionController {
   private PersonDao personDao;
   private ArticleDao articleDao;
   private ArticleCommentDao articleCommentDao;
+  private ResearchGroupDao researchGroupDao;
 
   public ArticleMultiController() {
   }
@@ -110,7 +113,11 @@ public class ArticleMultiController extends MultiActionController {
     ModelAndView mav = new ModelAndView("articles/articleSettings");
     setPermissionsToView(mav);
     Person loggedUser = personDao.getLoggedPerson();
-    int id = 0;
+    Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();
+    List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+    mav.addObject("researchGroupList", list);
+    mav.addObject("articlesGroupSubscribtions", articlesGroupSubscriptions);
+
     return mav;
   }
 
@@ -136,6 +143,33 @@ public class ArticleMultiController extends MultiActionController {
     articleDao.update(article);
 
     mav = new ModelAndView("redirect:/articles/detail.html?articleId=" + id);
+    return mav;
+  }
+
+  public ModelAndView subscribeGroupArticles(HttpServletRequest request, HttpServletResponse response) {
+    ModelAndView mav = new ModelAndView("articles/subscribeGroupArticles");
+    setPermissionsToView(mav);
+    Person loggedUser = personDao.getLoggedPerson();
+    int id = 0;
+    try {
+      id = Integer.parseInt(request.getParameter("groupId"));
+    } catch (NumberFormatException e) {
+      log.debug("Unable to determine research group id");
+    }
+    ResearchGroup group = (ResearchGroup) researchGroupDao.read(id);
+    
+    Boolean subscribe = Boolean.parseBoolean(request.getParameter("subscribe"));
+    
+    Set<Person> subscribers = group.getArticlesSubscribers();
+    if (subscribe) {
+      subscribers.add(loggedUser);
+    } else {
+      subscribers.remove(loggedUser);
+    }
+    group.setArticlesSubscribers(subscribers);
+    researchGroupDao.update(group);
+
+    mav = new ModelAndView("redirect:/articles/settings.html");
     return mav;
   }
 
@@ -221,5 +255,13 @@ public class ArticleMultiController extends MultiActionController {
 
   public void setArticleCommentDao(ArticleCommentDao articleCommentDao) {
     this.articleCommentDao = articleCommentDao;
+  }
+
+  public ResearchGroupDao getResearchGroupDao() {
+    return researchGroupDao;
+  }
+
+  public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+    this.researchGroupDao = researchGroupDao;
   }
 }

@@ -269,6 +269,7 @@
     <property name="articleDao" ref="articleDao" />
     <property name="articleCommentDao" ref="articleCommentDao" />
     <property name="personDao" ref="personDao" />
+    <property name="researchGroupDao" ref="researchGroupDao" />
     <property name="auth" ref="authorizationManager" />
     <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
   </bean>
