@@ -171,7 +171,7 @@ public class AddArticleController extends SimpleFormController {
   private void sendNotification(String email, Article article, HttpServletRequest request) throws MessagingException {
     String articleURL = "http://"+domain+"/articles/detail.html?articleId="+article.getArticleId();
     //System.out.println(articleURL);
-    String subject = messageSource.getMessage("articles.comments.email.subscribtion.subject", new String[]{article.getTitle(), article.getPerson().getUsername()}, RequestContextUtils.getLocale(request));
+    String subject = messageSource.getMessage("articles.group.email.subscribtion.subject", new String[]{article.getTitle(), article.getPerson().getUsername()}, RequestContextUtils.getLocale(request));
     //System.out.println(subject);
     String emailBody = "<html><body>";
       
@@ -198,12 +198,12 @@ public class AddArticleController extends SimpleFormController {
     //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
     message.setSubject(subject);
     message.setText(emailBody, true);
-
+    System.out.println(subject+"\n"+emailBody);
     try {
       log.debug("Sending e-mail" + message);
       log.debug("mailSender" + mailSender);
       log.debug("smtp " + mailSender.getHost());
-      mailSender.send(mimeMessage);
+      //mailSender.send(mimeMessage);
       log.debug("E-mail was sent");
     } catch (MailException e) {
       log.error("E-mail was NOT sent");
