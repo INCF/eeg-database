@@ -358,7 +358,10 @@ public class AddExperimentController
     }
 
     try {
-      Integer.parseInt(data.getTemperature());
+      int temp = Integer.parseInt(data.getTemperature());
+      if (temp < -273) {
+        errors.rejectValue("temperature", "invalid.minTemp");
+      }
     } catch (NumberFormatException e) {
       errors.rejectValue("temperature", "invalid.temperature");
     }

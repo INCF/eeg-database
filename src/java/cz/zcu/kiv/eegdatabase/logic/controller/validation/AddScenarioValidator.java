@@ -37,13 +37,17 @@ public class AddScenarioValidator implements Validator {
 
     try {
       int len = Integer.parseInt(data.getLength());
-      if (len < 0) {
+      if (len <= 0) {
         errors.rejectValue("length", "invalid.lengthValue");
       }
     } catch (NumberFormatException ex) {
       errors.rejectValue("length", "invalid.scenarioLength");
       log.debug("Scenario length is not in parseable format!");
     }
+    int len = data.getDescription().length();
+    if (len > 255) {
+        errors.rejectValue("description", "invalid.maxScenLen");
+      }
 
     if (data.getDataFile().isEmpty()) {
       errors.rejectValue("dataFile", "required.dataFile");
