@@ -158,7 +158,7 @@ public class AddArticleController extends SimpleFormController {
       if (article.getResearchGroup() != null) {
         for (Person subscriber : article.getResearchGroup().getArticlesSubscribers()) {
           if (!article.getPerson().equals(subscriber)) {
-            this.sendNotification(domain, null, request);
+            this.sendNotification(article.getPerson().getEmail(), article, request);
           }
         }
       }
