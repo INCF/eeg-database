@@ -39,7 +39,7 @@
 
 
       <div class="itemBox">
-        <input type="submit" value="<fmt:message key='button.addMeasurationOptionalParameter'/>" class="submitButton lightButtonLink" />
+        <input type="submit" value="<fmt:message key='button.addExperimentOptionalParameter'/>" class="submitButton lightButtonLink" />
       </div>
 
     </fieldset>

@@ -90,8 +90,8 @@
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='add-hearing-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addHearingDefect"/></a>
-        <a href="<c:url value='add-eyes-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addEyesDefect"/></a>
+        <a href="<c:url value='add-hearing-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addHearingImpairment"/></a>
+        <a href="<c:url value='add-eyes-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addVisualImpairment"/></a>
         <a href="<c:url value='add-optional-parameter.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
     </div>
 

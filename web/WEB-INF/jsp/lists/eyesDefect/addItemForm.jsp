@@ -4,8 +4,8 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<ui:listsTemplate pageTitle="pageTitle.addEyesDefect">
-    <h1><fmt:message key="pageTitle.addEyesDefect"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.addVisualImpairment">
+    <h1><fmt:message key="pageTitle.addVisualImpairment"/></h1>
 
     <c:url value="add.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="addEyesDefect" cssClass="standardInputForm">
@@ -21,7 +21,7 @@
 
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.addEyesDefect'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.addVisualImpairment'/>" class="submitButton lightButtonLink" />
             </div>
 
         </fieldset>

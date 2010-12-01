@@ -587,7 +587,7 @@
 
     <bean name="addHearingDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddHearingDefectController">
         <property name="formView" value="lists/hearingDefect/addItemForm"/>
-        <property name="successView" value="redirect:/lists/hearing-defects/list.html"/>
+        <property name="successView" value="redirect:/lists/hearing-impairments/list.html"/>
 
         <property name="auth" ref="authorizationManager"/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
@@ -596,7 +596,7 @@
 
     <bean name="addEyesDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddEyesDefectController">
         <property name="formView" value="lists/eyesDefect/addItemForm"/>
-        <property name="successView" value="redirect:/lists/eyes-defects/list.html"/>
+        <property name="successView" value="redirect:/lists/visual-impairments/list.html"/>
 
         <property name="auth" ref="authorizationManager"/>
         <property name="eyesDefectDao" ref="eyesDefectDao"/>
@@ -605,7 +605,7 @@
 
     <bean name="addHardwareController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddHardwareController">
         <property name="formView" value="lists/hardware/addItemForm"/>
-        <property name="successView" value="redirect:/lists/hardware/list.html"/>
+        <property name="successView" value="redirect:/lists/hardware-definitions/list.html"/>
 
         <property name="auth" ref="authorizationManager"/>
         <property name="hardwareDao" ref="hardwareDao"/>
@@ -641,7 +641,7 @@
     <bean name="addMeasurationAdditionalParamController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.AddMeasurationAdditionalParamController">
         <property name="formView" value="lists/measurationAdditionalParams/addItemForm"/>
-        <property name="successView" value="redirect:/lists/measuration-optional-parameters/list.html"/>
+        <property name="successView" value="redirect:/lists/experiment-optional-parameters/list.html"/>
 
         <property name="auth" ref="authorizationManager"/>
         <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
@@ -651,7 +651,7 @@
     <bean name="addFileMetadataParamController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.AddFileMetadataParamController">
         <property name="formView" value="lists/fileMetadataParams/addItemForm"/>
-        <property name="successView" value="redirect:/lists/file-metadata-names/list.html"/>
+        <property name="successView" value="redirect:/lists/file-metadata-definitions/list.html"/>
 
         <property name="auth" ref="authorizationManager"/>
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>

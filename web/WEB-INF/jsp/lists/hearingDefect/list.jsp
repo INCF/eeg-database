@@ -4,14 +4,14 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 
-<ui:listsTemplate pageTitle="pageTitle.hearingDefectList">
-  <h1><fmt:message key="pageTitle.hearingDefectList"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.hearingImpairmentList">
+  <h1><fmt:message key="pageTitle.hearingImpairmentList"/></h1>
 
   <table class="dataTable">
     <thead>
       <tr>
-        <th style="width: 150px;"><fmt:message key="dataTable.heading.hearingDefectId"/></th>
-        <th><fmt:message key="dataTable.heading.hearingDefectDescription"/></th>
+        <th style="width: 150px;"><fmt:message key="dataTable.heading.id"/></th>
+        <th><fmt:message key="dataTable.heading.description"/></th>
       </tr>
     </thead>
     <c:forEach items="${hearingDefectList}" var="hearingImpairment">
@@ -24,7 +24,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingDefect"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingImpairment"/></a>
     </div>
   </auth:experimenter>
 

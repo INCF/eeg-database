@@ -4,8 +4,8 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 
-<ui:listsTemplate pageTitle="pageTitle.measurationAdditionalParamsList">
-  <h1><fmt:message key="pageTitle.measurationAdditionalParamsList"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.experimentOptionalParameterList">
+  <h1><fmt:message key="pageTitle.experimentOptionalParameterList"/></h1>
 
   <table class="dataTable">
     <thead>
@@ -26,7 +26,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addMeasurationAdditionalParam"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addExperimentOptionalParameter"/></a>
     </div>
   </auth:experimenter>
 

@@ -69,20 +69,20 @@
 
 
                 <prop key="lists/index.html">listsIndexController</prop>
-                <prop key="lists/hearing-defects/list.html">hearingDefectListController</prop>
-                <prop key="lists/hearing-defects/add.html">addHearingDefectController</prop>
-                <prop key="lists/eyes-defects/list.html">eyesDefectListController</prop>
-                <prop key="lists/eyes-defects/add.html">addEyesDefectController</prop>
-                <prop key="lists/hardware/list.html">hardwareListController</prop>
-                <prop key="lists/hardware/add.html">addHardwareController</prop>
+                <prop key="lists/hearing-impairments/list.html">hearingDefectListController</prop>
+                <prop key="lists/hearing-impairments/add.html">addHearingDefectController</prop>
+                <prop key="lists/visual-impairments/list.html">eyesDefectListController</prop>
+                <prop key="lists/visual-impairments/add.html">addEyesDefectController</prop>
+                <prop key="lists/hardware-definitions/list.html">hardwareListController</prop>
+                <prop key="lists/hardware-definitions/add.html">addHardwareController</prop>
                 <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
                 <prop key="lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
-                <prop key="lists/measuration-optional-parameters/list.html">measurationAdditionalParamsListController
+                <prop key="lists/experiment-optional-parameters/list.html">measurationAdditionalParamsListController
                 </prop>
-                <prop key="lists/measuration-optional-parameters/add.html">addMeasurationAdditionalParamController
+                <prop key="lists/experiment-optional-parameters/add.html">addMeasurationAdditionalParamController
                 </prop>
-                <prop key="lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
-                <prop key="lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
+                <prop key="lists/file-metadata-definitions/list.html">fileMetadataParamsListController</prop>
+                <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParamController</prop>
                 <prop key="lists/weather-definitions/list.html">weatherListController</prop>
                 <prop key="lists/weather-definitions/add.html">addWeatherController</prop>
 

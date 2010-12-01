@@ -12,7 +12,7 @@
         <fieldset>
 
             <div class="itemBox">
-                <form:label path="paramName" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.paramName"/></form:label>
+                <form:label path="paramName" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.parameterName"/></form:label>
 
                 <form:input path="paramName" cssClass="textField" cssErrorClass="textField errorField" maxlength="30" />
 
@@ -20,7 +20,7 @@
             </div>
 
             <div class="itemBox">
-                <form:label path="paramDataType" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.paramDataType"/></form:label>
+                <form:label path="paramDataType" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.parameterDataType"/></form:label>
 
                 <form:input path="paramDataType" cssClass="textField" cssErrorClass="textField errorField" maxlength="20" />
 

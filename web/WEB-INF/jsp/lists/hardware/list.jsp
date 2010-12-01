@@ -10,10 +10,10 @@
   <table class="dataTable">
     <thead>
       <tr>
-        <th style="width: 50px;"><fmt:message key="dataTable.heading.hardwareId"/></th>
-        <th style="width: 150px;"><fmt:message key="dataTable.heading.hardwareTitle"/></th>
-        <th style="width: 150px;"><fmt:message key="dataTable.heading.hardwareType"/></th>
-        <th><fmt:message key="dataTable.heading.hardwareDescription"/></th>
+        <th style="width: 50px;"><fmt:message key="dataTable.heading.id"/></th>
+        <th style="width: 150px;"><fmt:message key="dataTable.heading.title"/></th>
+        <th style="width: 150px;"><fmt:message key="dataTable.heading.type"/></th>
+        <th><fmt:message key="dataTable.heading.description"/></th>
       </tr>
     </thead>
     <c:forEach items="${hardwareList}" var="hardware">
@@ -28,7 +28,7 @@
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHardware"/></a>
+      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHardwareDefinition"/></a>
     </div>
   </auth:experimenter>
 
