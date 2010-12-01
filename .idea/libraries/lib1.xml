@@ -1,0 +1,27 @@
+<component name="libraryTable">
+  <library name="lib1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/ehcache-1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/standard.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-io-1.3.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcommon-1.0.16.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring-webmvc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections-20040102.233541.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-fileupload-1.2.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/ostermillerutils_1_07_00.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-codec-1.3.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-collections.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/log4j-1.2.9.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/mail.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/activation.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/aspectjweaver.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jfreechart-1.0.13.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/commons-logging.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jstl.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jcaptcha-1.0-all.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

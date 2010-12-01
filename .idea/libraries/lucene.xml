@@ -1,0 +1,17 @@
+<component name="libraryTable">
+  <library name="lucene">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-analyzers-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-commons-csv-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-queries-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-highlighter-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/lucene-core-2.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/lucene-snowball-2.4.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-snowball-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-spellchecker-1.3.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/lucene/solr-lucene-core-1.3.0.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
