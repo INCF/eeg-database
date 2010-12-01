@@ -8,106 +8,109 @@
        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
-  <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
-    <property name="mappings">
-      <props>
-        <prop key="/home.html">homePageController</prop>
-        <prop key="/login.html">loginController</prop>
-        <prop key="/registration.html">registrationController</prop>
-        <prop key="/captcha.html">captchaController</prop>
-        <prop key="/access-denied.html">accessDeniedController</prop>
-        <prop key="/access-denied-not-admin.html">accessDeniedNotAdminController</prop>
-        <prop key="/forgotten-password.html">forgottenPasswordController</prop>
-        <prop key="/registration-confirmation.html">confirmController</prop>
+    <bean id="urlMapping" class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+        <property name="mappings">
+            <props>
+                <prop key="/home.html">homePageController</prop>
+                <prop key="/login.html">loginController</prop>
+                <prop key="/registration.html">registrationController</prop>
+                <prop key="/captcha.html">captchaController</prop>
+                <prop key="/access-denied.html">accessDeniedController</prop>
+                <prop key="/access-denied-not-admin.html">accessDeniedNotAdminController</prop>
+                <prop key="/forgotten-password.html">forgottenPasswordController</prop>
+                <prop key="/registration-confirmation.html">confirmController</prop>
 
-        <prop key="my-account/change-password.html">changePasswordController</prop>
-        <prop key="my-account/change-default-group.html">changeDefaultGroupController</prop>
-        <prop key="my-account/apply-for-writing-permission.html">applyForWritingPermission</prop>
-        <prop key="my-account/*.html">myAccountMultiController</prop>
+                <prop key="my-account/change-password.html">changePasswordController</prop>
+                <prop key="my-account/change-default-group.html">changeDefaultGroupController</prop>
+                <prop key="my-account/apply-for-writing-permission.html">applyForWritingPermission</prop>
+                <prop key="my-account/*.html">myAccountMultiController</prop>
 
-        <prop key="system/grant-permission.html">grantPermissionController</prop>
+                <prop key="system/grant-permission.html">grantPermissionController</prop>
 
-        <prop key="articles/add-article.html">addArticleController</prop>
-        <prop key="articles/edit.html">addArticleController</prop>
-        <prop key="articles/detail.html">articleMultiController</prop>
-        <prop key="articles/delete.html">articleMultiController</prop>
-        <prop key="articles/settings.html">articleMultiController</prop>
-        <prop key="articles/*.html">articleMultiController</prop>
+                <prop key="articles/add-article.html">addArticleController</prop>
+                <prop key="articles/edit.html">addArticleController</prop>
+                <prop key="articles/detail.html">articleMultiController</prop>
+                <prop key="articles/delete.html">articleMultiController</prop>
+                <prop key="articles/settings.html">articleMultiController</prop>
+                <prop key="articles/*.html">articleMultiController</prop>
 
-        <prop key="articles/add-article-comment.html">addArticleCommentController</prop>
-        <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
-        <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
+                <prop key="articles/add-article-comment.html">addArticleCommentController</prop>
+                <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
+                <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
 
-        <prop key="experiments/add-experiment.html">addExperimentController</prop>
-        <prop key="experiments/edit.html">addExperimentController</prop>
-        <prop key="experiments/add-optional-parameter.html">addExperimentOptParamValController</prop>
-        <prop key="experiments/*.html">experimentsMultiController</prop>
+                <prop key="experiments/add-experiment.html">addExperimentController</prop>
+                <prop key="experiments/edit.html">addExperimentController</prop>
+                <prop key="experiments/add-optional-parameter.html">addExperimentOptParamValController</prop>
+                <prop key="experiments/*.html">experimentsMultiController</prop>
 
-        <prop key="experiments/data/add.html">addDataFileController</prop>
-        <prop key="experiments/data/detail.html">dataFileDetailController</prop>
+                <prop key="experiments/data/add.html">addDataFileController</prop>
+                <prop key="experiments/data/detail.html">dataFileDetailController</prop>
 
-        <prop key="experiments/download_metadata_zip.html">downloadMetadataZipController</prop>
-        <prop key="experiments/choose-metadata.html">chooseMetadataController</prop>
-        <prop key="people/list.html">personListController</prop>
-        <prop key="people/detail.html">personDetailController</prop>
-        <prop key="people/add-person.html">addPersonController</prop>
-        <prop key="people/add-optional-parameter.html">addPersonAdditionalParamValueController</prop>
-        <prop key="people/add-hearing-defect.html">addHearingDefectToPersonController</prop>
-        <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>
+                <prop key="experiments/download_metadata_zip.html">downloadMetadataZipController</prop>
+                <prop key="experiments/choose-metadata.html">chooseMetadataController</prop>
+                <prop key="people/list.html">personListController</prop>
+                <prop key="people/detail.html">personDetailController</prop>
+                <prop key="people/add-person.html">addPersonController</prop>
+                <prop key="people/add-optional-parameter.html">addPersonAdditionalParamValueController</prop>
+                <prop key="people/add-hearing-defect.html">addHearingDefectToPersonController</prop>
+                <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>
 
-        <prop key="scenarios/add-scenario.html">addScenarioController</prop>
-        <prop key="scenarios/*.html">scenariosMultiController</prop>
+                <prop key="scenarios/add-scenario.html">addScenarioController</prop>
+                <prop key="scenarios/*.html">scenariosMultiController</prop>
 
-        <prop key="groups/create-group.html">createGroupController</prop>
-        <prop key="groups/accept-role-request.html">acceptRoleRequestController</prop>
-        <prop key="groups/add-member.html">addMemberToGroupController</prop>
-        <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
-        <prop key="groups/book-room.html">bookingRoomController</prop>
-        <prop key="groups/book-room-view.html">bookingRoomView</prop>
-        
-        <prop key="groups/*.html">groupsMultiController</prop>
+                <prop key="groups/create-group.html">createGroupController</prop>
+                <prop key="groups/accept-role-request.html">acceptRoleRequestController</prop>
+                <prop key="groups/add-member.html">addMemberToGroupController</prop>
+                <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
+                <prop key="groups/book-room.html">bookingRoomController</prop>
+                <prop key="groups/book-room-view.html">bookingRoomView</prop>
+
+                <prop key="groups/*.html">groupsMultiController</prop>
 
 
-        <prop key="lists/index.html">listsIndexController</prop>
-        <prop key="lists/hearing-defects/list.html">hearingDefectListController</prop>
-        <prop key="lists/hearing-defects/add.html">addHearingDefectController</prop>
-        <prop key="lists/eyes-defects/list.html">eyesDefectListController</prop>
-        <prop key="lists/eyes-defects/add.html">addEyesDefectController</prop>
-        <prop key="lists/hardware/list.html">hardwareListController</prop>
-        <prop key="lists/hardware/add.html">addHardwareController</prop>
-        <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
-        <prop key="lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
-        <prop key="lists/measuration-optional-parameters/list.html">measurationAdditionalParamsListController</prop>
-        <prop key="lists/measuration-optional-parameters/add.html">addMeasurationAdditionalParamController</prop>
-        <prop key="lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
-        <prop key="lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
+                <prop key="lists/index.html">listsIndexController</prop>
+                <prop key="lists/hearing-defects/list.html">hearingDefectListController</prop>
+                <prop key="lists/hearing-defects/add.html">addHearingDefectController</prop>
+                <prop key="lists/eyes-defects/list.html">eyesDefectListController</prop>
+                <prop key="lists/eyes-defects/add.html">addEyesDefectController</prop>
+                <prop key="lists/hardware/list.html">hardwareListController</prop>
+                <prop key="lists/hardware/add.html">addHardwareController</prop>
+                <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
+                <prop key="lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
+                <prop key="lists/measuration-optional-parameters/list.html">measurationAdditionalParamsListController
+                </prop>
+                <prop key="lists/measuration-optional-parameters/add.html">addMeasurationAdditionalParamController
+                </prop>
+                <prop key="lists/file-metadata-names/list.html">fileMetadataParamsListController</prop>
+                <prop key="lists/file-metadata-names/add.html">addFileMetadataParamController</prop>
+                <prop key="lists/weather-definitions/list.html">weatherListController</prop>
 
-        <prop key="administration/change-user-role.html">changeUserRoleController</prop>
+                <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 
-        <!-- the url is without extension so the file can be downloaded with whatever file extension (known issue when using e.g. Opera browser -->
-        <prop key="experiments/data/download">measurationDataOutputController</prop>
-        <prop key="scenarios/download-xml.html">scenarioXMLDownloadController</prop>
+                <!-- the url is without extension so the file can be downloaded with whatever file extension (known issue when using e.g. Opera browser -->
+                <prop key="experiments/data/download">measurationDataOutputController</prop>
+                <prop key="scenarios/download-xml.html">scenarioXMLDownloadController</prop>
 
-        <!-- Full text search-->
-        <prop key="experiments/fulltext.html">fullTextSearchController</prop>
-        <!-- Advanced search-->
-        <prop key="scenarios/search-results.html">scenarioSearcherController</prop>
-        <prop key="scenarios/search.html">scenarioSearcherController</prop>
-        <prop key="people/search.html">peopleSearcherController</prop>
-        <prop key="people/search-results.html">peopleSearcherController</prop>
-        <prop key="experiments/search.html">experimentsSearcherController</prop>
-        <prop key="experiments/search-results.html">experimentsSearcherController</prop>
-      
-       
-        <prop key="history/daily-history.html">dailyHistoryController</prop>
-        <prop key="history/weekly-history.html">weeklyHistoryController</prop>
-        <prop key="history/monthly-history.html">monthlyHistoryController</prop>
-        <prop key="history/search.html">searchHistoryController</prop>
-          <prop key="history/search-results.html">searchHistoryController</prop>
-        <prop key="history/graph.html">graphController</prop>
+                <!-- Full text search-->
+                <prop key="experiments/fulltext.html">fullTextSearchController</prop>
+                <!-- Advanced search-->
+                <prop key="scenarios/search-results.html">scenarioSearcherController</prop>
+                <prop key="scenarios/search.html">scenarioSearcherController</prop>
+                <prop key="people/search.html">peopleSearcherController</prop>
+                <prop key="people/search-results.html">peopleSearcherController</prop>
+                <prop key="experiments/search.html">experimentsSearcherController</prop>
+                <prop key="experiments/search-results.html">experimentsSearcherController</prop>
 
-      </props>
-    </property>
-  </bean>
+
+                <prop key="history/daily-history.html">dailyHistoryController</prop>
+                <prop key="history/weekly-history.html">weeklyHistoryController</prop>
+                <prop key="history/monthly-history.html">monthlyHistoryController</prop>
+                <prop key="history/search.html">searchHistoryController</prop>
+                <prop key="history/search-results.html">searchHistoryController</prop>
+                <prop key="history/graph.html">graphController</prop>
+
+            </props>
+        </property>
+    </bean>
 
 </beans>

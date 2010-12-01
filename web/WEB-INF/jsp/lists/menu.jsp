@@ -9,4 +9,5 @@
     <li><a href="<c:url value='/lists/person-optional-parameters/list.html'/>"><fmt:message key='menuItem.personOptionalParameters'/></a></li>
     <li><a href="<c:url value='/lists/measuration-optional-parameters/list.html'/>"><fmt:message key='menuItem.measurationOptionalParameters'/></a></li>
     <li><a href="<c:url value='/lists/file-metadata-names/list.html'/>"><fmt:message key='menuItem.fileMetadataNames'/></a></li>
+    <li><a href="<c:url value='/lists/weather-definitions/list.html'/>"><fmt:message key='menuItem.weatherDefinitions'/></a></li>
 </ul>
