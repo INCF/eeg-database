@@ -614,6 +614,17 @@
         </property>
     </bean>
 
+    <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddWeatherController">
+        <property name="formView" value="lists/weather/addItemForm"/>
+        <property name="successView" value="redirect:/lists/weather-definitions/list.html"/>
+
+        <property name="auth" ref="authorizationManager"/>
+        <property name="weatherDao" ref="weatherDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddWeatherValidator"/>
+        </property>
+    </bean>
+
     <bean name="addParameterValidator"
           class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddParameterValidator"/>
 
