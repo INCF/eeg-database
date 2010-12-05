@@ -834,7 +834,6 @@
         <property name="weatherDao" ref="weatherDao"/>
         <property name="experimentOptParamDef" ref="experimentOptParamDefDao"/>
         <property name="commentDao" ref="articleCommentDao"/>
-        <property name="creator" ref="creator"/>
 
 
         <!-- <property name="successView" value="redirect:/home"/>-->
@@ -842,8 +841,6 @@
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand"/>
     </bean>
 
-    <bean name="creator" class="cz.zcu.kiv.eegdatabase.logic.controller.search.SimpleSectionCreator">
-    </bean>
 
 
 </beans>

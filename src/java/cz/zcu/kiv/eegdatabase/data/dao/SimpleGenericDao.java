@@ -1,12 +1,17 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.search.Queries;
 import java.io.IOException;
 import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.apache.lucene.index.CorruptIndexException;
 import org.apache.lucene.queryParser.MultiFieldQueryParser;
@@ -14,6 +19,14 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 
+import org.apache.lucene.search.highlight.Encoder;
+import org.apache.lucene.search.highlight.Formatter;
+import org.apache.lucene.search.highlight.Fragmenter;
+import org.apache.lucene.search.highlight.Highlighter;
+import org.apache.lucene.search.highlight.QueryScorer;
+import org.apache.lucene.search.highlight.SimpleFragmenter;
+import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
+import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.store.Directory;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -108,14 +121,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
     //return getHibernateTemplate().loadAll(type).size();
   }
 
-  public Queries getLuceneQuery(String fullTextQuery, String[] fields) throws ParseException {
-
-
+  public Map<T, String> getFulltextResults(String fullTextQuery, String[] fields) throws ParseException {
     MultiFieldQueryParser parser = null;
     parser = new MultiFieldQueryParser(fields, new StandardAnalyzer(new HashSet()));
     Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
     FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
-
 
     DirectoryProvider[] providers = fts.getSearchFactory().getDirectoryProviders(type);
 
@@ -127,20 +137,56 @@ public class SimpleGenericDao<T, PK extends Serializable>
       throw new RuntimeException("Unable to parse query: " + fullTextQuery, e);
     }
     FullTextQuery fQuery = fts.createFullTextQuery(luceneQuery, type);
-        IndexSearcher searcher;
-    
+    IndexSearcher searcher;
+    Analyzer analyzer = null;
+    Highlighter ht = null;
+    Map<T, String> map = new HashMap<T, String>();
     try {
       searcher = new IndexSearcher(d);
-      
+      analyzer = new StandardAnalyzer();
+      Encoder encoder = new SimpleHTMLEncoder();
+      Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
+      Fragmenter fragmenter = new SimpleFragmenter(150);
       luceneQuery = searcher.rewrite(luceneQuery);
+      QueryScorer scorer = new QueryScorer(luceneQuery);
+      ht = new Highlighter(formatter, encoder, scorer);
+      ht.setTextFragmenter(fragmenter);
+
+      List<T> list = fQuery.list();
+      for (T t : list) {
+        try {
+        map.put(t, getHighlightedText(fields, t, ht, analyzer));
+        } catch (NoSuchFieldException e) {
+          continue;
+        }
+      }
     } catch (CorruptIndexException ex) {
       throw new RuntimeException("Unable to index.");
     } catch (IOException ex) {
       throw new RuntimeException("Unable to read index directory");
+    } catch (Exception ex) {
+      Logger.getLogger(SimpleGenericDao.class.getName()).log(Level.SEVERE, null, ex);
     }
-    return new Queries(luceneQuery, fQuery);
+    return map;
+  }
 
-  //  return luceneQuery;
+  protected String getHighlightedText(String[] fields, T t, Highlighter ht, Analyzer analyzer) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException {
+    Field[] field = new Field[fields.length];
+    String text = "";
+    for (int i = 0; i < field.length; i++) {
+      field[i] = t.getClass().getDeclaredField(fields[i]);
+      
+      field[i].setAccessible(true);
+      if (field[i].get(t) != null) {
+        String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
+        if (fragment == null) {
+          text += field[i].get(t) + " ";
+        } else {
+          text += fragment + " ";
+        }
+      }
+    }
+    return text;
   }
 }
 

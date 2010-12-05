@@ -22,6 +22,8 @@ import cz.zcu.kiv.eegdatabase.logic.wrapper.PersonWrapper;
 import cz.zcu.kiv.eegdatabase.logic.wrapper.ScenarioWrapper;
 import cz.zcu.kiv.eegdatabase.logic.wrapper.Wrapper;
 import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -49,9 +51,6 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<Weather, Integer> weatherDao;
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
   private GenericDao<ArticleComment, Integer> commentDao;
-  private SectionCreator creator;
-
-
 
   public FullTextSearchController() {
     setCommandClass(FullTextSearchCommand.class);
@@ -73,48 +72,80 @@ public class FullTextSearchController extends SimpleFormController {
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
     String fullTextQuery = fullTextSearchCommand.getSearchTI();
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
-      Set<FulltextResult> results = null;
+      Set<FulltextResult> results = new HashSet<FulltextResult>();
+      Wrapper w;
+
 
       String[] scenFields = {"title", "description", "scenarioLength"};
-      results = creator.createSection(scenarioDao.getLuceneQuery
-              (fullTextQuery, scenFields), scenFields, SectionType.SCENARIO, RelationshipType.SECTION_OBJ);
+      Map<Scenario, String> scen = scenarioDao.getFulltextResults(fullTextQuery, scenFields);
+      for (Map.Entry<Scenario, String> entry : scen.entrySet()) {
+        w = new ScenarioWrapper(entry.getKey());
+        results.add(new FulltextResult(entry.getKey().getScenarioId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+      }
 
       String[] exFields = {"weathernote", "temperature"};
-      results.addAll(creator.createSection(experimentDao.getLuceneQuery
-              (fullTextQuery, exFields), exFields, SectionType.EXPERIMENT, RelationshipType.SECTION_OBJ));
+      Map<Experiment, String> exp = experimentDao.getFulltextResults(fullTextQuery, exFields);
+      for (Map.Entry<Experiment, String> entry : exp.entrySet()) {
+        w = new ExperimentWrapper(entry.getKey());
+        results.add(new FulltextResult(entry.getKey().getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+      }
 
       String[] perFields = {"note", "email"};
-      results.addAll(creator.createSection(personDao.getLuceneQuery
-              (fullTextQuery, perFields), perFields, SectionType.PERSON ,RelationshipType.SECTION_OBJ));
+      Map<Person, String> per = personDao.getFulltextResults(fullTextQuery, perFields);
+      for (Map.Entry<Person, String> entry : per.entrySet()) {
+        w = new PersonWrapper(entry.getKey());
+        results.add(new FulltextResult(entry.getKey().getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+      }
 
       String[] artFields = {"title", "text"};
-      results.addAll(creator.createSection(articleDao.getLuceneQuery
-              (fullTextQuery, artFields), artFields, SectionType.ARTICLE, RelationshipType.SECTION_OBJ));
+      Map<Article, String> art = articleDao.getFulltextResults(fullTextQuery, artFields);
+      for (Map.Entry<Article, String> entry : art.entrySet()) {
+        w = new ArticleWrapper(entry.getKey());
+        results.add(new FulltextResult(entry.getKey().getArticleId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+      }
 
       String[] hardFields = {"title", "type", "description"};
-      results.addAll(creator.createSection(hardwareDao.getLuceneQuery
-              (fullTextQuery, hardFields), hardFields, SectionType.EXPERIMENT, RelationshipType.SET));
+      Map<Hardware, String> hw = hardwareDao.getFulltextResults(fullTextQuery, hardFields);
+      for (Map.Entry<Hardware, String> entry : hw.entrySet()) {
+        for (Experiment e : entry.getKey().getExperiments()) {
+          w = new ExperimentWrapper(e);
+          results.add(new FulltextResult(e.getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+        }
+      }
 
       String[] visualImpairmentFields = {"description"};
-      results.addAll(creator.createSection(eyesDefectDao.getLuceneQuery
-              (fullTextQuery, visualImpairmentFields), visualImpairmentFields, SectionType.PERSON, RelationshipType.SET));
+      Map<VisualImpairment, String> vis = eyesDefectDao.getFulltextResults(fullTextQuery, visualImpairmentFields);
+      for (Map.Entry<VisualImpairment, String> entry : vis.entrySet()) {
+        for (Person p : entry.getKey().getPersons()) {
+          w = new PersonWrapper(p);
+          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+        }
+      }
 
       String[] hearingFields = {"decription"};
-      results.addAll(creator.createSection(hearingImpairmentDao.getLuceneQuery
-              (fullTextQuery, hearingFields), hearingFields, SectionType.PERSON, RelationshipType.SET));
+      Map<HearingImpairment, String> hear = hearingImpairmentDao.getFulltextResults(fullTextQuery, hearingFields);
+       for (Map.Entry<HearingImpairment, String> entry : hear.entrySet()) {
+        for (Person p : entry.getKey().getPersons()) {
+          w = new PersonWrapper(p);
+          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+        }
+      }
 
       String[] weatherFields = {"title", "description"};
-      results.addAll(creator.createSection(weatherDao.getLuceneQuery
-              (fullTextQuery, weatherFields), weatherFields, SectionType.EXPERIMENT, RelationshipType.SET));
-
-//      String[] exOptParamDefFields = {"paramName", "paramDataType"};
-//      results.addAll(scenarioSection.createSection(experimentOptParamDef.getLuceneQuery
-//              (fullTextQuery, exOptParamDefFields), ExperimentOptParamDef.class, exOptParamDefFields));
+      Map<Weather, String> wea = weatherDao.getFulltextResults(fullTextQuery, weatherFields);
+      for (Map.Entry<Weather, String> entry : wea.entrySet()) {
+        for (Experiment e : entry.getKey().getExperiments()) {
+          w = new ExperimentWrapper(e);
+          results.add(new FulltextResult(e.getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+        }
+      }
 
       String[] commentPar = {"text"};
-      results.addAll(creator.createSection(commentDao.getLuceneQuery
-              (fullTextQuery, commentPar), commentPar, SectionType.ARTICLE, RelationshipType.SIMPLE_REL));
-
+      Map<ArticleComment, String> com = commentDao.getFulltextResults(fullTextQuery, commentPar);
+      for (Map.Entry<ArticleComment, String> entry : com.entrySet()) {
+        w = new ArticleWrapper(entry.getKey().getArticle());
+        results.add(new FulltextResult(entry.getKey().getArticle().getArticleId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+      }
 
       logger.debug("I have results: " + results);
 
@@ -207,14 +238,6 @@ public class FullTextSearchController extends SimpleFormController {
 
   public void setCommentDao(GenericDao<ArticleComment, Integer> commentDao) {
     this.commentDao = commentDao;
-  }
-
-  public SectionCreator getCreator() {
-    return creator;
-  }
-
-  public void setCreator(SectionCreator creator) {
-    this.creator = creator;
   }
 
 }
