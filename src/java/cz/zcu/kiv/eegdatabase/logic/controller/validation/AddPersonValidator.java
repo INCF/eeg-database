@@ -43,6 +43,19 @@ public class AddPersonValidator implements Validator {
     } catch (ParseException e) {
       errors.rejectValue("dateOfBirth", "invalid.dateOfBirth");
     }
+    if (!apc.getPhoneNumber().isEmpty()) {
+      try {
+        if (apc.getPhoneNumber().charAt(0) == '+') {
+          Long.parseLong(apc.getPhoneNumber().substring(1));
+        } else {
+          Long.parseLong(apc.getPhoneNumber());
+        }
+
+      } catch (NumberFormatException ex) {
+        errors.rejectValue("phoneNumber", "invalid.phoneNumber");
+      }
+
+    }
 
     if (!Pattern.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", apc.getEmail())) {
       errors.rejectValue("email", "invalid.email");
