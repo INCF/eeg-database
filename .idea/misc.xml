@@ -8,14 +8,14 @@
   </component>
   <component name="FacetAutodetectingManager">
     <autodetection-disabled>
-      <facet-type id="Spring">
+      <facet-type id="javaeeApplication">
         <modules>
           <module name="Trunk" />
         </modules>
       </facet-type>
-      <facet-type id="javaeeApplication">
+      <facet-type id="Spring">
         <modules>
-          <module name="Trunk" />
+          <module name="EEGDatabase" />
         </modules>
       </facet-type>
     </autodetection-disabled>
