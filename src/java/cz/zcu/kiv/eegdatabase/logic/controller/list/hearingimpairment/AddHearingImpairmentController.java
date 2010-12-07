@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -15,6 +16,7 @@ import javax.servlet.http.HttpServletResponse;
 public class AddHearingImpairmentController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
+    @Autowired
     private AuthorizationManager auth;
     private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
 
@@ -68,16 +70,16 @@ public class AddHearingImpairmentController extends SimpleFormController {
             // Editing
             log.debug("Editing existing object.");
             hearingImpairment = hearingImpairmentDao.read(data.getHearingImpairmentId());
+            hearingImpairment.setDescription(data.getDescription());
+            hearingImpairmentDao.update(hearingImpairment);
         } else {
             // Creating new
             log.debug("Creating new object.");
             hearingImpairment = new HearingImpairment();
+            hearingImpairment.setDescription(data.getDescription());
+            hearingImpairmentDao.create(hearingImpairment);
         }
 
-        hearingImpairment.setDescription(data.getDescription());
-
-        log.debug("Saving data to database.");
-        hearingImpairmentDao.create(hearingImpairment);
 
         log.debug("Returning MAV.");
         return mav;
@@ -89,13 +91,5 @@ public class AddHearingImpairmentController extends SimpleFormController {
 
     public void setHearingImpairmentDao(GenericDao<HearingImpairment, Integer> hearingImpairmentDao) {
         this.hearingImpairmentDao = hearingImpairmentDao;
-    }
-
-    public AuthorizationManager getAuth() {
-        return auth;
-    }
-
-    public void setAuth(AuthorizationManager auth) {
-        this.auth = auth;
     }
 }
