@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import java.util.Date;
 
 /**
@@ -55,6 +54,12 @@ public class AddPersonValidator implements Validator {
         errors.rejectValue("phoneNumber", "invalid.phoneNumber");
       }
 
+    }
+    if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*", apc.getGivenname())) {
+      errors.rejectValue("givenname", "invalid.givenname");
+    }
+    if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*",apc.getSurname())) {
+      errors.rejectValue("surname", "invalid.surname");
     }
 
     if (!Pattern.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", apc.getEmail())) {
