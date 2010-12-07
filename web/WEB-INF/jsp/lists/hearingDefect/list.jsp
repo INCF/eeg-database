@@ -12,19 +12,21 @@
       <tr>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.id"/></th>
         <th><fmt:message key="dataTable.heading.description"/></th>
+        <th></th>
       </tr>
     </thead>
     <c:forEach items="${hearingDefectList}" var="hearingImpairment">
       <tr>
         <td>${hearingImpairment.hearingImpairmentId}</td>
         <td>${hearingImpairment.description}</td>
+        <td><a href="<c:url value='/lists/hearing-impairments/edit.html?id=${hearingImpairment.hearingImpairmentId}' />"><fmt:message key="link.edit" /></a></td>
       </tr>
     </c:forEach>
   </table>
 
   <auth:experimenter>
     <div class="actionBox">
-      <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingImpairment"/></a>
+      <a href="<c:url value='/lists/hearing-impairments/add.html'/>" class="lightButtonLink"><fmt:message key="link.addHearingImpairment"/></a>
     </div>
   </auth:experimenter>
 

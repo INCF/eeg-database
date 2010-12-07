@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.logic.controller;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
@@ -15,7 +15,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
  *
  * @author JiPER
  */
-public class HearingDefectListController extends AbstractController {
+public class HearingImpairmentListController extends AbstractController {
 
   private Log log = LogFactory.getLog(getClass());
   private AuthorizationManager auth;

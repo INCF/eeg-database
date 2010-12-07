@@ -544,7 +544,7 @@
 
 
     <bean name="hearingDefectListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.HearingDefectListController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentListController">
         <property name="auth" ref="authorizationManager"/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
     </bean>
@@ -585,7 +585,7 @@
 
     <bean name="addDefectValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddDefectValidator"/>
 
-    <bean name="addHearingDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddHearingDefectController">
+    <bean name="addHearingDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
         <property name="formView" value="lists/hearingDefect/addItemForm"/>
         <property name="successView" value="redirect:/lists/hearing-impairments/list.html"/>
 

@@ -4,7 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddDefectCommand;
+import cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
@@ -19,7 +19,7 @@ public class AddEyesDefectController extends SimpleFormController {
   private GenericDao<VisualImpairment, Integer> eyesDefectDao;
 
   public AddEyesDefectController() {
-    setCommandClass(AddDefectCommand.class);
+    setCommandClass(AddHearingImpairmentCommand.class);
     setCommandName("addEyesDefect");
   }
 
@@ -29,7 +29,7 @@ public class AddEyesDefectController extends SimpleFormController {
 
     log.debug("Processing form data.");
 
-    AddDefectCommand data = (AddDefectCommand) command;
+    AddHearingImpairmentCommand data = (AddHearingImpairmentCommand) command;
 
     if (!auth.userIsExperimenter()) {
       mav.setViewName("lists/userNotExperimenter");

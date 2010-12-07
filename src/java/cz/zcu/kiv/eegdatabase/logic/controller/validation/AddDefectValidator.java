@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.validation;
 
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddDefectCommand;
+import cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
@@ -16,11 +16,11 @@ public class AddDefectValidator implements Validator {
     private Log log = LogFactory.getLog(getClass());
 
     public boolean supports(Class clazz) {
-        return clazz.equals(AddDefectCommand.class);
+        return clazz.equals(AddHearingImpairmentCommand.class);
     }
 
     public void validate(Object command, Errors errors) {
-        AddDefectCommand data = (AddDefectCommand) command;
+        AddHearingImpairmentCommand data = (AddHearingImpairmentCommand) command;
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
     }
