@@ -45,6 +45,37 @@
     <output url="file://$PROJECT_DIR$/out" />
   </component>
   <component name="SvnBranchConfigurationManager">
+    <option name="myConfigurationMap">
+      <map>
+        <entry key="$PROJECT_DIR$">
+          <value>
+            <SvnBranchConfiguration>
+              <option name="branchMap">
+                <map>
+                  <entry key="https://svn.origo.ethz.ch/eeg-database/branches">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                  <entry key="https://svn.origo.ethz.ch/eeg-database/tags">
+                    <value>
+                      <list />
+                    </value>
+                  </entry>
+                </map>
+              </option>
+              <option name="branchUrls">
+                <list>
+                  <option value="https://svn.origo.ethz.ch/eeg-database/branches" />
+                  <option value="https://svn.origo.ethz.ch/eeg-database/tags" />
+                </list>
+              </option>
+              <option name="trunkUrl" value="https://svn.origo.ethz.ch/eeg-database/trunk" />
+            </SvnBranchConfiguration>
+          </value>
+        </entry>
+      </map>
+    </option>
     <option name="mySupportsUserInfoFilter" value="true" />
   </component>
   <component name="WebServicesPlugin" addRequiredLibraries="true" />
