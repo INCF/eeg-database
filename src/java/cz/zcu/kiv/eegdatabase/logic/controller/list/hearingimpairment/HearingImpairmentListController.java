@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -21,7 +22,8 @@ public class HearingImpairmentListController extends AbstractController {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private AuthorizationManager auth;
-    private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
+    @Autowired
+    private HearingImpairmentDao hearingImpairmentDao;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -33,13 +35,5 @@ public class HearingImpairmentListController extends AbstractController {
         List<HearingImpairment> list = hearingImpairmentDao.getAllRecords();
         mav.addObject("hearingDefectList", list);
         return mav;
-    }
-
-    public GenericDao<HearingImpairment, Integer> getHearingImpairmentDao() {
-        return hearingImpairmentDao;
-    }
-
-    public void setHearingImpairmentDao(GenericDao<HearingImpairment, Integer> hearingImpairmentDao) {
-        this.hearingImpairmentDao = hearingImpairmentDao;
     }
 }

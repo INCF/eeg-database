@@ -158,10 +158,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="hearingImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment</value>
-        </constructor-arg>
+    <bean name="hearingImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHearingImpairmentDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -544,9 +541,7 @@
 
 
     <bean name="hearingDefectListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentListController">
-        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
-    </bean>
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentListController"/>
 
     <bean name="eyesDefectListController" class="cz.zcu.kiv.eegdatabase.logic.controller.EyesDefectListController">
         <property name="auth" ref="authorizationManager"/>
