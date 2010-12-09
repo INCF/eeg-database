@@ -92,7 +92,7 @@
  <!-- Project Libraries -->
 
  <path id="library.classpath">
- 		<fileset dir="${basedir}">
+ 		<fileset dir="${basedir}" id="libs" >
 			<include name="lib/**/*.jar" />
 		</fileset>
  </path>
@@ -129,14 +129,12 @@
  
  <path id="eegdatabase.module.production.classpath">
    <path refid="${module.jdk.classpath.eegdatabase}"/>
-   <pathelement location="${basedir}/lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar"/>
-   <path refid="library.classpath"/>
+    <path refid="library.classpath"/>
    <path refid="library.tomcat_6.classpath"/>
  </path>
  
  <path id="eegdatabase.runtime.production.module.classpath">
    <pathelement location="${eegdatabase.output.dir}"/>
-   <pathelement location="${basedir}/lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar"/>
    <path refid="library.classpath"/>
    <path refid="library.tomcat_6.classpath"/>
  </path>
@@ -144,7 +142,6 @@
  <path id="eegdatabase.module.classpath">
    <path refid="${module.jdk.classpath.eegdatabase}"/>
    <pathelement location="${eegdatabase.output.dir}"/>
-   <pathelement location="${basedir}/lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar"/>
    <path refid="library.classpath"/>
    <path refid="library.tomcat_6.classpath"/>
  </path>
@@ -152,7 +149,6 @@
  <path id="eegdatabase.runtime.module.classpath">
    <pathelement location="${eegdatabase.output.dir}"/>
    <pathelement location="${eegdatabase.testoutput.dir}"/>
-   <pathelement location="${basedir}/lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar"/>
    <path refid="library.classpath"/>
    <path refid="library.tomcat_6.classpath"/>
  </path>
@@ -204,7 +200,7 @@
    <!-- Perform any build initialization in this target -->
  </target>
  
- <target name="clean" depends="clean.module.eegdatabase, clean.artifact.eegdatabase" description="cleanup all"/>
+ <target name="clean" depends="init.artifacts, clean.module.eegdatabase, clean.artifact.eegdatabase" description="cleanup all"/>
  
  <target name="build.modules" depends="init, clean, compile.module.eegdatabase" description="build all modules"/>
  
@@ -217,7 +213,9 @@
  </target>
  
  <target name="clean.artifact.eegdatabase" description="clean EEGDatabase artifact output">
+     <echo>${artifact.output.eegdatabase}</echo>
    <delete dir="${artifact.output.eegdatabase}"/>
+   <delete dir="${artifact.output.eegdatabase_war}"/>
  </target>
  
  <target name="artifact.eegdatabase" depends="init.artifacts, compile.module.eegdatabase" description="Build &apos;EEGDatabase&apos; artifact">
@@ -228,11 +226,14 @@
      <fileset dir="${eegdatabase.output.dir}"/>
    </copy>
    <mkdir dir="${artifact.output.eegdatabase}/WEB-INF/lib"/>
-   <copy todir="${artifact.output.eegdatabase}/WEB-INF/lib">
+
+   <copy todir="${artifact.output.eegdatabase}/WEB-INF/lib" flatten="true">
        <fileset dir="${basedir}/lib">
-           <include name="*.jar"></include>
+           <include name="**/*.jar"></include>
        </fileset>
    </copy>
+
+
    <copy todir="${artifact.output.eegdatabase}">
      <fileset dir="${basedir}/web"/>
    </copy>
@@ -243,8 +244,8 @@
  <target name="artifact.eegdatabase_war" depends="init.artifacts, artifact.eegdatabase" description="Build &apos;EEGDatabase_war&apos; artifact">
    <property name="artifact.temp.output.eegdatabase_war" value="${artifacts.temp.dir}/EEGDatabase_war"/>
    <mkdir dir="${artifact.temp.output.eegdatabase_war}"/>
-   <jar destfile="${temp.jar.path.EEGDatabase.war}" duplicate="preserve" filesetmanifest="mergewithoutmain">
-     <zipfileset dir="${artifact.output.eegdatabase}"/>
+   <jar  destfile="${temp.jar.path.EEGDatabase.war}">
+       <zipfileset dir="${artifact.output.eegdatabase}"/>
    </jar>
    <copy file="${temp.jar.path.EEGDatabase.war}" tofile="${artifact.temp.output.eegdatabase_war}/EEGDatabase.war"/>
  </target>

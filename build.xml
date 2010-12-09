@@ -121,8 +121,4 @@
 		</hibernatetool>
 	</target>
 	
-	
-	<target name="distIdeaProject" depends="all">
-	</target>
-	
 </project>
