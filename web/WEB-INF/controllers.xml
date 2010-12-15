@@ -577,14 +577,12 @@
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
     </bean>
 
-    <bean name="addDefectValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddDefectValidator"/>
-
-    <bean name="addHearingDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
+    <bean name="addHearingImpairmentController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
         <property name="formView" value="lists/hearingDefect/addItemForm"/>
         <property name="successView" value="redirect:/lists/hearing-impairments/list.html"/>
-
-        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
-        <property name="validator" ref="addDefectValidator"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
+        </property>
     </bean>
 
     <bean name="addEyesDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddEyesDefectController">
@@ -593,7 +591,9 @@
 
         <property name="auth" ref="authorizationManager"/>
         <property name="eyesDefectDao" ref="eyesDefectDao"/>
-        <property name="validator" ref="addDefectValidator"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddDefectValidator"/>
+        </property>
     </bean>
 
     <bean name="addHardwareController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddHardwareController">
