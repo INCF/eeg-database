@@ -32,7 +32,7 @@ public class HearingImpairmentListController extends AbstractController {
 
         mav.addObject("userIsExperimenter", auth.userIsExperimenter());
 
-        List<HearingImpairment> list = hearingImpairmentDao.getAllRecords();
+        List<HearingImpairment> list = hearingImpairmentDao.getItemsForList();
         mav.addObject("hearingDefectList", list);
         return mav;
     }

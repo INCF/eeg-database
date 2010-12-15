@@ -31,7 +31,7 @@ public class VisualImpairmentListController extends AbstractController {
 
         mav.addObject("userIsExperimenter", auth.userIsExperimenter());
 
-        List<VisualImpairment> list = visualImpairmentDao.getAllRecords();
+        List<VisualImpairment> list = visualImpairmentDao.getItemsForList();
         mav.addObject("eyesDefectList", list);
         return mav;
     }
