@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.validation;
 
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddHardwareCommand;
 import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddWeatherCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

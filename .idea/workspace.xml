@@ -6,16 +6,21 @@
     </artifacts-to-build>
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="Repaired error when updating hearing impairment.">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/encodings.xml" afterPath="$PROJECT_DIR$/.idea/encodings.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\AddHardwareCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddHardwareController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\HardwareListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddHardwareValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HearingImpairmentDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HearingImpairmentDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/VisualImpairmentListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/VisualImpairmentListController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/messages.properties" afterPath="$PROJECT_DIR$/src/java/messages.properties" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -69,25 +74,6 @@
     <breakpoint_rules />
     <ui_properties />
   </component>
-  <component name="DockManager">
-    <window id="2">
-      <content type="file-editors">
-        <state>
-          <leaf>
-            <file leaf-file-name="addItemForm.jsp" pinned="false" current="false" current-in-tab="true">
-              <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp">
-                <provider selected="true" editor-type-id="text-editor">
-                  <state line="25" column="68" selection-start="1042" selection-end="1083" vertical-scroll-proportion="0.47065338">
-                    <folding />
-                  </state>
-                </provider>
-              </entry>
-            </file>
-          </leaf>
-        </state>
-      </content>
-    </window>
-  </component>
   <component name="FavoritesManager">
     <favorites_list name="trunk" />
   </component>
@@ -99,7 +85,7 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="70" column="57" selection-start="4714" selection-end="4714" vertical-scroll-proportion="-9.0">
+            <state line="65" column="55" selection-start="4617" selection-end="4617" vertical-scroll-proportion="-4.75">
               <folding />
             </state>
           </provider>
@@ -111,38 +97,34 @@
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="584" column="0" selection-start="28499" selection-end="28499" vertical-scroll-proportion="-5.3333335">
+            <state line="586" column="0" selection-start="28742" selection-end="28742" vertical-scroll-proportion="-12.45">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleVisualImpairmentDao.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java">
+      <file leaf-file-name="AddHardwareController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="14" column="30" selection-start="398" selection-end="563" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="89" column="0" selection-start="3352" selection-end="3352" vertical-scroll-proportion="0.0">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SimpleHearingImpairmentDao.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java">
+      <file leaf-file-name="addItemForm.jsp" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="20" selection-start="494" selection-end="494" vertical-scroll-proportion="0.0">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
+            <state line="51" column="73" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.78061223">
+              <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HearingImpairmentListController.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java">
+      <file leaf-file-name="HardwareListController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="34" column="77" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.60912055">
+            <state line="33" column="25" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -158,14 +140,9 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentController.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddDefectValidator.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentValidator.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentValidator.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
         <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentCommand.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentController.java" />
@@ -174,6 +151,11 @@
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/VisualImpairmentListController.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" />
       </list>
     </option>
   </component>
@@ -346,6 +328,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hearingDefect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lists" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hardware" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -596,6 +608,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hearingimpairment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="list" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="hardware" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1171,7 +1221,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented editation of visual impairment in Lists section." />
+    <option name="LAST_COMMIT_MESSAGE" value="List of hearing impairments and visual impairments sorted alphabetically." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1193,6 +1243,7 @@
     <MESSAGE value="Created HearingImpairmentDao and used autowiring via annotations in HearingImpairment controllers." />
     <MESSAGE value="Edited hearing impairment controller files." />
     <MESSAGE value="Implemented editation of visual impairment in Lists section." />
+    <MESSAGE value="List of hearing impairments and visual impairments sorted alphabetically." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1202,107 +1253,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="40" selection-start="250" selection-end="250" vertical-scroll-proportion="0.17068273">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="60" selection-start="1237" selection-end="1237" vertical-scroll-proportion="-18.307692">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="68" selection-start="1042" selection-end="1083" vertical-scroll-proportion="0.47065338">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="70" column="57" selection-start="4714" selection-end="4714" vertical-scroll-proportion="-9.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="161" selection-start="857" selection-end="1010" vertical-scroll-proportion="-13.730769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="40" selection-start="2634" selection-end="2634" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/addItemForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="6" column="50" selection-start="357" selection-end="357" vertical-scroll-proportion="-3.9230769">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/GenericDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="17" selection-start="359" selection-end="359" vertical-scroll-proportion="0.017068272">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleGenericDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="13" selection-start="1722" selection-end="1722" vertical-scroll-proportion="-1.4143095">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/VisualImpairmentListController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="75" selection-start="1328" selection-end="1328" vertical-scroll-proportion="0.60912055">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="584" column="0" selection-start="28499" selection-end="28499" vertical-scroll-proportion="-5.3333335">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="62" selection-start="213" selection-end="262" vertical-scroll-proportion="0.19381107">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HearingImpairmentDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="7" column="23" selection-start="236" selection-end="236" vertical-scroll-proportion="0.19381107">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="30" selection-start="398" selection-end="563" vertical-scroll-proportion="0.0">
@@ -1324,6 +1274,107 @@
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="77" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.60912055">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="0.055374593">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="21" selection-start="425" selection-end="425" vertical-scroll-proportion="0.30456027">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="0" selection-start="61" selection-end="61" vertical-scroll-proportion="0.055374593">
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="586" column="0" selection-start="28742" selection-end="28742" vertical-scroll-proportion="-12.45">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="681" selection-end="681" vertical-scroll-proportion="-0.44564047">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="24" selection-start="253" selection-end="253" vertical-scroll-proportion="0.33224756">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="25" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="173" selection-start="857" selection-end="1010" vertical-scroll-proportion="0.40112358">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="105" selection-start="1209" selection-end="1209" vertical-scroll-proportion="0.53741497">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="89" column="0" selection-start="3352" selection-end="3352" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="20" column="23" selection-start="378" selection-end="898" vertical-scroll-proportion="0.3765227">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="65" column="55" selection-start="4617" selection-end="4617" vertical-scroll-proportion="-4.75">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="51" column="73" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.78061223">
           <folding />
         </state>
       </provider>

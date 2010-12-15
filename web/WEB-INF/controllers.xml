@@ -123,10 +123,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="hardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.Hardware</value>
-        </constructor-arg>
+    <bean name="hardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -542,10 +539,7 @@
 
     <bean name="visualImpairmentListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentListController"/>
 
-    <bean name="hardwareListController" class="cz.zcu.kiv.eegdatabase.logic.controller.HardwareListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="hardwareDao" ref="hardwareDao"/>
-    </bean>
+    <bean name="hardwareListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareListController"/>
 
     <bean name="personAdditionalParamsListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.PersonAdditionalParamListController">
@@ -587,14 +581,11 @@
         </property>
     </bean>
 
-    <bean name="addHardwareController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddHardwareController">
+    <bean name="addHardwareController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareController">
         <property name="formView" value="lists/hardware/addItemForm"/>
         <property name="successView" value="redirect:/lists/hardware-definitions/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="hardwareDao" ref="hardwareDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddHardwareValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
         </property>
     </bean>
 

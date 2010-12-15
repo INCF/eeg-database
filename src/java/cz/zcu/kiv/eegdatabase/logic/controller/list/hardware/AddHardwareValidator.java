@@ -1,6 +1,5 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.validation;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.hardware;
 
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddHardwareCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
@@ -8,7 +7,6 @@ import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 
 /**
- *
  * @author JiPER
  */
 public class AddHardwareValidator implements Validator {
