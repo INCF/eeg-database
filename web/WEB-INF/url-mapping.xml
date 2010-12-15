@@ -68,12 +68,17 @@
                 <prop key="groups/*.html">groupsMultiController</prop>
 
 
+
                 <prop key="lists/index.html">listsIndexController</prop>
-                <prop key="lists/hearing-impairments/list.html">hearingDefectListController</prop>
+
+                <prop key="lists/hearing-impairments/list.html">hearingImpairmentListController</prop>
                 <prop key="lists/hearing-impairments/add.html">addHearingImpairmentController</prop>
                 <prop key="lists/hearing-impairments/edit.html">addHearingImpairmentController</prop>
-                <prop key="lists/visual-impairments/list.html">eyesDefectListController</prop>
-                <prop key="lists/visual-impairments/add.html">addEyesDefectController</prop>
+
+                <prop key="lists/visual-impairments/list.html">visualImpairmentListController</prop>
+                <prop key="lists/visual-impairments/add.html">addVisualImpairmentController</prop>
+                <prop key="lists/visual-impairments/edit.html">addVisualImpairmentController</prop>
+
                 <prop key="lists/hardware-definitions/list.html">hardwareListController</prop>
                 <prop key="lists/hardware-definitions/add.html">addHardwareController</prop>
                 <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>

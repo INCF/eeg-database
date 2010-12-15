@@ -14,7 +14,7 @@
         </c:when>
         <c:otherwise>
             <!-- creating new -->
-            <h1><fmt:message key="pageTitle.addExperiment"/></h1>
+            <h1><fmt:message key="pageTitle.addHearingImpairment"/></h1>
 
             <c:url value="add.html" var="formUrl"/>
         </c:otherwise>

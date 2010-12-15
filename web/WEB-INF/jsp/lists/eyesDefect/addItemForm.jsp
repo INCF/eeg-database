@@ -4,12 +4,26 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<ui:listsTemplate pageTitle="pageTitle.addVisualImpairment">
-    <h1><fmt:message key="pageTitle.addVisualImpairment"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.addEditVisualImpairment">
+     <c:choose>
+        <c:when test="${addEyesDefect.visualImpairmentId > 0}">
+            <!-- editation -->
+            <h1><fmt:message key="pageTitle.editVisualImpairment"/></h1>
 
-    <c:url value="add.html" var="formUrl"/>
+            <c:url value="edit.html?id=${addEyesDefect.visualImpairmentId}" var="formUrl"/>
+        </c:when>
+        <c:otherwise>
+            <!-- creating new -->
+            <h1><fmt:message key="pageTitle.addVisualImpairment"/></h1>
+
+            <c:url value="add.html" var="formUrl"/>
+        </c:otherwise>
+    </c:choose>
+
     <form:form action="${formUrl}" method="post" commandName="addEyesDefect" cssClass="standardInputForm">
         <fieldset>
+
+            <form:hidden path="visualImpairmentId"/>
 
             <div class="itemBox">
                 <form:label path="description" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.description"/></form:label>
@@ -21,7 +35,7 @@
 
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.addVisualImpairment'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
             </div>
 
         </fieldset>

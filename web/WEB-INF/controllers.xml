@@ -162,10 +162,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="eyesDefectDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment</value>
-        </constructor-arg>
+    <bean name="visualImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleVisualImpairmentDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -540,13 +537,10 @@
     </bean>
 
 
-    <bean name="hearingDefectListController"
+    <bean name="hearingImpairmentListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentListController"/>
 
-    <bean name="eyesDefectListController" class="cz.zcu.kiv.eegdatabase.logic.controller.EyesDefectListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="eyesDefectDao" ref="eyesDefectDao"/>
-    </bean>
+    <bean name="visualImpairmentListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentListController"/>
 
     <bean name="hardwareListController" class="cz.zcu.kiv.eegdatabase.logic.controller.HardwareListController">
         <property name="auth" ref="authorizationManager"/>
@@ -585,14 +579,11 @@
         </property>
     </bean>
 
-    <bean name="addEyesDefectController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddEyesDefectController">
+    <bean name="addVisualImpairmentController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentController">
         <property name="formView" value="lists/eyesDefect/addItemForm"/>
         <property name="successView" value="redirect:/lists/visual-impairments/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="eyesDefectDao" ref="eyesDefectDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddDefectValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
         </property>
     </bean>
 
@@ -691,7 +682,7 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.AddEyesDefectToPersonController">
         <property name="formView" value="people/addEyesDefectForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
-        <property name="eyesDefectDao" ref="eyesDefectDao"/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="validator">
             <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddEyesDefectToPersonValidator"/>
@@ -798,7 +789,7 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherController">
         <property name="formView" value="people/search"/>
         <property name="personDao" ref="personDao"/>
-        <property name="eyesDefectDao" ref="eyesDefectDao"/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
         <property name="successView" value="people/searchResults"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.PeopleSearcherCommand"/>
@@ -823,7 +814,7 @@
         <property name="articleDao" ref="articleDao"/>
         <property name="hardwareDao" ref="hardwareDao"/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
-        <property name="eyesDefectDao" ref="eyesDefectDao"/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="weatherDao" ref="weatherDao"/>
         <property name="experimentOptParamDef" ref="experimentOptParamDefDao"/>
         <property name="commentDao" ref="articleCommentDao"/>
