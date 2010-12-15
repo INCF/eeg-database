@@ -83,8 +83,10 @@
                 <prop key="lists/hardware-definitions/add.html">addHardwareController</prop>
                 <prop key="lists/hardware-definitions/edit.html">addHardwareController</prop>
 
-                <prop key="lists/person-optional-parameters/list.html">personAdditionalParamsListController</prop>
-                <prop key="lists/person-optional-parameters/add.html">addPersonAdditionalParamController</prop>
+                <prop key="lists/person-optional-parameters/list.html">personOptionalParametersListController</prop>
+                <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>
+                <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
+
                 <prop key="lists/experiment-optional-parameters/list.html">measurationAdditionalParamsListController
                 </prop>
                 <prop key="lists/experiment-optional-parameters/add.html">addMeasurationAdditionalParamController

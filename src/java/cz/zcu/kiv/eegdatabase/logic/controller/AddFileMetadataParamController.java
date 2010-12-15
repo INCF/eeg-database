@@ -4,7 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.AddParameterCommand;
+import cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
@@ -19,7 +19,7 @@ public class AddFileMetadataParamController extends SimpleFormController {
   private GenericDao<FileMetadataParamDef, Integer> fileMetadataParamDefDao;
 
   public AddFileMetadataParamController() {
-    setCommandClass(AddParameterCommand.class);
+    setCommandClass(AddPersonOptParamDefCommand.class);
     setCommandName("addFileMetadataParam");
   }
 
@@ -28,7 +28,7 @@ public class AddFileMetadataParamController extends SimpleFormController {
     ModelAndView mav = new ModelAndView(getSuccessView());
 
     log.debug("Processing form data.");
-    AddParameterCommand data = (AddParameterCommand) command;
+    AddPersonOptParamDefCommand data = (AddPersonOptParamDefCommand) command;
 
     if (!auth.userIsExperimenter()) {
       mav.setViewName("lists/userNotExperimenter");

@@ -1,13 +1,21 @@
-package cz.zcu.kiv.eegdatabase.logic.commandobjects;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef;
 
 /**
- *
  * @author Jindra
  */
-public class AddParameterCommand {
+public class AddPersonOptParamDefCommand {
 
+    private int id;
     private String paramName;
     private String paramDataType;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getParamDataType() {
         return paramDataType;

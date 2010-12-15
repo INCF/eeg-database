@@ -163,10 +163,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef</value>
-        </constructor-arg>
+    <bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -541,11 +538,8 @@
 
     <bean name="hardwareListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareListController"/>
 
-    <bean name="personAdditionalParamsListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.PersonAdditionalParamListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
-    </bean>
+    <bean name="personOptionalParametersListController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefListController"/>
 
     <bean name="measurationAdditionalParamsListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.MeasurationAdditionalParamListController">
@@ -601,15 +595,12 @@
     </bean>
 
     <bean name="addParameterValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddParameterValidator"/>
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.AddOptionalParameterDefinitionValidator"/>
 
-    <bean name="addPersonAdditionalParamController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddPersonAdditionalParamController">
+    <bean name="addPersonOptionalParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">
         <property name="formView" value="lists/personAdditionalParams/addItemForm"/>
         <property name="successView" value="redirect:/lists/person-optional-parameters/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
         <property name="validator" ref="addParameterValidator"/>
     </bean>
 
