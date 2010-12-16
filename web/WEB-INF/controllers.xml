@@ -181,10 +181,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef</value>
-        </constructor-arg>
+    <bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -541,11 +538,8 @@
     <bean name="personOptionalParametersListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefListController"/>
 
-    <bean name="measurationAdditionalParamsListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.MeasurationAdditionalParamListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
-    </bean>
+    <bean name="experimentOptionalParametersListController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefListController"/>
 
     <bean name="weatherListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.WeatherListController">
@@ -594,24 +588,22 @@
         </property>
     </bean>
 
-    <bean name="addParameterValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.AddOptionalParameterDefinitionValidator"/>
-
     <bean name="addPersonOptionalParameterController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">
         <property name="formView" value="lists/personAdditionalParams/addItemForm"/>
         <property name="successView" value="redirect:/lists/person-optional-parameters/list.html"/>
-        <property name="validator" ref="addParameterValidator"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
+        </property>
     </bean>
 
-    <bean name="addMeasurationAdditionalParamController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddMeasurationAdditionalParamController">
+    <bean name="addExperimentOptionalParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefController">
         <property name="formView" value="lists/measurationAdditionalParams/addItemForm"/>
         <property name="successView" value="redirect:/lists/experiment-optional-parameters/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
-        <property name="validator" ref="addParameterValidator"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefValidator"/>
+        </property>
     </bean>
 
     <bean name="addFileMetadataParamController"
@@ -621,7 +613,9 @@
 
         <property name="auth" ref="authorizationManager"/>
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
-        <property name="validator" ref="addParameterValidator"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
+        </property>
     </bean>
 
     <bean name="addExperimentOptParamValController"

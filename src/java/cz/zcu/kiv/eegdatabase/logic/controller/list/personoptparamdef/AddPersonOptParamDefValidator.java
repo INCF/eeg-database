@@ -1,6 +1,5 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.list;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
@@ -10,7 +9,7 @@ import org.springframework.validation.Validator;
 /**
  * @author JiPER
  */
-public class AddOptionalParameterDefinitionValidator implements Validator {
+public class AddPersonOptParamDefValidator implements Validator {
 
     private Log log = LogFactory.getLog(getClass());
 

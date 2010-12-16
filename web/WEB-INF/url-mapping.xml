@@ -87,10 +87,10 @@
                 <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>
                 <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
 
-                <prop key="lists/experiment-optional-parameters/list.html">measurationAdditionalParamsListController
-                </prop>
-                <prop key="lists/experiment-optional-parameters/add.html">addMeasurationAdditionalParamController
-                </prop>
+                <prop key="lists/experiment-optional-parameters/list.html">experimentOptionalParametersListController</prop>
+                <prop key="lists/experiment-optional-parameters/add.html">addExperimentOptionalParameterController</prop>
+                <prop key="lists/experiment-optional-parameters/edit.html">addExperimentOptionalParameterController</prop>
+
                 <prop key="lists/file-metadata-definitions/list.html">fileMetadataParamsListController</prop>
                 <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParamController</prop>
                 <prop key="lists/weather-definitions/list.html">weatherListController</prop>

@@ -13,6 +13,7 @@
         <th style="width: 50px;"><fmt:message key="dataTable.heading.measurationAdditionalParamsId"/></th>
         <th style="width: 150px;"><fmt:message key="dataTable.heading.measurationAdditionalParamsName"/></th>
         <th><fmt:message key="dataTable.heading.measurationAdditionalParamsDataType"/></th>
+          <th></th>
       </tr>
     </thead>
     <c:forEach items="${measurationAdditionalParamsList}" var="measurationAdditionalParam">
@@ -20,6 +21,7 @@
         <td>${measurationAdditionalParam.experimentOptParamDefId}</td>
         <td>${measurationAdditionalParam.paramName}</td>
         <td>${measurationAdditionalParam.paramDataType}</td>
+          <td><a href="<c:url value='/lists/experiment-optional-parameters/edit.html?id=${measurationAdditionalParam.experimentOptParamDefId}' />"><fmt:message key="link.edit" /></a></td>
       </tr>
     </c:forEach>
   </table>

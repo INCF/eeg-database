@@ -4,10 +4,22 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<ui:listsTemplate pageTitle="pageTitle.addExperimentOptionalParameter">
-    <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.addEditExperimentOptionalParameterDefinition">
+   <c:choose>
+        <c:when test="${addMeasurationAdditionalParam.id > 0}">
+            <!-- editation -->
+            <h1><fmt:message key="pageTitle.editExperimentOptionalParameterDefinition"/></h1>
 
-    <c:url value="add.html" var="formUrl"/>
+            <c:url value="edit.html?id=${addMeasurationAdditionalParam.id}" var="formUrl"/>
+        </c:when>
+        <c:otherwise>
+            <!-- creating new -->
+            <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
+
+            <c:url value="add.html" var="formUrl"/>
+        </c:otherwise>
+    </c:choose>
+
     <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParam" cssClass="standardInputForm">
         <fieldset>
 
@@ -28,7 +40,7 @@
             </div>
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.addExperimentOptionalParameter'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
             </div>
 
         </fieldset>
