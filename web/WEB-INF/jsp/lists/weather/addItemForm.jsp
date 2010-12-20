@@ -4,10 +4,22 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<ui:listsTemplate pageTitle="pageTitle.addWeather">
-    <h1><fmt:message key="pageTitle.addWeather"/></h1>
+<ui:listsTemplate pageTitle="pageTitle.addEditWeatherDefinition">
+     <c:choose>
+        <c:when test="${addWeather.id > 0}">
+            <!-- editation -->
+            <h1><fmt:message key="pageTitle.editWeatherDefinition"/></h1>
 
-    <c:url value="add.html" var="formUrl"/>
+            <c:url value="edit.html?id=${addWeather.id}" var="formUrl"/>
+        </c:when>
+        <c:otherwise>
+            <!-- creating new -->
+            <h1><fmt:message key="pageTitle.addWeatherDefinition"/></h1>
+
+            <c:url value="add.html" var="formUrl"/>
+        </c:otherwise>
+    </c:choose>
+
     <form:form action="${formUrl}" method="post" commandName="addWeather" cssClass="standardInputForm">
         <fieldset>
 
@@ -29,7 +41,7 @@
 
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.addWeatherDefinition'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
             </div>
 
         </fieldset>

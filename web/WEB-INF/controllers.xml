@@ -127,10 +127,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.Weather</value>
-        </constructor-arg>
+    <bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -538,11 +535,7 @@
     <bean name="experimentOptionalParametersListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefListController"/>
 
-    <bean name="weatherListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.WeatherListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="weatherDao" ref="weatherDao"/>
-    </bean>
+    <bean name="weatherListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherListController"/>
 
     <bean name="fileMetadataParametersListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefListController"/>
 
@@ -570,14 +563,11 @@
         </property>
     </bean>
 
-    <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddWeatherController">
+    <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherController">
         <property name="formView" value="lists/weather/addItemForm"/>
         <property name="successView" value="redirect:/lists/weather-definitions/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="weatherDao" ref="weatherDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddWeatherValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
         </property>
     </bean>
 

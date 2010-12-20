@@ -97,6 +97,7 @@
 
                 <prop key="lists/weather-definitions/list.html">weatherListController</prop>
                 <prop key="lists/weather-definitions/add.html">addWeatherController</prop>
+                <prop key="lists/weather-definitions/edit.html">addWeatherController</prop>
 
                 <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 

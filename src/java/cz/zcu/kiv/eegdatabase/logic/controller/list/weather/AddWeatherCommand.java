@@ -1,12 +1,21 @@
-package cz.zcu.kiv.eegdatabase.logic.commandobjects;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.weather;
 
 /**
  * @author Jindra
  */
 public class AddWeatherCommand {
 
+    private int id;
     private String title;
     private String description;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public String getDescription() {
         return description;
