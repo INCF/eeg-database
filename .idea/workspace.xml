@@ -7,19 +7,18 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\AddHardwareCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareCommand.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddHardwareController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\HardwareListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddHardwareValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/FileMetadataParamDefDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleFileMetadataParamDefDao.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefCommand.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddFileMetadataParamController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\FileMetadataParamListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/FileMetadataParamDefListController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/messages.properties" afterPath="$PROJECT_DIR$/src/java/messages.properties" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/addItemForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/addItemForm.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/list.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -81,50 +80,59 @@
     <leaf>
       <file leaf-file-name="url-mapping.xml" pinned="true" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
-          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-            <state />
-          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="65" column="55" selection-start="4617" selection-end="4617" vertical-scroll-proportion="-4.75">
+            <state line="94" column="79" selection-start="6591" selection-end="6591" vertical-scroll-proportion="-13.95">
               <folding />
             </state>
+          </provider>
+          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+            <state />
           </provider>
         </entry>
       </file>
       <file leaf-file-name="controllers.xml" pinned="true" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="606" column="102" selection-start="30309" selection-end="30309" vertical-scroll-proportion="-6.111111">
+              <folding />
+            </state>
+          </provider>
           <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
             <state />
           </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addItemForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/addItemForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="586" column="0" selection-start="28742" selection-end="28742" vertical-scroll-proportion="-12.45">
+            <state line="25" column="0" selection-start="1021" selection-end="1021" vertical-scroll-proportion="-5.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddHardwareController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java">
+      <file leaf-file-name="AddFileMetadataParamDefController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="89" column="0" selection-start="3352" selection-end="3352" vertical-scroll-proportion="0.0">
+            <state line="87" column="9" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addItemForm.jsp" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp">
+      <file leaf-file-name="FileMetadataParamDefListController.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/FileMetadataParamDefListController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="51" column="73" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.78061223">
+            <state line="33" column="84" selection-start="1370" selection-end="1370" vertical-scroll-proportion="0.6081301">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HardwareListController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java">
+      <file leaf-file-name="AddPersonOptParamDefController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/personoptparamdef/AddPersonOptParamDefController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="33" column="25" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
+            <state line="38" column="38" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -140,30 +148,30 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentValidator.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentCommand.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentController.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/list.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/VisualImpairmentListController.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/experimentoptparamdef/AddOptionalParameterDefinitionValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/experimentoptparamdef/AddExperimentOptParamDefValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/personoptparamdef/AddPersonOptParamDefValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/experimentoptparamdef/AddExperimentOptParamDefController.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/measurationAdditionalParams/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/measurationAdditionalParams/addItemForm.jsp" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefCommand.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/FileMetadataParamDefDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleFileMetadataParamDefDao.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/addItemForm.jsp" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefController.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/FileMetadataParamDefListController.java" />
       </list>
     </option>
   </component>
   <component name="LogFilters">
     <option name="FILTER_ERRORS" value="false" />
     <option name="FILTER_WARNINGS" value="false" />
-    <option name="FILTER_INFO" value="true" />
-    <option name="FILTER_DEBUG" value="true" />
+    <option name="FILTER_INFO" value="false" />
+    <option name="FILTER_DEBUG" value="false" />
     <option name="CUSTOM_FILTER" />
   </component>
   <component name="ModuleEditorState">
@@ -201,6 +209,100 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="validation" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Scope" />
       <pane id="Favorites" />
       <pane id="ProjectPane">
@@ -327,7 +429,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="hearingDefect" />
+              <option name="myItemId" value="personAdditionalParams" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -358,6 +460,36 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hardware" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lists" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="fileMetadataParams" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -531,7 +663,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="validation" />
+              <option name="myItemId" value="list" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -569,45 +701,7 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="visualimpairment" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hearingimpairment" />
+              <option name="myItemId" value="personoptparamdef" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -646,6 +740,44 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="hardware" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="list" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="filemetadata" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -737,100 +869,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="validation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -852,20 +890,21 @@
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="GoToClass.includeLibraries" value="false" />
     <property name="GenerateAntBuildDialog.backupFiles" value="false" />
-    <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="GoToClass.includeLibraries" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="options.splitter.details.proportions" value="0.2" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
       <recent name="cz.zcu.kiv.eegdatabase.data.dao" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef" />
       <recent name="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment" />
       <recent name="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment" />
-      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.validation" />
-      <recent name="cz.zcu.kiv.eegdatabase.logic.commandobjects" />
     </key>
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\data\dao" />
       <recent name="C:\Users\Jindra\IdeaProjects\EEGDatabase\web\WEB-INF\jsp\lists\weather" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
@@ -951,6 +990,15 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="FtpUpload" enabled="false" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="ValidateXdebugSetup" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="" />
@@ -977,13 +1025,27 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
+      <option name="LOCAL" value="false" />
+      <option name="UPDATING_POLICY" value="hot-swap-classes" />
+      <server-settings>
+        <option name="DEPLOY_TOMCAT_APPS" value="false" />
+        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
+      </server-settings>
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="62601" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
-        <option name="FtpUpload" enabled="false" />
+        <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="ValidateXdebugSetup" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6">
@@ -1041,29 +1103,6 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="EEGDatabase_war" />
         </option>
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
-      <option name="LOCAL" value="false" />
-      <option name="UPDATING_POLICY" value="hot-swap-classes" />
-      <server-settings>
-        <option name="DEPLOY_TOMCAT_APPS" value="false" />
-        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
-      </server-settings>
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="62601" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
@@ -1185,7 +1224,6 @@
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.34232122" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.35404456" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495935" sideWeight="0.66183573" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1198,10 +1236,11 @@
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25240642" sideWeight="0.62658846" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37341154" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2513369" sideWeight="0.627566" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37243402" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1221,7 +1260,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="List of hearing impairments and visual impairments sorted alphabetically." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented editing of experiment optional parameters." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1244,6 +1283,9 @@
     <MESSAGE value="Edited hearing impairment controller files." />
     <MESSAGE value="Implemented editation of visual impairment in Lists section." />
     <MESSAGE value="List of hearing impairments and visual impairments sorted alphabetically." />
+    <MESSAGE value="Implemented editation of hardware definitions." />
+    <MESSAGE value="Implemented editing of person optional parameters." />
+    <MESSAGE value="Implemented editing of experiment optional parameters." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1253,128 +1295,120 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleVisualImpairmentDao.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/FileMetadataParamDefDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="30" selection-start="398" selection-end="563" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHearingImpairmentDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="20" selection-start="494" selection-end="494" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="77" selection-start="1393" selection-end="1393" vertical-scroll-proportion="0.60912055">
+        <state line="6" column="80" selection-start="209" selection-end="209" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleFileMetadataParamDefDao.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="42" selection-end="42" vertical-scroll-proportion="0.055374593">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="21" selection-start="425" selection-end="425" vertical-scroll-proportion="0.30456027">
+        <state line="13" column="75" selection-start="571" selection-end="571" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation/AddWeatherValidator.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="61" selection-end="61" vertical-scroll-proportion="0.055374593">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="30" column="84" selection-start="1479" selection-end="1479" vertical-scroll-proportion="0.86587435">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/list.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="16" selection-start="917" selection-end="1067" vertical-scroll-proportion="0.46519524">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="94" column="79" selection-start="6591" selection-end="6591" vertical-scroll-proportion="-13.95">
+          <folding />
+        </state>
+      </provider>
       <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
         <state />
       </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="586" column="0" selection-start="28742" selection-end="28742" vertical-scroll-proportion="-12.45">
+        <state line="606" column="102" selection-start="30309" selection-end="30309" vertical-scroll-proportion="-6.111111">
+          <folding />
+        </state>
+      </provider>
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="58" selection-start="554" selection-end="554" vertical-scroll-proportion="0.33170733">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentController.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/personoptparamdef/AddPersonOptParamDefController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="681" selection-end="681" vertical-scroll-proportion="-0.44564047">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareCommand.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="24" selection-start="253" selection-end="253" vertical-scroll-proportion="0.33224756">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/HardwareListController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="33" column="25" selection-start="1225" selection-end="1225" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/list.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="21" column="173" selection-start="857" selection-end="1010" vertical-scroll-proportion="0.40112358">
+        <state line="38" column="38" selection-start="1580" selection-end="1580" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="105" selection-start="1209" selection-end="1209" vertical-scroll-proportion="0.53741497">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="89" column="0" selection-start="3352" selection-end="3352" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hearingDefect/addItemForm.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="23" selection-start="378" selection-end="898" vertical-scroll-proportion="0.3765227">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="65" column="55" selection-start="4617" selection-end="4617" vertical-scroll-proportion="-4.75">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.26994908">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/hardware/addItemForm.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="51" column="73" selection-start="2290" selection-end="2290" vertical-scroll-proportion="0.78061223">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.43293718">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="654" selection-end="654" vertical-scroll-proportion="-1.0504065">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/addItemForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="27" selection-start="915" selection-end="915" vertical-scroll-proportion="-14.384615">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/personAdditionalParams/addItemForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.60611206">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/lists/fileMetadataParams/addItemForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="0" selection-start="1021" selection-end="1021" vertical-scroll-proportion="-5.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/AddFileMetadataParamDefController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="87" column="9" selection-start="3449" selection-end="3449" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/filemetadata/FileMetadataParamDefListController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="84" selection-start="1370" selection-end="1370" vertical-scroll-proportion="0.6081301">
           <folding />
         </state>
       </provider>

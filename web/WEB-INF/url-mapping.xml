@@ -91,8 +91,10 @@
                 <prop key="lists/experiment-optional-parameters/add.html">addExperimentOptionalParameterController</prop>
                 <prop key="lists/experiment-optional-parameters/edit.html">addExperimentOptionalParameterController</prop>
 
-                <prop key="lists/file-metadata-definitions/list.html">fileMetadataParamsListController</prop>
-                <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParamController</prop>
+                <prop key="lists/file-metadata-definitions/list.html">fileMetadataParametersListController</prop>
+                <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParameterController</prop>
+                <prop key="lists/file-metadata-definitions/edit.html">addFileMetadataParameterController</prop>
+
                 <prop key="lists/weather-definitions/list.html">weatherListController</prop>
                 <prop key="lists/weather-definitions/add.html">addWeatherController</prop>
 

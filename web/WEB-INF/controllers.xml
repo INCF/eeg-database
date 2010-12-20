@@ -141,10 +141,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef</value>
-        </constructor-arg>
+    <bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -547,11 +544,7 @@
         <property name="weatherDao" ref="weatherDao"/>
     </bean>
 
-    <bean name="fileMetadataParamsListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.FileMetadataParamListController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
-    </bean>
+    <bean name="fileMetadataParametersListController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefListController"/>
 
     <bean name="addHearingImpairmentController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
         <property name="formView" value="lists/hearingDefect/addItemForm"/>
@@ -606,15 +599,12 @@
         </property>
     </bean>
 
-    <bean name="addFileMetadataParamController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddFileMetadataParamController">
+    <bean name="addFileMetadataParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefController">
         <property name="formView" value="lists/fileMetadataParams/addItemForm"/>
         <property name="successView" value="redirect:/lists/file-metadata-definitions/list.html"/>
-
-        <property name="auth" ref="authorizationManager"/>
-        <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefValidator"/>
         </property>
     </bean>
 
