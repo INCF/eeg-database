@@ -5,19 +5,14 @@
 --%>
 
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
-   "http://www.w3.org/TR/html4/loose.dtd">
+<%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
+<%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
-<%
+<c:set var="group" value="${param.group}"/>
+<c:set var="date" value="${param.date}"/>
+<c:set var="startTime" value="${param.startTime}"/>
+<c:set var="endTime" value="${param.endTime}"/>
 
-  out.println(request.getQueryString());
-  String date = request.getParameter("date");
-  int group = Integer.valueOf(request.getParameter("group"));
-  String startTime = request.getParameter("startTime");
-  String endTime = request.getParameter("endTime");
-  /*int repTime = Integer.valueOf(request.getParameter("repTime"));
-  int repType = Integer.valueOf(request.getParameter("repType"));
-
-  out.println("<br/><br/>Selected date:"+date+"<br/>Selected group:"+group+"<br/>"+startTime+" -> "+endTime+"<br/>"+"Repeat for "+repTime+" "+(repType==1?"weeks":"months"));
-*/
-%>
+<c:out value="${group}/${date}/${startTime}/${endTime}" />

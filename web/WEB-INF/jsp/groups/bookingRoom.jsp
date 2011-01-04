@@ -1,4 +1,3 @@
-<%@page import="java.util.Calendar"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -34,18 +33,20 @@
     </div>
     <div id="right">
       <div id="datePicker"></div>
-      <fmt:message key='label.chooseRepeating'/><br />
-      <fmt:message key='label.repeatFor'/>
+      <b><fmt:message key='label.chooseRepeating'/>:</b><br />
+      <fmt:message key='label.repeatFor'/>:<br />
+      <select id="repType">
+        <option value="1">Every</option>
+        <option value="2">Every odd</option>
+        <option value="2">Every even</option>
+      </select>
+      week,&nbsp;
       <select id="repTime">
         <c:forEach var="d" begin="1" end="5" step="1">
           <option value="">${d}</option>
         </c:forEach>
       </select>
-      <fmt:message key='label.timesEvery'/>
-      <select id="repType">
-        <option value="1">week</option>
-        <option value="2">month</option>
-      </select>
+      &nbsp;<fmt:message key='label.repeatTimes'/>
     </div>
     <div id="bottom">
       <div id="chosenData">&nbsp;</div>
@@ -101,23 +102,21 @@
       var sel = document.getElementById("selectedGroup");
 
       $.ajax({
-        type: "POST",
+        type: "GET",
         url: "<c:url value='book-room-view.html' />",
         cache: false,
-        data: "group="+sel.value+"&date="+date+"&startTime="+$("#startTime").attr('value')+"&endTime="+$("#endTime").attr('value')+"&repTime="+$("#repTime").attr('value')+"&repType="+$("#repType").attr('value'),
+        data: "group="+sel.value+"&date="+date+"&startTime="+$("#startTime").attr('value')+"&endTime="+$("#endTime").attr('value'),
         beforeSend: function(){
           $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
 
         },
         success: function(data){
-          
-
-          $("#chosenData").html("Selected time range: "+date+"; "+$("#startTime").attr('value')+" -> "+$("#endTime").attr('value')+"<br />Selected group:"+sel.options[sel.selectedIndex].text+"<br/>"+data);
+          $("#chosenData").html("Selected time range: "+date+"; "+$("#startTime").attr('value')+" -> "+$("#endTime").attr('value')+"<br />Selected group:"+sel.options[sel.selectedIndex].text+"<br/><hr>"+data);
         },
         error:function (xhr, ajaxOptions, thrownError){
-                    $("#chosenData").html(":-(");
-                    alert(xhr.status);
-                }
+          $("#chosenData").html(":-(");
+          alert(xhr.status);
+        }
       });
     }
 
