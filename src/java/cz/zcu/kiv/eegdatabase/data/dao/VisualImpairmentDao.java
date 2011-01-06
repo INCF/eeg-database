@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface VisualImpairmentDao extends GenericDao<VisualImpairment, Integer> {
     public List<VisualImpairment> getItemsForList();
+
+    public boolean canSaveDescription(String description, int id);
 }
