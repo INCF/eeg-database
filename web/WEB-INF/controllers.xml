@@ -192,6 +192,9 @@
 
     <bean name="createGroupController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupController">
         <property name="formView" value="groups/createGroupForm"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator"/>
+        </property>
     </bean>
 
 
@@ -400,7 +403,7 @@
 
     <bean name="editGroupRoleController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleController">
         <property name="formView" value="groups/editGroupRole"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.EditGroupRoleCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
@@ -438,7 +441,7 @@
     <bean name="acceptRoleRequestController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AcceptRoleRequestController">
         <property name="formView" value="groups/acceptRoleRequest"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.EditGroupRoleCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
         <property name="gpr" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="successView" value="myAccount/changesWereMade"/>

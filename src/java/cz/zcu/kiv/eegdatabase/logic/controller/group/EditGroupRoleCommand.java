@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.logic.commandobjects;
+package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
 /**
  *

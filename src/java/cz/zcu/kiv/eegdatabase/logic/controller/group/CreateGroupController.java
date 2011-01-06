@@ -1,15 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.data.service.DataService;
-import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.CreateGroupCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
