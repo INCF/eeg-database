@@ -5,7 +5,7 @@ import java.io.Serializable;
 import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-import cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils;
+import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;

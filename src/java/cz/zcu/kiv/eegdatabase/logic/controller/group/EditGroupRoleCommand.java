@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
 /**
- *
  * @author Miroslav Brozek
  */
 public class EditGroupRoleCommand {
@@ -12,46 +11,45 @@ public class EditGroupRoleCommand {
     private String user;
 
     public String getGroup() {
-      return group;
+        return group;
     }
 
 
-  public void setGroup(String group) {
-    this.group = group;
-  }
+    public void setGroup(String group) {
+        this.group = group;
+    }
 
 
+    public String getRole() {
+        return role;
+    }
 
-  public String getRole() {
-    return role;
-  }
+    public void setRole(String role) {
+        this.role = role;
+    }
 
-  public void setRole(String role) {
-    this.role = role;
-  }
+    public String getUser() {
+        return user;
+    }
 
-  public String getUser() {
-    return user;
-  }
+    public void setUser(String user) {
+        this.user = user;
+    }
 
-  public void setUser(String user) {
-    this.user = user;
-  }
+    public boolean isAdmin() {
+        return admin;
+    }
 
-  public boolean isAdmin() {
-    return admin;
-  }
+    public void setAdmin(boolean admin) {
+        this.admin = admin;
+    }
 
-  public void setAdmin(boolean admin) {
-    this.admin = admin;
-  }
+    public int getEditedGroup() {
+        return editedGroup;
+    }
 
-  public int getEditedGroup() {
-    return editedGroup;
-  }
-
-  public void setEditedGroup(int editedGroup) {
-    this.editedGroup = editedGroup;
-  }
+    public void setEditedGroup(int editedGroup) {
+        this.editedGroup = editedGroup;
+    }
 
 }

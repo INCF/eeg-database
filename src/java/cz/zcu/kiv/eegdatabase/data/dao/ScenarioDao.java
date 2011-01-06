@@ -2,7 +2,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.commandobjects.ScenarioSearcherCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import java.util.List;
 

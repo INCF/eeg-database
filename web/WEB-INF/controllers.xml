@@ -24,7 +24,7 @@
     </bean>
 
 
-    <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.RegistrationController">
+    <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
         <property name="formView" value="system/registrationForm"/>
 
         <property name="successView" value="system/confirmReg"/>
@@ -37,7 +37,7 @@
             <ref bean="captchaService"/>
         </property>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.RegistrationValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationValidator">
                 <property name="personDao" ref="personDao"/>
             </bean>
         </property>
@@ -185,7 +185,7 @@
     </bean>
 
 
-    <bean name="confirmController" class="cz.zcu.kiv.eegdatabase.logic.controller.ConfirmController">
+    <bean name="confirmController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.ConfirmController">
         <property name="personDao" ref="personDao"/>
     </bean>
 
@@ -340,7 +340,7 @@
     </bean>
 
     <bean name="forgottenPasswordController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.ForgottenPasswordController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.root.ForgottenPasswordController">
         <property name="formView" value="system/forgottenPasswordForm"/>
         <property name="successView" value="system/forgottenPasswordSuccess"/>
         <property name="failedView" value="system/forgottenPasswordFailed"/>
@@ -348,13 +348,13 @@
         <property name="mailSender" ref="mailSender"/>
         <property name="mailMessage" ref="mailMessage"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.ForgottenPasswordValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.root.ForgottenPasswordValidator">
                 <property name="personDao" ref="personDao"/>
             </bean>
         </property>
     </bean>
 
-    <bean name="grantPermissionController" class="cz.zcu.kiv.eegdatabase.logic.controller.GrantPermissionController">
+    <bean name="grantPermissionController" class="cz.zcu.kiv.eegdatabase.logic.controller.system.GrantPermissionController">
         <property name="personDao" ref="personDao"/>
     </bean>
 
@@ -381,21 +381,21 @@
         <!-- validation by class itself -->
     </bean>
 
-    <bean name="changePasswordController" class="cz.zcu.kiv.eegdatabase.logic.controller.ChangePasswordController">
+    <bean name="changePasswordController" class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangePasswordController">
         <property name="formView" value="myAccount/changePasswordForm"/>
         <property name="successView" value="myAccount/changesWereMade"/>
         <property name="personDao" ref="personDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.ChangePasswordValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangePasswordValidator">
                 <property name="personDao" ref="personDao"/>
             </bean>
         </property>
     </bean>
 
     <bean name="changeDefaultGroupController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.ChangeDefaultGroupController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupController">
         <property name="formView" value="myAccount/changeDefaultGroup"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="successView" value="myAccount/changesWereMade"/>
@@ -416,7 +416,7 @@
 
     <bean name="bookingRoomController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
         <property name="formView" value="groups/bookingRoom"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.BookRoomCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
@@ -428,7 +428,7 @@
 
     <bean name="bookingRoomView" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
         <property name="formView" value="groups/bookingRoomView"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.BookRoomCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
@@ -449,7 +449,7 @@
 
 
     <bean name="applyForWritingPermission"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.ApplyForWritingPermissionController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ApplyForWritingPermissionController">
         <property name="formView" value="myAccount/applyForWritingPermissionForm"/>
         <property name="successView" value="myAccount/applianceSent"/>
         <property name="failView" value="myAccount/applianceNotSent"/>
@@ -458,13 +458,13 @@
         <property name="mailSender" ref="mailSender"/>
         <property name="mailMessage" ref="mailMessage"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.ApplyForWritingPermissionValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ApplyForWritingPermissionValidator"/>
         </property>
     </bean>
 
 
     <bean name="writeRequestsListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.WriteRequestsListController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.root.WriteRequestsListController">
         <property name="personDao" ref="personDao"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="mailMessage" ref="mailMessage"/>
@@ -472,7 +472,7 @@
 
 
     <!-- Person list controller loads persons from database -->
-    <bean name="personListController" class="cz.zcu.kiv.eegdatabase.logic.controller.PersonListController">
+    <bean name="personListController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonListController">
         <property name="personDao" ref="personDao"/>
     </bean>
 
@@ -484,7 +484,7 @@
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddScenarioValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioValidator">
                 <property name="auth" ref="authorizationManager"/>
             </bean>
         </property>
@@ -492,20 +492,20 @@
     </bean>
 
     <bean name="measurationDataOutputController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.MeasurationDataOutputController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.MeasurationDataOutputController">
         <property name="dataFileDao" ref="dataFileDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="historyDao" ref="historyDao"/>
     </bean>
 
     <bean name="scenarioXMLDownloadController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.ScenarioXMLDownloadController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.ScenarioXMLDownloadController">
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="historyDao" ref="historyDao"/>
     </bean>
 
-    <bean name="addPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.AddPersonController">
+    <bean name="addPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonController">
         <property name="formView" value="people/addPersonForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
         <property name="personDao" ref="personDao"/>
@@ -514,13 +514,13 @@
         <property name="mailSender" ref="mailSender"/>
 
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddPersonValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
                 <property name="personDao" ref="personDao"/>
             </bean>
         </property>
     </bean>
 
-    <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.PersonDetailController">
+    <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonDetailController">
         <property name="personDao" ref="personDao"/>
     </bean>
 
@@ -613,43 +613,43 @@
     </bean>
 
     <bean name="addPersonAdditionalParamValueController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddPersonAdditionalParamValueController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueController">
         <property name="formView" value="people/optionalParams/addItemForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
         <property name="personDao" ref="personDao"/>
         <property name="personOptParamValDao" ref="personOptParamValDao"/>
         <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddPersonAdditionalParamValueValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
                 <property name="personOptParamValDao" ref="personOptParamValDao"/>
             </bean>
         </property>
     </bean>
 
     <bean name="addHearingDefectToPersonController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddHearingDefectToPersonController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonController">
         <property name="formView" value="people/addHearingDefectForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddHearingDefectToPersonValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonValidator"/>
         </property>
     </bean>
 
     <bean name="addEyesDefectToPersonController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.AddEyesDefectToPersonController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonController">
         <property name="formView" value="people/addEyesDefectForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
         <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.AddEyesDefectToPersonValidator"/>
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonValidator"/>
         </property>
     </bean>
 
     <bean name="downloadMetadataZipController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.DownloadMetadataZipController">
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DownloadMetadataZipController">
         <property name="zipGenerator" ref="zipGenerator"/>
         <property name="experimentDao" ref="experimentDao"/>
         <property name="personDao" ref="personDao"/>
@@ -657,12 +657,12 @@
     </bean>
 
     <!-- Administration -->
-    <bean name="changeUserRoleController" class="cz.zcu.kiv.eegdatabase.logic.controller.admin.ChangeUserRole">
+    <bean name="changeUserRoleController" class="cz.zcu.kiv.eegdatabase.logic.controller.admin.ChangeUserRoleController">
         <property name="formView" value="administration/changeUserRole"/>
         <property name="successView" value="administration/roleChanged"/>
         <property name="personDao" ref="personDao"/>
         <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.validation.ChangeUserRoleValidator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.admin.ChangeUserRoleValidator">
                 <property name="personDao" ref="personDao"/>
             </bean>
         </property>
@@ -684,7 +684,7 @@
 
     </bean>
 
-    <bean name="chooseMetadataController" class="cz.zcu.kiv.eegdatabase.logic.controller.ChooseMetadataController">
+    <bean name="chooseMetadataController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.ChooseMetadataController">
         <property name="experimentDao" ref="experimentDao"/>
         <property name="auth" ref="authorizationManager"/>
     </bean>
@@ -693,7 +693,7 @@
 
     <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController">
         <property name="formView" value="history/dailyHistory"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
         <property name="successView" value="history/dailyHistory"/>
         <property name="historyDao" ref="historyDao"/>
         <property name="auth" ref="authorizationManager"/>
@@ -704,7 +704,7 @@
     <bean name="weeklyHistoryController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController">
         <property name="formView" value="history/weeklyHistory"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
         <property name="successView" value="history/weeklyHistory"/>
         <property name="historyDao" ref="historyDao"/>
         <property name="auth" ref="authorizationManager"/>
@@ -715,7 +715,7 @@
     <bean name="monthlyHistoryController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.history.MonthlyHistoryController">
         <property name="formView" value="history/monthlyHistory"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ChangeDefaultGroupCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
         <property name="successView" value="history/monthlyHistory"/>
         <property name="historyDao" ref="historyDao"/>
         <property name="auth" ref="authorizationManager"/>
@@ -730,7 +730,7 @@
         <property name="historyDao" ref="historyDao"/>
         <property name="auth" ref="authorizationManager"/>
         <property name="personDao" ref="personDao"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.HistorySearcherCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.history.HistorySearcherCommand"/>
     </bean>
 
     <!-- Advanced search  -->
@@ -741,7 +741,7 @@
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="successView" value="scenario/searchResults"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ScenarioSearcherCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSearcherCommand"/>
     </bean>
 
     <bean name="peopleSearcherController"
@@ -751,7 +751,7 @@
         <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
         <property name="successView" value="people/searchResults"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.PeopleSearcherCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherCommand"/>
     </bean>
 
     <bean name="experimentsSearcherController"
@@ -762,7 +762,7 @@
         <property name="experimentDao" ref="experimentDao"/>
         <property name="hardwareDao" ref="hardwareDao"/>
         <property name="successView" value="experiments/searchResults"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.ExperimentsSearcherCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentsSearcherCommand"/>
     </bean>
     <!-- Full text search  -->
     <bean name="fullTextSearchController"
@@ -781,7 +781,7 @@
 
         <!-- <property name="successView" value="redirect:/home"/>-->
         <property name="successView" value="experiments/fulltext"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
     </bean>
 
 

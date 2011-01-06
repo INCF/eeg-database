@@ -3,7 +3,7 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils" %>
+<%@page import="cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils" %>
 <div class="header">
   <div class="pageTitle"><fmt:message key='web.title'/></div>
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">

@@ -7,16 +7,108 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupValidator.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\CreateGroupCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupCommand.java" />
-      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\EditGroupRoleCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleCommand.java" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/system" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/commandobjects" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/validation" afterPath="" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\AddDefectToPersonCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddDefectToPersonCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\AddPersonAdditionalParameterCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonAdditionalParamValueCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\AddPersonCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ApplyForWritingPermissionCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ApplyForWritingPermissionCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\BookRoomCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/BookRoomCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ChangeDefaultGroupCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangeDefaultGroupCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ChangeUserRoleCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin/ChangeUserRoleCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ExperimentsSearcherCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ExperimentsSearcherCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ForgottenPasswordCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/ForgottenPasswordCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\FullTextSearchCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FullTextSearchCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\HistorySearcherCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/HistorySearcherCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\MetadataCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/MetadataCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\MyAccountCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangePasswordCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\PeopleSearcherCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/PeopleSearcherCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\RegistrationCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/RegistrationCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\commandobjects\ScenarioSearcherCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ScenarioSearcherCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddEyesDefectToPersonController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddEyesDefectToPersonController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddHearingDefectToPersonController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddHearingDefectToPersonController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddPersonAdditionalParamValueController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonAdditionalParamValueController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\AddPersonController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ApplyForWritingPermissionController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ApplyForWritingPermissionController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ChangeDefaultGroupController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangeDefaultGroupController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ChangePasswordController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangePasswordController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ChooseMetadataController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/ChooseMetadataController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ConfirmController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/ConfirmController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\DownloadMetadataZipController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ForgottenPasswordController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/ForgottenPasswordController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\GrantPermissionController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/system/GrantPermissionController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\MeasurationDataOutputController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/MeasurationDataOutputController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\PersonDetailController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/PersonDetailController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\PersonListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/PersonListController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\RegistrationController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/RegistrationController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\ScenarioXMLDownloadController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/ScenarioXMLDownloadController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\WriteRequestsListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/WriteRequestsListController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\admin\ChangeUserRole.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin/ChangeUserRoleController.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\experiment\AddMetadataCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddFileMetadataCommand.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\util\ControllerUtils.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/util/ControllerUtils.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddEyesDefectToPersonValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddEyesDefectToPersonValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddFileMetadataValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddFileMetadataValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddHearingDefectToPersonValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddHearingDefectToPersonValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddPersonAdditionalParamValueValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonAdditionalParamValueValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddPersonValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\AddScenarioValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\ApplyForWritingPermissionValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ApplyForWritingPermissionValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\ChangePasswordValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangePasswordValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\ChangeUserRoleValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin/ChangeUserRoleValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\ForgottenPasswordValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/ForgottenPasswordValidator.java" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\validation\RegistrationValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/RegistrationValidator.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ResearchGroupDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ResearchGroupDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleResearchGroupDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleResearchGroupDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ScenarioDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ScenarioDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleExperimentDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleExperimentDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/CaptchaImageGenerator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/CaptchaImageGenerator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/AddArticleCommentController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/AddArticleCommentController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/AddArticleController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/AddArticleController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleCommentCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleCommentCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleMultiController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/article/ArticleMultiController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentOptParamValCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentOptParamValCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentOptParamValController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentOptParamValController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DataFileDetailController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DataFileDetailController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/ExperimentMultiController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/ExperimentMultiController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AcceptRoleRequestController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AcceptRoleRequestController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AddMemberToGroupCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AddMemberToGroupCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AddMemberToGroupController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AddMemberToGroupController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/BookingRoomController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/BookingRoomController.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleCommand.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/GroupMultiController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/GroupMultiController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/AbstractHistoryController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/AbstractHistoryController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/ChoiceHistory.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/ChoiceHistory.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/DailyHistoryController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/DailyHistoryController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/DownloadStatistic.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/DownloadStatistic.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/GraphController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/GraphController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/MonthlyHistoryController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/MonthlyHistoryController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/SearchHistoryController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/SearchHistoryController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/WeeklyHistoryController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/WeeklyHistoryController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/HearingImpairmentListController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioCommand.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioCommand.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/ScenarioMultiController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/ScenarioMultiController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/AbstractSearchController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/AbstractSearchController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ExperimentsSearcherController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ExperimentsSearcherController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FullTextSearchController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FullTextSearchController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FulltextResult.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FulltextResult.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/PeopleSearcherController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/PeopleSearcherController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ScenarioSearcherController.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/ScenarioSearcherController.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/SearchRequest.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/SearchRequest.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/template/header.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/template/header.jsp" />
+      <change type="MOVED" beforePath="C:\Users\Jindra\IdeaProjects\EEGDatabase\src\java\cz\zcu\kiv\eegdatabase\logic\controller\util" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/util" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -72,45 +164,123 @@
   </component>
   <component name="FavoritesManager">
     <favorites_list name="trunk" />
+    <favorites_list name="EEG">
+      <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/messages.properties" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/errors.properties" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/commandobjects" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/system" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+      <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+      <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
+      <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/jsp" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+    </favorites_list>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="CreateGroupController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupController.java">
+      <file leaf-file-name="url-mapping.xml" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
+          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+            <state />
+          </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="15" column="13" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0">
+            <state line="24" column="48" selection-start="1707" selection-end="1707" vertical-scroll-proportion="-13.15">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="AddExperimentOptParamDefValidator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/experimentoptparamdef/AddExperimentOptParamDefValidator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="12" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="CreateGroupValidator.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupValidator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="22" column="87" selection-start="969" selection-end="969" vertical-scroll-proportion="0.6081301">
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="controllers.xml" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="controllers.xml" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
           <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
             <state />
           </provider>
           <provider selected="true" editor-type-id="text-editor">
-            <state line="195" column="94" selection-start="8556" selection-end="8556" vertical-scroll-proportion="-11.311111">
+            <state line="465" column="16" selection-start="22691" selection-end="22698" vertical-scroll-proportion="0.9902755">
               <folding />
             </state>
           </provider>
@@ -126,10 +296,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/VisualImpairmentDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/visualimpairment/AddVisualImpairmentValidator.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonOptParamDefDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java" />
@@ -141,7 +307,11 @@
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ResearchGroupDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupCommand.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonAdditionalParamValueController.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangePasswordController.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DataFileDetailController.java" />
       </list>
     </option>
   </component>
@@ -187,102 +357,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="cz.zcu.kiv.eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="validation" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageElementNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Favorites" />
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -487,174 +561,69 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="experimentoptparamdef" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="group" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="commandobjects" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
               <option name="myItemId" value="data" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+      <pane id="PackagesPane">
+        <subPane>
           <PATH>
             <PATH_ELEMENT>
               <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Favorites">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="trunk">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+        <subPane subId="EEG">
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
             </PATH_ELEMENT>
             <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="dao" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+              <option name="myItemId" value="experiment" />
+              <option name="myItemType" value="com.intellij.ide.favoritesTreeView.FavoritesTreeNodeDescriptor" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -674,18 +643,18 @@
     <property name="recentsLimit" value="5" />
     <property name="options.lastSelected" value="editor.preferences.smartKeys" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="true" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.2" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
-    <property name="GenerateAntBuildDialog.backupFiles" value="false" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="dynamic.classpath" value="false" />
-    <property name="options.searchVisible" value="true" />
+    <property name="GenerateAntBuildDialog.backupFiles" value="false" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -700,122 +669,12 @@
       <recent name="C:\Users\Jindra\IdeaProjects\EEGDatabase\web\WEB-INF\jsp\lists\weather" />
     </key>
     <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.root" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.experiment" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.admin" />
+      <recent name="cz.zcu.kiv.eegdatabase.logic.controller.group" />
     </key>
-  </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="Moments ago" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-            <PATH vcs="svn" revision="745">C:\Users\Jindra\IdeaProjects\EEGDatabase\web\WEB-INF\jsp\groups\bookingRoom.jsp</PATH>
-            <PATH vcs="svn" revision="745">C:\Users\Jindra\IdeaProjects\EEGDatabase\web\WEB-INF\jsp\groups\bookingRoomView.jsp</PATH>
-            <PATH vcs="svn" revision="745">C:\Users\Jindra\IdeaProjects\EEGDatabase\web\WEB-INF\jsp\experiments\data\detail.jsp</PATH>
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
   </component>
   <component name="RunManager" selected="Tomcat Server.EEG Tomcat">
     <configuration default="true" type="PhpRunConfigurationType" factoryName="PHP">
@@ -896,15 +755,6 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="FtpUpload" enabled="false" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="ValidateXdebugSetup" enabled="true" />
-      </method>
-    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="" />
@@ -931,38 +781,13 @@
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
+        <option name="FtpUpload" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
-      <option name="LOCAL" value="false" />
-      <option name="UPDATING_POLICY" value="hot-swap-classes" />
-      <server-settings>
-        <option name="DEPLOY_TOMCAT_APPS" value="false" />
-        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
-      </server-settings>
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="62601" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="ValidateXdebugSetup" enabled="true" />
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6">
@@ -1020,6 +845,40 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="EEGDatabase_war" />
         </option>
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
+      <option name="LOCAL" value="false" />
+      <option name="UPDATING_POLICY" value="hot-swap-classes" />
+      <server-settings>
+        <option name="DEPLOY_TOMCAT_APPS" value="false" />
+        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
+      </server-settings>
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="62601" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+      </method>
+    </configuration>
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
       </method>
@@ -1137,8 +996,6 @@
     <frame x="-8" y="-8" width="1936" height="1176" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.34232122" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.35404456" order="2" side_tool="true" content_ui="tabs" />
@@ -1149,19 +1006,21 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264907" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3264907" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.33645955" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.3481829" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2197861" sideWeight="0.627566" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37243402" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2197861" sideWeight="0.6735093" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.37243402" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
@@ -1179,7 +1038,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented control of uniqueness of title and description when adding or editing weather." />
+    <option name="LAST_COMMIT_MESSAGE" value="Restructured the rest of the classes of controllers, command objects and validators." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1211,6 +1070,8 @@
     <MESSAGE value="Implemented control of uniqueness of description when adding or creating visual impairment." />
     <MESSAGE value="Implemented control of uniqueness of title when adding or editing hardware." />
     <MESSAGE value="Implemented control of uniqueness of title and description when adding or editing weather." />
+    <MESSAGE value="Created basic validation of form for creating new group." />
+    <MESSAGE value="Restructured the rest of the classes of controllers, command objects and validators." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1220,102 +1081,110 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentController.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/system/GrantPermissionController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="681" selection-end="681" vertical-scroll-proportion="0.06827309">
+        <state line="15" column="13" selection-start="491" selection-end="491" vertical-scroll-proportion="0.22113821">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person/AddPersonAdditionalParamValueController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="28" column="35" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.37550202">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonOptParamDefDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="5" selection-start="576" selection-end="576" vertical-scroll-proportion="0.22188754">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="16" selection-start="658" selection-end="658" vertical-scroll-proportion="0.38699186">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="11" selection-start="505" selection-end="866" vertical-scroll-proportion="0.5804878">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="66" selection-start="350" selection-end="350" vertical-scroll-proportion="0.24878049">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/AcceptRoleRequestController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="13" selection-start="795" selection-end="795" vertical-scroll-proportion="0.17068273">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/EditGroupRoleController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="13" selection-start="1273" selection-end="1273" vertical-scroll-proportion="0.06827309">
+        <state line="20" column="13" selection-start="816" selection-end="816" vertical-scroll-proportion="0.110569105">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="13" selection-start="555" selection-end="555" vertical-scroll-proportion="0.0">
+        <state line="15" column="13" selection-start="555" selection-end="555" vertical-scroll-proportion="0.22113821">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/experimentoptparamdef/AddExperimentOptParamDefValidator.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/FulltextResult.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="12" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
+        <state line="11" column="13" selection-start="199" selection-end="199" vertical-scroll-proportion="0.13654618">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search/SearchRequest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="10" selection-start="487" selection-end="846" vertical-scroll-proportion="0.35843372">
+        <state line="11" column="13" selection-start="199" selection-end="199" vertical-scroll-proportion="0.13654618">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/ResearchGroupDao.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history/SearchHistoryController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="29" column="54" selection-start="1031" selection-end="1031" vertical-scroll-proportion="0.4437751">
+        <state line="30" column="13" selection-start="1279" selection-end="1279" vertical-scroll-proportion="0.17068273">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleResearchGroupDao.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/BookingRoomController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="91" column="23" selection-start="3918" selection-end="3918" vertical-scroll-proportion="0.47791165">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="27" column="13" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.06827309">
+          <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupCommand.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin/ChangeUserRoleController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="24" selection-start="256" selection-end="256" vertical-scroll-proportion="0.18775101">
+        <state line="13" column="13" selection-start="441" selection-end="441" vertical-scroll-proportion="0.23181818">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/MetadataCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="13" selection-start="312" selection-end="312" vertical-scroll-proportion="0.25757575">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount/ChangeDefaultGroupController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="13" selection-start="763" selection-end="763" vertical-scroll-proportion="0.06827309">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="47" column="36" selection-start="1753" selection-end="1753" vertical-scroll-proportion="0.30722892">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddFileMetadataCommand.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root/ConfirmController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="13" selection-start="458" selection-end="458" vertical-scroll-proportion="0.085341364">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="24" column="48" selection-start="1707" selection-end="1707" vertical-scroll-proportion="-13.15">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DataFileDetailController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="24" selection-start="553" selection-end="553" vertical-scroll-proportion="0.35934958">
           <folding />
         </state>
       </provider>
@@ -1325,17 +1194,8 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="195" column="94" selection-start="8556" selection-end="8556" vertical-scroll-proportion="-11.311111">
+        <state line="465" column="16" selection-start="22691" selection-end="22698" vertical-scroll-proportion="0.9902755">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group/CreateGroupValidator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="87" selection-start="969" selection-end="969" vertical-scroll-proportion="0.6081301">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

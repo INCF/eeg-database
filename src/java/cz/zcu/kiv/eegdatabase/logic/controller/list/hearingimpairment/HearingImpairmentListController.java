@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import org.apache.commons.logging.Log;
