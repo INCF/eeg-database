@@ -7,11 +7,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="Implemented control of uniqueness of description when adding or creating visual impairment.">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/dataSources.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java" afterPath="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -70,10 +69,37 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="AddHardwareValidator.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java">
+      <file leaf-file-name="SimpleHardwareDao.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="27" column="35" selection-start="953" selection-end="953" vertical-scroll-proportion="0.5804878">
+            <state line="23" column="11" selection-start="505" selection-end="866" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="SimpleWeatherDao.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="17" column="4" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddWeatherValidator.java" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="43" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.74634147">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="WeatherDao.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="11" column="66" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -89,10 +115,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/WeatherListController.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/weather/list.jsp" />
-        <option value="$PROJECT_DIR$/src/java/messages.properties" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/weather/addItemForm.jsp" />
         <option value="$PROJECT_DIR$/src/java/errors.properties" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hearingimpairment/AddHearingImpairmentCommand.java" />
@@ -105,6 +127,10 @@
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonOptParamDefDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java" />
       </list>
     </option>
   </component>
@@ -429,6 +455,10 @@
               <option name="myItemId" value="list" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="weather" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
           </PATH>
           <PATH>
             <PATH_ELEMENT>
@@ -461,10 +491,6 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="list" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="hardware" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -684,13 +710,7 @@
       </UpdatedFiles>
     </UpdateInfo>
   </component>
-  <component name="RunManager" selected="Query Language Console.Default">
-    <configuration default="false" name="Default" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console" temporary="true">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method />
-    </configuration>
+  <component name="RunManager" selected="Tomcat Server.EEG Tomcat">
     <configuration default="true" type="PhpRunConfigurationType" factoryName="PHP">
       <method>
         <option name="AntTarget" enabled="false" />
@@ -950,9 +970,8 @@
       </ConfigurationWrapper>
       <method />
     </configuration>
-    <list size="2">
+    <list size="1">
       <item index="0" class="java.lang.String" itemvalue="Tomcat Server.EEG Tomcat" />
-      <item index="1" class="java.lang.String" itemvalue="Query Language Console.Default" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -1012,11 +1031,12 @@
     <editor active="false" />
     <layout>
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
-      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20855615" sideWeight="0.627566" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="-1" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.34232122" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2504065" sideWeight="0.35404456" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2495935" sideWeight="0.66183573" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -1033,7 +1053,6 @@
       <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.37243402" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32844576" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1053,7 +1072,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Implemented control of uniqueness of description when adding or creating visual impairment." />
+    <option name="LAST_COMMIT_MESSAGE" value="Implemented control of uniqueness of title when adding or editing hardware." />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1083,6 +1102,7 @@
     <MESSAGE value="Implemented editing of weather definitions." />
     <MESSAGE value="Implemented control of uniqueness of description when adding or creating hearing impairment." />
     <MESSAGE value="Implemented control of uniqueness of description when adding or creating visual impairment." />
+    <MESSAGE value="Implemented control of uniqueness of title when adding or editing hardware." />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager />
@@ -1092,35 +1112,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="74" column="28" selection-start="2657" selection-end="2657" vertical-scroll-proportion="1.6634146" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/errors.properties">
-      <provider editor-type-id="ResourceBundle">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="39" column="28" selection-start="2194" selection-end="2194" vertical-scroll-proportion="0.6793033">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleExperimentDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="13" selection-start="665" selection-end="665" vertical-scroll-proportion="0.24878049">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHistoryDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="13" selection-start="720" selection-end="720" vertical-scroll-proportion="0.28239202">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="21" column="34" selection-start="710" selection-end="710" vertical-scroll-proportion="-2.1179402">
@@ -1163,13 +1154,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="4" selection-start="505" selection-end="554" vertical-scroll-proportion="0.2560241">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/HardwareDao.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="9" column="54" selection-start="286" selection-end="286" vertical-scroll-proportion="0.11947791">
@@ -1202,7 +1186,42 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/hardware/AddHardwareValidator.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="27" column="35" selection-start="953" selection-end="953" vertical-scroll-proportion="0.5804878">
+        <state line="28" column="35" selection-start="1038" selection-end="1038" vertical-scroll-proportion="0.37550202">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimplePersonOptParamDefDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="5" selection-start="576" selection-end="576" vertical-scroll-proportion="0.22188754">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleHardwareDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="11" selection-start="505" selection-end="866" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/WeatherDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="66" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao/SimpleWeatherDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="17" column="4" selection-start="488" selection-end="488" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/list/weather/AddWeatherValidator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="43" selection-start="1283" selection-end="1283" vertical-scroll-proportion="0.74634147">
           <folding />
         </state>
       </provider>
