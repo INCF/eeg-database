@@ -14,4 +14,12 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         List<Hardware> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
+
+    public boolean canSaveTitle(String title, int id) {
+        String hqlQuery = "from Hardware h where h.title = :title and h.hardwareId != :id";
+        String[] names = {"title", "id"};
+        Object[] values = {title, id};
+        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }
