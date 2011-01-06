@@ -14,4 +14,12 @@ public class SimpleHearingImpairmentDao extends SimpleGenericDao<HearingImpairme
         List<HearingImpairment> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
+
+    public boolean canSaveDescription(String description, int id) {
+        String hqlQuery = "from HearingImpairment i where i.description = :description and i.hearingImpairmentId != :id";
+        String[] names = {"description", "id"};
+        Object[] values = {description, id};
+        List<HearingImpairment> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

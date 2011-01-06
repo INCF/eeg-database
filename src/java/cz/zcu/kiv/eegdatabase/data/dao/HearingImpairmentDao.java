@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface HearingImpairmentDao extends GenericDao<HearingImpairment, Integer> {
     public List<HearingImpairment> getItemsForList();
+
+    public boolean canSaveDescription(String description, int id);
 }
