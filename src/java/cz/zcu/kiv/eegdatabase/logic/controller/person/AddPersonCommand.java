@@ -5,6 +5,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.person;
  */
 public class AddPersonCommand {
 
+    private int id;
     private String givenname;
     private String surname;
     private String gender;
@@ -14,6 +15,14 @@ public class AddPersonCommand {
     private String note;
     private int[] eyesDefects;
     private int[] hearingDefects;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public String getDateOfBirth() {
         return dateOfBirth;

@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
@@ -25,7 +25,7 @@
         </tr>
         <tr>
             <th><fmt:message key="label.dateOfBirth"/></th>
-            <td><fmt:formatDate value="${personDetail.dateOfBirth}" pattern="dd.MM.yyyy" /></td>
+            <td><fmt:formatDate value="${personDetail.dateOfBirth}" pattern="dd.MM.yyyy"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.email"/></th>
@@ -48,9 +48,9 @@
     <h2><fmt:message key="heading.hearingDefects"/></h2>
     <table class="dataTable" style="width: 250px;">
         <thead>
-            <tr>
-                <th><!-- just a heading without title --></th>
-            </tr>
+        <tr>
+            <th><!-- just a heading without title --></th>
+        </tr>
         </thead>
         <c:forEach items="${personDetail.hearingImpairments}" var="hearingImpairment">
             <tr>
@@ -62,9 +62,9 @@
     <h2><fmt:message key="heading.eyesDefects"/></h2>
     <table class="dataTable" style="width: 250px;">
         <thead>
-            <tr>
-                <th><!-- just a heading without title --></th>
-            </tr>
+        <tr>
+            <th><!-- just a heading without title --></th>
+        </tr>
         </thead>
         <c:forEach items="${personDetail.visualImpairments}" var="visualImpairment">
             <tr>
@@ -74,12 +74,12 @@
     </table>
 
     <h2><fmt:message key="heading.optionalParameters"/></h2>
-     <table class="dataTable" style="width: 450px;">
+    <table class="dataTable" style="width: 450px;">
         <thead>
-            <tr>
-                <th style="width: 250px;"><fmt:message key="dataTable.heading.personOptionalParamName"/></th>
-                <th><fmt:message key="dataTable.heading.personOptionalParamValue"/></th>
-            </tr>
+        <tr>
+            <th style="width: 250px;"><fmt:message key="dataTable.heading.personOptionalParamName"/></th>
+            <th><fmt:message key="dataTable.heading.personOptionalParamValue"/></th>
+        </tr>
         </thead>
         <c:forEach items="${personDetail.personOptParamVals}" var="additionalParameter">
             <tr>
@@ -90,9 +90,16 @@
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='add-hearing-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addHearingImpairment"/></a>
-        <a href="<c:url value='add-eyes-defect.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addVisualImpairment"/></a>
-        <a href="<c:url value='add-optional-parameter.html?personId=${personDetail.personId}'/>" class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
+        <a href="<c:url value='add-hearing-defect.html?personId=${personDetail.personId}'/>"
+           class="lightButtonLink"><fmt:message key="button.addHearingImpairment"/></a>
+        <a href="<c:url value='add-eyes-defect.html?personId=${personDetail.personId}'/>"
+           class="lightButtonLink"><fmt:message key="button.addVisualImpairment"/></a>
+        <a href="<c:url value='add-optional-parameter.html?personId=${personDetail.personId}'/>"
+           class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
+        <c:if test="${canEdit}">
+            <a href="<c:url value='/people/edit.html?id=${personDetail.personId}'/>"
+               class="lightButtonLink"><fmt:message key="button.edit"/></a>
+        </c:if>
     </div>
 
 </ui:personsTemplate>

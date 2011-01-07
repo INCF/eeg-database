@@ -51,6 +51,7 @@
                 <prop key="people/list.html">personListController</prop>
                 <prop key="people/detail.html">personDetailController</prop>
                 <prop key="people/add-person.html">addPersonController</prop>
+                <prop key="people/edit.html">editPersonController</prop>
                 <prop key="people/add-optional-parameter.html">addPersonAdditionalParamValueController</prop>
                 <prop key="people/add-hearing-defect.html">addHearingDefectToPersonController</prop>
                 <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>

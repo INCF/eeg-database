@@ -520,9 +520,17 @@
         </property>
     </bean>
 
-    <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonDetailController">
-        <property name="personDao" ref="personDao"/>
+    <bean name="editPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.EditPersonController">
+        <property name="formView" value="people/addPersonForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
     </bean>
+
+    <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonDetailController"/>
 
 
     <bean name="hearingImpairmentListController"

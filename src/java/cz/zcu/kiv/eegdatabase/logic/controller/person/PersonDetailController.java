@@ -1,9 +1,12 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
+import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -16,7 +19,10 @@ import javax.servlet.http.HttpServletResponse;
 public class PersonDetailController extends AbstractController {
 
     private Log log = LogFactory.getLog(getClass());
-    private GenericDao<Person, Integer> personDao;
+    @Autowired
+    private PersonDao personDao;
+    @Autowired
+    private AuthorizationManager auth;
 
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
@@ -30,15 +36,8 @@ public class PersonDetailController extends AbstractController {
         Person p = personDao.read(id);
 
         mav.addObject("personDetail", p);
+        mav.addObject("canEdit", auth.userCanViewPersonDetails(id));
 
         return mav;
-    }
-
-    public GenericDao<Person, Integer> getPersonDao() {
-        return personDao;
-    }
-
-    public void setPersonDao(GenericDao<Person, Integer> personDao) {
-        this.personDao = personDao;
     }
 }
