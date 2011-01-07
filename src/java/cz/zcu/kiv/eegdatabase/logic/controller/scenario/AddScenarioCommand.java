@@ -4,12 +4,21 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddScenarioCommand {
 
+    private int id;
     private int researchGroup;
     private String title;
     private String length;
     private String description;
     private MultipartFile dataFile;
     private boolean privateNote;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
 
     public int getResearchGroup() {
         return researchGroup;

@@ -47,7 +47,8 @@ public class AddScenarioValidator implements Validator {
             errors.rejectValue("description", "invalid.maxScenLen");
         }
 
-        if (data.getDataFile().isEmpty()) {
+        if ((!(data.getId() > 0)) && (data.getDataFile().isEmpty())) {
+            // Creating new scenario and no file was uploaded
             errors.rejectValue("dataFile", "required.dataFile");
             log.debug("No data file was inserted!");
         }

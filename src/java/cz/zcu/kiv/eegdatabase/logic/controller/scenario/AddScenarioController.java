@@ -41,14 +41,49 @@ public class AddScenarioController
     }
 
     @Override
+    protected Object formBackingObject(HttpServletRequest request) throws Exception {
+        AddScenarioCommand data = (AddScenarioCommand) super.formBackingObject(request);
+
+        String idString = request.getParameter("id");
+
+        if (idString != null) {
+            // Editing existing scenario
+            int id = Integer.parseInt(idString);
+
+            log.debug("Loading scenario to the command object for editing.");
+            Scenario scenario = scenarioDao.read(id);
+
+            data.setId(id);
+            data.setTitle(scenario.getTitle());
+            data.setLength(new Integer(scenario.getScenarioLength()).toString());
+            data.setDescription(scenario.getDescription());
+            data.setPrivateNote(scenario.isPrivateScenario());
+            data.setResearchGroup(scenario.getResearchGroup().getResearchGroupId());
+        }
+
+        return data;
+    }
+
+    @Override
     protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
         ModelAndView mav = super.showForm(request, response, errors);
 
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
+        String idString = request.getParameter("id");
+        if (idString != null) {
+            int id = Integer.parseInt(idString);
 
+            if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
+                // Editing existing scenario and user is not owner
+                mav.setViewName("redirect:/scenarios/list.html");
+                return mav;
+            }
+        }
+
+        // Creating new scenario
         if (!auth.userIsExperimenter()) {
             mav.setViewName("scenario/userNotExperimenter");
         }
+        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
 
         return mav;
     }
@@ -75,6 +110,18 @@ public class AddScenarioController
         log.debug("Processing form data");
         AddScenarioCommand data = (AddScenarioCommand) command;
 
+        String idString = request.getParameter("id");
+        int id = 0;
+        if (idString != null) {
+            id = Integer.parseInt(idString);
+        }
+
+        if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
+            // Editing existing scenario and user is not owner
+            mav.setViewName("redirect:/scenarios/list.html");
+            return mav;
+        }
+
         if (!auth.userIsExperimenter()) {
             mav.setViewName("scenario/userNotExperimenter");
             return mav;
@@ -82,42 +129,52 @@ public class AddScenarioController
 
         MultipartFile file = data.getDataFile();
 
-
-        if (file == null) {
-            log.error("No data file was uploaded!");
+        Scenario scenario;
+        if (id > 0) {
+            // Editing existing
+            log.debug("Editing existing scenario.");
+            scenario = scenarioDao.read(id);
         } else {
+            // Creating new
             log.debug("Creating new scenario object");
-            Scenario scenario = new Scenario();
-            scenario.setScenarioName(file.getOriginalFilename());
-            scenario.setMimetype(file.getContentType());
+            scenario = new Scenario();
 
             log.debug("Setting owner to the logged user.");
             scenario.setPerson(personDao.getLoggedPerson());
+        }
 
-            log.debug("Setting research group.");
-            ResearchGroup group = new ResearchGroup();
-            group.setResearchGroupId(data.getResearchGroup());
-            scenario.setResearchGroup(group);
+        log.debug("Setting research group.");
+        ResearchGroup group = new ResearchGroup();
+        group.setResearchGroupId(data.getResearchGroup());
+        scenario.setResearchGroup(group);
 
-            log.debug("Setting scenario title: " + data.getTitle());
-            scenario.setTitle(data.getTitle());
+        log.debug("Setting scenario title: " + data.getTitle());
+        scenario.setTitle(data.getTitle());
 
-            log.debug("Setting scenario description: " + data.getDescription());
-            scenario.setDescription(data.getDescription());
+        log.debug("Setting scenario description: " + data.getDescription());
+        scenario.setDescription(data.getDescription());
 
-            log.debug("Setting scenario length: " + data.getLength());
-            scenario.setScenarioLength(Integer.parseInt(data.getLength()));
+        log.debug("Setting scenario length: " + data.getLength());
+        scenario.setScenarioLength(Integer.parseInt(data.getLength()));
 
+        if ((file != null) && (!file.isEmpty())) {
+            // File uploaded
             log.debug("Setting XML data file");
+            scenario.setScenarioName(file.getOriginalFilename());
+            scenario.setMimetype(file.getContentType());
             scenario.setScenarioXml(Hibernate.createClob(new String(file.getBytes())));
+        }
 
-            log.debug("Setting private/public access");
-            scenario.setPrivateScenario(data.getPrivateNote());
+        log.debug("Setting private/public access");
+        scenario.setPrivateScenario(data.getPrivateNote());
 
-            log.debug("Saving scenario object");
+        log.debug("Saving scenario object");
+        if (id > 0) {
+            // Editing existing
+            scenarioDao.update(scenario);
+        } else {
+            // Creating new
             scenarioDao.create(scenario);
-
-            log.debug("Scenario saved to database");
         }
 
         log.debug("Returning MAV");
