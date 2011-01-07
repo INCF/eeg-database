@@ -1,8 +1,10 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
@@ -14,6 +16,8 @@ public class AddScenarioValidator implements Validator {
 
     private Log log = LogFactory.getLog(getClass());
     private AuthorizationManager auth;
+    @Autowired
+    private ScenarioDao scenarioDao;
 
     public boolean supports(Class clazz) {
         return clazz.equals(AddScenarioCommand.class);
@@ -45,6 +49,10 @@ public class AddScenarioValidator implements Validator {
         int len = data.getDescription().length();
         if (len > 255) {
             errors.rejectValue("description", "invalid.maxScenLen");
+        }
+
+        if (!scenarioDao.canSaveTitle(data.getTitle(), data.getId())) {
+            errors.rejectValue("title", "error.valueAlreadyInDatabase");
         }
 
         if ((!(data.getId() > 0)) && (data.getDataFile().isEmpty())) {
