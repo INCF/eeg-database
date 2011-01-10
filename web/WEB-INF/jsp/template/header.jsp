@@ -19,11 +19,13 @@
       <span><a href="<c:url value='registration.html'/>"><fmt:message key="system.register" /></a></span>
     </div>
   </security:authorize>
+  <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
  <c:url value="/experiments/fulltext.html" var="formUrl"/>
  <form:form action="${formUrl}" method="post" commandName="fullTextSearchCommand" cssClass="globalSearch">
       <input type="text" name="searchTI" value="" size="20" class="textfield" />
       <input type="submit" value="<fmt:message key='button.fulltextSearch'/>" name="searchBT" class="button" />
   </form:form>
+  </security:authorize>
 
   <ul class="mainMenu">
     <li><a href="<c:url value='/home.html'/>" title="<fmt:message key='menuItem.home'/>"><fmt:message key='menuItem.home'/></a></li>
