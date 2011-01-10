@@ -14,4 +14,12 @@ public class SimplePersonOptParamDefDao extends SimpleGenericDao<PersonOptParamD
         List<PersonOptParamDef> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select def.personOptParamVals from PersonOptParamDef def where def.personOptParamDefId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<PersonOptParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

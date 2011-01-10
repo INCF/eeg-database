@@ -21,7 +21,15 @@
                 <td>${personAdditionalParam.personOptParamDefId}</td>
                 <td>${personAdditionalParam.paramName}</td>
                 <td>${personAdditionalParam.paramDataType}</td>
-                <td><a href="<c:url value='/lists/person-optional-parameters/edit.html?id=${personAdditionalParam.personOptParamDefId}' />"><fmt:message key="link.edit" /></a></td>
+                <td>
+                    <a href="<c:url value='/lists/person-optional-parameters/edit.html?id=${personAdditionalParam.personOptParamDefId}' />"><fmt:message
+                            key="link.edit"/></a>
+                    <auth:experimenter>
+                        <a href="<c:url value='/lists/person-optional-parameters/delete.html?id=${personAdditionalParam.personOptParamDefId}' />"
+                           onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
+                                key="link.delete"/></a>
+                    </auth:experimenter>
+                </td>
             </tr>
         </c:forEach>
     </table>

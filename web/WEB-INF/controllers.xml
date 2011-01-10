@@ -545,8 +545,8 @@
     <bean name="hardwareMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareMultiController"/>
 
-    <bean name="personOptionalParametersListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefListController"/>
+    <bean name="personOptionalParametersMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefMultiController"/>
 
     <bean name="experimentOptionalParametersListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefListController"/>

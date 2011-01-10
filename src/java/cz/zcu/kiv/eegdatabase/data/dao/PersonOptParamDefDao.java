@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface PersonOptParamDefDao extends GenericDao<PersonOptParamDef, Integer> {
     public List<PersonOptParamDef> getItemsForList();
+
+    public boolean canDelete(int id);
 }
