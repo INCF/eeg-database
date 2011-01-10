@@ -90,9 +90,9 @@
                 <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
                 <prop key="lists/person-optional-parameters/*.html">personOptionalParametersMultiController</prop>
 
-                <prop key="lists/experiment-optional-parameters/list.html">experimentOptionalParametersListController</prop>
                 <prop key="lists/experiment-optional-parameters/add.html">addExperimentOptionalParameterController</prop>
                 <prop key="lists/experiment-optional-parameters/edit.html">addExperimentOptionalParameterController</prop>
+                <prop key="lists/experiment-optional-parameters/*.html">experimentOptionalParametersMultiController</prop>
 
                 <prop key="lists/file-metadata-definitions/list.html">fileMetadataParametersListController</prop>
                 <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParameterController</prop>
