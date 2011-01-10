@@ -22,4 +22,12 @@ public class SimpleHearingImpairmentDao extends SimpleGenericDao<HearingImpairme
         List<HearingImpairment> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select i.persons from HearingImpairment i where i.hearingImpairmentId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<HearingImpairment> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

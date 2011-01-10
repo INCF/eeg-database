@@ -8,4 +8,6 @@ public interface HearingImpairmentDao extends GenericDao<HearingImpairment, Inte
     public List<HearingImpairment> getItemsForList();
 
     public boolean canSaveDescription(String description, int id);
+
+    public boolean canDelete(int id);
 }
