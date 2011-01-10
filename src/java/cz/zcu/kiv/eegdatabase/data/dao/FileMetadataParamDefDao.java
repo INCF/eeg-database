@@ -6,4 +6,6 @@ import java.util.List;
 
 public interface FileMetadataParamDefDao extends GenericDao<FileMetadataParamDef, Integer> {
     public List<FileMetadataParamDef> getItemsForList();
+
+    public boolean canDelete(int id);
 }

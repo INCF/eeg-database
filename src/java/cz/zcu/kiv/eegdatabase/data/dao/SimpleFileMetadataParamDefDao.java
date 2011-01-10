@@ -14,4 +14,12 @@ public class SimpleFileMetadataParamDefDao extends SimpleGenericDao<FileMetadata
         List<FileMetadataParamDef> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select def.fileMetadataParamVals from FileMetadataParamDef def where def.fileMetadataParamDefId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<FileMetadataParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

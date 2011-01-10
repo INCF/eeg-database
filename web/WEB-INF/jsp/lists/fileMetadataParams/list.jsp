@@ -21,14 +21,23 @@
                 <td>${fileMetadataParam.fileMetadataParamDefId}</td>
                 <td>${fileMetadataParam.paramName}</td>
                 <td>${fileMetadataParam.paramDataType}</td>
-                <td><a href="<c:url value='/lists/file-metadata-definitions/edit.html?id=${fileMetadataParam.fileMetadataParamDefId}' />"><fmt:message key="link.edit" /></a></td>
+                <td>
+                    <a href="<c:url value='/lists/file-metadata-definitions/edit.html?id=${fileMetadataParam.fileMetadataParamDefId}' />"><fmt:message
+                            key="link.edit"/></a>
+                    <auth:experimenter>
+                        <a href="<c:url value='/lists/file-metadata-definitions/delete.html?id=${fileMetadataParam.fileMetadataParamDefId}' />"
+                           onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
+                                key="link.delete"/></a>
+                    </auth:experimenter>
+                </td>
             </tr>
         </c:forEach>
     </table>
 
     <auth:experimenter>
         <div class="actionBox">
-            <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message key="link.addFileMetadataDefinition"/></a>
+            <a href="<c:url value='add.html'/>" class="lightButtonLink"><fmt:message
+                    key="link.addFileMetadataDefinition"/></a>
         </div>
     </auth:experimenter>
 

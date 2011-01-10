@@ -554,8 +554,8 @@
     <bean name="weatherListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherListController"/>
 
-    <bean name="fileMetadataParametersListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefListController"/>
+    <bean name="fileMetadataParametersMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>
 
     <bean name="addHearingImpairmentController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
