@@ -539,8 +539,8 @@
     <bean name="hearingImpairmentMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentMultiController"/>
 
-    <bean name="visualImpairmentListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentListController"/>
+    <bean name="visualImpairmentMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentMultiController"/>
 
     <bean name="hardwareListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareListController"/>

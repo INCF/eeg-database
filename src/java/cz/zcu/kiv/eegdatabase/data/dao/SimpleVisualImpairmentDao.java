@@ -22,4 +22,12 @@ public class SimpleVisualImpairmentDao extends SimpleGenericDao<VisualImpairment
         List<VisualImpairment> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select i.persons from VisualImpairment i where i.visualImpairmentId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<VisualImpairment> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

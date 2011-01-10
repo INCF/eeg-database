@@ -8,4 +8,6 @@ public interface VisualImpairmentDao extends GenericDao<VisualImpairment, Intege
     public List<VisualImpairment> getItemsForList();
 
     public boolean canSaveDescription(String description, int id);
+
+    public boolean canDelete(int id);
 }
