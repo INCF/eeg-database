@@ -551,8 +551,8 @@
     <bean name="experimentOptionalParametersMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefMultiController"/>
 
-    <bean name="weatherListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherListController"/>
+    <bean name="weatherMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherMultiController"/>
 
     <bean name="fileMetadataParametersMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>

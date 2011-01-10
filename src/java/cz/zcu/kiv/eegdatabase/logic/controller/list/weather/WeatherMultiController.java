@@ -7,13 +7,13 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class WeatherListController extends AbstractController {
+public class WeatherMultiController extends MultiActionController {
 
     private Log log = LogFactory.getLog(getClass());
     @Autowired
@@ -21,15 +21,32 @@ public class WeatherListController extends AbstractController {
     @Autowired
     private WeatherDao weatherDao;
 
-    @Override
-    protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        log.debug("Processing hardware list controller");
+    public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
+        log.debug("Processing weather list controller");
         ModelAndView mav = new ModelAndView("lists/weather/list");
 
         mav.addObject("userIsExperimenter", auth.userIsExperimenter());
 
         List<Weather> list = weatherDao.getItemsForList();
         mav.addObject("weatherList", list);
+        return mav;
+    }
+
+    public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
+        log.debug("Deleting weather.");
+        ModelAndView mav = new ModelAndView("/lists/itemDeleted");
+
+        String idString = request.getParameter("id");
+        if (idString != null) {
+            int id = Integer.parseInt(idString);
+
+            if (weatherDao.canDelete(id)) {
+                weatherDao.delete(weatherDao.read(id));
+            } else {
+                mav.setViewName("/lists/itemUsed");
+            }
+        }
+
         return mav;
     }
 }

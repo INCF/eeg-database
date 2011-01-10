@@ -30,4 +30,12 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select w.experiments from Weather w where w.id = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

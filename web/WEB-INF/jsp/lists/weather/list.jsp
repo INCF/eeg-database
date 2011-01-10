@@ -21,7 +21,15 @@
                 <td>${weather.weatherId}</td>
                 <td>${weather.title}</td>
                 <td>${weather.description}</td>
-                <td><a href="<c:url value='/lists/weather-definitions/edit.html?id=${weather.weatherId}' />"><fmt:message key="link.edit"/></a></td>
+                <td>
+                    <a href="<c:url value='/lists/weather-definitions/edit.html?id=${weather.weatherId}' />"><fmt:message
+                            key="link.edit"/></a>
+                    <auth:experimenter>
+                        <a href="<c:url value='/lists/weather-definitions/delete.html?id=${weather.weatherId}' />"
+                           onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
+                                key="link.delete"/></a>
+                    </auth:experimenter>
+                </td>
             </tr>
         </c:forEach>
     </table>
