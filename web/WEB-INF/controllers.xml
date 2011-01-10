@@ -542,8 +542,8 @@
     <bean name="visualImpairmentMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentMultiController"/>
 
-    <bean name="hardwareListController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareListController"/>
+    <bean name="hardwareMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareMultiController"/>
 
     <bean name="personOptionalParametersListController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefListController"/>

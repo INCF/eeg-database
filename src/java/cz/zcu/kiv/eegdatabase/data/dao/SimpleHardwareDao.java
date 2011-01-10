@@ -22,4 +22,12 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select h.experiments from Hardware h where h.hardwareId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
 }

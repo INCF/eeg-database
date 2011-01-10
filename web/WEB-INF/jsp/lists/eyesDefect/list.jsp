@@ -26,7 +26,8 @@
                         <a href="<c:url value='/lists/visual-impairments/delete.html?id=${visualImpairment.visualImpairmentId}' />"
                            onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
                                 key="link.delete"/></a>
-                    </auth:experimenter></td>
+                    </auth:experimenter>
+                </td>
             </tr>
         </c:forEach>
     </table>

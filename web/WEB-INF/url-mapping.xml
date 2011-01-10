@@ -82,9 +82,9 @@
                 <prop key="lists/visual-impairments/edit.html">addVisualImpairmentController</prop>
                 <prop key="lists/visual-impairments/*.html">visualImpairmentMultiController</prop>
 
-                <prop key="lists/hardware-definitions/list.html">hardwareListController</prop>
                 <prop key="lists/hardware-definitions/add.html">addHardwareController</prop>
                 <prop key="lists/hardware-definitions/edit.html">addHardwareController</prop>
+                <prop key="lists/hardware-definitions/*.html">hardwareMultiController</prop>
 
                 <prop key="lists/person-optional-parameters/list.html">personOptionalParametersListController</prop>
                 <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>

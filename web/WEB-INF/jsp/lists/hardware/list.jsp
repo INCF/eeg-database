@@ -23,7 +23,15 @@
                 <td>${hardware.title}</td>
                 <td>${hardware.type}</td>
                 <td>${hardware.description}</td>
-                <td><a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}' />"><fmt:message key="link.edit" /></a></td>
+                <td>
+                    <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}' />"><fmt:message
+                            key="link.edit"/></a>
+                    <auth:experimenter>
+                        <a href="<c:url value='/lists/hardware-definitions/delete.html?id=${hardware.hardwareId}' />"
+                           onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
+                                key="link.delete"/></a>
+                    </auth:experimenter>
+                </td>
             </tr>
         </c:forEach>
     </table>

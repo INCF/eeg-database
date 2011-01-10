@@ -8,4 +8,6 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
     public List<Hardware> getItemsForList();
 
     public boolean canSaveTitle(String title, int id);
+
+    public boolean canDelete(int id);
 }
