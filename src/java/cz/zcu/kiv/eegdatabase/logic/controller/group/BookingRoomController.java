@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.group;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
@@ -23,6 +24,7 @@ public class BookingRoomController extends SimpleFormController {
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
+    private ReservationDao reservationDao;
     private GenericDao<GroupPermissionRequest, Integer> groupPermissionRequestDao;
 
     /**
@@ -192,4 +194,11 @@ public class BookingRoomController extends SimpleFormController {
     }
 
 
+    public ReservationDao getReservationDao() {
+        return reservationDao;
+    }
+
+    public void setReservationDao(ReservationDao reservationDao) {
+        this.reservationDao = reservationDao;
+    }
 }

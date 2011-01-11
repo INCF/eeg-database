@@ -15,4 +15,4 @@
 <c:set var="startTime" value="${param.startTime}"/>
 <c:set var="endTime" value="${param.endTime}"/>
 
-<c:out value="${group}/${date}/${startTime}/${endTime}" />
+<c:out value="OK#${group}/${date}/${startTime}/${endTime}" />

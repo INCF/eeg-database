@@ -421,7 +421,6 @@
         <property name="formView" value="groups/bookingRoom"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
-        <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="successView" value="groups/requestSent"/>
         <property name="mailSender" ref="mailSender"/>
@@ -433,11 +432,11 @@
         <property name="formView" value="groups/bookingRoomView"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
-        <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="messageSource"/>
         <property name="domain" value="${app.domain}"/>
+        <property name="reservationDao" value="cz.zcu.kiv.eegdatabase.data.dao.ReservationDao"/>
     </bean>
 
 
