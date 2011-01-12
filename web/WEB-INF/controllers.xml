@@ -436,7 +436,6 @@
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="messageSource"/>
         <property name="domain" value="${app.domain}"/>
-        <property name="reservationDao" value="cz.zcu.kiv.eegdatabase.data.dao.ReservationDao"/>
     </bean>
 
 
