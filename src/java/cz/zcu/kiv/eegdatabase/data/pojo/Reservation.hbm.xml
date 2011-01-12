@@ -3,11 +3,11 @@
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
   <class name="cz.zcu.kiv.eegdatabase.data.pojo.Reservation" schema="JPERGLER" table="RESERVATIONS">
-    <id name="experimentId" type="int">
+    <id name="reservationId" type="int">
       <column name="RESERVATION_ID" precision="22" scale="0"/>
       <generator class="increment"/>
     </id>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="personBySubjectPersonId">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
       <column name="SUBJECT_PERSON_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
