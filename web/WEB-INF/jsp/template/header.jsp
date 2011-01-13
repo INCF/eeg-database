@@ -3,12 +3,11 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils" %>
 <div class="header">
   <div class="pageTitle"><fmt:message key='web.title'/></div>
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
     <div class="loggedUserBox">
-      <fmt:message key="system.loggedUser" />: <%= ControllerUtils.getLoggedUserName()%>
+      <fmt:message key="system.loggedUser" />: <security:authentication property="principal.username"/>
       <span><a href="<c:url value='/my-account/overview.html'/>" title="<fmt:message key='system.myAccount'/>"><fmt:message key='system.myAccount'/></a></span>
       <a href="<c:url value='/logout'/>" title="<fmt:message key='system.logOut'/>"><fmt:message key='system.logOut'/></a>
     </div>
