@@ -6,9 +6,11 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.history;
 
 /**
+ * Using enum type
+ * constants for choice history type
  *
  * @author pbruha
  */
 public enum ChoiceHistory {
- DAILY, WEEKLY, MONTHLY
+    DAILY, WEEKLY, MONTHLY
 }

@@ -17,7 +17,6 @@ import org.springframework.web.servlet.mvc.Controller;
 import com.octo.captcha.service.image.ImageCaptchaService;
 import com.sun.image.codec.jpeg.JPEGCodec;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
-import cz.zcu.kiv.eegdatabase.logic.controller.RegistrationController;
 
 /**
 *

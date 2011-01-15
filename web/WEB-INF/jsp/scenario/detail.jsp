@@ -1,4 +1,4 @@
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -21,13 +21,17 @@
             <td>${scenarioDetail.description}</td>
         </tr>
         <tr>
-          <th><fmt:message key="label.private" /></th>
-          <td>${scenarioDetail.privateScenario}</td>
+            <th><fmt:message key="label.private"/></th>
+            <td>${scenarioDetail.privateScenario}</td>
         </tr>
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='/scenarios/download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message key="link.downloadXMLFile"/></a>
+        <a href="<c:url value='/scenarios/download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />"
+           class="lightButtonLink"><fmt:message key="link.downloadXMLFile"/></a>
+        <c:if test="${isOwner}">
+            <a href="<c:url value='/scenarios/edit.html?id=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message key="button.edit"/></a>
+        </c:if>
     </div>
 
 

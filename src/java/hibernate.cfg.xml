@@ -20,6 +20,7 @@
             org.hibernate.cache.NoCacheProvider
     </property>
     <!--<property name="hibernate.hbm2dll.auto">create</property>-->
+   
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Data.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/EyesDefect.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/PersonAditionalParams.hbm.xml"/>
@@ -37,5 +38,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/GroupPermissionRequest.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

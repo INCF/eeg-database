@@ -28,5 +28,13 @@
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment"/>
     </set>
+    <set name="subscribers" table="ARTICLES_SUBSCRIBTIONS">
+      <key>
+        <column name="ARTICLE_ID" precision="22" scale="0" />
+      </key>
+      <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Person">
+        <column name="PERSON_ID" precision="22" scale="0" />
+      </many-to-many>
+    </set>
   </class>
 </hibernate-mapping>

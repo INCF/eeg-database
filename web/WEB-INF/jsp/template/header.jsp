@@ -3,12 +3,11 @@
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-<%@page import="cz.zcu.kiv.eegdatabase.logic.controller.util.ControllerUtils" %>
 <div class="header">
   <div class="pageTitle"><fmt:message key='web.title'/></div>
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
     <div class="loggedUserBox">
-      <fmt:message key="system.loggedUser" />: <%= ControllerUtils.getLoggedUserName()%>
+      <fmt:message key="system.loggedUser" />: <security:authentication property="principal.username"/>
       <span><a href="<c:url value='/my-account/overview.html'/>" title="<fmt:message key='system.myAccount'/>"><fmt:message key='system.myAccount'/></a></span>
       <a href="<c:url value='/logout'/>" title="<fmt:message key='system.logOut'/>"><fmt:message key='system.logOut'/></a>
     </div>
@@ -19,11 +18,13 @@
       <span><a href="<c:url value='login.html'/>" title="<fmt:message key='system.logIn'/>"><fmt:message key='system.logIn'/></a></span>
     </div>
   </security:authorize>
+  <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
  <c:url value="/experiments/fulltext.html" var="formUrl"/>
  <form:form action="${formUrl}" method="post" commandName="fullTextSearchCommand" cssClass="globalSearch">
       <input type="text" name="searchTI" value="" size="20" class="textfield" />
       <input type="submit" value="<fmt:message key='button.fulltextSearch'/>" name="searchBT" class="button" />
   </form:form>
+  </security:authorize>
 
   <ul class="mainMenu">
     <li><a href="<c:url value='/home.html'/>" title="<fmt:message key='menuItem.home'/>"><fmt:message key='menuItem.home'/></a></li>

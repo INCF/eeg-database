@@ -4,59 +4,68 @@ import org.springframework.web.multipart.MultipartFile;
 
 public class AddScenarioCommand {
 
-  private int researchGroup;
-  private String title;
-  private String length;
-  private String description;
-  private MultipartFile dataFile;
-  private boolean privateNote;
+    private int id;
+    private int researchGroup;
+    private String title;
+    private String length;
+    private String description;
+    private MultipartFile dataFile;
+    private boolean privateNote;
 
-  public int getResearchGroup() {
-    return researchGroup;
-  }
+    public int getId() {
+        return id;
+    }
 
-  public void setResearchGroup(int researchGroup) {
-    this.researchGroup = researchGroup;
-  }
+    public void setId(int id) {
+        this.id = id;
+    }
 
-  public String getTitle() {
-    return title;
-  }
+    public int getResearchGroup() {
+        return researchGroup;
+    }
 
-  public void setTitle(String title) {
-    this.title = title;
-  }
+    public void setResearchGroup(int researchGroup) {
+        this.researchGroup = researchGroup;
+    }
 
-  public String getLength() {
-    return length;
-  }
+    public String getTitle() {
+        return title;
+    }
 
-  public void setLength(String length) {
-    this.length = length;
-  }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-  public String getDescription() {
-    return description;
-  }
+    public String getLength() {
+        return length;
+    }
 
-  public void setDescription(String description) {
-    this.description = description;
-  }
+    public void setLength(String length) {
+        this.length = length;
+    }
 
-  public MultipartFile getDataFile() {
-    return dataFile;
-  }
+    public String getDescription() {
+        return description;
+    }
 
-  public void setDataFile(MultipartFile dataFile) {
-    this.dataFile = dataFile;
-  }
+    public void setDescription(String description) {
+        this.description = description;
+    }
 
-  public boolean getPrivateNote() {
-    return this.privateNote;
-  }
+    public MultipartFile getDataFile() {
+        return dataFile;
+    }
 
-  public void setPrivateNote(boolean privateNote) {
-    this.privateNote = privateNote;
-  }
+    public void setDataFile(MultipartFile dataFile) {
+        this.dataFile = dataFile;
+    }
+
+    public boolean getPrivateNote() {
+        return this.privateNote;
+    }
+
+    public void setPrivateNote(boolean privateNote) {
+        this.privateNote = privateNote;
+    }
 
 }

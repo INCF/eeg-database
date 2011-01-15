@@ -189,17 +189,51 @@
 
   </security:authorize>
   <security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
-    <h1><fmt:message key="homePage.welcomeHeading" /></h1>
-
-    <p><fmt:message key="homePage.description1" /></p>
-
-    <p><fmt:message key="homePage.description2" /></p>
-
-    <div class="homePageActionBoxes">
-      <a href="<c:url value='login.html'/>" class="homepageLoginLink"><fmt:message key="system.logIn" /></a>
-      <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
+    
+    <div class="homepageLeftColumn">
+      <h1><fmt:message key="homePage.welcomeHeading" /></h1>
+      <p><fmt:message key="homePage.description1" /></p>
+      <p><fmt:message key="homePage.description2" /></p>
+      <div class="homePageActionBoxes">
+        <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"><fmt:message key="system.register" /></a>
+      </div>
     </div>
-    <a href="<c:url value='/forgotten-password.html'/>"><fmt:message key="system.forgottenPassword" /></a>
+    <div class="homepageRightColumn">
+      <h2>Login</h2>
+      
+      <a href="<c:url value='/forgotten-password.html'/>"><fmt:message key="system.forgottenPassword" />?</a>
+      <form action="j_spring_security_check" class="loginForm" method="post">
+        <fieldset>
+          <c:if test="${not empty param.login_error}">
+            <span class="errorMessage"><fmt:message key="system.loginNotSuccessfull"/> <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
+          </c:if>
+          <div>
+            <label for="j_username" class="fieldLabel"><fmt:message key="label.username"/></label>
+            <input type="text" name="j_username" id="j_username"/>
+          </div>
+          <div>
+            <label for="j_password" class="fieldLabel"><fmt:message key="label.password"/></label>
+            <input type="password" name="j_password" id="j_password"/>
+          </div>
+          <div class="rememberMeBox">
+            <input type="checkbox" name="_spring_security_remember_me" id="_spring_security_remember_me"/> <label for="_spring_security_remember_me"><fmt:message key="label.rememberMe"/></label>
+          </div>
+
+          <input type="submit" value="<fmt:message key='button.logIn'/>" class="lightButtonLink" />
+        </fieldset>
+      </form>
+           
+    </div>
+
+
+
+
+
+
+
+
+
+ 
   </security:authorize>
 
 

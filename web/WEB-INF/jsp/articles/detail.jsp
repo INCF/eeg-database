@@ -38,6 +38,17 @@
         | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
         | <a href="<c:url value="delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
       </c:if>
+        |
+        <c:choose>
+          <c:when test="${subscribed}">
+            <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=false" />"><fmt:message key="label.unsubscribe" /> </a>
+          </c:when>
+          <c:otherwise>
+            <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=true" />"><fmt:message key="label.subscribe" /> </a>
+          </c:otherwise>
+        </c:choose>
+
+
 
     </div>
     <div class="content">
