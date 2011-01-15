@@ -1,77 +1,66 @@
+
 package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-
-import java.util.HashSet;
-import java.util.Set;
-
 /**
+ *
  * @author Jiri Vlasimsky
  */
 public class ArticleCommand {
-    private int articleId;
-    private int personId;
-    private int researchGroup;
-    private String title;
-    private String text;
-    private String time;
-    private Set<Person> subscribers = new HashSet<Person>(0);
+  private int articleId;
+  private int personId;
+  private int researchGroup;
+  private String title;
+  private String text;
+  private String time;
 
-    public int getArticleId() {
-        return articleId;
-    }
 
-    public void setArticleId(int articleId) {
-        this.articleId = articleId;
-    }
+  public int getArticleId() {
+    return articleId;
+  }
 
-    public int getPersonId() {
-        return personId;
-    }
+  public void setArticleId(int articleId) {
+    this.articleId = articleId;
+  }
 
-    public void setPersonId(int personId) {
-        this.personId = personId;
-    }
+  public int getPersonId() {
+    return personId;
+  }
 
-    public int getResearchGroup() {
-        return researchGroup;
-    }
+  public void setPersonId(int personId) {
+    this.personId = personId;
+  }
 
-    public void setResearchGroup(int researchGroup) {
-        this.researchGroup = researchGroup;
-    }
+  public int getResearchGroup() {
+    return researchGroup;
+  }
 
-    public String getText() {
-        return text;
-    }
+  public void setResearchGroup(int researchGroup) {
+    this.researchGroup = researchGroup;
+  }
 
-    public void setText(String text) {
-        this.text = text;
-    }
+  public String getText() {
+    return text;
+  }
 
-    public String getTime() {
-        return time;
-    }
+  public void setText(String text) {
+    this.text = text;
+  }
 
-    public void setTime(String time) {
-        this.time = time;
-    }
+  public String getTime() {
+    return time;
+  }
 
-    public String getTitle() {
-        return title;
-    }
+  public void setTime(String time) {
+    this.time = time;
+  }
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+  public String getTitle() {
+    return title;
+  }
 
-    public Set<Person> getSubscribers() {
-        return subscribers;
-    }
-
-    public void setSubscribers(Set<Person> subscribers) {
-        this.subscribers = subscribers;
-    }
+  public void setTitle(String title) {
+    this.title = title;
+  }
 
 
 }

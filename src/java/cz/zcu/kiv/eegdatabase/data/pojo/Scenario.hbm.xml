@@ -28,12 +28,6 @@
     <property name="description" type="string">
       <column name="DESCRIPTION"/>
     </property>
-    <property name="scenarioName" type="string">
-      <column name="SCENARIO_NAME"/>
-    </property>
-    <property name="mimetype" type="string">
-      <column name="MIMETYPE"/>
-    </property>
     <set inverse="true" name="histories">
       <key>
         <column name="SCENARIO_ID" precision="22" scale="0"/>

@@ -40,8 +40,6 @@ public class Scenario implements java.io.Serializable {
   private Set<History> histories = new HashSet<History>(0);
   private boolean privateScenario;
   private boolean userMemberOfGroup;
-  private String scenarioName;
-  private String mimetype;
 
   public Scenario() {
   }
@@ -149,21 +147,6 @@ public class Scenario implements java.io.Serializable {
 
   public void setHistories(Set<History> histories) {
     this.histories = histories;
-  }
-  public String getMimetype() {
-    return mimetype;
-  }
-
-  public void setMimetype(String mimetype) {
-    this.mimetype = mimetype;
-  }
-
-  public String getScenarioName() {
-    return scenarioName;
-  }
-
-  public void setScenarioName(String scenarioName) {
-    this.scenarioName = scenarioName;
   }
 }
 

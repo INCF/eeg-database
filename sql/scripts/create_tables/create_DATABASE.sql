@@ -15,7 +15,6 @@
 @create_table_PERSON.sql
 @create_table_PERSON_OPT_PARAM_DEF.sql
 @create_table_PERSON_OPT_PARAM_VAL.sql
-@create_table_ARTICLES_SUBSCRIBTIONS.sql
 @create_table_RESEARCH_GROUP.sql
 @create_table_RESEARCH_GROUP_MEMBERSHIP.sql
 @create_table_SCENARIO.sql

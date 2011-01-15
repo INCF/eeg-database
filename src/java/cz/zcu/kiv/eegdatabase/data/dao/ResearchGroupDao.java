@@ -2,7 +2,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-
 import java.util.List;
 
 /**
@@ -13,19 +12,17 @@ import java.util.List;
  */
 public interface ResearchGroupDao extends GenericDao<ResearchGroup, Integer> {
 
-    public List<ResearchGroup> getResearchGroupsWhereMember(Person person);
+  public List<ResearchGroup> getResearchGroupsWhereMember(Person person);
 
-    public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
+  public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
 
-    public List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
+  public List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
 
-    public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
+  public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
 
-    public List getGroupDataForAccountOverview(Person person);
+  public List getGroupDataForAccountOverview(Person person);
 
-    public List getListOfGroupMembers(int groupId);
+  public List getListOfGroupMembers(int groupId);
 
-    public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
-
-    public boolean canSaveTitle(String title, int id);
+  public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
 }

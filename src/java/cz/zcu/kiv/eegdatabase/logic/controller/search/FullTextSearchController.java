@@ -5,20 +5,26 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.logic.commandobjects.FullTextSearchCommand;
+import java.util.ArrayList;
+import java.util.Set;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
@@ -38,6 +44,12 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<Weather, Integer> weatherDao;
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
   private GenericDao<ArticleComment, Integer> commentDao;
+  private SectionCreator scenarioSection;
+  private SectionCreator experimentSection;
+  private SectionCreator personSection;
+  private SectionCreator articleSection;
+
+
 
   public FullTextSearchController() {
     setCommandClass(FullTextSearchCommand.class);
@@ -59,71 +71,48 @@ public class FullTextSearchController extends SimpleFormController {
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
     String fullTextQuery = fullTextSearchCommand.getSearchTI();
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
-      Set<FulltextResult> results = new HashSet<FulltextResult>();
-      Wrapper w;
+      Set<FulltextResult> results = null;
 
+      String[] scenFields = {"title", "description"};
+      results = scenarioSection.createSection(scenarioDao.getLuceneQuery
+              (fullTextQuery, scenFields), Scenario.class, scenFields);
 
-      Map<Scenario, String> scen = scenarioDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Scenario, String> entry : scen.entrySet()) {
-        w = new ScenarioWrapper(entry.getKey());
-        results.add(new FulltextResult(entry.getKey().getScenarioId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-      }
+      String[] exFields = {"weathernote", "temperature"};
+      results.addAll(experimentSection.createSection(experimentDao.getLuceneQuery
+              (fullTextQuery, exFields), Experiment.class, exFields));
 
-      Map<Experiment, String> exp = experimentDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Experiment, String> entry : exp.entrySet()) {
-        w = new ExperimentWrapper(entry.getKey());
-        results.add(new FulltextResult(entry.getKey().getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-      }
+      String[] perFields = {"note", "email"};
+      results.addAll(personSection.createSection(personDao.getLuceneQuery
+              (fullTextQuery, perFields), Person.class, perFields));
 
-      Map<Person, String> per = personDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Person, String> entry : per.entrySet()) {
-        w = new PersonWrapper(entry.getKey());
-        results.add(new FulltextResult(entry.getKey().getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-      }
+      String[] artFields = {"title", "text"};
+      results.addAll(articleSection.createSection(articleDao.getLuceneQuery
+              (fullTextQuery, artFields), Article.class, artFields));
 
-      Map<Article, String> art = articleDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Article, String> entry : art.entrySet()) {
-        w = new ArticleWrapper(entry.getKey());
-        results.add(new FulltextResult(entry.getKey().getArticleId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-      }
+      String[] hardFields = {"title", "type", "description"};
+      results.addAll(experimentSection.createSection(hardwareDao.getLuceneQuery
+              (fullTextQuery, hardFields), Hardware.class, hardFields));
 
-      Map<Hardware, String> hw = hardwareDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Hardware, String> entry : hw.entrySet()) {
-        for (Experiment e : entry.getKey().getExperiments()) {
-          w = new ExperimentWrapper(e);
-          results.add(new FulltextResult(e.getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
+      String[] visualImpairmentFields = {"description"};
+      results.addAll(personSection.createSection(eyesDefectDao.getLuceneQuery
+              (fullTextQuery, visualImpairmentFields), VisualImpairment.class, visualImpairmentFields));
 
-      Map<VisualImpairment, String> vis = eyesDefectDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<VisualImpairment, String> entry : vis.entrySet()) {
-        for (Person p : entry.getKey().getPersons()) {
-          w = new PersonWrapper(p);
-          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
+      String[] hearingFields = {"decription"};
+      results.addAll(personSection.createSection(hearingImpairmentDao.getLuceneQuery
+              (fullTextQuery, hearingFields), HearingImpairment.class, hearingFields));
 
-      Map<HearingImpairment, String> hear = hearingImpairmentDao.getFulltextResults(fullTextQuery);
-       for (Map.Entry<HearingImpairment, String> entry : hear.entrySet()) {
-        for (Person p : entry.getKey().getPersons()) {
-          w = new PersonWrapper(p);
-          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
+      String[] weatherFields = {"title", "description"};
+      results.addAll(experimentSection.createSection(weatherDao.getLuceneQuery
+              (fullTextQuery, weatherFields), Weather.class, weatherFields));
 
-      Map<Weather, String> wea = weatherDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<Weather, String> entry : wea.entrySet()) {
-        for (Experiment e : entry.getKey().getExperiments()) {
-          w = new ExperimentWrapper(e);
-          results.add(new FulltextResult(e.getExperimentId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
+//      String[] exOptParamDefFields = {"paramName", "paramDataType"};
+//      results.addAll(scenarioSection.createSection(experimentOptParamDef.getLuceneQuery
+//              (fullTextQuery, exOptParamDefFields), ExperimentOptParamDef.class, exOptParamDefFields));
 
-      Map<ArticleComment, String> com = commentDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<ArticleComment, String> entry : com.entrySet()) {
-        w = new ArticleWrapper(entry.getKey().getArticle());
-        results.add(new FulltextResult(entry.getKey().getArticle().getArticleId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-      }
+      String[] commentPar = {"text"};
+      results.addAll(articleSection.createSection(commentDao.getLuceneQuery
+              (fullTextQuery, commentPar), ArticleComment.class, commentPar));
+
 
       logger.debug("I have results: " + results);
 
@@ -217,5 +206,36 @@ public class FullTextSearchController extends SimpleFormController {
   public void setCommentDao(GenericDao<ArticleComment, Integer> commentDao) {
     this.commentDao = commentDao;
   }
+    public SectionCreator getScenarioSection() {
+    return scenarioSection;
+  }
 
+  public void setScenarioSection(SectionCreator scenarioSection) {
+    this.scenarioSection = scenarioSection;
+  }
+
+
+  public SectionCreator getArticleSection() {
+    return articleSection;
+  }
+
+  public void setArticleSection(SectionCreator articleSection) {
+    this.articleSection = articleSection;
+  }
+
+  public SectionCreator getExperimentSection() {
+    return experimentSection;
+  }
+
+  public void setExperimentSection(SectionCreator experimentSection) {
+    this.experimentSection = experimentSection;
+  }
+
+  public SectionCreator getPersonSection() {
+    return personSection;
+  }
+
+  public void setPersonSection(SectionCreator personSection) {
+    this.personSection = personSection;
+  }
 }

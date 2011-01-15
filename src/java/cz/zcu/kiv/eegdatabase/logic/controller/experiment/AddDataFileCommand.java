@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 import org.springframework.web.multipart.MultipartFile;
 
 /**
+ *
  * @author JiPER
  */
 public class AddDataFileCommand {

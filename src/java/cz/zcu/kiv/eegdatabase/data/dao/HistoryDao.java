@@ -17,7 +17,7 @@ import java.util.List;
  */
 public interface HistoryDao<T, PK extends Serializable> extends GenericDao<T, PK> {
 
-  public List<History> getHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId);
+  public List<History> getHistory(ChoiceHistory historyType, boolean isGroupAdmin, int personId, int groupId);
 
   public long getCountOfFilesHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId);
 

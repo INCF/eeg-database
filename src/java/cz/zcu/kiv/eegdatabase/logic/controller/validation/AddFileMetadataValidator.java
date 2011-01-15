@@ -1,15 +1,17 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
+package cz.zcu.kiv.eegdatabase.logic.controller.validation;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddMetadataCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
 
 /**
+ *
  * @author JiPER
  */
 public class AddFileMetadataValidator implements Validator {
@@ -18,20 +20,20 @@ public class AddFileMetadataValidator implements Validator {
     private GenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataDao;
 
     public boolean supports(Class clazz) {
-        return clazz.equals(AddFileMetadataCommand.class);
+        return clazz.equals(AddMetadataCommand.class);
     }
 
     public void validate(Object command, Errors errors) {
-        AddFileMetadataCommand addFileMetadataCommand = (AddFileMetadataCommand) command;
+        AddMetadataCommand addMetadataCommand = (AddMetadataCommand) command;
         log.debug("Validating form for adding file metadata.");
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paramValue", "required.paramValue");
 
-        if (addFileMetadataCommand.getParamId() <= 0) {
+        if (addMetadataCommand.getParamId() <= 0) {
             errors.rejectValue("paramId", "required.paramId");
         }
 
-        FileMetadataParamVal f = fileMetadataDao.read(new FileMetadataParamValId(addFileMetadataCommand.getParamId(), addFileMetadataCommand.getDataId()));
+        FileMetadataParamVal f = fileMetadataDao.read(new FileMetadataParamValId(addMetadataCommand.getParamId(), addMetadataCommand.getDataId()));
         if (f != null) {
             errors.rejectValue("paramId", "invalid.paramIdAlreadyInserted");
         }

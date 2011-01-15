@@ -1,9 +1,10 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 /**
+ *
  * @author Jindra
  */
-public class AddFileMetadataCommand {
+public class AddMetadataCommand {
 
     private int dataId;
     private int paramId;

@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 /**
+ *
  * @author Jindra
  */
 public class AddExperimentOptParamValCommand {
