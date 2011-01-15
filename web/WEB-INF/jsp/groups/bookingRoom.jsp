@@ -90,7 +90,7 @@
         $("#datePicker").datepicker({
             minDate: 0,
             firstDay: 1,
-            dateFormat: "dd.mm.yy",
+            dateFormat: "dd/mm/yy",
             onSelect: function(selectedDate) {
                 date = selectedDate;
                 showChosenData();
@@ -123,7 +123,7 @@
                     if (trim(answer[0]) == "OK")
                         $("#chosenData").html("Selected time range: " + date + "; " + $("#startTime").attr('value') + " -> " + $("#endTime").attr('value') + "<br />Selected group:" + sel.options[sel.selectedIndex].text + "<br/><hr>" + answer[1]);
                     else {
-                        $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
+                        $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)<hr>"+data.length+"<br/>"+data);
                     }
 
                 },

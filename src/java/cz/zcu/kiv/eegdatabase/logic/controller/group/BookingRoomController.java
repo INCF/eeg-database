@@ -24,7 +24,7 @@ public class BookingRoomController extends SimpleFormController {
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
-    //private ReservationDao reservationDao;
+    private ReservationDao reservationDao;
     private GenericDao<GroupPermissionRequest, Integer> groupPermissionRequestDao;
 
     /**
@@ -193,12 +193,12 @@ public class BookingRoomController extends SimpleFormController {
         this.messageSource = messageSource;
     }
 
-              /*
+
     public ReservationDao getReservationDao() {
         return reservationDao;
     }
 
     public void setReservationDao(ReservationDao reservationDao) {
         this.reservationDao = reservationDao;
-    }           */
+    }           
 }

@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 
@@ -12,6 +13,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
  */
 public interface ReservationDao extends GenericDao<Reservation, Integer> {
 
-  public List<Reservation> getReservationsBetween(Date start, Date end);
+  public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end);
 
 }

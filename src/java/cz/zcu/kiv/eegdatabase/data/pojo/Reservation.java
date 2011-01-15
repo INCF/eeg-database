@@ -1,5 +1,5 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
-// Generated 11.1.2011 11:19:33 by Hibernate Tools 3.2.1.GA
+// Generated 15.1.2011 15:15:26 by Hibernate Tools 3.2.1.GA
 
 
 import java.sql.Timestamp;
@@ -11,8 +11,9 @@ public class Reservation  implements java.io.Serializable {
 
 
      private int reservationId;
-     private Person person;
      private ResearchGroup researchGroup;
+     private Person person;
+     private Timestamp creationTime;
      private Timestamp startTime;
      private Timestamp endTime;
 
@@ -20,14 +21,14 @@ public class Reservation  implements java.io.Serializable {
     }
 
 	
-    public Reservation(int reservationId, ResearchGroup researchGroup) {
+    public Reservation(int reservationId) {
         this.reservationId = reservationId;
-        this.researchGroup = researchGroup;
     }
-    public Reservation(int reservationId, Person person, ResearchGroup researchGroup, Timestamp startTime, Timestamp endTime) {
+    public Reservation(int reservationId, ResearchGroup researchGroup, Person person, Timestamp creationTime, Timestamp startTime, Timestamp endTime) {
        this.reservationId = reservationId;
-       this.person = person;
        this.researchGroup = researchGroup;
+       this.person = person;
+       this.creationTime = creationTime;
        this.startTime = startTime;
        this.endTime = endTime;
     }
@@ -39,6 +40,13 @@ public class Reservation  implements java.io.Serializable {
     public void setReservationId(int reservationId) {
         this.reservationId = reservationId;
     }
+    public ResearchGroup getResearchGroup() {
+        return this.researchGroup;
+    }
+    
+    public void setResearchGroup(ResearchGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
     public Person getPerson() {
         return this.person;
     }
@@ -46,12 +54,12 @@ public class Reservation  implements java.io.Serializable {
     public void setPerson(Person person) {
         this.person = person;
     }
-    public ResearchGroup getResearchGroup() {
-        return this.researchGroup;
+    public Timestamp getCreationTime() {
+        return this.creationTime;
     }
     
-    public void setResearchGroup(ResearchGroup researchGroup) {
-        this.researchGroup = researchGroup;
+    public void setCreationTime(Timestamp creationTime) {
+        this.creationTime = creationTime;
     }
     public Timestamp getStartTime() {
         return this.startTime;
