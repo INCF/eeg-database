@@ -39,7 +39,7 @@ div#datePicker
 
 div#chosenData
 {
-  border: 1px solid red;
+  border: 1px dotted cyan;
 }
 
 .combobox
@@ -96,4 +96,19 @@ div#changeTime ul li
 div#changeTime ul li:hover
 {
   background-color: silver;
+}
+
+table#reservations
+{
+    border: 1px solid black;
+    padding: 2px 2px 2px 2px;
+    margin: 1px 1px 1px 1px;
+    width: 100%;
+}
+
+
+
+table#reservations tr
+{
+    border-bottom: 1px solid gray;
 }

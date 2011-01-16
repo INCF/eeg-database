@@ -59,41 +59,28 @@ public class AddBookingRoomViewParamsController
         int h = Integer.parseInt(startTime[0]);
         int m = Integer.parseInt(startTime[1]);
 
-        String start = request.getParameter("date")+" "+request.getParameter("startTime");
+        GregorianCalendar cal = new GregorianCalendar(year, month - 1, day, 0, 0, 0);
+        log.info("ORIG= " + cal.get(Calendar.DAY_OF_MONTH) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.YEAR) + " 00:00:00");
 
-
-        GregorianCalendar cal = new GregorianCalendar(year,month-1,day,0,0,0);
-        log.info("ORIG= "+cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00");
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-
-        log.info("START= "+cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00");
-
-        String startStr = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
         GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
+        String startStr = weekStart.get(Calendar.DAY_OF_MONTH) + "-" + (weekStart.get(Calendar.MONTH) + 1) + "-" + weekStart.get(Calendar.YEAR) + " 00:00:00";
+        log.info("START= " + startStr);
+
         cal.add(Calendar.WEEK_OF_YEAR, 1);
-
-        String endStr = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
-
         GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
 
-        log.info("END= "+cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00");
+        String endStr = weekEnd.get(Calendar.DAY_OF_MONTH) + "-" + (weekEnd.get(Calendar.MONTH) + 1) + "-" + weekEnd.get(Calendar.YEAR) + " 00:00:00";
+        log.info("END= " + endStr);
 
-        /*h = Integer.parseInt(endTime[0]);
-        m = Integer.parseInt(endTime[1]);*/
-        String end = request.getParameter("date")+" "+request.getParameter("endTime");
-
-
-
-
-        List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd, startStr, endStr);
+        List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd);
         map.put("reservations", reservations);
         map.put("reservationsCount", reservations.size());
-        map.put("timerange",weekStart+" - "+weekEnd);
-                 
+        map.put("timerange", startStr + " - " + endStr);
 
 
-        map.put("check", request.getParameter("date")+ " date=" + Arrays.toString(date) + " group=" + group + " startTime=" + Arrays.toString(startTime) + " endTime=" + Arrays.toString(endTime));
+        map.put("check", "[date=" + Arrays.toString(date) + " group=" + group + " startTime=" + Arrays.toString(startTime) + " endTime=" + Arrays.toString(endTime) + "]");
 
         log.debug("Returning map object");
         return map;

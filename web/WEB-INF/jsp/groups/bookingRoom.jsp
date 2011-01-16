@@ -54,22 +54,6 @@
         </div>
         <div id="bottom">
             <div id="chosenData">&nbsp;</div>
-            <table class="dataTable listOfResearchGroupsDataTable">
-                <thead>
-                <tr>
-                    <th class="columnGroupTitle"><fmt:message key="bookRoom.day"/></th>
-                    <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
-                    <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
-                </tr>
-                </thead>
-                <c:forEach items="${researchGroupList}" var="group">
-                    <tr>
-                        <td>4.11.2010</td>
-                        <td>12:00-13:00</td>
-                        <td><c:out value="${group.title}"/></td>
-                    </tr>
-                </c:forEach>
-            </table>
         </div>
     </div>
     <div id="changeTime">

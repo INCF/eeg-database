@@ -12,6 +12,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
  */
 public interface ReservationDao extends GenericDao<Reservation, Integer> {
 
-  public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end, String startstr, String endstr);
+  public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end);
 
 }
