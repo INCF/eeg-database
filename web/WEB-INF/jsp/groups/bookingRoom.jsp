@@ -124,8 +124,9 @@
                         $("#chosenData").html("Selected time range: " + date + "; " + $("#startTime").attr('value') + " -> " + $("#endTime").attr('value') + "<br />Selected group:" + sel.options[sel.selectedIndex].text + "<br/><hr>" + answer[1]);
                     else {
                         $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)<hr>"+data.length+"<br/>"+data);
-                    }
 
+                    }
+                     //alert(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#chosenData").html("Error while getting data... :-(");

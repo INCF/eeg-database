@@ -16,12 +16,12 @@
 <c:set var="endTime" value="${param.endTime}"/>
 
 <c:out value="OK#${group}/${date}/${startTime}/${endTime}"/>
+<hr>
 
-<c:out value="${check}"/>
-
+<h2><c:out value="${timerange}"/></h2>
 
 <c:forEach items="${reservations}" var="reservation">
 
-        <c:out value="${reservation.creationTime}<br>"/>
+        <c:out value="${reservation.researchGroup.title} - ${reservation.creationTime}"/><br>
 
 </c:forEach>

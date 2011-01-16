@@ -74,6 +74,13 @@
     <orderEntry type="library" name="spring-security" level="project" />
     <orderEntry type="library" name="lib" level="project" />
     <orderEntry type="library" name="Tomcat 6" level="application_server_libraries" />
+    <orderEntry type="module-library">
+      <library name="PHP 5.3.1">
+        <CLASSES />
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
   </component>
 </module>
 
