@@ -5,110 +5,97 @@
     Description:
  Styles for layout on groups/bookingRoom page.*/
 
-div#box
-{
-  border: none;
+div#box {
+    border: none;
 }
 
-div#left,div#right,div#bottom
-{
-  border: none;
+div#left, div#right, div#bottom {
+    border: none;
 }
 
-div#left
-{
-  float: left;
-  width: 220px;
+div#left {
+    float: left;
+    width: 220px;
 }
 
-div#right
-{
-  float: right;
-  width: 500px;
+div#right {
+    float: right;
+    width: 500px;
 }
 
-div#bottom
-{
-  clear: both;
+div#bottom {
+    clear: both;
 }
 
-div#datePicker
-{
-  float: left;
+div#datePicker {
+    float: left;
 }
 
-div#chosenData
-{
-  border: 1px dotted cyan;
+div#chosenData {
+    border: 1px dotted cyan;
 }
 
-.combobox
-{
-  width: 170px;
-  padding-right: 20px;
+.combobox {
+    width: 170px;
+    padding-right: 20px;
 }
 
-img.combo
-{
-  border: 0px solid orange;
-  cursor: pointer;
-  position: relative;
-  left: -19px;
-  top: 1px;
+img.combo {
+    border: 0px solid orange;
+    cursor: pointer;
+    position: relative;
+    left: -19px;
+    top: 1px;
 }
 
+div#changeTime {
+    display: none;
+    position: absolute;
+    width: 190px;
+    height: 120px;
+    background-color: white;
+    border: 1px solid silver;
+    overflow: scroll;
 
-div#changeTime
-{
-  display: none;
-  position: absolute;
-  width: 190px;
-  height: 120px;
-  background-color: white;
-  border: 1px solid silver;
-  overflow: scroll;
-
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
-div#changeTime ul
-{
-  width: 100%;
-  height: 100%;
-  margin: 0px 0px 0px 0px;
-  padding: 0px 0px 0px 0px;
-}
-
-div#changeTime ul li
-{
-  width: 95%;
-  height: 15px;
-  border: 1px solid silver;
-  background-color: lightblue;
-  margin: 1px 1px 1px 1px;
-  padding: 3px 3px 3px 3px;
-  text-align: center;
-  list-style: none;
-  cursor: pointer;
-}
-
-div#changeTime ul li:hover
-{
-  background-color: silver;
-}
-
-table#reservations
-{
-    border: 1px solid black;
-    padding: 2px 2px 2px 2px;
-    margin: 1px 1px 1px 1px;
+div#changeTime ul {
     width: 100%;
+    height: 100%;
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
 }
 
+div#changeTime ul li {
+    width: 95%;
+    height: 15px;
+    border: 1px solid silver;
+    background-color: lightblue;
+    margin: 1px 1px 1px 1px;
+    padding: 3px 3px 3px 3px;
+    text-align: center;
+    list-style: none;
+    cursor: pointer;
+}
 
+div#changeTime ul li:hover {
+    background-color: silver;
+}
 
-table#reservations tr
-{
-    border-bottom: 1px solid gray;
+table.dataTable tr.sameDay td {
+    background-color: #ffcc99;
+}
+
+table.dataTable tr.sameDay:hover td {
+    background-color: #ffcc66;
+}
+
+table.dataTable tr.collision td {
+    background-color: #ff6666;
+}
+
+table.dataTable tr.collision:hover td {
+    background-color: #ff3333;
 }

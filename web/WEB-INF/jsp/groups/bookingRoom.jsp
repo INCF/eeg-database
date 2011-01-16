@@ -10,11 +10,12 @@
     <script type="text/javascript" src="<c:url value='/files/js/jquery-1.3.2.min.js' />"></script>
     <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
 
-    <div id="box">
-        <div id="left">
-            <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand"
-                       cssClass="standardInputForm">
-                <fmt:message key='label.chooseGroup'/>:<br />
+    <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand"
+               cssClass="standardInputForm">
+        <div id="box">
+            <div id="left">
+
+                <fmt:message key='label.chooseGroup'/>:<br/>
                 <form:select path="selectedGroup" cssClass="selectBox" cssStyle="width: 195px;">
                     <c:forEach items="${researchGroupList}" var="researchGroup">
                         <option value="${researchGroup.researchGroupId}" label="" <c:if
@@ -33,39 +34,42 @@
                 <form:input path="endTime" cssClass="combobox" cssErrorClass="error"/>
                 <img src="<c:url value='/files/images/combo_arrow.png' />" alt="" class="combo"
                      onclick="changeTime('endTime')"/>
-            </form:form>
+
+            </div>
+            <div id="right">
+                <div id="datePicker"></div>
+                <b><fmt:message key='label.chooseRepeating'/>:</b><br/>
+                <fmt:message key='label.repeatFor'/>:<br/>
+                <select id="repType">
+                    <option value="1">Every</option>
+                    <option value="2">Every odd</option>
+                    <option value="3">Every even</option>
+                </select>
+                week,&nbsp;
+                <select id="repTime">
+                    <c:forEach var="d" begin="0" end="5" step="1">
+                        <option value="">${d}</option>
+                    </c:forEach>
+                </select>
+                &nbsp;<fmt:message key='label.repeatTimes'/>
+                <br/>
+
+            </div>
+            <div id="bottom">
+                <div id="chosenData">&nbsp;</div>
+            </div>
         </div>
-        <div id="right">
-            <div id="datePicker"></div>
-            <b><fmt:message key='label.chooseRepeating'/>:</b><br/>
-            <fmt:message key='label.repeatFor'/>:<br/>
-            <select id="repType">
-                <option value="1">Every</option>
-                <option value="2">Every odd</option>
-                <option value="3">Every even</option>
-            </select>
-            week,&nbsp;
-            <select id="repTime">
-                <c:forEach var="d" begin="1" end="5" step="1">
-                    <option value="">${d}</option>
+        <div id="changeTime">
+            <ul>
+                <c:forEach var="hour" begin="6" end="21" step="1">
+                    <c:forEach var="min" begin="0" end="45" step="15">
+                        <li onclick="selectTime(this)"><c:if test="${hour==0}">0</c:if><c:out value="${hour}"/>:<c:if
+                                test="${min==0}">0</c:if><c:out value="${min}"/></li>
+                    </c:forEach>
                 </c:forEach>
-            </select>
-            &nbsp;<fmt:message key='label.repeatTimes'/>
+            </ul>
         </div>
-        <div id="bottom">
-            <div id="chosenData">&nbsp;</div>
-        </div>
-    </div>
-    <div id="changeTime">
-        <ul>
-            <c:forEach var="hour" begin="6" end="21" step="1">
-                <c:forEach var="min" begin="0" end="45" step="15">
-                    <li onclick="selectTime(this)"><c:if test="${hour==0}">0</c:if><c:out value="${hour}"/>:<c:if
-                            test="${min==0}">0</c:if><c:out value="${min}"/></li>
-                </c:forEach>
-            </c:forEach>
-        </ul>
-    </div>
+    </form:form>
     <script type="text/javascript">
         //initialization:
         //create datepicker
@@ -104,13 +108,14 @@
                 },
                 success: function(data) {
                     var answer = data.split('#');
-                    if (trim(answer[0]) == "OK")
-                        $("#chosenData").html("Selected time range: " + date + "; " + $("#startTime").attr('value') + " -> " + $("#endTime").attr('value') + "<br />Selected group:" + sel.options[sel.selectedIndex].text + "<br/><hr>" + answer[1]);
-                    else {
-                        $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)<hr>"+data.length+"<br/>"+data);
-
+                    if (trim(answer[0]) == "OK") {
+                        $("#chosenData").html(answer[1]);
+                        //alert(answer[1]);
                     }
-                     //alert(data);
+                    else {
+                        $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)<hr>" + data.length + "<br/>" + data);
+                    }
+                    //alert(data);
                 },
                 error: function (xhr, ajaxOptions, thrownError) {
                     $("#chosenData").html("Error while getting data... :-(");

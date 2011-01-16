@@ -77,10 +77,10 @@ public class AddBookingRoomViewParamsController
         List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd);
         map.put("reservations", reservations);
         map.put("reservationsCount", reservations.size());
-        map.put("timerange", startStr + " - " + endStr);
+        map.put("timerange", request.getParameter("date") + "; " + request.getParameter("startTime") + " - " + request.getParameter("endTime"));
 
 
-        map.put("check", "[date=" + Arrays.toString(date) + " group=" + group + " startTime=" + Arrays.toString(startTime) + " endTime=" + Arrays.toString(endTime) + "]");
+        map.put("check", "[group=" + group + " startTime=" + startStr + " endTime=" + endStr + "]");
 
         log.debug("Returning map object");
         return map;
