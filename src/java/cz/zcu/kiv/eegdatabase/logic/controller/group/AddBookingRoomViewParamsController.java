@@ -68,11 +68,14 @@ public class AddBookingRoomViewParamsController
 
         log.info("START= "+cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00");
 
-        String weekStart = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
+        String startStr = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
+        GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
 
-        String weekEnd = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
+        String endStr = cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00";
+
+        GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
 
         log.info("END= "+cal.get(Calendar.DAY_OF_MONTH)+"-"+(cal.get(Calendar.MONTH)+1)+"-"+cal.get(Calendar.YEAR)+" 00:00:00");
 
@@ -83,7 +86,7 @@ public class AddBookingRoomViewParamsController
 
 
 
-        List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd);
+        List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd, startStr, endStr);
         map.put("reservations", reservations);
         map.put("reservationsCount", reservations.size());
         map.put("timerange",weekStart+" - "+weekEnd);
