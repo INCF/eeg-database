@@ -1,3 +1,4 @@
+<%@ page import="java.util.GregorianCalendar" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -7,15 +8,21 @@
 <ui:groupsTemplate pageTitle="pageTitle.bookingRoom">
 <!--<script type="text/javascript" src="<c:url value='/files/js/bookRoom.js'/>"></script>-->
 
+<c:set var="now" value="<%=new java.util.Date()%>"/>
+
 <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
 <c:url value="/groups/book-room.html" var="formUrl"/>
 <script type="text/javascript" src="<c:url value='/files/js/jquery-1.3.2.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
 
 <c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2><c:out
-        value="${param.comment}"/><hr></c:if>
+        value="${param.comment}"/>
+    <hr>
+</c:if>
 <c:if test="${param.status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out
-        value="${param.comment}"/><hr></c:if>
+        value="${param.comment}"/>
+    <hr>
+</c:if>
 
 <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand"
            cssClass="standardInputForm" onsubmit="return isAllowed();">
@@ -31,16 +38,43 @@
                     </option>
                 </c:forEach>
             </form:select>
+
+
             <br>
             <fmt:message key='label.chooseStartTime'/><br/>
-            <form:input path="startTime" cssClass="combobox" cssErrorClass="error" onblur="showChosenData()"/>
-            <img src="<c:url value='/files/images/combo_arrow.png' />" alt="" class="combo"
-                 onclick="changeTime('startTime')"/>
+            <form:hidden path="startTime"/>
+
+            <select id="startH" size="1" class="timeSelect" onchange="newTime()">
+                <c:forEach var="hour" begin="6" end="21" step="1">
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
+                            <c:if test="${hour==(now.hours+1)}">selected</c:if>><c:if test="${hour<10}">0</c:if>
+                            ${hour}</option>
+                </c:forEach>
+            </select>
+            &nbsp;
+            <select id="startM" size="1" class="timeSelect" onchange="newTime()">
+                <c:forEach var="min" begin="00" end="45" step="15">
+                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if>${min}</option>
+                </c:forEach>
+            </select>
             <br/>
+
             <fmt:message key='label.chooseEndTime'/><br/>
-            <form:input path="endTime" cssClass="combobox" cssErrorClass="error" onblur="showChosenData()"/>
-            <img src="<c:url value='/files/images/combo_arrow.png' />" alt="" class="combo"
-                 onclick="changeTime('endTime')"/>
+            <form:hidden path="endTime"/>
+            <select id="endH" size="1" class="timeSelect" onchange="newTime()">
+                <c:forEach var="hour" begin="6" end="21" step="1">
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
+                            <c:if test="${hour==(now.hours+2)}">selected</c:if>><c:if test="${hour<10}">0</c:if>
+                            ${hour}</option>
+                </c:forEach>
+            </select>
+            &nbsp;
+            <select id="endM" size="1" class="timeSelect" onchange="newTime()">
+                <c:forEach var="min" begin="00" end="45" step="15">
+                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if>${min}</option>
+                </c:forEach>
+            </select>
+
 
         </div>
         <div id="right">
@@ -61,20 +95,11 @@
             &nbsp;<fmt:message key='label.repeatTimes'/>
         </div>
         <div id="bottom">
-            <input type="submit" value="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
-
+            <div id="button">
+                <input type="submit" value="<fmt:message key='bookRoom.create'/>" title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
+            </div>
             <div id="chosenData">&nbsp;</div>
         </div>
-    </div>
-    <div id="changeTime">
-        <ul>
-            <c:forEach var="hour" begin="6" end="21" step="1">
-                <c:forEach var="min" begin="0" end="45" step="15">
-                    <li onclick="selectTime(this)"><c:if test="${hour==0}">0</c:if><c:out value="${hour}"/>:<c:if
-                            test="${min==0}">0</c:if><c:out value="${min}"/></li>
-                </c:forEach>
-            </c:forEach>
-        </ul>
     </div>
     <form:hidden path="date"/>
 </form:form>
@@ -100,13 +125,6 @@
 
         //default values
         var d = new Date();
-        /*
-        $("#startTime").attr('value', (d.getHours() + 1) + ':00');
-        $("#endTime").attr('value', (d.getHours() + 2) + ':00');*/
-
-
-        $("#startTime").attr('value', '14:00');
-        $("#endTime").attr('value', '15:00');
 
         var day = d.getDate() + '';
         if (day.length == 1) day = "0" + day;
@@ -114,7 +132,8 @@
         if (month.length == 1) month = "0" + month;
         $("#date").attr('value', day + "/" + month + "/" + d.getFullYear());
 
-        showChosenData();
+        //calls also showChosenData()
+        newTime();
 
     };
 
@@ -143,8 +162,28 @@
                 return false;
             }
                 break;
+            case '-2':
+            {
+                alert("<fmt:message key='bookRoom.invalidTime'/>");
+                return false;
+            }
+                break;
         }
         return false;
+    }
+
+    function newTime() {
+        var start = $("#startH").attr('value') + $("#startM").attr('value');
+        var end = $("#endH").attr('value') + $("#endM").attr('value');
+
+        if (end < start) {
+            $("#collision").attr('value', '-2');
+            alert("<fmt:message key='bookRoom.invalidTime'/>");
+        } else {
+            $("#startTime").attr('value', $("#startH").attr('value') + ":" + $("#startM").attr('value'));
+            $("#endTime").attr('value', $("#endH").attr('value') + ":" + $("#endM").attr('value'));
+            showChosenData();
+        }
     }
 
     function showChosenData() {
@@ -158,61 +197,28 @@
             cache: false,
             data: "group=" + sel.value + "&date=" + $("#date").attr('value') + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount,
             beforeSend: function() {
+                $("#collision").attr('value', '-1');
                 $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
-
             },
             success: function(data) {
                 var answer = data.split('#');
                 if (trim(answer[0]) == "OK") {
                     $("#chosenData").html(answer[1]);
-                    //alert(answer[1]);
-                    document.getElementById("collision").value = answer[2];
+                    $("#collision").attr('value', answer[2]);
                 }
                 else {
                     $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)<hr>" + data.length + "<br/>" + data);
+                    $("#collision").attr('value', '-1');
                 }
                 //alert(data);
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $("#chosenData").html("Error while getting data... :-(");
-                alert(xhr.status);
+                $("#chosenData").html("Error while getting data... :-(<br>Error " + xhr.status);
+                $("#collision").attr('value', '-1');
             }
         }
                 )
                 ;
-    }
-
-    var timeElement;
-
-    function changeTime(elem) {
-        //if not visible, then show it
-        if ($("#changeTime").css('display') == 'none') {
-            timeElement = document.getElementById(elem);
-
-            var pos = $("#" + elem).position();
-
-            $("#changeTime").css('left', pos.left);
-            $("#changeTime").css('top', (pos.top + $("#" + elem).height() + 5));
-
-            showTimeCombobox(true);
-        }
-        else {
-            showTimeCombobox(false);
-        }
-    }
-
-    function showTimeCombobox(show) {
-        if (show == true) {
-            $("#changeTime").fadeIn(100);
-        }
-        else {
-            $("#changeTime").fadeOut(100);
-        }
-    }
-
-    function selectTime(pointer) {
-        timeElement.value = $(pointer).text();
-        showTimeCombobox(false);
     }
 
 
