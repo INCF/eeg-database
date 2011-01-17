@@ -12,6 +12,8 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="myGroup" value="${param.group}"/>
+<c:set var="myRepCount" value="${param.repCount}"/>
+<c:set var="myRepType" value="${param.repType}"/>
 <c:set var="myDate" value="${param.date}"/>
 
 <c:set var="myStartTime" value="${param.startTime}"/>
@@ -74,5 +76,4 @@
     </c:forEach>
 
 </table>
-
-<c:if test="${isCollision==1}"><h2 style="color:red;">Vznikla kolize!</h2></c:if>
+<c:out value="#${isCollision}"/>

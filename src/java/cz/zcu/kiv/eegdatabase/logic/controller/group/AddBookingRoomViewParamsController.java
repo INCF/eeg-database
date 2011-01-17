@@ -52,6 +52,8 @@ public class AddBookingRoomViewParamsController
         String[] endTime = request.getParameter("endTime").split(":");
         String[] date = request.getParameter("date").split("/");
         int group = Integer.parseInt(request.getParameter("group"));
+        int repType = Integer.parseInt(request.getParameter("repType"));
+        int repCount = Integer.parseInt(request.getParameter("repCount"));
 
         int day = Integer.parseInt(date[0]);
         int month = Integer.parseInt(date[1]);
@@ -74,9 +76,11 @@ public class AddBookingRoomViewParamsController
         String endStr = weekEnd.get(Calendar.DAY_OF_MONTH) + "-" + (weekEnd.get(Calendar.MONTH) + 1) + "-" + weekEnd.get(Calendar.YEAR) + " 00:00:00";
         log.info("END= " + endStr);
 
-        List<Reservation> reservations = reservationDao.getReservationsBetween(weekStart, weekEnd);
-        map.put("reservations", reservations);
-        map.put("reservationsCount", reservations.size());
+        map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
+
+        //if(repCount)
+
+
         map.put("timerange", request.getParameter("date") + "; " + request.getParameter("startTime") + " - " + request.getParameter("endTime"));
 
 

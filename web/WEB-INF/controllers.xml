@@ -426,48 +426,19 @@
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
-        <property name="successView" value="groups/requestSent"/>
+        <property name="successView" value="redirect:/groups/book-room.html"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="messageSource" ref="messageSource"/>
         <property name="domain" value="${app.domain}"/>
     </bean>
-                  <!--
-    <bean name="bookingRoomView" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
-        <property name="formView" value="groups/bookingRoomView"/>
-        <property name="successView" value="groups/requestSent"/>
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
-        <property name="personDao" ref="personDao"/>
-        <property name="researchGroupDao" ref="researchGroupDao"/>
-        <property name="reservationDao" ref="reservationDao" />
-        <property name="mailSender" ref="mailSender"/>
-        <property name="messageSource" ref="messageSource"/>
-        <property name="domain" value="${app.domain}"/>
-    </bean>    -->
 
     <bean name="bookingRoomView"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
         <property name="formView" value="groups/bookingRoomView"/>
-        <!--<property name="successView" value="redirect:/groups/bookingRoomView"/>-->
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="reservationDao" ref="reservationDao" />
     </bean>
-
-    <!--
-    <bean name="addExperimentOptParamValController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentOptParamValController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="formView" value="experiments/optionalParams/addItemForm"/>
-        <property name="successView" value="redirect:/experiments/detail.html?experimentId="/>
-        <property name="experimentDao" ref="experimentDao"/>
-        <property name="experimentOptParamValDao" ref="experimentOptParamValDao"/>
-        <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
-        <property name="validator" ref="addExperimentOptParamValController"/>
-    </bean>
-
-    -->
-
-
 
     <bean name="acceptRoleRequestController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AcceptRoleRequestController">
