@@ -14,7 +14,7 @@
 
 <c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2><c:out
         value="${param.comment}"/><hr></c:if>
-<c:if test="${param.status=='fail'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out
+<c:if test="${param.status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out
         value="${param.comment}"/><hr></c:if>
 
 <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand"
@@ -100,9 +100,13 @@
 
         //default values
         var d = new Date();
-
+        /*
         $("#startTime").attr('value', (d.getHours() + 1) + ':00');
-        $("#endTime").attr('value', (d.getHours() + 2) + ':00');
+        $("#endTime").attr('value', (d.getHours() + 2) + ':00');*/
+
+
+        $("#startTime").attr('value', '14:00');
+        $("#endTime").attr('value', '15:00');
 
         var day = d.getDate() + '';
         if (day.length == 1) day = "0" + day;

@@ -4,9 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -18,9 +16,8 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.sql.Timestamp;
+import java.util.*;
 
 public class BookingRoomController extends SimpleFormController {
     private Log log = LogFactory.getLog(getClass());
@@ -47,29 +44,68 @@ public class BookingRoomController extends SimpleFormController {
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        BookRoomCommand bookRoomCommand = (BookRoomCommand) command;
-        String status = "fail";
-        String comment = "Unknown error";
 
-        Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
-        String[] startTime = request.getParameter("startTime").split(":");
-        String[] endTime = request.getParameter("endTime").split(":");
-        String[] date = request.getParameter("date").split("/");
-        int group = Integer.parseInt(request.getParameter("selectedGroup"));
-        int repType = Integer.parseInt(request.getParameter("repType"));
-        int repCount = Integer.parseInt(request.getParameter("repCount"));
+        String status = null;
+        String comment = null;
+        try {
+            BookRoomCommand bookRoomCommand = (BookRoomCommand) command;
+            status = "failed";
+            comment = "Unknown error";
 
-        int day = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int year = Integer.parseInt(date[2]);
-        int h = Integer.parseInt(startTime[0]);
-        int m = Integer.parseInt(startTime[1]);
+            Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
+            String[] startTime = request.getParameter("startTime").split(":");
+            String[] endTime = request.getParameter("endTime").split(":");
+            String[] date = request.getParameter("date").split("/");
+            int group = Integer.parseInt(request.getParameter("selectedGroup"));
+            int repType = Integer.parseInt(request.getParameter("repType"));
+            int repCount = Integer.parseInt(request.getParameter("repCount"));
+
+            int day = Integer.parseInt(date[0]);
+            int month = Integer.parseInt(date[1]);
+            int year = Integer.parseInt(date[2]);
+            int h = Integer.parseInt(startTime[0]);
+            int m = Integer.parseInt(startTime[1]);
+
+            Reservation res = new Reservation();
+
+            res.setCreationTime(new Timestamp(new GregorianCalendar().getTimeInMillis()));
+            res.setStartTime(new Timestamp(new GregorianCalendar(year, month - 1, day, h, m, 0).getTimeInMillis()));
+            h = Integer.parseInt(endTime[0]);
+            m = Integer.parseInt(endTime[1]);
+            res.setEndTime(new Timestamp(new GregorianCalendar(year, month - 1, day, h, m, 0).getTimeInMillis()));
+
+            res.setPerson(user);
+
+            //searching for ResearchGroup
+            ResearchGroup grp = null;
+            Iterator it = user.getResearchGroupMemberships().iterator();
+            while (it.hasNext()) {
+                ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
+                //tmp.getResearchGroup().getResearchGroupId()
+
+                if (tmp.getResearchGroup().getResearchGroupId() == group)
+                    grp = tmp.getResearchGroup();
+            }
+            if (grp == null) throw new Exception("ResearchGroup was not found by id='" + group + "'!");
+
+            res.setResearchGroup(grp);
 
 
-        
+            log.debug("Reservation has been created: " + ((res == null) ? "false" : "true"));
+            reservationDao.create(res);
+
+            status = "booked";
+            comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
+        } catch (Exception e) {
+            //e.printStackTrace();
+            status = "failed";
+            comment = "An exception was thrown: " + e.getMessage();
+        }
+
 
         log.debug("Returning MAV");
         ModelAndView mav = new ModelAndView(getSuccessView() + "?status=" + status + "&comment=" + comment);
+
         return mav;
 
     }
@@ -84,6 +120,9 @@ public class BookingRoomController extends SimpleFormController {
         map.put("defaultGroupId", defaultGroupId);
         map.put("researchGroupList", researchGroupList);
 
+
+        map.put("status", "");
+        map.put("comment", "");
         return map;
     }
 
