@@ -1,13 +1,16 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
-import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+/**
+ * @author Jenda Kolena
+ */
+
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -19,10 +22,6 @@ public class AddBookingRoomViewParamsController
         extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
-    /*private AuthorizationManager auth;
-    /*private GenericDao<Experiment, Integer> experimentDao;
-    private GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao;
-    private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDefDao;*/
 
     private ReservationDao reservationDao;
     private ResearchGroupDao researchGroupDao;
@@ -32,14 +31,6 @@ public class AddBookingRoomViewParamsController
     public AddBookingRoomViewParamsController() {
         setCommandClass(AddBookingRoomViewParamsCommand.class);
         setCommandName("addBookingRoomViewParams");
-    }
-
-    @Override
-    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        ModelAndView mav = super.showForm(request, response, errors);
-
-        //mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        return mav;
     }
 
     @Override
@@ -64,6 +55,40 @@ public class AddBookingRoomViewParamsController
         GregorianCalendar cal = new GregorianCalendar(year, month - 1, day, 0, 0, 0);
         log.info("ORIG= " + cal.get(Calendar.DAY_OF_MONTH) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.YEAR) + " 00:00:00");
 
+
+        if (repCount > 0) {
+            int hS = Integer.parseInt(startTime[0]);
+            int mS = Integer.parseInt(startTime[1]);
+            int hE = Integer.parseInt(endTime[0]);
+            int mE = Integer.parseInt(endTime[1]);
+
+            int weekNum = cal.get(Calendar.WEEK_OF_YEAR);
+            GregorianCalendar nextS = new GregorianCalendar(year, month - 1, day, hS, mS, 0);
+            GregorianCalendar nextE = new GregorianCalendar(year, month - 1, day, hE, mE, 0);
+            List coll = new ArrayList();
+            for (int i = 0; i < repCount; i++) {
+                int add = 0;
+                if (repType == 0) add = 1;
+                if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
+                    add = 2;
+                }
+                if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
+                    if (i == 0) add = 1;
+                    else add = 2;
+                }
+
+                nextS.add(Calendar.WEEK_OF_YEAR, add);
+                nextE.add(Calendar.WEEK_OF_YEAR, add);
+
+                List nextRes = reservationDao.getReservationsBetween(nextS, nextE);
+                if (nextRes.size() > 0) {
+                    coll.addAll(nextRes);
+                }
+            }
+            map.put("collisions", coll);
+            map.put("collisionsCount", coll.size());
+        }
+
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
         GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
@@ -78,7 +103,8 @@ public class AddBookingRoomViewParamsController
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
 
-        //if(repCount)
+
+        map.put("repCount", repCount);
 
 
         map.put("timerange", request.getParameter("date") + "; " + request.getParameter("startTime") + " - " + request.getParameter("endTime"));
@@ -93,89 +119,9 @@ public class AddBookingRoomViewParamsController
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
 
-
-        /*
-        log.debug("Processing form data.");
-        AddBookingRoomViewParamsCommand data = (AddBookingRoomViewParamsCommand) command;
-
-        log.debug("Creating new object");
-        ExperimentOptParamVal val = new ExperimentOptParamVal();
-        val.setId(new ExperimentOptParamValId(data.getMeasurationFormId(), data.getParamId()));
-        val.setParamValue(data.getParamValue());
-
-        log.debug("Saving object to database");
-        experimentOptParamValDao.create(val);
-
-        log.debug("Returning MAV");
-        ModelAndView mav = new ModelAndView(getSuccessView() + data.getMeasurationFormId());
-        return mav;         */
-
-
-        AddBookingRoomViewParamsCommand data = (AddBookingRoomViewParamsCommand) command;
-
-
-        ModelAndView mav = new ModelAndView(getSuccessView() + "?msg=ahojss&" + data.toString());
+        ModelAndView mav = new ModelAndView(getSuccessView());
         return mav;
     }
-
-    public boolean supports(Class clazz) {
-        return clazz.equals(AddBookingRoomViewParamsCommand.class);
-    }
-    /*
- public void validate(Object command, Errors errors) {
-     AddBookingRoomViewParamsCommand data = (AddBookingRoomViewParamsCommand) command;
-
-     if (!auth.userIsOwnerOrCoexperimenter(data.getMeasurationFormId())) {
-         // First check whether the user has permission to add data
-         errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
-     } else {
-
-         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paramValue", "required.field");
-
-         if (data.getParamId() < 0) {
-             errors.rejectValue("paramId", "required.field");
-         }
-
-         ExperimentOptParamVal val = experimentOptParamValDao.read(new ExperimentOptParamValId(data.getMeasurationFormId(), data.getParamId()));
-         if (val != null) {  // field already exists
-             errors.rejectValue("paramId", "invalid.paramIdAlreadyInserted");
-         }
-
-     }
-
- }
-
- public GenericDao<Experiment, Integer> getExperimentDao() {
-     return experimentDao;
- }
-
- public void setExperimentDao(GenericDao<Experiment, Integer> experimentDao) {
-     this.experimentDao = experimentDao;
- }
-
- public GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> getExperimentOptParamValDao() {
-     return experimentOptParamValDao;
- }
-
- public void setExperimentOptParamValDao(GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao) {
-     this.experimentOptParamValDao = experimentOptParamValDao;
- }
-
- public GenericDao<ExperimentOptParamDef, Integer> getExperimentOptParamDefDao() {
-     return experimentOptParamDefDao;
- }
-
- public void setExperimentOptParamDefDao(GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDefDao) {
-     this.experimentOptParamDefDao = experimentOptParamDefDao;
- }
-
- public AuthorizationManager getAuth() {
-     return auth;
- }
-
- public void setAuth(AuthorizationManager auth) {
-     this.auth = auth;
- }   */
 
 
     public ReservationDao getReservationDao() {

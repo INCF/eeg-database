@@ -428,13 +428,9 @@
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="reservationDao" ref="reservationDao" />
         <property name="successView" value="redirect:/groups/book-room.html"/>
-        <property name="mailSender" ref="mailSender"/>
-        <property name="messageSource" ref="messageSource"/>
-        <property name="domain" value="${app.domain}"/>
     </bean>
 
-    <bean name="bookingRoomView"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
+    <bean name="bookingRoomView" class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
         <property name="formView" value="groups/bookingRoomView"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>

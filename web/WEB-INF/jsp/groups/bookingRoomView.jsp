@@ -26,10 +26,40 @@
 <c:set var="myEnd" value="${fn:join(time, '')}"/>
 
 
-<c:out value="OK#"/>
+<c:out value="OK#!#"/>
+
+<c:set var="isCollision" value="0"/>
+
+<c:if test="${collisionsCount>0}">
+    <c:set var="isCollision" value="1"/>
+    <h3 style="margin-left: 1cm; color:red;"><fmt:message key="bookRoom.collisionsList"/></h3>
+    <table class="dataTable listOfResearchGroupsDataTable" style="border: 2px solid red;">
+        <thead>
+        <tr>
+            <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
+            <th class="columnGroupTitle"><fmt:message key="bookRoom.day"/></th>
+            <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
+        </tr>
+        </thead>
+        <c:forEach items="${collisions}" var="reservation">
+            <c:set var="datetime" value="${fn:split(reservation.startTime,' ')}"/>
+            <c:set var="tmpdate" value="${fn:split(datetime[0],'-')}"/>
+            <c:set var="startdate" value="${tmpdate[2]}/${tmpdate[1]}/${tmpdate[0]}"/>
+            <c:set var="starttime" value="${fn:split(datetime[1],':')}"/>
+            <c:set var="datetime" value="${fn:split(reservation.endTime,' ')}"/>
+            <c:set var="endtime" value="${fn:split(datetime[1],':')}"/>
+
+            <tr class='collision' title='Collide with selected time range!'>
+                <td><c:out value="${reservation.researchGroup.title}"/></td>
+                <td><c:out value="${startdate}"/></td>
+                <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
+            </tr>
+        </c:forEach>
+    </table>
+    <hr>
+</c:if>
+
 <h2><fmt:message key="bookRoom.selectedTime"/>: <c:out value="${timerange}"/></h2>
-
-
 <table class="dataTable listOfResearchGroupsDataTable">
     <thead>
     <tr>
@@ -38,7 +68,7 @@
         <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
     </tr>
     </thead>
-    <c:set var="isCollision" value="0"/>
+
     <c:forEach items="${reservations}" var="reservation">
 
         <c:set var="datetime" value="${fn:split(reservation.startTime,' ')}"/>
@@ -66,8 +96,8 @@
             </c:choose>
         </c:if>
 
-        <tr<c:if test="${collision==1}"> class='sameDay' title='Same day as you have selected'</c:if><c:if
-                test="${collision==2}"> class='collision' title='Collide with selected time range!'</c:if>>
+        <tr<c:if test="${collision==1}"> class='sameDay' title='Reservation to same day you have selected'</c:if><c:if
+                test="${collision==2}"> class='collision' title='Collission with selected time range!'</c:if>>
             <td><c:out value="${reservation.researchGroup.title}"/></td>
             <td><c:out value="${startdate}"/></td>
             <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
@@ -76,4 +106,4 @@
     </c:forEach>
 
 </table>
-<c:out value="#${isCollision}"/>
+<c:out value="#!#${isCollision}"/>

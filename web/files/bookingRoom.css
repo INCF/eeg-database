@@ -33,8 +33,7 @@ div#datePicker {
 }
 
 div#chosenData {
-    border: 1px dotted none;
-    overflow: scroll;
+    border: 0px dotted black;
 }
 
 table.dataTable tr.sameDay td {
@@ -69,4 +68,9 @@ div#button, div#button input
 div#button input
 {
     cursor: pointer;
+}
+
+div#message
+{
+    border-bottom: 2px solid gray;
 }

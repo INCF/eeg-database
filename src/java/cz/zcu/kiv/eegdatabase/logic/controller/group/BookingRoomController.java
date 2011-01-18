@@ -1,15 +1,19 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+/**
+ * @author Jenda Kolena
+ */
+
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.context.HierarchicalMessageSource;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -24,18 +28,6 @@ public class BookingRoomController extends SimpleFormController {
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
     private ReservationDao reservationDao;
-    private GenericDao<GroupPermissionRequest, Integer> groupPermissionRequestDao;
-
-    /**
-     * Source of localized messages defined in persistence.xml
-     */
-    private HierarchicalMessageSource messageSource;
-    /**
-     * Domain from configuration file defined in persistence.xml
-     */
-    private String domain;
-
-    private JavaMailSenderImpl mailSender;
 
     public BookingRoomController() {
         setCommandClass(BookRoomCommand.class);
@@ -68,7 +60,8 @@ public class BookingRoomController extends SimpleFormController {
 
             Reservation res = new Reservation();
 
-            res.setCreationTime(new Timestamp(new GregorianCalendar().getTimeInMillis()));
+            Timestamp createTime = new Timestamp(new GregorianCalendar().getTimeInMillis());
+            res.setCreationTime(createTime);
             res.setStartTime(new Timestamp(new GregorianCalendar(year, month - 1, day, h, m, 0).getTimeInMillis()));
             h = Integer.parseInt(endTime[0]);
             m = Integer.parseInt(endTime[1]);
@@ -81,8 +74,6 @@ public class BookingRoomController extends SimpleFormController {
             Iterator it = user.getResearchGroupMemberships().iterator();
             while (it.hasNext()) {
                 ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
-                //tmp.getResearchGroup().getResearchGroupId()
-
                 if (tmp.getResearchGroup().getResearchGroupId() == group)
                     grp = tmp.getResearchGroup();
             }
@@ -94,14 +85,67 @@ public class BookingRoomController extends SimpleFormController {
             log.debug("Reservation has been created: " + ((res == null) ? "false" : "true"));
             reservationDao.create(res);
 
+            if (repCount > 0) {
+                comment = "A reservations to:<br>";
+                log.debug("RESERVATION Repetition count = "+repCount);
+                log.debug("RESERVATION Repetition type = "+repType);
+
+                int hS = Integer.parseInt(startTime[0]);
+                int mS = Integer.parseInt(startTime[1]);
+                int hE = Integer.parseInt(endTime[0]);
+                int mE = Integer.parseInt(endTime[1]);
+
+                comment += (day < 10 ? "0" : "") + day + "/" + (month < 10 ? "0" : "") + month + "/" + year + ", from " + (hS < 10 ? "0" : "") + hS + ":" + (mS == 0 ? "0" : "") + mS + " to " + (hE < 10 ? "0" : "") + hE + ":" + (mE == 0 ? "0" : "") + mE + "<br>";
+
+                int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
+
+                log.debug("RESERVATION Current week = "+weekNum);
+
+                GregorianCalendar nextS = new GregorianCalendar(year, month - 1, day, hS, mS, 0);
+                GregorianCalendar nextE = new GregorianCalendar(year, month - 1, day, hE, mE, 0);
+
+                for (int i = 0; i < repCount; i++) {
+                    int add = 0;
+                    if (repType == 0) add = 1;
+                    if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
+                        add = 2;
+                    }
+                    if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
+                        if (i == 0) add = 1;
+                        else add = 2;
+                    }
+
+                    nextS.add(Calendar.WEEK_OF_YEAR, add);
+                    nextE.add(Calendar.WEEK_OF_YEAR, add);
+
+                    Reservation newReservation = new Reservation();
+                    newReservation.setCreationTime(createTime);
+                    newReservation.setStartTime(new Timestamp(nextS.getTimeInMillis()));
+                    newReservation.setEndTime(new Timestamp(nextE.getTimeInMillis()));
+
+                    newReservation.setPerson(user);
+                    newReservation.setResearchGroup(grp);
+
+                    reservationDao.create(newReservation);
+
+                    String dayE = nextS.get(Calendar.DAY_OF_MONTH) + "";
+                    if (dayE.length() == 1) dayE = "0" + dayE;
+                    String monthE = (nextS.get(Calendar.MONTH) + 1) + "";
+                    if (monthE.length() == 1) monthE = "0" + monthE;
+                    comment += dayE + "/" + monthE + "/" + nextS.get(Calendar.YEAR) + ", from " + (hS < 10 ? "0" : "") + hS + ":" + (mS == 0 ? "0" : "") + mS + " to " + (hE < 10 ? "0" : "") + hE + ":" + (mE == 0 ? "0" : "") + mE + "<br>";
+                }
+
+                comment += " have been created! (totally " + (repCount + 1) + " reservations)";//+1 because we nedd count "original" reservation!
+            } else {
+                comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
+            }
+
             status = "booked";
-            comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
+
         } catch (Exception e) {
-            //e.printStackTrace();
             status = "failed";
             comment = "An exception was thrown: " + e.getMessage();
         }
-
 
         log.debug("Returning MAV");
         ModelAndView mav = new ModelAndView(getSuccessView() + "?status=" + status + "&comment=" + comment);
@@ -120,9 +164,6 @@ public class BookingRoomController extends SimpleFormController {
         map.put("defaultGroupId", defaultGroupId);
         map.put("researchGroupList", researchGroupList);
 
-
-        map.put("status", "");
-        map.put("comment", "");
         return map;
     }
 
@@ -140,52 +181,6 @@ public class BookingRoomController extends SimpleFormController {
 
     public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
         this.researchGroupDao = researchGroupDao;
-    }
-
-
-    public GenericDao<GroupPermissionRequest, Integer> getGroupPermissionRequestDao() {
-        return groupPermissionRequestDao;
-    }
-
-    public void setGroupPermissionRequestDao(GenericDao<GroupPermissionRequest, Integer> groupPermissionRequestDao) {
-        this.groupPermissionRequestDao = groupPermissionRequestDao;
-    }
-
-
-    public JavaMailSenderImpl getMailSender() {
-        return mailSender;
-    }
-
-    public void setMailSender(JavaMailSenderImpl mailSender) {
-        this.mailSender = mailSender;
-    }
-
-    /**
-     * @return the domain
-     */
-    public String getDomain() {
-        return domain;
-    }
-
-    /**
-     * @param domain the domain to set
-     */
-    public void setDomain(String domain) {
-        this.domain = domain;
-    }
-
-    /**
-     * @return the messageSource
-     */
-    public HierarchicalMessageSource getMessageSource() {
-        return messageSource;
-    }
-
-    /**
-     * @param messageSource the messageSource to set
-     */
-    public void setMessageSource(HierarchicalMessageSource messageSource) {
-        this.messageSource = messageSource;
     }
 
 

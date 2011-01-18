@@ -15,14 +15,14 @@
 <script type="text/javascript" src="<c:url value='/files/js/jquery-1.3.2.min.js' />"></script>
 <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
 
-<c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2><c:out
-        value="${param.comment}"/>
-    <hr>
-</c:if>
-<c:if test="${param.status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out
-        value="${param.comment}"/>
-    <hr>
-</c:if>
+<div id="message">
+    <c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2>
+        <c:out value="${param.comment}" escapeXml="false"/>
+    </c:if>
+    <c:if test="${param.status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out
+            value="${param.comment}"/>
+    </c:if>
+</div>
 
 <form:form action="${formUrl}" method="post" commandName="bookRoomCommand" name="bookRoomCommand"
            cssClass="standardInputForm" onsubmit="return isAllowed();">
@@ -39,16 +39,13 @@
                 </c:forEach>
             </form:select>
 
-
-            <br>
+            <br/>
             <fmt:message key='label.chooseStartTime'/><br/>
             <form:hidden path="startTime"/>
 
             <select id="startH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="6" end="21" step="1">
-                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
-                            <c:if test="${hour==(now.hours+1)}">selected</c:if>><c:if test="${hour<10}">0</c:if>
-                            ${hour}</option>
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==(now.hours+1)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
                 </c:forEach>
             </select>
             &nbsp;
@@ -63,9 +60,7 @@
             <form:hidden path="endTime"/>
             <select id="endH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="6" end="21" step="1">
-                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
-                            <c:if test="${hour==(now.hours+2)}">selected</c:if>><c:if test="${hour<10}">0</c:if>
-                            ${hour}</option>
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==(now.hours+2)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
                 </c:forEach>
             </select>
             &nbsp;
@@ -82,9 +77,9 @@
             <b><fmt:message key='label.chooseRepeating'/>:</b><br/>
             <fmt:message key='label.repeatFor'/>:<br/>
             <form:select path="repType" onchange="showChosenData()">
-                <option value="1">Every</option>
-                <option value="2">Every odd</option>
-                <option value="3">Every even</option>
+                <option value="0">Every</option>
+                <option value="1">Every odd</option>
+                <option value="2">Every even</option>
             </form:select>
             week,&nbsp;
             <form:select path="repCount" onchange="showChosenData()">
@@ -96,7 +91,8 @@
         </div>
         <div id="bottom">
             <div id="button">
-                <input type="submit" value="<fmt:message key='bookRoom.create'/>" title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
+                <input type="submit" value="<fmt:message key='bookRoom.create'/>"
+                       title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
             </div>
             <div id="chosenData">&nbsp;</div>
         </div>
@@ -135,8 +131,15 @@
         //calls also showChosenData()
         newTime();
 
+    <c:if test="${param.status!=''}">
+        setTimeout('hideMessage()', 10000);
+    </c:if>
     };
 
+    function hideMessage() {
+        $('#message').fadeOut(1500, function() {
+        });
+    }
 
     function trim(stringToTrim) {
         return stringToTrim.replace(/^\s+|\s+$/g, "");
@@ -178,7 +181,7 @@
 
         if (end < start) {
             $("#collision").attr('value', '-2');
-            alert("<fmt:message key='bookRoom.invalidTime'/>");
+            $("#chosenData").html("<h3><fmt:message key='bookRoom.invalidTime'/></h3>");
         } else {
             $("#startTime").attr('value', $("#startH").attr('value') + ":" + $("#startM").attr('value'));
             $("#endTime").attr('value', $("#endH").attr('value') + ":" + $("#endM").attr('value'));
@@ -201,7 +204,7 @@
                 $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
             },
             success: function(data) {
-                var answer = data.split('#');
+                var answer = data.split('#!#');
                 if (trim(answer[0]) == "OK") {
                     $("#chosenData").html(answer[1]);
                     $("#collision").attr('value', answer[2]);
