@@ -125,7 +125,7 @@ public class HomePageDelegate {
       /* articles */
 
       Person loggedUser = personDao.getLoggedPerson();
-      List<Article> articleList = articleDao.getAllRecords();
+      List<Article> articleList = articleDao.getAllArticles();
 
       for (Article article : articleList) {
         article.setUserMemberOfGroup(canView(loggedUser, article));

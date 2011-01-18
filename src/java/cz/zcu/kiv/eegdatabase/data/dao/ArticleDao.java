@@ -5,12 +5,15 @@
 
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
  * @author Jiri Vlasimsky
  */
 public interface ArticleDao<T, PK extends Serializable> extends GenericDao<T, PK> {
-
+     public List<Article> getAllArticles();
 }

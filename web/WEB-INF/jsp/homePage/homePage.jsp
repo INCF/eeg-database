@@ -10,7 +10,6 @@
 <ui:standardTemplate pageTitle="pageTitle.homePage">
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
     <h1 class="homepageHeading"><fmt:message key="pageTitle.homePage"/></h1>
-
     <div class="homepageLeftColumn">
 
       <h2>
@@ -35,7 +34,7 @@
             <c:if test="${article.userMemberOfGroup}">
               <tr class ="${article.researchGroup.title}">
                 <td> <fmt:formatDate value="${article.time}" /></td>
-                <td><a href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></td>
+                <td class="tableArticleTitle"><a href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></td>
                 <td>
                   <c:if test="${article.researchGroup != null}">
                     <c:out value="${article.researchGroup.title}" />

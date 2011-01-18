@@ -34,14 +34,13 @@ public class ArticleMultiController extends MultiActionController {
         setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user from database is: " + loggedUser.getPersonId());
-        List<Article> list = articleDao.getAllRecords();
-
+        List<Article> articleList = articleDao.getAllArticles();
         int groupId;
-        for (Article item : list) {
+        for (Article item : articleList) {
             item.setUserMemberOfGroup(canView(loggedUser, item));
             item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
         }
-        mav.addObject("articleList", list);
+        mav.addObject("articleList", articleList);
         mav.addObject("articleListTitle", "pageTitle.allArticles");
         return mav;
     }

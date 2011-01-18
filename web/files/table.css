@@ -22,9 +22,15 @@
   table.dataTable th, table.dataTable th.header {
     padding: 7px 5px 1px;
     text-align: left;
+    cursor: pointer;
   }
   table#monthlyHistory th  {
     cursor: pointer;
+  }
+  table.dataTable td.tableArticleTitle {
+      display: block;
+      width: 200px;
+      word-wrap: break-word;
   }
   table.dataTable tr td
   {
@@ -122,6 +128,8 @@
     padding: 3px 5px 1px;
     background-color: #fff;
   }
+
+
 
 
 
