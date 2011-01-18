@@ -3,6 +3,11 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
+  <!-- Webservice Listener -->
+  <listener>
+    <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+  </listener>
+    
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -10,6 +15,8 @@
       /WEB-INF/url-mapping.xml
       /WEB-INF/persistence.xml
       /WEB-INF/security.xml
+
+      /WEB-INF/webservices.xml
     </param-value>
   </context-param>
 
@@ -56,7 +63,7 @@
     <url-pattern>/*</url-pattern>
   </filter-mapping>
 
-  <!-- konfigurace dispatcheru -->
+  <!-- dispatcher configuration -->
   <servlet>
     <servlet-name>dispatcher</servlet-name>
     <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
@@ -75,7 +82,31 @@
     <url-pattern>/scenarios/download-xml</url-pattern>
   </servlet-mapping>
 
+  <!-- WEBSERVICES -->
 
+  <servlet>
+    <servlet-name>CXFServlet</servlet-name>
+    <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+      <init-param>
+      <param-name>config-location</param-name>
+      <param-value>/WEB-INF/webservices.xml</param-value>
+    </init-param>
+    <load-on-startup>2</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>CXFServlet</servlet-name>
+    <url-pattern>/webservice/*</url-pattern>
+  </servlet-mapping>
+
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>Webservices SSL</web-resource-name>
+            <url-pattern>/webservice/*</url-pattern>
+        </web-resource-collection>
+        <user-data-constraint>
+            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
+        </user-data-constraint>
+    </security-constraint>
 
 
   <session-config>
@@ -86,8 +117,6 @@
   <welcome-file-list>
     <welcome-file>redirect.jsp</welcome-file>
   </welcome-file-list>
-
-
 
   <error-page>
     <error-code>404</error-code>
