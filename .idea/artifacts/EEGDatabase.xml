@@ -15,6 +15,9 @@
           <element id="library" level="project" name="lucene" />
           <element id="library" level="project" name="spring-security" />
           <element id="library" level="project" name="lib" />
+          <element id="library" level="project" name="geronimo" />
+          <element id="library" level="project" name="cxf" />
+          <element id="library" level="project" name="jaxws" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="EEGDatabase/web/Web" />
