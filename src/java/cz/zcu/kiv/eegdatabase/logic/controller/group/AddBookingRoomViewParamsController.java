@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,7 +27,7 @@ public class AddBookingRoomViewParamsController
     private ReservationDao reservationDao;
     private ResearchGroupDao researchGroupDao;
     private PersonDao personDao;
-
+    private HierarchicalMessageSource messageSource;
 
     public AddBookingRoomViewParamsController() {
         setCommandClass(AddBookingRoomViewParamsCommand.class);
@@ -123,6 +124,14 @@ public class AddBookingRoomViewParamsController
         return mav;
     }
 
+
+    public HierarchicalMessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    public void setMessageSource(HierarchicalMessageSource messageSource) {
+        this.messageSource = messageSource;
+    }
 
     public ReservationDao getReservationDao() {
         return reservationDao;

@@ -426,15 +426,18 @@
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
-        <property name="reservationDao" ref="reservationDao" />
+        <property name="reservationDao" ref="reservationDao"/>
+        <property name="messageSource" ref="messageSource"/>
         <property name="successView" value="redirect:/groups/book-room.html"/>
     </bean>
 
-    <bean name="bookingRoomView" class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
+    <bean name="bookingRoomView"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
         <property name="formView" value="groups/bookingRoomView"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
-        <property name="reservationDao" ref="reservationDao" />
+        <property name="messageSource" ref="messageSource"/>
+        <property name="reservationDao" ref="reservationDao"/>
     </bean>
 
     <bean name="acceptRoleRequestController"

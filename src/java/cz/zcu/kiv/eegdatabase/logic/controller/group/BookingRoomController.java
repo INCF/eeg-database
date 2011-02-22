@@ -14,9 +14,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -28,6 +30,7 @@ public class BookingRoomController extends SimpleFormController {
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
     private ReservationDao reservationDao;
+    private HierarchicalMessageSource messageSource;
 
     public BookingRoomController() {
         setCommandClass(BookRoomCommand.class);
@@ -35,14 +38,14 @@ public class BookingRoomController extends SimpleFormController {
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
+    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception {
 
         String status = null;
         String comment = null;
         try {
-            BookRoomCommand bookRoomCommand = (BookRoomCommand) command;
-            status = "failed";
-            comment = "Unknown error";
+            BookRoomCommand command = (BookRoomCommand) comm;
+            status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
+            comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.unknown", null, RequestContextUtils.getLocale(request));
 
             Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
             String[] startTime = request.getParameter("startTime").split(":");
@@ -70,25 +73,16 @@ public class BookingRoomController extends SimpleFormController {
             res.setPerson(user);
 
             //searching for ResearchGroup
-            ResearchGroup grp = null;
-            Iterator it = user.getResearchGroupMemberships().iterator();
-            while (it.hasNext()) {
-                ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
-                if (tmp.getResearchGroup().getResearchGroupId() == group)
-                    grp = tmp.getResearchGroup();
-            }
-            if (grp == null) throw new Exception("ResearchGroup was not found by id='" + group + "'!");
-
+            ResearchGroup grp = getResearchGroup(group);
             res.setResearchGroup(grp);
-
 
             log.debug("Reservation has been created: " + ((res == null) ? "false" : "true"));
             reservationDao.create(res);
 
             if (repCount > 0) {
-                comment = "A reservations to:<br>";
-                log.debug("RESERVATION Repetition count = "+repCount);
-                log.debug("RESERVATION Repetition type = "+repType);
+                comment = messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part1", null, RequestContextUtils.getLocale(request));
+                log.debug("RESERVATION Repetition count = " + repCount);
+                log.debug("RESERVATION Repetition type = " + repType);
 
                 int hS = Integer.parseInt(startTime[0]);
                 int mS = Integer.parseInt(startTime[1]);
@@ -99,7 +93,7 @@ public class BookingRoomController extends SimpleFormController {
 
                 int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
 
-                log.debug("RESERVATION Current week = "+weekNum);
+                log.debug("RESERVATION Current week = " + weekNum);
 
                 GregorianCalendar nextS = new GregorianCalendar(year, month - 1, day, hS, mS, 0);
                 GregorianCalendar nextE = new GregorianCalendar(year, month - 1, day, hE, mE, 0);
@@ -135,16 +129,21 @@ public class BookingRoomController extends SimpleFormController {
                     comment += dayE + "/" + monthE + "/" + nextS.get(Calendar.YEAR) + ", from " + (hS < 10 ? "0" : "") + hS + ":" + (mS == 0 ? "0" : "") + mS + " to " + (hE < 10 ? "0" : "") + hE + ":" + (mE == 0 ? "0" : "") + mE + "<br>";
                 }
 
-                comment += " have been created! (totally " + (repCount + 1) + " reservations)";//+1 because we nedd count "original" reservation!
+                comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);
+                //comment += " have been created! (totally " + (repCount + 1) + " reservations)";//+1 because we need count "original" reservation!
             } else {
-                comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
+                comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDateString(), command.getStartTimeString(), command.getEndTimeString());
+                //comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
             }
 
-            status = "booked";
+            status = messageSource.getMessage("bookRoom.controllerMessages.status.ok", null, RequestContextUtils.getLocale(request));
 
         } catch (Exception e) {
-            status = "failed";
-            comment = "An exception was thrown: " + e.getMessage();
+            log.error("Exception: " + e.getMessage() + "\n" + e.getStackTrace()[0].getFileName() + " at line " + e.getStackTrace()[0].getLineNumber(), e);
+
+            status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
+            log.info("After critical");
+            comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.exception", null, RequestContextUtils.getLocale(request)) + " " + e.getMessage();
         }
 
         log.debug("Returning MAV");
@@ -152,6 +151,24 @@ public class BookingRoomController extends SimpleFormController {
 
         return mav;
 
+    }
+
+    /**
+     * Method to get chosen researchgroup by id.
+     *
+     * @param id ID of the researchgroup.
+     * @return Chosen researchgroup.
+     * @throws Exception When researchgroup with ID does not exist.
+     */
+    private ResearchGroup getResearchGroup(int id) throws Exception {
+        Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
+        Iterator it = user.getResearchGroupMemberships().iterator();
+        while (it.hasNext()) {
+            ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
+            if (tmp.getResearchGroup().getResearchGroupId() == id)
+                return tmp.getResearchGroup();
+        }
+        throw new Exception("ResearchGroup with id='" + id + "' was not found!");
     }
 
     @Override
@@ -165,6 +182,14 @@ public class BookingRoomController extends SimpleFormController {
         map.put("researchGroupList", researchGroupList);
 
         return map;
+    }
+
+    public HierarchicalMessageSource getMessageSource() {
+        return messageSource;
+    }
+
+    public void setMessageSource(HierarchicalMessageSource messageSource) {
+        this.messageSource = messageSource;
     }
 
     public PersonDao getPersonDao() {
