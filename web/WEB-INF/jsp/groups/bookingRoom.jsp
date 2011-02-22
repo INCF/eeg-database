@@ -6,14 +6,13 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
 <ui:groupsTemplate pageTitle="pageTitle.bookingRoom">
-<!--<script type="text/javascript" src="<c:url value='/files/js/bookRoom.js'/>"></script>-->
 
 <c:set var="now" value="<%=new java.util.Date()%>"/>
 
 <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
 <c:url value="/groups/book-room.html" var="formUrl"/>
 <script type="text/javascript" src="<c:url value='/files/js/jquery-1.3.2.min.js' />"></script>
-<script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
+<script type="text/javascript" src="<c:url value='/files/js/jquery-ui.js' />"></script>
 
 <div id="message">
     <c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2>
