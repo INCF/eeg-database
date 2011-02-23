@@ -1,5 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 /**
  * @author Jenda Kolena
  */
@@ -7,8 +10,8 @@ public class BookRoomCommand {
 
     private int selectedGroup;
     private String date;
-    private String startTime;
-    private String endTime;
+    private GregorianCalendar startTime;
+    private GregorianCalendar endTime;
     private int repCount;
     private int repType;
 
@@ -20,28 +23,41 @@ public class BookRoomCommand {
         this.selectedGroup = selectedGroup;
     }
 
-    public String getDate() {
-        return date;
+    public String getDateString() {
+        return null;
+    }
+
+    public Date getDate() {
+        return null;
     }
 
     public void setDate(String date) {
-        this.date = date;
+        //this.date = date;
     }
 
-    public String getEndTime() {
-        return endTime;
+    public String getEndTimeString() {
+        return null;
+    }
+
+    public GregorianCalendar getEndTime() {
+        return null;
     }
 
     public void setEndTime(String endTime) {
-        this.endTime = endTime;
+        //this.endTime = endTime;
     }
 
-    public String getStartTime() {
-        return startTime;
+    public String getStartTimeString() {
+        return null;
+    }
+
+    public GregorianCalendar getStartTime() {
+        return null;
     }
 
     public void setStartTime(String startTime) {
-        this.startTime = startTime;
+        String[] tmp = startTime.split(":");
+        //this.startTime = new GregorianCalendar(year, month - 1, day, h, m, 0)
     }
 
     public int getRepCount() {
