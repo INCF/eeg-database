@@ -48,27 +48,16 @@ public class BookingRoomController extends SimpleFormController {
             comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.unknown", null, RequestContextUtils.getLocale(request));
 
             Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
-            String[] startTime = request.getParameter("startTime").split(":");
-            String[] endTime = request.getParameter("endTime").split(":");
-            String[] date = request.getParameter("date").split("/");
-            int group = Integer.parseInt(request.getParameter("selectedGroup"));
-            int repType = Integer.parseInt(request.getParameter("repType"));
-            int repCount = Integer.parseInt(request.getParameter("repCount"));
-
-            int day = Integer.parseInt(date[0]);
-            int month = Integer.parseInt(date[1]);
-            int year = Integer.parseInt(date[2]);
-            int h = Integer.parseInt(startTime[0]);
-            int m = Integer.parseInt(startTime[1]);
+            int group = command.getSelectedGroup();
+            int repType = command.getRepType();
+            int repCount = command.getRepCount();
 
             Reservation res = new Reservation();
 
             Timestamp createTime = new Timestamp(new GregorianCalendar().getTimeInMillis());
             res.setCreationTime(createTime);
-            res.setStartTime(new Timestamp(new GregorianCalendar(year, month - 1, day, h, m, 0).getTimeInMillis()));
-            h = Integer.parseInt(endTime[0]);
-            m = Integer.parseInt(endTime[1]);
-            res.setEndTime(new Timestamp(new GregorianCalendar(year, month - 1, day, h, m, 0).getTimeInMillis()));
+            res.setStartTime(command.getStartTimeTimestamp());
+            res.setEndTime(command.getEndTimeTimestamp());
 
             res.setPerson(user);
 
@@ -84,33 +73,18 @@ public class BookingRoomController extends SimpleFormController {
                 log.debug("RESERVATION Repetition count = " + repCount);
                 log.debug("RESERVATION Repetition type = " + repType);
 
-                int hS = Integer.parseInt(startTime[0]);
-                int mS = Integer.parseInt(startTime[1]);
-                int hE = Integer.parseInt(endTime[0]);
-                int mE = Integer.parseInt(endTime[1]);
-
-                comment += (day < 10 ? "0" : "") + day + "/" + (month < 10 ? "0" : "") + month + "/" + year + ", from " + (hS < 10 ? "0" : "") + hS + ":" + (mS == 0 ? "0" : "") + mS + " to " + (hE < 10 ? "0" : "") + hE + ":" + (mE == 0 ? "0" : "") + mE + "<br>";
+                comment += command.getDate() + ", from " + BookRoomCommand.getTime(command.getStartTime()) + " to " + BookRoomCommand.getTime(command.getEndTime()) + "<br>\n";
 
                 int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
 
                 log.debug("RESERVATION Current week = " + weekNum);
 
-                GregorianCalendar nextS = new GregorianCalendar(year, month - 1, day, hS, mS, 0);
-                GregorianCalendar nextE = new GregorianCalendar(year, month - 1, day, hE, mE, 0);
+                GregorianCalendar nextS = command.getStartTime();
+                GregorianCalendar nextE = command.getEndTime();
 
                 for (int i = 0; i < repCount; i++) {
-                    int add = 0;
-                    if (repType == 0) add = 1;
-                    if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
-                        add = 2;
-                    }
-                    if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
-                        if (i == 0) add = 1;
-                        else add = 2;
-                    }
-
-                    nextS.add(Calendar.WEEK_OF_YEAR, add);
-                    nextE.add(Calendar.WEEK_OF_YEAR, add);
+                    //shift of dates
+                    setRepetitionDate(repType, i, nextS, nextE);
 
                     Reservation newReservation = new Reservation();
                     newReservation.setCreationTime(createTime);
@@ -122,31 +96,23 @@ public class BookingRoomController extends SimpleFormController {
 
                     reservationDao.create(newReservation);
 
-                    String dayE = nextS.get(Calendar.DAY_OF_MONTH) + "";
-                    if (dayE.length() == 1) dayE = "0" + dayE;
-                    String monthE = (nextS.get(Calendar.MONTH) + 1) + "";
-                    if (monthE.length() == 1) monthE = "0" + monthE;
-                    comment += dayE + "/" + monthE + "/" + nextS.get(Calendar.YEAR) + ", from " + (hS < 10 ? "0" : "") + hS + ":" + (mS == 0 ? "0" : "") + mS + " to " + (hE < 10 ? "0" : "") + hE + ":" + (mE == 0 ? "0" : "") + mE + "<br>";
+                    comment += BookRoomCommand.getDate(nextS) + ", from " + BookRoomCommand.getTime(nextS) + " to " + BookRoomCommand.getTime(nextE) + "<br>\n";
                 }
 
-                comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);
-                //comment += " have been created! (totally " + (repCount + 1) + " reservations)";//+1 because we need count "original" reservation!
+                comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);//+1 because we need count "original" reservation!
             } else {
-                comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDateString(), command.getStartTimeString(), command.getEndTimeString());
-                //comment = "A reservation to " + request.getParameter("date") + ", from " + request.getParameter("startTime") + " to " + request.getParameter("endTime") + " has been created!";
+                comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDate(), command.getStartTimeString(), command.getEndTimeString());
             }
-
             status = messageSource.getMessage("bookRoom.controllerMessages.status.ok", null, RequestContextUtils.getLocale(request));
-
         } catch (Exception e) {
+            //log.error("Exception was thrown: ",e);
             log.error("Exception: " + e.getMessage() + "\n" + e.getStackTrace()[0].getFileName() + " at line " + e.getStackTrace()[0].getLineNumber(), e);
 
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
-            log.info("After critical");
             comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.exception", null, RequestContextUtils.getLocale(request)) + " " + e.getMessage();
         }
 
-        log.debug("Returning MAV");
+        log.debug("Returning MAV" + " with status=" + status + "&comment=" + comment);
         ModelAndView mav = new ModelAndView(getSuccessView() + "?status=" + status + "&comment=" + comment);
 
         return mav;
@@ -170,6 +136,32 @@ public class BookingRoomController extends SimpleFormController {
         }
         throw new Exception("ResearchGroup with id='" + id + "' was not found!");
     }
+
+    /**
+     * Sets dates of next repetition.
+     *
+     * @param repType   Type of repetition.
+     * @param repIndex  Index of repetition (defacto FOR cycle).
+     * @param startTime GregorianCalendar, which will be shifted.
+     * @param endTime   GregorianCalendar, which will be shifted.
+     */
+    public static void setRepetitionDate(int repType, int repIndex, GregorianCalendar startTime, GregorianCalendar endTime) {
+        int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
+
+        int add = 0;
+        if (repType == 0) add = 1;
+        if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
+            add = 2;
+        }
+        if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
+            if (repIndex == 0) add = 1;
+            else add = 2;
+        }
+
+        startTime.add(Calendar.WEEK_OF_YEAR, add);
+        endTime.add(Calendar.WEEK_OF_YEAR, add);
+    }
+
 
     @Override
     protected Map referenceData(HttpServletRequest request) throws Exception {

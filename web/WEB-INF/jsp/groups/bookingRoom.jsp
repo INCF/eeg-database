@@ -1,4 +1,3 @@
-<%@ page import="java.util.GregorianCalendar" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -44,7 +43,8 @@
 
             <select id="startH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="6" end="21" step="1">
-                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==(now.hours+1)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
+                            <c:if test="${hour==(now.hours+1)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
                 </c:forEach>
             </select>
             &nbsp;
@@ -59,7 +59,8 @@
             <form:hidden path="endTime"/>
             <select id="endH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="6" end="21" step="1">
-                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==(now.hours+2)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}"
+                            <c:if test="${hour==(now.hours+2)}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
                 </c:forEach>
             </select>
             &nbsp;
@@ -73,7 +74,7 @@
         </div>
         <div id="right">
             <div id="datePicker"></div>
-            <b><fmt:message key='label.chooseRepeating'/>:</b><br/>
+            <b><fmt:message key='label.chooseRepeating'/></b><br/>
             <fmt:message key='label.repeatFor'/>:<br/>
             <form:select path="repType" onchange="showChosenData()">
                 <option value="0">Every</option>
@@ -114,7 +115,7 @@
             dateFormat: "dd/mm/yy",
             onSelect: function(selectedDate) {
                 $("#date").attr('value', selectedDate);
-                showChosenData();
+                newTime();
             }
         });
 
@@ -130,9 +131,9 @@
         //calls also showChosenData()
         newTime();
 
-    <c:if test="${param.status!=''}">
+        <c:if test="${param.status!=''}">
         setTimeout('hideMessage()', 10000);
-    </c:if>
+        </c:if>
     };
 
     function hideMessage() {
@@ -178,7 +179,7 @@
         var start = $("#startH").attr('value') + $("#startM").attr('value');
         var end = $("#endH").attr('value') + $("#endM").attr('value');
 
-        if (end < start) {
+        if (end <= start) {
             $("#collision").attr('value', '-2');
             $("#chosenData").html("<h3><fmt:message key='bookRoom.invalidTime'/></h3>");
         } else {
@@ -192,12 +193,18 @@
         var sel = document.getElementById("selectedGroup");
         var repType = $("#repType").attr('value');
         var repCount = $("#repCount").attr('value');
+        var date = $("#date").attr('value');
+        var start = date + " " + $("#startTime").attr('value') + ":00";
+        var end = date + " " + $("#endTime").attr('value') + ":00";
+
+        var req = "group=" + sel.value + "&date=" + date + "&startTime=" + start + "&endTime=" + end + "&repType=" + repType + "&repCount=" + repCount;
+        alert(req);
 
         $.ajax({
             type: "GET",
             url: "<c:url value='book-room-view.html' />",
             cache: false,
-            data: "group=" + sel.value + "&date=" + $("#date").attr('value') + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount,
+            data: req,
             beforeSend: function() {
                 $("#collision").attr('value', '-1');
                 $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");

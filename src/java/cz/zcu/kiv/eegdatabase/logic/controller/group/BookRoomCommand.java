@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
-import java.util.Date;
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
@@ -23,41 +25,44 @@ public class BookRoomCommand {
         this.selectedGroup = selectedGroup;
     }
 
-    public String getDateString() {
-        return null;
-    }
-
-    public Date getDate() {
-        return null;
+    public String getDate() {
+        return date;
     }
 
     public void setDate(String date) {
-        //this.date = date;
+        this.date = date;
     }
 
     public String getEndTimeString() {
-        return null;
+        return getTime(endTime);
     }
 
     public GregorianCalendar getEndTime() {
-        return null;
+        return endTime;
     }
 
-    public void setEndTime(String endTime) {
-        //this.endTime = endTime;
+    public Timestamp getEndTimeTimestamp() {
+        return new Timestamp(endTime.getTimeInMillis());
+    }
+
+    public void setEndTime(String endTime) throws ParseException {
+        this.endTime = getCalendar(endTime);
     }
 
     public String getStartTimeString() {
-        return null;
+        return getTime(startTime);
     }
 
     public GregorianCalendar getStartTime() {
-        return null;
+        return startTime;
     }
 
-    public void setStartTime(String startTime) {
-        String[] tmp = startTime.split(":");
-        //this.startTime = new GregorianCalendar(year, month - 1, day, h, m, 0)
+    public Timestamp getStartTimeTimestamp() {
+        return new Timestamp(startTime.getTimeInMillis());
+    }
+
+    public void setStartTime(String startTime) throws ParseException {
+        this.startTime = getCalendar(startTime);
     }
 
     public int getRepCount() {
@@ -74,5 +79,41 @@ public class BookRoomCommand {
 
     public void setRepType(int repType) {
         this.repType = repType;
+    }
+
+    /**
+     * Converts String to GregorianCalendar.
+     *
+     * @param rawDate Date in dd/mm/yy hh:mm:ss format.
+     * @return Created GregorianCalendar.
+     * @throws ParseException If rawDate cannot be parsed.
+     */
+    public static GregorianCalendar getCalendar(String rawDate) throws ParseException {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
+        GregorianCalendar tmp = new GregorianCalendar();
+        tmp.setTime(sdf.parse(rawDate));
+        return tmp;
+    }
+
+    /**
+     * Gets time in hh:mm:ss format from GregorianCalendar.
+     *
+     * @param cal Input GregorianCalendar.
+     * @return Retreived time.
+     */
+    public static String getTime(GregorianCalendar cal) {
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
+        return sdf.format(cal);
+    }
+
+    /**
+     * Gets time in dd/mm/yy format from GregorianCalendar.
+     *
+     * @param cal Input GregorianCalendar.
+     * @return Retreived date.
+     */
+    public static String getDate(GregorianCalendar cal) {
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
+        return sdf.format(cal);
     }
 }

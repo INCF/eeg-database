@@ -40,32 +40,18 @@ public class AddBookingRoomViewParamsController
 
         Map map = new HashMap<String, Object>();
 
-        String[] startTime = request.getParameter("startTime").split(":");
-        String[] endTime = request.getParameter("endTime").split(":");
-        String[] date = request.getParameter("date").split("/");
         int group = Integer.parseInt(request.getParameter("group"));
         int repType = Integer.parseInt(request.getParameter("repType"));
         int repCount = Integer.parseInt(request.getParameter("repCount"));
 
-        int day = Integer.parseInt(date[0]);
-        int month = Integer.parseInt(date[1]);
-        int year = Integer.parseInt(date[2]);
-        int h = Integer.parseInt(startTime[0]);
-        int m = Integer.parseInt(startTime[1]);
-
-        GregorianCalendar cal = new GregorianCalendar(year, month - 1, day, 0, 0, 0);
-        log.info("ORIG= " + cal.get(Calendar.DAY_OF_MONTH) + "-" + (cal.get(Calendar.MONTH) + 1) + "-" + cal.get(Calendar.YEAR) + " 00:00:00");
+        GregorianCalendar cal = BookRoomCommand.getCalendar(request.getParameter("startTime"));
+        log.info("ORIG= " + request.getParameter("startTime") + " - " + request.getParameter("EndTime"));
 
 
         if (repCount > 0) {
-            int hS = Integer.parseInt(startTime[0]);
-            int mS = Integer.parseInt(startTime[1]);
-            int hE = Integer.parseInt(endTime[0]);
-            int mE = Integer.parseInt(endTime[1]);
-
             int weekNum = cal.get(Calendar.WEEK_OF_YEAR);
-            GregorianCalendar nextS = new GregorianCalendar(year, month - 1, day, hS, mS, 0);
-            GregorianCalendar nextE = new GregorianCalendar(year, month - 1, day, hE, mE, 0);
+            GregorianCalendar nextS = BookRoomCommand.getCalendar(request.getParameter("startTime"));
+            GregorianCalendar nextE = BookRoomCommand.getCalendar(request.getParameter("endTime"));
             List coll = new ArrayList();
             for (int i = 0; i < repCount; i++) {
                 int add = 0;
@@ -93,24 +79,18 @@ public class AddBookingRoomViewParamsController
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
         GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
-        String startStr = weekStart.get(Calendar.DAY_OF_MONTH) + "-" + (weekStart.get(Calendar.MONTH) + 1) + "-" + weekStart.get(Calendar.YEAR) + " 00:00:00";
+        String startStr = request.getParameter("startTime");
         log.info("START= " + startStr);
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
         GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
 
-        String endStr = weekEnd.get(Calendar.DAY_OF_MONTH) + "-" + (weekEnd.get(Calendar.MONTH) + 1) + "-" + weekEnd.get(Calendar.YEAR) + " 00:00:00";
+        String endStr = request.getParameter("endTime");
         log.info("END= " + endStr);
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
-
-
         map.put("repCount", repCount);
-
-
-        map.put("timerange", request.getParameter("date") + "; " + request.getParameter("startTime") + " - " + request.getParameter("endTime"));
-
-
+        map.put("timerange", request.getParameter("startTime") + " - " + request.getParameter("endTime").split(" ")[1]);
         map.put("check", "[group=" + group + " startTime=" + startStr + " endTime=" + endStr + "]");
 
         log.debug("Returning map object");
