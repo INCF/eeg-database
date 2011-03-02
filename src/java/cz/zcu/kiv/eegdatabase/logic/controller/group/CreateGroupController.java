@@ -61,15 +61,10 @@ public class CreateGroupController extends SimpleFormController {
         String idString = request.getParameter("groupId");
 
         if (idString != null) {
-            // Editing existing hardware
+            // Editing existing group
             int id = Integer.parseInt(idString);
             if (!auth.userIsAdminInGroup(id)) {
                 mav.setViewName("redirect:/groups/detail.html?groupId=" + id);
-            }
-        } else {
-            // Creating new group
-            if (!auth.userIsExperimenter()) {
-                mav.setViewName("redirect:/groups/list.html");
             }
         }
 
