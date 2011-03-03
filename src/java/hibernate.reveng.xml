@@ -36,6 +36,6 @@
     <table-filter match-name=".*" match-catalog=".*" match-schema=".*"
     
     exclude="true"/>-->
-        <table-filter match-name=".*" match-catalog=".*" match-schema="JPERGLER"  />
+        <table-filter match-name=".*" match-catalog=".*" match-schema="PBORIK"  />
 </hibernate-reverse-engineering>
 
