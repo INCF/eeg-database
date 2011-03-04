@@ -807,6 +807,11 @@
         <property name="successView" value="experiments/fulltext"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
     </bean>
-
-
+    <!-- Transformer POJO to resource of semantic web-->
+    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory"/>
+    <bean name="transformerMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.semantic.TransformerMultiController">
+        <property name="semanticFactory" ref="semanticFactory"/>
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+    </bean>
 </beans>

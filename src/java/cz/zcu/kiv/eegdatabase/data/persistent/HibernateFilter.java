@@ -10,7 +10,6 @@ import org.springframework.orm.hibernate3.SessionFactoryUtils;
 import org.springframework.orm.hibernate3.support.OpenSessionInViewFilter;
 
 /**
- *
  * @author Jindra
  */
 public class HibernateFilter extends OpenSessionInViewFilter {
@@ -38,4 +37,4 @@ public class HibernateFilter extends OpenSessionInViewFilter {
             }
         }
     }
-} 
+}

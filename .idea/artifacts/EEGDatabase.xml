@@ -18,6 +18,7 @@
           <element id="library" level="project" name="geronimo" />
           <element id="library" level="project" name="cxf" />
           <element id="library" level="project" name="jaxws" />
+          <element id="library" level="project" name="semantic" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="EEGDatabase/web/Web" />

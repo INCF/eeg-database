@@ -36,7 +36,7 @@
     </set>
     <set inverse="true" name="usersWithThisAsDefault">
       <key>
-        <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Person"/>
     </set>

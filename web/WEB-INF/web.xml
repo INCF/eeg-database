@@ -3,11 +3,11 @@
   <listener>
     <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
   </listener>
-  <!-- Webservice Listener -->
+  <!-- Webservice Listener-->
   <listener>
     <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
   </listener>
-    
+
   <context-param>
     <param-name>contextConfigLocation</param-name>
     <param-value>
@@ -84,7 +84,7 @@
 
   <!-- WEBSERVICES -->
 
-  <servlet>
+ <servlet>
     <servlet-name>CXFServlet</servlet-name>
     <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
       <init-param>

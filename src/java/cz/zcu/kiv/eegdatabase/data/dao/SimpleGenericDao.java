@@ -100,7 +100,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
      * @return list that includes all records
      */
     public List<T> getAllRecords() {
-        return getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(type));
+       return getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(type));
         //return getHibernateTemplate().loadAll(type);
     }
 
