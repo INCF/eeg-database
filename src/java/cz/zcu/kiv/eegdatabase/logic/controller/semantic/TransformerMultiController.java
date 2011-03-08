@@ -1,18 +1,12 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.semantic;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
-
-import java.util.ArrayList;
-import java.util.List;
-
 import org.apache.commons.logging.Log;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -24,9 +18,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  */
 public class TransformerMultiController extends MultiActionController {
     private Log log = LogFactory.getLog(getClass());
-    private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
-    private OutputStream os = new ByteArrayOutputStream();
-    private List dataList = new ArrayList();
     private SemanticFactory semanticFactory;
 
     public TransformerMultiController() {
@@ -35,6 +26,7 @@ public class TransformerMultiController extends MultiActionController {
 
     /**
      * Transforms POJO object to resources of semantic web
+     *
      * @param request
      * @param response
      * @return
@@ -43,32 +35,55 @@ public class TransformerMultiController extends MultiActionController {
     public ModelAndView generateOWL(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         String typeTransform = "";
+        OutputStream out = null;
+        byte[] bytes = null;
+
         typeTransform = request.getParameter("type");
-        response.setHeader("Content-Type", "application/rdf xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase");
+        response.setHeader("Content-Type", "application/rdf+xml");
+        response.setContentType("application/rdf+xml");
+        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.owl");
+
         log.debug("Creating output stream");
-        response.getOutputStream().write(semanticFactory.transformPOJOToSemanticResource(typeTransform).toByteArray());
+        out = response.getOutputStream();
+        log.debug("Generating OWL");
+        bytes = semanticFactory.transformPOJOToSemanticResource(typeTransform).toByteArray();
+        response.setContentLength(bytes.length);
+        out.write(bytes);
+        out.flush();
+        out.close();
         return null;
     }
 
     /**
      * Transforms POJO object to RDF
+     *
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
-     public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
+        OutputStream out = null;
+        byte[] bytes = null;
+
         response.setHeader("Content-Type", "application/rdf+xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase");
+        response.setContentType("application/rdf+xml");
+        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.rdf");
         log.debug("Creating output stream");
-        response.getOutputStream().write(semanticFactory.generateRDF().toByteArray());
+        out = response.getOutputStream();
+        log.debug("Generating RDF");
+        bytes = semanticFactory.generateRDF().toByteArray();
+        response.setContentLength(bytes.length);
+        out.write(bytes);
+        out.flush();
+        out.close();
         return null;
     }
 
     /**
      * Sets semantic factory
+     *
      * @param semanticFactory - semantic factory
      */
     public void setSemanticFactory(SemanticFactory semanticFactory) {
