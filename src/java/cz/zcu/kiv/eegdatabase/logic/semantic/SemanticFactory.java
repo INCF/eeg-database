@@ -50,7 +50,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         ByteArrayOutputStream bout = null;
         bout = new ByteArrayOutputStream();
 
-        IOwlApi owlApi = (IOwlApi) new OwlApi(creatingJenaBean());
+        IOwlApi owlApi = new OwlApi(creatingJenaBean());
         bout = (ByteArrayOutputStream) owlApi.convertToSemanticStandard(typeTransform);
         return bout;
     }
