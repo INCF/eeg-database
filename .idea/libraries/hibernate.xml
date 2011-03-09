@@ -21,9 +21,15 @@
       <root url="file://$PROJECT_DIR$/lib/lucene" />
       <root url="file://$PROJECT_DIR$/lib/ojdbc" />
       <root url="file://$PROJECT_DIR$/lib/spring" />
+      <root url="file://$PROJECT_DIR$/lib/jaxws21" />
+      <root url="file://$PROJECT_DIR$/lib/cxf" />
+      <root url="file://$PROJECT_DIR$/lib/geronimo" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/cxf" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/geronimo" recursive="false" />
+    <jarDirectory url="file://$PROJECT_DIR$/lib/jaxws21" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/jstl" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/logger" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/lucene" recursive="false" />
