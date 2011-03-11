@@ -814,4 +814,34 @@
         <property name="semanticFactory" ref="semanticFactory"/>
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
     </bean>
+    <bean name="addExperimentWizardController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController">
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardCommand"/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="hardwareDao" ref="hardwareDao"/>
+        <property name="weatherDao" ref="weatherDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="auth" ref="authorizationManager"/>
+      <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
+        <property name="dataFileDao" ref="dataFileDao"/>
+       <!-- <property name="validator" ref="addDataFileController"/>-->
+        <property name="pages">
+            <list>
+                <!-- follow sequence -->
+                <value>experiments/addExperiment1Form</value>
+                <!-- page1, _target0 -->
+                <value>experiments/addExperiment2Form</value>
+                <!-- page2, _target1 -->
+                <value>experiments/addExperiment3Form</value>
+                <!-- page3, _target2 -->
+            </list>
+        </property>
+        <!--<property name="validator">
+          <bean class="com.mkyong.common.validator.UserValidator" />
+         </property>-->
+    </bean>
+
 </beans>

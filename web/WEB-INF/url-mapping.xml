@@ -38,7 +38,7 @@
                 <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
                 <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
 
-                <prop key="experiments/add-experiment.html">addExperimentController</prop>
+               <!-- <prop key="experiments/add-experiment.html">addExperimentController</prop>  -->
                 <prop key="experiments/edit.html">addExperimentController</prop>
                 <prop key="experiments/add-optional-parameter.html">addExperimentOptParamValController</prop>
                 <prop key="experiments/*.html">experimentsMultiController</prop>
@@ -127,7 +127,8 @@
                 <!-- Transformer POJO to resource of semantic web-->
                 <prop key="semantic/generateOWL.html">transformerMultiController</prop>
                 <prop key="semantic/generateRDF.html">transformerMultiController</prop>
-                <prop key="transformer/*.html">transformerMultiController</prop>
+
+                <prop key="experiments/add-experiment.html">addExperimentWizardController</prop>
             </props>
         </property>
     </bean>
