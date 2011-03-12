@@ -1,17 +1,19 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import java.io.Serializable;
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
+import org.hibernate.Query;
+import org.hibernate.Session;
+
+import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
-import org.hibernate.Query;
-import org.hibernate.Session;
+import java.util.List;
 
 /**
  * This class extends powers (extend from) class SimpleGenericDao.
@@ -24,6 +26,18 @@ public class SimpleExperimentDao<T, PK extends Serializable>
   public SimpleExperimentDao(Class<T> type) {
     super(type);
   }
+
+    public List<DataFile> getDataFilesWhereExpId(int experimentId){
+        String HQLselect = "from DataFile file " + "where file.experiment.experimentId = :experimentId";
+        return getHibernateTemplate().
+            findByNamedParam(HQLselect, "experimentId", experimentId);
+    }
+
+    public List<DataFile> getDataFilesWhereId(int dataFileId){
+        String HQLselect = "from DataFile file " + "where file.dataFileId = :dataFileId";
+        return getHibernateTemplate().
+            findByNamedParam(HQLselect, "dataFileId", dataFileId);
+    }
 
   public List<Experiment> getExperimentsWhereOwner(int personId) {
     String HQLselect = "from Experiment experiment " + "where experiment.personByOwnerId.personId = :personId";

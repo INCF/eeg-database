@@ -17,7 +17,9 @@ import java.util.List;
 @WebService
 public interface UserDataService {
 
-    public boolean serviceAvailable();
+    public boolean isServiceAvailable();
 
-    public List<ExperimentInfo> availableExperiments(Rights rights);
+    public List<ExperimentInfo> getAvailableExperiments(Rights rights);
+
+    public List<DataFileInfo> getExperimentDataFiles(int experimentID);
 }

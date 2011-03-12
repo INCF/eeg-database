@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 
 import javax.jws.WebService;
@@ -35,19 +36,18 @@ public class UserDataImpl implements UserDataService {
         this.personDao = personDao;
      }
 
-    public boolean serviceAvailable() {
-
+    public boolean isServiceAvailable() {
         return true;
     }
 
-    public List<ExperimentInfo> availableExperiments(Rights rights){
+    public List<ExperimentInfo> getAvailableExperiments(Rights rights){
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        if(rights == Rights.MEMBER)
-                experiments = experimentDao.getExperimentsWhereMember(personDao.getLoggedPerson().getPersonId());
+        if(rights == Rights.SUBJECT)
+                experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
             else
-                experiments = experimentDao.getExperimentsWhereOwner(personDao.getLoggedPerson().getPersonId());
+                experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
 
         for (Experiment experiment : experiments) {
             exps.add(new ExperimentInfo(experiment.getExperimentId(),experiment.getScenario().getTitle()));
@@ -56,6 +56,14 @@ public class UserDataImpl implements UserDataService {
         return exps;
     }
 
-}
+    public List<DataFileInfo> getExperimentDataFiles(int experimentID){
+        List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentID);
+        List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
-    
+        for (DataFile file : files) {
+            fileInfos.add(new DataFileInfo(file.getDataFileId(),file.getFilename(),file.getMimetype()));
+        }
+
+        return fileInfos;
+    }
+}

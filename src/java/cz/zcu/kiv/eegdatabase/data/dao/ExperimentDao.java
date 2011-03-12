@@ -1,9 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+
 import java.io.Serializable;
 import java.util.List;
 
@@ -13,6 +14,10 @@ import java.util.List;
  * @author Jindrich Pergler
  */
 public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+
+  public List<DataFile> getDataFilesWhereExpId(int experimentId);
+
+  public List<DataFile> getDataFilesWhereId(int dataFileId);
 
   public List<Experiment> getExperimentsWhereSubject(int personId);
 

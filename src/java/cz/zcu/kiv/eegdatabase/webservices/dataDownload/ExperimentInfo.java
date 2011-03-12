@@ -29,8 +29,4 @@ public class ExperimentInfo {
     public void setScenarioName(String scenarioName) {
         this.scenarioName = scenarioName;
     }
-
-
-
-
 }
