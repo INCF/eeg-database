@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
+import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.ws.soap.MTOM;
 import java.util.List;
@@ -19,7 +20,9 @@ public interface UserDataService {
 
     public boolean isServiceAvailable();
 
-    public List<ExperimentInfo> getAvailableExperiments(Rights rights);
+    public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights);
 
-    public List<DataFileInfo> getExperimentDataFiles(int experimentID);
+    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId);
+
+    public DataHandler getDataFileBinaryWhereFileId(int dataFileId);
 }
