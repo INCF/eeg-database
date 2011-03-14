@@ -809,8 +809,8 @@
     </bean>
     <!-- Transformer POJO to resource of semantic web-->
     <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory"/>
-    <bean name="transformerMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.semantic.TransformerMultiController">
+    <bean name="semanticMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.semantic.SemanticMultiController">
         <property name="semanticFactory" ref="semanticFactory"/>
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
     </bean>

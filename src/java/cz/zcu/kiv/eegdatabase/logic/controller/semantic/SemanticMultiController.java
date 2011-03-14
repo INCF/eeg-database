@@ -16,11 +16,11 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
  * Date: 23.2.11
  * Time: 19:03
  */
-public class TransformerMultiController extends MultiActionController {
+public class SemanticMultiController extends MultiActionController {
     private Log log = LogFactory.getLog(getClass());
     private SemanticFactory semanticFactory;
 
-    public TransformerMultiController() {
+    public SemanticMultiController() {
 
     }
 

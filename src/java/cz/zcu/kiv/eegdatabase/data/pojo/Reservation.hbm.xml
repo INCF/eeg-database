@@ -11,7 +11,7 @@
       <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <property name="creationTime" type="java.sql.Timestamp">
-      <column length="7" name="RESERVATION_TIME"/>
+      <column length="7" name="CREATION_TIME"/>
     </property>
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
       <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
