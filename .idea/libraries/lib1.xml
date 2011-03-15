@@ -21,6 +21,7 @@
       <root url="jar://$PROJECT_DIR$/lib/jstl.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/jcaptcha-1.0-all.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/JavaToSemanticWeb.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/library_1.0.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
