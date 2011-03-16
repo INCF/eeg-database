@@ -4,22 +4,32 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
  * Author: Petr Miko
  */
 public class ExperimentInfo {
-    private int experimentID;
+    private int experimentId;
+    private int scenarioId;
     private String scenarioName;
 
     public ExperimentInfo(){}
 
-    public ExperimentInfo(int experimentID, String scenarioName){
-        this.experimentID = experimentID;
+    public ExperimentInfo(int experimentId, int scenarioId, String scenarioName){
+        this.experimentId = experimentId;
+        this.scenarioId = scenarioId;
         this.scenarioName = scenarioName;
     }
 
-    public int getExperimentID() {
-        return experimentID;
+    public int getExperimentId() {
+        return experimentId;
     }
 
-    public void setExperimentID(int experimentID) {
-        this.experimentID = experimentID;
+    public void setExperimentId(int experimentId) {
+        this.experimentId = experimentId;
+    }
+
+    public int getScenarioId() {
+        return scenarioId;
+    }
+
+    public void setScenarioId(int scenarioId) {
+        this.scenarioId = scenarioId;
     }
 
     public String getScenarioName() {

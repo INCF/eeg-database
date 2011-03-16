@@ -58,19 +58,25 @@ public class UserDataImpl implements UserDataService {
                 experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
 
         for (Experiment experiment : experiments) {
-            exps.add(new ExperimentInfo(experiment.getExperimentId(),experiment.getScenario().getTitle()));
+            exps.add(new ExperimentInfo(experiment.getExperimentId(), experiment.getScenario().getScenarioId(),
+                    experiment.getScenario().getTitle()));
         }
 
         return exps;
     }
 
     /* Method returning list containing information about data files selected by experiment id */
-    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId){
+    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) {
         List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
         for (DataFile file : files) {
-            fileInfos.add(new DataFileInfo(file.getDataFileId(),file.getFilename(),file.getMimetype()));
+            try {
+                fileInfos.add(new DataFileInfo(experimentId, file.getExperiment().getScenario().getTitle(),
+                        file.getDataFileId(),file.getFilename(),file.getMimetype(), file.getFileContent().length()));
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
         }
 
         return fileInfos;
