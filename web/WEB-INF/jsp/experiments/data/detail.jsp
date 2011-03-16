@@ -4,7 +4,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:experimentsTemplate pageTitle="pageTitle.addOptionalParameterForMeasuration">
+<ui:dataTemplate pageTitle="pageTitle.addOptionalParameterForMeasuration">
 
   <h1><fmt:message key="pageTitle.addOptionalParameterForMeasuration"/></h1>
 
@@ -71,4 +71,4 @@
     <a href="<c:url value='download?fileId=${dataDetail.dataFileId}' />" class="lightButtonLink"><fmt:message key="button.downloadFile"/></a>
     <a href="<c:url value='../detail.html?experimentId=${dataDetail.experiment.experimentId}' />" class="lightButtonLink"><fmt:message key="button.backToMeasuration"/></a>
   </div>
-</ui:experimentsTemplate>
+</ui:dataTemplate>
