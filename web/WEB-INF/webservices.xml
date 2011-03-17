@@ -25,9 +25,21 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
       </jaxws:properties>
    </jaxws:endpoint>
 
+     <jaxws:endpoint id="semanticService"
+                   implementor="#semanticDataService"
+	               address="/SemanticService">
+      <jaxws:properties>
+            <entry key="mtom-enabled" value="true"/>
+      </jaxws:properties>
+   </jaxws:endpoint>
+
     <bean id="userData" class="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl">
         <property name="personDao" ref="personDao"/>
         <property name="experimentDao" ref="experimentDao"/>
+    </bean>
+
+    <bean id="semanticDataService" class="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl">
+        <property name="semanticFactory" ref="semanticFactory"/>
     </bean>
 
 </beans>
