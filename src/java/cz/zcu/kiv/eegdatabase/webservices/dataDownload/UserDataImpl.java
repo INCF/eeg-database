@@ -9,13 +9,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.mail.util.ByteArrayDataSource;
+import javax.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
 
 /**
- *
  * @author Petr Miko
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataService")
@@ -40,7 +40,7 @@ public class UserDataImpl implements UserDataService {
 
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
-     }
+    }
 
     /* Method just for checking web service availability */
     public boolean isServiceAvailable() {
@@ -48,14 +48,14 @@ public class UserDataImpl implements UserDataService {
     }
 
     /* Method returning list of experiments' information according to desired rights */
-    public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights){
+    public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights) {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        if(rights == Rights.SUBJECT)
-                experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
-            else
-                experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
+        if (rights == Rights.SUBJECT)
+            experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
+        else
+            experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
 
         for (Experiment experiment : experiments) {
             exps.add(new ExperimentInfo(experiment.getExperimentId(), experiment.getScenario().getScenarioId(),
@@ -66,16 +66,16 @@ public class UserDataImpl implements UserDataService {
     }
 
     /* Method returning list containing information about data files selected by experiment id */
-    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) {
+    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) throws  WebServiceException{
         List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
         for (DataFile file : files) {
             try {
                 fileInfos.add(new DataFileInfo(experimentId, file.getExperiment().getScenario().getTitle(),
-                        file.getDataFileId(),file.getFilename(),file.getMimetype(), file.getFileContent().length()));
+                        file.getDataFileId(), file.getFilename(), file.getMimetype(), file.getFileContent().length()));
             } catch (SQLException e) {
-                e.printStackTrace();
+                throw new WebServiceException(e.getMessage(),e.getCause());
             }
         }
 
@@ -83,18 +83,18 @@ public class UserDataImpl implements UserDataService {
     }
 
     /* Method returning DataHandler object which contains data file binary. Data file is selected by id */
-    public DataHandler getDataFileBinaryWhereFileId(int dataFileId) {
+    public DataHandler getDataFileBinaryWhereFileId(int dataFileId) throws WebServiceException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
 
-        ByteArrayDataSource rawData= null;
+        ByteArrayDataSource rawData = null;
         try {
-            rawData = new ByteArrayDataSource(file.getFileContent().getBinaryStream(),"fileBinaryStream");
+            rawData = new ByteArrayDataSource(file.getFileContent().getBinaryStream(), "fileBinaryStream");
         } catch (IOException e) {
-            e.printStackTrace();
+            throw new WebServiceException(e.getMessage(),e.getCause());
         } catch (SQLException e) {
-            e.printStackTrace();
+            throw new WebServiceException(e.getMessage(),e.getCause());
         }
 
         return new DataHandler(rawData);

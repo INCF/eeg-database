@@ -7,6 +7,7 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
+import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.MTOM;
 import java.util.List;
 
@@ -22,7 +23,7 @@ public interface UserDataService {
 
     public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights);
 
-    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId);
+    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) throws WebServiceException;
 
-    public DataHandler getDataFileBinaryWhereFileId(int dataFileId);
+    public DataHandler getDataFileBinaryWhereFileId(int dataFileId) throws WebServiceException;
 }
