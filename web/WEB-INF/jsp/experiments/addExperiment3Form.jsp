@@ -30,7 +30,7 @@
                         key="label.samplingRate"/></form:label>
 
                 <form:input path="samplingRate" cssClass="textField dateField"
-                            cssErrorClass="textField dateField errorField"/>
+                            cssErrorClass="textField dateField errorField"/> Hz
 
                 <form:errors path="samplingRate" cssClass="errorBox"/>
             </div>

@@ -55,6 +55,7 @@ public class AddDataFileController
         if (measurationId != null) {
             adc.setMeasurationId(Integer.parseInt(measurationId));
         }
+        adc.setSamplingRate("1000");
         return adc;
     }
 

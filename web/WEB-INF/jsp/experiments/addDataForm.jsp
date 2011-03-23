@@ -4,7 +4,7 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/format/" %>
-<ui:experimentsTemplate pageTitle="pageTitle.addDataFile">
+<ui:dataTemplate pageTitle="pageTitle.addDataFile">
 
   <h1><fmt:message key="pageTitle.addDataFile"/></h1>
 
@@ -20,7 +20,7 @@
       <div class="itemBox">
         <form:label path="samplingRate" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.samplingRate"/></form:label>
 
-        <form:input path="samplingRate" cssClass="textField dateField" cssErrorClass="textField dateField errorField" />
+        <form:input path="samplingRate" cssClass="textField dateField" cssErrorClass="textField dateField errorField" />  Hz
 
         <form:errors path="samplingRate" cssClass="errorBox" />
       </div>
@@ -41,4 +41,4 @@
 
     </fieldset>
   </form:form>
-</ui:experimentsTemplate>
+</ui:dataTemplate>

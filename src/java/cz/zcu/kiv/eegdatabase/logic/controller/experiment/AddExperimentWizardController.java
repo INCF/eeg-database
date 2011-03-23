@@ -119,6 +119,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
             addExperimentWizardCommand.setPrivateNote(measuration.isPrivateExperiment());
         }
+        addExperimentWizardCommand.setSamplingRate("1000");
 
         return addExperimentWizardCommand;
 
