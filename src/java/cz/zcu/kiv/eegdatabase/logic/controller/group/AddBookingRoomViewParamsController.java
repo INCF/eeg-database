@@ -84,12 +84,14 @@ public class AddBookingRoomViewParamsController
         log.info("END= " + endStr);
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
-        map.put("repCount", repCount);
-        map.put("repType", repType);
         map.put("timerange", date + " " + getHoursAndMinutes(startStr) + " - " + getHoursAndMinutes(endStr));
 
+        /*
+        -- JSP can get this from param object --
+        map.put("repCount", repCount);
+        map.put("repType", repType);
         map.put("group", group);
-        map.put("date", date);
+        map.put("date", date);*/
         map.put("startTime", getHoursAndMinutes(startStr).replaceAll(":", ""));
         map.put("endTime", getHoursAndMinutes(endStr).replaceAll(":", ""));
 

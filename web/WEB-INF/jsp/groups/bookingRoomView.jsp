@@ -102,4 +102,4 @@
     </c:forEach>
 
 </table>
-<c:out value="#!#${isCollision}"/>
+#!#<c:out value="${isCollision}"/>

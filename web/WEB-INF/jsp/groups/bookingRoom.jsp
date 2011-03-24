@@ -52,10 +52,12 @@
                 <c:when test="${now.hours>endHour-3}">
                     <c:set var="startSelection" value="7"/>
                     <c:set var="endSelection" value="8"/>
-                    <script type="text/javascript">
-                        $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
-                        setTimeout('hideMessage()', 10000);
-                    </script>
+                    <c:if test="${param.status==''}">
+                        <script type="text/javascript">
+                            $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
+                            setTimeout('hideMessage()', 10000);
+                        </script>
+                    </c:if>
                     <c:set var="defaultDay" value="+1"/>
                     <c:if test="${now.hours>=endHour}">
                         <c:set var="minDate" value="+0"/>
@@ -211,6 +213,11 @@
                 return false;
             }
                 break;
+            default:
+            {
+                alert("<fmt:message key='bookRoom.error'/> E1");
+                return false;
+            }
         }
         return false;
     }
@@ -272,6 +279,7 @@
         var date = $("#date").attr('value');
 
         var req = "group=" + sel.value + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
+        //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
 
         $.ajax({
             type: "GET",
@@ -296,6 +304,7 @@
             error: function (xhr, ajaxOptions, thrownError) {
                 $("#chosenData").html("Error while getting data... :-(<br>Error " + xhr.status);
                 $("#collision").attr('value', '-1');
+                alert("<fmt:message key='bookRoom.error'/> E2:" + xhr.status);
             }
         });
     }

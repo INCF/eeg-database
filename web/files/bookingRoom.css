@@ -40,7 +40,7 @@ div#left, div#datePicker {
 }
 
 div#chosenData {
-    border: 0px dotted black;
+
 }
 
 table.dataTable tr.sameDay td {
@@ -66,7 +66,6 @@ select.timeSelect {
 
 div#button, div#button input {
     text-align: center;
-    border: 1px solid none;
     margin: 5px 0px 5px 0px;
 }
 
