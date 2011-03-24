@@ -17,6 +17,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.*;
 import org.springframework.validation.ValidationUtils;
 
@@ -119,6 +120,16 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
             addExperimentWizardCommand.setPrivateNote(measuration.isPrivateExperiment());
         }
+        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+        Date startDate = new Date(System.currentTimeMillis());
+
+        // current time + 1hour in millis
+        Date endDate = new Date(System.currentTimeMillis() + 3600*1000);
+        addExperimentWizardCommand.setStartDate(sdf.format(startDate));
+        addExperimentWizardCommand.setEndDate(sdf.format(endDate));
+        sdf = new SimpleDateFormat("HH:mm");
+        addExperimentWizardCommand.setStartTime(sdf.format(startDate));
+        addExperimentWizardCommand.setEndTime(sdf.format(endDate));
         addExperimentWizardCommand.setSamplingRate("1000");
 
         return addExperimentWizardCommand;
