@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
+import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
+
 import java.sql.Timestamp;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 
 /**
@@ -12,108 +12,80 @@ public class BookRoomCommand {
 
     private int selectedGroup;
     private String date;
-    private GregorianCalendar startTime;
-    private GregorianCalendar endTime;
+    private String startTime;
+    private GregorianCalendar startTimeCal;
+    private String endTime;
+    private GregorianCalendar endTimeCal;
     private int repCount;
     private int repType;
+
+    public void setSelectedGroup(int selectedGroup) {
+        this.selectedGroup = selectedGroup;
+    }
 
     public int getSelectedGroup() {
         return selectedGroup;
     }
 
-    public void setSelectedGroup(int selectedGroup) {
-        this.selectedGroup = selectedGroup;
+
+    public void setDate(String date) throws Exception {
+        this.date = date;
     }
 
     public String getDate() {
         return date;
     }
 
-    public void setDate(String date) {
-        this.date = date;
-    }
-
-    public String getEndTimeString() {
-        return getTime(endTime);
-    }
-
-    public GregorianCalendar getEndTime() {
-        return endTime;
-    }
-
-    public Timestamp getEndTimeTimestamp() {
-        return new Timestamp(endTime.getTimeInMillis());
-    }
-
-    public void setEndTime(String endTime) throws ParseException {
-        this.endTime = getCalendar(endTime);
-    }
-
-    public String getStartTimeString() {
-        return getTime(startTime);
-    }
-
-    public GregorianCalendar getStartTime() {
-        return startTime;
-    }
-
-    public Timestamp getStartTimeTimestamp() {
-        return new Timestamp(startTime.getTimeInMillis());
-    }
-
-    public void setStartTime(String startTime) throws ParseException {
-        this.startTime = getCalendar(startTime);
+    public void setRepCount(int repCount) {
+        this.repCount = repCount;
     }
 
     public int getRepCount() {
         return repCount;
     }
 
-    public void setRepCount(int repCount) {
-        this.repCount = repCount;
+    public void setRepType(int repType) {
+        this.repType = repType;
     }
 
     public int getRepType() {
         return repType;
     }
 
-    public void setRepType(int repType) {
-        this.repType = repType;
+    public void setEndTime(String endTime) {
+        this.endTime = endTime;
+        endTimeCal = BookingRoomUtils.getCalendar(endTime);
     }
 
-    /**
-     * Converts String to GregorianCalendar.
-     *
-     * @param rawDate Date in dd/mm/yy hh:mm:ss format.
-     * @return Created GregorianCalendar.
-     * @throws ParseException If rawDate cannot be parsed.
-     */
-    public static GregorianCalendar getCalendar(String rawDate) throws ParseException {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy HH:mm:ss");
-        GregorianCalendar tmp = new GregorianCalendar();
-        tmp.setTime(sdf.parse(rawDate));
-        return tmp;
+    public String getEndTime() {
+        return endTime;
     }
 
-    /**
-     * Gets time in hh:mm:ss format from GregorianCalendar.
-     *
-     * @param cal Input GregorianCalendar.
-     * @return Retreived time.
-     */
-    public static String getTime(GregorianCalendar cal) {
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss");
-        return sdf.format(cal);
+    public GregorianCalendar getEndTimeCal() {
+        return endTimeCal;
     }
 
-    /**
-     * Gets time in dd/mm/yy format from GregorianCalendar.
-     *
-     * @param cal Input GregorianCalendar.
-     * @return Retreived date.
-     */
-    public static String getDate(GregorianCalendar cal) {
-        SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yy");
-        return sdf.format(cal);
+
+    public Timestamp getEndTimeTimestamp() {
+        return new Timestamp(endTimeCal.getTimeInMillis());
     }
+
+
+    public void setStartTime(String startTime) {
+        this.startTime = startTime;
+        startTimeCal = BookingRoomUtils.getCalendar(startTime);
+    }
+
+    public String getStartTime() {
+        return startTime;
+    }
+
+    public GregorianCalendar getStartTimeCal() {
+        return startTimeCal;
+    }
+
+    public Timestamp getStartTimeTimestamp() {
+        return new Timestamp(getStartTimeCal().getTimeInMillis());
+    }
+
 }

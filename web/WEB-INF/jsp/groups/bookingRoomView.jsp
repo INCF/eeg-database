@@ -16,17 +16,13 @@
 <c:set var="myRepType" value="${param.repType}"/>
 <c:set var="myDate" value="${param.date}"/>
 
-<c:set var="myStartTime" value="${param.startTime}"/>
-<c:set var="time" value="${fn:split(myStartTime,':')}"/>
-<c:set var="myStart" value="${fn:join(time, '')}"/>
-
-
-<c:set var="myEndTime" value="${param.endTime}"/>
-<c:set var="time" value="${fn:split(myEndTime,':')}"/>
-<c:set var="myEnd" value="${fn:join(time, '')}"/>
+<c:set var="myStart" value="${startTime}"/>
+<c:set var="myEnd" value="${endTime}"/>
 
 
 <c:out value="OK#!#"/>
+
+<%--<c:out value="${date},${myStart},${myEnd}"/>--%>
 
 <c:set var="isCollision" value="0"/>
 

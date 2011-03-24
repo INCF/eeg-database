@@ -11,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
+import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -40,8 +41,8 @@ public class BookingRoomController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception {
 
-        String status = null;
-        String comment = null;
+        String status = "";
+        String comment = "";
         try {
             BookRoomCommand command = (BookRoomCommand) comm;
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
@@ -51,11 +52,23 @@ public class BookingRoomController extends SimpleFormController {
             int group = command.getSelectedGroup();
             int repType = command.getRepType();
             int repCount = command.getRepCount();
+            String startStr = BookingRoomUtils.getTime(command.getStartTimeCal());
+            String endStr = BookingRoomUtils.getTime(command.getEndTimeCal());
 
             Reservation res = new Reservation();
 
             Timestamp createTime = new Timestamp(new GregorianCalendar().getTimeInMillis());
             res.setCreationTime(createTime);
+            /*
+            log.debug("startTimeNull="+(command.getStartTime()==null));
+            if (command.getStartTime()==null)
+            {
+              log.debug("startTimeRequest="+request.getParameter("startTime"));
+                log.debug("endTimeNull="+(command.getEndTime()==null));
+                log.debug("dateNull="+(command.getDate()==null));
+            } else log.debug("startTimeHour="+(command.getStartTimeCal().getTime().getHours()));
+            */
+            log.debug("startTime = " + command.getStartTime());
             res.setStartTime(command.getStartTimeTimestamp());
             res.setEndTime(command.getEndTimeTimestamp());
 
@@ -73,36 +86,36 @@ public class BookingRoomController extends SimpleFormController {
                 log.debug("RESERVATION Repetition count = " + repCount);
                 log.debug("RESERVATION Repetition type = " + repType);
 
-                comment += command.getDate() + ", from " + BookRoomCommand.getTime(command.getStartTime()) + " to " + BookRoomCommand.getTime(command.getEndTime()) + "<br>\n";
+                comment += command.getDate() + ", from " + startStr + " to " + endStr + "<br>\n";
 
                 int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
 
                 log.debug("RESERVATION Current week = " + weekNum);
 
-                GregorianCalendar nextS = command.getStartTime();
-                GregorianCalendar nextE = command.getEndTime();
+                GregorianCalendar nextS = command.getStartTimeCal();
+                GregorianCalendar nextE = command.getEndTimeCal();
 
                 for (int i = 0; i < repCount; i++) {
                     //shift of dates
-                    setRepetitionDate(repType, i, nextS, nextE);
-
+                    int add = BookingRoomUtils.getWeeksAddCount(repType, i);
+                    nextS.add(Calendar.WEEK_OF_YEAR, add);
+                    nextE.add(Calendar.WEEK_OF_YEAR, add);
                     Reservation newReservation = new Reservation();
                     newReservation.setCreationTime(createTime);
                     newReservation.setStartTime(new Timestamp(nextS.getTimeInMillis()));
                     newReservation.setEndTime(new Timestamp(nextE.getTimeInMillis()));
-
                     newReservation.setPerson(user);
                     newReservation.setResearchGroup(grp);
-
                     reservationDao.create(newReservation);
 
-                    comment += BookRoomCommand.getDate(nextS) + ", from " + BookRoomCommand.getTime(nextS) + " to " + BookRoomCommand.getTime(nextE) + "<br>\n";
+                    comment += BookingRoomUtils.getDate(nextS) + ", from " + BookingRoomUtils.getTime(nextS) + " to " + BookingRoomUtils.getTime(nextE) + "<br>\n";
                 }
 
                 comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);//+1 because we need count "original" reservation!
             } else {
-                comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDate(), command.getStartTimeString(), command.getEndTimeString());
+                comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDate(), startStr, endStr);
             }
+
             status = messageSource.getMessage("bookRoom.controllerMessages.status.ok", null, RequestContextUtils.getLocale(request));
         } catch (Exception e) {
             //log.error("Exception was thrown: ",e);
@@ -135,31 +148,6 @@ public class BookingRoomController extends SimpleFormController {
                 return tmp.getResearchGroup();
         }
         throw new Exception("ResearchGroup with id='" + id + "' was not found!");
-    }
-
-    /**
-     * Sets dates of next repetition.
-     *
-     * @param repType   Type of repetition.
-     * @param repIndex  Index of repetition (defacto FOR cycle).
-     * @param startTime GregorianCalendar, which will be shifted.
-     * @param endTime   GregorianCalendar, which will be shifted.
-     */
-    public static void setRepetitionDate(int repType, int repIndex, GregorianCalendar startTime, GregorianCalendar endTime) {
-        int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
-
-        int add = 0;
-        if (repType == 0) add = 1;
-        if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
-            add = 2;
-        }
-        if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
-            if (repIndex == 0) add = 1;
-            else add = 2;
-        }
-
-        startTime.add(Calendar.WEEK_OF_YEAR, add);
-        endTime.add(Calendar.WEEK_OF_YEAR, add);
     }
 
 

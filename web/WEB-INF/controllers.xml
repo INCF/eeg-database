@@ -433,7 +433,7 @@
 
     <bean name="bookingRoomView"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsCommand"/>
         <property name="formView" value="groups/bookingRoomView"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
@@ -825,9 +825,9 @@
         <property name="weatherDao" ref="weatherDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="auth" ref="authorizationManager"/>
-      <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
+        <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
         <property name="dataFileDao" ref="dataFileDao"/>
-       <!-- <property name="validator" ref="addDataFileController"/>-->
+        <!-- <property name="validator" ref="addDataFileController"/>-->
         <property name="pages">
             <list>
                 <!-- follow sequence -->

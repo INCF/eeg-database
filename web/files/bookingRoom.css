@@ -9,27 +9,34 @@ div#box {
     border: none;
 }
 
-div#left, div#right, div#bottom {
-    border: none;
-}
-
 div#left {
     float: left;
-    width: 220px;
+    width: 248px;
 }
 
 div#right {
     float: right;
-    width: 500px;
+    width: 480px;
 }
 
-div#bottom {
+div#bottom, div#internbottom {
     clear: both;
 }
 
 div#datePicker {
     float: left;
-    margin: 3px 3px 3px 3px;
+    width: 232px;
+}
+
+div#internright {
+    float: right;
+    width: 230px;
+    padding-left: 10px;
+}
+
+div#left, div#datePicker {
+    padding: 5px 5px 5px 5px;
+    padding: 0px 0px 0px 0px;
 }
 
 div#chosenData {
@@ -52,25 +59,22 @@ table.dataTable tr.collision:hover td {
     background-color: #ff3333;
 }
 
-select.timeSelect
-{
+select.timeSelect {
     cursor: pointer;
     width: 50px;
 }
 
-div#button, div#button input
-{
+div#button, div#button input {
     text-align: center;
     border: 1px solid none;
     margin: 5px 0px 5px 0px;
 }
 
-div#button input
-{
+div#button input {
     cursor: pointer;
 }
 
-div#message
-{
+div#message {
     border-bottom: 2px solid gray;
+    margin-bottom: 15px;
 }

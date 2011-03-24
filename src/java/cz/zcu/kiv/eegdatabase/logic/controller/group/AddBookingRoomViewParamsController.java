@@ -7,6 +7,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.group;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
+import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.HierarchicalMessageSource;
@@ -44,26 +45,21 @@ public class AddBookingRoomViewParamsController
         int repType = Integer.parseInt(request.getParameter("repType"));
         int repCount = Integer.parseInt(request.getParameter("repCount"));
 
-        GregorianCalendar cal = BookRoomCommand.getCalendar(request.getParameter("startTime"));
-        log.info("ORIG= " + request.getParameter("startTime") + " - " + request.getParameter("EndTime"));
+        String date = request.getParameter("date");
+        String startStr = request.getParameter("startTime");
+        String endStr = request.getParameter("endTime");
 
+        GregorianCalendar cal = BookingRoomUtils.getCalendar(startStr);
+        log.info("ORIG= " + startStr + " - " + endStr);
 
+        //reservations in not visible time period
         if (repCount > 0) {
             int weekNum = cal.get(Calendar.WEEK_OF_YEAR);
-            GregorianCalendar nextS = BookRoomCommand.getCalendar(request.getParameter("startTime"));
-            GregorianCalendar nextE = BookRoomCommand.getCalendar(request.getParameter("endTime"));
+            GregorianCalendar nextS = BookingRoomUtils.getCalendar(startStr);
+            GregorianCalendar nextE = BookingRoomUtils.getCalendar(endStr);
             List coll = new ArrayList();
             for (int i = 0; i < repCount; i++) {
-                int add = 0;
-                if (repType == 0) add = 1;
-                if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
-                    add = 2;
-                }
-                if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
-                    if (i == 0) add = 1;
-                    else add = 2;
-                }
-
+                int add = BookingRoomUtils.getWeeksAddCount(repType, i);
                 nextS.add(Calendar.WEEK_OF_YEAR, add);
                 nextE.add(Calendar.WEEK_OF_YEAR, add);
 
@@ -76,25 +72,34 @@ public class AddBookingRoomViewParamsController
             map.put("collisionsCount", coll.size());
         }
 
+        //reservations in currently visible time period
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
         GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
-        String startStr = request.getParameter("startTime");
         log.info("START= " + startStr);
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
         GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
 
-        String endStr = request.getParameter("endTime");
         log.info("END= " + endStr);
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
         map.put("repCount", repCount);
-        map.put("timerange", request.getParameter("startTime") + " - " + request.getParameter("endTime").split(" ")[1]);
-        map.put("check", "[group=" + group + " startTime=" + startStr + " endTime=" + endStr + "]");
+        map.put("repType", repType);
+        map.put("timerange", date + " " + getHoursAndMinutes(startStr) + " - " + getHoursAndMinutes(endStr));
+
+        map.put("group", group);
+        map.put("date", date);
+        map.put("startTime", getHoursAndMinutes(startStr).replaceAll(":", ""));
+        map.put("endTime", getHoursAndMinutes(endStr).replaceAll(":", ""));
 
         log.debug("Returning map object");
         return map;
+    }
+
+    private String getHoursAndMinutes(String dateTime) {
+        String tmp = dateTime.split(" ")[1];
+        return tmp.substring(0, tmp.lastIndexOf(":"));
     }
 
     @Override
