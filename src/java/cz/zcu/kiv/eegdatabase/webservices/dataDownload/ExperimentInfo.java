@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 /**
+ * Class for gathering few important information about experiment.
+ * Meant to be sent to user.
+ *
  * Author: Petr Miko
  */
 public class ExperimentInfo {

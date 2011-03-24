@@ -12,6 +12,7 @@ import javax.xml.ws.soap.MTOM;
 import java.util.List;
 
 /**
+ * Interface for web service providing user's data remotely.
  *
  * @author Petr Miko
  */
@@ -19,11 +20,37 @@ import java.util.List;
 @WebService
 public interface UserDataService {
 
+    /**
+     * Method just for checking web service availability
+     * (user needs to connect through Spring security but doesn't wish to do anything more)
+     *
+     * @return true
+     */
     public boolean isServiceAvailable();
 
-    public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights);
+    /**
+     * Method returning List of information about available experiments.
+     *
+     * @param rights defines rights that user has in desired experiments (user, subject)
+     * @return List of information about available experiments
+     */
+    public List<ExperimentInfo> getExperiments (Rights rights);
 
-    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) throws WebServiceException;
+    /**
+     * Method returning list of files, which belong to experiment defined by id.
+     *
+     * @param experimentId Number defining explored experiment
+     * @return List of information about experiment's data files
+     * @throws WebServiceException wrapped SQLException
+     */
+    public List<DataFileInfo> getExperimentFiles(int experimentId) throws WebServiceException;
 
-    public DataHandler getDataFileBinaryWhereFileId(int dataFileId) throws WebServiceException;
+    /**
+     * Method streaming desired file back to user.
+     *
+     * @param dataFileId Id of file to download
+     * @return Stream of bytes (file)
+     * @throws WebServiceException Wrapped SQLException and IOException
+     */
+    public DataHandler downloadFile(int dataFileId) throws WebServiceException;
 }

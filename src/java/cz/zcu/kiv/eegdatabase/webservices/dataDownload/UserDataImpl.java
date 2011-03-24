@@ -5,6 +5,8 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
@@ -16,6 +18,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Web service providing user's data remotely.
+ *
  * @author Petr Miko
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataService")
@@ -25,6 +29,7 @@ public class UserDataImpl implements UserDataService {
     /* necessary Dao objects*/
     private PersonDao personDao;
     private ExperimentDao experimentDao;
+    private Log log = LogFactory.getLog(getClass());
 
     public ExperimentDao getExperimentDao() {
         return experimentDao;
@@ -42,13 +47,25 @@ public class UserDataImpl implements UserDataService {
         this.personDao = personDao;
     }
 
-    /* Method just for checking web service availability */
+    /**
+     * Method just for checking web service availability.
+     * (user needs to connect through Spring security but doesn't wish to do anything more)
+     *
+     * @return true
+     */
     public boolean isServiceAvailable() {
+        log.debug("User " + personDao.getLoggedPerson().getUsername() +
+                " verified connection with dataDownload web service.");
         return true;
     }
 
-    /* Method returning list of experiments' information according to desired rights */
-    public List<ExperimentInfo> getAvailableExperimentsWithRights(Rights rights) {
+    /**
+     * Method returning List of information about available experiments.
+     *
+     * @param rights defines rights that user has in desired experiments (user, subject)
+     * @return List of information about available experiments
+     */
+    public List<ExperimentInfo> getExperiments(Rights rights) {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
@@ -62,28 +79,47 @@ public class UserDataImpl implements UserDataService {
                     experiment.getScenario().getTitle()));
         }
 
+        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list with " + rights.toString() + " rights.");
+
         return exps;
     }
 
-    /* Method returning list containing information about data files selected by experiment id */
-    public List<DataFileInfo> getExperimentDataFilesWhereExpId(int experimentId) throws  WebServiceException{
+    /**
+     * Method returning list of files, which belong to experiment defined by id.
+     *
+     * @param experimentId Number defining explored experiment
+     * @return List of information about experiment's data files
+     * @throws WebServiceException wrapped SQLException
+     */
+    public List<DataFileInfo> getExperimentFiles(int experimentId) throws WebServiceException {
         List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
-        for (DataFile file : files) {
-            try {
+        try {
+
+            for (DataFile file : files) {
                 fileInfos.add(new DataFileInfo(experimentId, file.getExperiment().getScenario().getTitle(),
                         file.getDataFileId(), file.getFilename(), file.getMimetype(), file.getFileContent().length()));
-            } catch (SQLException e) {
-                throw new WebServiceException(e.getMessage(),e.getCause());
             }
+
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of experiment " + experimentId + " data files.");
+        } catch (SQLException e) {
+            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of experiment " + experimentId + " data files!");
+            log.error(e);
+            throw new WebServiceException(e);
         }
 
         return fileInfos;
     }
 
-    /* Method returning DataHandler object which contains data file binary. Data file is selected by id */
-    public DataHandler getDataFileBinaryWhereFileId(int dataFileId) throws WebServiceException {
+    /**
+     * Method streaming desired file back to user.
+     *
+     * @param dataFileId Id of file to download
+     * @return Stream of bytes (file)
+     * @throws WebServiceException Wrapped SQLException and IOException
+     */
+    public DataHandler downloadFile(int dataFileId) throws WebServiceException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
@@ -91,10 +127,15 @@ public class UserDataImpl implements UserDataService {
         ByteArrayDataSource rawData = null;
         try {
             rawData = new ByteArrayDataSource(file.getFileContent().getBinaryStream(), "fileBinaryStream");
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved file " + dataFileId);
         } catch (IOException e) {
-            throw new WebServiceException(e.getMessage(),e.getCause());
+            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
+            log.error(e);
+            throw new WebServiceException(e);
         } catch (SQLException e) {
-            throw new WebServiceException(e.getMessage(),e.getCause());
+            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
+            log.error(e);
+            throw new WebServiceException(e);
         }
 
         return new DataHandler(rawData);

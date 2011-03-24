@@ -1,7 +1,10 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 /**
- * @author: Petr Miko
+ * Class for gathering few important information about data file.
+ * Meant to be sent to user.
+ *
+ * @author: Petr Miko (miko.petr at gmail.com)
  */
 public class DataFileInfo {
 
