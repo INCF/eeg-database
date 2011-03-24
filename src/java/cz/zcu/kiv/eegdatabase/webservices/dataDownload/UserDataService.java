@@ -7,6 +7,7 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlMimeType;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.MTOM;
 import java.util.List;
@@ -52,5 +53,6 @@ public interface UserDataService {
      * @return Stream of bytes (file)
      * @throws WebServiceException Wrapped SQLException and IOException
      */
+    @XmlMimeType("application/octet-stream")
     public DataHandler downloadFile(int dataFileId) throws WebServiceException;
 }
