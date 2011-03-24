@@ -15,7 +15,7 @@
             <!-- creating new -->
             <h1><fmt:message key="pageTitle.addPerson"/></h1>
 
-            <c:url value="/people/add-person.html" var="formUrl"/>
+            <c:url value="add-person.html" var="formUrl"/>
         </c:otherwise>
     </c:choose>
 

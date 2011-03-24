@@ -17,7 +17,7 @@
             <!-- creating new -->
             <h1><fmt:message key="pageTitle.addScenario"/></h1>
 
-            <c:url value="/scenarios/add-scenario.html" var="formUrl"/>
+            <c:url value="add-scenario.html" var="formUrl"/>
         </c:otherwise>
     </c:choose>
 
