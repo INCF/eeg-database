@@ -21,12 +21,20 @@ public class SimpleReservationDao
     }
 
     public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end) {//${(start<myEnd) && (end>myStart)}
-
         String hqlQuery = "from Reservation reservation where reservation.startTime < (:endtime) AND reservation.endTime >  (:starttime) order by reservation.startTime";
-
         Session session = getSession();
         return session.createQuery(hqlQuery).setTimestamp("starttime", start.getTime()).setTimestamp("endtime", end.getTime()).list();
-
     }
 
+    public Reservation getReservationById(int id) {
+        String hqlQuery = "from Reservation reservation where reservation.reservationId = :id";
+        Session session = getSession();
+        return (Reservation) (session.createQuery(hqlQuery).setInteger("id", id).list().get(0));
+    }
+
+    public boolean deleteReservation(int id) {
+        String hqlQuery = "delete from Reservation reservation where reservation.reservationId = :id";
+        Session session = getSession();
+        return session.createQuery(hqlQuery).setInteger("id", id).executeUpdate() == 1;
+    }
 }

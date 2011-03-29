@@ -433,8 +433,16 @@
 
     <bean name="bookingRoomView"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
-        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsCommand"/>
         <property name="formView" value="groups/bookingRoomView"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="reservationDao" ref="reservationDao"/>
+    </bean>
+
+    <bean name="bookingRoomAjax"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomAjaxController">
+        <property name="formView" value="groups/bookingRoomAjax"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="messageSource" ref="messageSource"/>

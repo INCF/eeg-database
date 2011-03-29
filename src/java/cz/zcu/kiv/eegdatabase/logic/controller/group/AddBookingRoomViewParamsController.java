@@ -15,6 +15,7 @@ import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -31,8 +32,8 @@ public class AddBookingRoomViewParamsController
     private HierarchicalMessageSource messageSource;
 
     public AddBookingRoomViewParamsController() {
-        setCommandClass(AddBookingRoomViewParamsCommand.class);
-        setCommandName("addBookingRoomViewParams");
+        setCommandClass(BookRoomCommand.class);
+        setCommandName("bookRoomCommand");
     }
 
     @Override
@@ -74,34 +75,35 @@ public class AddBookingRoomViewParamsController
 
         //reservations in currently visible time period
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
+        cal.set(Calendar.HOUR, 0);
+        cal.set(Calendar.MINUTE, 0);
+        cal.set(Calendar.SECOND, 0);
         GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
 
         log.info("START= " + startStr);
 
         cal.add(Calendar.WEEK_OF_YEAR, 1);
         GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
+        weekEnd.add(Calendar.SECOND, -1);
 
         log.info("END= " + endStr);
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
-        map.put("timerange", date + " " + getHoursAndMinutes(startStr) + " - " + getHoursAndMinutes(endStr));
+        map.put("timerange", date + " " + BookingRoomUtils.getHoursAndMinutes(startStr) + " - " + BookingRoomUtils.getHoursAndMinutes(endStr));
+        map.put("displayed", String.format(messageSource.getMessage("bookRoom.displayed", null, RequestContextUtils.getLocale(request)), BookingRoomUtils.getDate(weekStart), BookingRoomUtils.getDate(weekEnd)));
 
         /*
-        -- JSP can get this from param object --
+        -- JSP can get this from params object --
         map.put("repCount", repCount);
         map.put("repType", repType);
         map.put("group", group);
         map.put("date", date);*/
-        map.put("startTime", getHoursAndMinutes(startStr).replaceAll(":", ""));
-        map.put("endTime", getHoursAndMinutes(endStr).replaceAll(":", ""));
+        map.put("startTime", BookingRoomUtils.getHoursAndMinutes(startStr).replaceAll(":", ""));
+        map.put("endTime", BookingRoomUtils.getHoursAndMinutes(endStr).replaceAll(":", ""));
+        map.put("loggedUser", personDao.getLoggedPerson());
 
         log.debug("Returning map object");
         return map;
-    }
-
-    private String getHoursAndMinutes(String dateTime) {
-        String tmp = dateTime.split(" ")[1];
-        return tmp.substring(0, tmp.lastIndexOf(":"));
     }
 
     @Override

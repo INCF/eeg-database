@@ -33,8 +33,10 @@
         <thead>
         <tr>
             <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
-            <th class="columnGroupTitle"><fmt:message key="bookRoom.day"/></th>
+            <th class="columnDescription"><fmt:message key="bookRoom.day"/></th>
             <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
+            <th class="columnDescription" style="width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
+            <th class="columnDescription" style="text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
         </tr>
         </thead>
         <c:forEach items="${collisions}" var="reservation">
@@ -49,6 +51,12 @@
                 <td><c:out value="${reservation.researchGroup.title}"/></td>
                 <td><c:out value="${startdate}"/></td>
                 <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
+                <td style="text-align:center;"><span class="infoicon" onclick="showInfo(<c:out value="${reservation.reservationId}"/>)"
+                                                     title="Show more information about this reservation"></span></td>
+                <td style="text-align:center;"><c:if test="${reservation.person.username==loggedUser.username}"><span class="deleteicon"
+                                                                                                                      onclick="deleteReservation(<c:out value="${reservation.reservationId}"/>)"
+                                                                                                                      title="Delete this reservation"></span></c:if>
+                </td>
             </tr>
         </c:forEach>
     </table>
@@ -56,12 +64,15 @@
 </c:if>
 
 <h2><fmt:message key="bookRoom.selectedTime"/>: <c:out value="${timerange}"/></h2>
+(<c:out value="${displayed}"/>)
 <table class="dataTable listOfResearchGroupsDataTable">
     <thead>
     <tr>
         <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
-        <th class="columnGroupTitle"><fmt:message key="bookRoom.day"/></th>
+        <th class="columnDescription"><fmt:message key="bookRoom.day"/></th>
         <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
+        <th class="columnDescription" style="width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
+        <th class="columnDescription" style="text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
     </tr>
     </thead>
 
@@ -72,7 +83,6 @@
         <c:set var="startdate" value="${tmpdate[2]}/${tmpdate[1]}/${tmpdate[0]}"/>
         <c:set var="starttime" value="${fn:split(datetime[1],':')}"/>
         <c:set var="start" value="${starttime[0]}${starttime[1]}"/>
-
 
         <c:set var="datetime" value="${fn:split(reservation.endTime,' ')}"/>
         <c:set var="endtime" value="${fn:split(datetime[1],':')}"/>
@@ -92,11 +102,18 @@
             </c:choose>
         </c:if>
 
-        <tr<c:if test="${collision==1}"> class='sameDay' title='Reservation to same day you have selected'</c:if><c:if
-                test="${collision==2}"> class='collision' title='Collission with selected time range!'</c:if>>
+        <tr<c:if test="${collision==1}"> class='sameDay' title='<fmt:message key="bookRoom.reservationToSameDate"/>'</c:if><c:if
+                test="${collision==2}"> class='collision' title='<fmt:message key="bookRoom.collisionWithSelected"/>'</c:if>>
             <td><c:out value="${reservation.researchGroup.title}"/></td>
             <td><c:out value="${startdate}"/></td>
             <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
+            <td style="text-align:center;">
+                <span class="infoicon" onclick="showInfo(<c:out value="${reservation.reservationId}"/>)"
+                      title="Show more information about this reservation"></span></td>
+            <td style="text-align:center;"><c:if test="${reservation.person.username==loggedUser.username}">
+                <span class="deleteicon" onclick="deleteReservation(<c:out value="${reservation.reservationId}"/>)"
+                      title="Delete this reservation"></span></c:if>
+            </td>
         </tr>
 
     </c:forEach>

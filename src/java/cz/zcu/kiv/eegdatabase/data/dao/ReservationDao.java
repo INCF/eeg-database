@@ -1,8 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
+
 import java.util.GregorianCalendar;
 import java.util.List;
-import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 
 /**
  * Data Access Object for accessing Reservation entities. The interface will use
@@ -12,6 +13,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
  */
 public interface ReservationDao extends GenericDao<Reservation, Integer> {
 
-  public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end);
+    public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end);
 
+    public Reservation getReservationById(int id);
+
+    public boolean deleteReservation(int id);
 }

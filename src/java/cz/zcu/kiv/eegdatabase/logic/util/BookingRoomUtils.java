@@ -57,6 +57,28 @@ public class BookingRoomUtils {
     }
 
     /**
+     * Gets hours and minutes from complete time value.
+     *
+     * @param dateTime
+     * @return Retreived hours:minutes.
+     */
+    public static String getHoursAndMinutes(String dateTime) {
+        String tmp = dateTime.split(" ")[1];
+        return tmp.substring(0, tmp.lastIndexOf(":"));
+    }
+
+    /**
+     * Gets hours and minutes from GregorianCalendar.
+     *
+     * @param cal Input GregorianCalendar.
+     * @return Retreived hours:minutes.
+     */
+    public static String getHoursAndMinutes(GregorianCalendar cal) {
+        String tmp = getTime(cal);
+        return getTime(cal).substring(0, tmp.lastIndexOf(":"));
+    }
+
+    /**
      * Gets time in dd/mm/yy format from GregorianCalendar.
      *
      * @param cal Input GregorianCalendar.

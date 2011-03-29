@@ -33,6 +33,9 @@ public class BookingRoomController extends SimpleFormController {
     private ReservationDao reservationDao;
     private HierarchicalMessageSource messageSource;
 
+    private String status = null;
+    private String comment = null;
+
     public BookingRoomController() {
         setCommandClass(BookRoomCommand.class);
         setCommandName("bookRoomCommand");
@@ -41,8 +44,8 @@ public class BookingRoomController extends SimpleFormController {
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception {
 
-        String status = "";
-        String comment = "";
+        /*String status = "";
+        String comment = "";*/
         try {
             BookRoomCommand command = (BookRoomCommand) comm;
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
@@ -52,23 +55,13 @@ public class BookingRoomController extends SimpleFormController {
             int group = command.getSelectedGroup();
             int repType = command.getRepType();
             int repCount = command.getRepCount();
-            String startStr = BookingRoomUtils.getTime(command.getStartTimeCal());
-            String endStr = BookingRoomUtils.getTime(command.getEndTimeCal());
+            String startStr = BookingRoomUtils.getHoursAndMinutes(command.getStartTimeCal());
+            String endStr = BookingRoomUtils.getHoursAndMinutes(command.getEndTimeCal());
 
             Reservation res = new Reservation();
 
             Timestamp createTime = new Timestamp(new GregorianCalendar().getTimeInMillis());
             res.setCreationTime(createTime);
-            /*
-            log.debug("startTimeNull="+(command.getStartTime()==null));
-            if (command.getStartTime()==null)
-            {
-              log.debug("startTimeRequest="+request.getParameter("startTime"));
-                log.debug("endTimeNull="+(command.getEndTime()==null));
-                log.debug("dateNull="+(command.getDate()==null));
-            } else log.debug("startTimeHour="+(command.getStartTimeCal().getTime().getHours()));
-            */
-            log.debug("startTime = " + command.getStartTime());
             res.setStartTime(command.getStartTimeTimestamp());
             res.setEndTime(command.getEndTimeTimestamp());
 
@@ -83,14 +76,7 @@ public class BookingRoomController extends SimpleFormController {
 
             if (repCount > 0) {
                 comment = messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part1", null, RequestContextUtils.getLocale(request));
-                log.debug("RESERVATION Repetition count = " + repCount);
-                log.debug("RESERVATION Repetition type = " + repType);
-
                 comment += command.getDate() + ", from " + startStr + " to " + endStr + "<br>\n";
-
-                int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
-
-                log.debug("RESERVATION Current week = " + weekNum);
 
                 GregorianCalendar nextS = command.getStartTimeCal();
                 GregorianCalendar nextE = command.getEndTimeCal();
@@ -108,7 +94,7 @@ public class BookingRoomController extends SimpleFormController {
                     newReservation.setResearchGroup(grp);
                     reservationDao.create(newReservation);
 
-                    comment += BookingRoomUtils.getDate(nextS) + ", from " + BookingRoomUtils.getTime(nextS) + " to " + BookingRoomUtils.getTime(nextE) + "<br>\n";
+                    comment += BookingRoomUtils.getDate(nextS) + ", from " + BookingRoomUtils.getHoursAndMinutes(nextS) + " to " + BookingRoomUtils.getHoursAndMinutes(nextE) + "<br>\n";
                 }
 
                 comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);//+1 because we need count "original" reservation!
@@ -118,7 +104,6 @@ public class BookingRoomController extends SimpleFormController {
 
             status = messageSource.getMessage("bookRoom.controllerMessages.status.ok", null, RequestContextUtils.getLocale(request));
         } catch (Exception e) {
-            //log.error("Exception was thrown: ",e);
             log.error("Exception: " + e.getMessage() + "\n" + e.getStackTrace()[0].getFileName() + " at line " + e.getStackTrace()[0].getLineNumber(), e);
 
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
@@ -126,10 +111,9 @@ public class BookingRoomController extends SimpleFormController {
         }
 
         log.debug("Returning MAV" + " with status=" + status + "&comment=" + comment);
-        ModelAndView mav = new ModelAndView(getSuccessView() + "?status=" + status + "&comment=" + comment);
+        ModelAndView mav = new ModelAndView(getSuccessView()/* + "?status=" + status + "&comment=" + comment*/);
 
         return mav;
-
     }
 
     /**
@@ -160,6 +144,16 @@ public class BookingRoomController extends SimpleFormController {
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
         map.put("researchGroupList", researchGroupList);
+
+        //if status or comment is prepared, send then delete them
+        if (status != null) {
+            map.put("status", new String(status));
+            status = null;
+        }
+        if (comment != null) {
+            map.put("comment", new String(comment));
+            comment = null;
+        }
 
         return map;
     }

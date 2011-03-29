@@ -38,7 +38,7 @@
                 <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
                 <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
 
-               <!-- <prop key="experiments/add-experiment.html">addExperimentController</prop>  -->
+                <!-- <prop key="experiments/add-experiment.html">addExperimentController</prop>  -->
                 <prop key="experiments/edit.html">addExperimentController</prop>
                 <prop key="experiments/add-optional-parameter.html">addExperimentOptParamValController</prop>
                 <prop key="experiments/*.html">experimentsMultiController</prop>
@@ -67,9 +67,9 @@
                 <prop key="groups/edit-group-role.html">editGroupRoleController</prop>
                 <prop key="groups/book-room.html">bookingRoomController</prop>
                 <prop key="groups/book-room-view.html">bookingRoomView</prop>
+                <prop key="groups/book-room-ajax.html">bookingRoomAjax</prop>
 
                 <prop key="groups/*.html">groupsMultiController</prop>
-
 
 
                 <prop key="lists/index.html">listsIndexController</prop>

@@ -15,6 +15,9 @@
 <script type="text/javascript">
     var startHour = <c:out value="${startHour}"/>;
     var endHour = <c:out value="${endHour}"/>;
+    var fadeSpeed = 150;
+    var collapseSpeed = 1000;
+    var timeoutBeforeMessageHide = 10000;
 </script>
 
 <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
@@ -23,10 +26,10 @@
 <script type="text/javascript" src="<c:url value='/files/js/jquery-ui.js' />"></script>
 
 <div id="message">
-    <c:if test="${param.status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2>
-        <c:out value="${param.comment}" escapeXml="false"/>
+    <c:if test="${status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2>
+        <c:out value="${comment}" escapeXml="false"/>
     </c:if>
-    <c:if test="${param.status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out value="${param.comment}"/>
+    <c:if test="${status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out value="${comment}"/>
     </c:if>
 </div>
 
@@ -52,10 +55,17 @@
                 <c:when test="${now.hours>endHour-3}">
                     <c:set var="startSelection" value="7"/>
                     <c:set var="endSelection" value="8"/>
-                    <c:if test="${param.status==''}">
+                    <c:if test="${status==''}">
                         <script type="text/javascript">
+                            alert('late');
                             $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
-                            setTimeout('hideMessage()', 10000);
+                        </script>
+                    </c:if>
+
+                    <c:if test="${status!=''}">
+                        <script type="text/javascript">
+                            alert('status = <c:out value="${status}"/>');
+                            //TODO $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
                         </script>
                     </c:if>
                     <c:set var="defaultDay" value="+1"/>
@@ -141,173 +151,255 @@
 </form:form>
 <input type="hidden" id="collision" value="-1"/>
 
+<div id="flowbox">
+    <span id="close" onclick="toggleInfo(false);" title="<fmt:message key='bookRoom.ajax.info.closeButtonHint'/>"></span>
+
+    <div id="flowContent"></div>
+</div>
+<div id="shadow">&nbsp;</div>
+
 
 <script type="text/javascript">
 
-    window.onload = function() {
-        //initialization:
-        //create datepicker
+function showInfo(id) {
+    var req = "type=info&id=" + id;
 
-        $("#datePicker").datepicker({
-            minDate: <c:out value="${minDate}" />,
-            firstDay: 1,
-            dateFormat: "dd/mm/yy",
-            <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
-            onSelect: function(selectedDate) {
-                $("#date").attr('value', selectedDate);
-                newTime();
-            }
-        });
-
-        //default values
-        var d = new Date();
-
-        <c:if test="${defaultDay!=''}">
-        d.setMilliseconds(d.getMilliseconds() + ((<c:out value="${defaultDay}" />) * 24 * 60 * 60 * 1000));
-        </c:if>
-        var day = d.getDate() + '';
-        if (day.length == 1) day = "0" + day;
-        var month = (d.getMonth() + 1) + '';
-        if (month.length == 1) month = "0" + month;
-        $("#date").attr('value', day + "/" + month + "/" + d.getFullYear());
-
-        //calls also showChosenData()
-        newTime();
-
-        <c:if test="${param.status!=''}">
-        setTimeout('hideMessage()', 30000);
-        </c:if>
-    };
-
-    function hideMessage() {
-        $('#message').hide(1000);
-    }
-
-    function trim(stringToTrim) {
-        return stringToTrim.replace(/^\s+|\s+$/g, "");
-    }
-
-    function isAllowed() {
-        switch ($("#collision").attr('value')) {
-            case '0':
-            {
-                return true;
-            }
-                break;
-            case '1':
-            {
-                alert("<fmt:message key='bookRoom.collisions'/>");
-                return false;
-            }
-                break;
-            case '-1':
-            {
-                alert("<fmt:message key='bookRoom.waitForControl'/>");
-                showChosenData();
-                return false;
-            }
-                break;
-            case '-2':
-            {
-                alert("<fmt:message key='bookRoom.invalidTime'/>");
-                return false;
-            }
-                break;
-            default:
-            {
-                alert("<fmt:message key='bookRoom.error'/> E1");
-                return false;
-            }
-        }
-        return false;
-    }
-
-    function setEndTime(hour, minute) {
-        hour = hour - startHour;
-        minute = parseInt(minute / 15);
-        $("#endH").attr('selectedIndex', hour);
-        $("#endM").attr('selectedIndex', minute);
-    }
-
-    function newTime() {
-        var start = $("#startH").attr('value') + $("#startM").attr('value');
-        var end = $("#endH").attr('value') + $("#endM").attr('value');
-        var date = $("#date").attr('value');
-        var d = new Date();
-        var now = ((d.getHours() > 9) ? d.getHours() : "0" + d.getHours()) + "" + ((d.getMinutes() > 9) ? d.getMinutes() : "0" + d.getMinutes());
-        var today = ((d.getDate() > 9) ? d.getDate() : "0" + d.getDate()) + "/" + ((d.getMonth() > 8) ? (d.getMonth() + 1) : "0" + (d.getMonth() + 1)) + "/" + d.getFullYear();
-
-        //try to set end hour after start hour
-        if (end <= start) {
-            if ($("#startH").attr('value') == endHour) {
-                if ($("#startM").attr('value') != 45) {
-                    setEndTime(endHour, 45);
-                }
-                else {
-                    //we can't do anything...
-                }
+    $.ajax({
+        type: "GET",
+        url: "<c:url value='book-room-ajax.html' />",
+        cache: false,
+        data: req,
+        beforeSend: function() {
+            toggleInfo(true);
+            $("#flowContent").html("<center><img src='<c:url value='/files/images/loading.gif'/>' style='width: 100%;' alt=''></center>");
+        },
+        success: function(data) {
+            var answer = data.split('#!#');
+            if (trim(answer[0]) == "OK") {
+                $("#flowContent").html(answer[1]);
             }
             else {
-                setEndTime(parseInt($("#startH").attr('value')) + 1, $("#endM").attr('value'));
+                $("#flowContent").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
             }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $("#flow").html("Error while getting data... :-(<br>Error " + xhr.status);
+            alert("<fmt:message key='bookRoom.error'/> E3:" + xhr.status);
+        }
+    });
+}
 
-            //load endtime value again for next comparison
-            end = $("#endH").attr('value') + $("#endM").attr('value');
-        }
-
-        //alert("start= " + start + "\nend= " + end + "\nnow= " + now + "\ndate= " + date + "\ntoday= " + today);
-
-        if (end <= start) {
-            $("#collision").attr('value', '-2');
-            $("#chosenData").html("<h3><fmt:message key='bookRoom.invalidTime'/></h3>");
-        }
-        else if ((start <= now) && (date <= today)) {
-            $("#collision").attr('value', '-2');
-            $("#chosenData").html("<h3><fmt:message key='bookRoom.timeInPast'><fmt:param value="${now.hours}:${now.minutes}" /></fmt:message></h3>");
-        }
-        else {
-            $("#startTime").attr('value', date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
-            $("#endTime").attr('value', date + " " + $("#endH").attr('value') + ":" + $("#endM").attr('value') + ":00");
-            showChosenData();
-        }
+function toggleInfo(show) {
+    if (show) {
+        $('#shadow').fadeIn(fadeSpeed, function() {
+        });
+        $('#flowbox').fadeIn(fadeSpeed, function() {
+        });
     }
+    else {
+        $('#shadow').fadeOut(fadeSpeed, function() {
+        });
+        $('#flowbox').fadeOut(fadeSpeed, function() {
+        });
+    }
+}
 
-    function showChosenData() {
-        var sel = document.getElementById("selectedGroup");
-        var repType = $("#repType").attr('value');
-        var repCount = $("#repCount").attr('value');
-        var date = $("#date").attr('value');
-
-        var req = "group=" + sel.value + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
-        //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
+function deleteReservation(id) {
+    if (window.confirm("<fmt:message key='bookRoom.deleteConfirmation'/>")) {
+        var req = "type=delete&id=" + id;
 
         $.ajax({
             type: "GET",
-            url: "<c:url value='book-room-view.html' />",
+            url: "<c:url value='book-room-ajax.html' />",
             cache: false,
             data: req,
             beforeSend: function() {
-                $("#collision").attr('value', '-1');
-                $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
             },
             success: function(data) {
                 var answer = data.split('#!#');
-                if (trim(answer[0]) == "OK") {
-                    $("#chosenData").html(answer[1]);
-                    $("#collision").attr('value', answer[2]);
-                }
-                else {
-                    $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
-                    $("#collision").attr('value', '-1');
-                }
+                if (trim(answer[0]) == 'OK') showChosenData();
+                alert(trim(answer[1]));
             },
             error: function (xhr, ajaxOptions, thrownError) {
-                $("#chosenData").html("Error while getting data... :-(<br>Error " + xhr.status);
-                $("#collision").attr('value', '-1');
-                alert("<fmt:message key='bookRoom.error'/> E2:" + xhr.status);
+                alert("<fmt:message key='bookRoom.error'/> E4:" + xhr.status);
             }
         });
     }
+}
+
+
+window.onload = function() {
+    //initialization:
+    //create datepicker
+
+    $("#datePicker").datepicker({
+        minDate: <c:out value="${minDate}" />,
+        firstDay: 1,
+        dateFormat: "dd/mm/yy",
+        <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
+        onSelect: function(selectedDate) {
+            $("#date").attr('value', selectedDate);
+            newTime();
+        }
+    });
+
+    //make flowbox draggable
+    $("#flowbox").draggable({
+        grid: [10, 10]
+    });
+
+    //default values
+    var d = new Date();
+
+    <c:if test="${defaultDay!=''}">
+    d.setMilliseconds(d.getMilliseconds() + ((<c:out value="${defaultDay}" />) * 24 * 60 * 60 * 1000));
+    </c:if>
+    var day = d.getDate() + '';
+    if (day.length == 1) day = "0" + day;
+    var month = (d.getMonth() + 1) + '';
+    if (month.length == 1) month = "0" + month;
+    $("#date").attr('value', day + "/" + month + "/" + d.getFullYear());
+
+    //show div#message?
+    if (trim($("#message").html()) != '') showMessage(true);
+
+    //calls also showChosenData()
+    newTime();
+
+};
+
+function showMessage(show) {
+    if (show) {
+        $('#message').show(collapseSpeed);
+        setTimeout('showMessage(false)', timeoutBeforeMessageHide);
+    }
+    else
+        $('#message').hide(collapseSpeed);
+}
+
+function trim(stringToTrim) {
+    return stringToTrim.replace(/^\s+|\s+$/g, "");
+}
+
+function isAllowed() {
+    switch ($("#collision").attr('value')) {
+        case '0':
+        {
+            return true;
+        }
+            break;
+        case '1':
+        {
+            alert("<fmt:message key='bookRoom.collisions'/>");
+            return false;
+        }
+            break;
+        case '-1':
+        {
+            alert("<fmt:message key='bookRoom.waitForControl'/>");
+            showChosenData();
+            return false;
+        }
+            break;
+        case '-2':
+        {
+            alert("<fmt:message key='bookRoom.invalidTime'/>");
+            return false;
+        }
+            break;
+        default:
+        {
+            alert("<fmt:message key='bookRoom.error'/> E1");
+            return false;
+        }
+    }
+    return false;
+}
+
+function setEndTime(hourIndex, minuteIndex) {
+    $("#endH").attr('selectedIndex', hourIndex);
+    $("#endM").attr('selectedIndex', minuteIndex);
+}
+
+function newTime() {
+    var start = $("#startH").attr('value') + $("#startM").attr('value');
+    var end = $("#endH").attr('value') + $("#endM").attr('value');
+    var date = $("#date").attr('value');
+    var d = new Date();
+    var now = ((d.getHours() > 9) ? d.getHours() : "0" + d.getHours()) + "" + ((d.getMinutes() > 9) ? d.getMinutes() : "0" + d.getMinutes());
+    var today = ((d.getDate() > 9) ? d.getDate() : "0" + d.getDate()) + "/" + ((d.getMonth() > 8) ? (d.getMonth() + 1) : "0" + (d.getMonth() + 1)) + "/" + d.getFullYear();
+
+    //try to set end hour after start hour
+    if (end <= start) {
+        if ($("#startH").attr('value') == endHour) {
+            if ($("#startM").attr('value') != 45) {
+                setEndTime(endHour - startHour, 3);
+            }
+            else {
+                //we can't do anything...
+            }
+        }
+        else {
+            setEndTime(parseInt($("#startH").attr('selectedIndex')) + 1, $("#endM").attr('selectedIndex'));
+        }
+
+        //load endtime value again for next comparison
+        end = $("#endH").attr('value') + $("#endM").attr('value');
+    }
+
+    //alert("start= " + start + "\nend= " + end + "\nnow= " + now + "\ndate= " + date + "\ntoday= " + today);
+
+    if (end <= start) {
+        $("#collision").attr('value', '-2');
+        $("#chosenData").html("<h3><fmt:message key='bookRoom.invalidTime'/></h3>");
+    }
+    else if ((start <= now) && (date <= today)) {
+        $("#collision").attr('value', '-2');
+        $("#chosenData").html("<h3><fmt:message key='bookRoom.timeInPast'/><c:out value="${now.hours}:${now.minutes}" />!</h3>");
+    }
+    else {
+        $("#startTime").attr('value', date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
+        $("#endTime").attr('value', date + " " + $("#endH").attr('value') + ":" + $("#endM").attr('value') + ":00");
+        showChosenData();
+    }
+}
+
+function showChosenData() {
+    var sel = document.getElementById("selectedGroup");
+    var repType = $("#repType").attr('value');
+    var repCount = $("#repCount").attr('value');
+    var date = $("#date").attr('value');
+
+    var req = "group=" + sel.value + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
+    //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
+
+    $.ajax({
+        type: "GET",
+        url: "<c:url value='book-room-view.html' />",
+        cache: false,
+        data: req,
+        beforeSend: function() {
+            $("#collision").attr('value', '-1');
+            $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
+        },
+        success: function(data) {
+            var answer = data.split('#!#');
+            if (trim(answer[0]) == "OK") {
+                $("#chosenData").html(answer[1]);
+                $("#collision").attr('value', answer[2]);
+            }
+            else {
+                $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
+                $("#collision").attr('value', '-1');
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError) {
+            $("#chosenData").html("Error while getting data... :-(<br>Error " + xhr.status);
+            $("#collision").attr('value', '-1');
+            alert("<fmt:message key='bookRoom.error'/> E2:" + xhr.status);
+        }
+    });
+}
 
 
 </script>
