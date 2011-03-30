@@ -43,6 +43,10 @@
         </property>
     </bean>
 
+    <bean name="facebookController" class="cz.zcu.kiv.eegdatabase.logic.controller.social.FacebookController">
+
+    </bean>
+
     <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
         <property name="historyDao" ref="historyDao"/>
         <property name="auth" ref="authorizationManager"/>

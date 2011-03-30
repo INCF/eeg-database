@@ -15,7 +15,6 @@
       /WEB-INF/url-mapping.xml
       /WEB-INF/persistence.xml
       /WEB-INF/security.xml
-
       /WEB-INF/webservices.xml
     </param-value>
   </context-param>
