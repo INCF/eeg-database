@@ -217,25 +217,14 @@
           <div class="rememberMeBox">
             <input type="checkbox" name="_spring_security_remember_me" id="_spring_security_remember_me"/> <label for="_spring_security_remember_me"><fmt:message key="label.rememberMe"/></label>
           </div>
-
-          <input type="submit" value="<fmt:message key='button.logIn'/>" class="lightButtonLink" />
+          <div>
+            <input type="submit" value="<fmt:message key='button.logIn'/>" class="lightButtonLink" />
+          </div>
         </fieldset>
       </form>
            
     </div>
 
 
-
-
-
-
-
-
-
- 
   </security:authorize>
-
-
-
-
 </ui:standardTemplate>
