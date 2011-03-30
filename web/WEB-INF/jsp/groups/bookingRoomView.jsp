@@ -35,8 +35,8 @@
             <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
             <th class="columnDescription"><fmt:message key="bookRoom.day"/></th>
             <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
-            <th class="columnDescription" style="width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
-            <th class="columnDescription" style="text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
+            <th class="" style="width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
+            <th class="" style="text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
         </tr>
         </thead>
         <c:forEach items="${collisions}" var="reservation">
@@ -71,8 +71,8 @@
         <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
         <th class="columnDescription"><fmt:message key="bookRoom.day"/></th>
         <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
-        <th class="columnDescription" style="width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
-        <th class="columnDescription" style="text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
+        <th class="columnDescription" style="cursor: default; width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
+        <th class="columnDescription" style="cursor: default; text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
     </tr>
     </thead>
 
@@ -102,8 +102,9 @@
             </c:choose>
         </c:if>
 
-        <tr<c:if test="${collision==1}"> class='sameDay' title='<fmt:message key="bookRoom.reservationToSameDate"/>'</c:if><c:if
-                test="${collision==2}"> class='collision' title='<fmt:message key="bookRoom.collisionWithSelected"/>'</c:if>>
+        <tr<c:if test="${collision==1}"> class='sameDay' title='<fmt:message key="bookRoom.reservationToSameDate"/>. <fmt:message
+                key="bookRoom.clickToIcon"/>.'</c:if><c:if
+                test="${collision==2}"> class='collision' title='<fmt:message key="bookRoom.collisionWithSelected"/>!'</c:if>>
             <td><c:out value="${reservation.researchGroup.title}"/></td>
             <td><c:out value="${startdate}"/></td>
             <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
@@ -115,8 +116,21 @@
                       title="Delete this reservation"></span></c:if>
             </td>
         </tr>
-
     </c:forEach>
+</table>
+<!-- LEGEND -->
+<table style="width: 100%; border-top: 1px solid black;">
+    <tr>
+        <td style="border: none; background-color:white; height: 15px; text-align:left; font-weight: bold;">
+            <fmt:message key="bookRoom.label.legend"/>:
+        </td>
+    </tr>
+    <tr class="sameDay">
+        <td style="height: 11px; text-align:left; font-style: italic;"><fmt:message key="bookRoom.reservationToSameDate"/></td>
+    </tr>
+    <tr class="collision">
+        <td colspan="5" style="height: 11px; text-align:left; font-style: italic;"><fmt:message key="bookRoom.collisionWithSelected"/></td>
+    </tr>
 
 </table>
 #!#<c:out value="${isCollision}"/>

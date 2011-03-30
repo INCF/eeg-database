@@ -21,25 +21,23 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.*;
 
-public class AddBookingRoomViewParamsController
-        extends SimpleFormController {
-
+public class AddBookingRoomViewParamsController extends SimpleFormController
+{
     private Log log = LogFactory.getLog(getClass());
-
     private ReservationDao reservationDao;
     private ResearchGroupDao researchGroupDao;
     private PersonDao personDao;
     private HierarchicalMessageSource messageSource;
 
-    public AddBookingRoomViewParamsController() {
+    public AddBookingRoomViewParamsController()
+    {
         setCommandClass(BookRoomCommand.class);
         setCommandName("bookRoomCommand");
     }
 
     @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
-        log.debug("Preparing data for form");
-
+    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception
+    {
         Map map = new HashMap<String, Object>();
 
         int group = Integer.parseInt(request.getParameter("group"));
@@ -51,21 +49,23 @@ public class AddBookingRoomViewParamsController
         String endStr = request.getParameter("endTime");
 
         GregorianCalendar cal = BookingRoomUtils.getCalendar(startStr);
-        log.info("ORIG= " + startStr + " - " + endStr);
 
         //reservations in not visible time period
-        if (repCount > 0) {
+        if (repCount > 0)
+        {
             int weekNum = cal.get(Calendar.WEEK_OF_YEAR);
             GregorianCalendar nextS = BookingRoomUtils.getCalendar(startStr);
             GregorianCalendar nextE = BookingRoomUtils.getCalendar(endStr);
             List coll = new ArrayList();
-            for (int i = 0; i < repCount; i++) {
+            for (int i = 0; i < repCount; i++)
+            {
                 int add = BookingRoomUtils.getWeeksAddCount(repType, i);
                 nextS.add(Calendar.WEEK_OF_YEAR, add);
                 nextE.add(Calendar.WEEK_OF_YEAR, add);
 
                 List nextRes = reservationDao.getReservationsBetween(nextS, nextE);
-                if (nextRes.size() > 0) {
+                if (nextRes.size() > 0)
+                {
                     coll.addAll(nextRes);
                 }
             }
@@ -75,22 +75,15 @@ public class AddBookingRoomViewParamsController
 
         //reservations in currently visible time period
         cal.set(Calendar.DAY_OF_WEEK, cal.getFirstDayOfWeek());
-        cal.set(Calendar.HOUR, 0);
-        cal.set(Calendar.MINUTE, 0);
-        cal.set(Calendar.SECOND, 0);
-        GregorianCalendar weekStart = (GregorianCalendar) cal.clone();
+        GregorianCalendar weekStart = BookingRoomUtils.getCalendar(BookingRoomUtils.getDate(cal) + " 00:00:00");
 
-        log.info("START= " + startStr);
-
-        cal.add(Calendar.WEEK_OF_YEAR, 1);
-        GregorianCalendar weekEnd = (GregorianCalendar) cal.clone();
+        GregorianCalendar weekEnd = (GregorianCalendar) weekStart.clone();
+        weekEnd.add(Calendar.DAY_OF_YEAR, 7);
         weekEnd.add(Calendar.SECOND, -1);
-
-        log.info("END= " + endStr);
 
         map.put("reservations", reservationDao.getReservationsBetween(weekStart, weekEnd));
         map.put("timerange", date + " " + BookingRoomUtils.getHoursAndMinutes(startStr) + " - " + BookingRoomUtils.getHoursAndMinutes(endStr));
-        map.put("displayed", String.format(messageSource.getMessage("bookRoom.displayed", null, RequestContextUtils.getLocale(request)), BookingRoomUtils.getDate(weekStart), BookingRoomUtils.getDate(weekEnd)));
+        map.put("displayed", String.format(messageSource.getMessage("bookRoom.displayed", null, RequestContextUtils.getLocale(request)), BookingRoomUtils.getDate(weekStart), BookingRoomUtils.getDate(weekEnd)/*+" "+BookingRoomUtils.getTime(weekEnd)*/));
 
         /*
         -- JSP can get this from params object --
@@ -102,47 +95,55 @@ public class AddBookingRoomViewParamsController
         map.put("endTime", BookingRoomUtils.getHoursAndMinutes(endStr).replaceAll(":", ""));
         map.put("loggedUser", personDao.getLoggedPerson());
 
-        log.debug("Returning map object");
         return map;
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
+    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception
+    {
 
         ModelAndView mav = new ModelAndView(getSuccessView());
         return mav;
     }
 
 
-    public HierarchicalMessageSource getMessageSource() {
+    public HierarchicalMessageSource getMessageSource()
+    {
         return messageSource;
     }
 
-    public void setMessageSource(HierarchicalMessageSource messageSource) {
+    public void setMessageSource(HierarchicalMessageSource messageSource)
+    {
         this.messageSource = messageSource;
     }
 
-    public ReservationDao getReservationDao() {
+    public ReservationDao getReservationDao()
+    {
         return reservationDao;
     }
 
-    public void setReservationDao(ReservationDao reservationDao) {
+    public void setReservationDao(ReservationDao reservationDao)
+    {
         this.reservationDao = reservationDao;
     }
 
-    public ResearchGroupDao getResearchGroupDao() {
+    public ResearchGroupDao getResearchGroupDao()
+    {
         return researchGroupDao;
     }
 
-    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao)
+    {
         this.researchGroupDao = researchGroupDao;
     }
 
-    public PersonDao getPersonDao() {
+    public PersonDao getPersonDao()
+    {
         return personDao;
     }
 
-    public void setPersonDao(PersonDao personDao) {
+    public void setPersonDao(PersonDao personDao)
+    {
         this.personDao = personDao;
     }
 }
