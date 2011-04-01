@@ -11,6 +11,7 @@ import org.apache.commons.logging.LogFactory;
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.mail.util.ByteArrayDataSource;
+import javax.xml.soap.SOAPException;
 import javax.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.sql.SQLException;
@@ -89,9 +90,9 @@ public class UserDataImpl implements UserDataService {
      *
      * @param experimentId Number defining explored experiment
      * @return List of information about experiment's data files
-     * @throws WebServiceException wrapped SQLException
+     * @throws SOAPException wrapped SQLException
      */
-    public List<DataFileInfo> getExperimentFiles(int experimentId) throws WebServiceException {
+    public List<DataFileInfo> getExperimentFiles(int experimentId) throws SOAPException {
         List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
@@ -106,7 +107,7 @@ public class UserDataImpl implements UserDataService {
         } catch (SQLException e) {
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of experiment " + experimentId + " data files!");
             log.error(e);
-            throw new WebServiceException(e);
+            throw new SOAPException(e);
         }
 
         return fileInfos;
@@ -117,9 +118,9 @@ public class UserDataImpl implements UserDataService {
      *
      * @param dataFileId Id of file to download
      * @return Stream of bytes (file)
-     * @throws WebServiceException Wrapped SQLException and IOException
+     * @throws SOAPException Wrapped SQLException and IOException
      */
-    public DataHandler downloadFile(int dataFileId) throws WebServiceException {
+    public DataHandler downloadFile(int dataFileId) throws SOAPException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
@@ -131,11 +132,11 @@ public class UserDataImpl implements UserDataService {
         } catch (IOException e) {
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
             log.error(e);
-            throw new WebServiceException(e);
+            throw new SOAPException(e);
         } catch (SQLException e) {
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
             log.error(e);
-            throw new WebServiceException(e);
+            throw new SOAPException(e);
         }
 
         return new DataHandler(rawData);
