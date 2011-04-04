@@ -11,7 +11,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<ui:experimentsTemplate pageTitle="pageTitle.addEditExperiment" addExperimentCalendar="true">
+<ui:experimentsTemplate pageTitle="pageTitle.addEditExperiment" jspinner="true" addExperimentCalendar="true">
 
     <c:choose>
         <c:when test="${addExperimentWizard.measurationId > 0}">
@@ -54,29 +54,30 @@
                     <form:errors path="researchGroup" cssClass="errorBox"/>
                 </div>
             </c:if>
-
             <div class="itemBox">
                 <label class="textFieldLabel"><fmt:message key="label.startDateTime"/></label>
-                <form:input path="startDate" cssClass="textField dateField"
+                <form:input path="startDate" cssClass="textField dateField" 
                             cssErrorClass="textField dateField errorField" onchange="setDate(this.value)"/>
                 <form:input path="startTime" cssClass="textField timeField" maxlength="5"
                             cssErrorClass="textField timeField errorField" onchange="startTimeChange(this.value)"/>
-                <span class="note"><fmt:message key="form.note.timeFormatHHMM"/></span>
 
                 <form:errors path="startDate" cssClass="errorBox"/>
                 <form:errors path="startTime" cssClass="errorBox"/>
+                <span class="note"><fmt:message key="form.note.timeFormatHHMM"/></span>
+
             </div>
 
             <div class="itemBox">
                 <label class="textFieldLabel"><fmt:message key="label.endDateTime"/></label>
                 <form:input path="endDate" cssClass="textField dateField"
-                            cssErrorClass="textField dateField errorField" />
+                            cssErrorClass="textField dateField errorField" onchange="changeEndDate()"/>
+
                 <form:input path="endTime" cssClass="textField timeField" maxlength="5"
                             cssErrorClass="textField timeField errorField"/>
-                <span class="note"><fmt:message key="form.note.timeFormatHHMM"/></span>
 
                 <form:errors path="endDate" cssClass="errorBox"/>
                 <form:errors path="endTime" cssClass="errorBox"/>
+                <span class="note"><fmt:message key="form.note.timeFormatHHMM"/></span>
             </div>
 
             <div class="itemBox">
@@ -118,24 +119,6 @@
 
         </fieldset>
     </form:form>
-       <script type="text/javascript">
-        function setDate(date) {
-           $("#endDate").attr('value', date);
-        }
-    </script>
-
-     <script type="text/javascript">
-        function startTimeChange(time) {
-            var hourAndMin = time.split(":");
-           if (hourAndMin.length == 2) {
-               var hour = parseInt(hourAndMin[0]) + 1;
-
-               $("#endTime").attr('value', hour % 24 + ":" + hourAndMin[1]);
-           }
-
-        }
-    </script>
-
-
+   
 
 </ui:experimentsTemplate>

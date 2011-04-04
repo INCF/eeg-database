@@ -1,0 +1,8 @@
+/* DateEntry styles */
+.dateEntry_control {
+	vertical-align: middle;
+	margin-left: 2px;
+}
+* html .dateEntry_control { /* IE only */
+	margin-top: -4px;
+}
