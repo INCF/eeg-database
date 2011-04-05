@@ -1,18 +1,19 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import jenaBean.JenaBean;
+import cz.zcu.kiv.jenaBean.JenaBean;
+import cz.zcu.kiv.jenaBean.JenaBeanTool;
+import cz.zcu.kiv.owlApi.OwlApi;
+import cz.zcu.kiv.owlApi.OwlApiTool;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import owlApi.IOwlApi;
-import owlApi.OwlApi;
 
-import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,25 +47,22 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @throws OWLOntologyStorageException
      * @throws OWLOntologyCreationException
      */
-    public ByteArrayOutputStream transformPOJOToSemanticResource(String typeTransform) throws IOException, OWLOntologyStorageException, OWLOntologyCreationException {
-        ByteArrayOutputStream bout = null;
-        bout = new ByteArrayOutputStream();
-
-        IOwlApi owlApi = new OwlApi(creatingJenaBean());
-        bout = (ByteArrayOutputStream) owlApi.convertToSemanticStandard(typeTransform);
-        return bout;
+    public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException, OWLOntologyStorageException, OWLOntologyCreationException {
+        InputStream is = null;
+        OwlApi owlApi = new OwlApiTool(creatingJenaBean());
+        is = owlApi.convertToSemanticStandard(typeTransform);
+        return is;
     }
 
     /**
      * Generates RDF
-     * @return  bout - RDF
+     * @return  is - RDF
      * @throws IOException
      */
-     public ByteArrayOutputStream  generateRDF() throws IOException{
-        ByteArrayOutputStream bout = null;
-        bout = new ByteArrayOutputStream();
-        bout = (ByteArrayOutputStream) creatingJenaBean().getOutJB();
-        return bout;
+     public InputStream  generateRDF() throws IOException{
+        InputStream is = null;
+        is = creatingJenaBean().getOutJB();
+        return is;
     }
 
 
@@ -73,10 +71,10 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @return jenaBean - Jena bean
      * @throws IOException
      */
-    private JenaBean creatingJenaBean() throws IOException {
+    private JenaBeanTool creatingJenaBean() throws IOException {
        loadData();
-       JenaBean jenaBean = new JenaBean(dataList);
-       return jenaBean;
+       JenaBean jenaBean = new JenaBeanTool(dataList);
+       return (JenaBeanTool)jenaBean;
     }
 
     /**

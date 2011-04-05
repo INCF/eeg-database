@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.webservices.semantic;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
+import javax.xml.bind.annotation.XmlMimeType;
+import javax.xml.soap.SOAPException;
 import javax.xml.ws.WebServiceException;
 import javax.xml.ws.soap.MTOM;
 import java.io.IOException;
@@ -30,7 +32,8 @@ public interface SemanticService {
      * @throws WebServiceException
      * @throws IOException
      */
-    public DataHandler generateRDF() throws WebServiceException, IOException;
+    @XmlMimeType("application/octet-stream")
+    public DataHandler generateRDF() throws SOAPException;
 
     /**
      * Transforms POJO object to resources of semantic web
@@ -39,5 +42,6 @@ public interface SemanticService {
      * @return
      * @throws WebServiceException
      */
-    public DataHandler generateOWL(String type) throws WebServiceException;
+    @XmlMimeType("application/octet-stream")
+    public DataHandler generateOWL(String type) throws SOAPException;
 }

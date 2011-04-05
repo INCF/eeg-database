@@ -6,6 +6,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.InputStream;
 import java.io.OutputStream;
 import org.apache.commons.logging.Log;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -36,7 +37,7 @@ public class SemanticMultiController extends MultiActionController {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         String typeTransform = "";
         OutputStream out = null;
-        byte[] bytes = null;
+        InputStream is = null;
 
         typeTransform = request.getParameter("type");
         response.setHeader("Content-Type", "application/rdf+xml");
@@ -46,9 +47,11 @@ public class SemanticMultiController extends MultiActionController {
         log.debug("Creating output stream");
         out = response.getOutputStream();
         log.debug("Generating OWL");
-        bytes = semanticFactory.transformPOJOToSemanticResource(typeTransform).toByteArray();
-        response.setContentLength(bytes.length);
-        out.write(bytes);
+        is = semanticFactory.transformPOJOToSemanticResource(typeTransform);
+        int i;
+        while ((i = is.read()) > -1) {
+           out.write(i);
+        }
         out.flush();
         out.close();
         return null;
@@ -65,17 +68,20 @@ public class SemanticMultiController extends MultiActionController {
     public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         OutputStream out = null;
-        byte[] bytes = null;
 
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
         response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.rdf");
+
         log.debug("Creating output stream");
         out = response.getOutputStream();
         log.debug("Generating RDF");
-        bytes = semanticFactory.generateRDF().toByteArray();
-        response.setContentLength(bytes.length);
-        out.write(bytes);
+        InputStream is = semanticFactory.generateRDF();
+        int i;
+        while ((i = is.read()) > -1) {
+           out.write(i);
+        }
+
         out.flush();
         out.close();
         return null;
