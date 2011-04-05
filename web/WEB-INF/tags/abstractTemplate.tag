@@ -15,6 +15,7 @@
 <%@attribute name="tableSortMin" %>
 <%@attribute name="jMetadata" %>
 <%@attribute name="jspinner" %>
+<%@attribute name="jaddWeather" %>
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -31,6 +32,19 @@
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<c:url value='/files/js/jquery-ui.js' />"></script>
+
+    <script src="<c:url value='/files/js/modalForm.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.button.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.core.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.dialog.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.draggable.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.mouse.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.position.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.resizable.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.ui.widget.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.effects.core.js' />"></script>
+    <script src="<c:url value='/files/js/jquery.bgiframe-2.1.2.js' />"></script>
+
     <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.timeentry.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.dateentry.js'/>"></script>
@@ -40,7 +54,9 @@
     <c:if test="${mainPage}">
         <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>
     </c:if>
-
+    <c:if test="${jaddWeather}">
+        <script type="text/javascript" src="<c:url value='/files/js/addWeather.js'/>"></script>
+    </c:if>
     <c:if test="${history}">
         <script type="text/javascript" src="<c:url value='/files/js/history.js' />"></script>
     </c:if>

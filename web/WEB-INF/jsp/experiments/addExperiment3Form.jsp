@@ -45,10 +45,10 @@
             </div>
 
 
-            <div class="itemBox">
-                <input type="submit" value="Previous" name="_target1"/>
-                <input type="submit" value="Finish" name="_finish"/>
-                <input type="submit" value="Cancel" name="_cancel"/>
+            <div class="actionBox">
+                <input type="submit" value="Previous" name="_target1" class="submitButton lightButtonLink"/>
+                <input type="submit" value="Finish" name="_finish" class="lightButtonLink"/>
+                <input type="submit" value="Cancel" name="_cancel" class="lightButtonLink"/>
             </div>
 
 

@@ -856,4 +856,11 @@
          </property>-->
     </bean>
 
+     <bean id="wizardAjaxMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+
+    </bean>
+
+
+
 </beans>

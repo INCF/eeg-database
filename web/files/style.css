@@ -2,6 +2,7 @@
 
 /** CSS file for standard layout with menu header, footer and content **/
 @import "search.css";
+@import "modalForm.css";
 @import "common.css";
 @import "table.css";
 @import "jquery-ui.css";

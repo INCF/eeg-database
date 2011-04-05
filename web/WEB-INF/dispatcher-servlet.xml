@@ -9,24 +9,22 @@
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd">
 
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
+    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
 
-  <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver" />
+    <bean id="downloadMetadataZipView" class="cz.zcu.kiv.eegdatabase.view.DownloadMetadataZipView"/>
 
-  <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-    <property name="prefix" value="/WEB-INF/jsp/"/>
-    <property name="suffix" value=".jsp"/>
-  </bean>
+    <bean id="binaryView" class="cz.zcu.kiv.eegdatabase.view.MeasurationDataView"/>
 
-  <bean id="downloadMetadataZipView" class="cz.zcu.kiv.eegdatabase.view.DownloadMetadataZipView" />
+    <bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>
 
-  <bean id="binaryView" class="cz.zcu.kiv.eegdatabase.view.MeasurationDataView" />
-
-  <bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>
-
-
-  <bean name="/captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService" id="imageCaptchaService"/>
-  <bean name="indexController"
-        class="org.springframework.web.servlet.mvc.ParameterizableViewController"
-        p:viewName="home" />
+    <bean name="/captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService"
+          id="imageCaptchaService"/>
+    <bean name="indexController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController"
+          p:viewName="home"/>
 </beans>

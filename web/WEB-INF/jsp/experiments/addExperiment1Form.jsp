@@ -111,9 +111,9 @@
             </div>
 
 
-            <div class="itemBox">
-                <input type="submit" value="Next" name="_target1"/>
-                <input type="submit" value="Cancel" name="_cancel"/>
+            <div class="actionBox">
+                <input type="submit" value="Next" name="_target1" class="submitButton lightButtonLink"/>
+                <input type="submit" value="Cancel" name="_cancel" class="lightButtonLink"/>
             </div>
 
 

@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleCommentCommand;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -19,7 +20,9 @@ import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+
 import org.springframework.validation.ValidationUtils;
+import org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver;
 
 /**
  * Wizard for adding experiments
@@ -38,6 +41,15 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private ResearchGroupDao researchGroupDao;
     private AuthorizationManager auth;
     private GenericDao<DataFile, Integer> dataFileDao;
+    private ParameterMethodNameResolver methodNameResolver;
+
+    public ParameterMethodNameResolver getMethodNameResolver() {
+        return methodNameResolver;
+    }
+
+    public void setMethodNameResolver(ParameterMethodNameResolver methodNameResolver) {
+        this.methodNameResolver = methodNameResolver;
+    }
 
     public AddExperimentWizardController() {
         setCommandClass(AddExperimentWizardCommand.class);
@@ -124,7 +136,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         Date startDate = new Date(System.currentTimeMillis());
 
         // current time + 1hour in millis
-        Date endDate = new Date(System.currentTimeMillis() + 3600*1000);
+        Date endDate = new Date(System.currentTimeMillis() + 3600 * 1000);
         addExperimentWizardCommand.setStartDate(sdf.format(startDate));
         addExperimentWizardCommand.setEndDate(sdf.format(endDate));
         sdf = new SimpleDateFormat("HH:mm");
