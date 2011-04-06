@@ -73,6 +73,7 @@
                 <prop key="groups/book-room.html">bookingRoomController</prop>
                 <prop key="groups/book-room-view.html">bookingRoomView</prop>
                 <prop key="groups/book-room-ajax.html">bookingRoomAjax</prop>
+                <prop key="groups/book-room-export.html">bookingRoomExport</prop>
 
                 <prop key="groups/*.html">groupsMultiController</prop>
 

@@ -12,6 +12,9 @@
 <c:set var="defaultDay" value=""/>
 <c:set var="minDate" value="0"/>
 
+
+<script src="<c:url value="/files/timeline/timeline-api.js"/>" type="text/javascript"></script>
+
 <script type="text/javascript">
     var startHour = <c:out value="${startHour}"/>;
     var endHour = <c:out value="${endHour}"/>;
@@ -139,6 +142,7 @@
                 <input type="submit" value="<fmt:message key='bookRoom.create'/>"
                        title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
             </div>
+            <div id='timeline'></div>
             <div id="chosenData">&nbsp;</div>
         </div>
     </div>
@@ -146,6 +150,11 @@
     <form:hidden path="startTime"/>
     <form:hidden path="endTime"/>
 </form:form>
+
+<form:form action="book-room-export.html" name="pdf">
+    <input type="hidden" name="reservationId" id="reservationId" value=""/>
+</form:form>
+
 <input type="hidden" id="collision" value="-1"/>
 
 <div id="flowbox">
@@ -157,6 +166,13 @@
 
 
 <script type="text/javascript">
+
+
+function downloadPDF(id)
+{
+    $("#reservationId").attr('value', id);
+    document.forms["pdf"].submit();
+}
 
 function showInfo(id)
 {
@@ -267,7 +283,12 @@ window.onload = function()
         <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
         onSelect: function(selectedDate)
         {
+            var newMonth = selectedDate.split('/')[1];
+            var oldMonth = $("#date").attr('value').split('/')[1];
+
             $("#date").attr('value', selectedDate);
+            if (newMonth != oldMonth) reloadTimeline();
+            else setCenterDate(selectedDate);
             newTime();
         }
     });
@@ -307,6 +328,10 @@ window.onload = function()
         type: 'text'
     });
 
+    //create timeline
+    window.onresize = timelineResize();
+    //cals also timelineCreate
+    reloadTimeline();
 
     //calls also showChosenData()
     newTime();
@@ -489,6 +514,38 @@ function showChosenData()
     });
 }
 
+function reloadTimeline()
+{
+    var req = "type=timeline&date=" + $("#date").attr('value');
+    $.ajax({
+        type: "GET",
+        url: "<c:url value='book-room-ajax.html' />",
+        cache: false,
+        data: req,
+        beforeSend: function()
+        {
+            $("#timeline").html("<center><img src='<c:url value='/files/images/loading.gif'/>' alt=''></center>");
+        },
+        success: function(data)
+        {
+            var answer = data.split('#!#');
+            if (trim(answer[0]) == "OK")
+            {
+                timelineCreate("timeline", $("#date").attr('value'), trim(answer[1]));
+            }
+            else
+            {
+                alert(trim(answer[0]));
+                $("#timeline").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
+            }
+        },
+        error: function (xhr, ajaxOptions, thrownError)
+        {
+            $("#timeline").html("Error while getting data... :-(<br>Error " + xhr.status);
+            alert("<fmt:message key='bookRoom.error'/> E6:" + xhr.status);
+        }
+    });
+}
 
 </script>
 </ui:groupsTemplate>

@@ -71,7 +71,7 @@
         <th class="columnDescription"><fmt:message key="bookRoom.group"/></th>
         <th class="columnDescription"><fmt:message key="bookRoom.day"/></th>
         <th class="columnDescription"><fmt:message key="bookRoom.time"/></th>
-        <th class="columnDescription" style="cursor: default; width: 40px; text-align:center;"><fmt:message key="bookRoom.info"/></th>
+        <th class="columnDescription" style="cursor: default; width: 60px; text-align:center; display: block;"><fmt:message key="bookRoom.info"/></th>
         <th class="columnDescription" style="cursor: default; text-align:center;"><fmt:message key="bookRoom.deleteYourReservation"/></th>
     </tr>
     </thead>
@@ -110,7 +110,10 @@
             <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
             <td style="text-align:center;">
                 <span class="infoicon" onclick="showInfo(<c:out value="${reservation.reservationId}"/>)"
-                      title="Show more information about this reservation"></span></td>
+                      title="Show more information about this reservation"></span>
+                <span class="pdficon" onclick="downloadPDF(<c:out value="${reservation.reservationId}"/>)"
+                      title="Download more information about this reservation in PDF file"></span>
+            </td>
             <td style="text-align:center;"><c:if test="${reservation.person.username==loggedUser.username}">
                 <span class="deleteicon" onclick="deleteReservation(<c:out value="${reservation.reservationId}"/>)"
                       title="Delete this reservation"></span></c:if>

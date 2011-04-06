@@ -61,6 +61,10 @@
         <c:out value="${status}"/>
     </c:when>
 
+    <c:when test="${param.type=='timeline'}">
+        <c:out value="OK#!#"/><c:out value="${xmlContent}" escapeXml="false"/>
+    </c:when>
+
     <c:otherwise>
         FAIL#!#<fmt:message key='bookRoom.error'/> E5:<c:out value="${param.type}"/>
     </c:otherwise>

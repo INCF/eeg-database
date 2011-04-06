@@ -1,5 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.util;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -9,8 +12,8 @@ import java.util.GregorianCalendar;
 /**
  * @author Jenda Kolena
  */
-public class BookingRoomUtils {
-
+public class BookingRoomUtils
+{
     /**
      * Format of dateTime string.
      */
@@ -32,25 +35,43 @@ public class BookingRoomUtils {
      * @throws java.text.ParseException If rawDate cannot be parsed.
      * @see #dateTimeFormat
      */
-    public static GregorianCalendar getCalendar(String rawDate) {
+    public static GregorianCalendar getCalendar(String rawDate)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat(dateTimeFormat);
         GregorianCalendar tmp = new GregorianCalendar();
-        try {
+        try
+        {
             tmp.setTime(sdf.parse(rawDate));
-        } catch (ParseException e) {
+        } catch (ParseException e)
+        {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
         return tmp;
     }
 
     /**
+     * Gets time in hh:mm:ss format from java.sql.Timestamp.
+     *
+     * @param timestamp Input Timestamp.
+     * @return Retrieved time.
+     * @see #timeFormat
+     */
+    public static String getTime(Timestamp timestamp)
+    {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(timestamp);
+        return getTime(cal);
+    }
+
+    /**
      * Gets time in hh:mm:ss format from GregorianCalendar.
      *
      * @param cal Input GregorianCalendar.
-     * @return Retreived time.
+     * @return Retrieved time.
      * @see #timeFormat
      */
-    public static String getTime(GregorianCalendar cal) {
+    public static String getTime(GregorianCalendar cal)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat(timeFormat);
         Date date = cal.getTime();
         return sdf.format(date);
@@ -60,32 +81,62 @@ public class BookingRoomUtils {
      * Gets hours and minutes from complete time value.
      *
      * @param dateTime
-     * @return Retreived hours:minutes.
+     * @return Retrieved hours:minutes.
      */
-    public static String getHoursAndMinutes(String dateTime) {
+    public static String getHoursAndMinutes(String dateTime)
+    {
         String tmp = dateTime.split(" ")[1];
         return tmp.substring(0, tmp.lastIndexOf(":"));
+    }
+
+    /**
+     * Gets hours and minutes from java.sql.Timestamp.
+     *
+     * @param timestamp Input Timestamp.
+     * @return Retrieved hours:minutes.
+     */
+    public static String getHoursAndMinutes(Timestamp timestamp)
+    {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(timestamp);
+        return getHoursAndMinutes(cal);
     }
 
     /**
      * Gets hours and minutes from GregorianCalendar.
      *
      * @param cal Input GregorianCalendar.
-     * @return Retreived hours:minutes.
+     * @return Retrieved hours:minutes.
      */
-    public static String getHoursAndMinutes(GregorianCalendar cal) {
+    public static String getHoursAndMinutes(GregorianCalendar cal)
+    {
         String tmp = getTime(cal);
         return getTime(cal).substring(0, tmp.lastIndexOf(":"));
+    }
+
+    /**
+     * Gets time in dd/mm/yy format from java.sql.Timestamp.
+     *
+     * @param timestamp Input Timestamp.
+     * @return Retrieved date.
+     * @see #dateFormat
+     */
+    public static String getDate(Timestamp timestamp)
+    {
+        GregorianCalendar cal = new GregorianCalendar();
+        cal.setTime(timestamp);
+        return getDate(cal);
     }
 
     /**
      * Gets time in dd/mm/yy format from GregorianCalendar.
      *
      * @param cal Input GregorianCalendar.
-     * @return Retreived date.
+     * @return Retrieved date.
      * @see #dateFormat
      */
-    public static String getDate(GregorianCalendar cal) {
+    public static String getDate(GregorianCalendar cal)
+    {
         SimpleDateFormat sdf = new SimpleDateFormat(dateFormat);
         return sdf.format(cal.getTime());
     }
@@ -97,18 +148,38 @@ public class BookingRoomUtils {
      * @param repIndex Index of repetition (defacto FOR cycle).
      * @return int Count of weeks to add.
      */
-    public static int getWeeksAddCount(int repType, int repIndex) {
+    public static int getWeeksAddCount(int repType, int repIndex)
+    {
         int weekNum = new GregorianCalendar().get(Calendar.WEEK_OF_YEAR);
 
         int add = 0;
         if (repType == 0) add = 1;
-        if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0)) {
+        if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0))
+        {
             add = 2;
         }
-        if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1)) {
-            if (repIndex == 0) add = 1;
-            else add = 2;
+        if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1))
+        {
+            if (repIndex == 0)
+            {
+                add = 1;
+            }
+            else
+            {
+                add = 2;
+            }
         }
         return add;
+    }
+
+    /**
+     * Gets formatted person name.
+     *
+     * @param person Person.
+     * @return Persons name in format: Name SurName (UserName)
+     */
+    public static String formatPersonName(Person person)
+    {
+        return person.getGivenname() + " " + person.getSurname() + "(" + person.getUsername() + ")";
     }
 }

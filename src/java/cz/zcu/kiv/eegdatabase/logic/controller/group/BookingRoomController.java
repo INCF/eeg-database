@@ -26,7 +26,8 @@ import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.*;
 
-public class BookingRoomController extends SimpleFormController {
+public class BookingRoomController extends SimpleFormController
+{
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
@@ -36,17 +37,18 @@ public class BookingRoomController extends SimpleFormController {
     private String status = null;
     private String comment = null;
 
-    public BookingRoomController() {
+    public BookingRoomController()
+    {
         setCommandClass(BookRoomCommand.class);
         setCommandName("bookRoomCommand");
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception {
+    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception
+    {
 
-        /*String status = "";
-        String comment = "";*/
-        try {
+        try
+        {
             BookRoomCommand command = (BookRoomCommand) comm;
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
             comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.unknown", null, RequestContextUtils.getLocale(request));
@@ -74,14 +76,16 @@ public class BookingRoomController extends SimpleFormController {
             log.debug("Reservation has been created: " + ((res == null) ? "false" : "true"));
             reservationDao.create(res);
 
-            if (repCount > 0) {
+            if (repCount > 0)
+            {
                 comment = messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part1", null, RequestContextUtils.getLocale(request));
                 comment += command.getDate() + ", from " + startStr + " to " + endStr + "<br>\n";
 
                 GregorianCalendar nextS = command.getStartTimeCal();
                 GregorianCalendar nextE = command.getEndTimeCal();
 
-                for (int i = 0; i < repCount; i++) {
+                for (int i = 0; i < repCount; i++)
+                {
                     //shift of dates
                     int add = BookingRoomUtils.getWeeksAddCount(repType, i);
                     nextS.add(Calendar.WEEK_OF_YEAR, add);
@@ -98,12 +102,15 @@ public class BookingRoomController extends SimpleFormController {
                 }
 
                 comment += String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.multiple.part2", null, RequestContextUtils.getLocale(request)), repCount + 1);//+1 because we need count "original" reservation!
-            } else {
+            }
+            else
+            {
                 comment = String.format(messageSource.getMessage("bookRoom.controllerMessages.comment.booked.single", null, RequestContextUtils.getLocale(request)), command.getDate(), startStr, endStr);
             }
 
             status = messageSource.getMessage("bookRoom.controllerMessages.status.ok", null, RequestContextUtils.getLocale(request));
-        } catch (Exception e) {
+        } catch (Exception e)
+        {
             log.error("Exception: " + e.getMessage() + "\n" + e.getStackTrace()[0].getFileName() + " at line " + e.getStackTrace()[0].getLineNumber(), e);
 
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
@@ -123,20 +130,25 @@ public class BookingRoomController extends SimpleFormController {
      * @return Chosen researchgroup.
      * @throws Exception When researchgroup with ID does not exist.
      */
-    private ResearchGroup getResearchGroup(int id) throws Exception {
+    private ResearchGroup getResearchGroup(int id) throws Exception
+    {
         Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
         Iterator it = user.getResearchGroupMemberships().iterator();
-        while (it.hasNext()) {
+        while (it.hasNext())
+        {
             ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
             if (tmp.getResearchGroup().getResearchGroupId() == id)
+            {
                 return tmp.getResearchGroup();
+            }
         }
         throw new Exception("ResearchGroup with id='" + id + "' was not found!");
     }
 
 
     @Override
-    protected Map referenceData(HttpServletRequest request) throws Exception {
+    protected Map referenceData(HttpServletRequest request) throws Exception
+    {
         Map map = new HashMap<String, Object>();
         List<ResearchGroup> researchGroupList =
                 researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
@@ -146,11 +158,13 @@ public class BookingRoomController extends SimpleFormController {
         map.put("researchGroupList", researchGroupList);
 
         //if status or comment is prepared, send then delete them
-        if (status != null) {
+        if (status != null)
+        {
             map.put("status", new String(status));
             status = null;
         }
-        if (comment != null) {
+        if (comment != null)
+        {
             map.put("comment", new String(comment));
             comment = null;
         }
@@ -158,36 +172,44 @@ public class BookingRoomController extends SimpleFormController {
         return map;
     }
 
-    public HierarchicalMessageSource getMessageSource() {
+    public HierarchicalMessageSource getMessageSource()
+    {
         return messageSource;
     }
 
-    public void setMessageSource(HierarchicalMessageSource messageSource) {
+    public void setMessageSource(HierarchicalMessageSource messageSource)
+    {
         this.messageSource = messageSource;
     }
 
-    public PersonDao getPersonDao() {
+    public PersonDao getPersonDao()
+    {
         return personDao;
     }
 
-    public void setPersonDao(PersonDao personDao) {
+    public void setPersonDao(PersonDao personDao)
+    {
         this.personDao = personDao;
     }
 
-    public ResearchGroupDao getResearchGroupDao() {
+    public ResearchGroupDao getResearchGroupDao()
+    {
         return researchGroupDao;
     }
 
-    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao)
+    {
         this.researchGroupDao = researchGroupDao;
     }
 
 
-    public ReservationDao getReservationDao() {
+    public ReservationDao getReservationDao()
+    {
         return reservationDao;
     }
 
-    public void setReservationDao(ReservationDao reservationDao) {
+    public void setReservationDao(ReservationDao reservationDao)
+    {
         this.reservationDao = reservationDao;
     }
 }

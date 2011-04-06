@@ -425,6 +425,7 @@
         <property name="domain" value="${app.domain}"/>
     </bean>
 
+
     <bean name="bookingRoomController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
         <property name="formView" value="groups/bookingRoom"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
@@ -452,6 +453,15 @@
         <property name="messageSource" ref="messageSource"/>
         <property name="reservationDao" ref="reservationDao"/>
     </bean>
+
+    <bean name="bookingRoomExport" class="cz.zcu.kiv.eegdatabase.logic.pdf.ReservationPDF">
+        <property name="formView" value="errors/pdfError"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="reservationDao" ref="reservationDao"/>
+    </bean>
+
 
     <bean name="acceptRoleRequestController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.group.AcceptRoleRequestController">
@@ -856,11 +866,10 @@
          </property>-->
     </bean>
 
-     <bean id="wizardAjaxMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
+    <bean id="wizardAjaxMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
 
     </bean>
-
 
 
 </beans>

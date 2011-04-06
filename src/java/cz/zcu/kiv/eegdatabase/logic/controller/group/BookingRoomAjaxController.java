@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
+import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomXmlUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.HierarchicalMessageSource;
@@ -21,12 +22,14 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 import javax.naming.directory.InvalidAttributeValueException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
 public class BookingRoomAjaxController
-        extends SimpleFormController {
+        extends SimpleFormController
+{
 
     private Log log = LogFactory.getLog(getClass());
 
@@ -35,19 +38,19 @@ public class BookingRoomAjaxController
     private PersonDao personDao;
     private HierarchicalMessageSource messageSource;
 
-    public BookingRoomAjaxController() {
+    public BookingRoomAjaxController()
+    {
         setCommandClass(BookRoomCommand.class);
         setCommandName("bookRoomCommand");
     }
 
     @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
-        log.debug("Preparing data for form");
-
+    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception
+    {
         Map map = new HashMap<String, Object>();
 
-        if (request.getParameter("type").compareTo("info") == 0) {
-
+        if (request.getParameter("type").compareTo("info") == 0)
+        {
             int id = Integer.parseInt(request.getParameter("id"));
             Reservation reservation = reservationDao.getReservationById(id);
             GregorianCalendar created = new GregorianCalendar();
@@ -66,19 +69,41 @@ public class BookingRoomAjaxController
             data.put("end", BookingRoomUtils.getHoursAndMinutes(endTime));
 
             map.put("data", data);
-            log.debug("Returning map object");
             return map;
         }
 
-        if (request.getParameter("type").compareTo("delete") == 0) {
+        if (request.getParameter("type").compareTo("delete") == 0)
+        {
             int id = Integer.parseInt(request.getParameter("id"));
 
             if (reservationDao.deleteReservation(id))
+            {
                 map.put("status", messageSource.getMessage("bookRoom.delete.success", null, RequestContextUtils.getLocale(request)));
+            }
             else
+            {
                 map.put("status", messageSource.getMessage("bookRoom.delete.error", null, RequestContextUtils.getLocale(request)));
+            }
 
-            log.debug("Returning map object");
+            return map;
+        }
+
+        if (request.getParameter("type").compareTo("timeline") == 0)
+        {
+            String date = request.getParameter("date") + " 00:00:00";
+            log.debug("XML DATE=" + date);
+            GregorianCalendar monthStart = BookingRoomUtils.getCalendar(date);
+            //GregorianCalendar monthStart = BookingRoomUtils.getCalendar(BookingRoomUtils.getDate(date) + " 00:00:00");
+            monthStart.set(Calendar.DAY_OF_MONTH, 1);
+
+            GregorianCalendar monthEnd = (GregorianCalendar) monthStart.clone();
+            monthEnd.add(Calendar.MONTH, 1);
+            monthEnd.add(Calendar.SECOND, -1);
+
+            String xml = BookingRoomXmlUtils.formatReservationsList(reservationDao.getReservationsBetween(monthStart, monthEnd), personDao.getLoggedPerson());
+            //String xml = BookingRoomUtils.getDate(monthStart)+" "+BookingRoomUtils.getTime(monthStart)+" - "+BookingRoomUtils.getDate(monthEnd)+" "+BookingRoomUtils.getTime(monthEnd);
+
+            map.put("xmlContent", xml);
             return map;
         }
 
@@ -86,42 +111,51 @@ public class BookingRoomAjaxController
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
+    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception
+    {
 
         ModelAndView mav = new ModelAndView(getSuccessView());
         return mav;
     }
 
 
-    public HierarchicalMessageSource getMessageSource() {
+    public HierarchicalMessageSource getMessageSource()
+    {
         return messageSource;
     }
 
-    public void setMessageSource(HierarchicalMessageSource messageSource) {
+    public void setMessageSource(HierarchicalMessageSource messageSource)
+    {
         this.messageSource = messageSource;
     }
 
-    public ReservationDao getReservationDao() {
+    public ReservationDao getReservationDao()
+    {
         return reservationDao;
     }
 
-    public void setReservationDao(ReservationDao reservationDao) {
+    public void setReservationDao(ReservationDao reservationDao)
+    {
         this.reservationDao = reservationDao;
     }
 
-    public ResearchGroupDao getResearchGroupDao() {
+    public ResearchGroupDao getResearchGroupDao()
+    {
         return researchGroupDao;
     }
 
-    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao)
+    {
         this.researchGroupDao = researchGroupDao;
     }
 
-    public PersonDao getPersonDao() {
+    public PersonDao getPersonDao()
+    {
         return personDao;
     }
 
-    public void setPersonDao(PersonDao personDao) {
+    public void setPersonDao(PersonDao personDao)
+    {
         this.personDao = personDao;
     }
 }

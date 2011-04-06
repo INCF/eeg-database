@@ -79,9 +79,10 @@ div#message {
     display: none;
 }
 
-span.infoicon, span.deleteicon {
+span.infoicon, span.deleteicon, span.pdficon {
     display: inline-block;
     cursor: pointer;
+    margin-top: 2px;
 }
 
 span.infoicon {
@@ -94,6 +95,12 @@ span.deleteicon {
     background: url(images/cross_icon.png) no-repeat;
     width: 20px;
     height: 20px;
+}
+
+span.pdficon {
+    background: url(images/pdf_icon.png) no-repeat;
+    width: 25px;
+    height: 25px;
 }
 
 div#flowbox {
