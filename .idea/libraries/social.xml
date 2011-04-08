@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="social">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/social/restfb-1.6.4.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

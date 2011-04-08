@@ -87,6 +87,12 @@
       </library>
     </orderEntry>
     <orderEntry type="library" name="semantic" level="project" />
+    <orderEntry type="library" name="pdf" level="project" />
+    <orderEntry type="library" name="social" level="project" />
+    <orderEntry type="library" name="cxf" level="project" />
+    <orderEntry type="library" name="jaxws" level="project" />
+    <orderEntry type="library" name="geronimo" level="project" />
+    <orderEntry type="library" name="jstl" level="project" />
   </component>
 </module>
 
