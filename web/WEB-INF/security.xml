@@ -17,6 +17,9 @@
         <intercept-url pattern="/forgotten-password.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
         <intercept-url pattern="/registration-confirmation.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
+        <intercept-url pattern="/social/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/social/*.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
         <intercept-url pattern="/my-account/*.html" access="IS_AUTHENTICATED_FULLY" />
 
         <intercept-url pattern="/administration/*.html" access="ROLE_ADMIN" />

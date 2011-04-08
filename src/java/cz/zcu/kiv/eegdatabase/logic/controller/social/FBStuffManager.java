@@ -13,15 +13,15 @@ import java.net.URL;
  * Time: 14:14
  */
 public class FBStuffManager implements IFBStuffManager {
-    private final String fb_oath_uri =
-            "https://graph.facebook.com/ouath/";
+    private final String fb_oauth_uri =
+            "https://graph.facebook.com/oauth/";
     private String secret;
     private String clientId;
     private String redirectURI;
 
     private String assembleAuthentication(String authCode){
-        return fb_oath_uri + "access_token?" +
-                "client_id" + clientId +
+        return fb_oauth_uri + "access_token?" +
+                "client_id=" + clientId +
                 "&redirect_uri=" +redirectURI +
                 "&client_secret="+secret+
                 "&code="+authCode;
@@ -40,7 +40,7 @@ public class FBStuffManager implements IFBStuffManager {
                 for (String value : values) {
                     String[] valuePair = value.split("=");
                     if (valuePair.length !=2) {
-                        throw new RuntimeException("Unexpected Facebook Auth response");
+                        System.out.println("Unexpected Facebook Auth response");
                     } else {
                         if (valuePair[0].equals("access_token")) {
                             accessToken = valuePair[1];
@@ -48,7 +48,7 @@ public class FBStuffManager implements IFBStuffManager {
                     }
                 }
             } catch (MalformedURLException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
         return accessToken;
@@ -88,9 +88,10 @@ public class FBStuffManager implements IFBStuffManager {
     }
 
     public String fbLoginAuthenticate() {
-        return "redicrect:"+fb_oath_uri+"authorize?"+
+        return "redirect:"+ fb_oauth_uri +"authorize?"+
                 "client_id="+clientId+
-                "&display=page&redirect_uri="+redirectURI;
+                "&display=page&redirect_uri="+redirectURI+
+                "&scope=email,user_birthday";
     }
 
     public String getSecret() {

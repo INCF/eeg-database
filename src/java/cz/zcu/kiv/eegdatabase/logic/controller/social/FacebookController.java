@@ -1,8 +1,9 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
+import com.restfb.DefaultFacebookClient;
+import com.restfb.FacebookClient;
+import com.restfb.types.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.social.facebook.FacebookProfile;
-import org.springframework.social.facebook.FacebookTemplate;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -20,23 +21,22 @@ import javax.servlet.http.HttpServletResponse;
 public class FacebookController extends MultiActionController{
     @Autowired
     private IFBStuffManager fbStuffKeeper;
+    private FacebookClient facebookClient;
 
     public ModelAndView login(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView("social/login");
-        this.fbStuffKeeper.fbLoginAuthenticate();
+        ModelAndView mav = new ModelAndView(this.fbStuffKeeper.fbLoginAuthenticate());
         return mav;
     }
 
 
     public ModelAndView user(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView("social/user");
         String code = request.getParameter("code");
         String accessToken = fbStuffKeeper.retrieveAccessToken(code);
-        ModelAndView mav = new ModelAndView("social/user");
-        FacebookTemplate facebook = new FacebookTemplate(accessToken);
-        mav.addObject("picture", facebook.getUserProfile());
-        FacebookProfile profile = facebook.getUserProfile();
-        mav.addObject("facebookProfile", profile);
-        mav.addObject("accessToken", accessToken);
+        facebookClient = new DefaultFacebookClient(accessToken);
+        User user = facebookClient.fetchObject("me", User.class);
+        mav.addObject("facebookProfile",user);
+        mav.addObject("picture", user.getId());
         return mav;
     }
 

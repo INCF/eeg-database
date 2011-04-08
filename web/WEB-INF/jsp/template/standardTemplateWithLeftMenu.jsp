@@ -11,7 +11,7 @@
 
         <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
         <script type="text/javascript" src="<c:url value='/files/js/jquery-1.3.2.min.js' />"></script>
-        <script type="text/javascript" src="<c:url value='/files/js/jquery-ui-1.7.1.custom.min.js' />"></script>
+        <script type="text/javascript" src="<c:url value='/files/js/jquery-ui.js' />"></script>
         <script type="text/javascript">
             $(function() {
                 $("#startDate").datepicker({
