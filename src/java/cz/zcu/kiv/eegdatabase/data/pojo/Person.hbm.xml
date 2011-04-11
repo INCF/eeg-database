@@ -7,8 +7,8 @@
       <column name="PERSON_ID" precision="22" scale="0"/>
       <generator class="increment"/>
     </id>
-    <property name="facebookId" type="integer">
-        <column name="FB_UID" precision="22" scale="0" />
+    <property name="facebookId" type="string">
+        <column length="30" name="FB_UID" />
     </property>
     <property name="givenname" type="string">
       <column length="50" name="GIVENNAME"/>

@@ -55,7 +55,7 @@ public class Person implements Serializable {
     private Set<History> histories = new HashSet<History>(0);
     private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
     private Set<ResearchGroup> articlesGroupSubscribtions = new HashSet<ResearchGroup>(0);
-    private Integer facebookId;
+    private String facebookId;
 
 
     public Person() {
@@ -314,11 +314,11 @@ public class Person implements Serializable {
         this.articlesGroupSubscribtions = articlesGroupSubscribtions;
     }
 
-    public Integer getFacebookId() {
+    public String getFacebookId() {
         return facebookId;
     }
 
-    public void setFacebookId(Integer facebookId) {
+    public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
     }
 
