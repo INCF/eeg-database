@@ -143,6 +143,8 @@
                        title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
             </div>
             <div id='timeline'></div>
+            <span style="cursor: pointer;" onclick="downloadPDFList();">Download all in PDF</span>
+
             <div id="chosenData">&nbsp;</div>
         </div>
     </div>
@@ -152,7 +154,10 @@
 </form:form>
 
 <form:form action="book-room-export.html" name="pdf">
-    <input type="hidden" name="reservationId" id="reservationId" value=""/>
+    <input type="hidden" name="reservationId" id="pdfId" value=""/>
+    <input type="hidden" name="type" id="pdfType" value=""/>
+    <input type="hidden" name="date" id="pdfDate" value=""/>
+    <input type="hidden" name="length" id="pdfLentgh" value="7"/>
 </form:form>
 
 <input type="hidden" id="collision" value="-1"/>
@@ -167,10 +172,17 @@
 
 <script type="text/javascript">
 
-
 function downloadPDF(id)
 {
-    $("#reservationId").attr('value', id);
+    $("#pdfId").attr('value', id);
+    $("#pdfType").attr('value', 'single');
+    document.forms["pdf"].submit();
+}
+
+function downloadPDFList()
+{
+    $("#pdfType").attr('value', 'range');
+    $("#pdfDate").attr('value', $("#date").attr('value'));
     document.forms["pdf"].submit();
 }
 
@@ -260,7 +272,7 @@ function deleteReservation(id)
             {
                 var answer = data.split('#!#');
                 if (trim(answer[0]) == 'OK') showChosenData();
-                alert(trim(answer[1]));
+                //alert(trim(answer[1]));
             },
             error: function (xhr, ajaxOptions, thrownError)
             {
@@ -535,7 +547,7 @@ function reloadTimeline()
             }
             else
             {
-                alert(trim(answer[0]));
+                //alert(trim(answer[0]));
                 $("#timeline").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
             }
         },

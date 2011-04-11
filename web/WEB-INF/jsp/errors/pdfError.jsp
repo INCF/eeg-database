@@ -24,6 +24,8 @@
 
         <p>error has occurred</p>
 
+        <div><c:out value="${error}"/></div>
+
         <ul>
             <li><a href="<c:url value='/'/>" title="<fmt:message key='gotoHomepage'/>"><fmt:message key="gotoHomepage"/></a></li>
         </ul>

@@ -93,15 +93,12 @@ public class BookingRoomAjaxController
             String date = request.getParameter("date") + " 00:00:00";
             log.debug("XML DATE=" + date);
             GregorianCalendar monthStart = BookingRoomUtils.getCalendar(date);
-            //GregorianCalendar monthStart = BookingRoomUtils.getCalendar(BookingRoomUtils.getDate(date) + " 00:00:00");
             monthStart.set(Calendar.DAY_OF_MONTH, 1);
-
             GregorianCalendar monthEnd = (GregorianCalendar) monthStart.clone();
             monthEnd.add(Calendar.MONTH, 1);
             monthEnd.add(Calendar.SECOND, -1);
 
             String xml = BookingRoomXmlUtils.formatReservationsList(reservationDao.getReservationsBetween(monthStart, monthEnd), personDao.getLoggedPerson());
-            //String xml = BookingRoomUtils.getDate(monthStart)+" "+BookingRoomUtils.getTime(monthStart)+" - "+BookingRoomUtils.getDate(monthEnd)+" "+BookingRoomUtils.getTime(monthEnd);
 
             map.put("xmlContent", xml);
             return map;

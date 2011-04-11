@@ -69,7 +69,7 @@ public class BookingRoomXmlUtils
         text += ", " + BookingRoomUtils.getHoursAndMinutes(reservation.getStartTime()) + " - " + BookingRoomUtils.getHoursAndMinutes(reservation.getEndTime());
         String mail = reservation.getPerson().getEmail();
         String date = BookingRoomUtils.getDate(reservation.getStartTime()) + ", " + BookingRoomUtils.getHoursAndMinutes(reservation.getStartTime()) + " - " + BookingRoomUtils.getHoursAndMinutes(reservation.getEndTime());
-        text += "<a href='mailto:" + mail + "?subject=Reservation to " + date + "'>" + mail + "</a>";
+        text += "<br><a href='mailto:" + mail + "?subject=Reservation to " + date + "'>" + mail + "</a>";
 
 
         Node event = doc.createElement("event");

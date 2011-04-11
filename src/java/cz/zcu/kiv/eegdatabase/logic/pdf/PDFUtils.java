@@ -1,10 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.pdf;
 
-import com.itextpdf.text.BadElementException;
-import com.itextpdf.text.Image;
-import com.itextpdf.text.PageSize;
-import com.itextpdf.text.Paragraph;
+import com.itextpdf.text.*;
 
+import java.io.File;
 import java.io.IOException;
 
 /**
@@ -14,41 +12,57 @@ import java.io.IOException;
  */
 public class PDFUtils
 {
-    String path;
+    public static final String HEADERIMG = "header.gif";
+    public static final String FOOTERIMG = "pdf_footer.png";
+    public static final int[] PADDING = {10, 10, 10, 10};
+
+    private String path;
+
 
     public PDFUtils(String path)
     {
         this.path = path;
     }
 
-    public Paragraph getHeader()
+    public Paragraph setHeader(Document document) throws IOException, BadElementException
     {
-        return getHeader(null);
+        return setHeader(document, "EEG Database");
     }
 
-    public Paragraph getHeader(String title)
+    public Paragraph setHeader(Document document, String title) throws IOException, BadElementException
     {
-        Paragraph paragraph = new Paragraph("EEG Database");
+        Paragraph paragraph = new Paragraph(title, FontFactory.getFont(FontFactory.HELVETICA, 14, Font.BOLD, BaseColor.BLACK));
+        paragraph.setAlignment(Element.ALIGN_CENTER);
 
-        try
-        {
+        Image img = GetResizedAndCenteredImage(path + convertPath("/files/images/" + HEADERIMG));
+        float topMargin = img.getScaledHeight() + 2 * PADDING[0];
+        img.setAbsolutePosition((PageSize.A4.getWidth() - img.getScaledWidth()) / 2, (PageSize.A4.getHeight() - img.getScaledHeight()) - PADDING[0]);
+        paragraph.add(img);
+        img = GetResizedAndCenteredImage(path + convertPath("/files/images/" + FOOTERIMG));
+        img.setAbsolutePosition((PageSize.A4.getWidth() - img.getScaledWidth()) / 2, PADDING[2]);
+        paragraph.add(img);
+        float bottomMargin = img.getScaledHeight() + 2 * PADDING[2];
 
+        document.setMargins(topMargin, PADDING[1], bottomMargin, PADDING[3]);
 
-            Image img = Image.getInstance(this.getClass().getResource("/files/images/header-no-login.gif"));
-            img.setAbsolutePosition((PageSize.A4.getWidth() - img.getScaledWidth()) / 2, (PageSize.A4.getHeight() - img.getScaledHeight()));
-            paragraph.add(img);
+        paragraph.setSpacingAfter(1.5f * PADDING[0]);
 
-            return paragraph;
-        } catch (BadElementException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (IOException e)
-        {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        }
-
-        return null;
+        return paragraph;
     }
 
+    private Image GetResizedAndCenteredImage(String filename) throws IOException, BadElementException
+    {
+        Image img = Image.getInstance(filename);
+        float newWidth = PageSize.A4.getWidth() - PADDING[1] - PADDING[3];
+        float ratio = newWidth / img.getWidth();
+        float newHeight = img.getHeight() * ratio;
+        img.scaleAbsolute(newWidth, newHeight);
 
+        return img;
+    }
+
+    private String convertPath(String origPath)
+    {
+        return origPath.replace('/', File.separatorChar).replace('\\', File.separatorChar);
+    }
 }
