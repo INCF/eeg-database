@@ -2,31 +2,40 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+
 import java.util.List;
 import java.util.Map;
 
 /**
  * DAO for fetching and saving objects with people.
- * 
+ *
  * @author Jindrich Pergler
  */
 public interface PersonDao extends GenericDao<Person, Integer> {
 
-  public Person getPerson(String userName);
+    public Person getPerson(String userName);
 
-  public Person getPersonByHash (String hashCode);
+    public Person getPersonByHash(String hashCode);
 
-  public List<Person> getPersonsWherePendingRequirement();
+    public Person getPersonByFbUid(String fbUid);
 
-  public boolean usernameExists(String userName);
+    public List<Person> getPersonsWherePendingRequirement();
 
-  public List<Person> getSupervisors();
+    public boolean usernameExists(String userName);
 
-  public Person getLoggedPerson();
+    public boolean fbUidExists(String id);
 
-  public Map getInfoForAccountOverview(Person loggedPerson);
+    public boolean emailExists(String email);
 
-  public boolean userNameInGroup(String userName, int groupId);
+    public List<Person> getSupervisors();
 
-  public List<Person> getPersonSearchResults(List<SearchRequest> requests);
+    public Person getLoggedPerson();
+
+    public Map getInfoForAccountOverview(Person loggedPerson);
+
+    public boolean userNameInGroup(String userName, int groupId);
+
+    public List<Person> getPersonSearchResults(List<SearchRequest> requests);
+
+
 }

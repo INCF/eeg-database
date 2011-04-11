@@ -13,7 +13,7 @@
 
     <context:annotation-config/>
 
-    <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky -->
+    <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">
             <map>
@@ -21,7 +21,7 @@
             </map>
         </property>
         <property name="defaultErrorView" value="errors/generalError"/>
-    </bean>
+    </bean>                                           -->
 
 
     <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
