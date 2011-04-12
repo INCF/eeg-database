@@ -10,6 +10,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+import net.sf.json.JSONObject;
 
 /**
  * Adding new weather, person atd. to database
@@ -23,24 +25,38 @@ public class WizardAjaxMultiController extends MultiActionController{
     @Autowired
     private WeatherDao weatherDao;
 
-    public ModelAndView addNewWeather(HttpServletRequest request, HttpServletResponse response) {
-        ModelAndView mav = new ModelAndView();
+    /**
+     * Added new weather to database
+     * @param request
+     * @param response
+     * @return
+     * @throws IOException
+     */
+    public ModelAndView addNewWeather(HttpServletRequest request, HttpServletResponse response) throws IOException {
+        ModelAndView mav = new ModelAndView("experiments/JSonView");
         log.debug("WizardAjaxMultiController - Add new weather.");
         String weatherTitle;
         String weatherDescription;
         Weather weather = null;
         weatherTitle = request.getParameter("title");
         weatherDescription = request.getParameter("description");
-        if (!weatherTitle.equals("") && !weatherDescription.equals("")) {
+        JSONObject jo = new JSONObject();
+        if (!weatherTitle.equals("") && !weatherDescription.equals("") && weatherDao.canSaveNewDescription(weatherDescription)) {
             log.debug("Creating new weather object.");
             weather = new Weather();
             weather.setTitle(weatherTitle);
             weather.setDescription(weatherDescription);
             weatherDao.create(weather);
+            log.debug("Saving attribute - success: true");
+            jo.put("success", true);
+            log.debug("Saving attribute - weatherId: "+weather.getWeatherId());
+            jo.put("weatherId", weather.getWeatherId());
+        } else {
+             log.debug("Saving attribute - success: false");
+             jo.put("success", false);
         }
-        mav.addObject("commit", "OK#!#");
+        log.debug("Saving  JSONObject: "+jo);
+        mav.addObject("result",jo);
         return mav;
     }
-
-
 }

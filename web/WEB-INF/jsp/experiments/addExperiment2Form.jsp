@@ -26,16 +26,16 @@
                 </form:label>
 
                 <form:select path="scenario" cssClass="selectBox">
-                <form:option value="-1">
-                    <fmt:message key="select.option.noScenarioSelected"/>
-                </form:option>
-                <c:forEach items="${scenarioList}" var="scenario">
-                    <form:option value="${scenario.scenarioId}" label="${scenario.title}"></form:option>
-                </c:forEach>
+                    <form:option value="-1">
+                        <fmt:message key="select.option.noScenarioSelected"/>
+                    </form:option>
+                    <c:forEach items="${scenarioList}" var="scenario">
+                        <form:option value="${scenario.scenarioId}" label="${scenario.title}"></form:option>
+                    </c:forEach>
                 </form:select>
 
 
-                    <form:errors path="scenario" cssClass="errorBox"/>
+                <form:errors path="scenario" cssClass="errorBox"/>
 
                 <div class="itemBox">
                     <form:label path="hardware" cssClass="multipleSelectBoxLabel"
@@ -56,76 +56,73 @@
                                 cssErrorClass="selectBoxLabel errorLabel"><fmt:message
                             key="label.weather"/></form:label>
 
-                    <form:select path="weather" id="selectWeather"  multiple="false" cssClass="selectBox">
-                        <option selected="-1" value="-1"><fmt:message key="select.option.noWeatherSelected"/></option>
+                    <form:select path="weather" id="selectWeather" multiple="false" cssClass="selectBox">
+                        <option value="-1"><fmt:message key="select.option.noWeatherSelected"/></option>
                         <c:forEach items="${weatherList}" var="weather">
                             <option value="${weather.weatherId}">${weather.title}</option>
                         </c:forEach>
                     </form:select>
-                    <input type="button" id="create-weather" value="<fmt:message key="button.addWeatherDefinition"/>">
+                    <input type="button" name="new_weather" id="create-weather"
+                           value="<fmt:message key="button.addWeatherDefinition"/>">
 
                     <form:errors path="weather" cssClass="errorBox"/>
                 </div>
 
-                <div id="dialog-form" title="Create new weather">
-                    <p class="validateTips">All form fields are required.</p>
 
-                    <form>
-                    <fieldset>
-                        <label for="weatherTitle">Title</label>
-                        <input type="text" name="weatherTitle" id="weatherTitle" class="text ui-widget-content ui-corner-all" />
-                        <label for="weatherDescription">Description</label>
-                        <input type="text" name="weatherDescription" id="weatherDescription" class="text ui-widget-content ui-corner-all" />
-                    </fieldset>
-                    </form>
+                <div class="itemBox">
+                    <form:label path="weatherNote" cssClass="textFieldLabel"
+                                cssErrorClass="textFieldLabel errorLabel"><fmt:message
+                            key="label.weatherNote"/></form:label>
+
+                    <form:input path="weatherNote" cssClass="textField" cssErrorClass="textField errorField"/>
+
+                    <form:errors path="weatherNote" cssClass="errorBox"/>
                 </div>
 
+                <div class="itemBox">
+                    <form:label path="temperature" cssClass="textFieldLabel"
+                                cssErrorClass="textFieldLabel errorLabel"><fmt:message
+                            key="label.temperature"/></form:label>
 
+                    <form:input path="temperature" cssClass="textField" cssErrorClass="textField errorField"/> °C
 
-
-
-                    <div class="itemBox">
-                        <form:label path="weatherNote" cssClass="textFieldLabel"
-                                    cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                                key="label.weatherNote"/></form:label>
-
-                        <form:input path="weatherNote" cssClass="textField" cssErrorClass="textField errorField"/>
-
-                        <form:errors path="weatherNote" cssClass="errorBox"/>
-                    </div>
-
-                    <div class="itemBox">
-                        <form:label path="temperature" cssClass="textFieldLabel"
-                                    cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                                key="label.temperature"/></form:label>
-
-                        <form:input path="temperature" cssClass="textField" cssErrorClass="textField errorField"/> °C
-
-                        <form:errors path="temperature" cssClass="errorBox"/>
-                    </div>
-                    <div class="itemBox">
-
-                        <form:label path="privateNote" cssClass="textFieldLabel"
-                                    cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                                key="label.private"/></form:label>
-
-                        <form:checkbox path="privateNote" cssClass="checkBox"
-                                       value="${addExperimentWizard.privateNote}"/>
-
-                        <form:errors path="privateNote" cssClass="errorBox"/>
-                    </div>
+                    <form:errors path="temperature" cssClass="errorBox"/>
                 </div>
+                <div class="itemBox">
 
+                    <form:label path="privateNote" cssClass="textFieldLabel"
+                                cssErrorClass="textFieldLabel errorLabel"><fmt:message
+                            key="label.private"/></form:label>
 
-                <div class="actionBox">
-                    <input type="submit" value="Previous" name="_target0" class="submitButton lightButtonLink"/>
-                    <input type="submit" value="Next" name="_target2" class="lightButtonLink"/>
-                    <input type="submit" value="Cancel" name="_cancel" class="lightButtonLink"/>
+                    <form:checkbox path="privateNote" cssClass="checkBox"
+                                   value="${addExperimentWizard.privateNote}"/>
+
+                    <form:errors path="privateNote" cssClass="errorBox"/>
                 </div>
+            </div>
 
 
+            <div class="actionBox">
+                <input type="submit" value="Previous" name="_target0" class="submitButton lightButtonLink"/>
+                <input type="submit" value="Next" name="_target2" class="lightButtonLink"/>
+                <input type="submit" value="Cancel" name="_cancel" class="lightButtonLink"/>
+            </div>
 
 
         </fieldset>
     </form:form>
-    </ui:experimentsTemplate>
+
+    <div id="dialog-form" title="Create new weather">
+        <p class="validateTips">All form fields are required.</p>
+
+        <form>
+            <fieldset>
+                <label for="weatherTitle">Title</label>
+                <input type="text" name="weatherTitle" id="weatherTitle" class="text ui-widget-content ui-corner-all"/>
+                <label for="weatherDescription">Description</label>
+                <input type="text" name="weatherDescription" id="weatherDescription"
+                       class="text ui-widget-content ui-corner-all"/>
+            </fieldset>
+        </form>
+    </div>
+</ui:experimentsTemplate>

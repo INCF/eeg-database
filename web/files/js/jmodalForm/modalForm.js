@@ -64,18 +64,25 @@ $(function() {
                         url: "http://localhost:8080/EEGDatabase/experiments/addNewWeather.html",
                         cache: false,
                         data: req,
+                        async:false,
                         beforeSend: function() {
 
                         },
-                        async:false,
                         success: function(data) {
-                            alert("OK");
-                            var answer = data.getAttribute("commit").split('#!#');
-                            if (trim(answer[0]) == "OK") {
-                                alert("OK");
+                            var newId;
+                            var answer = data.split(':');
+                            //alert(answer[1].substring(0, 4));
+                            if ((answer[1].substring(0, 4)) == "true") {
+                                //alert(answer[2].substring(0, answer[2].length - 1));
+                                newId = parseInt(answer[2].substring(0, answer[2].length - 1), 10);
+                                $("#selectWeather").append(
+                                        '<option selected="' + newId + '" value="' + newId + '">' + weatherTitle.val() +
+                                                '</option>'
+                                        )
+                                        ;
                             }
                             else {
-
+                                alert("Data not saved!");
                             }
                         },
 
@@ -84,17 +91,10 @@ $(function() {
                                 return;  // it's not really an error
                             }
                             else {
-                               // alert("Error E3:" + xmlHttpRequest.status);
+                                alert("Error E3:" + xmlHttpRequest.status);
                             }
                         }
                     });
-
-
-                    $("#selectWeather").append(
-                            '<option selected="' + selectedId + '" value="'+ selectedId +'">' + weatherTitle.val() +
-                                    '</option>'
-                            )
-                            ;
                     $(this).dialog("close");
                 }
             },

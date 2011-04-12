@@ -38,4 +38,17 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    /**
+     * Description of weather must be unique
+     * @param description - description of weather
+     * @return
+     */
+    public boolean canSaveNewDescription(String description) {
+       String hqlQuery = "from Weather w where w.description = :description";
+       String name = "description";
+       Object value = description;
+       List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
+       return (list.size() == 0);
+    }
 }
