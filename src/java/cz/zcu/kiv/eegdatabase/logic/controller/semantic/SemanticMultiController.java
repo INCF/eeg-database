@@ -11,6 +11,8 @@ import java.io.OutputStream;
 import org.apache.commons.logging.Log;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import static org.apache.commons.io.IOUtils.copy;
+
 /**
  * Controller for transforming POJO object to resources of semantic web
  * User: pbruha
@@ -48,10 +50,8 @@ public class SemanticMultiController extends MultiActionController {
         out = response.getOutputStream();
         log.debug("Generating OWL");
         is = semanticFactory.transformPOJOToSemanticResource(typeTransform);
-        int i;
-        while ((i = is.read()) > -1) {
-           out.write(i);
-        }
+
+        copy(is, out);
         out.flush();
         out.close();
         return null;
@@ -77,11 +77,8 @@ public class SemanticMultiController extends MultiActionController {
         out = response.getOutputStream();
         log.debug("Generating RDF");
         InputStream is = semanticFactory.generateRDF();
-        int i;
-        while ((i = is.read()) > -1) {
-           out.write(i);
-        }
 
+        copy(is, out);
         out.flush();
         out.close();
         return null;
