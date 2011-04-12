@@ -8,7 +8,9 @@
        xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
        http://www.springframework.org/schema/op http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
-       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd
+       http://www.springframework.org/schema/security/spring-security-2.0.1.xsd http://www.springframework.org/schema/security
+       ">
 
 
     <context:annotation-config/>
@@ -22,7 +24,6 @@
         </property>
         <property name="defaultErrorView" value="errors/generalError"/>
     </bean>                                           -->
-
 
     <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
         <property name="formView" value="system/registrationForm"/>
@@ -866,7 +867,8 @@
          </property>-->
     </bean>
 
-    <bean id="wizardAjaxMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
+    <bean id="wizardAjaxMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
 
     </bean>

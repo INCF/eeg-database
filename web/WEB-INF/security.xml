@@ -40,14 +40,13 @@
         <logout logout-url="/logout" logout-success-url="/home.html"/>
 
     </http>
-
+    <authentication-manager alias="authenticationManager" />
     <authentication-provider>
         <jdbc-user-service data-source-ref="dataSource"
                            users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and username=?"
                            authorities-by-username-query="select username, authority from person where username=?"/>
         <password-encoder hash="md5"/>
     </authentication-provider>
-
 
 
 </beans:beans>

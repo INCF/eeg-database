@@ -38,11 +38,12 @@ public class SimplePersonDao
         String HQLselect = "from Person person " + "where person.username = :userName";
 
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "userName", userName));
+        if (foundUser != null) {
+            System.out.println("FOUND: User "+foundUser.getUsername()+": "+foundUser.getEmail()+"("+foundUser.getAuthority()+")");
+        } else {
+            System.out.println("FOUND NULL");
+        }
         return foundUser;
-
-        /*List<Person> foundUser = getHibernateTemplate()
-       .findByNamedParam(HQLselect, "userName", userName);
-       return foundUser.iterator().next();*/
     }
 
 
@@ -66,6 +67,7 @@ public class SimplePersonDao
         String HQLselect = "from Person person " + "where person.facebookId = :facebookId";
 
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "facebookId", facebookId));
+
         return foundUser;
     }
 

@@ -5,13 +5,14 @@
 package cz.zcu.kiv.eegdatabase.logic.util;
 
 import com.Ostermiller.util.RandPass;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.springframework.security.GrantedAuthority;
+import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.userdetails.UserDetails;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
-
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.userdetails.UserDetails;
 
 /**
  *
@@ -43,12 +44,23 @@ public class ControllerUtils {
      */
     public static String getLoggedUserName() {
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        if (o != null) {
+            GrantedAuthority[] authorities =
+                    SecurityContextHolder.getContext().getAuthentication().getAuthorities();
+            for (GrantedAuthority ga : authorities) {
+                System.out.println("AUTHORITY: "+ga.getAuthority());
+            }
+        }
+
         String userName = null;
         if (o instanceof UserDetails) {
             userName = ((UserDetails) o).getUsername();
+        } else if (o instanceof Person) {
+            userName = ((Person) o).getUsername();
         } else {
             userName = o.toString();
         }
+
         return userName;
     }
 
