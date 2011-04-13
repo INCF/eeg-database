@@ -38,6 +38,10 @@ $(function() {
         }
     }
 
+    function get_hostname_from_url(url) {
+        return url.match(/:\/\/(.[^/]+)/)[1];
+    }
+
     $("#dialog-form").dialog({
         autoOpen: false,
         height: 300,
@@ -59,9 +63,24 @@ $(function() {
 
                 if (bValid) {
                     var req = "title=" + weatherTitle.val() + "&description=" + weatherDescription.val();
+                    var hn = window.location.hostname;
+                    var addNewWeather = 'experiments/addNewWeather.html';
+                    var url;
+                    if (hn == "eegdatabase.kiv.zcu.cz") {
+                       url = 'http://eegdatabase.kiv.zcu.cz';
+                    }
+                    else if (hn =="localhost"){
+                        url ='http://localhost:8080/EEGDatabase/';
+                    }
+                    else {
+                        url = 'http://147.228.64.173:8080/EEGDatabase/';
+                    }
+
+                    url = url + addNewWeather;
+
                     $.ajax({
                         type: "GET",
-                        url: "http://localhost:8080/EEGDatabase/experiments/addNewWeather.html",
+                        url: url,
                         cache: false,
                         data: req,
                         async:false,
@@ -71,7 +90,7 @@ $(function() {
                         success: function(data) {
                             var newId;
                             var answer = data.split(':');
-                            //alert(answer[1].substring(0, 4));
+                            //alert(url);
                             if ((answer[1].substring(0, 4)) == "true") {
                                 //alert(answer[2].substring(0, answer[2].length - 1));
                                 newId = parseInt(answer[2].substring(0, answer[2].length - 1), 10);
