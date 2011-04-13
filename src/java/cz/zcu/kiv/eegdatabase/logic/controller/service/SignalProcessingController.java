@@ -25,9 +25,6 @@ public class SignalProcessingController extends AbstractController {
         DataTransformer transformer = new EEGDataTransformer();
         if (transformer.isSuitableExperiment(exp)) {
             double[] experimentalData = transformer.transformExperimentalData(exp);
-            for (int i = 0; i < 30; i++) {
-                System.out.println(experimentalData[i]);
-            }
         }
 
         return mav;

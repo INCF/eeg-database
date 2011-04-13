@@ -30,7 +30,7 @@ public class EEGDataTransformer implements DataTransformer {
         return (vhdr && eeg);
     }
 
-    public double[] transformExperimentalData(Experiment e) {
+    public double[] transformExperimentalData(Experiment e) throws SQLException {
         VhdrReader r = new VhdrReader();
         EegReader eeg;
         DataFile vhdr = null;
@@ -45,7 +45,6 @@ public class EEGDataTransformer implements DataTransformer {
                 vmrk = file;
             }
         }
-        try {
             r.readVhdr(vhdr);
             for (DataFile file: e.getDataFiles()) {
                 if (file.getFilename().equals(r.getProperties().get("CI").get("DataFile"))) {
@@ -58,9 +57,6 @@ public class EEGDataTransformer implements DataTransformer {
             }
             eeg = new EegReader(r);
             data = eeg.readFile(binaryFile);
-        } catch (SQLException e1) {
-            e1.printStackTrace();
-        }
 
         return data; 
     }

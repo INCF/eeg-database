@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.logic.signal;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 
+import java.sql.SQLException;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Honza
@@ -13,5 +15,5 @@ public interface DataTransformer {
 
     public boolean isSuitableExperiment(Experiment e);
 
-    public double[] transformExperimentalData(Experiment e);
+    public double[] transformExperimentalData(Experiment e) throws SQLException;
 }
