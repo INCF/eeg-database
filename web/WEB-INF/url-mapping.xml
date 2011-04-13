@@ -136,6 +136,8 @@
                 <prop key="semantic/generateRDF.html">semanticMultiController</prop>
 
                 <prop key="experiments/add-experiment.html">addExperimentWizardController</prop>
+
+                <prop key="services/index.html">signalProcessingController</prop>
             </props>
         </property>
     </bean>

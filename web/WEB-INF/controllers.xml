@@ -873,5 +873,7 @@
 
     </bean>
 
-
+    <bean id="signalProcessingController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.SignalProcessingController">
+        <property name="experimentDao" ref="experimentDao" />
+    </bean>
 </beans>
