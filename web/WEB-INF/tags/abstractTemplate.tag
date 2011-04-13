@@ -65,8 +65,8 @@
     </c:if>
 
     <c:if test="${allowWYSIWYG}">
-        <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
-        <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script>
+        <%-- <script src="http://js.nicedit.com/nicEdit-latest.js" type="text/javascript"></script>
+        <script type="text/javascript">bkLib.onDomLoaded(nicEditors.allTextAreas);</script> --%>
     </c:if>
     <c:if test="${search}">
         <script type="text/javascript" src="<c:url value='/files/js/search.js' />"></script>
