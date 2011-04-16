@@ -7,6 +7,11 @@ $(function() {
             weatherDescription = $("#weatherDescription"),
             allFields = $([]).add(weatherTitle).add(weatherDescription),
             tips = $(".validateTips");
+    var hardwareTitle = $("#hardwareTitle"),
+            hardwareType = $("#hardwareType"),
+            hardwareDescription = $("#hardwareDescription"),
+            allHardwareFields = $([]).add(hardwareTitle).add(hardwareType).add(hardwareDescription),
+            hardwareTips = $(".validateTips");
 
     function updateTips(t) {
         tips
@@ -42,7 +47,21 @@ $(function() {
         return url.match(/:\/\/(.[^/]+)/)[1];
     }
 
-    $("#dialog-form").dialog({
+    function get_url(url) {
+        var hn = window.location.hostname;
+        if (hn == "eegdatabase.kiv.zcu.cz") {
+            url = 'http://eegdatabase.kiv.zcu.cz';
+        }
+        else if (hn == "localhost") {
+            url = 'http://localhost:8080/EEGDatabase/';
+        }
+        else {
+            url = 'http://147.228.64.173:8080/EEGDatabase/';
+        }
+        return url;
+    }
+
+    $("#dialog-form-weather").dialog({
         autoOpen: false,
         height: 300,
         width: 350,
@@ -63,18 +82,9 @@ $(function() {
 
                 if (bValid) {
                     var req = "title=" + weatherTitle.val() + "&description=" + weatherDescription.val();
-                    var hn = window.location.hostname;
                     var addNewWeather = 'experiments/addNewWeather.html';
                     var url;
-                    if (hn == "eegdatabase.kiv.zcu.cz") {
-                       url = 'http://eegdatabase.kiv.zcu.cz';
-                    }
-                    else if (hn =="localhost"){
-                        url ='http://localhost:8080/EEGDatabase/';
-                    }
-                    else {
-                        url = 'http://147.228.64.173:8080/EEGDatabase/';
-                    }
+                    url = get_url(url);
 
                     url = url + addNewWeather;
 
@@ -127,10 +137,90 @@ $(function() {
                 }
     });
 
+    $("#dialog-form-hardware").dialog({
+        autoOpen: false,
+        height: 360,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Create new hardware": function() {
+                var bValid = true;
+                allFields.removeClass("ui-state-error");
+
+                bValid = bValid && checkLength(hardwareTitle, "title", 3, 30);
+                bValid = bValid && checkLength(hardwareType, "type", 3, 30);
+                bValid = bValid && checkLength(hardwareDescription, "description", 6, 80);
+
+                bValid = bValid && checkRegexp(hardwareTitle, /^[a-z]([0-9a-z_ ])+$/i, "Hardware title may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(hardwareTitle, /^[a-z]([0-9a-z_ ])+$/i, "Hardware type may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(hardwareDescription, /^([0-9a-zA-Z ])+$/, "Hardware description field only allow : a-z 0-9");
+
+
+                if (bValid) {
+                    var req = "title=" + hardwareTitle.val() + "&type=" + hardwareType.val() + "&description=" + hardwareDescription.val();
+                    var addNewHardware = 'experiments/addNewHardware.html';
+                    var url;
+                    url = get_url(url);
+
+                    url = url + addNewHardware;
+
+                    $.ajax({
+                        type: "GET",
+                        url: url,
+                        cache: false,
+                        data: req,
+                        async:false,
+                        beforeSend: function() {
+
+                        },
+                        success: function(data) {
+                            var newId;
+                            var answer = data.split(':');
+                            if ((answer[1].substring(0, 4)) == "true") {
+                                newId = parseInt(answer[2].substring(0, answer[2].length - 1), 10);
+                                $("#selectHardware").append(
+                                        '<option selected="' + newId + '" value="' + newId + '">' + hardwareTitle.val() +
+                                                '</option>'
+                                        )
+                                        ;
+                            }
+                            else {
+                                alert("Data not saved!");
+                            }
+                        },
+
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0) {
+                                return;  // it's not really an error
+                            }
+                            else {
+                                alert("Error E3:" + xmlHttpRequest.status);
+                            }
+                        }
+                    });
+                    $(this).dialog("close");
+                }
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        close:
+                function() {
+                    allHardwareFields.val("").removeClass("ui-state-error");
+                }
+    });
+
+
     $("#create-weather")
             .button()
             .click(function() {
-        $("#dialog-form").dialog("open");
+        $("#dialog-form-weather").dialog("open");
+    });
+    $("#create-hardware")
+            .button()
+            .click(function() {
+        $("#dialog-form-hardware").dialog("open");
     });
 })
         ;

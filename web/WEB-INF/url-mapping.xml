@@ -124,6 +124,7 @@
                 <prop key="experiments/search.html">experimentsSearcherController</prop>
                 <prop key="experiments/search-results.html">experimentsSearcherController</prop>
                 <prop key="experiments/addNewWeather.html">wizardAjaxMultiController</prop>
+                <prop key="experiments/addNewHardware.html">wizardAjaxMultiController</prop>
 
                 <prop key="history/daily-history.html">dailyHistoryController</prop>
                 <prop key="history/weekly-history.html">weeklyHistoryController</prop>

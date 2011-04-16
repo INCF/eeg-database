@@ -42,12 +42,13 @@
                                 cssErrorClass="multipleSelectBoxLabel errorLabel"><fmt:message
                             key="label.hardware"/></form:label>
 
-                    <form:select path="hardware" multiple="multiple" cssClass="multipleSelectBox">
+                    <form:select path="hardware" multiple="multiple" id="selectHardware" cssClass="multipleSelectBox">
                         <c:forEach items="${hardwareList}" var="hardware">
-                            <form:option value="${hardware.hardwareId}" label="${hardware.title}"></form:option>
+                            <option value="${hardware.hardwareId}">${hardware.title}</option>
                         </c:forEach>
                     </form:select>
-
+                    <input type="button" name="new_hardware" id="create-hardware"
+                           value="<fmt:message key="button.addHardwareDefinition"/>">
                     <form:errors path="hardware" cssClass="errorBox"/>
                 </div>
 
@@ -112,15 +113,30 @@
         </fieldset>
     </form:form>
 
-    <div id="dialog-form" title="Create new weather">
+    <div id="dialog-form-weather" title="Create new weather">
         <p class="validateTips">All form fields are required.</p>
 
         <form>
             <fieldset>
-                <label for="weatherTitle">Title</label>
+                <label for="weatherTitle"><fmt:message key="label.title"/></label>
                 <input type="text" name="weatherTitle" id="weatherTitle" class="text ui-widget-content ui-corner-all"/>
-                <label for="weatherDescription">Description</label>
-                <input type="text" name="weatherDescription" id="weatherDescription"
+                <label for="weatherDescription"><fmt:message key="label.description"/></label>
+                <input type="text" name="weatherDescription" id="weatherDescription" class="text ui-widget-content ui-corner-all"/>
+            </fieldset>
+        </form>
+    </div>
+
+    <div id="dialog-form-hardware" title="Create new hardware">
+        <p class="validateTips">All form fields are required.</p>
+
+        <form>
+            <fieldset>
+                <label for="hardwareTitle"><fmt:message key="label.hardwareTitle"/></label>
+                <input type="text" name="hardwareTitle" id="hardwareTitle" class="text ui-widget-content ui-corner-all"/>
+                <label for="hardwareType"><fmt:message key="label.hardwareType"/></label>
+                <input type="text" name="hardwareType" id="hardwareType" class="text ui-widget-content ui-corner-all"/>
+                <label for="hardwareDescription"><fmt:message key="label.hardwareDescription"/></label>
+                <input type="text" name="hardwareDescription" id="hardwareDescription"
                        class="text ui-widget-content ui-corner-all"/>
             </fieldset>
         </form>

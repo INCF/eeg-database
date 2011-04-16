@@ -10,4 +10,12 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
     public boolean canSaveTitle(String title, int id);
 
     public boolean canDelete(int id);
+
+    /**
+     * Title of hardware must be unique
+     * @param title
+     * @return
+     */
+    public boolean canSaveTitle(String title);
+
 }
