@@ -9,7 +9,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:abstractTemplate pageTitle="${pageTitle}" jspinner="${jspinner}" addExperimentCalendar="${addExperimentCalendar}" allowJQuery="true" search="true">
+<ui:abstractTemplate pageTitle="${pageTitle}" jspinner="${jspinner}" addExperimentCalendar="${addExperimentCalendar}" allowJQuery="true" search="true" dateOfBirthCalendar="true">
   <div class="leftMenu">
     <jsp:include page="/WEB-INF/jsp/experiments/menu.jsp"/>
   </div>

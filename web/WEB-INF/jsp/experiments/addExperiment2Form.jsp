@@ -8,10 +8,9 @@
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<%@taglib prefix="f" tagdir="/WEB-INF/tags/format/" %>
-<ui:experimentsTemplate pageTitle="pageTitle.addEditExperiment" addExperimentCalendar="false">
+<%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
+<ui:experimentsTemplate pageTitle="pageTitle.addEditExperiment" addExperimentCalendar="true">
 
     <h1><fmt:message key="pageTitle.addExperiment"/></h1>
 
@@ -121,7 +120,8 @@
                 <label for="weatherTitle"><fmt:message key="label.title"/></label>
                 <input type="text" name="weatherTitle" id="weatherTitle" class="text ui-widget-content ui-corner-all"/>
                 <label for="weatherDescription"><fmt:message key="label.description"/></label>
-                <input type="text" name="weatherDescription" id="weatherDescription" class="text ui-widget-content ui-corner-all"/>
+                <input type="text" name="weatherDescription" id="weatherDescription"
+                       class="text ui-widget-content ui-corner-all"/>
             </fieldset>
         </form>
     </div>
@@ -132,7 +132,8 @@
         <form>
             <fieldset>
                 <label for="hardwareTitle"><fmt:message key="label.hardwareTitle"/></label>
-                <input type="text" name="hardwareTitle" id="hardwareTitle" class="text ui-widget-content ui-corner-all"/>
+                <input type="text" name="hardwareTitle" id="hardwareTitle"
+                       class="text ui-widget-content ui-corner-all"/>
                 <label for="hardwareType"><fmt:message key="label.hardwareType"/></label>
                 <input type="text" name="hardwareType" id="hardwareType" class="text ui-widget-content ui-corner-all"/>
                 <label for="hardwareDescription"><fmt:message key="label.hardwareDescription"/></label>

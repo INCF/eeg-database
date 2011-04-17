@@ -56,7 +56,7 @@
             </c:if>
             <div class="itemBox">
                 <label class="textFieldLabel"><fmt:message key="label.startDateTime"/></label>
-                <form:input path="startDate" cssClass="textField dateField" 
+                <form:input path="startDate" cssClass="textField dateField"
                             cssErrorClass="textField dateField errorField" onchange="setDate(this.value)"/>
                 <form:input path="startTime" cssClass="textField timeField" maxlength="5"
                             cssErrorClass="textField timeField errorField" onchange="startTimeChange(this.value)"/>
@@ -92,7 +92,8 @@
                                      label="${person.givenname} ${person.surname}"></form:option>
                     </c:forEach>
                 </form:select>
-
+                <input type="button" name="new_person" id="create-person"
+                       value="<fmt:message key="button.addPerson"/>">
                 <form:errors path="subjectPerson" cssClass="errorBox"/>
             </div>
 
@@ -119,6 +120,39 @@
 
         </fieldset>
     </form:form>
-   
+
+    <div id="dialog-form-person" title="Create new person">
+        <p class="validateTips">All form fields are required.</p>
+
+        <form id="addPersonForm">
+            <fieldset>
+                <%--@declare id="gender"--%><%--@declare id="female"--%><%--@declare id="male"--%><label for="givenname"><fmt:message key="label.givenname"/></label>
+                <input type="text" name="givenname" id="givenname" class="text ui-widget-content ui-corner-all"/>
+
+                <label for="surname"><fmt:message key="label.surname"/></label>
+                <input type="text" name="surname" id="surname" class="text ui-widget-content ui-corner-all"/>
+
+                <label for="dateOfBirth"><fmt:message key="label.dateOfBirth"/></label>
+                <input type="text" name="dateOfBirth" id="dateOfBirth" class="text textField dateField ui-widget-content ui-corner-all"/>
+
+                <label for="gender"><fmt:message key="label.gender"/></label>
+                <input id="gender" name="gender" type="radio" value="M" checked="checked" class="radio ui-widget-content ui-corner-all">
+                <label for="male"><fmt:message key="label.gender.male"/></label>
+                <input id="gender" name="gender" type="radio" value="F">
+                <label for="female"><fmt:message key="label.gender.female"/></label>
+
+                <label for="email" class="text email"><fmt:message key="label.email"/></label>
+                <input type="text" name="email" id="email" class="text ui-widget-content ui-corner-all"/>
+
+                <label for="phoneNumber"><fmt:message key="label.phoneNumber"/></label>
+                <input type="text" name="phoneNumber" id="phoneNumber" class="text ui-widget-content ui-corner-all"/>
+
+                <label for="note"><fmt:message key="label.note"/></label>
+                <input type="text" name="note" id="note" class="text ui-widget-content ui-corner-all"/>
+
+            </fieldset>
+        </form>
+    </div>
+
 
 </ui:experimentsTemplate>

@@ -1,4 +1,4 @@
-label.description, input.text {
+label.text, input.text {
     display: block;
 }
 
@@ -6,6 +6,10 @@ input.text {
     margin-bottom: 12px;
     width: 95%;
     padding: .4em;
+}
+label.email {
+   margin-top: 12px;
+   width: 95%;
 }
 
 fieldset.modalForm {
