@@ -10,17 +10,11 @@ public class EegReader {
 
     private VhdrReader info;
     private int channelCnt;
-    private int dataShift;
     private Class binaryType;
     private byte[] eegData;
 
     public EegReader(VhdrReader info) {
         this.info = info;
-        try {
-        dataShift = Integer.parseInt(info.getProperties().get("CI").get("Prestimulus"));
-        } catch (NumberFormatException e) {
-            dataShift = 1000;
-        }
         channelCnt = Integer.parseInt(info.getProperties().get("CI").get("NumberOfChannels"));
         if (info.getProperties().get("BI").get("BinaryFormat").equals("INT_16")) {
             binaryType = Integer.class;
@@ -34,10 +28,10 @@ public class EegReader {
         eegData = binaryFile.getFileContent().getBytes(1, (int) binaryFile.getFileContent().length());
         int channel = 5; // electrode
         
-        return readOneChannel(-dataShift, channel);
+        return readOneChannel(channel);
     }
 
-    private double[] readOneChannel(int time, int channel) {
+    private double[] readOneChannel(int channel) {
 
         int len = eegData.length / (getBinarySize() * channelCnt);
         double[] ret;
@@ -45,7 +39,7 @@ public class EegReader {
         double resolution = info.getChannels().get(channel).getResolution();
         ret = new double[len];
         for (int i = 0; i < len; i++) {
-            channelSet = readChannelSet(time + dataShift + i, channelSet);
+            channelSet = readChannelSet(i, channelSet);
             ret[i] = (channelSet[channel - 1] * resolution);
         }
         

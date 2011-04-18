@@ -20,14 +20,14 @@ public class SignalProcessingController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws Exception {
 
-        Experiment exp = experimentDao.read(156);   //tested experiment - eeg data
-        //Experiment exp = experimentDao.read(159);    //avg data
+        //Experiment exp = experimentDao.read(156);   //tested experiment - eeg data
+        Experiment exp = experimentDao.read(159);    //avg data
         ModelAndView mav = new ModelAndView("redirect:/home.html");
         DataTransformer transformer = new EEGDataTransformer();
         if (transformer.isSuitableExperiment(exp)) {
             double[] experimentalData = transformer.transformExperimentalData(exp);
-            for (int i = 0; i < 1000; i = i+50)
-                System.out.println(experimentalData[i]);
+//            for (int i = 0; i < 1000; i = i+50)
+//                System.out.println(experimentalData[i]);
         }
 
         return mav;

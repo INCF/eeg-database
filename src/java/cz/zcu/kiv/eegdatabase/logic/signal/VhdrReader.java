@@ -79,15 +79,6 @@ public class VhdrReader {
         properties.put("CI", readInfo(lines, "Common Infos"));
         properties.put("BI", readInfo(lines, "Binary Infos"));
         properties.put("CH", readInfo(lines, "Channel Infos"));
-
-        for (int i = 0; i < lines.length; i++) {
-            if (lines[i].contains("Interval")) {
-                String prestimulus = lines[i].substring(lines[i].lastIndexOf(":") + 1).trim();
-
-                properties.get("CI").put("Prestimulus", prestimulus);
-
-            }
-        }
     }
 
     private void loadChannelInfo()  {
