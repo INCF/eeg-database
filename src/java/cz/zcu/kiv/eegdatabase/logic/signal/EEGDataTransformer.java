@@ -6,13 +6,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import java.sql.SQLException;
 import java.util.Set;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Honza
- * Date: 10.4.2011
- * Time: 17:25:17
- * To change this template use File | Settings | File Templates.
- */
 public class EEGDataTransformer implements DataTransformer {
 
     public boolean isSuitableExperiment(Experiment e) {
@@ -23,7 +16,7 @@ public class EEGDataTransformer implements DataTransformer {
             if (file.getFilename().endsWith(".vhdr")) {
                 vhdr = true;
             }
-            if (file.getFilename().endsWith(".eeg")) {
+            if ((file.getFilename().endsWith(".eeg")) || (file.getFilename().endsWith(".avg"))) {
                 eeg = true;
             }
         }
@@ -36,7 +29,6 @@ public class EEGDataTransformer implements DataTransformer {
         DataFile vhdr = null;
         DataFile vmrk = null;
         DataFile binaryFile = null;
-        double[] data = null;
         for (DataFile file: e.getDataFiles()) {
             if (file.getFilename().endsWith(".vhdr")) {
                 vhdr = file;
@@ -45,19 +37,17 @@ public class EEGDataTransformer implements DataTransformer {
                 vmrk = file;
             }
         }
-            r.readVhdr(vhdr);
-            for (DataFile file: e.getDataFiles()) {
-                if (file.getFilename().equals(r.getProperties().get("CI").get("DataFile"))) {
-                    binaryFile = file;
-                    break;
-                }
+        r.readVhdr(vhdr);
+        for (DataFile file : e.getDataFiles()) {
+            if (file.getFilename().equals(r.getProperties().get("CI").get("DataFile"))) {
+                binaryFile = file;
+                break;
             }
-            if (vmrk != null) {
-                r.readVmrk(vmrk);
-            }
-            eeg = new EegReader(r);
-            data = eeg.readFile(binaryFile);
-
-        return data; 
+        }
+        if (vmrk != null) {
+            r.readVmrk(vmrk);
+        }
+        eeg = new EegReader(r);
+        return eeg.readFile(binaryFile);
     }
 }
