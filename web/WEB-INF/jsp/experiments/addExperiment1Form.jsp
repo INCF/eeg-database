@@ -85,11 +85,10 @@
                             cssErrorClass="selectBoxLabel errorLabel"><fmt:message
                         key="label.subjectPerson"/></form:label>
 
-                <form:select path="subjectPerson" cssClass="selectBox">
-                    <form:option value="-1"><fmt:message key="select.option.noSubjectPersonSelected"/></form:option>
+                <form:select path="subjectPerson" id="subjectPerson" cssClass="selectBox">
+                    <option value="-1"><fmt:message key="select.option.noSubjectPersonSelected"/></option>
                     <c:forEach items="${personList}" var="person">
-                        <form:option value="${person.personId}"
-                                     label="${person.givenname} ${person.surname}"></form:option>
+                        <option value="${person.personId}">${person.givenname} ${person.surname}</option>
                     </c:forEach>
                 </form:select>
                 <input type="button" name="new_person" id="create-person"

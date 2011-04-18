@@ -142,4 +142,34 @@
             </fieldset>
         </form>
     </div>
+     <div id="dialog-form-scenario" title="Create new scenario">
+        <p class="validateTips">All form fields are required.</p>
+
+        <form>
+            <fieldset>
+
+                <label for="researchGroup"><fmt:message key="label.researchGroup"/></label>
+                 <select name="researchGroup" id="researchGroup" class="text ui-widget-content ui-corner-all">
+                    <option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></option>
+                    <c:forEach items="${researchGroupList}" var="researchGroup">
+                        <option value="${researchGroup.researchGroupId}" label="" <c:if
+                                test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
+                            <c:out value="${researchGroup.title}"/>
+                        </option>
+                    </c:forEach>
+                </select>
+                <label for="scenarioTitle"><fmt:message key="label.title"/></label>
+                <input type="text" name="scenarioTitle" id="scenarioTitle" class="text ui-widget-content ui-corner-all"/>
+                <label for="length"><fmt:message key="label.lenght"/></label>
+                <input type="text" name="length" id="length" class="text ui-widget-content ui-corner-all"/>
+
+                <label for="scenarioDescription"><fmt:message key="label.hardwareDescription"/></label>
+                <textarea rows="3" cols="20" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all"/>
+                <label for="dataFile"><fmt:message key="label.dataFile"/></label>
+                <input type="file" name="dataFile" id="dataFile" class="fileField"/>
+                <label for="privateNote"><fmt:message key="label.private"/></label>
+                <input type="checkbox" name="privateNote" value="private"  />
+            </fieldset>
+        </form>
+    </div>
 </ui:experimentsTemplate>

@@ -165,6 +165,12 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
                 map.put("defaultGroupId", defaultGroupId);
                 break;
             case 1:
+                List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
+                map.put("researchGroupList", groups);
+
+                ResearchGroup defaultGroup1 = personDao.getLoggedPerson().getDefaultGroup();
+                int defaultGroupId1 = (defaultGroup1 != null) ? defaultGroup1.getResearchGroupId() : 0;
+                map.put("defaultGroupId", defaultGroupId1);
                 List<Scenario> scenarioList = scenarioDao.getAllRecords();
                 map.put("scenarioList", scenarioList);
 

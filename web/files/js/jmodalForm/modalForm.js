@@ -269,8 +269,8 @@ $("#dialog-form-person").dialog({
                             var answer = data.split(':');
                             if ((answer[1].substring(0, 4)) == "true") {
                                 newId = parseInt(answer[2].substring(0, answer[2].length - 1), 10);
-                                $("#selectHardware").append(
-                                        '<option selected="' + newId + '" value="' + newId + '">' + hardwareTitle.val() +
+                                $("#subjectPerson").append(
+                                        '<option selected="' + newId + '" value="' + newId + '">' + givenname.val() + ' '+ surname.val()+
                                                 '</option>'
                                         )
                                         ;
