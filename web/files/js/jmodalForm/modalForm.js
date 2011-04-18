@@ -20,6 +20,11 @@ $(function() {
             note = $("#note"),
             allPersonsFields= $([]).add(givenname).add(surname).add(dateOfBirth).add(email).add(phoneNumber).add(note),
             personsTips = $(".validateTips");
+    var scenarioTitle = $("#scenarioTitle"),
+            length = $("#length"),
+            scenarioDescription = $("#scenarioDescription"),
+            allScenariosFields= $([]).add(scenarioTitle).add(length).add(scenarioDescription),
+            scenariosTips = $(".validateTips");
 
     function updateTips(t) {
         tips
@@ -248,7 +253,7 @@ $("#dialog-form-person").dialog({
 
                     var req = $("#addPersonForm").serialize();
                     var addNewPerson = 'experiments/addNewPerson.html';
-                    alert(req);
+                    //alert(req);
 
                     var url;
                     url = get_url(url);
@@ -302,6 +307,83 @@ $("#dialog-form-person").dialog({
                 }
     });
 
+    $("#dialog-form-scenario").dialog({
+        autoOpen: false,
+        height: 500,
+        width: 350,
+        modal: true,
+        buttons: {
+            "Create new scenario": function() {
+                var bValid = true;
+                allScenariosFields.removeClass("ui-state-error");
+
+                bValid = bValid && checkLength(scenarioTitle, "scenario title", 3, 30);
+                bValid = bValid && checkLength(length, "length", 1, 30);
+                bValid = bValid && checkLength(scenarioDescription, "scenario description", 6, 30);
+
+                bValid = bValid && checkRegexp(scenarioTitle, /^[a-z]([0-9a-z_ ])+$/i, "Scenario title may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(length, /^[0-9]+$/i, "Scenario length may consist of 0-9.");
+                bValid = bValid && checkRegexp(scenarioDescription, /^[0-9a-z_ ]+$/i, "Scenario description may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+
+
+                if (bValid) {
+
+                    var req = $("#addScenarioForm").serialize();
+                    var addNewScenario = 'experiments/addNewScenario.html';
+                    //alert(req);
+
+                    var url;
+                    url = get_url(url);
+
+                    url = url + addNewScenario;
+
+                    $.ajax({
+                        type: "POST",
+                        url: url,
+                        cache: false,
+                        data: req,
+                        async:false,
+                        beforeSend: function() {
+
+                        },
+                        success: function(data) {
+                            var newId;
+                            var answer = data.split(':');
+                            if ((answer[1].substring(0, 4)) == "true") {
+                                newId = parseInt(answer[2].substring(0, answer[2].length - 1), 10);
+                                $("#selectScenario").append(
+                                        '<option selected="' + newId + '" value="' + newId + '">' + scenarioTitle +
+                                                '</option>'
+                                        )
+                                        ;
+                            }
+                            else {
+                                alert("Data not saved!");
+                            }
+                        },
+
+                        error: function (xmlHttpRequest, textStatus, errorThrown) {
+                            if (xmlHttpRequest.readyState == 0 || xmlHttpRequest.status == 0) {
+                                return;  // it's not really an error
+                            }
+                            else {
+                                alert("Error E3:" + xmlHttpRequest.status);
+                            }
+                        }
+                    });
+                    $(this).dialog("close");
+                }
+            },
+            Cancel: function() {
+                $(this).dialog("close");
+            }
+        },
+        close:
+                function() {
+                    allScenariosFields.val("").removeClass("ui-state-error");
+                }
+    });
+
 
 
     $("#create-weather")
@@ -318,6 +400,11 @@ $("#dialog-form-person").dialog({
             .button()
             .click(function() {
         $("#dialog-form-person").dialog("open");
+    });
+    $("#create-scenario")
+            .button()
+            .click(function() {
+        $("#dialog-form-scenario").dialog("open");
     });
 
 })

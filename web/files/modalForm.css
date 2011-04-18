@@ -2,12 +2,12 @@ label.text, input.text {
     display: block;
 }
 
-input.text {
+input.text, textarea.text {
     margin-bottom: 12px;
     width: 95%;
     padding: .4em;
 }
-label.email {
+label.email,label.title, label.dataFile  {
    margin-top: 12px;
    width: 95%;
 }

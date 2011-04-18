@@ -24,15 +24,16 @@
                     <fmt:message key="label.scenario"/>
                 </form:label>
 
-                <form:select path="scenario" cssClass="selectBox">
-                    <form:option value="-1">
+                <form:select path="scenario" id="selectScenario" cssClass="selectBox">
+                    <option value="-1">
                         <fmt:message key="select.option.noScenarioSelected"/>
-                    </form:option>
+                    </option>
                     <c:forEach items="${scenarioList}" var="scenario">
-                        <form:option value="${scenario.scenarioId}" label="${scenario.title}"></form:option>
+                        <option value="${scenario.scenarioId}">${scenario.title}</option>
                     </c:forEach>
                 </form:select>
-
+                 <input type="button" name="new_scenario" id="create-scenario"
+                           value="<fmt:message key="button.addScenario"/>">
 
                 <form:errors path="scenario" cssClass="errorBox"/>
 
@@ -145,7 +146,7 @@
      <div id="dialog-form-scenario" title="Create new scenario">
         <p class="validateTips">All form fields are required.</p>
 
-        <form>
+        <form id="addScenarioForm">
             <fieldset>
 
                 <label for="researchGroup"><fmt:message key="label.researchGroup"/></label>
@@ -158,15 +159,16 @@
                         </option>
                     </c:forEach>
                 </select>
-                <label for="scenarioTitle"><fmt:message key="label.title"/></label>
+                <label for="scenarioTitle" class="text title"><fmt:message key="label.title"/></label>
                 <input type="text" name="scenarioTitle" id="scenarioTitle" class="text ui-widget-content ui-corner-all"/>
                 <label for="length"><fmt:message key="label.lenght"/></label>
                 <input type="text" name="length" id="length" class="text ui-widget-content ui-corner-all"/>
 
                 <label for="scenarioDescription"><fmt:message key="label.hardwareDescription"/></label>
-                <textarea rows="3" cols="20" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all"/>
-                <label for="dataFile"><fmt:message key="label.dataFile"/></label>
-                <input type="file" name="dataFile" id="dataFile" class="fileField"/>
+                <textarea rows="3" cols="20" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
+                </textarea>
+                <label for="dataFile" class="dataFile"><fmt:message key="label.dataFile"/></label>
+                <input type="file" name="dataFile" id="dataFile" class="text ui-widget-content ui-corner-all"/>
                 <label for="privateNote"><fmt:message key="label.private"/></label>
                 <input type="checkbox" name="privateNote" value="private"  />
             </fieldset>

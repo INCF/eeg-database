@@ -2,14 +2,15 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -37,6 +38,8 @@ public class WizardAjaxMultiController extends MultiActionController {
     private HardwareDao hardwareDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private ScenarioDao scenarioDao;
 
     /**
      * Added new weather to database
@@ -126,7 +129,6 @@ public class WizardAjaxMultiController extends MultiActionController {
     public ModelAndView addNewPerson(HttpServletRequest request, HttpServletResponse response) throws IOException {
         ModelAndView mav = new ModelAndView("experiments/JSonView");
         log.debug("WizardAjaxMultiController - Add new person.");
-        System.out.println("WizardAjaxMultiController - Add new person.");
 
         Person person = null;
         String givenname;
@@ -186,6 +188,60 @@ public class WizardAjaxMultiController extends MultiActionController {
 
         //log.debug("Generating username");
         //String username = apc.getGivenname().toLowerCase() + "-" + apc.getSurname().toLowerCase();
+        log.debug("Saving  JSONObject: " + jo);
+        mav.addObject("result", jo);
+        return mav;
+    }
+
+    public ModelAndView addNewScenario(HttpServletRequest request, HttpServletResponse response) throws IOException {
+    ModelAndView mav = new ModelAndView("experiments/JSonView");
+        log.debug("WizardAjaxMultiController - Add new scenario.");
+        //System.out.println("WizardAjaxMultiController - Add new scenario.");
+        JSONObject jo = new JSONObject();
+        Scenario scenario = new Scenario();
+
+        int researchGroupId;
+        String scenarioTitle;
+        String scenarioLength;
+        String scenarioDescription;
+        String dataFile;
+        String privateNote;
+
+        researchGroupId = Integer.parseInt(request.getParameter("researchGroup"));
+        scenarioTitle = request.getParameter("scenarioTitle");
+        scenarioLength = request.getParameter("length");
+        scenarioDescription = request.getParameter("scenarioDescription");
+        dataFile = request.getParameter("dataFile");
+        privateNote = request.getParameter("privateNote");
+
+        log.debug("Setting logged person.");
+        scenario.setPerson(personDao.getLoggedPerson());
+        log.debug("Setting research group.");
+        ResearchGroup group = new ResearchGroup();
+        group.setResearchGroupId(researchGroupId);
+        scenario.setResearchGroup(group);
+
+        log.debug("Setting scenario title: " + scenarioTitle);
+        scenario.setTitle(scenarioTitle);
+
+        log.debug("Setting scenario description: " + scenarioDescription);
+        scenario.setDescription(scenarioDescription);
+
+        log.debug("Setting scenario length: " + scenarioLength);
+        scenario.setScenarioLength(Integer.parseInt(scenarioLength));
+
+        scenario.setScenarioName(scenarioTitle+"text.fileTypeXml");
+        scenario.setMimetype("text/xml");
+        scenario.setScenarioXml(Hibernate.createClob(dataFile));
+        log.debug("Setting private/public access");
+        scenario.setPrivateScenario(true);
+        scenarioDao.create(scenario);
+        log.debug("Saving attribute - success: true");
+        jo.put("success", true);
+        log.debug("Saving attribute - scenarioId: " + scenario.getScenarioId());
+        jo.put("personId", scenario.getScenarioId());
+
+
         log.debug("Saving  JSONObject: " + jo);
         mav.addObject("result", jo);
         return mav;

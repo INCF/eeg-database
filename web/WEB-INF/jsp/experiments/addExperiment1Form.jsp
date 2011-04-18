@@ -137,7 +137,7 @@
                 <label for="gender"><fmt:message key="label.gender"/></label>
                 <input id="gender" name="gender" type="radio" value="M" checked="checked" class="radio ui-widget-content ui-corner-all">
                 <label for="male"><fmt:message key="label.gender.male"/></label>
-                <input id="gender" name="gender" type="radio" value="F">
+                <input id="gender" name="gender" type="radio" value="F" class="radio ui-widget-content ui-corner-all">
                 <label for="female"><fmt:message key="label.gender.female"/></label>
 
                 <label for="email" class="text email"><fmt:message key="label.email"/></label>
