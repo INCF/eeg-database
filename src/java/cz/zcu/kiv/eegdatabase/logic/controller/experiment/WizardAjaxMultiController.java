@@ -6,22 +6,40 @@ import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
+import org.apache.commons.fileupload.FileItemIterator;
+import org.apache.commons.fileupload.FileItemStream;
+import org.apache.commons.fileupload.FileUploadException;
+import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.apache.commons.fileupload.util.Streams;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.javamail.JavaMailSenderImpl;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Timestamp;
+import java.text.Normalizer;
 import java.text.ParseException;
 import java.util.Date;
+import java.util.Random;
 
 import net.sf.json.JSONObject;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
  * Adding new weather, person atd. to database
@@ -40,6 +58,11 @@ public class WizardAjaxMultiController extends MultiActionController {
     private PersonDao personDao;
     @Autowired
     private ScenarioDao scenarioDao;
+    @Autowired
+    private JavaMailSenderImpl mailSender;
+    @Autowired
+    private HierarchicalMessageSource messageSource;
+    private String domain;
 
     /**
      * Added new weather to database
@@ -79,6 +102,7 @@ public class WizardAjaxMultiController extends MultiActionController {
 
     /**
      * Method adds new hardware to database
+     *
      * @param request
      * @param response
      * @return
@@ -121,6 +145,7 @@ public class WizardAjaxMultiController extends MultiActionController {
 
     /**
      * Adds new person to database
+     *
      * @param request
      * @param response
      * @return
@@ -179,7 +204,104 @@ public class WizardAjaxMultiController extends MultiActionController {
 
         log.debug("Setting note = " + note);
         person.setNote(note);
+
+        log.debug("Generating username");
+        String username = givenname.toLowerCase() + "-" + surname.toLowerCase();
+
+        // Removing the diacritical marks
+        String decomposed = Normalizer.normalize(username, Normalizer.Form.NFD);
+        username = decomposed.replaceAll("[^\\p{ASCII}]", "");
+
+        String tempUsername = username;
+        // if the username already exists generate random numbers until some combination is free
+        // if the username does not exist, we can use it (so the while is jumped over)
+        while (personDao.usernameExists(tempUsername)) {
+            Random random = new Random();
+            int number = random.nextInt(999) + 1;  // not many users are expected to have the same name and surname, so 1000 numbers is enough
+            tempUsername = username + "-" + number;
+        }
+
+        username = tempUsername;
+        log.debug("Unique username was generated: " + username);
+        person.setUsername(username);
+
+        log.debug("Generating random password");
+        String password = ControllerUtils.getRandomPassword();
+        person.setPassword(ControllerUtils.getMD5String(password));
+
+        log.debug("Setting authority to ROLE_READER");
+        person.setAuthority("ROLE_READER");
+
         personDao.create(person);
+
+         log.debug("Hashing the username");
+        String authHash = ControllerUtils.getMD5String(givenname);
+
+        String userName = "<b>" + person.getUsername() + "</b>";
+        String pass = "<b>" + person.getPassword() + "</b>";
+
+        log.debug("Creating email content");
+        String emailBody = "<html><body>";
+
+        emailBody += "<h4>" + messageSource.getMessage("registration.email.body.hello",
+                null, RequestContextUtils.getLocale(request)) + "</h4>";
+
+        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part1",
+                null, RequestContextUtils.getLocale(request)) + "</p>";
+
+        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part2",
+                new String[]{userName}, RequestContextUtils.getLocale(request)) + "<br/>";
+
+        emailBody += messageSource.getMessage("registration.email.body.text.part3",
+                new String[]{pass}, RequestContextUtils.getLocale(request)) + "</p>";
+
+        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part4",
+                null, RequestContextUtils.getLocale(request)) + "<br/>";
+
+
+        emailBody +=
+                "<a href=\"http://" + domain + "/registration-confirmation.html?activation=" + authHash + "\">" +
+                        "http://" + domain + "/registration-confirmation.html?activation=" + authHash + "" +
+                        "</a>" +
+                        "</p>";
+
+        emailBody += "</body></html>";
+
+        log.debug("email body: " + emailBody);
+
+
+        log.debug("Composing e-mail message");
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        //message.setContent(confirmLink, "text/html");
+        MimeMessageHelper helper = new MimeMessageHelper(mimeMessage);
+        try {
+            helper.setTo(email);
+        } catch (MessagingException e) {
+            log.error(e);
+        }
+        //helper.setFrom(messageSource.getMessage("registration.email.from",null, RequestContextUtils.getLocale(request)));
+        try {
+            helper.setSubject(messageSource.getMessage("registration.email.subject", null, RequestContextUtils.getLocale(request)));
+        } catch (MessagingException e) {
+            log.error(e);
+        }
+        try {
+            helper.setText(emailBody, true);
+        } catch (MessagingException e) {
+            log.error(e);
+        }
+
+        try {
+            log.debug("Sending e-mail");
+            mailSender.send(mimeMessage);
+            log.debug("E-mail was sent");
+        } catch (MailException e) {
+            log.error("E-mail was NOT sent");
+            log.error(e);
+            e.printStackTrace();
+        }
+
+
 
         log.debug("Saving attribute - success: true");
         jo.put("success", true);
@@ -194,45 +316,56 @@ public class WizardAjaxMultiController extends MultiActionController {
     }
 
     public ModelAndView addNewScenario(HttpServletRequest request, HttpServletResponse response) throws IOException {
-    ModelAndView mav = new ModelAndView("experiments/JSonView");
+        ModelAndView mav = new ModelAndView("experiments/JSonView");
         log.debug("WizardAjaxMultiController - Add new scenario.");
         //System.out.println("WizardAjaxMultiController - Add new scenario.");
         JSONObject jo = new JSONObject();
         Scenario scenario = new Scenario();
 
-        int researchGroupId;
-        String scenarioTitle;
-        String scenarioLength;
-        String scenarioDescription;
+        int researchGroupId = 0;
+        String scenarioTitle = "";
+        String scenarioLength = "";
+        String scenarioDescription = "";
         String dataFile;
         String privateNote;
 
-        researchGroupId = Integer.parseInt(request.getParameter("researchGroup"));
-        scenarioTitle = request.getParameter("scenarioTitle");
-        scenarioLength = request.getParameter("length");
-        scenarioDescription = request.getParameter("scenarioDescription");
-        dataFile = request.getParameter("dataFile");
-        privateNote = request.getParameter("privateNote");
-
         log.debug("Setting logged person.");
         scenario.setPerson(personDao.getLoggedPerson());
+
+        MultipartHttpServletRequest multipartRequest = (MultipartHttpServletRequest) request;
+
         log.debug("Setting research group.");
+        researchGroupId = Integer.parseInt(multipartRequest.getParameter("researchGroup"));
         ResearchGroup group = new ResearchGroup();
         group.setResearchGroupId(researchGroupId);
         scenario.setResearchGroup(group);
-
+        scenarioTitle = multipartRequest.getParameter("scenarioTitle");
         log.debug("Setting scenario title: " + scenarioTitle);
         scenario.setTitle(scenarioTitle);
 
+         scenarioLength = multipartRequest.getParameter("length");
+         log.debug("Setting scenario length: " + scenarioLength);
+         scenario.setScenarioLength(Integer.parseInt(scenarioLength));
+
+        scenarioDescription = multipartRequest.getParameter("scenarioDescription");
         log.debug("Setting scenario description: " + scenarioDescription);
         scenario.setDescription(scenarioDescription);
 
-        log.debug("Setting scenario length: " + scenarioLength);
-        scenario.setScenarioLength(Integer.parseInt(scenarioLength));
+        MultipartFile multipartFile = multipartRequest.getFile("dataFile");
 
-        scenario.setScenarioName(scenarioTitle+"text.fileTypeXml");
-        scenario.setMimetype("text/xml");
-        scenario.setScenarioXml(Hibernate.createClob(dataFile));
+         scenario.setScenarioName(scenarioTitle + "text.fileTypeXml");
+         scenario.setMimetype("text/xml");
+         scenario.setScenarioXml(Hibernate.createClob(new String(multipartFile.getBytes())));
+
+        /* researchGroupId = Integer.parseInt(request.getParameter("researchGroup"));
+                scenarioTitle = request.getParameter("scenarioTitle");
+                scenarioLength = request.getParameter("length");
+                scenarioDescription = request.getParameter("scenarioDescription");
+                dataFile = request.getParameter("dataFile");
+                privateNote = request.getParameter("privateNote");
+        */
+
+
         log.debug("Setting private/public access");
         scenario.setPrivateScenario(true);
         scenarioDao.create(scenario);
@@ -246,4 +379,14 @@ public class WizardAjaxMultiController extends MultiActionController {
         mav.addObject("result", jo);
         return mav;
     }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
+    }
 }
+
+

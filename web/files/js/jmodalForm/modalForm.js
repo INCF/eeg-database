@@ -23,7 +23,8 @@ $(function() {
     var scenarioTitle = $("#scenarioTitle"),
             length = $("#length"),
             scenarioDescription = $("#scenarioDescription"),
-            allScenariosFields= $([]).add(scenarioTitle).add(length).add(scenarioDescription),
+            dataFile = $("#dataFile"),
+            allScenariosFields= $([]).add(scenarioTitle).add(length).add(scenarioDescription).add(dataFile),
             scenariosTips = $(".validateTips");
 
     function updateTips(t) {
@@ -309,7 +310,7 @@ $("#dialog-form-person").dialog({
 
     $("#dialog-form-scenario").dialog({
         autoOpen: false,
-        height: 500,
+        height: 550,
         width: 350,
         modal: true,
         buttons: {
@@ -330,7 +331,7 @@ $("#dialog-form-person").dialog({
 
                     var req = $("#addScenarioForm").serialize();
                     var addNewScenario = 'experiments/addNewScenario.html';
-                    //alert(req);
+                    alert(req);
 
                     var url;
                     url = get_url(url);
@@ -343,6 +344,7 @@ $("#dialog-form-person").dialog({
                         cache: false,
                         data: req,
                         async:false,
+                       // contentType:'multipart/form-data',
                         beforeSend: function() {
 
                         },

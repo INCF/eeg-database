@@ -870,7 +870,7 @@
     <bean id="wizardAjaxMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
-
+        <property name="domain" value="${app.domain}"/>
     </bean>
 
     <bean id="signalProcessingController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.SignalProcessingController">

@@ -32,7 +32,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/../web" relative="/" />
         </webroots>
-        <context-artifact name="EEGDatabase" />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">

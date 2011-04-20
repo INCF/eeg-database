@@ -146,7 +146,7 @@
      <div id="dialog-form-scenario" title="Create new scenario">
         <p class="validateTips">All form fields are required.</p>
 
-        <form id="addScenarioForm">
+        <form id="addScenarioForm" enctype="multipart/form-data">
             <fieldset>
 
                 <label for="researchGroup"><fmt:message key="label.researchGroup"/></label>
@@ -165,7 +165,7 @@
                 <input type="text" name="length" id="length" class="text ui-widget-content ui-corner-all"/>
 
                 <label for="scenarioDescription"><fmt:message key="label.hardwareDescription"/></label>
-                <textarea rows="3" cols="20" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
+                <textarea rows="3" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
                 </textarea>
                 <label for="dataFile" class="dataFile"><fmt:message key="label.dataFile"/></label>
                 <input type="file" name="dataFile" id="dataFile" class="text ui-widget-content ui-corner-all"/>
