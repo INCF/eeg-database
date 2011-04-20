@@ -162,7 +162,7 @@ public class AddScenarioController
             log.debug("Setting XML data file");
             scenario.setScenarioName(file.getOriginalFilename());
             scenario.setMimetype(file.getContentType());
-            scenario.setScenarioXml(Hibernate.createClob(new String(file.getBytes())));
+            scenario.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
         log.debug("Setting private/public access");

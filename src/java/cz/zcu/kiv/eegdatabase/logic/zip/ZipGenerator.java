@@ -11,7 +11,6 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.sql.Blob;
-import java.sql.Clob;
 import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
@@ -57,7 +56,7 @@ public class ZipGenerator implements Generator {
         OutputStream meta = getTransformer().transform(meas, isScenName);
         Scenario scen = meas.getScenario();
         log.debug("getting scenario file");
-        Clob scenarioXml = scen.getScenarioXml();
+        Blob scenarioXml = scen.getScenarioXml();
 
         byte[] xmlMetadata = null;
         if (meta instanceof ByteArrayOutputStream) {
@@ -70,8 +69,7 @@ public class ZipGenerator implements Generator {
 
         zos.closeEntry();
         if (scenarioXml != null) {
-          String scenarioStr = scenarioXml.getSubString(1, (int) scenarioXml.length());
-          scenario = scenarioStr.getBytes();
+          scenario = scenarioXml.getBytes(1, (int) scenarioXml.length());
           log.debug("saving xml file of scenario (" + scen.getTitle() + ".xml) to zip file");
           e = new ZipEntry(directory + scen.getTitle() + ".xml");
           zos.putNextEntry(e);
