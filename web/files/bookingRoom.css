@@ -5,105 +5,127 @@
     Description:
  Styles for layout on groups/bookingRoom page.*/
 
-div#box {
+div#box
+{
     border: none;
 }
 
-div#left {
+div#left
+{
     float: left;
     width: 248px;
 }
 
-div#right {
+div#right
+{
     float: right;
     width: 480px;
 }
 
-div#bottom, div#internbottom {
+div#bottom, div#internbottom
+{
     clear: both;
 }
 
-div#datePicker {
+div#datePicker
+{
     float: left;
     width: 232px;
 }
 
-div#internright {
+div#internright
+{
     float: right;
     width: 230px;
     padding-left: 10px;
 }
 
-div#left, div#datePicker {
+div#left, div#datePicker
+{
     padding: 5px 5px 5px 5px;
     padding: 0px 0px 0px 0px;
 }
 
-div#chosenData {
+div#chosenData
+{
 
 }
 
-table tr.sameDay td {
+table tr.sameDay td
+{
     background-color: #ffcc99;
 }
 
-table tr.sameDay:hover td {
+table tr.sameDay:hover td
+{
     background-color: #ffcc66;
 }
 
-table tr.collision td {
+table tr.collision td
+{
     background-color: #ff6666;
 }
 
-table tr.collision:hover td {
+table tr.collision:hover td
+{
     background-color: #ff3333;
 }
 
-select.timeSelect {
+select.timeSelect
+{
     cursor: pointer;
     width: 50px;
 }
 
-div#button, div#button input {
+div#button, div#button input
+{
     text-align: center;
     margin: 5px 0px 5px 0px;
 }
 
-div#button input {
+div#button input
+{
     cursor: pointer;
 }
 
-div#message {
+div#message
+{
     border-bottom: 2px solid gray;
     margin-bottom: 15px;
     display: none;
+    padding: 0px 0px 10px 20px;
 }
 
-span.infoicon, span.deleteicon, span.pdficon {
+span.infoicon, span.deleteicon, span.pdficon
+{
     display: inline-block;
     cursor: pointer;
     margin-top: 2px;
 }
 
-span.infoicon {
+span.infoicon
+{
     background: url(images/info_icon.png) no-repeat;
     width: 25px;
     height: 25px;
 }
 
-span.deleteicon {
+span.deleteicon
+{
     background: url(images/cross_icon.png) no-repeat;
     width: 20px;
     height: 20px;
 }
 
-span.pdficon {
+span.pdficon
+{
     background: url(images/pdf_icon.png) no-repeat;
     width: 25px;
     height: 25px;
 }
 
-div#flowbox {
+div#flowbox
+{
     z-index: 101;
     width: 400px;
     height: 180px;
@@ -118,7 +140,8 @@ div#flowbox {
     padding: 10px 10px 10px 10px;
 }
 
-div#flowbox span#close {
+div#flowbox span#close
+{
     position: absolute;
     top: 2px;
     right: 2px;
@@ -129,7 +152,8 @@ div#flowbox span#close {
     background: url(images/cross_icon.png) no-repeat;
 }
 
-div#shadow {
+div#shadow
+{
     background-color: black;
     opacity: 0.8;
     z-index: 100;
@@ -141,25 +165,30 @@ div#shadow {
     display: none;
 }
 
-table.reservationinfo {
+table.reservationinfo
+{
     font-size: 16px;
 }
 
-table.reservationinfo td {
+table.reservationinfo td
+{
     width: 50%;
 }
 
-table.reservationinfo td.br_header {
+table.reservationinfo td.br_header
+{
     font-weight: bold;
     text-align: left;
 }
 
-table.reservationinfo td.br_value {
+table.reservationinfo td.br_value
+{
     text-align: center;
     font-family: "Courier New", serif;
 }
 
-span.reservationheader, span.reservationperson {
+span.reservationheader, span.reservationperson
+{
     width: 100%;
     border: 0px solid lime;
     font-family: "Trebuchet MS", Arial, sans-serif;
@@ -169,10 +198,57 @@ span.reservationheader, span.reservationperson {
     color: #597000;
 }
 
-span.reservationperson {
+span.reservationperson
+{
     font-size: 16px;
 }
 
-hr.partial {
+hr.partial
+{
     width: 80%;
+}
+
+#toolbar
+{
+    display: none;
+    padding: 5px 5px 5px 5px;
+}
+
+#toolbar div
+{
+    display: table-cell;
+}
+
+#toolbar div span
+{
+    vertical-align: middle;
+    margin-left: 3px;
+    margin-right: 3px;
+}
+
+span.messageToggle
+{
+    background: url(images/arrow_right.png) no-repeat left center;
+    display: table;
+    width: 100%;
+    height: 11px;
+    border: none;
+    padding-left: 20px;
+    cursor: pointer;
+}
+
+span.messageToggle hr
+{
+    width: 708px;
+    vertical-align: middle;
+    text-align: left;
+}
+
+div.slowness
+{
+    display: none;
+    padding: 5px 5px 5px 5px;
+    color: red;
+    font-weight: bold;
+    border: 1px solid black;
 }

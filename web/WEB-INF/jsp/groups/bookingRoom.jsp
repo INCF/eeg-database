@@ -1,36 +1,46 @@
+<%@ page import="java.util.Date" %>
 <%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <ui:groupsTemplate pageTitle="pageTitle.bookingRoom">
 
-<c:set var="now" value="<%=new java.util.Date()%>"/>
+<c:set var="now" value='<%= new Date() %>'/>
 <c:set var="startHour" value="6"/>
 <c:set var="endHour" value="21"/>
 <c:set var="defaultDay" value=""/>
 <c:set var="minDate" value="0"/>
-
-
-<script src="<c:url value="/files/timeline/timeline-api.js"/>" type="text/javascript"></script>
 
 <script type="text/javascript">
     var startHour = <c:out value="${startHour}"/>;
     var endHour = <c:out value="${endHour}"/>;
     var fadeSpeed = 150;
     var collapseSpeed = 1000;
-    var timeoutBeforeMessageHide = 15000;
+    var timeoutBeforeMessageHide = 3000;
+    var timeoutBeforeLongOperation = 1500;
+
+    //array fow wating flags
+    var waitings = new Array();
 </script>
+
+
+<script src="<c:url value="/files/timeline/timeline-api.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/files/js/jquery.localize.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/files/js/bookRoom/bookRoomFilterAndPDF.js"/>" type="text/javascript"></script>
+<script src="<c:url value="/files/js/bookRoom/bookRoomView.js"/>" type="text/javascript"></script>
 
 <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
 <c:url value="/groups/book-room.html" var="formUrl"/>
 
+<c:if test="${fn:trim(status)!=''}"><span class="messageToggle" id="toggle_message" title="<fmt:message key='bookRoom.toggle.message'/>" onclick="toggleDiv('message')"><hr></span></c:if>
 <div id="message">
-    <c:if test="${status=='booked'}"><h2><fmt:message key="bookRoom.success"/></h2>
+    <c:if test="${status=='booked'}"><h2 style="padding-top: 0px;"><fmt:message key="bookRoom.success"/></h2>
         <c:out value="${comment}" escapeXml="false"/>
     </c:if>
-    <c:if test="${status=='failed'}"><h2><fmt:message key="bookRoom.fail"/></h2><c:out value="${comment}"/>
+    <c:if test="${status=='failed'}"><h2 style="padding-top: 0px;"><fmt:message key="bookRoom.fail"/></h2><c:out value="${comment}"/>
     </c:if>
 </div>
 
@@ -56,17 +66,13 @@
                 <c:when test="${now.hours>endHour-3}">
                     <c:set var="startSelection" value="7"/>
                     <c:set var="endSelection" value="8"/>
-                    <c:if test="${status==''}">
+                    <c:if test="${fn:trim(status)==''}">
                         <script type="text/javascript">
-                            //TODO alert('late');
                             $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
-                        </script>
-                    </c:if>
-
-                    <c:if test="${status!=''}">
-                        <script type="text/javascript">
-                            //TODO alert('status = <c:out value="${status}"/>');
-                            //TODO $("#message").html("<h2><fmt:message key="bookRoom.gettingLate"/></h2>");
+                            setTimeout(function()
+                            {
+                                toggleDiv("message", false);
+                            }, timeoutBeforeMessageHide);
                         </script>
                     </c:if>
                     <c:set var="defaultDay" value="+1"/>
@@ -142,10 +148,37 @@
                 <input type="submit" value="<fmt:message key='bookRoom.create'/>"
                        title="<fmt:message key='bookRoom.create'/>" class="submitButton lightButtonLink"/>
             </div>
-            <div id='timeline'></div>
-            <span style="cursor: pointer;" onclick="downloadPDFList();">Download all in PDF</span>
 
-            <div id="chosenData">&nbsp;</div>
+            <!-- DIV loaded by AJAX-->
+            <span id="timeline_header"></span>
+
+            <div id='timeline'></div>
+            <div id="slowness_delete" class="slowness"></div>
+            <div id="chosenData"></div>
+
+            <!-- TOOLBAR -->
+            <div id="toolbar">
+                <div>
+                    <span style="border: 1px solid black; padding: 5px 5px 5px 5px;">filter is not implemented yet, sorry O:-)</span>
+                    <span class="pdficon" onclick="downloadPDFList();"></span><span style="cursor: pointer;" onclick="downloadPDFList();">Download selected in PDF</span>
+                </div>
+            </div>
+            <span class="messageToggle" id="toggle_toolbar" title="<fmt:message key='bookRoom.toggle.toolbar'/>" onclick="toggleDiv('toolbar')"><hr></span>
+
+            <!-- LEGEND -->
+            <table style="width: 100%;">
+                <tr>
+                    <td style="border: none; background-color:white; height: 15px; text-align:left; font-weight: bold;">
+                        <fmt:message key="bookRoom.label.legend"/>:
+                    </td>
+                </tr>
+                <tr class="sameDay">
+                    <td style="height: 11px; text-align:left; font-style: italic;" id="legend_day"></td>
+                </tr>
+                <tr class="collision">
+                    <td colspan="5" style="height: 11px; text-align:left; font-style: italic;"><fmt:message key="bookRoom.collisionWithSelected"/></td>
+                </tr>
+            </table>
         </div>
     </div>
     <form:hidden path="date"/>
@@ -161,6 +194,7 @@
 </form:form>
 
 <input type="hidden" id="collision" value="-1"/>
+<input type="hidden" id="reservationsCount" value="0"/>
 
 <div id="flowbox">
     <span id="close" onclick="toggleInfo(false);" title="<fmt:message key='bookRoom.ajax.info.closeButtonHint'/>"></span>
@@ -172,392 +206,72 @@
 
 <script type="text/javascript">
 
-function downloadPDF(id)
-{
-    $("#pdfId").attr('value', id);
-    $("#pdfType").attr('value', 'single');
-    document.forms["pdf"].submit();
-}
+    window.onload = function()
+    {
+        //initialization:
+        //create datepicker
 
-function downloadPDFList()
-{
-    $("#pdfType").attr('value', 'range');
-    $("#pdfDate").attr('value', $("#date").attr('value'));
-    document.forms["pdf"].submit();
-}
-
-function showInfo(id)
-{
-    var req = "type=info&id=" + id;
-
-    $.ajax({
-        type: "GET",
-        url: "<c:url value='book-room-ajax.html' />",
-        cache: false,
-        data: req,
-        beforeSend: function()
-        {
-            toggleInfo(true);
-            $("#flowContent").html("<center><img src='<c:url value='/files/images/loading.gif'/>' style='width: 100%;' alt=''></center>");
-        },
-        success: function(data)
-        {
-            var answer = data.split('#!#');
-            if (trim(answer[0]) == "OK")
+        $("#datePicker").datepicker({
+            minDate: <c:out value="${minDate}" />,
+            firstDay: 1,
+            dateFormat: "dd/mm/yy",
+            <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
+            onSelect: function(selectedDate)
             {
-                $("#flowContent").html(answer[1]);
+                var newMonth = selectedDate.split('/')[1];
+                var oldMonth = $("#date").attr('value').split('/')[1];
+
+                $("#date").attr('value', selectedDate);
+                if (newMonth != oldMonth) reloadTimeline();
+                else setCenterDate(selectedDate);
+                newTime();
             }
-            else
+        });
+
+        //make flowbox draggable
+        $("#flowbox").draggable({
+            grid: [10, 10]
+        });
+
+        //default values
+        var d = new Date();
+
+        <c:if test="${defaultDay!=''}">
+        d.setMilliseconds(d.getMilliseconds() + ((<c:out value="${defaultDay}" />) * 24 * 60 * 60 * 1000));
+        </c:if>
+        var day = d.getDate() + '';
+        if (day.length == 1) day = "0" + day;
+        var month = (d.getMonth() + 1) + '';
+        if (month.length == 1) month = "0" + month;
+        $("#date").attr('value', day + "/" + month + "/" + d.getFullYear());
+
+        //show div#message?
+        if (trim($("#message").html()) != '') toggleDiv('message', true);
+
+        //add tablesorter parser
+        $.tablesorter.addParser({
+            id: 'days',
+            is: function(s)
             {
-                $("#flowContent").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            $("#flow").html("Error while getting data... :-(<br>Error " + xhr.status);
-            alert("<fmt:message key='bookRoom.error'/> E3:" + xhr.status);
-        }
-    });
-}
-
-
-function toggleInfo(show)
-{
-    if (show)
-    {
-        var x = $(document).scrollLeft();
-        var y = $(document).scrollTop();
-        var width = $(document).width();
-        var height = $(document).height();
-
-        $('#shadow').css('width', width + x);
-        $('#shadow').css('height', height + y);
-
-        $("#flowbox").css('left', (x + width) / 2);
-        $("#flowbox").css('top', (y + height) / 2);
-
-        $('#shadow').fadeIn(fadeSpeed, function()
-        {
-        });
-        $('#flowbox').fadeIn(fadeSpeed, function()
-        {
-        });
-    }
-    else
-    {
-        $('#shadow').fadeOut(fadeSpeed, function()
-        {
-        });
-        $('#flowbox').fadeOut(fadeSpeed, function()
-        {
-        });
-    }
-}
-
-function deleteReservation(id)
-{
-    if (window.confirm("<fmt:message key='bookRoom.deleteConfirmation'/>"))
-    {
-        var req = "type=delete&id=" + id;
-
-        $.ajax({
-            type: "GET",
-            url: "<c:url value='book-room-ajax.html' />",
-            cache: false,
-            data: req,
-            beforeSend: function()
-            {
+                return false;
             },
-            success: function(data)
+            format: function(s)
             {
-                var answer = data.split('#!#');
-                if (trim(answer[0]) == 'OK') showChosenData();
-                //alert(trim(answer[1]));
+                var date = s.split("/");
+                return date[2] + date[1] + date[0];
             },
-            error: function (xhr, ajaxOptions, thrownError)
-            {
-                alert("<fmt:message key='bookRoom.error'/> E4:" + xhr.status);
-            }
+            type: 'text'
         });
-    }
-}
 
+        //create timeline
+        window.onresize = timelineResize();
+        //cals also timelineCreate
+        reloadTimeline();
 
-window.onload = function()
-{
-    //initialization:
-    //create datepicker
+        //calls also showChosenData()
+        newTime();
 
-    $("#datePicker").datepicker({
-        minDate: <c:out value="${minDate}" />,
-        firstDay: 1,
-        dateFormat: "dd/mm/yy",
-        <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
-        onSelect: function(selectedDate)
-        {
-            var newMonth = selectedDate.split('/')[1];
-            var oldMonth = $("#date").attr('value').split('/')[1];
-
-            $("#date").attr('value', selectedDate);
-            if (newMonth != oldMonth) reloadTimeline();
-            else setCenterDate(selectedDate);
-            newTime();
-        }
-    });
-
-    //make flowbox draggable
-    $("#flowbox").draggable({
-        grid: [10, 10]
-    });
-
-    //default values
-    var d = new Date();
-
-    <c:if test="${defaultDay!=''}">
-    d.setMilliseconds(d.getMilliseconds() + ((<c:out value="${defaultDay}" />) * 24 * 60 * 60 * 1000));
-    </c:if>
-    var day = d.getDate() + '';
-    if (day.length == 1) day = "0" + day;
-    var month = (d.getMonth() + 1) + '';
-    if (month.length == 1) month = "0" + month;
-    $("#date").attr('value', day + "/" + month + "/" + d.getFullYear());
-
-    //show div#message?
-    if (trim($("#message").html()) != '') showMessage(true);
-
-    //add tablesorter parser
-    $.tablesorter.addParser({
-        id: 'days',
-        is: function(s)
-        {
-            return false;
-        },
-        format: function(s)
-        {
-            var date = s.split("/");
-            return date[2] + date[1] + date[0];
-        },
-        type: 'text'
-    });
-
-    //create timeline
-    window.onresize = timelineResize();
-    //cals also timelineCreate
-    reloadTimeline();
-
-    //calls also showChosenData()
-    newTime();
-
-};
-
-function showMessage(show)
-{
-    if (show)
-    {
-        $('#message').show(collapseSpeed);
-        setTimeout('showMessage(false)', timeoutBeforeMessageHide);
-    }
-    else
-        $('#message').hide(collapseSpeed);
-}
-
-function trim(stringToTrim)
-{
-    return stringToTrim.replace(/^\s+|\s+$/g, "");
-}
-
-function isAllowed()
-{
-    switch ($("#collision").attr('value'))
-    {
-        case '0':
-        {
-            return true;
-        }
-            break;
-        case '1':
-        {
-            alert("<fmt:message key='bookRoom.collisions'/>");
-            return false;
-        }
-            break;
-        case '-1':
-        {
-            alert("<fmt:message key='bookRoom.waitForControl'/>");
-            showChosenData();
-            return false;
-        }
-            break;
-        case '-2':
-        {
-            alert("<fmt:message key='bookRoom.invalidTime'/>");
-            return false;
-        }
-            break;
-        default:
-        {
-            alert("<fmt:message key='bookRoom.error'/> E1");
-            return false;
-        }
-    }
-    return false;
-}
-
-function inPast()
-{
-    var now = new Date();
-
-    var tmp = $("#date").attr('value').split("/");
-    var date = tmp[2] + "/" + tmp[1] + "/" + tmp[0];
-
-    var startTime = new Date(date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
-    startTime.setHours(startTime.getHours() + 2);
-
-    return (startTime < now);
-}
-
-function setEndTime(hourIndex, minuteIndex)
-{
-    $("#endH").attr('selectedIndex', hourIndex);
-    $("#endM").attr('selectedIndex', minuteIndex);
-}
-
-function newTime()
-{
-    var start = $("#startH").attr('value') + $("#startM").attr('value');
-    var end = $("#endH").attr('value') + $("#endM").attr('value');
-    var date = $("#date").attr('value');
-
-
-    //try to set end hour after start hour
-    if (end <= start)
-    {
-        if ($("#startH").attr('value') == endHour)
-        {
-            if ($("#startM").attr('value') != 45)
-            {
-                setEndTime(endHour - startHour, 3);
-            }
-            else
-            {
-                //we can't do anything...
-            }
-        }
-        else
-        {
-            setEndTime(parseInt($("#startH").attr('selectedIndex')) + 1, $("#endM").attr('selectedIndex'));
-        }
-
-        //load endtime value again for next comparison
-        end = $("#endH").attr('value') + $("#endM").attr('value');
-    }
-
-    if (end <= start)
-    {
-        $("#collision").attr('value', '-2');
-        $("#chosenData").html("<h3><fmt:message key='bookRoom.invalidTime'/></h3>");
-    }
-    else if (inPast())
-    {
-        $("#collision").attr('value', '-2');
-        $("#chosenData").html("<h3><fmt:message key='bookRoom.timeInPast'/> <c:out value="${now.hours}:${now.minutes}" />!</h3>");
-    }
-    else
-    {
-        $("#startTime").attr('value', date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
-        $("#endTime").attr('value', date + " " + $("#endH").attr('value') + ":" + $("#endM").attr('value') + ":00");
-        showChosenData();
-    }
-}
-
-function showChosenData()
-{
-    var sel = document.getElementById("selectedGroup");
-    var repType = $("#repType").attr('value');
-    var repCount = $("#repCount").attr('value');
-    var date = $("#date").attr('value');
-
-    var req = "group=" + sel.value + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
-    //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
-
-    $.ajax({
-        type: "GET",
-        url: "<c:url value='book-room-view.html' />",
-        cache: false,
-        data: req,
-        beforeSend: function()
-        {
-            $("#collision").attr('value', '-1');
-            $("#chosenData").html("<center><img src='<c:url value='/files/images/loading.gif' />' alt=''></center>");
-        },
-        success: function(data)
-        {
-            var answer = data.split('#!#');
-            if (trim(answer[0]) == "OK")
-            {
-                $("#chosenData").html(answer[1]);
-                $("#collision").attr('value', answer[2]);
-                $("table.dataTable").tablesorter({
-                    headers: {
-                        1: {
-                            sorter: 'days'
-                        },
-                        3: {
-                            sorter: false
-                        },
-                        4: {
-                            sorter: false
-                        }
-                    }
-                });
-            }
-            else
-            {
-                $("#chosenData").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
-                $("#collision").attr('value', '-1');
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            $("#chosenData").html("Error while getting data... :-(<br>Error " + xhr.status);
-            $("#collision").attr('value', '-1');
-            alert("<fmt:message key='bookRoom.error'/> E2:" + xhr.status);
-        }
-    });
-}
-
-function reloadTimeline()
-{
-    var req = "type=timeline&date=" + $("#date").attr('value');
-    $.ajax({
-        type: "GET",
-        url: "<c:url value='book-room-ajax.html' />",
-        cache: false,
-        data: req,
-        beforeSend: function()
-        {
-            $("#timeline").html("<center><img src='<c:url value='/files/images/loading.gif'/>' alt=''></center>");
-        },
-        success: function(data)
-        {
-            var answer = data.split('#!#');
-            if (trim(answer[0]) == "OK")
-            {
-                timelineCreate("timeline", $("#date").attr('value'), trim(answer[1]));
-            }
-            else
-            {
-                //alert(trim(answer[0]));
-                $("#timeline").html("Error while getting data...<br/>(try to refresh page, you can be logged off after timeout)");
-            }
-        },
-        error: function (xhr, ajaxOptions, thrownError)
-        {
-            $("#timeline").html("Error while getting data... :-(<br>Error " + xhr.status);
-            alert("<fmt:message key='bookRoom.error'/> E6:" + xhr.status);
-        }
-    });
-}
-
+        toggleDiv('toolbar', true);
+    };
 </script>
 </ui:groupsTemplate>

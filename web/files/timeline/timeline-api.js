@@ -362,10 +362,18 @@ function timelineCreate(elementName, selectedDate, xmlData)
 
     var tmp = selectedDate.split('/');
     var d = new Date(tmp[2] + "/" + tmp[1] + "/" + tmp[0] + " 00:00:00");
-    var bandInfos = [
+    var monthStart = new Date(tmp[2] + "/" + tmp[1] + "/" + tmp[0] + " 00:00:00");
+    monthStart.setDate(1);
+    var monthEnd = new Date(tmp[2] + "/" + tmp[1] + "/" + tmp[0] + " 23:59:59");
+    monthEnd.setMonth(parseInt(tmp[1]));
+    monthEnd.setDate(0);
 
+    theme.timeline_start = monthStart;
+    theme.timeline_stop = monthEnd;
+
+    var bandInfos = [
         Timeline.createBandInfo({
-            width:          45,
+            width:          40,
             intervalUnit:   Timeline.DateTime.HOUR,
             intervalPixels: 40,
             eventSource:    eventSource,
@@ -374,7 +382,7 @@ function timelineCreate(elementName, selectedDate, xmlData)
             layout:         'original'
         }),
         Timeline.createBandInfo({
-            width:          45,
+            width:          40,
             intervalUnit:   Timeline.DateTime.DAY,
             intervalPixels: 40,
             overview:       true,
@@ -405,7 +413,6 @@ function timelineResize()
         resizeTimerID = window.setTimeout(function()
         {
             resizeTimerID = null;
-            tl.layout();
         }, 500);
     }
 }

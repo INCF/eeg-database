@@ -1,20 +1,23 @@
 /*------------------- Horizontal / Vertical lines ----------------*/
 
 /* style for ethers */
-.timeline-ether-lines {
+.timeline-ether-lines
+{
     border-color: #666;
     border-style: dotted;
     position: absolute;
 }
 
-.timeline-horizontal .timeline-ether-lines {
+.timeline-horizontal .timeline-ether-lines
+{
     border-width: 0 0 0 1px;
     height: 100%;
     top: 0;
     width: 1px;
 }
 
-.timeline-vertical .timeline-ether-lines {
+.timeline-vertical .timeline-ether-lines
+{
     border-width: 1px 0 0;
     height: 1px;
     left: 0;
@@ -22,17 +25,20 @@
 }
 
 /*---------------- Weekends ---------------------------*/
-.timeline-ether-weekends {
+.timeline-ether-weekends
+{
     position: absolute;
     background-color: #FFFFE0;
 }
 
-.timeline-vertical .timeline-ether-weekends {
+.timeline-vertical .timeline-ether-weekends
+{
     left: 0;
     width: 100%;
 }
 
-.timeline-horizontal .timeline-ether-weekends {
+.timeline-horizontal .timeline-ether-weekends
+{
     top: 0;
     height: 100%;
 }
@@ -40,7 +46,8 @@
 /*-------------------------- HIGHLIGHT DECORATORS -------------------*/
 /* Used for decorators, not used for Timeline Highlight              */
 .timeline-highlight-decorator,
-.timeline-highlight-point-decorator {
+.timeline-highlight-point-decorator
+{
     position: absolute;
     overflow: hidden;
 }
@@ -48,27 +55,32 @@
 /* Width of horizontal decorators and Height of vertical decorators is
    set in the decorator function params */
 .timeline-horizontal .timeline-highlight-point-decorator,
-.timeline-horizontal .timeline-highlight-decorator {
+.timeline-horizontal .timeline-highlight-decorator
+{
     top: 0;
     height: 100%;
 }
 
 .timeline-vertical .timeline-highlight-point-decorator,
-.timeline-vertical .timeline-highlight-decorator {
+.timeline-vertical .timeline-highlight-decorator
+{
     width: 100%;
     left: 0;
 }
 
-.timeline-highlight-decorator {
+.timeline-highlight-decorator
+{
     background-color: #FFC080;
 }
 
-.timeline-highlight-point-decorator {
+.timeline-highlight-point-decorator
+{
     background-color: #ff5;
 }
 
 /*---------------------------- LABELS -------------------------*/
-.timeline-highlight-label {
+.timeline-highlight-label
+{
     position: absolute;
     overflow: hidden;
     font-size: 200%;
@@ -77,43 +89,52 @@
 }
 
 /*---------------- VERTICAL LABEL -------------------*/
-.timeline-horizontal .timeline-highlight-label {
+.timeline-horizontal .timeline-highlight-label
+{
     top: 0;
     height: 100%;
 }
 
-.timeline-horizontal .timeline-highlight-label td {
+.timeline-horizontal .timeline-highlight-label td
+{
     vertical-align: middle;
 }
 
-.timeline-horizontal .timeline-highlight-label-start {
+.timeline-horizontal .timeline-highlight-label-start
+{
     text-align: right;
 }
 
-.timeline-horizontal .timeline-highlight-label-end {
+.timeline-horizontal .timeline-highlight-label-end
+{
     text-align: left;
 }
 
 /*---------------- HORIZONTAL LABEL -------------------*/
-.timeline-vertical .timeline-highlight-label {
+.timeline-vertical .timeline-highlight-label
+{
     left: 0;
     width: 100%;
 }
 
-.timeline-vertical .timeline-highlight-label td {
+.timeline-vertical .timeline-highlight-label td
+{
     vertical-align: top;
 }
 
-.timeline-vertical .timeline-highlight-label-start {
+.timeline-vertical .timeline-highlight-label-start
+{
     text-align: center;
 }
 
-.timeline-vertical .timeline-highlight-label-end {
+.timeline-vertical .timeline-highlight-label-end
+{
     text-align: center;
 }
 
 /*-------------------------------- DATE LABELS --------------------------------*/
-.timeline-date-label {
+.timeline-date-label
+{
     position: absolute;
     border: solid #aaa;
     color: #aaa;
@@ -121,157 +142,187 @@
     height: 1.5em;
 }
 
-.timeline-date-label-em {
+.timeline-date-label-em
+{
     color: #000;
 }
 
 /* horizontal */
-.timeline-horizontal .timeline-date-label {
+.timeline-horizontal .timeline-date-label
+{
     padding-left: 2px;
 }
 
-.timeline-horizontal .timeline-date-label {
+.timeline-horizontal .timeline-date-label
+{
     border-width: 0 0 0 1px;
 }
 
-.timeline-horizontal .timeline-date-label-em {
+.timeline-horizontal .timeline-date-label-em
+{
     height: 2em
 }
 
 /* vertical */
-.timeline-vertical .timeline-date-label {
+.timeline-vertical .timeline-date-label
+{
     padding-top: 2px;
 }
 
-.timeline-vertical .timeline-date-label {
+.timeline-vertical .timeline-date-label
+{
     border-width: 1px 0 0;
 }
 
-.timeline-vertical .timeline-date-label-em {
+.timeline-vertical .timeline-date-label-em
+{
     width: 7em
 }
 
 /*------------------------------- Ether.highlight -------------------------*/
-.timeline-ether-highlight {
+.timeline-ether-highlight
+{
     position: absolute;
     background-color: #fff;
 }
 
-.timeline-horizontal .timeline-ether-highlight {
+.timeline-horizontal .timeline-ether-highlight
+{
     top: 2px;
 }
 
-.timeline-vertical .timeline-ether-highlight {
+.timeline-vertical .timeline-ether-highlight
+{
     left: 2px;
 }
 
 /*------------------------------ EVENTS ------------------------------------*/
-.timeline-event-icon, .timeline-event-label, .timeline-event-tape {
+.timeline-event-icon, .timeline-event-label, .timeline-event-tape
+{
     position: absolute;
     cursor: pointer;
 }
 
 .timeline-event-tape,
 .timeline-small-event-tape,
-.timeline-small-event-icon {
+.timeline-small-event-icon
+{
     background-color: #58A0DC;
     overflow: hidden;
 }
 
 .timeline-small-event-tape,
-.timeline-small-event-icon {
+.timeline-small-event-icon
+{
     position: absolute;
 }
 
-.timeline-small-event-icon {
+.timeline-small-event-icon
+{
     width: 1px;
     height: 6px;
 }
 
 /*--------------------------------- TIMELINE-------------------------*/
-.timeline-ether-bg {
+.timeline-ether-bg
+{
     width: 100%;
     height: 100%;
 }
 
-.timeline-band-0 .timeline-ether-bg {
+.timeline-band-0 .timeline-ether-bg
+{
     background-color: #eee
 }
 
-.timeline-band-1 .timeline-ether-bg {
+.timeline-band-1 .timeline-ether-bg
+{
     background-color: #ddd
 }
 
-.timeline-band-2 .timeline-ether-bg {
+.timeline-band-2 .timeline-ether-bg
+{
     background-color: #ccc
 }
 
-.timeline-band-3 .timeline-ether-bg {
+.timeline-band-3 .timeline-ether-bg
+{
     background-color: #aaa
 }
 
-.timeline-duration-event {
+.timeline-duration-event
+{
     position: absolute;
     overflow: hidden;
     border: 1px solid blue;
 }
 
-.timeline-instant-event2 {
+.timeline-instant-event2
+{
     position: absolute;
     overflow: hidden;
     border-left: 1px solid blue;
     padding-left: 2px;
 }
 
-.timeline-instant-event {
+.timeline-instant-event
+{
     position: absolute;
     overflow: hidden;
 }
 
-.timeline-event-bubble-title {
+.timeline-event-bubble-title
+{
     font-weight: bold;
     border-bottom: 1px solid #888;
     margin-bottom: 0.5em;
 }
 
-.timeline-event-bubble-body {
+.timeline-event-bubble-body
+{
 }
 
-.timeline-event-bubble-wiki {
+.timeline-event-bubble-wiki
+{
     margin: 0.5em;
     text-align: right;
     color: #A0A040;
 }
 
-.timeline-event-bubble-wiki a {
+.timeline-event-bubble-wiki a
+{
     color: #A0A040;
 }
 
-.timeline-event-bubble-time {
+.timeline-event-bubble-time
+{
     color: #aaa;
     display: none;
 }
 
-.timeline-event-bubble-image {
+.timeline-event-bubble-image
+{
     float: right;
     padding-left: 5px;
     padding-bottom: 5px;
 }
 
-.timeline-container {
+.timeline-container
+{
     position: relative;
     overflow: hidden;
 }
 
-.timeline-copyright {
+.timeline-copyright
+{
     position: absolute;
     bottom: 0px;
     left: 0px;
-    z-index: 1000;
     cursor: pointer;
 }
 
-.timeline-message-container {
+.timeline-message-container
+{
     position: absolute;
     top: 30%;
     left: 35%;
@@ -280,29 +331,34 @@
     display: none;
 }
 
-.timeline-message {
+.timeline-message
+{
     font-size: 120%;
     font-weight: bold;
     text-align: center;
 }
 
-.timeline-message img {
+.timeline-message img
+{
     vertical-align: middle;
 }
 
-.timeline-band {
+.timeline-band
+{
     position: absolute;
     background: #eee;
     z-index: 10;
 }
 
-.timeline-band-inner {
+.timeline-band-inner
+{
     position: relative;
     width: 100%;
     height: 100%;
 }
 
-.timeline-band-input {
+.timeline-band-input
+{
     position: absolute;
     width: 1em;
     height: 1em;
@@ -310,17 +366,20 @@
     z-index: 0;
 }
 
-.timeline-band-input input {
+.timeline-band-input input
+{
     width: 0;
 }
 
-.timeline-band-layer {
+.timeline-band-layer
+{
     position: absolute;
     width: 100%;
     height: 100%;
 }
 
-.timeline-band-layer-inner {
+.timeline-band-layer-inner
+{
     position: relative;
     width: 100%;
     height: 100%;

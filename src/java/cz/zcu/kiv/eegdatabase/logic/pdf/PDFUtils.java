@@ -12,7 +12,7 @@ import java.io.IOException;
  */
 public class PDFUtils
 {
-    public static final String HEADERIMG = "header.gif";
+    public static final String HEADERIMG = "logo.png";
     public static final String FOOTERIMG = "pdf_footer.png";
     public static final int[] PADDING = {10, 10, 10, 10};
 
@@ -35,13 +35,13 @@ public class PDFUtils
         paragraph.setAlignment(Element.ALIGN_CENTER);
 
         Image img = GetResizedAndCenteredImage(path + convertPath("/files/images/" + HEADERIMG));
-        float topMargin = img.getScaledHeight() + 2 * PADDING[0];
-        img.setAbsolutePosition((PageSize.A4.getWidth() - img.getScaledWidth()) / 2, (PageSize.A4.getHeight() - img.getScaledHeight()) - PADDING[0]);
+        float topMargin = img.getHeight() + 2 * PADDING[0];
+        img.setAbsolutePosition(PADDING[3], (PageSize.A4.getHeight() - img.getHeight()) - PADDING[0]);
         paragraph.add(img);
         img = GetResizedAndCenteredImage(path + convertPath("/files/images/" + FOOTERIMG));
-        img.setAbsolutePosition((PageSize.A4.getWidth() - img.getScaledWidth()) / 2, PADDING[2]);
+        img.setAbsolutePosition((PageSize.A4.getWidth() - img.getWidth()) / 2, PADDING[2]);
         paragraph.add(img);
-        float bottomMargin = img.getScaledHeight() + 2 * PADDING[2];
+        float bottomMargin = img.getHeight() + 2 * PADDING[2];
 
         document.setMargins(topMargin, PADDING[1], bottomMargin, PADDING[3]);
 
@@ -53,6 +53,12 @@ public class PDFUtils
     private Image GetResizedAndCenteredImage(String filename) throws IOException, BadElementException
     {
         Image img = Image.getInstance(filename);
+
+        if (img.getWidth() <= PageSize.A4.getWidth() - PADDING[1] - PADDING[3])
+        {
+            return img;
+        }
+
         float newWidth = PageSize.A4.getWidth() - PADDING[1] - PADDING[3];
         float ratio = newWidth / img.getWidth();
         float newHeight = img.getHeight() * ratio;
