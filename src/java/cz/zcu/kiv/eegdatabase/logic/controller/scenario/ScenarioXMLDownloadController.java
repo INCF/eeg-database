@@ -14,7 +14,7 @@ import org.springframework.web.servlet.mvc.AbstractController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Clob;
+import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -46,7 +46,7 @@ public class ScenarioXMLDownloadController extends AbstractController {
         log.debug("Processing download scenario.");
         int scenarioId = Integer.parseInt(request.getParameter("scenarioId"));
         Scenario scenario = scenarioDao.read(scenarioId);
-        Clob c = scenario.getScenarioXml();
+        Blob c = scenario.getScenarioXml();
         Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         History history = new History();
@@ -61,7 +61,7 @@ public class ScenarioXMLDownloadController extends AbstractController {
         // System.out.println(scenario.getMimetype());
         response.setHeader("Content-Type", scenario.getMimetype());
         response.setHeader("Content-Disposition", "attachment;filename=" + scenario.getScenarioName());
-        response.getOutputStream().write(c.getSubString(1, (int) c.length()).getBytes());
+        response.getOutputStream().write(c.getBytes(1, (int) c.length()));
         response.flushBuffer();
         // mav.addObject("dataObject", scenarioDao.read(scenarioId));
 

@@ -355,7 +355,7 @@ public class WizardAjaxMultiController extends MultiActionController {
 
          scenario.setScenarioName(scenarioTitle + "text.fileTypeXml");
          scenario.setMimetype("text/xml");
-         scenario.setScenarioXml(Hibernate.createClob(new String(multipartFile.getBytes())));
+         scenario.setScenarioXml(Hibernate.createBlob(multipartFile.getBytes()));
 
         /* researchGroupId = Integer.parseInt(request.getParameter("researchGroup"));
                 scenarioTitle = request.getParameter("scenarioTitle");

@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.view;
 
-import java.sql.Clob;
+import java.sql.Blob;
 import java.util.Map;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -22,7 +22,7 @@ public class ScenarioXMLDownloadView extends AbstractView {
         log.debug("Processing view for scenario XML output");
 
         Scenario scenario = (Scenario) map.get("dataObject");
-        Clob c = scenario.getScenarioXml();
+        Blob c = scenario.getScenarioXml();
         
         log.debug("Loading Scenario object - ID " + scenario.getScenarioId());
 
@@ -33,7 +33,7 @@ public class ScenarioXMLDownloadView extends AbstractView {
         response.setHeader("Content-Disposition", "attachment;filename=scenario-" + scenario.getScenarioId());
 
         log.debug("Printing file content to output");
-        response.getOutputStream().write(c.getSubString(1, (int) c.length()).getBytes());
+        response.getOutputStream().write(c.getBytes(1, (int) c.length()));
 
         log.debug("End of the view");
     }

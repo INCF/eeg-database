@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import java.sql.Blob;
 import java.sql.Clob;
 import java.util.HashSet;
 import java.util.Set;
@@ -34,7 +35,7 @@ public class Scenario implements java.io.Serializable {
     @Field(name = "scenarioLength"),
     @Field(store = Store.YES)})
   private int scenarioLength;
-  private Clob scenarioXml;
+  private Blob scenarioXml;
   @Fields({
     @Field(name = "description"),
     @Field(store = Store.YES)}) //use a different field name
@@ -55,7 +56,7 @@ public class Scenario implements java.io.Serializable {
     this.researchGroup = researchGroup;
   }
 
-  public Scenario(int scenarioId, Person person, ResearchGroup researchGroup, String title, int scenarioLength, Clob scenarioXml, String description, Set<Experiment> experiments) {
+  public Scenario(int scenarioId, Person person, ResearchGroup researchGroup, String title, int scenarioLength, Blob scenarioXml, String description, Set<Experiment> experiments) {
     this.scenarioId = scenarioId;
     this.person = person;
     this.researchGroup = researchGroup;
@@ -106,11 +107,11 @@ public class Scenario implements java.io.Serializable {
     this.scenarioLength = scenarioLength;
   }
 
-  public Clob getScenarioXml() {
+  public Blob getScenarioXml() {
     return this.scenarioXml;
   }
 
-  public void setScenarioXml(Clob scenarioXml) {
+  public void setScenarioXml(Blob scenarioXml) {
     this.scenarioXml = scenarioXml;
   }
 
