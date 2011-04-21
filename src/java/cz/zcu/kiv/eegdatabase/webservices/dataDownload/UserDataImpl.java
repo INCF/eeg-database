@@ -12,7 +12,6 @@ import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.soap.SOAPException;
-import javax.xml.ws.WebServiceException;
 import java.io.IOException;
 import java.sql.SQLException;
 import java.util.LinkedList;
@@ -70,7 +69,10 @@ public class UserDataImpl implements UserDataService {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        if (rights == Rights.SUBJECT)
+        if(rights == Rights.ALL){
+            experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
+        }
+        else if (rights == Rights.SUBJECT)
             experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
         else
             experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
