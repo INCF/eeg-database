@@ -146,7 +146,7 @@
      <div id="dialog-form-scenario" title="Create new scenario">
         <p class="validateTips">All form fields are required.</p>
 
-        <form id="addScenarioForm" enctype="multipart/form-data">
+        <form id="addScenarioForm" name="addScenarioForm" enctype="multipart/form-data">
             <fieldset>
 
                 <label for="researchGroup"><fmt:message key="label.researchGroup"/></label>

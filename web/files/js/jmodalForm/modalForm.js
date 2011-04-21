@@ -328,8 +328,8 @@ $("#dialog-form-person").dialog({
 
 
                 if (bValid) {
-
-                    var req = $("#addScenarioForm").serialize();
+                    //document.forms["addScenarioForm"].submit();
+                    var req = $("#addScenarioForm").serializeArray();
                     var addNewScenario = 'experiments/addNewScenario.html';
                     alert(req);
 
@@ -344,7 +344,7 @@ $("#dialog-form-person").dialog({
                         cache: false,
                         data: req,
                         async:false,
-                       // contentType:'multipart/form-data',
+                        contentType:'multipart/form-data',
                         beforeSend: function() {
 
                         },

@@ -17,6 +17,7 @@ import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.web.multipart.MultipartFile;
@@ -62,6 +63,7 @@ public class WizardAjaxMultiController extends MultiActionController {
     private JavaMailSenderImpl mailSender;
     @Autowired
     private HierarchicalMessageSource messageSource;
+    private SimpleMailMessage mailMessage;
     private String domain;
 
     /**
@@ -386,6 +388,14 @@ public class WizardAjaxMultiController extends MultiActionController {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public SimpleMailMessage getMailMessage() {
+        return mailMessage;
+    }
+
+    public void setMailMessage(SimpleMailMessage mailMessage) {
+        this.mailMessage = mailMessage;
     }
 }
 
