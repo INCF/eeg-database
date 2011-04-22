@@ -14,7 +14,6 @@
 
 
     <context:annotation-config/>
-
     <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky
     <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
         <property name="exceptionMappings">

@@ -47,9 +47,6 @@ public class ControllerUtils {
         if (o != null) {
             GrantedAuthority[] authorities =
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
-            for (GrantedAuthority ga : authorities) {
-                System.out.println("AUTHORITY: "+ga.getAuthority());
-            }
         }
 
         String userName = null;

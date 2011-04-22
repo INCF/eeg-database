@@ -36,13 +36,7 @@ public class SimplePersonDao
      */
     public Person getPerson(String userName) {
         String HQLselect = "from Person person " + "where person.username = :userName";
-
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "userName", userName));
-        if (foundUser != null) {
-            System.out.println("FOUND: User "+foundUser.getUsername()+": "+foundUser.getEmail()+"("+foundUser.getAuthority()+")");
-        } else {
-            System.out.println("FOUND NULL");
-        }
         return foundUser;
     }
 
