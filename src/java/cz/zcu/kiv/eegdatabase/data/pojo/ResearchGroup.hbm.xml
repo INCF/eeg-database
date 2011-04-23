@@ -46,7 +46,7 @@
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest"/>
     </set>
-    <set name="ArticlesSubscribers" table="ARTICLES_GROUP_SUBSCRIBTIONS">
+    <set name="articlesSubscribers" table="ARTICLES_GROUP_SUBSCRIBTIONS">
       <key>
         <column name="RESEARCH_GROUP_ID" precision="22" scale="0" />
       </key>
