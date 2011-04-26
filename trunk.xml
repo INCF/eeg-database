@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="trunk" default="all">
  
+ <!-- import json build file-->
+ <import file="json-converter.xml"/>
  
  <property file="trunk.properties"/>
  <!-- Uncomment the following property if no tests compilation is needed -->
@@ -241,7 +243,7 @@
    <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.eegdatabase}/WEB-INF/web.xml"/>
  </target>
  
- <target name="artifact.eegdatabase_war" depends="init.artifacts, artifact.eegdatabase" description="Build &apos;EEGDatabase_war&apos; artifact">
+ <target name="artifact.eegdatabase_war" depends="init.artifacts, artifact.eegdatabase, convertToJSON" description="Build &apos;EEGDatabase_war&apos; artifact">
    <property name="artifact.temp.output.eegdatabase_war" value="${artifacts.temp.dir}/EEGDatabase_war"/>
    <mkdir dir="${artifact.temp.output.eegdatabase_war}"/>
    <jar  destfile="${temp.jar.path.EEGDatabase.war}">
