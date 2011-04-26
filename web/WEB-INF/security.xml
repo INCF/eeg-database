@@ -38,7 +38,6 @@
                 default-target-url="/home.html"
                 authentication-failure-url="/login.html?login_error=1"/>
         <logout logout-url="/logout" logout-success-url="/home.html"/>
-        <concurrent-session-control max-sessions="1" exception-if-maximum-exceeded="true" />
     </http>
     <authentication-manager alias="authenticationManager" />
     <authentication-provider>

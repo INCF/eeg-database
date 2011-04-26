@@ -9,9 +9,7 @@
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
-    <listener>
-        <listener-class>org.springframework.security.ui.session.HttpSessionEventPublisher</listener-class>
-    </listener>
+
 
     <context-param>
         <param-name>contextConfigLocation</param-name>
@@ -27,6 +25,7 @@
         <param-name>useHttpOnly</param-name>
         <param-value>true</param-value>
     </context-param>
+
 
     <filter>
         <filter-name>openSessionInViewFilter</filter-name>
