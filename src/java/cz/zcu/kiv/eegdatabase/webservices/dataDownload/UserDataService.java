@@ -10,7 +10,6 @@ import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
 import javax.xml.soap.SOAPException;
 import javax.xml.ws.WebServiceException;
-import javax.xml.ws.soap.MTOM;
 import java.util.List;
 
 /**
@@ -18,7 +17,6 @@ import java.util.List;
  *
  * @author Petr Miko
  */
-@MTOM
 @WebService
 public interface UserDataService {
 
@@ -45,7 +43,8 @@ public interface UserDataService {
      * @return List of information about experiment's data files
      * @throws SOAPException wrapped SQLException
      */
-    public List<DataFileInfo> getExperimentFiles(int experimentId) throws SOAPException;
+    public List<DataFileInfo> getExperimentFiles(int experimentId)
+            throws SOAPException;
 
     /**
      * Method streaming desired file back to user.

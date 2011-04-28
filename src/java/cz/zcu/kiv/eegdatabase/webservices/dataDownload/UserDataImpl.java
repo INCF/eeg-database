@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
+import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
@@ -9,10 +10,12 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
 import javax.activation.DataHandler;
+import javax.activation.DataSource;
 import javax.jws.WebService;
-import javax.mail.util.ByteArrayDataSource;
 import javax.xml.soap.SOAPException;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.sql.SQLException;
 import java.util.LinkedList;
 import java.util.List;
@@ -69,10 +72,9 @@ public class UserDataImpl implements UserDataService {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        if(rights == Rights.ALL){
+        if (rights == Rights.ALL) {
             experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
-        }
-        else if (rights == Rights.SUBJECT)
+        } else if (rights == Rights.SUBJECT)
             experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
         else
             experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
@@ -127,14 +129,27 @@ public class UserDataImpl implements UserDataService {
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
 
-        ByteArrayDataSource rawData = null;
+        DataSource rawData = null;
         try {
-            rawData = new ByteArrayDataSource(file.getFileContent().getBinaryStream(), "fileBinaryStream");
+            final InputStream in = file.getFileContent().getBinaryStream();
+            rawData = new DataSource() {
+                public String getContentType() {
+                    return "application/octet-stream";
+                }
+
+                public InputStream getInputStream() throws IOException {
+                    return in;
+                }
+
+                public String getName() {
+                    return "application/octet-stream";
+                }
+
+                public OutputStream getOutputStream() throws IOException {
+                    return null;
+                }
+            };
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved file " + dataFileId);
-        } catch (IOException e) {
-            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
-            log.error(e);
-            throw new SOAPException(e);
         } catch (SQLException e) {
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
             log.error(e);
