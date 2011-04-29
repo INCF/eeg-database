@@ -13,6 +13,7 @@
         <th style="width: 60px;"><fmt:message key="dataTable.heading.id"/></th>
         <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
         <th style="width: 80px;"></th>
+        <th style="width: 80px;"></th>
       </tr>
     </thead>
     <c:choose>
@@ -23,6 +24,7 @@
             <td><c:out value="${measuration.experimentId}" />(${measuration.researchGroup.researchGroupId})</td>
             <td><c:out value="${measuration.scenario.title}" /></td>
             <td><a href="<c:url value='detail.html?experimentId=${measuration.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
+            <td><a href="<c:url value='../services/index.html?experimentId=${measuration.experimentId}'/>" ><fmt:message key='menuItem.services'/></a></td>
           </tr>
         </c:forEach>
       </c:when>
@@ -35,6 +37,7 @@
               <td><c:out value="${measuration.experimentId}" />(${measuration.researchGroup.researchGroupId})</td>
               <td><c:out value="${measuration.scenario.title}" /></td>
               <td><a href="<c:url value='detail.html?experimentId=${measuration.experimentId}'/>"><fmt:message key="link.detail"/></a></td>
+              <td><a href="<c:url value='../services/index.html?experimentId=${measuration.experimentId}'/>" ><fmt:message key='menuItem.services'/></a></td>
             </tr>
           </c:if>
 

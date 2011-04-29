@@ -3,25 +3,20 @@ package cz.zcu.kiv.eegdatabase.logic.signal;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
+import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Honza
- * Date: 10.4.2011
- * Time: 17:45:52
- * To change this template use File | Settings | File Templates.
- */
+
 public class VhdrReader {
 
     protected HashMap<String, HashMap<String, String>> properties;
-    protected HashMap<Integer, ChannelInfo> channels;
+    protected List<ChannelInfo> channels;
     protected HashMap<String, EEGMarker> markers;
 
     public VhdrReader() {
         properties = new HashMap<String, HashMap<String, String>>();
-        channels = new HashMap<Integer, ChannelInfo>();
+        channels = new ArrayList<ChannelInfo>();
         markers = new HashMap<String, EEGMarker>();
     }
 
@@ -84,7 +79,7 @@ public class VhdrReader {
     private void loadChannelInfo()  {
         int channelCnt = Integer.parseInt(properties.get("CI").get("NumberOfChannels"));
         for (int i = 1; i <= channelCnt; i++) {
-              channels.put(i, new ChannelInfo(properties.get("CH").get("Ch"+i)));
+              channels.add(new ChannelInfo(i, properties.get("CH").get("Ch"+i)));
         }
 
     }
@@ -114,7 +109,7 @@ public class VhdrReader {
         return properties;
     }
 
-    public HashMap<Integer, ChannelInfo> getChannels() {
+    public List<ChannelInfo> getChannels() {
         return channels;
     }
 
