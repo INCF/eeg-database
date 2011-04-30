@@ -19,7 +19,7 @@
     var endHour = <c:out value="${endHour}"/>;
     var fadeSpeed = 150;
     var collapseSpeed = 1000;
-    var timeoutBeforeMessageHide = 3000;
+    var timeoutBeforeMessageHide = 15000;
     var timeoutBeforeLongOperation = 1500;
 
     //array fow wating flags
@@ -126,20 +126,22 @@
         <div id="right">
             <div id="datePicker"></div>
             <div id="internright">
-                <b><fmt:message key='bookRoom.label.chooseRepeating'/>:</b><br/>
-                <fmt:message key='bookRoom.label.repeatFor'/>:<br/>
+                <fmt:message key="bookRoom.label.recur"/>
                 <form:select path="repType" onchange="showChosenData()">
-                    <option value="0">Every</option>
-                    <option value="1">Every odd</option>
-                    <option value="2">Every even</option>
-                </form:select>
-                <fmt:message key='bookRoom.label.week'/>
+                    <option value="0">every</option>
+                    <option value="1">every odd</option>
+                    <option value="2">every even</option>
+                </form:select><fmt:message key="bookRoom.label.week"/>
+                <br>
+                <fmt:message key="bookRoom.label.endAfter"/>
                 <form:select path="repCount" onchange="showChosenData()">
                     <c:forEach var="d" begin="0" end="5" step="1">
                         <option value="${d}">${d}</option>
                     </c:forEach>
                 </form:select>
-                <fmt:message key='bookRoom.label.repeatTimes'/>
+                <fmt:message key="bookRoom.label.occurrences"/><br/><br/>
+                <fmt:message key="bookRoom.label.selectedDates"/>:
+                <div id="repVis"></div>
             </div>
             <div id="internbottom"></div>
         </div>

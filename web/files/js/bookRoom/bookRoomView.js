@@ -31,6 +31,12 @@ Date.prototype.getMonthName = function()
     return m[this.getMonth()];
 }
 
+Date.prototype.getWeek = function()
+{
+    var d = new Date(this.getFullYear(), 0, 1);
+    return Math.ceil((((this - d) / 86400000) + d.getDay() + 1) / 7);
+}
+
 function getPageUrl(page)
 {
     var url = window.location.href;
@@ -290,6 +296,52 @@ function newTime()
     }
 }
 
+function getVisualizedRepetition()
+{
+    var millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
+    var date = $("#date").attr('value');
+    var repType = $("#repType").attr('value');
+    var repCount = parseInt($("#repCount").attr('value'));
+
+    var tmp = date.split('/');
+    var d = new Date(tmp[2] + "/" + tmp[1] + "/" + tmp[0] + " 00:00:00");
+
+    var html = "<i>" + date + "</i>";
+    for (i = 0; i < repCount; i++)
+    {
+        var time = d.getTime();
+        time += getWeeksAddCount(repType, i) * millisecondsInWeek;
+        d.setTime(time);
+        date = (d.getDate() < 10 ? "0" : "") + d.getDate() + "/" + (d.getMonth() < (10 - 1) ? "0" : "") + (d.getMonth() + 1) + "/" + d.getFullYear();
+        html += "\n<br>" + date;
+    }
+    return html;
+}
+
+function getWeeksAddCount(repType, repIndex)
+{
+    var weekNum = new Date().getWeek();
+
+    var add = 0;
+    if (repType == 0) add = 1;
+    if ((repType == 1 && weekNum % 2 == 1) || (repType == 2 && weekNum % 2 == 0))
+    {
+        add = 2;
+    }
+    if ((repType == 1 && weekNum % 2 == 0) || (repType == 2 && weekNum % 2 == 1))
+    {
+        if (repIndex == 0)
+        {
+            add = 1;
+        }
+        else
+        {
+            add = 2;
+        }
+    }
+    return add;
+}
+
 function showChosenData()
 {
     var filterGroup = $("#filterGroup").attr('value');
@@ -303,6 +355,8 @@ function showChosenData()
     //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
 
     $("#legend_day").html(localize("bookRoom.reservationToSameDate") + " " + date);
+
+    $("#repVis").html(getVisualizedRepetition());
 
     $.ajax({
         type: "GET",
