@@ -124,6 +124,11 @@
     clear: both;
   }
 
+  .nifButton {
+      background:white;
+      text-align: center;
+  }
+
 
   .mainContent {
     padding: 10px 0;

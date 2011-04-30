@@ -40,6 +40,7 @@ public class SemanticMultiController extends MultiActionController {
         String typeTransform = "";
         OutputStream out = null;
         InputStream is = null;
+        int headerBufferSize = 8096;
 
         typeTransform = request.getParameter("type");
         response.setHeader("Content-Type", "application/rdf+xml");
@@ -47,11 +48,14 @@ public class SemanticMultiController extends MultiActionController {
         response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.owl");
 
         log.debug("Creating output stream");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setBufferSize(headerBufferSize);
         out = response.getOutputStream();
         log.debug("Generating OWL");
         is = semanticFactory.transformPOJOToSemanticResource(typeTransform);
 
         copy(is, out);
+
         out.flush();
         out.close();
         return null;
@@ -68,12 +72,15 @@ public class SemanticMultiController extends MultiActionController {
     public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         OutputStream out = null;
+        int headerBufferSize = 8096;
 
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
         response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.rdf");
 
         log.debug("Creating output stream");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setBufferSize(headerBufferSize);
         out = response.getOutputStream();
         log.debug("Generating RDF");
         InputStream is = semanticFactory.generateRDF();
