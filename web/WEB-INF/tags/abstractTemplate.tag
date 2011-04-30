@@ -16,6 +16,7 @@
 <%@attribute name="jMetadata" %>
 <%@attribute name="jspinner" %>
 <%@attribute name="jaddWeather" %>
+<%@attribute name="jatoms" %>
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -29,6 +30,7 @@
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/files/jquery.timeentry.css'/>" type="text/css"/>
     <link rel="stylesheet" href="<c:url value='/files/jquery.dateentry.css'/>" type="text/css"/>
+    <link rel="stylesheet" href="<c:url value='/files/ui.spinner.css'/>" type="text/css"/>
     <script type="text/javascript" src="<c:url value='/files/js/metadata.js' />"></script>
     <script src="http://code.jquery.com/jquery-latest.js"></script>
     <script src="<c:url value='/files/js/jquery-ui.js' />"></script>
@@ -48,6 +50,7 @@
     <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.timeentry.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.dateentry.js'/>"></script>
+    <script src="<c:url value='/files/js/ui.spinner.js'/>"></script>
     <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
 
 
@@ -131,6 +134,13 @@
         </script>
         <script type="text/javascript" src="<c:url value='/files/js/dateTimeEdit.js' />"></script>
 
+    </c:if>
+    <c:if test="${jatoms}">
+        <script type="text/javascript">
+        jQuery().ready(function($) {
+            $("#atom").spinner({min: 1, max: 20});
+        });
+        </script>
     </c:if>
 </head>
 <body>

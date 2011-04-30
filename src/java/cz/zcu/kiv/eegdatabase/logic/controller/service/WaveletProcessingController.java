@@ -10,12 +10,12 @@ import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
 import cz.zcu.kiv.eegdsp.wavelet.continuous.WaveletTransformationContinuous;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletTransformationDiscrete;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.BindException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

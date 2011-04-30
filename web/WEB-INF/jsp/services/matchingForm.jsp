@@ -3,7 +3,7 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-<ui:servicesTemplate pageTitle="pageTitle.services">
+<ui:servicesTemplate pageTitle="pageTitle.services" jatoms="true">
 
     <h1><fmt:message key="link.matchingPursuit"/></h1>
 

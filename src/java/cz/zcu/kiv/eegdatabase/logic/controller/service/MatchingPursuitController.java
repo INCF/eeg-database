@@ -6,12 +6,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.BindException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;

@@ -6,23 +6,17 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
+import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.net.BindException;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Honza
- * Date: 29.4.2011
- * Time: 10:00:26
- * To change this template use File | Settings | File Templates.
- */
+
 public class FastFourierController extends SimpleFormController {
      private GenericDao<Experiment, Integer> experimentDao;
     private DataTransformer transformer;
