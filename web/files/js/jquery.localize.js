@@ -43,7 +43,16 @@ $.ajax({
 function localize(key, replacementArray)
 {
     if (localization == null) return "Messages not loaded yet!";
-    var message = eval("localization." + key)
+    var message;
+    try
+    {
+        message = eval("localization." + key)
+    }
+    catch(err)
+    {
+        return "Could not find localized key '" + key + "'!";
+    }
+
     if (replacementArray != null && replacementArray.length > 0)
     {
         for (var i = 0; i < replacementArray.length; i++)
