@@ -1,13 +1,13 @@
 package cz.zcu.kiv.eegdatabase.logic.util;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.GregorianCalendar;
+import java.util.*;
 
 /**
  * @author Jenda Kolena
@@ -170,6 +170,24 @@ public class BookingRoomUtils
             }
         }
         return add;
+    }
+
+    public static ArrayList<Reservation> getCollisions(ReservationDao dao, int repCount, int repType, GregorianCalendar start, GregorianCalendar end)
+    {
+        ArrayList coll = new ArrayList();
+        for (int i = 0; i < repCount; i++)
+        {
+            int add = BookingRoomUtils.getWeeksAddCount(repType, i);
+            start.add(Calendar.WEEK_OF_YEAR, add);
+            end.add(Calendar.WEEK_OF_YEAR, add);
+
+            List nextRes = dao.getReservationsBetween(start, end);
+            if (nextRes.size() > 0)
+            {
+                coll.addAll(nextRes);
+            }
+        }
+        return coll;
     }
 
     /**

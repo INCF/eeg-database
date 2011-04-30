@@ -113,8 +113,8 @@
             <td><c:out value="${starttime[0]}:${starttime[1]} - ${endtime[0]}:${endtime[1]}"/></td>
             <td style="text-align:center;">
                 <span style="width: 60px; display: block; vertical-align: middle;">
-                    <span class="infoicon" onclick="showInfo(<c:out value="${reservation.reservationId}"/>)" title="Show more information about this reservation"></span>
-                    <span class="pdficon" onclick="downloadPDF(<c:out value="${reservation.reservationId}"/>)" title="Download more information about this reservation in PDF file"></span>
+                    <span class="infoicon" onclick="showInfo(<c:out value="${reservation.reservationId}"/>)" title="<fmt:message key="bookRoom.more.info"/>"></span>
+                    <span class="pdficon" onclick="downloadPDF(<c:out value="${reservation.reservationId}"/>)" title="<fmt:message key="bookRoom.more.download"/>"></span>
                 </span>
             </td>
             <td style="text-align:center;" id="delete<c:out value="${reservation.reservationId}"/>"><c:if test="${reservation.person.username==loggedUser.username}">
@@ -126,5 +126,8 @@
         <c:set var="reservationsCount" value="${reservationsCount+1}"/>
     </c:forEach>
 </table>
+<c:if test="${reservationsCount==0}">
+    <h2><fmt:message key="bookRoom.noReservationsMatch"/></h2>
+</c:if>
 #!#<c:out value="${isCollision}"/>
 #!#<c:out value="${reservationsCount}"/>

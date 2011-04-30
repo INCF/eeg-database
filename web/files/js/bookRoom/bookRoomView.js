@@ -292,12 +292,14 @@ function newTime()
 
 function showChosenData()
 {
-    var sel = document.getElementById("selectedGroup");
+    var filterGroup = $("#filterGroup").attr('value');
+    var filterDate = $("#filterDate").attr('value');
+    if (filterDate == localize("bookRoom.filter.date.click")) filterDate = '';
     var repType = $("#repType").attr('value');
     var repCount = $("#repCount").attr('value');
     var date = $("#date").attr('value');
 
-    var req = "group=" + sel.value + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
+    var req = "filterGroup=" + filterGroup + "&filterDate=" + filterDate + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
     //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
 
     $("#legend_day").html(localize("bookRoom.reservationToSameDate") + " " + date);

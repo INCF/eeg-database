@@ -12,6 +12,13 @@ function selectAllReservations()
     }
 }
 
+function resetFilter()
+{
+    $("#filterDate").attr('value', '<fmt:message key="bookRoom.filter.date.click"/>');
+    $("#filterGroup").attr('selectedIndex', 0);
+    showChosenData();
+}
+
 function downloadPDF(id)
 {
     $("#pdfId").attr('value', id);

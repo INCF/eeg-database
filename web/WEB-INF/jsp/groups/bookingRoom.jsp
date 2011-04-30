@@ -159,8 +159,23 @@
             <!-- TOOLBAR -->
             <div id="toolbar">
                 <div>
-                    <span style="border: 1px solid black; padding: 5px 5px 5px 5px;">filter is not implemented yet, sorry O:-)</span>
-                    <span class="pdficon" onclick="downloadPDFList();"></span><span style="cursor: pointer;" onclick="downloadPDFList();">Download selected in PDF</span>
+                    <!-- FILTER -->
+                    <fmt:message key="bookRoom.filter.group.label"/>&nbsp;
+                    <select id="filterGroup" class="selectBox" style="width: 160px; cursor: pointer;" onchange="showChosenData();">
+                        <option value="0" selected="true"><fmt:message key="bookRoom.filter.group.forAll"/></option>
+                        <c:forEach items="${researchGroupList}" var="researchGroup">
+                            <option value="${researchGroup.researchGroupId}">
+                                <fmt:message key="bookRoom.filter.group.onlyFor"/> <c:out value="${researchGroup.title}"/>
+                            </option>
+                        </c:forEach>
+                    </select>
+                    <fmt:message key="bookRoom.filter.date.label"/>
+                    <input class="" style="cursor: pointer; width:90px;" id="filterDate" onchange="showChosenData();" readonly="true" value="<fmt:message key="bookRoom.filter.date.click"/>"
+                           title="<fmt:message key="bookRoom.filter.date.hint"/>"/>
+                    <input type="button" value="<fmt:message key="bookRoom.filter.reset"/>" onclick="resetFilter();"/>
+                    <!-- PDF DOWNLOAD ICON -->
+                    <span class="pdficon" onclick="downloadPDFList();"></span>
+                    <span style="cursor: pointer;" onclick="downloadPDFList();" title="<fmt:message key="bookRoom.downloadPDF.hint"/>"><fmt:message key="bookRoom.downloadPDF.label"/></span>
                 </div>
             </div>
             <span class="messageToggle" id="toggle_toolbar" title="<fmt:message key='bookRoom.toggle.toolbar'/>" onclick="toggleDiv('toolbar')"><hr></span>
@@ -213,6 +228,7 @@
 
         $("#datePicker").datepicker({
             minDate: <c:out value="${minDate}" />,
+            showWeekNumbers: true,
             firstDay: 1,
             dateFormat: "dd/mm/yy",
             <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
@@ -225,6 +241,18 @@
                 if (newMonth != oldMonth) reloadTimeline();
                 else setCenterDate(selectedDate);
                 newTime();
+            }
+        });
+
+        $("#filterDate").datepicker({
+            minDate: <c:out value="${minDate}" />,
+            showWeekNumbers: true,
+            firstDay: 1,
+            dateFormat: "dd/mm/yy",
+            <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
+            onSelect: function(selectedDate)
+            {
+                showChosenData()
             }
         });
 
