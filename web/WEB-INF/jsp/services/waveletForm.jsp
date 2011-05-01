@@ -14,7 +14,7 @@
     </c:if>
 
 
-    <c:url value="/services/results.html" var="formUrl"/>
+    <c:url value="/services/resultsWT.html?experimentId=${experimentId}" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="wavelet" cssClass="standardInputForm"
                name="wavelet">
 

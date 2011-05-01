@@ -24,9 +24,8 @@ public class EegReader {
         }
     }
 
-    public double[] readFile(DataFile binaryFile) throws SQLException {
-        eegData = binaryFile.getFileContent().getBytes(1, (int) binaryFile.getFileContent().length());
-        int channel = 5; // electrode
+    public double[] readFile(byte[] binaryFile, int channel) {
+        eegData = binaryFile;
         
         return readOneChannel(channel);
     }

@@ -143,9 +143,11 @@
                 <prop key="services/index.html">signalProcessingController</prop>
 
                 <prop key="services/matchingForm.html">matchingPursuitController</prop>
-                <prop key="services/results.html">matchingPursuitController</prop>
+                <prop key="services/resultsMP.html">matchingPursuitController</prop>
                 <prop key="services/waveletForm.html">waveletController</prop>
+                <prop key="services/resultsWT.html">waveletController</prop>
                 <prop key="services/fourierForm.html">fastFourierController</prop>
+                <prop key="services/resultsFF.html">fastFourierController</prop>
             </props>
         </property>
     </bean>

@@ -21,8 +21,10 @@ public class VhdrReader {
     }
 
 
-    public void readVhdr(DataFile vhdr) throws SQLException {
-        byte[] bytes = vhdr.getFileContent().getBytes(1, (int) vhdr.getFileContent().length());
+    public void readVhdr(byte[] bytes) {
+        properties.clear();
+        channels.clear();
+        markers.clear();
         String vhdrIn = "";
         for (int i = 0; i < bytes.length; i++) {
             vhdrIn = vhdrIn + "" + ((char) (bytes[i] & 0xFF));
@@ -40,12 +42,12 @@ public class VhdrReader {
             vmrkIn = vmrkIn + "" + ((char) (bytes[i] & 0xFF));
         }
         String[] lines = vmrkIn.split("\n");
-        
+
         readMarkersInfos(lines);
     }
 
 
-    private void readMarkersInfos(String[] lines)  {
+    void readMarkersInfos(String[] lines) {
         int index;
         for (index = 0; index < lines.length; index++) {
             if (lines[index].contains("Marker Infos")) {
@@ -53,9 +55,9 @@ public class VhdrReader {
             }
         }
         for (int i = index + 1; i < lines.length; i++) {
-           if (!(lines[i].startsWith(";"))) {
-               String[] arr = lines[i].split("[=]");
-               String[] par = arr[1].split("[,]");
+            if (!(lines[i].startsWith(";"))) {
+                String[] arr = lines[i].split("[=]");
+                String[] par = arr[1].split("[,]");
 
                 if (par[0].equals("Stimulus")) {
                     EEGMarker marker = new EEGMarker();
@@ -65,21 +67,21 @@ public class VhdrReader {
 
                     markers.put(arr[0], marker.clone());
                 }
-           }
+            }
         }
 
     }
 
-    private void readCommonInfos(String[] lines)  {
+    void readCommonInfos(String[] lines) {
         properties.put("CI", readInfo(lines, "Common Infos"));
         properties.put("BI", readInfo(lines, "Binary Infos"));
         properties.put("CH", readInfo(lines, "Channel Infos"));
     }
 
-    private void loadChannelInfo()  {
+    void loadChannelInfo() {
         int channelCnt = Integer.parseInt(properties.get("CI").get("NumberOfChannels"));
         for (int i = 1; i <= channelCnt; i++) {
-              channels.add(new ChannelInfo(i, properties.get("CH").get("Ch"+i)));
+            channels.add(new ChannelInfo(i, properties.get("CH").get("Ch" + i)));
         }
 
     }
@@ -92,7 +94,7 @@ public class VhdrReader {
                 break;
             }
         }
-        for (int i = index+1; i < lines.length; i++) {
+        for (int i = index + 1; i < lines.length; i++) {
             if (!(lines[i].startsWith(";"))) {
                 if (lines[i].trim().equals("")) {
                     break;
@@ -100,7 +102,7 @@ public class VhdrReader {
                 String[] arr = lines[i].trim().split("[=]");
                 info.put(arr[0], arr[1]);
             }
-            
+
         }
         return info;
     }

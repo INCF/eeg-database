@@ -21,11 +21,7 @@ import java.util.List;
 import java.util.Map;
 
 
-public class WaveletProcessingController extends SimpleFormController {
-    private GenericDao<Experiment, Integer> experimentDao;
-    private DataTransformer transformer;
-    private VhdrReader reader;
-    Experiment experiment;
+public class WaveletProcessingController extends AbstractProcessingController {
 
 
     public WaveletProcessingController() {
@@ -34,18 +30,7 @@ public class WaveletProcessingController extends SimpleFormController {
     }
 
     protected Map referenceData(HttpServletRequest request) throws Exception {
-        Map map = new HashMap<String, Object>();
-        experiment = experimentDao.read(Integer.parseInt(request.getParameter("experimentId")));
-        reader = new VhdrReader();
-        DataFile vhdr = null;
-        for (DataFile d : experiment.getDataFiles()) {
-            if (d.getFilename().endsWith(".vhdr")) {
-                vhdr = d;
-                break;
-            }
-        }
-        reader.readVhdr(vhdr);
-        List<ChannelInfo> channels = reader.getChannels();
+        Map map = super.referenceData(request);
         String[] names;
         if (request.getParameter("type").equals("DWT")) {
             ISignalProcessor dwt = SignalProcessingFactory.getInstance().getWaveletDiscrete();
@@ -54,7 +39,6 @@ public class WaveletProcessingController extends SimpleFormController {
             ISignalProcessor dwt = SignalProcessingFactory.getInstance().getWaveletContinuous();
             names = ((WaveletTransformationContinuous) dwt).getWaveletGenerator().getWaveletNames();
         }
-        map.put("channels", channels);
         map.put("wavelets", names);
         map.put("type", request.getParameter("type"));
 
@@ -64,22 +48,5 @@ public class WaveletProcessingController extends SimpleFormController {
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         WaveletCommand cmd = (WaveletCommand) command;
         return new ModelAndView(getSuccessView());
-    }
-
-
-    public GenericDao<Experiment, Integer> getExperimentDao() {
-        return experimentDao;
-    }
-
-    public void setExperimentDao(GenericDao<Experiment, Integer> experimentDao) {
-        this.experimentDao = experimentDao;
-    }
-
-    public DataTransformer getTransformer() {
-        return transformer;
-    }
-
-    public void setTransformer(DataTransformer transformer) {
-        this.transformer = transformer;
     }
 }
