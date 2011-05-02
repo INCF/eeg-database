@@ -17,5 +17,4 @@ public interface DataTransformer {
     public HashMap<String, HashMap<String, String>> getProperties();
 
     public List<ChannelInfo> getChannelInfo();
-
 }

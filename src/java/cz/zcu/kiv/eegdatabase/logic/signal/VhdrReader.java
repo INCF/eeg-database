@@ -47,7 +47,7 @@ public class VhdrReader {
     }
 
 
-    void readMarkersInfos(String[] lines) {
+    private void readMarkersInfos(String[] lines) {
         int index;
         for (index = 0; index < lines.length; index++) {
             if (lines[index].contains("Marker Infos")) {
@@ -72,13 +72,13 @@ public class VhdrReader {
 
     }
 
-    void readCommonInfos(String[] lines) {
+    private void readCommonInfos(String[] lines) {
         properties.put("CI", readInfo(lines, "Common Infos"));
         properties.put("BI", readInfo(lines, "Binary Infos"));
         properties.put("CH", readInfo(lines, "Channel Infos"));
     }
 
-    void loadChannelInfo() {
+    private void loadChannelInfo() {
         int channelCnt = Integer.parseInt(properties.get("CI").get("NumberOfChannels"));
         for (int i = 1; i <= channelCnt; i++) {
             channels.add(new ChannelInfo(i, properties.get("CH").get("Ch" + i)));

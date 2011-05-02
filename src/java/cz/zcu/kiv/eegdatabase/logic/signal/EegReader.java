@@ -31,7 +31,6 @@ public class EegReader {
     }
 
     private double[] readOneChannel(int channel) {
-
         int len = eegData.length / (getBinarySize() * channelCnt);
         double[] ret;
         double[] channelSet = new double[channelCnt];
@@ -41,7 +40,6 @@ public class EegReader {
             channelSet = readChannelSet(i, channelSet);
             ret[i] = (channelSet[channel - 1] * resolution);
         }
-        
         return ret;
     }
 
@@ -66,8 +64,6 @@ public class EegReader {
                 channelSet[i] = bb.getFloat(0);
                 index = index + 4;
             }
-
-
         }
         return channelSet;
     }

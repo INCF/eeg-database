@@ -1,12 +1,5 @@
 package cz.zcu.kiv.eegdatabase.logic.signal;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Honza
- * Date: 10.4.2011
- * Time: 17:39:17
- * To change this template use File | Settings | File Templates.
- */
 public class EEGMarker {
 
     protected String name;
