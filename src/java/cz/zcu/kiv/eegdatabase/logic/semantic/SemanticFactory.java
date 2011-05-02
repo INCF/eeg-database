@@ -36,6 +36,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
+            break;
         }
     }
 
