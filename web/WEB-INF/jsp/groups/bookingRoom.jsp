@@ -19,7 +19,7 @@
     var endHour = <c:out value="${endHour}"/>;
     var fadeSpeed = 150;
     var collapseSpeed = 1000;
-    var timeoutBeforeMessageHide = 15000;
+    var timeoutBeforeMessageHide = 10000;
     var timeoutBeforeLongOperation = 1500;
 
     //array fow wating flags

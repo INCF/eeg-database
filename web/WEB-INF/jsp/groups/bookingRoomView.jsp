@@ -60,7 +60,6 @@
             </tr>
         </c:forEach>
     </table>
-    <hr>
 </c:if>
 
 <h2><fmt:message key="bookRoom.selectedTime"/>: <c:out value="${timerange}"/></h2>
@@ -129,5 +128,4 @@
 <c:if test="${reservationsCount==0}">
     <h2><fmt:message key="bookRoom.noReservationsMatch"/></h2>
 </c:if>
-#!#<c:out value="${isCollision}"/>
-#!#<c:out value="${reservationsCount}"/>
+#!#<c:out value="${isCollision}"/>#!#<c:out value="${reservationsCount}"/>

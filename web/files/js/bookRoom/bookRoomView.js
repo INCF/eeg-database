@@ -235,7 +235,7 @@ function inPast()
     var tmp = $("#date").attr('value').split("/");
     var date = tmp[2] + "/" + tmp[1] + "/" + tmp[0];
 
-    var startTime = new Date(date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
+    var startTime = new Date(date + " " + $("#startH").val() + ":" + $("#startM").val() + ":00");
     startTime.setHours(startTime.getHours() + 2);
 
     return (startTime < now);
@@ -243,22 +243,22 @@ function inPast()
 
 function setEndTime(hourIndex, minuteIndex)
 {
-    $("#endH").attr('selectedIndex', hourIndex);
-    $("#endM").attr('selectedIndex', minuteIndex);
+    document.getElementById("endH").selectedIndex = hourIndex;
+    document.getElementById("endM").selectedIndex = minuteIndex;
 }
 
 function newTime()
 {
-    var start = $("#startH").attr('value') + $("#startM").attr('value');
-    var end = $("#endH").attr('value') + $("#endM").attr('value');
+    var start = $("#startH").val() + $("#startM").val();
+    var end = $("#endH").val() + $("#endM").val();
     var date = $("#date").attr('value');
 
     //try to set end hour after start hour
     if (end <= start)
     {
-        if ($("#startH").attr('value') == endHour)
+        if ($("#startH").val() == endHour)
         {
-            if ($("#startM").attr('value') != 45)
+            if ($("#startM").val() != 45)
             {
                 setEndTime(endHour - startHour, 3);
             }
@@ -269,11 +269,11 @@ function newTime()
         }
         else
         {
-            setEndTime(parseInt($("#startH").attr('selectedIndex')) + 1, $("#endM").attr('selectedIndex'));
+            setEndTime(parseInt(document.getElementById("startH").selectedIndex) + 1, parseInt(document.getElementById("endM").selectedIndex));
         }
 
         //load endtime value again for next comparison
-        end = $("#endH").attr('value') + $("#endM").attr('value');
+        end = $("#endH").val() + $("#endM").val();
     }
 
     if (end <= start)
@@ -290,8 +290,8 @@ function newTime()
     }
     else
     {
-        $("#startTime").attr('value', date + " " + $("#startH").attr('value') + ":" + $("#startM").attr('value') + ":00");
-        $("#endTime").attr('value', date + " " + $("#endH").attr('value') + ":" + $("#endM").attr('value') + ":00");
+        $("#startTime").attr('value', date + " " + $("#startH").val() + ":" + $("#startM").val() + ":00");
+        $("#endTime").attr('value', date + " " + $("#endH").val() + ":" + $("#endM").val() + ":00");
         showChosenData();
     }
 }
@@ -300,8 +300,8 @@ function getVisualizedRepetition()
 {
     var millisecondsInWeek = 7 * 24 * 60 * 60 * 1000;
     var date = $("#date").attr('value');
-    var repType = $("#repType").attr('value');
-    var repCount = parseInt($("#repCount").attr('value'));
+    var repType = $("#repType").val();
+    var repCount = parseInt($("#repCount").val());
 
     var tmp = date.split('/');
     var d = new Date(tmp[2] + "/" + tmp[1] + "/" + tmp[0] + " 00:00:00");
@@ -344,15 +344,15 @@ function getWeeksAddCount(repType, repIndex)
 
 function showChosenData()
 {
-    var filterGroup = $("#filterGroup").attr('value');
+    var filterGroup = $("#filterGroup").val();
     var filterDate = $("#filterDate").attr('value');
     if (filterDate == localize("bookRoom.filter.date.click")) filterDate = '';
-    var repType = $("#repType").attr('value');
-    var repCount = $("#repCount").attr('value');
+    var repType = $("#repType").val();
+    var repCount = $("#repCount").val();
     var date = $("#date").attr('value');
 
     var req = "filterGroup=" + filterGroup + "&filterDate=" + filterDate + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
-    //group=24&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
+    //filterGroup=0&filterDate=&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
 
     $("#legend_day").html(localize("bookRoom.reservationToSameDate") + " " + date);
 
