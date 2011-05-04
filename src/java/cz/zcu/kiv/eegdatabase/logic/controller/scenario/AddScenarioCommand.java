@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
 import org.springframework.web.multipart.MultipartFile;
+import org.w3c.dom.Document;
 
 public class AddScenarioCommand {
 
@@ -10,7 +11,9 @@ public class AddScenarioCommand {
     private String length;
     private String description;
     private MultipartFile dataFile;
+    private MultipartFile dataFileXml;
     private boolean privateNote;
+    private String scenarioSchema;
 
     public int getId() {
         return id;
@@ -67,5 +70,22 @@ public class AddScenarioCommand {
     public void setPrivateNote(boolean privateNote) {
         this.privateNote = privateNote;
     }
+
+    public String getScenarioSchema() {
+      return scenarioSchema;
+    }
+
+    public void setScenarioSchema(String scenarioSchema) {
+      this.scenarioSchema = scenarioSchema;
+    }
+
+    public MultipartFile getDataFileXml() {
+      return dataFileXml;
+    }
+
+    public void setDataFileXml(MultipartFile dataFileXml) {
+      this.dataFileXml = dataFileXml;
+    }
+
 
 }

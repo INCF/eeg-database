@@ -120,6 +120,14 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="scenarioSchemasDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioSchemasDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean name="scenarioTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioTypeDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
     <bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -508,6 +516,8 @@
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
+        <property name="scenarioTypeDao" ref="scenarioTypeDao"/>
         <property name="validator">
             <bean class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioValidator">
                 <property name="auth" ref="authorizationManager"/>

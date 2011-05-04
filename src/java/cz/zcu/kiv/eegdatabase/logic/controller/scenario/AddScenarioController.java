@@ -1,11 +1,11 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType1;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -13,9 +13,19 @@ import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.w3c.dom.Document;
+import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.*;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -34,6 +44,8 @@ public class AddScenarioController
     private ScenarioDao scenarioDao;
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
+    private ScenarioSchemasDao scenarioSchemasDao;
+    private ScenarioTypeDao scenarioTypeDao;
 
     public AddScenarioController() {
         setCommandClass(AddScenarioCommand.class);
@@ -95,10 +107,12 @@ public class AddScenarioController
         List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
         map.put("researchGroupList", groups);
 
+        List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getScenarioSchemaNames();
+        map.put("schemaNamesList", schemaNames);
+
         ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
-
 
         return map;
     }
@@ -129,11 +143,17 @@ public class AddScenarioController
 
         MultipartFile file = data.getDataFile();
 
+        MultipartFile xmlFile = data.getDataFileXml();
+
         Scenario scenario;
+        ScenarioType1 scenarioType1;
         if (id > 0) {
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
+
+            //predelat!!!
+            scenarioType1 = new ScenarioType1();
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -141,6 +161,8 @@ public class AddScenarioController
 
             log.debug("Setting owner to the logged user.");
             scenario.setPerson(personDao.getLoggedPerson());
+
+            scenarioType1 = new ScenarioType1();
         }
 
         log.debug("Setting research group.");
@@ -165,6 +187,23 @@ public class AddScenarioController
             scenario.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
+        if ((xmlFile != null) && (!xmlFile.isEmpty())) {
+            //nahrani XML do tabulky s XMLType sloupcem
+
+            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
+            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
+            InputStream inputStream = xmlFile.getInputStream();
+
+            //byte[] dataS = xmlFile.getBytes();
+            //String dataStr = new String(dataS);
+
+            //Document doc = docBuilder.parse(new ByteArrayInputStream(dataS));
+            Document doc = docBuilder.parse(inputStream);
+
+            scenarioType1.setScenarioXml(doc);
+
+        }
+
         log.debug("Setting private/public access");
         scenario.setPrivateScenario(data.getPrivateNote());
 
@@ -174,6 +213,7 @@ public class AddScenarioController
             scenarioDao.update(scenario);
         } else {
             // Creating new
+            scenarioTypeDao.create(scenarioType1);
             scenarioDao.create(scenario);
         }
 
@@ -212,5 +252,21 @@ public class AddScenarioController
 
     public void setAuth(AuthorizationManager auth) {
         this.auth = auth;
+    }
+
+    public ScenarioSchemasDao getScenarioSchemasDao() {
+        return scenarioSchemasDao;
+    }
+
+    public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
+        this.scenarioSchemasDao = scenarioSchemasDao;
+    }
+
+    public ScenarioTypeDao getScenarioTypeDao() {
+        return scenarioTypeDao;
+    }
+
+    public void setScenarioTypeDao(ScenarioTypeDao scenarioTypeDao) {
+        this.scenarioTypeDao = scenarioTypeDao;
     }
 }

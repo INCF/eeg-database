@@ -58,7 +58,7 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library">
+    <orderEntry type="module-library" exported="">
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar!/" />
@@ -67,28 +67,29 @@
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="struts" level="project" />
-    <orderEntry type="library" name="lib1" level="project" />
-    <orderEntry type="library" name="hibernate" level="project" />
-    <orderEntry type="library" name="spring" level="project" />
-    <orderEntry type="library" name="lucene" level="project" />
-    <orderEntry type="library" name="spring-security" level="project" />
-    <orderEntry type="library" name="lib" level="project" />
-    <orderEntry type="library" name="Tomcat 6" level="application_server_libraries" />
-    <orderEntry type="module-library">
+    <orderEntry type="library" exported="" name="struts" level="project" />
+    <orderEntry type="library" exported="" name="lib1" level="project" />
+    <orderEntry type="library" exported="" name="hibernate" level="project" />
+    <orderEntry type="library" exported="" name="spring" level="project" />
+    <orderEntry type="library" exported="" name="lucene" level="project" />
+    <orderEntry type="library" exported="" name="spring-security" level="project" />
+    <orderEntry type="library" exported="" name="lib" level="project" />
+    <orderEntry type="library" exported="" name="Tomcat 6" level="application_server_libraries" />
+    <orderEntry type="module-library" exported="">
       <library name="PHP 5.3.1">
         <CLASSES />
         <JAVADOC />
         <SOURCES />
       </library>
     </orderEntry>
-    <orderEntry type="library" name="semantic" level="project" />
-    <orderEntry type="library" name="pdf" level="project" />
-    <orderEntry type="library" name="social" level="project" />
-    <orderEntry type="library" name="cxf" level="project" />
-    <orderEntry type="library" name="jaxws" level="project" />
-    <orderEntry type="library" name="geronimo" level="project" />
-    <orderEntry type="library" name="jstl" level="project" />
+    <orderEntry type="library" exported="" name="semantic" level="project" />
+    <orderEntry type="library" exported="" name="pdf" level="project" />
+    <orderEntry type="library" exported="" name="social" level="project" />
+    <orderEntry type="library" exported="" name="cxf" level="project" />
+    <orderEntry type="library" exported="" name="jaxws" level="project" />
+    <orderEntry type="library" exported="" name="geronimo" level="project" />
+    <orderEntry type="library" exported="" name="jstl" level="project" />
+    <orderEntry type="library" name="oracle" level="project" />
   </component>
 </module>
 

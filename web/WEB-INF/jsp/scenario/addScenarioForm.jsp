@@ -85,6 +85,17 @@
             </div>
             <div class="itemBox">
 
+
+            <div class="itemBox">
+                <form:label path="dataFileXml" cssClass="fileFieldLabel"
+                            cssErrorClass="fileFieldLabel errorLabel">XML Data file</form:label>
+
+                <input type="file" name="dataFileXml" class="fileField"/>
+
+                <form:errors path="dataFileXml" cssClass="errorBox"/>
+            </div>
+            <div class="itemBox">
+
                 <form:label path="privateNote" cssClass="textFieldLabel"
                             cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.private"/></form:label>
 
@@ -93,6 +104,21 @@
                 <form:errors path="privateNote" cssClass="errorBox"/>
             </div>
 
+            <div class="itemBox">
+                <form:label path="scenarioSchema" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.scenarioSchema"/></form:label>
+
+                <form:select path="scenarioSchema" cssClass="selectBox">
+                    <form:option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></form:option>
+
+                    <c:forEach items="${schemaNamesList}" var="schemaName">
+                        <option value="schemaName.schemaId" label="">
+                            <c:out value="${schemaName.schemaName}" />
+                        </option>
+                    </c:forEach>
+
+                </form:select>
+                <form:errors path="scenarioSchema" cssClass="errorBox" />
+            </div>
 
             <div class="itemBox">
                 <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink"/>
