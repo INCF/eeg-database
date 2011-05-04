@@ -131,7 +131,7 @@
                     <option value="0">every</option>
                     <option value="1">every odd</option>
                     <option value="2">every even</option>
-                </form:select><fmt:message key="bookRoom.label.week"/>
+                </form:select><fmt:message key="bookRoom.label.week"/>,
                 <br>
                 <fmt:message key="bookRoom.label.endAfter"/>
                 <form:select path="repCount" onchange="showChosenData()">

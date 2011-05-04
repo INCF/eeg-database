@@ -14,8 +14,8 @@ function selectAllReservations()
 
 function resetFilter()
 {
-    $("#filterDate").attr('value', '<fmt:message key="bookRoom.filter.date.click"/>');
-    $("#filterGroup").attr('selectedIndex', 0);
+    $("#filterDate").attr('value', localize("bookRoom.filter.date.click"));
+    document.getElementById("filterGroup").selectedIndex = 0;
     showChosenData();
 }
 
