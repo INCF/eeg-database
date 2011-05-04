@@ -89,7 +89,7 @@ public class ReservationPDF extends SimpleFormController
                 PDFUtils utils = new PDFUtils(getServletContext().getRealPath("/"));
                 document.add(utils.setHeader(document, "Reservations listing"));
 
-                java.util.List<Reservation> reservations = reservationDao.getReservationsBetween(rangeStart, rangeEnd);
+                java.util.List<Reservation> reservations = reservationDao.getReservationsBetween(rangeStart, rangeEnd, "", 0);
 
                 int count = 0;
                 for (Reservation reservation : reservations)

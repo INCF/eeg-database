@@ -23,13 +23,6 @@ public class SimpleReservationDao
         super(Reservation.class);
     }
 
-    public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end)
-    {//${(start<myEnd) && (end>myStart)}
-        String hqlQuery = "from Reservation reservation where reservation.startTime < (:endtime) AND reservation.endTime >  (:starttime) order by reservation.startTime";
-        Session session = getSession();
-        return session.createQuery(hqlQuery).setTimestamp("starttime", start.getTime()).setTimestamp("endtime", end.getTime()).list();
-    }
-
     public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end, String date, int group)
     {
         if (date != null && date.compareTo("") != 0)

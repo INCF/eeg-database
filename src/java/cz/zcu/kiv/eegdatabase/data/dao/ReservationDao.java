@@ -13,9 +13,6 @@ import java.util.List;
  */
 public interface ReservationDao extends GenericDao<Reservation, Integer>
 {
-
-    public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end);
-
     public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end, String date, int group);
 
     public Reservation getReservationById(int id);
