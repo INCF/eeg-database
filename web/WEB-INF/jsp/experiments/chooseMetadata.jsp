@@ -9,7 +9,8 @@
 <ui:experimentsTemplate pageTitle="pageTitle.chooseMetadata">
 
   <h1><fmt:message key="pageTitle.chooseMetadata"/></h1>
-  <form:form id="metadataDownloader" action="download_metadata_zip.html?id=${measurationDetail.experimentId}" method="post" commandName="chooseMetadata" cssClass="standardInputForm" name="chooseMetadata" >
+  <c:url value="download_metadata_zip.html?id=${measurationDetail.experimentId}" var="formUrl"/>
+  <form:form id="metadataDownloader" action="${formUrl}" method="post" commandName="chooseMetadata" cssClass="standardInputForm" name="chooseMetadata" >
     <table style="width:27%;" class="standardValueTable">
     <tr>
       <th class="multiple"><fmt:message key="label.chooseAll"/></th>
