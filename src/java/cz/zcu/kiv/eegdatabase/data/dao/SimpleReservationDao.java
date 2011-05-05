@@ -23,6 +23,11 @@ public class SimpleReservationDao
         super(Reservation.class);
     }
 
+    public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end)
+    {
+        return getReservationsBetween(start, end, "", 0);
+    }
+
     public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end, String date, int group)
     {
         if (date != null && date.compareTo("") != 0)
@@ -46,7 +51,8 @@ public class SimpleReservationDao
     {
         String hqlQuery = "from Reservation reservation where reservation.reservationId = :id";
         Session session = getSession();
-        return (Reservation) (session.createQuery(hqlQuery).setInteger("id", id).list().get(0));
+        List res = session.createQuery(hqlQuery).setInteger("id", id).list();
+        return res.size() == 1 ? (Reservation) res.get(0) : null;
     }
 
     public boolean deleteReservation(int id)
