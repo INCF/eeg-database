@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+  <session-factory>
+    <property name="hibernate.current_session_context_class">
+            org.hibernate.context.ThreadLocalSessionContext
+    </property>
+    <property name="hibernate.dialect">
+            cz.zcu.kiv.eegdatabase.dialect.UserDefinedOracleDialect
+    </property>
+    <property name="hibernate.connection.driver_class">
+            oracle.jdbc.driver.OracleDriver
+    </property>
+    <property name="hibernate.connection.url">
+            jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students
+    </property>
+    <property name="hibernate.connection.username">jpergler</property>
+    <property name="hibernate.connection.password">jpergler</property>
+    <property name="hibernate.cache.provider_class">
+            org.hibernate.cache.NoCacheProvider
+    </property>
+    <!--<property name="hibernate.hbm2dll.auto">create</property>-->
+   
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Data.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/EyesDefect.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/PersonAditionalParams.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Measuration.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/FileMetadataParams.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/HearingDefect.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/MeasurationAdditionalParams.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/PersonAddParamsValues.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/FileMetadata.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Weather.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/MeasAddParamsValues.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Person.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/GroupPermissionRequest.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType1.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
+  </session-factory>
+</hibernate-configuration>

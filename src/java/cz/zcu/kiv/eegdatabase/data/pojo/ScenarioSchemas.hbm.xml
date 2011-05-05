@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!--
+    Document   : ScenarioType1.hbm.xml
+    Created on : 19. duben 2011, 18:05
+    Author     : Jan Koreň
+    Description:
+        Purpose of the document follows.
+-->
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas" schema="JPERGLER" table="SCENARIO_SCHEMA">
+    <id name="schemaId" type="int">
+      <column name="SCHEMA_ID" precision="22" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <property name="schemaName" type="string">
+      <column name="SCHEMA_NAME"/>
+    </property>
+  </class>
+</hibernate-mapping>
