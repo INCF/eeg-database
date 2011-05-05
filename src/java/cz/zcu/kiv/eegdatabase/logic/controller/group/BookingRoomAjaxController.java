@@ -45,7 +45,7 @@ public class BookingRoomAjaxController
     }
 
     @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception
+    public Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception
     {
         Map map = new HashMap<String, Object>();
 

@@ -24,9 +24,27 @@
         </constructor-arg>
     </bean>
 
+    <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
+    </bean>
+
+    <bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
+    </bean>
+
+    <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
+    </bean>
+
+    <bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages</value>
+                <value>errors</value>
+            </list>
+        </property>
+    </bean>
+
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml" />
+        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>

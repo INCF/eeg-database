@@ -9,10 +9,8 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
-import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.context.HierarchicalMessageSource;
@@ -44,16 +42,15 @@ public class BookingRoomController extends SimpleFormController
     }
 
     @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception
+    public ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object comm, BindException bindException) throws Exception
     {
-
         try
         {
             BookRoomCommand command = (BookRoomCommand) comm;
             status = messageSource.getMessage("bookRoom.controllerMessages.status.fail", null, RequestContextUtils.getLocale(request));
             comment = messageSource.getMessage("bookRoom.controllerMessages.comment.error.unknown", null, RequestContextUtils.getLocale(request));
 
-            Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
+            Person user = personDao.getLoggedPerson();
             int group = command.getSelectedGroup();
             int repType = command.getRepType();
             int repCount = command.getRepCount();
@@ -132,22 +129,20 @@ public class BookingRoomController extends SimpleFormController
      */
     private ResearchGroup getResearchGroup(int id) throws Exception
     {
-        Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
-        Iterator it = user.getResearchGroupMemberships().iterator();
-        while (it.hasNext())
-        {
-            ResearchGroupMembership tmp = (ResearchGroupMembership) it.next();
-            if (tmp.getResearchGroup().getResearchGroupId() == id)
-            {
-                return tmp.getResearchGroup();
-            }
-        }
+        Person user = personDao.getLoggedPerson();
+        List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(user);
+        groups.addAll(researchGroupDao.getResearchGroupsWhereOwner(user));
+        groups.addAll(researchGroupDao.getResearchGroupsWhereUserIsGroupAdmin(user));
+
+        for (ResearchGroup group : groups)
+            if (group.getResearchGroupId() == id) return group;
+
         throw new Exception("ResearchGroup with id='" + id + "' was not found!");
     }
 
 
     @Override
-    protected Map referenceData(HttpServletRequest request) throws Exception
+    public Map referenceData(HttpServletRequest request) throws Exception
     {
         Map map = new HashMap<String, Object>();
         List<ResearchGroup> researchGroupList =
