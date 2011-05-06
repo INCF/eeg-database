@@ -4,7 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType1;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Toshiba
+ * User: Jan Koren
  * Date: 22.4.11
  * Time: 17:12
  * To change this template use File | Settings | File Templates.

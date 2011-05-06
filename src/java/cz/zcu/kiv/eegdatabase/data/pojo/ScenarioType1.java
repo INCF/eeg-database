@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
 
 /**
  * Mapping ScenarioType tables - ScenarioType objects
- * @author Jan Koreň
+ * @author Jan Koren
  */
 public class ScenarioType1 implements java.io.Serializable {
 

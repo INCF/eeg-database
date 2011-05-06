@@ -31,7 +31,7 @@ import org.apache.xml.serialize.OutputFormat;
 import org.apache.xml.serialize.XMLSerializer;
 
 /**
- * @author Toshiba
+ * @author Jan Koren
  */
 public class OracleXMLType implements UserType, Serializable {
     // all other methods are ommitted at present for brevity

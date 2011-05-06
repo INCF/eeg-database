@@ -7,7 +7,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 /**
  *
- * @author Jan Koreň
+ * @author Jan Koren
  */
 public class ScenarioSchemas implements java.io.Serializable {
 

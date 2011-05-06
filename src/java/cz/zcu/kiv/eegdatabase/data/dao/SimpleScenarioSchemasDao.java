@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author Jan Koreň
+ * @author Jan Koren
  */
 public class SimpleScenarioSchemasDao
         extends SimpleGenericDao<ScenarioSchemas, Integer>
