@@ -35,8 +35,7 @@ public class VhdrReader {
         loadChannelInfo();
     }
 
-    public void readVmrk(DataFile vmrk) throws SQLException {
-        byte[] bytes = vmrk.getFileContent().getBytes(1, (int) vmrk.getFileContent().length());
+    public void readVmrk(byte[] bytes) throws SQLException {
         String vmrkIn = "";
         for (int i = 0; i < bytes.length; i++) {
             vmrkIn = vmrkIn + "" + ((char) (bytes[i] & 0xFF));

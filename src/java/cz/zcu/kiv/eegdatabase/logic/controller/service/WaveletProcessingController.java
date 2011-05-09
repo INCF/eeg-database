@@ -67,17 +67,28 @@ public class WaveletProcessingController extends AbstractProcessingController {
         if (type.equals("CWT")) {
             wt = SignalProcessingFactory.getInstance().getWaveletContinuous();
             String name = cmd.getWavelet();
-            WaveletCWT wavelet = ((WaveletTransformationContinuous)wt).getWaveletGenerator().getWaveletByName(name);
-			((WaveletTransformationContinuous)wt).setWavelet(wavelet);
-        }
-        else {
+            WaveletCWT wavelet = ((WaveletTransformationContinuous) wt).getWaveletGenerator().getWaveletByName(name);
+            ((WaveletTransformationContinuous) wt).setWavelet(wavelet);
+            mav.addObject("coefs", false);
+            mav.addObject("title", "Continuous Wavelet Transformation");
+        } else {
             wt = SignalProcessingFactory.getInstance().getWaveletDiscrete();
             String name = cmd.getWavelet();
-            WaveletDWT wavelet = ((WaveletTransformationDiscrete)wt).getWaveletGenerator().getWaveletByName(name);
-			((WaveletTransformationDiscrete)wt).setWavelet(wavelet);
+            WaveletDWT wavelet = ((WaveletTransformationDiscrete) wt).getWaveletGenerator().getWaveletByName(name);
+            ((WaveletTransformationDiscrete) wt).setWavelet(wavelet);
+            mav.addObject("coefs", true);
+            mav.addObject("title", "Discrete Wavelet Transformation");
 
         }
-        ISignalProcessingResult res = wt.processSignal(signal);	
+        ISignalProcessingResult res = wt.processSignal(signal);
+        Map<String, Double[][]> map = res.toHashMap();
+        for (Map.Entry<String, Double[][]> e : map.entrySet()) {
+            System.out.println(e.getKey() + " " + e.getValue()[0].length + " " + e.getValue().length);
+        }
+         if (map.containsKey("highestCoefficients")) {
+            mav.addObject("name", "highest Coefficients");
+            mav.addObject("values", map.get("highestCoefficients")[0]);
+        }
         return mav;
     }
 }
