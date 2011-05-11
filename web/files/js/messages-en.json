@@ -95,10 +95,36 @@
         },
         "deleteConfirmation":"Are you sure you want to delete this reservation?",
         "deleteYourReservation":"Delete your reservation",
-        "displayed":"Displayed week from %s to %s",
+        "displayed":
+        {
+            "day":"Displayed only for",
+            "group":"for",
+            "week":"Displayed week from %s to %s"
+        },
         "displayedMonth":"Displayed month",
+        "downloadPDF":
+        {
+            "hint":"Select reservations and then click to this icon for download PDF report.",
+            "label":"Download selected in PDF"
+        },
         "error":"An error has occurred.\nPlease mail me to jendakolena@gmail.com and report error value:",
         "fail":"An error has occurred while booking the room...",
+        "filter":
+        {
+            "date":
+            {
+                "click":"--select date--",
+                "hint":"Click for date selection or keep clear for showing whole week.",
+                "label":"and only for"
+            },
+            "group":
+            {
+                "forAll":"for all groups",
+                "label":"Show reservations",
+                "onlyFor":"only for"
+            },
+            "reset":"Reset filter"
+        },
         "gettingLate":"It's getting late, don't you want to make reservation to next day?",
         "group":"Group",
         "info":"Info",
@@ -107,14 +133,21 @@
         {
             "chooseEndTime":"Choose end time",
             "chooseGroup":"Choose group",
-            "chooseRepeating":"Choose repeating frequency",
             "chooseStartTime":"Choose start time",
+            "endAfter":"end after",
             "legend":"Legend",
-            "repeatFor":"Repeat this reservation",
-            "repeatTimes":"week(s)",
-            "week":"week, for"
+            "occurrences":"occurrences",
+            "recur":"Recur",
+            "selectedDates":"Selected dates",
+            "week":"week"
         },
         "longOperation":"Current operation tooks more time than expected...",
+        "more":
+        {
+            "download":"Download more information about this reservation in PDF file",
+            "info":"Show more information about this reservation"
+        },
+        "noReservationsMatch":"No reservations match your selection.",
         "reservationToSameDate":"All reservations for",
         "select":
         {
@@ -164,6 +197,7 @@
         "listOfMembers":"List of members",
         "logIn":"Log in",
         "reset":"Reset",
+        "run":"Run Service",
         "save":"Save",
         "search":"Search",
         "send":"Send",
@@ -266,7 +300,8 @@
         {
             "message":"An application error occured.",
             "title":"Application error"
-        }
+        },
+        "notSuitable":"This experiment is not suitable for EEG processing services because this experiment does not contain .vhdr and .eeg or .avg file type."
     },
     "form":
     {
@@ -329,8 +364,10 @@
         "age":"Age",
         "ageMax":"Maximum age",
         "ageMin":"Minimum age",
+        "atom":"Count of atoms",
         "author":"Author",
         "beginningOfMeasuration":"Beginning of measuration",
+        "channel":"Channel",
         "chooseAll":"Choose all",
         "chooseFile":"Choose all data files",
         "coExperimenters":"Co-experimenters",
@@ -364,8 +401,7 @@
         "fullName":"Full name",
         "gender":
         {
-            "female":"Female",
-            "male":"Male"
+            "female":"Female"
         },
         "givenname":"Givenname",
         "globalPermissionLevel":"Global permission level",
@@ -400,6 +436,7 @@
         "scenarioDescription":"Description",
         "scenarioFile":"Scenario file",
         "scenarioLength":"Length",
+        "scenarioSchema":"Scenario schema",
         "scenarioTitle":"Scenario title",
         "selectResearchGroup":"Select research group",
         "startDate":"Start date",
@@ -421,6 +458,7 @@
         "userNote":"Note",
         "userRole":"User role",
         "username":"User name",
+        "wavelets":"Wavelets",
         "weather":"Weather",
         "weatherNote":"Weather note",
         "yearOfBirth":"Year of birth"
@@ -453,10 +491,15 @@
         {
             "sureToRemoveUserFromGroup":"Are you sure you want to remove the user from group?"
         },
+        "continuousWavelet":"Continuous Wavelet Transformation",
         "delete":"Delete",
         "detail":"Detail",
+        "discreteWavelet":"Discrete Wavelet Transformation",
         "downloadXMLFile":"Download scenario file",
         "edit":"Edit",
+        "fastFourier":"Fast Fourier Transformation",
+        "matchingPursuit":"Matching Pursuit",
+        "services":"Services",
         "viewDetailOfPerson":"View detail of person",
         "viewDetailOfScenario":"View detail of scenario"
     },
@@ -464,15 +507,15 @@
     {
         "addScenario":"Add scenario",
         "administration":"Administration",
-        "articles":"Articles",
+        "articles":
+        {
+            "settings":"Articles Settings"
+        },
         "bookingRoom":"Book room for group",
         "changeUserRole":"Change user role",
         "createGroup":"Create group",
         "editGroupRole":"Edit group role",
-        "experiments":
-        {
-            "myExperiments":"My experiments"
-        },
+        "experiments":"Experiments",
         "fileMetadataDefinitions":"File metadata definitions",
         "groups":"Groups",
         "hardwareDefinitions":"Hardware definitions",
@@ -642,6 +685,7 @@
         "roleChanged":"Role changed",
         "scenarioDetail":"Scenario detail",
         "searchResult":"List of download history",
+        "services":"EEG Signal Processing Services",
         "userNotExperimenter":"Experimenter role needed",
         "weatherDefinitionsList":"List of weather definitions",
         "weeklyDownloadHistory":"Weekly download history",
@@ -692,6 +736,7 @@
             "noParameterTypeSelected":"-- Select parameter type --",
             "noResearchGroupSelected":"-- Select research group --",
             "noScenarioAuthorSelected":"-- Select author --",
+            "noScenarioSchemaSelected":"-- Select scenario schema --",
             "noScenarioSelected":"-- Select scenario --",
             "noScenarioTitleSelected":"-- Select title of scenario --",
             "noSubjectPersonSelected":"-- Select subject person --",
@@ -801,10 +846,7 @@
     "valueTable":
     {
         "scenarioDescription":"Description",
-        "scenarioLength":
-        {
-            "minutes":"minutes"
-        },
+        "scenarioLength":"Length",
         "scenarioTitle":"Scenario title"
     },
     "web":

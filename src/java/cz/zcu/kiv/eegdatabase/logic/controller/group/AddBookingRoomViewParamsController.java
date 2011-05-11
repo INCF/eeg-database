@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,6 +54,7 @@ public class AddBookingRoomViewParamsController extends SimpleFormController
         String endStr = request.getParameter("endTime");
 
         GregorianCalendar cal = BookingRoomUtils.getCalendar(startStr);
+        boolean collisions = false;
 
         //reservations in not visible time period
         if (repCount > 0)
@@ -60,10 +62,11 @@ public class AddBookingRoomViewParamsController extends SimpleFormController
             GregorianCalendar nextS = BookingRoomUtils.getCalendar(startStr);
             GregorianCalendar nextE = BookingRoomUtils.getCalendar(endStr);
 
-            List coll = BookingRoomUtils.getCollisions(reservationDao, repCount, repType, nextS, nextE);
+            List<Reservation> coll = BookingRoomUtils.getCollisions(reservationDao, repCount, repType, nextS, nextE);
 
-            map.put("collisions", coll);
-            map.put("collisionsCount", coll.size());
+            map.put("collisionsInNext", coll);
+            map.put("collisionsInNextCount", coll.size());
+            if (coll.size() > 0) collisions = true;
         }
 
         //reservations in currently visible time period
@@ -79,24 +82,45 @@ public class AddBookingRoomViewParamsController extends SimpleFormController
 
         String displayed = String.format(messageSource.getMessage("bookRoom.displayed.week", null, RequestContextUtils.getLocale(request)), BookingRoomUtils.getDate(weekStart), BookingRoomUtils.getDate(weekEnd));
 
+        boolean filtered = false;
+
         if (filterDate != null)
         {//filter of date
+            filtered = true;
             displayed = messageSource.getMessage("bookRoom.displayed.day", null, RequestContextUtils.getLocale(request)) + " " + filterDate;
         }
 
         if (filterGroup > 0)
         {
+            filtered = true;
             displayed += (filterDate == null ? "," : " and") + " " + messageSource.getMessage("bookRoom.displayed.group", null, RequestContextUtils.getLocale(request)) + " " + getResearchGroup(filterGroup).getTitle();
+        }
+
+        if (filtered)
+        {//we must verify that there are no reservations in selected range
+            GregorianCalendar start = BookingRoomUtils.getCalendar(startStr);
+            GregorianCalendar end = BookingRoomUtils.getCalendar(endStr);
+            List<Reservation> coll = reservationDao.getReservationsBetween(start, end);
+            if (coll.size() > 0)
+            {
+                //if the collision exists
+                collisions = true;
+                map.put("collisions", coll);
+                map.put("collisionsCount", coll.size());
+            }
         }
 
         map.put("displayed", displayed);
 
+        map.put("collisionsExist", (collisions) ? "1" : "0");
+
+
         /*
-        -- JSP can get this from params object --
-        map.put("repCount", repCount);
-        map.put("repType", repType);
-        map.put("group", group);
-        map.put("date", date);*/
+       -- JSP can get this from params object --
+       map.put("repCount", repCount);
+       map.put("repType", repType);
+       map.put("group", group);
+       map.put("date", date);*/
         map.put("startTime", BookingRoomUtils.getHoursAndMinutes(startStr).replaceAll(":", ""));
         map.put("endTime", BookingRoomUtils.getHoursAndMinutes(endStr).replaceAll(":", ""));
         map.put("loggedUser", personDao.getLoggedPerson());

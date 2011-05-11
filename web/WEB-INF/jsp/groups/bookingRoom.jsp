@@ -254,6 +254,7 @@
             <c:if test="${defaultDay!=''}">defaultDate: <c:out value="${defaultDay}" />,</c:if>
             onSelect: function(selectedDate)
             {
+                $("#filterDate").attr('value', selectedDate);
                 showChosenData()
             }
         });

@@ -8,7 +8,7 @@ function selectAllReservations()
 
     for (var i = 0; i < count; i++)
     {
-        $("#check_" + i).attr('checked', true);
+        document.getElementById("check_" + i).checked = true;
     }
 }
 

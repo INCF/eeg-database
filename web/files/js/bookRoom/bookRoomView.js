@@ -286,7 +286,7 @@ function newTime()
         $("#collision").attr('value', '-2');
         var d = new Date();
         var now = d.getHours() + ":" + d.getMinutes();
-        $("#chosenData").html("<h3>" + localize('bookRoom.timeInPast') + now + "!</h3>");
+        $("#chosenData").html("<h3>" + localize('bookRoom.timeInPast') + " " + now + "!</h3>");
     }
     else
     {
@@ -354,6 +354,8 @@ function showChosenData()
     var req = "filterGroup=" + filterGroup + "&filterDate=" + filterDate + "&date=" + date + "&startTime=" + $("#startTime").attr('value') + "&endTime=" + $("#endTime").attr('value') + "&repType=" + repType + "&repCount=" + repCount;
     //filterGroup=0&filterDate=&date=24/03/2011&startTime=24/03/2011 06:00:00&endTime=24/03/2011 07:00:00&repType=0&repCount=0
 
+    //alert(req);
+
     $("#legend_day").html(localize("bookRoom.reservationToSameDate") + " " + date);
 
     $("#repVis").html(getVisualizedRepetition());
@@ -380,7 +382,10 @@ function showChosenData()
                 $("#reservationsCount").attr('value', answer[3]);
                 $("table.dataTable").tablesorter({
                     headers: {
-                        1: {
+                        0: {
+                            sorter: false
+                        },
+                        2: {
                             sorter: 'days'
                         },
                         3: {
@@ -418,6 +423,7 @@ function reloadTimeline()
         data: req,
         beforeSend: function()
         {
+            //alert(req);
             waitingStart("timeline");
             $("#timeline").html("<center><img src='" + getImageUrl('loading.gif') + "' alt=''></center>");
         },
@@ -427,6 +433,7 @@ function reloadTimeline()
             var answer = data.split('#!#');
             if (trim(answer[0]) == "OK")
             {
+                //alert(answer[1]);
                 $("#timeline_header").html("<b>" + localize("bookRoom.displayedMonth") + "</b>: " + new Date().getMonthName());
                 timelineCreate("timeline", $("#date").attr('value'), trim(answer[1]));
             }
