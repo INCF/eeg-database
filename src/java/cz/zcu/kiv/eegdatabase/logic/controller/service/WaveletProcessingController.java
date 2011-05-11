@@ -82,9 +82,6 @@ public class WaveletProcessingController extends AbstractProcessingController {
         }
         ISignalProcessingResult res = wt.processSignal(signal);
         Map<String, Double[][]> map = res.toHashMap();
-        for (Map.Entry<String, Double[][]> e : map.entrySet()) {
-            System.out.println(e.getKey() + " " + e.getValue()[0].length + " " + e.getValue().length);
-        }
          if (map.containsKey("highestCoefficients")) {
             mav.addObject("name", "highest Coefficients");
             mav.addObject("values", map.get("highestCoefficients")[0]);

@@ -49,18 +49,17 @@ public class MatchingPursuitController extends AbstractProcessingController {
         ((MatchingPursuit) mp).setIterationCount(cmd.getAtom());
         ISignalProcessingResult res = mp.processSignal(binaryData);
         Map<String, Double[][]> result = res.toHashMap();
-        Map<String, Double[][]> map = res.toHashMap();
-        for (Map.Entry<String, Double[][]> e : map.entrySet()) {
-            System.out.println(e.getKey() + " " + e.getValue()[0].length + " " + e.getValue().length);
-        }
         Double[][] atoms = result.get("atoms");
+        Double[][] rec = result.get("reconstruction");
         XYSeries XYatom = new XYSeries("Gabor atom");
-        XYSeries XYimag = new XYSeries("Imaginary part");
-        for (int i = 0; i < atoms[0].length; i++) {
+        XYSeries XYrec = new XYSeries("Reconstructed signal");
+        for (int i = 0; i < binaryData.length; i++) {
             XYatom.add(i, atoms[0][i]);
+            XYrec.add(i, rec[0][i]);
         }
         XYSeriesCollection dataset = new XYSeriesCollection();
         dataset.addSeries(XYatom);
+        dataset.addSeries(XYrec);
         //         Generate the graph
         JFreeChart chart = ChartFactory.createXYLineChart("Matching Pursuit", // Title
                 "time", // x-axis Label
