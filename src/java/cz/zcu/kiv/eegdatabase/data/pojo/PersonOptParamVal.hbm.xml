@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal" schema="PBORIK" table="PERSON_OPT_PARAM_VAL">
+    <composite-id class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamValId" name="id">
+      <key-property name="personId" type="int">
+        <column name="PERSON_ID" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="personAdditionalParamId" type="int">
+        <column name="PERSON_OPT_PARAM_DEF_ID" precision="22" scale="0"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef" fetch="select" insert="false" name="personOptParamDef" update="false">
+      <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" insert="false" name="person" update="false">
+      <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <property name="paramValue" type="string">
+      <column length="30" name="PARAM_VALUE" not-null="true"/>
+    </property>
+  </class>
+</hibernate-mapping>

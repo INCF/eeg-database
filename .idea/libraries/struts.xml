@@ -1,0 +1,11 @@
+<component name="libraryTable">
+  <library name="struts">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/struts/struts.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts/commons-beanutils.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/struts/commons-digester.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

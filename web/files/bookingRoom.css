@@ -1,0 +1,76 @@
+/* 
+    Document   : bookingRoom
+    Created on : 11.11.2010, 19:52:29
+    Author     : Jenda
+    Description:
+ Styles for layout on groups/bookingRoom page.*/
+
+div#box {
+    border: none;
+}
+
+div#left, div#right, div#bottom {
+    border: none;
+}
+
+div#left {
+    float: left;
+    width: 220px;
+}
+
+div#right {
+    float: right;
+    width: 500px;
+}
+
+div#bottom {
+    clear: both;
+}
+
+div#datePicker {
+    float: left;
+    margin: 3px 3px 3px 3px;
+}
+
+div#chosenData {
+    border: 0px dotted black;
+}
+
+table.dataTable tr.sameDay td {
+    background-color: #ffcc99;
+}
+
+table.dataTable tr.sameDay:hover td {
+    background-color: #ffcc66;
+}
+
+table.dataTable tr.collision td {
+    background-color: #ff6666;
+}
+
+table.dataTable tr.collision:hover td {
+    background-color: #ff3333;
+}
+
+select.timeSelect
+{
+    cursor: pointer;
+    width: 50px;
+}
+
+div#button, div#button input
+{
+    text-align: center;
+    border: 1px solid none;
+    margin: 5px 0px 5px 0px;
+}
+
+div#button input
+{
+    cursor: pointer;
+}
+
+div#message
+{
+    border-bottom: 2px solid gray;
+}

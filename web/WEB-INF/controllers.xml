@@ -1,0 +1,812 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd
+       http://www.springframework.org/schema/op http://www.springframework.org/schema/aop/spring-aop-2.5.xsd
+       http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-2.5.xsd
+       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-2.5.xsd">
+
+
+    <context:annotation-config/>
+
+    <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky -->
+    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+        <property name="exceptionMappings">
+            <map>
+                <entry key="DataAccessException" value="errors/databaseError"/>
+            </map>
+        </property>
+        <property name="defaultErrorView" value="errors/generalError"/>
+    </bean>
+
+
+    <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
+        <property name="formView" value="system/registrationForm"/>
+
+        <property name="successView" value="system/confirmReg"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="domain" value="${app.domain}"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="captchaService">
+            <ref bean="captchaService"/>
+        </property>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
+        <property name="historyDao" ref="historyDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+
+    <bean id="captchaController" class="cz.zcu.kiv.eegdatabase.logic.CaptchaImageGenerator">
+        <property name="captchaService">
+            <ref bean="captchaService"/>
+        </property>
+    </bean>
+
+
+    <bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
+        <property name="sessionFactory" ref="sessionFactory"/>
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+    <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="researchGroupMembershipDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Experiment</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="historyDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.History</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="groupPermissionRequestDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="scenarioDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>java.lang.Object</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="hardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.DataFile</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="fileMetadataDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="hearingImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHearingImpairmentDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="visualImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleVisualImpairmentDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+
+    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService">
+
+    </bean>
+
+
+    <bean name="confirmController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.ConfirmController">
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+
+    <bean name="createGroupController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupController">
+        <property name="formView" value="groups/createGroupForm"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator"/>
+        </property>
+    </bean>
+
+
+    <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.smtp}"/>
+    </bean>
+
+    <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${email.from}"/>
+        <property name="subject" value="${email.subject}"/>
+    </bean>
+
+
+    <bean id="multiControllerMethodResolver" class="cz.zcu.kiv.eegdatabase.logic.DashedUrlMethodNameResolver"/>
+
+    <bean id="groupsMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.GroupMultiController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="membershipDao" ref="researchGroupMembershipDao"/>
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <bean id="experimentsMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.ExperimentMultiController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <bean name="addExperimentController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentController">
+        <property name="formView" value="experiments/addExperimentForm"/>
+        <property name="successView" value="redirect:/experiments/my-experiments.html"/>
+        <!-- don't need special view after successfull adding -->
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="hardwareDao" ref="hardwareDao"/>
+        <property name="weatherDao" ref="weatherDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="validator" ref="addExperimentController"/>
+        <!-- validation by class itself -->
+    </bean>
+
+    <!-- Articles -->
+    <bean name="articleMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleMultiController">
+        <property name="articleDao" ref="articleDao"/>
+        <property name="articleCommentDao" ref="articleCommentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+    </bean>
+
+    <bean name="addArticleController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleController">
+        <property name="formView" value="articles/addArticleForm"/>
+        <property name="successView" value="redirect:/articles/list.html"/>
+        <!-- don't need special view after successfull adding -->
+        <property name="articleDao" ref="articleDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="domain" value="${app.domain}"/>
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <bean name="addArticleCommentController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleCommentController">
+        <property name="formView" value="articles/addArticleCommentForm"/>
+        <property name="articleDao" ref="articleDao"/>
+        <property name="articleCommentDao" ref="articleCommentDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="domain" value="${app.domain}"/>
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <bean name="scenariosMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.ScenarioMultiController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+    <bean id="myAccountMultiController" class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="delegate">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.delegate.MyAccountDelegate">
+                <property name="researchGroupDao" ref="researchGroupDao"/>
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+
+    <bean name="homePageController" class="org.springframework.web.servlet.mvc.multiaction.MultiActionController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="delegate">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.delegate.HomePageDelegate">
+                <property name="researchGroupDao" ref="researchGroupDao"/>
+                <property name="personDao" ref="personDao"/>
+                <property name="scenarioDao" ref="scenarioDao"/>
+                <property name="experimentDao" ref="experimentDao"/>
+                <property name="articleDao" ref="articleDao"/>
+                <property name="auth" ref="authorizationManager"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="addMemberToGroupController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddMemberToGroupController">
+        <property name="formView" value="/groups/addMemberForm"/>
+        <property name="successView" value="/groups/addMemberForm"/>
+        <property name="validator" ref="addMemberToGroupController"/>
+
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <bean name="accessDeniedController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="system/accessDenied"/>
+    </bean>
+
+    <bean name="accessDeniedNotAdminController"
+          class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="system/accessDeniedNotAdmin"/>
+    </bean>
+
+    <bean name="loginController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="system/login"/>
+    </bean>
+
+    <bean name="listsIndexController" class="org.springframework.web.servlet.mvc.ParameterizableViewController">
+        <property name="viewName" value="lists/index"/>
+    </bean>
+
+    <bean name="forgottenPasswordController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.root.ForgottenPasswordController">
+        <property name="formView" value="system/forgottenPasswordForm"/>
+        <property name="successView" value="system/forgottenPasswordSuccess"/>
+        <property name="failedView" value="system/forgottenPasswordFailed"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.root.ForgottenPasswordValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="grantPermissionController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.system.GrantPermissionController">
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+
+    <bean name="dataFileDetailController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DataFileDetailController">
+        <property name="auth" ref="authorizationManager"/>
+        <property name="dataFileDao" ref="dataFileDao"/>
+        <property name="fileMetadataParamValDao" ref="fileMetadataDao"/>
+        <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
+        <property name="formView" value="experiments/data/detail"/>
+        <property name="successView" value="redirect:/experiments/data/detail.html"/>
+        <property name="validator" ref="dataFileDetailController"/>
+        <!-- validation by class itself -->
+    </bean>
+
+
+    <bean name="addDataFileController" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddDataFileController">
+        <property name="auth" ref="authorizationManager"/>
+        <property name="formView" value="experiments/addDataForm"/>
+        <property name="successView" value="redirect:/experiments/myExperiments.html"/>
+        <property name="dataFileDao" ref="dataFileDao"/>
+        <property name="validator" ref="addDataFileController"/>
+        <!-- validation by class itself -->
+    </bean>
+
+    <bean name="changePasswordController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangePasswordController">
+        <property name="formView" value="myAccount/changePasswordForm"/>
+        <property name="successView" value="myAccount/changesWereMade"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangePasswordValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="changeDefaultGroupController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupController">
+        <property name="formView" value="myAccount/changeDefaultGroup"/>
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="successView" value="myAccount/changesWereMade"/>
+    </bean>
+
+    <bean name="editGroupRoleController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleController">
+        <property name="formView" value="groups/editGroupRole"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="successView" value="groups/requestSent"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="domain" value="${app.domain}"/>
+    </bean>
+
+    <bean name="bookingRoomController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.BookingRoomController">
+        <property name="formView" value="groups/bookingRoom"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="reservationDao" ref="reservationDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="successView" value="redirect:/groups/book-room.html"/>
+    </bean>
+
+    <bean name="bookingRoomView"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.group.AddBookingRoomViewParamsController">
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.BookRoomCommand"/>
+        <property name="formView" value="groups/bookingRoomView"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="reservationDao" ref="reservationDao"/>
+    </bean>
+
+    <bean name="acceptRoleRequestController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.group.AcceptRoleRequestController">
+        <property name="formView" value="groups/acceptRoleRequest"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
+        <property name="gpr" ref="groupPermissionRequestDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="successView" value="myAccount/changesWereMade"/>
+    </bean>
+
+
+    <bean name="applyForWritingPermission"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ApplyForWritingPermissionController">
+        <property name="formView" value="myAccount/applyForWritingPermissionForm"/>
+        <property name="successView" value="myAccount/applianceSent"/>
+        <property name="failView" value="myAccount/applianceNotSent"/>
+        <property name="requestNotNeededView" value="myAccount/requestNotNeeded"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ApplyForWritingPermissionValidator"/>
+        </property>
+    </bean>
+
+
+    <bean name="writeRequestsListController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.root.WriteRequestsListController">
+        <property name="personDao" ref="personDao"/>
+        <property name="mailSender" ref="mailSender"/>
+        <property name="mailMessage" ref="mailMessage"/>
+    </bean>
+
+
+    <!-- Person list controller loads persons from database -->
+    <bean name="personListController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonListController">
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+    <bean name="addScenarioController" class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioController">
+        <property name="auth" ref="authorizationManager"/>
+        <property name="formView" value="scenario/addScenarioForm"/>
+        <property name="successView" value="redirect:/scenarios/list.html"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioValidator">
+                <property name="auth" ref="authorizationManager"/>
+            </bean>
+        </property>
+        <!-- validation by class itself -->
+    </bean>
+
+    <bean name="measurationDataOutputController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.MeasurationDataOutputController">
+        <property name="dataFileDao" ref="dataFileDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="historyDao" ref="historyDao"/>
+    </bean>
+
+    <bean name="scenarioXMLDownloadController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.ScenarioXMLDownloadController">
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="historyDao" ref="historyDao"/>
+    </bean>
+
+    <bean name="addPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonController">
+        <property name="formView" value="people/addPersonForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="personDao" ref="personDao"/>
+        <property name="messageSource" ref="messageSource"/>
+        <property name="domain" value="${app.domain}"/>
+        <property name="mailSender" ref="mailSender"/>
+
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="editPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.EditPersonController">
+        <property name="formView" value="people/addPersonForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonDetailController"/>
+
+
+    <bean name="hearingImpairmentMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentMultiController"/>
+
+    <bean name="visualImpairmentMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentMultiController"/>
+
+    <bean name="hardwareMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareMultiController"/>
+
+    <bean name="personOptionalParametersMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefMultiController"/>
+
+    <bean name="experimentOptionalParametersMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefMultiController"/>
+
+    <bean name="weatherMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherMultiController"/>
+
+    <bean name="fileMetadataParametersMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>
+
+    <bean name="addHearingImpairmentController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
+        <property name="formView" value="lists/hearingDefect/addItemForm"/>
+        <property name="successView" value="redirect:/lists/hearing-impairments/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addVisualImpairmentController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentController">
+        <property name="formView" value="lists/eyesDefect/addItemForm"/>
+        <property name="successView" value="redirect:/lists/visual-impairments/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addHardwareController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareController">
+        <property name="formView" value="lists/hardware/addItemForm"/>
+        <property name="successView" value="redirect:/lists/hardware-definitions/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherController">
+        <property name="formView" value="lists/weather/addItemForm"/>
+        <property name="successView" value="redirect:/lists/weather-definitions/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addPersonOptionalParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">
+        <property name="formView" value="lists/personAdditionalParams/addItemForm"/>
+        <property name="successView" value="redirect:/lists/person-optional-parameters/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addExperimentOptionalParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefController">
+        <property name="formView" value="lists/measurationAdditionalParams/addItemForm"/>
+        <property name="successView" value="redirect:/lists/experiment-optional-parameters/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addFileMetadataParameterController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefController">
+        <property name="formView" value="lists/fileMetadataParams/addItemForm"/>
+        <property name="successView" value="redirect:/lists/file-metadata-definitions/list.html"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addExperimentOptParamValController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentOptParamValController">
+        <property name="auth" ref="authorizationManager"/>
+        <property name="formView" value="experiments/optionalParams/addItemForm"/>
+        <property name="successView" value="redirect:/experiments/detail.html?experimentId="/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="experimentOptParamValDao" ref="experimentOptParamValDao"/>
+        <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
+        <property name="validator" ref="addExperimentOptParamValController"/>
+    </bean>
+
+    <bean name="addPersonAdditionalParamValueController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueController">
+        <property name="formView" value="people/optionalParams/addItemForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="personDao" ref="personDao"/>
+        <property name="personOptParamValDao" ref="personOptParamValDao"/>
+        <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
+                <property name="personOptParamValDao" ref="personOptParamValDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="addHearingDefectToPersonController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonController">
+        <property name="formView" value="people/addHearingDefectForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonValidator"/>
+        </property>
+    </bean>
+
+    <bean name="addEyesDefectToPersonController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonController">
+        <property name="formView" value="people/addEyesDefectForm"/>
+        <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonValidator"/>
+        </property>
+    </bean>
+
+    <bean name="downloadMetadataZipController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DownloadMetadataZipController">
+        <property name="zipGenerator" ref="zipGenerator"/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="historyDao" ref="historyDao"/>
+    </bean>
+
+    <!-- Administration -->
+    <bean name="changeUserRoleController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.admin.ChangeUserRoleController">
+        <property name="formView" value="administration/changeUserRole"/>
+        <property name="successView" value="administration/roleChanged"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.admin.ChangeUserRoleValidator">
+                <property name="personDao" ref="personDao"/>
+            </bean>
+        </property>
+    </bean>
+
+    <bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
+        <!-- property -->
+        <property name="encoding" value="${encoding}"/>
+        <property name="objects" value="${objects}"/>
+        <property name="measured" value="${measured}"/>
+        <property name="experimenter" value="${experimenter}"/>
+    </bean>
+
+    <bean name="zipGenerator" class="cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator">
+        <property name="metadata" value="${metadata.file}"/>
+        <property name="transformer" ref="transformer"/>
+        <property name="dir" value="${experiment.dir}"/>
+        <property name="dataZip" value="${data.zip}"/>
+
+    </bean>
+
+    <bean name="chooseMetadataController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.ChooseMetadataController">
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="auth" ref="authorizationManager"/>
+    </bean>
+
+    <!-- Download history  -->
+
+    <bean name="dailyHistoryController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.DailyHistoryController">
+        <property name="formView" value="history/dailyHistory"/>
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
+        <property name="successView" value="history/dailyHistory"/>
+        <property name="historyDao" ref="historyDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+    </bean>
+
+    <bean name="weeklyHistoryController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.history.WeeklyHistoryController">
+        <property name="formView" value="history/weeklyHistory"/>
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
+        <property name="successView" value="history/weeklyHistory"/>
+        <property name="historyDao" ref="historyDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="personDao" ref="personDao"/>
+    </bean>
+
+    <bean name="monthlyHistoryController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.history.MonthlyHistoryController">
+        <property name="formView" value="history/monthlyHistory"/>
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.myaccount.ChangeDefaultGroupCommand"/>
+        <property name="successView" value="history/monthlyHistory"/>
+        <property name="historyDao" ref="historyDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+    </bean>
+
+    <bean name="searchHistoryController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.history.SearchHistoryController">
+        <property name="formView" value="history/search"/>
+        <property name="successView" value="history/searchResults"/>
+        <property name="historyDao" ref="historyDao"/>
+        <property name="auth" ref="authorizationManager"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.history.HistorySearcherCommand"/>
+    </bean>
+
+    <!-- Advanced search  -->
+
+    <bean name="scenarioSearcherController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSearcherController">
+        <property name="formView" value="scenario/search"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="successView" value="scenario/searchResults"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.ScenarioSearcherCommand"/>
+    </bean>
+
+    <bean name="peopleSearcherController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherController">
+        <property name="formView" value="people/search"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
+        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
+        <property name="successView" value="people/searchResults"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherCommand"/>
+    </bean>
+
+    <bean name="experimentsSearcherController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentsSearcherController">
+        <property name="formView" value="experiments/search"/>
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="hardwareDao" ref="hardwareDao"/>
+        <property name="successView" value="experiments/searchResults"/>
+        <property name="commandClass"
+                  value="cz.zcu.kiv.eegdatabase.logic.controller.search.ExperimentsSearcherCommand"/>
+    </bean>
+    <!-- Full text search  -->
+    <bean name="fullTextSearchController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchController">
+        <property name="scenarioDao" ref="scenarioDao"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="experimentDao" ref="experimentDao"/>
+        <property name="articleDao" ref="articleDao"/>
+        <property name="hardwareDao" ref="hardwareDao"/>
+        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
+        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
+        <property name="weatherDao" ref="weatherDao"/>
+        <property name="experimentOptParamDef" ref="experimentOptParamDefDao"/>
+        <property name="commentDao" ref="articleCommentDao"/>
+
+
+        <!-- <property name="successView" value="redirect:/home"/>-->
+        <property name="successView" value="experiments/fulltext"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
+    </bean>
+
+
+</beans>

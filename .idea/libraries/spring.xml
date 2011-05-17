@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="spring">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/spring/commons-logging-1.1.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring/spring-2.5.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring/spring-webmvc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring/cglib-2.2.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

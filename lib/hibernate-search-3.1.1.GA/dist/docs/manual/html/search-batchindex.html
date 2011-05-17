@@ -1,0 +1,136 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;6.&nbsp;Manual indexing</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="index.html" title="Hibernate Search">
+      <link rel="prev" href="ch05s05.html" title="5.5.&nbsp;Native Lucene Queries">
+      <link rel="next" href="ch06s02.html" title="6.2.&nbsp;Purging">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;6.&nbsp;Manual indexing</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch05s05.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="search-batchindex"></a>Chapter&nbsp;6.&nbsp;Manual indexing
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="search-batchindex-indexing"></a>6.1.&nbsp;Indexing
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>It is sometimes useful to index an entity even if this entity is not
+               inserted or updated to the database. This is for example the case when you
+                   want to build your index for the first time.
+                   <code class="classname">FullTextSession</code>.<code class="methodname">index()</code>
+                   allows you to do so.
+            </p>
+            <div class="example"><a name="d0e3272"></a><p class="title"><b>Example&nbsp;6.1.&nbsp;Indexing an entity via
+                           <code class="methodname">FullTextSession.index()</code></b></p>
+               <div class="example-contents"><pre class="programlisting">FullTextSession fullTextSession = Search.getFullTextSession(session);
+Transaction tx = fullTextSession.beginTransaction();
+for (Customer customer : customers) {
+    <span class="bold"><strong>fullTextSession.index(customer);</strong></span>
+}
+tx.commit(); //index are written at commit time    </pre></div>
+            </div><br class="example-break"><p>For maximum efficiency, Hibernate Search batches index operations
+                   and executes them at commit time. If you expect to index a lot of data,
+                   however, you need to be careful about memory consumption since all
+                   documents are kept in a queue until the transaction commit. You can
+                   potentially face an <code class="classname">OutOfMemoryException</code>. To avoid
+                   this exception, you can use
+                   <code class="methodname">fullTextSession.flushToIndexes()</code>. Every time
+                   <code class="methodname">fullTextSession.flushToIndexes()</code> is called (or if
+                   the transaction is committed), the batch queue is processed (freeing
+                   memory) applying all index changes. Be aware that once flushed changes
+                   cannot be rolled back.
+            </p>
+            <div class="note" style="margin-left: 0.5in; margin-right: 0.5in;">
+               <h3 class="title">Note</h3>
+               <p><code class="literal">hibernate.search.worker.batch_size</code> has been
+                        deprecated in favor of this explicit API which provides better
+                        control
+               </p>
+            </div>
+            <p>Other parameters which also can affect indexing time and memory
+                   consumption are:
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].max_buffered_docs</code></li>
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].max_field_length</code></li>
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].max_merge_docs</code></li>
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].merge_factor</code></li>
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].ram_buffer_size</code></li>
+                  <li><code class="literal">hibernate.search.[default|&lt;indexname&gt;].indexwriter.[batch|transaction].term_index_interval</code></li>
+               </ul>
+            </div>
+            <p>These parameters are Lucene specific and Hibernate Search is just
+                   passing these parameters through - see <a href="lucene-indexing-performance.html" title="3.8.&nbsp;Tuning Lucene indexing performance">Section&nbsp;3.8, &#8220;Tuning Lucene indexing performance&#8221;</a> for more details.
+            </p>
+            <div class="example"><a name="d0e3323"></a><p class="title"><b>Example&nbsp;6.2.&nbsp;Efficiently indexing a given class (useful for index
+                           (re)initialization)</b></p>
+               <div class="example-contents"><pre class="programlisting">fullTextSession.setFlushMode(FlushMode.MANUAL);
+fullTextSession.setCacheMode(CacheMode.IGNORE);
+transaction = fullTextSession.beginTransaction();
+//Scrollable results will avoid loading too many objects in memory
+ScrollableResults results = fullTextSession.createCriteria( Email.class )
+    .setFetchSize(BATCH_SIZE)
+    .scroll( ScrollMode.FORWARD_ONLY );
+int index = 0;
+while( results.next() ) {
+    index++;
+    fullTextSession.index( results.get(0) ); //index each element
+    if (index % BATCH_SIZE == 0) {
+        fullTextSession.flushToIndexes(); //apply changes to indexes
+        fullTextSession.clear(); //clear since the queue is processed
+    }
+}
+transaction.commit();</pre></div>
+            </div><br class="example-break"><p>Try to use a batch size that guarantees that your application will
+                   not run out of memory.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch05s05.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch06s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">5.5.&nbsp;Native Lucene Queries&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;6.2.&nbsp;Purging</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

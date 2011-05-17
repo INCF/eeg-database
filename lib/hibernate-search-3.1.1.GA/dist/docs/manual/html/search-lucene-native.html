@@ -1,0 +1,73 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;8.&nbsp;Advanced features</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="index.html" title="Hibernate Search">
+      <link rel="prev" href="ch07s03.html" title="7.3.&nbsp;Adjusting optimization">
+      <link rel="next" href="ch08s02.html" title="8.2.&nbsp;Accessing a Lucene Directory">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;8.&nbsp;Advanced features</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch08s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="search-lucene-native"></a>Chapter&nbsp;8.&nbsp;Advanced features
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e3490"></a>8.1.&nbsp;SearchFactory
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>The <code class="classname">SearchFactory</code> object keeps track of the
+                   underlying Lucene resources for Hibernate Search, it's also a convenient
+                   way to access Lucene natively. The <code class="classname">SearchFactory</code>
+                   can be accessed from a <code class="classname">FullTextSession</code>:
+            </p>
+            <div class="example"><a name="d0e3504"></a><p class="title"><b>Example&nbsp;8.1.&nbsp;Accessing the <code class="classname">SearchFactory</code></b></p>
+               <div class="example-contents"><pre class="programlisting">FullTextSession fullTextSession = Search.getFullTextSession(regularSession);
+SearchFactory searchFactory = fullTextSession.getSearchFactory();</pre></div>
+            </div><br class="example-break"></div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch07s03.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch08s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">7.3.&nbsp;Adjusting optimization&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;8.2.&nbsp;Accessing a Lucene Directory</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

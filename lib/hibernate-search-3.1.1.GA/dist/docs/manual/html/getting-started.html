@@ -1,0 +1,123 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;1.&nbsp;Getting started</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="index.html" title="Hibernate Search">
+      <link rel="prev" href="preface.html" title="Preface">
+      <link rel="next" href="ch01s02.html" title="1.2.&nbsp;Using Maven">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;1.&nbsp;Getting started</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="preface.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="getting-started"></a>Chapter&nbsp;1.&nbsp;Getting started
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>Welcome to Hibernate Search! The following chapter will guide you
+            through the initial steps required to integrate Hibernate Search into an
+            existing Hibernate enabled application. In case you are a Hibernate new
+              timer we recommend you start <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://hibernate.org/152.html" target="_top">here</a>.
+         </p>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e45"></a>1.1.&nbsp;System Requirements
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <div class="table"><a name="d0e48"></a><p class="title"><b>Table&nbsp;1.1.&nbsp;System requirements</b></p>
+               <div class="table-contents">
+                  <table summary="System requirements" border="1">
+                     <colgroup>
+                        <col>
+                        <col>
+                     </colgroup>
+                     <tbody>
+                        <tr>
+                           <td>Java Runtime</td>
+                           <td>A JDK or JRE version <span class="emphasis"><em>5</em></span> or greater. You
+                                          can download a Java Runtime for Windows/Linux/Solaris <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://java.sun.com/javase/downloads/" target="_top">here</a>.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Hibernate Search</td>
+                           <td><code class="literal">hibernate-search.jar</code> and all runtime
+                                          dependencies from the <code class="literal">lib</code> directory of the
+                                          Hibernate Search distribution. Please refer to
+                                          <code class="filename">README.txt </code>in the lib directory to understand
+                                          which dependencies are required.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Hibernate Core</td>
+                           <td>This instructions have been tested against Hibernate 3.3.x.
+                                          You will need <code class="literal">hibernate-core.jar</code> and its
+                                          transitive dependencies from the <code class="literal">lib</code> directory
+                                          of the distribution. Refer to <code class="literal">README.txt</code> in the
+                                          <code class="literal">lib</code> directory of the distribution to determine
+                                          the minimum runtime requirements.
+                           </td>
+                        </tr>
+                        <tr>
+                           <td>Hibernate Annotations</td>
+                           <td>Even though Hibernate Search can be used without Hibernate
+                                          Annotations the following instructions will use them for basic
+                                          entity configuration (<span class="emphasis"><em>@Entity, @Id,
+                                                @OneToMany,...</em></span>). This part of the configuration could
+                                          also be expressed in xml or code. However, Hibernate Search itself
+                                          has its own set of annotations (<span class="emphasis"><em>@Indexed, @DocumentId,
+                                                @Field,...</em></span>) for which there exists so far no
+                                          alternative configuration. The tutorial is tested against version
+                                          3.4.x of Hibernate Annotations.
+                           </td>
+                        </tr>
+                     </tbody>
+                  </table>
+               </div>
+            </div><br class="table-break"><p>You can download all dependencies from the Hibernate <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.hibernate.org/6.html" target="_top">download site</a>. You can also
+                   verify the dependency versions against the <a xmlns:xlink="http://www.w3.org/1999/xlink" href="http://www.hibernate.org/6.html#A3" target="_top">Hibernate Compatibility
+                      Matrix</a>.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="preface.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch01s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">Preface&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;1.2.&nbsp;Using Maven</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

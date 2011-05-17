@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<disco about="http://disco.med.yale.edu/webfeeds/format" format="disco.main" format-version="3.0">
+  <information>
+    <resource name="EEGbase" uuid="nif-0000-08190"/>
+    <resource_base_location url="http://eegdatabase.kiv.zcu.cz/"/>
+    <technical_contact email="jezekp@kiv.zcu.cz" name="Petr Jezek"/>
+    <update by="DISCO-Dashboard" date="2011/04/05 16:24:06 PDT"/>
+  </information>
+  
+<services>
+    <service format="disco.rd.nif.rdf" type="Resource Description" url="http://disco.neuinfo.org/discolocal/resource/nif-0000-08190/disco.rd.xml"/>
+  </services>
+</disco>

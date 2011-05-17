@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--
+    Document   : hibernate.reveng.xml
+    Created on : 15. březen 2009, 12:39
+    Author     : Pavel biebr Bořík
+    Description: xml, ktere popisuje tabulky
+-->
+
+<!DOCTYPE hibernate-reverse-engineering SYSTEM 
+"http://hibernate.sourceforge.net/hibernate-reverse-engineering-3.0.dtd" >
+<hibernate-reverse-engineering>
+    <type-mapping>
+            <sql-type jdbc-type="NUMERIC" hibernate-type="int"/>
+            <sql-type jdbc-type="DATE" hibernate-type="java.sql.Timestamp"/>
+    </type-mapping>
+    <!--
+    <table-filter match-name="DATA" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="EYES_DEFECT" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="EYES_DEFECT_PERSON" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="FILE_METADATA" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="FILE_METADATA_PARAMS" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="HARDWARE" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="HEARING_DEFECT" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="HEARING_DEFECT_PERSON" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="MEAS_ADD_PARAMS_VALUES" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="MEASURATION" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="MEASURATION_ADDITIONAL_PARAMS" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="MEASUREMENT_STAFF" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="PERSON" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="PERSON_ADD_PARAMS_VALUES" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="PERSON_ADITIONAL_PARAMS" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="SCENARIO" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="USED_HARDWARE" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name="WEATHER" match-schema="JPERGLER" package="data.pojo"/>
+    <table-filter match-name=".*" match-catalog=".*" match-schema=".*"
+    
+    exclude="true"/>-->
+        <table-filter match-name=".*" match-catalog=".*" match-schema="PBORIK"  />
+</hibernate-reverse-engineering>
+

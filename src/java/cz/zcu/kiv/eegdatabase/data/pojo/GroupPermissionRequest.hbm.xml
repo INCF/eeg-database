@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest" schema="PBORIK" table="GROUP_PERMISSION_REQUEST">
+    <id name="requestId" type="int">
+      <column name="REQUEST_ID" precision="22" scale="0"/>
+      <generator class="increment"/>
+    </id>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
+      <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
+      <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <property name="requestedPermission" type="string">
+      <column length="50" name="REQUESTED_PERMISSION" not-null="true"/>
+    </property>
+    <property name="granted" type="boolean">
+      <column name="GRANTED"/>
+    </property>
+  </class>
+</hibernate-mapping>

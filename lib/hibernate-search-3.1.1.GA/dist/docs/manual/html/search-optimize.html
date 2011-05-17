@@ -1,0 +1,124 @@
+<html>
+   <head>
+      <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+   
+      <title>Chapter&nbsp;7.&nbsp;Index Optimization</title>
+      <link rel="stylesheet" href="css/html.css" type="text/css">
+      <meta name="generator" content="DocBook XSL Stylesheets V1.72.0">
+      <link rel="start" href="index.html" title="Hibernate Search">
+      <link rel="up" href="index.html" title="Hibernate Search">
+      <link rel="prev" href="ch06s02.html" title="6.2.&nbsp;Purging">
+      <link rel="next" href="ch07s02.html" title="7.2.&nbsp;Manual optimization">
+   </head>
+   <body bgcolor="white" text="black" link="#0000FF" vlink="#840084" alink="#0000FF">
+      <div class="navheader">
+         <table width="100%" summary="Navigation header">
+            <tr>
+               <th colspan="3" align="center">Chapter&nbsp;7.&nbsp;Index Optimization</th>
+            </tr>
+            <tr>
+               <td width="20%" align="left"><a accesskey="p" href="ch06s02.html">Prev</a>&nbsp;
+               </td>
+               <th width="60%" align="center">&nbsp;</th>
+               <td width="20%" align="right">&nbsp;<a accesskey="n" href="ch07s02.html">Next</a></td>
+            </tr>
+         </table>
+         <hr>
+      </div>
+      <div class="chapter" lang="en-US">
+         <div class="titlepage">
+            <div>
+               <div>
+                  <h2 class="title"><a name="search-optimize"></a>Chapter&nbsp;7.&nbsp;Index Optimization
+                  </h2>
+               </div>
+            </div>
+         </div>
+         <p>From time to time, the Lucene index needs to be optimized. The process
+            is essentially a defragmentation. Until an optimization is triggered Lucene
+            only marks deleted documents as such, no physical deletions are applied.
+            During the optimization process the deletions will be applied which also
+              effects the number of files in the Lucene Directory.
+         </p>
+         <p>Optimizing the Lucene index speeds up searches but has no effect on
+              the indexation (update) performance. During an optimization, searches can be
+              performed, but will most likely be slowed down. All index updates will be
+              stopped. It is recommended to schedule optimization:
+         </p>
+         <div class="itemizedlist">
+            <ul type="disc">
+               <li>
+                  <p>on an idle system or when the searches are less frequent</p>
+               </li>
+               <li>
+                  <p>after a lot of index modifications</p>
+               </li>
+            </ul>
+         </div>
+         <div class="section" lang="en-US">
+            <div class="titlepage">
+               <div>
+                  <div>
+                     <h2 class="title" style="clear: both"><a name="d0e3394"></a>7.1.&nbsp;Automatic optimization
+                     </h2>
+                  </div>
+               </div>
+            </div>
+            <p>Hibernate Search can automatically optimize an index after:</p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>a certain amount of operations (insertion, deletion)</p>
+                  </li>
+                  <li>
+                     <p>or a certain amount of transactions </p>
+                  </li>
+               </ul>
+            </div>
+            <p>The configuration for automatic index optimization can be defined on
+                   a global level or per index:
+            </p>
+            <div class="example"><a name="d0e3408"></a><p class="title"><b>Example&nbsp;7.1.&nbsp;Defining automatic optimization parameters</b></p>
+               <div class="example-contents"><pre class="programlisting">hibernate.search.default.optimizer.operation_limit.max = 1000
+hibernate.search.default.optimizer.transaction_limit.max = 100
+hibernate.search.Animal.optimizer.transaction_limit.max = 50</pre></div>
+            </div><br class="example-break"><p>An optimization will be triggered to the <code class="literal">Animal</code>
+                   index as soon as either:
+            </p>
+            <div class="itemizedlist">
+               <ul type="disc">
+                  <li>
+                     <p>the number of additions and deletions reaches 1000</p>
+                  </li>
+                  <li>
+                     <p>the number of transactions reaches 50
+                                (<code class="constant">hibernate.search.Animal.optimizer.transaction_limit.max</code>
+                                having priority over
+                                <code class="constant">hibernate.search.default.optimizer.transaction_limit.max</code>)
+                     </p>
+                  </li>
+               </ul>
+            </div>
+            <p>If none of these parameters are defined, no optimization is
+                   processed automatically.
+            </p>
+         </div>
+      </div>
+      <div class="navfooter">
+         <hr>
+         <table width="100%" summary="Navigation footer">
+            <tr>
+               <td width="40%" align="left"><a accesskey="p" href="ch06s02.html">Prev</a>&nbsp;
+               </td>
+               <td width="20%" align="center">&nbsp;</td>
+               <td width="40%" align="right">&nbsp;<a accesskey="n" href="ch07s02.html">Next</a></td>
+            </tr>
+            <tr>
+               <td width="40%" align="left" valign="top">6.2.&nbsp;Purging&nbsp;</td>
+               <td width="20%" align="center"><a accesskey="h" href="index.html">Home</a></td>
+               <td width="40%" align="right" valign="top">&nbsp;7.2.&nbsp;Manual optimization</td>
+            </tr>
+         </table>
+      </div>
+   </body>
+</html>

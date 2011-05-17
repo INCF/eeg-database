@@ -1,0 +1,24 @@
+/*
+    Document   : search
+    Created on : 19.10.2009, 22:09:47
+    Author     : Meda
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+/*
+   TODO customize this sample style
+   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
+*/
+.resultf {
+  border:white;
+}
+
+.highlightText {
+  font-weight:bolder;
+  font-size:1.15em;
+}
+
+
+
+
