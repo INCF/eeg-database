@@ -103,8 +103,7 @@ public class FacebookController extends MultiActionController {
         a.setAuthenticated(true);
         SecurityContextHolder.getContext().setAuthentication(a);
 
-        mav.addObject("facebookProfile", userFb);
-        mav.addObject("picture", userFb.getId());
+        mav = new ModelAndView("redirect:/home.html");
         return mav;
     }
 

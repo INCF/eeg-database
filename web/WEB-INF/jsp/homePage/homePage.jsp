@@ -220,6 +220,12 @@
           <div>
             <input type="submit" value="<fmt:message key='button.logIn'/>" class="lightButtonLink" />
           </div>
+            <div>OR</div>
+            <div>
+                <a href="<c:url value='/social/login.html' />">
+                    <img src="<c:url value='files/images/facebook-login-button.png' />" alt="facebook login button"/>
+                </a>
+            </div>
         </fieldset>
       </form>
            
