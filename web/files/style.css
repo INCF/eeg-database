@@ -106,6 +106,7 @@
     padding: 3px 8px 6px;
     margin: 0 0 0 5px;
     display: block;
+    text-shadow: 1px 1px 1px #CDEBF1;
     /* text-shadow: 1px 0px white;*/
   }
   .mainMenu a:hover {
