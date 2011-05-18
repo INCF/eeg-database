@@ -18,9 +18,9 @@
         </thead>
         <c:forEach items="${weatherList}" var="weather">
             <tr>
-                <td>${weather.weatherId}</td>
-                <td>${weather.title}</td>
-                <td>${weather.description}</td>
+                <td><c:out value="${weather.weatherId}" /></td>
+                <td><c:out value="${weather.title}" /></td>
+                <td><c:out value="${weather.description}" /></td>
                 <td>
                     <a href="<c:url value='/lists/weather-definitions/edit.html?id=${weather.weatherId}' />"><fmt:message
                             key="link.edit"/></a>

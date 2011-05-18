@@ -46,7 +46,7 @@
         </div>
 
         <div class="content">
-          <c:out value="${fn:substring(article.text,0,500)}" escapeXml="false" />
+          <c:out value="${fn:substring(article.text,0,500)}"  />
         </div>
       </div>
     </c:if>

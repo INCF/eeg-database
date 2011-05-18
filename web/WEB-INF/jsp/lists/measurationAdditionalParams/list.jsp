@@ -18,9 +18,9 @@
         </thead>
         <c:forEach items="${measurationAdditionalParamsList}" var="measurationAdditionalParam">
             <tr>
-                <td>${measurationAdditionalParam.experimentOptParamDefId}</td>
-                <td>${measurationAdditionalParam.paramName}</td>
-                <td>${measurationAdditionalParam.paramDataType}</td>
+                <td><c:out value="${measurationAdditionalParam.experimentOptParamDefId}" /></td>
+                <td><c:out value="${measurationAdditionalParam.paramName}" /></td>
+                <td><c:out value="${measurationAdditionalParam.paramDataType}" /></td>
                 <td>
                     <a href="<c:url value='/lists/experiment-optional-parameters/edit.html?id=${measurationAdditionalParam.experimentOptParamDefId}' />"><fmt:message
                             key="link.edit"/></a>

@@ -17,8 +17,8 @@
         </thead>
         <c:forEach items="${eyesDefectList}" var="visualImpairment">
             <tr>
-                <td>${visualImpairment.visualImpairmentId}</td>
-                <td>${visualImpairment.description}</td>
+                <td><c:out value="${visualImpairment.visualImpairmentId}" /></td>
+                <td><c:out value="${visualImpairment.description}" /></td>
                 <td>
                     <a href="<c:url value='/lists/visual-impairments/edit.html?id=${visualImpairment.visualImpairmentId}' />"><fmt:message
                             key="link.edit"/></a>

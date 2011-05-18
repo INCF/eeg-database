@@ -18,9 +18,9 @@
         </thead>
         <c:forEach items="${personAdditionalParamsList}" var="personAdditionalParam">
             <tr>
-                <td>${personAdditionalParam.personOptParamDefId}</td>
-                <td>${personAdditionalParam.paramName}</td>
-                <td>${personAdditionalParam.paramDataType}</td>
+                <td><c:out value="${personAdditionalParam.personOptParamDefId}" /></td>
+                <td><c:out value="${personAdditionalParam.paramName}" /></td>
+                <td><c:out value="${personAdditionalParam.paramDataType}" /></td>
                 <td>
                     <a href="<c:url value='/lists/person-optional-parameters/edit.html?id=${personAdditionalParam.personOptParamDefId}' />"><fmt:message
                             key="link.edit"/></a>

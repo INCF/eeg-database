@@ -15,7 +15,7 @@
         <a href="<c:url value="add-article-comment.html?articleId=${comment.article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
       </span>
       <br />
-      <span class="text"><c:out value="${comment.text}" escapeXml="false" /></span>
+      <span class="text"><c:out value="${comment.text}"  /></span>
       <c:if test="${fn:length(comment.children) > 0}">
         <c:set var="node" value="${comment}" scope="request"/>
         <c:import url="node.jsp" />

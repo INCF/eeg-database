@@ -10,7 +10,7 @@
     <table class="standardValueTable">
         <tr>
             <th><fmt:message key="valueTable.scenarioTitle"/></th>
-            <td>${scenarioDetail.title}</td>
+            <td><c:out value="${scenarioDetail.title}" /></td>
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioLength"/></th>
@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioDescription"/></th>
-            <td>${scenarioDetail.description}</td>
+            <td><c:out value="${scenarioDetail.description}" /></td>
         </tr>
         <tr>
             <th><fmt:message key="label.private"/></th>

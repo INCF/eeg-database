@@ -18,9 +18,9 @@
         </thead>
         <c:forEach items="${fileMetadataParamsList}" var="fileMetadataParam">
             <tr>
-                <td>${fileMetadataParam.fileMetadataParamDefId}</td>
-                <td>${fileMetadataParam.paramName}</td>
-                <td>${fileMetadataParam.paramDataType}</td>
+                <td><c:out value="${fileMetadataParam.fileMetadataParamDefId}" /></td>
+                <td><c:out value="${fileMetadataParam.paramName}" /></td>
+                <td><c:out value="${fileMetadataParam.paramDataType}" /></td>
                 <td>
                     <a href="<c:url value='/lists/file-metadata-definitions/edit.html?id=${fileMetadataParam.fileMetadataParamDefId}' />"><fmt:message
                             key="link.edit"/></a>

@@ -19,10 +19,10 @@
         </thead>
         <c:forEach items="${hardwareList}" var="hardware">
             <tr>
-                <td>${hardware.hardwareId}</td>
-                <td>${hardware.title}</td>
-                <td>${hardware.type}</td>
-                <td>${hardware.description}</td>
+                <td><c:out value="${hardware.hardwareId}" /></td>
+                <td><c:out value="${hardware.title}" /></td>
+                <td><c:out value="${hardware.type}" /></td>
+                <td><c:out value="${hardware.description}" /></td>
                 <td>
                     <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}' />"><fmt:message
                             key="link.edit"/></a>
