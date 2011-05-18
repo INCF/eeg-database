@@ -64,9 +64,8 @@ public class ArticleMultiController extends MultiActionController {
             log.debug("Unable to determine article id");
         }
         Article article = (Article) articleDao.read(id);
-        if (article.getResearchGroup() != null) {
-            mav.addObject("userIsMemberOfGroup", canView(loggedUser, article));
-        }
+
+        mav.addObject("userCanView", canView(loggedUser, article));
         command.setArticleId(id);
         mav.addObject("command", command);
         mav.addObject("userCanEdit", canEdit(loggedUser, article));

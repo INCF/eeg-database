@@ -1,5 +1,5 @@
 
-<%-- 
+<%--
     Document   : detail
     Created on : 4.5.2010, 20:45:54
     Author     : Jiri Vlasimsky
@@ -14,82 +14,86 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <ui:articlesTemplate pageTitle="pageTitle.experimentDetail">
-
-  <div class="articleDetail">
-    <h1>${article.title}</h1>
-    <div class="subheading">
-      <span class="researchGroup">
-        <c:if test="${article.researchGroup != null}">
-          <c:out value="${article.researchGroup.title}" />
-        </c:if>
-        <c:if test="${article.researchGroup == null}">
-          Public article
-        </c:if>
-      </span>
-      |
-      <span class="date">
-        <fmt:formatDate value="${article.time}" />
-      </span>
-      |
-      <span class="author">
-        <c:out value="${article.person.username}" />
-      </span>
-      <c:if test="${userCanEdit}">
-        | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-        | <a href="<c:url value="delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
-      </c:if>
-        |
-        <c:choose>
-          <c:when test="${subscribed}">
-            <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=false" />"><fmt:message key="label.unsubscribe" /> </a>
-          </c:when>
-          <c:otherwise>
-            <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=true" />"><fmt:message key="label.subscribe" /> </a>
-          </c:otherwise>
-        </c:choose>
-
-
-
-    </div>
-    <div class="content">
-      <c:out value="${article.text}"  />
-    </div>
+<c:choose>
+    <c:when test="${userCanView}">
+          <div class="articleDetail">
+            <h1>${article.title}</h1>
+            <div class="subheading">
+              <span class="researchGroup">
+                <c:if test="${article.researchGroup != null}">
+                  <c:out value="${article.researchGroup.title}" />
+                </c:if>
+                <c:if test="${article.researchGroup == null}">
+                  Public article
+                </c:if>
+              </span>
+              |
+              <span class="date">
+                <fmt:formatDate value="${article.time}" />
+              </span>
+              |
+              <span class="author">
+                <c:out value="${article.person.username}" />
+              </span>
+              <c:if test="${userCanEdit}">
+                | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
+                | <a href="<c:url value="delete.html?articleId=${article.articleId}"  />" class="confirm"><fmt:message key="label.delete" /> </a>
+              </c:if>
+                |
+                <c:choose>
+                  <c:when test="${subscribed}">
+                    <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=false" />"><fmt:message key="label.unsubscribe" /> </a>
+                  </c:when>
+                  <c:otherwise>
+                    <a href="<c:url value="subscribe.html?articleId=${article.articleId}&amp;subscribe=true" />"><fmt:message key="label.subscribe" /> </a>
+                  </c:otherwise>
+                </c:choose>
+            </div>
+            <div class="content">
+              <c:out value="${article.text}"  />
+            </div>
 
 
-    <h2><fmt:message key="label.addComment" /></h2>
-    <form:form action="/EEGDatabase/articles/edit-article-comment.html" method="post" commandName="command" cssClass="standardInputForm" name="addArticleComment">
-      <form:hidden path="articleId" />
+            <h2><fmt:message key="label.addComment" /></h2>
+            <form:form action="/EEGDatabase/articles/edit-article-comment.html" method="post" commandName="command" cssClass="standardInputForm" name="addArticleComment">
+              <form:hidden path="articleId" />
 
-      <div class="itemBox">
-        <form:textarea path="text" cssClass="textAreaSmall"  />
-        <form:errors path="text" cssClass="errorBox" />
-      </div>
-      <div class="itemBox">
-        <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
-      </div>
-    </form:form>
-    <h2><fmt:message key="heading.comments" /></h2>
-    <ul class="comments">
-      <c:forEach items="${commentsList}" var="comment" varStatus="status">
-        <li class="comment">
-          <span class="subheading">
-            <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
-            <span class="author"><c:out value="${comment.person.username}" /></span>
-          </span>
+              <div class="itemBox">
+                <form:textarea path="text" cssClass="textAreaSmall"  />
+                <form:errors path="text" cssClass="errorBox" />
+              </div>
+              <div class="itemBox">
+                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
+              </div>
+            </form:form>
+            <h2><fmt:message key="heading.comments" /></h2>
+            <ul class="comments">
+              <c:forEach items="${commentsList}" var="comment" varStatus="status">
+                <li class="comment">
+                  <span class="subheading">
+                    <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
+                    <span class="author"><c:out value="${comment.person.username}" /></span>
+                  </span>
 
-          <span class="comment">
-            <a href="<c:url value="add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
-          </span> 
-          <br />
-          <span class="text"><c:out value="${comment.text}"  /></span>
+                  <span class="comment">
+                    <a href="<c:url value="add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>
+                  </span>
+                  <br />
+                  <span class="text"><c:out value="${comment.text}"  /></span>
 
 
-          <c:if test="${fn:length(comment.children) > 0}">
-            <c:set var="node" value="${comment}" scope="request"/>
-            <c:import url="node.jsp"/>
-          </c:if>
-        </li>
-      </c:forEach>
-    </ul>
-  </div>
+                  <c:if test="${fn:length(comment.children) > 0}">
+                    <c:set var="node" value="${comment}" scope="request"/>
+                    <c:import url="node.jsp"/>
+                  </c:if>
+                </li>
+              </c:forEach>
+            </ul>
+          </div>
+    </c:when>
+    <c:otherwise>
+        <h1><fmt:message key="authentication.error" /></h1>
+    </c:otherwise>
+</c:choose>
+
 </ui:articlesTemplate>
