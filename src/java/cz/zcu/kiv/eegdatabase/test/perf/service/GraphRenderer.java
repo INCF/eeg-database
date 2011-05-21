@@ -31,13 +31,10 @@ public class GraphRenderer implements ExecutionLogger{
     }
 
 	/**
-	 * Mapa kde jsou ulozeny data pro graf.
+	 * Map -save data for graph.
 	 */
 	Map<Integer, Integer> mapa = new HashMap<Integer, Integer>();
 
-	/**
-	 * Promena, kde bude ulozen nazev testovaci metody.
-	 */
 	private String method;
 
 
@@ -55,7 +52,7 @@ public class GraphRenderer implements ExecutionLogger{
 
 	}
     /**
-	 * Metoda provede vygenerovani grafu a ulozi jej ve formatu .png nazev je jmeno testovaci metody.
+     * Method generate graph and save as name of test method.
 	 */
 	public void save(){
 	    	System.out.println("mapa ="+mapa);

@@ -6,11 +6,10 @@ package cz.zcu.kiv.eegdatabase.test.perf;
  * Date: 17.5.11
  * Time: 20:05
  * To change this template use File | Settings | File Templates.
- * Trida, kde se testuji akce provadene s experimenty.
  */
 public class ExperimentsServicePerformanceTest extends PerformanceTest {
     /**
-     * Metoda otestuje vytvareni experimentu.
+     * Method test create experiment.
      */
     public void createExperimentTest(){
 

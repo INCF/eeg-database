@@ -24,6 +24,12 @@
         </constructor-arg>
     </bean>
 
+        <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
+        </constructor-arg>
+    </bean>
+
     <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
     </bean>
 
