@@ -206,13 +206,15 @@
     <div class="notLogged">
         <div class="homepageLeftColumn">
             <h1><fmt:message key="homePage.welcomeHeading"/></h1>
-            <fmt:message key="homePage.description1"/>
+
+            <p>
+                    <fmt:message key="homePage.description1"/>
+
             <div class="left">
                 <img src="./files/images/eeg-foto-main.jpg"/>
             </div>
             <div class="right">
                 <h2><fmt:message key="homePage.featuresHeading"/></h2>
-
                 <fmt:message key="homePage.featuresList"/>
             </div>
             <div class="clear"></div>
@@ -224,12 +226,11 @@
                         key="system.register"/></a>
             </div>
             <div class="clear"></div>
-            <h2><fmt:message key="homePage.discoverHeading"/></h2>
+            <!--<h2><fmt:message key="homePage.discoverHeading"/></h2>
 
-            <div class="showreel">
-                <a href="http://www.youtube.com/watch?v=qqXi8WmQ_WM
-" rel="prettyPhoto" title=""><img src="images/thumbnails/flash-logo.jpg" alt="YouTube" width="60"/></a>
-            </div>
+            <div class="showreel"> 
+                
+            </div> -->
         </div>
 
         <div class="homepageRightColumn">

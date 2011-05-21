@@ -275,7 +275,6 @@ while still visible in code, so it can be accessible without styles **/
 
 .notLogged .homepageLeftColumn .left {
     float: left;
-    width: left;
     width: 120px;
     padding-top: 0px;
 }
