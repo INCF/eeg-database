@@ -9,358 +9,475 @@
 @import "bookingRoom.css";
 
 @media screen, projection {
-  .page {
-    width: 950px;
-    margin: 20px auto;
-    padding: 0;
-  }
+    .page {
+        width: 950px;
+        margin: 20px auto;
+        padding: 0;
+    }
 
-  .page > .header, page .headerNoLogin {
-    padding: 0;
-    margin: 0;
-    height: 132px;
-    background: #81c5d0 url(images/header.gif) left top no-repeat;
-    overflow: hidden;
-    position: relative;
-  }
+    .page > .header, page .headerNoLogin {
+        padding: 0;
+        margin: 0;
+        height: 132px;
+        background: #81c5d0 url(images/header.gif) left top no-repeat;
+        overflow: hidden;
+        position: relative;
+    }
 
-  .headerNoLogin {
-    background-image: url(images/header-no-login.gif);
-  }
+    .headerNoLogin {
+        background-image: url(images/header-no-login.gif);
+    }
 
-  .pageTitle {
-    font-size: 2.5em;
-    font-weight: bold;
-    color: #fff;
+    .pageTitle {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #fff;
 
-    /** these few lines make page title invisible on standard screen
-    while still visible in code, so it can be accessible without styles **/
-    line-height: 500px;
-    width: 1px;
-    height: 1px;
-    overflow: hidden;
-    /*****************/
-  }
+        /** these few lines make page title invisible on standard screen
+while still visible in code, so it can be accessible without styles **/
+        line-height: 500px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        /*****************/
+    }
 
-  /** These lines are formatting the search form in the page header - it is part
-   *   of the layout, so it is present in this file.
-  */
-  form.globalSearch {
-    margin: 0;
-    padding: 0;
-    position: absolute;
-    bottom: 51px;
-    right: 5px;
-    border: solid 1px #636363;
-    background: #fff url(images/search-bg.gif) top left repeat-x
-  }
+    /** These lines are formatting the search form in the page header - it is part
+     *   of the layout, so it is present in this file.
+    */
+    form.globalSearch {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 51px;
+        right: 5px;
+        border: solid 1px #636363;
+        background: #fff url(images/search-bg.gif) top left repeat-x
+    }
 
-  form.globalSearch fieldset {
-    margin: 0;
-    padding: 0;
-    border: none;
-  }
+    form.globalSearch fieldset {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
 
-  form.globalSearch .textfield {
-    border: none;
-    background: none;
-    padding: 1px 5px;
-    margin-bottom: 2px;
-    width: 200px;
-  }
+    form.globalSearch .textfield {
+        border: none;
+        background: none;
+        padding: 1px 5px;
+        margin-bottom: 2px;
+        width: 200px;
+    }
 
-  form.globalSearch .button {
-    border: none;
-    background: #597000;
-    margin: 2px;
-    padding: 1px 4px;
-    color: #fff;
-  }
+    form.globalSearch .button {
+        border: none;
+        background: #597000;
+        margin: 2px;
+        padding: 1px 4px;
+        color: #fff;
+    }
 
-  form.globalSearch .textfield,
-  form.globalSearch .button {
-    font-size: 1.3em;
-    font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
-  }
+    form.globalSearch .textfield,
+    form.globalSearch .button {
+        font-size: 1.3em;
+        font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+    }
 
+    /**
+     * Main menu
+    */
+    .mainMenu {
+        font-size: 1.5em;
+        list-style: none;
+        position: relative;
+        margin-top: 98px;
+        margin-left: 10px;
+        padding: 0;
+    }
 
-  /**
-   * Main menu
-  */
-  .mainMenu {
-    font-size: 1.5em;
-    list-style: none;
-    position: relative;
-    margin-top: 98px;
-    margin-left: 10px;
-    padding: 0;
-  }
-  .mainMenu li {
-    display: block;
-    float: left;
-    margin: 0;
-  }
-  .mainMenu a {
-    color: #0b3c45;
-    text-decoration: none;
-    padding: 3px 8px 6px;
-    margin: 0 0 0 5px;
-    display: block;
-    text-shadow: 1px 1px 1px #CDEBF1;
-    /* text-shadow: 1px 0px white;*/
-  }
-  .mainMenu a:hover {
-    color: #000;
-    border: solid 1px #999;
-    border-bottom: none;
-    background: #ededed url(images/main-menu-selected-bg.gif) left bottom repeat-x;
-    padding: 2px 7px 5px;
-  }
+    .mainMenu li {
+        display: block;
+        float: left;
+        margin: 0;
+    }
 
-  .footer {
-    padding: 3px 10px 1px;
-    background: #dcf2f5 url(images/footer-bg.gif) left top repeat-x;
-    text-align: center;
-    color: #666;
-    clear: both;
-  }
+    .mainMenu a {
+        color: #0b3c45;
+        text-decoration: none;
+        padding: 3px 8px 6px;
+        margin: 0 0 0 5px;
+        display: block;
+        text-shadow: 1px 1px 1px #CDEBF1;
+        /* text-shadow: 1px 0px white;*/
+    }
 
-  .nifButton {
-      background:white;
-      text-align: center;
-  }
+    .mainMenu a:hover {
+        color: #000;
+        border: solid 1px #999;
+        border-bottom: none;
+        background: #ededed url(images/main-menu-selected-bg.gif) left bottom repeat-x;
+        padding: 2px 7px 5px;
+    }
 
+    .footer {
+        padding: 3px 10px 1px;
+        background: #dcf2f5 url(images/footer-bg.gif) left top repeat-x;
+        text-align: center;
+        color: #666;
+        clear: both;
+    }
 
-  .mainContent {
-    padding: 10px 0;
-  }
+    .nifButton {
+        background: white;
+        text-align: center;
+    }
 
-  .mainContentWithMenu {
-    padding: 10px 0;
-    margin-left: 220px;
-  }
+    .mainContent {
+        padding: 10px 0;
+    }
 
+    .mainContentWithMenu {
+        padding: 10px 0;
+        margin-left: 220px;
+    }
 
-  .pageTitle {
-    float: left;
-  }
+    .pageTitle {
+        float: left;
+    }
 
-  .loggedUserBox {
-    float: right;
-    padding: 12px 10px;
-    font-size: 1.2em;
-  }
-  .loggedUserBox span {
-    border-left: solid 1px #8a966d;
-    margin-left: 5px;
-    padding-left: 10px;
-    margin-right: 10px;
-  }
-  .loggedUserBox a, .loggedUserBox a:hover {
-    color: #000;
-  }
-  .loggedUserBox a:hover {
-    text-decoration: none;
-  }
+    .loggedUserBox {
+        float: right;
+        padding: 12px 10px;
+        font-size: 1.2em;
+    }
 
-  .leftMenu {
-    width: 200px;
-    float: left;
-    padding: 10px 0;
-  }
-  .dummySearchColumn {
-    width: 60px;
-  }
-  input.condition {
-    width: 400px;
-  }
+    .loggedUserBox span {
+        border-left: solid 1px #8a966d;
+        margin-left: 5px;
+        padding-left: 10px;
+        margin-right: 10px;
+    }
+
+    .loggedUserBox a, .loggedUserBox a:hover {
+        color: #000;
+    }
+
+    .loggedUserBox a:hover {
+        text-decoration: none;
+    }
+
+    .leftMenu {
+        width: 200px;
+        float: left;
+        padding: 10px 0;
+    }
+
+    .dummySearchColumn {
+        width: 60px;
+    }
+
+    input.condition {
+        width: 400px;
+    }
 
 }
 
 .homepageLoginLink,
 .homepageRegistrationLink {
-  font-size: 1.5em;
-  font-weight: bold;
-  border: solid 1px #71a7b1;
-  color: #102b30;
-  text-decoration: none;
-  padding: 20px 20px;
-  margin: 10px 10px 10px 0;
-  text-align: center;
-  background: #c2e3e9;
-  float: left;
-  display: block;
+    font-size: 1.5em;
+    border: solid 1px #71a7b1;
+    color: #102b30;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px 10px 10px 0;
+    text-align: center;
+    background: #c2e3e9;
+    float: left;
+    display: block;
+    text-shadow: 1px 1px 1px #fff;
+    border-radius: 10px;
+}
+
+.homepageLoginLink:hover,
+.homepageRegistrationLink:hover {
+    background: #cfecf0;
+    text-decoration: none;
 }
 
 .homepageHeading {
-  padding-bottom: 0;
+    padding-bottom: 0;
 }
 
+.notLogged .homepageLeftColumn h2 {
+    margin: 0;
+}
+
+.notLogged .homepageLeftColumn .dataTable,
+.notLogged .homepageRightColumn .dataTable {
+    margin-top: 2px;
+}
+
+.notLogged .homepageLeftColumn h2 a,
+.notLogged .homepageRightColumn h2 a {
+    font-size: .7em;
+    margin-left: 5px;
+}
+
+/* Styles for data tables at home page */
+.homepageLeftColumn {
+    float: left;
+    width: 550px;
+}
+
+.homepageRightColumn {
+    margin-left: 570px;
+}
 
 .homepageLeftColumn h2 {
-  margin: 0;
+    margin: 0;
 }
 
 .homepageLeftColumn .dataTable,
 .homepageRightColumn .dataTable {
-  margin-top: 2px;
+    margin-top: 2px;
 }
 
 .homepageLeftColumn h2 a,
 .homepageRightColumn h2 a {
-  font-size: .7em;
-  margin-left: 5px;
+    font-size: .7em;
+    margin-left: 5px;
 }
 
+/** NOT LOGGED */
 
-/* Styles for data tables at home page */
-
-.homepageLeftColumn {
-  float: left;
-  width: 550px;
+.notLogged .homepageLeftColumn {
+    float: left;
+    width: 650px;
+    padding: 20px;
 }
 
-.homepageRightColumn {
-  margin-left: 570px;
+.notLogged .homepageLeftColumn h1 {
+    margin: 0px;
+    padding: 0;
 }
 
+.notLogged .homepageLeftColumn ul {
+}
+
+.notLogged .homepageLeftColumn h2 {
+    margin: 0px;
+    padding: 0;
+}
+
+.notLogged .homepageRightColumn {
+    margin-left: 670px;
+}
+
+.notLogged .homepageLeftColumn .left {
+    float: left;
+    width: left;
+    width: 120px;
+    padding-top: 0px;
+}
+
+/*.homepageLeftColumn .left {float: left; display: block; width: 200px; }*/
+.notLogged .homepageLeftColumn .right {
+    float: left;
+    display: block;
+    width: 440px;
+    position: relative;
+}
+
+.clear {
+    clear: both;
+}
 
 #homepageMyExperimentsList .columnDate,
 #homepageMeAsSubjectList .columnDate {
-  width: 150px;
+    width: 150px;
 }
 
 #homepageMyExperimentsList .columnId,
 #homepageMeAsSubjectList .columnId {
-  width: 50px;
+    width: 50px;
 }
 
 #homepageMyExperimentsList .columnScenarioTitle,
 #homepageMeAsSubjectList .columnScenarioTitle {
-  width: 270px;
+    width: 270px;
 }
 
 #homepageMyScenariosList .columnTitle,
 #homepageMyGroupsList .columnTitle {
-  width: 320px;
+    width: 320px;
 }
 
+.listOfResearchGroupsDataTable .columnGroupTitle {
+    width: 250px;
+}
 
+.listOfResearchGroupsDataTable .columnDescription {
+    width: 400px;
+}
 
-.listOfResearchGroupsDataTable .columnGroupTitle {width: 250px;}
-.listOfResearchGroupsDataTable .columnDescription {width: 400px;}
+.accountOverviewGroupMembershipDataTable .columnGroupName {
+    width: 350px;
+}
 
-.accountOverviewGroupMembershipDataTable .columnGroupName {width: 350px;}
-.accountOverviewGroupMembershipDataTable .columnRole {width: 250px;}
-
+.accountOverviewGroupMembershipDataTable .columnRole {
+    width: 250px;
+}
 
 /* Login form definitions are used also for print */
 
 @media screen, projection, print {
-  /* Style for login page */
+    /* Style for login page */
 
-  .loginForm {
-    margin: 0;
-    padding: 0;
-  }
+    .loginForm {
+        margin: 0;
+        padding: 0;
+    }
 
-  .loginForm fieldset {
-    border: none;
-    padding: 0;
-    text-align: center;
-  }
+    .loginForm fieldset {
+        border: none;
+        padding: 0;
+        text-align: center;
+    }
 
-  .loginForm .fieldLabel {
-    display: block;
-    margin: 10px 0 0;
-  }
+    .loginForm .fieldLabel {
+        display: block;
+        margin: 10px 0 0;
+    }
 
-  .loginForm #j_username,
-  .loginForm #j_password {
-    border: solid 1px #bababa;
-    font-size: 2em;
-    color: #000;
-    background: #fff url(images/input-field-bg.gif) left bottom repeat-x;
-    padding: 3px 5px;
-    width: 200px;
-  }
+    .loginForm #j_username,
+    .loginForm #j_password {
+        border: solid 1px #bababa;
+        font-size: 2em;
+        color: #000;
+        background: #fff url(images/input-field-bg.gif) left bottom repeat-x;
+        padding: 3px 5px;
+        width: 200px;
+    }
 
-  .loginForm .rememberMeBox {
-    padding: 10px 0;
-  }
+    .loginForm .rememberMeBox {
+        padding: 10px 0;
+    }
 
-  .loginForm .errorMessage {
-    font-size: 1.4em;
-    color: #c00;
-  }
+    .loginForm .errorMessage {
+        font-size: 1.4em;
+        color: #c00;
+    }
 }
+
 div.article {
-  margin-bottom: 40px;
-  width: 700px;
-  word-wrap: break-word;
-  text-align: justify;
-  display: block;
-  margin-bottom: 10px;
+    margin-bottom: 40px;
+    width: 700px;
+    word-wrap: break-word;
+    text-align: justify;
+    display: block;
+    margin-bottom: 10px;
 }
+
 div.articleDetail .content {
-  margin-top: 15px;
-  width: 700px;
-  text-align: justify;
-  margin-bottom: 30px;
+    margin-top: 15px;
+    width: 700px;
+    text-align: justify;
+    margin-bottom: 30px;
 }
 
 .homePageActionBoxes {
-  display: block;
-  margin-top: 30px;
-  height: 60px;
-}
-.articleDetail h1 {
-  
-}
-.article .subheading, .articleDetail .subheading {
-  margin-top: 5px;
-  margin-bottom: 5px;
-  color:gray;
+    display: block;
+    height: 60px;
+    position: relative;
+    left: 270px;
 }
 
-ul.comments { width:680px; list-style: none; list-style-position: outside; margin:0; padding: 0; list-style: none;}
-  li.comment { background: #f0f3f3; margin-top: 5px; padding: 5px; border-top: 1px solid lightblue; clear: both;  margin: 10px; }
-  li.comment ul {list-style: none; margin-left: 10px; padding: 0;}
-  li.comment li {border-top: 1px solid #add8e6; border-left: 4px solid #add8e6;  padding-left: 5px; margin: 10px; margin-left: 0; padding-bottom: 10px;}
-  li.comment li {background: #ffffff;}
-  li.comment li li {background: #f0f3f3; }
-  li.comment li li li {background: #ffffff; }
-  li.comment li li li {background: #f0f3f3;}
+.articleDetail h1 {
+
+}
+
+.article .subheading, .articleDetail .subheading {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: gray;
+}
+
+ul.comments {
+    width: 680px;
+    list-style: none;
+    list-style-position: outside;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li.comment {
+    background: #f0f3f3;
+    margin-top: 5px;
+    padding: 5px;
+    border-top: 1px solid lightblue;
+    clear: both;
+    margin: 10px;
+}
+
+li.comment ul {
+    list-style: none;
+    margin-left: 10px;
+    padding: 0;
+}
+
+li.comment li {
+    border-top: 1px solid #add8e6;
+    border-left: 4px solid #add8e6;
+    padding-left: 5px;
+    margin: 10px;
+    margin-left: 0;
+    padding-bottom: 10px;
+}
+
+li.comment li {
+    background: #ffffff;
+}
+
+li.comment li li {
+    background: #f0f3f3;
+}
+
+li.comment li li li {
+    background: #ffffff;
+}
+
+li.comment li li li {
+    background: #f0f3f3;
+}
 
 @media print {
-  .leftMenu {
-    display: none;
-  }
+    .leftMenu {
+        display: none;
+    }
 
-  .footer {
-    margin-top: 40px;
-    border-top: solid 1px #000;
-    text-align: center;
-  }
+    .footer {
+        margin-top: 40px;
+        border-top: solid 1px #000;
+        text-align: center;
+    }
 
+    #homepageMyExperimentsList a,
+    #homepageMyDataList a,
+    #homepageMyScenariosList a,
+    #homepageMyGroupsList a,
+    #accountOverviewGroupMembership a {
+        display: none;
+    }
 
-  #homepageMyExperimentsList a,
-  #homepageMyDataList a,
-  #homepageMyScenariosList a,
-  #homepageMyGroupsList a,
-  #accountOverviewGroupMembership a {
-    display: none;
-  }
+    .accountOverviewList dt {
+        float: left;
+        width: 180px;
+        font-weight: bold;
+    }
 
-  .accountOverviewList dt {
-    float: left;
-    width: 180px;
-    font-weight: bold;
-  }
+    form.globalSearch {
+        display: none;
+    }
 
-  form.globalSearch {
-    display: none;
-  }
-
-  
 }

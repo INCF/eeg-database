@@ -1,147 +1,178 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:owl="http://www.w3.org/2002/07/owl#" xmlns:property="http://neurolex.org/wiki/Special:URIResolver/Property-3A" xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:swivt="http://semantic-mediawiki.org/swivt/1.0#" xmlns:wiki="http://neurolex.org/wiki/Special:URIResolver/">
-	<!-- Ontology header -->
-	<owl:Ontology rdf:about="">
-		<swivt:creationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2011-04-05T16:21:52-07:00</swivt:creationDate>
-		<owl:imports rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
-	</owl:Ontology>
-	<!-- exported page data -->
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AResource-3AEEGbase">
-		<rdfs:label>Resource:EEGbase</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Resource:EEGbase"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Resource:EEGbase"/>
-		<property:CurationStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string">uncurated</property:CurationStatus>
-		<property:DefiningCitation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://eegdatabase.kiv.zcu.cz/</property:DefiningCitation>
-		<property:Definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EEG/ERP portal enables community researchers to store, update, download and search data and metadata from EEG/ERP experiments. The system is developed as a standalone product; the database access is available through a web interface.
-The system essentially offers the following set of features (the set of accessible features depends on a specific user role):
-* User authentication
-* Storage, update, and download of EEG/ERP data and metadata
-* Storage, update and download of EEG/ERP experimental design (experimental scenarios)
-* Storage, update and download of data related to testing subjects
-* Fulltext search
-* Sharing of knowledge and working in groups
+<rdf:RDF xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#" xmlns:owl="http://www.w3.org/2002/07/owl#"
+         xmlns:property="http://neurolex.org/wiki/Special:URIResolver/Property-3A"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#" xmlns:swivt="http://semantic-mediawiki.org/swivt/1.0#"
+         xmlns:wiki="http://neurolex.org/wiki/Special:URIResolver/">
+    <!-- Ontology header -->
+    <owl:Ontology rdf:about="">
+        <swivt:creationDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2011-04-05T16:21:52-07:00
+        </swivt:creationDate>
+        <owl:imports rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
+    </owl:Ontology>
+    <!-- exported page data -->
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AResource-3AEEGbase">
+        <rdfs:label>Resource:EEGbase</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Resource:EEGbase"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Resource:EEGbase"/>
+        <property:CurationStatus rdf:datatype="http://www.w3.org/2001/XMLSchema#string">uncurated
+        </property:CurationStatus>
+        <property:DefiningCitation rdf:datatype="http://www.w3.org/2001/XMLSchema#string">http://eegdatabase.kiv.zcu.cz/
+        </property:DefiningCitation>
+        <property:Definition rdf:datatype="http://www.w3.org/2001/XMLSchema#string">EEG/ERP portal enables community
+            researchers to store, update, download and search data and metadata from EEG/ERP experiments. The system is
+            developed as a standalone product; the database access is available through a web interface.
+            The system essentially offers the following set of features (the set of accessible features depends on a
+            specific user role):
+            * User authentication
+            * Storage, update, and download of EEG/ERP data and metadata
+            * Storage, update and download of EEG/ERP experimental design (experimental scenarios)
+            * Storage, update and download of data related to testing subjects
+            * Fulltext search
+            * Sharing of knowledge and working in groups
 
-The system is based on tree layer architecture(MVC pattern) consisting of persistent layer(relational database), application layer (object oriented code, object relational mapping from persistence layer) and presentation layer (JSP). The persistence layer uses Hibernate framework; Oracle 11g database server is used to ensure the processing of large data files. Application and presentation 
-layers are designed and implemented using Spring technology. This framework supports MVC architecture, Dependency injection and Aspect Oriented Programming.  There were no  significant difficulties with integration of both frameworks, 
-Hibernate and Spring MVC. Spring Security framework is used to ensure management of authentication and user roles.
+            The system is based on tree layer architecture(MVC pattern) consisting of persistent layer(relational
+            database), application layer (object oriented code, object relational mapping from persistence layer) and
+            presentation layer (JSP). The persistence layer uses Hibernate framework; Oracle 11g database server is used
+            to ensure the processing of large data files. Application and presentation
+            layers are designed and implemented using Spring technology. This framework supports MVC architecture,
+            Dependency injection and Aspect Oriented Programming. There were no significant difficulties with
+            integration of both frameworks,
+            Hibernate and Spring MVC. Spring Security framework is used to ensure management of authentication and user
+            roles.
 
-Since the system is thought to be finally open to the whole EEG/ERP community there is necessary to protect EEG/ERP data and metadata, and especially personal data of testing subjects stored in the database from an unauthorized access. Then a restricted user policy is applied and user roles are introduced.
+            Since the system is thought to be finally open to the whole EEG/ERP community there is necessary to protect
+            EEG/ERP data and metadata, and especially personal data of testing subjects stored in the database from an
+            unauthorized access. Then a restricted user policy is applied and user roles are introduced.
 
-The complete overview of the system features and user roles (use case diagram) is available in (Pergler 2009).
-Concerning the architectural layers there is a question which layer is more feasible for mapping of its structure into  ontology.
+            The complete overview of the system features and user roles (use case diagram) is available in (Pergler
+            2009).
+            Concerning the architectural layers there is a question which layer is more feasible for mapping of its
+            structure into ontology.
 
-Currently we have studied two possibilities:
-* Mapping from  the  persistence layer (relational database)
-* Mapping from  the  application layer (object oriented code)
+            Currently we have studied two possibilities:
+            * Mapping from the persistence layer (relational database)
+            * Mapping from the application layer (object oriented code)
 
-The mapping from  the  application layer to  an ontology includes the precedent object relational mapping provided by Hibernate framework.</property:Definition>
-		<property:Has_role rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AData_storage_repository"/>
-		<property:Has_role rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3ADatabase"/>
-		<property:Id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">nif-0000-08190</property:Id>
-		<property:Is_part_of rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AUniversity_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
-		<property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AElectroencephalography_recording_protocol"/>
-		<property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AEvent_related_potential"/>
-		<property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AExperiments"/>
-		<property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AScenarios"/>
-		<property:Label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Resource:EEGbase</property:Label>
-		<property:ModifiedDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2011-03-31T00:00:00</property:ModifiedDate>
-		<property:PublicationLink rdf:resource="http://www.youtube.com/watch?v=2WuYVUM9FZo"/>
-	</owl:Class>
-	<!-- auxilliary definitions -->
-	<owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3APublicationLink">
-		<rdfs:label>PublicationLink</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:PublicationLink"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:PublicationLink"/>
-	</owl:ObjectProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AModifiedDate">
-		<rdfs:label>ModifiedDate</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:ModifiedDate"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:ModifiedDate"/>
-	</owl:DatatypeProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ALabel">
-		<rdfs:label>Label</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Label"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Label"/>
-	</owl:DatatypeProperty>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AScenarios">
-		<rdfs:label>Scenarios</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Scenarios"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Scenarios"/>
-	</owl:Class>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AExperiments">
-		<rdfs:label>Experiments</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Experiments"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Experiments"/>
-	</owl:Class>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AEvent_related_potential">
-		<rdfs:label>Event related potential</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Event_related_potential"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Event_related_potential"/>
-	</owl:Class>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AElectroencephalography_recording_protocol">
-		<rdfs:label>Electroencephalography recording protocol</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Electroencephalography_recording_protocol"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Electroencephalography_recording_protocol"/>
-	</owl:Class>
-	<owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AKeywords">
-		<rdfs:label>Keywords</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Keywords"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Keywords"/>
-	</owl:ObjectProperty>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AUniversity_of_West_Bohemia;_Pilsen;_Czech_Republic">
-		<rdfs:label>University of West Bohemia; Pilsen; Czech Republic</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:University_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:University_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
-	</owl:Class>
-	<owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AIs_part_of">
-		<rdfs:label>Is part of</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Is_part_of"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Is_part_of"/>
-	</owl:ObjectProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AId">
-		<rdfs:label>Id</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Id"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Id"/>
-	</owl:DatatypeProperty>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3ADatabase">
-		<rdfs:label>Database</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Database"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Database"/>
-	</owl:Class>
-	<owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AData_storage_repository">
-		<rdfs:label>Data storage repository</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Category:Data_storage_repository"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Data_storage_repository"/>
-	</owl:Class>
-	<owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AHas_role">
-		<rdfs:label>Has role</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Has_role"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Has_role"/>
-	</owl:ObjectProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ADefinition">
-		<rdfs:label>Definition</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:Definition"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Definition"/>
-	</owl:DatatypeProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ADefiningCitation">
-		<rdfs:label>DefiningCitation</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:DefiningCitation"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:DefiningCitation"/>
-	</owl:DatatypeProperty>
-	<owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ACurationStatus">
-		<rdfs:label>CurationStatus</rdfs:label>
-		<swivt:page rdf:resource="http://neurolex.org/wiki/Property:CurationStatus"/>
-		<rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:CurationStatus"/>
-	</owl:DatatypeProperty>
-	<!-- References to the SWiVT Ontology, see http://semantic-mediawiki.org/swivt/ -->
-	<owl:AnnotationProperty rdf:about="http://semantic-mediawiki.org/swivt/1.0#page">
-		<rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
-	</owl:AnnotationProperty>
-	<owl:AnnotationProperty rdf:about="http://semantic-mediawiki.org/swivt/1.0#creationDate">
-		<rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
-	</owl:AnnotationProperty>
-	<owl:Class rdf:about="http://semantic-mediawiki.org/swivt/1.0#Subject">
-		<rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
-	</owl:Class>
-	<!-- Created by Semantic MediaWiki, http://semantic-mediawiki.org -->
+            The mapping from the application layer to an ontology includes the precedent object relational mapping
+            provided by Hibernate framework.
+        </property:Definition>
+        <property:Has_role
+                rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AData_storage_repository"/>
+        <property:Has_role rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3ADatabase"/>
+        <property:Id rdf:datatype="http://www.w3.org/2001/XMLSchema#string">nif-0000-08190</property:Id>
+        <property:Is_part_of
+                rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AUniversity_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
+        <property:Keywords
+                rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AElectroencephalography_recording_protocol"/>
+        <property:Keywords
+                rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AEvent_related_potential"/>
+        <property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AExperiments"/>
+        <property:Keywords rdf:resource="http://neurolex.org/wiki/Special:URIResolver/Category-3AScenarios"/>
+        <property:Label rdf:datatype="http://www.w3.org/2001/XMLSchema#string">Resource:EEGbase</property:Label>
+        <property:ModifiedDate rdf:datatype="http://www.w3.org/2001/XMLSchema#dateTime">2011-03-31T00:00:00
+        </property:ModifiedDate>
+        <property:PublicationLink rdf:resource="http://www.youtube.com/watch?v=2WuYVUM9FZo"/>
+    </owl:Class>
+    <!-- auxilliary definitions -->
+    <owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3APublicationLink">
+        <rdfs:label>PublicationLink</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:PublicationLink"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:PublicationLink"/>
+    </owl:ObjectProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AModifiedDate">
+        <rdfs:label>ModifiedDate</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:ModifiedDate"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:ModifiedDate"/>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ALabel">
+        <rdfs:label>Label</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Label"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Label"/>
+    </owl:DatatypeProperty>
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AScenarios">
+        <rdfs:label>Scenarios</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Scenarios"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Scenarios"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AExperiments">
+        <rdfs:label>Experiments</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Experiments"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Experiments"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AEvent_related_potential">
+        <rdfs:label>Event related potential</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Event_related_potential"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Event_related_potential"/>
+    </owl:Class>
+    <owl:Class
+            rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AElectroencephalography_recording_protocol">
+        <rdfs:label>Electroencephalography recording protocol</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Electroencephalography_recording_protocol"/>
+        <rdfs:isDefinedBy
+                rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Electroencephalography_recording_protocol"/>
+    </owl:Class>
+    <owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AKeywords">
+        <rdfs:label>Keywords</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Keywords"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Keywords"/>
+    </owl:ObjectProperty>
+    <owl:Class
+            rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AUniversity_of_West_Bohemia;_Pilsen;_Czech_Republic">
+        <rdfs:label>University of West Bohemia; Pilsen; Czech Republic</rdfs:label>
+        <swivt:page
+                rdf:resource="http://neurolex.org/wiki/Category:University_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
+        <rdfs:isDefinedBy
+                rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:University_of_West_Bohemia;_Pilsen;_Czech_Republic"/>
+    </owl:Class>
+    <owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AIs_part_of">
+        <rdfs:label>Is part of</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Is_part_of"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Is_part_of"/>
+    </owl:ObjectProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AId">
+        <rdfs:label>Id</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Id"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Id"/>
+    </owl:DatatypeProperty>
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3ADatabase">
+        <rdfs:label>Database</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Database"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Database"/>
+    </owl:Class>
+    <owl:Class rdf:about="http://neurolex.org/wiki/Special:URIResolver/Category-3AData_storage_repository">
+        <rdfs:label>Data storage repository</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Category:Data_storage_repository"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Category:Data_storage_repository"/>
+    </owl:Class>
+    <owl:ObjectProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3AHas_role">
+        <rdfs:label>Has role</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Has_role"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Has_role"/>
+    </owl:ObjectProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ADefinition">
+        <rdfs:label>Definition</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:Definition"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:Definition"/>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ADefiningCitation">
+        <rdfs:label>DefiningCitation</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:DefiningCitation"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:DefiningCitation"/>
+    </owl:DatatypeProperty>
+    <owl:DatatypeProperty rdf:about="http://neurolex.org/wiki/Special:URIResolver/Property-3ACurationStatus">
+        <rdfs:label>CurationStatus</rdfs:label>
+        <swivt:page rdf:resource="http://neurolex.org/wiki/Property:CurationStatus"/>
+        <rdfs:isDefinedBy rdf:resource="http://neurolex.org/wiki/Special:ExportRDF/Property:CurationStatus"/>
+    </owl:DatatypeProperty>
+    <!-- References to the SWiVT Ontology, see http://semantic-mediawiki.org/swivt/ -->
+    <owl:AnnotationProperty rdf:about="http://semantic-mediawiki.org/swivt/1.0#page">
+        <rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
+    </owl:AnnotationProperty>
+    <owl:AnnotationProperty rdf:about="http://semantic-mediawiki.org/swivt/1.0#creationDate">
+        <rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
+    </owl:AnnotationProperty>
+    <owl:Class rdf:about="http://semantic-mediawiki.org/swivt/1.0#Subject">
+        <rdfs:isDefinedBy rdf:resource="http://semantic-mediawiki.org/swivt/1.0"/>
+    </owl:Class>
+    <!-- Created by Semantic MediaWiki, http://semantic-mediawiki.org -->
 </rdf:RDF>
