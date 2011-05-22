@@ -61,16 +61,18 @@ $(function() {
         return url.match(/:\/\/(.[^/]+)/)[1];
     }
 
+
     function get_url(url) {
         var hn = window.location.hostname;
-        if (hn == "eegdatabase.kiv.zcu.cz") {
-            url = 'http://eegdatabase.kiv.zcu.cz';
+        alert(hn);
+        if (hn == "147.228.64.173") {
+            url = 'http://147.228.64.173:8080/EEGDatabase/';
         }
         else if (hn == "localhost") {
             url = 'http://localhost:8080/EEGDatabase/';
         }
         else {
-            url = 'http://147.228.64.173:8080/EEGDatabase/';
+             url = 'http://eegdatabase.kiv.zcu.cz/';
         }
         return url;
     }
@@ -242,9 +244,9 @@ $("#dialog-form-person").dialog({
                 bValid = bValid && checkLength(phoneNumber, "phonenumber", 9, 30);
                // bValid = bValid && checkLength(note, "note", 6, 80);
 
-                bValid = bValid && checkRegexp(givenname, /^[a-z]([0-9a-z_ ])+$/i, "Givenname may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
-                bValid = bValid && checkRegexp(surname, /^[a-z]([0-9a-z_ ])+$/i, "Surname may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
-                bValid = bValid && checkRegexp(dateOfBirth, /^[0-9/]+$/i, "Date of birth may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(givenname, /^[a-z]+$/i, "Givenname may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(surname, /^[a-z]+$/i, "Surname may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
+                bValid = bValid && checkRegexp(dateOfBirth, /^[0-9/]+$/i, "Date of birth may consist of 0-9, /.");
                // From jquery.validate.js (by joern), contributed by Scott Gonzalez: http://projects.scottsplayground.com/email_address_validation/
 		        bValid = bValid && checkRegexp( email, /^((([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+(\.([a-z]|\d|[!#\$%&'\*\+\-\/=\?\^_`{\|}~]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])+)*)|((\x22)((((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(([\x01-\x08\x0b\x0c\x0e-\x1f\x7f]|\x21|[\x23-\x5b]|[\x5d-\x7e]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(\\([\x01-\x09\x0b\x0c\x0d-\x7f]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF]))))*(((\x20|\x09)*(\x0d\x0a))?(\x20|\x09)+)?(\x22)))@((([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|\d|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.)+(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])|(([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])([a-z]|\d|-|\.|_|~|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])*([a-z]|[\u00A0-\uD7FF\uF900-\uFDCF\uFDF0-\uFFEF])))\.?$/i, "eg. ui@jquery.com" );
                 bValid = bValid && checkRegexp(phoneNumber, /^[0-9]+$/i, "Phone number may consist of a-z, 0-9, underscores, spaces, begin with a letter.");
@@ -329,7 +331,7 @@ $("#dialog-form-person").dialog({
 
                 if (bValid) {
                     //document.forms["addScenarioForm"].submit();
-                    var req = $("#addScenarioForm").serializeArray();
+                    var req = $("#addScenarioForm").serialize();
                     var addNewScenario = 'experiments/addNewScenario.html';
                     alert(req);
 
@@ -337,7 +339,8 @@ $("#dialog-form-person").dialog({
                     url = get_url(url);
 
                     url = url + addNewScenario;
-
+                   // document.forms["addScenarioForm"]
+                   // ajaxFileUpload();
                     $.ajax({
                         type: "POST",
                         url: url,
