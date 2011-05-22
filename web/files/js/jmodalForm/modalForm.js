@@ -64,7 +64,6 @@ $(function() {
 
     function get_url(url) {
         var hn = window.location.hostname;
-        alert(hn);
         if (hn == "147.228.64.173") {
             url = 'http://147.228.64.173:8080/EEGDatabase/';
         }
