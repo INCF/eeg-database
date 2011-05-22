@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.test.perf;
 
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.springframework.beans.factory.annotation.Autowired;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Kabourek
@@ -9,8 +13,16 @@ package cz.zcu.kiv.eegdatabase.test.perf;
  */
 public class PeopleServicePerformanceTest extends PerformanceTest {
 
-    public void createPeopleTest(){
+    @Autowired
+    PersonDao personDao;
 
+    private Person person;
+
+    public void createPeopleTest(){
+        person = new Person();
+        person.setSurname("surname");
+        person.setUsername("username");
+        personDao.create(person);
     }
 
 }

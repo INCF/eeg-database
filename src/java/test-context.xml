@@ -24,10 +24,28 @@
         </constructor-arg>
     </bean>
 
-        <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+    <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
         </constructor-arg>
+    </bean>
+
+    <bean name="ExperimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Experiment</value>
+        </constructor-arg>
+    </bean>
+
+    <bean name="HistoryDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.History</value>
+        </constructor-arg>
+    </bean>
+
+    <bean name="ScenarioDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioDao">
+    </bean>
+
+    <bean name="HardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
     </bean>
 
     <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
