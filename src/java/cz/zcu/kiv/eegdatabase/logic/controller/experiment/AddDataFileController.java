@@ -12,11 +12,14 @@ import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.Map;
+import java.util.Set;
 
 /**
  * Controller for adding data file to database
@@ -66,35 +69,40 @@ public class AddDataFileController
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
         log.debug("Processing form data.");
         AddDataFileCommand addDataCommand = (AddDataFileCommand) command;
+        MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest) request;
+        // the map containing file names mapped to files
+        Map m = mpRequest.getFileMap();
+        Set set = m.keySet();
+        for (Object key : set) {
+            MultipartFile file = (MultipartFile) m.get(key);
 
-        MultipartFile file = addDataCommand.getDataFile();
+            if (file == null) {
+                log.error("No file was uploaded!");
+            } else {
+                log.debug("Creating measuration with ID " + addDataCommand.getMeasurationId());
+                Experiment experiment = new Experiment();
+                experiment.setExperimentId(addDataCommand.getMeasurationId());
 
-        if (file == null) {
-            log.error("No file was uploaded!");
-        } else {
-            log.debug("Creating measuration with ID " + addDataCommand.getMeasurationId());
-            Experiment experiment = new Experiment();
-            experiment.setExperimentId(addDataCommand.getMeasurationId());
+                log.debug("Creating new Data object.");
+                DataFile data = new DataFile();
+                data.setExperiment(experiment);
 
-            log.debug("Creating new Data object.");
-            DataFile data = new DataFile();
-            data.setExperiment(experiment);
+                log.debug("Original name of uploaded file: " + file.getOriginalFilename());
+                data.setFilename(file.getOriginalFilename());
 
-            log.debug("Original name of uploaded file: " + file.getOriginalFilename());
-            data.setFilename(file.getOriginalFilename());
+                log.debug("MIME type of the uploaded file: " + file.getContentType());
+                data.setMimetype(file.getContentType());
 
-            log.debug("MIME type of the uploaded file: " + file.getContentType());
-            data.setMimetype(file.getContentType());
+                log.debug("Parsing the sapmling rate.");
+                double samplingRate = Double.parseDouble(addDataCommand.getSamplingRate());
+                data.setSamplingRate(samplingRate);
 
-            log.debug("Parsing the sapmling rate.");
-            double samplingRate = Double.parseDouble(addDataCommand.getSamplingRate());
-            data.setSamplingRate(samplingRate);
+                log.debug("Setting the binary data to object.");
+                data.setFileContent(Hibernate.createBlob(file.getBytes()));
 
-            log.debug("Setting the binary data to object.");
-            data.setFileContent(Hibernate.createBlob(addDataCommand.getDataFile().getBytes()));
-
-            dataFileDao.create(data);
-            log.debug("Data stored into database.");
+                dataFileDao.create(data);
+                log.debug("Data stored into database.");
+            }
         }
 
         log.debug("Returning MAV");

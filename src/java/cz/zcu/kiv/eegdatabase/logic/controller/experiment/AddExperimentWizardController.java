@@ -10,6 +10,7 @@ import org.hibernate.Hibernate;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 
@@ -288,26 +289,32 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         //     experiment.setExperimentId(addDataCommand.getMeasurationId());
 
         log.debug("Creating new Data object.");
-        MultipartFile file = data.getDataFile();
-        DataFile dataFile = new DataFile();
-        dataFile.setExperiment(experiment);
+        MultipartHttpServletRequest mpRequest = (MultipartHttpServletRequest)httpServletRequest;
+    // the map containing file names mapped to files
+        Map m = mpRequest.getFileMap();
+        Set set = m.keySet();
+        for (Object key: set) {
+            MultipartFile file = (MultipartFile) m.get(key);
 
-        log.debug("Original name of uploaded file: " + file.getOriginalFilename());
-        dataFile.setFilename(file.getOriginalFilename());
+            DataFile dataFile = new DataFile();
+            dataFile.setExperiment(experiment);
 
-        log.debug("MIME type of the uploaded file: " + file.getContentType());
-        dataFile.setMimetype(file.getContentType());
+            log.debug("Original name of uploaded file: " + file.getOriginalFilename());
+            dataFile.setFilename(file.getOriginalFilename());
 
-        log.debug("Parsing the sapmling rate.");
-        double samplingRate = Double.parseDouble(data.getSamplingRate());
-        dataFile.setSamplingRate(samplingRate);
+            log.debug("MIME type of the uploaded file: " + file.getContentType());
+            dataFile.setMimetype(file.getContentType());
 
-        log.debug("Setting the binary data to object.");
-        dataFile.setFileContent(Hibernate.createBlob(data.getDataFile().getBytes()));
+            log.debug("Parsing the sapmling rate.");
+            double samplingRate = Double.parseDouble(data.getSamplingRate());
+            dataFile.setSamplingRate(samplingRate);
 
-        dataFileDao.create(dataFile);
-        log.debug("Data stored into database.");
+            log.debug("Setting the binary data to object.");
+            dataFile.setFileContent(Hibernate.createBlob(file.getBytes()));
 
+            dataFileDao.create(dataFile);
+            log.debug("Data stored into database.");
+        }
 
         log.debug("Returning MAV object");
         return mav;

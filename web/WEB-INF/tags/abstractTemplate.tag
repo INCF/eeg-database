@@ -17,6 +17,7 @@
 <%@attribute name="jspinner" %>
 <%@attribute name="jaddWeather" %>
 <%@attribute name="jatoms" %>
+<%@attribute name="jaddData" %>
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -53,6 +54,9 @@
     <script src="<c:url value='/files/js/ui.spinner.js'/>"></script>
     <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
 
+    <c:if test="${jaddData}">
+        <script type="text/javascript" src="<c:url value="/files/js/addFile.js" />"></script>
+    </c:if>
 
     <c:if test="${mainPage}">
         <script type="text/javascript" src="<c:url value='/files/js/mainPage.js' />"></script>

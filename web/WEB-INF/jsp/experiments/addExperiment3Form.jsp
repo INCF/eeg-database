@@ -11,39 +11,58 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/format/" %>
-<ui:experimentsTemplate pageTitle="pageTitle.addDataFile">
+<ui:experimentsTemplate pageTitle="pageTitle.addDataFile" jaddData="true">
 
     <h1><fmt:message key="pageTitle.addDataFile"/></h1>
 
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm" name="addExperimentWizard"
                enctype="multipart/form-data">
         <fieldset>
+            <table class="formTable">
 
-            <f:errorBox/>
+                <f:errorBox/>
 
-            <form:hidden path="measurationId"/>
+                <form:hidden path="measurationId"/>
 
 
-            <div class="itemBox">
-                <form:label path="samplingRate" cssClass="textFieldLabel"
-                            cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                        key="label.samplingRate"/></form:label>
+                <tr>
+                    <div class="itemBox">
+                        <td>
 
-                <form:input path="samplingRate" cssClass="textField dateField"
-                            cssErrorClass="textField dateField errorField"/> Hz
+                            <form:label path="samplingRate" cssClass="textFieldLabel"
+                                        cssErrorClass="textFieldLabel errorLabel">
+                                <fmt:message
+                                        key="label.samplingRate"/>
+                            </form:label>
+                        </td>
+                        <td>
+                            <form:input path="samplingRate" cssClass="textField dateField"
+                                        cssErrorClass="textField dateField errorField"/> Hz
 
-                <form:errors path="samplingRate" cssClass="errorBox"/>
-            </div>
+                            <form:errors path="samplingRate" cssClass="errorBox"/>
 
-            <div class="itemBox">
-                <form:label path="dataFile" cssClass="fileFieldLabel"
-                            cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="label.dataFile"/></form:label>
+                        </td>
+                    </div>
+                </tr>
+                <tr>
+                    <div class="itemBox">
+                        <td>
 
-                <input type="file" name="dataFile" class="fileField"/>
+                            <form:label path="dataFile" cssClass="fileFieldLabel"
+                                        cssErrorClass="fileFieldLabel errorLabel">
+                                <fmt:message key="label.dataFile"/>
+                            </form:label>
+                        </td>
+                        <td>
+                            <input type="file" name="dataFile" class="fileField"/>
 
-                <form:errors path="dataFile" cssClass="errorBox"/>
-            </div>
+                            <form:errors path="dataFile" cssClass="errorBox"/>
 
+                        </td>
+                    </div>
+                </tr>
+            </table>
+            <a class="addFile"><fmt:message key="label.addFile"/></a>
 
             <div class="actionBox">
                 <input type="submit" value="Previous" name="_target1" class="submitButton lightButtonLink"/>
