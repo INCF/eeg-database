@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.test.perf;
+package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
@@ -17,6 +17,7 @@ import java.util.Set;
  * Date: 16.5.11
  * Time: 17:37
  * To change this template use File | Settings | File Templates.
+ * Identificator of test  /PPT_A_1_WorWitArt_L/. Contains document Testovaci scenare.docx.
  */
 
    public class ArticleServicePerformanceTest  extends PerformanceTest {
@@ -31,9 +32,14 @@ import java.util.Set;
     ArticleCommentDao articleCommnetDao;
 
     private Article article;
-
     private ArticleComment articleComment;
 
+
+/**
+ * Method test create article.
+ * User: Kabourek
+ * Identificator of test / PPT_A_2_AddArt_F /. Contains document Testovaci scenare.docx.
+ */
     @Test
     @PerfTest(invocations = 2, threads = 2)
     public void createArticleTest(){
@@ -44,6 +50,12 @@ import java.util.Set;
         articleDao.create(article);
 
     }
+
+/**
+ * Method test edit article.
+ * User: Kabourek
+ * Identificator of test /PPT_A_3_EdiArt_F/. Contains document Testovaci scenare.docx.
+ */
     @Test
     @PerfTest(invocations = 2, threads = 2)
     public void editArticleTest(){
@@ -55,12 +67,25 @@ import java.util.Set;
 
     }
 
+
+/**
+ * Method test get all article.
+ * User: Kabourek
+ * Identificator of test. Contains document Testovaci scenare.docx.
+ */
     @Test
     @PerfTest(invocations = 2, threads = 2)
     public void getAllArticleTest(){
         articleDao.getAllArticles();
 
     }
+
+
+/**
+ * Method test create commons.
+ * User: Kabourek
+ * Identificator of test /PPT_A_4_AddComArt_F/. Contains document Testovaci scenare.docx.
+ */
     @Test
     @PerfTest(invocations = 2, threads = 2)
     public void createCommonsTest(){
@@ -72,13 +97,17 @@ import java.util.Set;
 
     }
 
-    //@Test
-   // @PerfTest(invocations = 5, threads = 2)
-    //@Required(max = 1200, average = 250)
-    public void test1() throws Exception {
-        Thread.sleep(200);
-        System.out.println("helloWord");
 
+/**
+ * Method test delete article.
+ * User: Kabourek
+ * Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
+ */
+   //@Test
+   // @PerfTest(invocations = 5, threads = 2)
+   //@Required(max = 1200, average = 250)
+    public void deleteArticle() throws Exception {
+      articleCommnetDao.delete(article);
     }
 
     //setter

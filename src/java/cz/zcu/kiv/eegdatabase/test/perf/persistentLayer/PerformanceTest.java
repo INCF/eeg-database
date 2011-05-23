@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.test.perf;
+package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer;
 
 import cz.zcu.kiv.eegdatabase.test.perf.service.GraphRenderer;
 import org.databene.contiperf.PerfTest;

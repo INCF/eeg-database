@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.test.perf;
+package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 17.5.11
  * Time: 20:02
  * To change this template use File | Settings | File Templates.
+ * Identificator of test /PPT_S_1_WorWitSce_L/. Contains document Testovaci scenare.docx.
  */
 public class ScenarioServicePerformanceTest extends PerformanceTest{
 
@@ -17,6 +18,10 @@ public class ScenarioServicePerformanceTest extends PerformanceTest{
 
     private Scenario scenario;
 
+    /**
+     * Method test insert file to experiment.
+     * Identificator of test /PPT_S_2_AddSce_F/. Contains document Testovaci scenare.docx.
+     */
     //@Test
     public void createScenarioTest(){
       scenario = new Scenario();
@@ -27,6 +32,10 @@ public class ScenarioServicePerformanceTest extends PerformanceTest{
 //        scenario.setResearchGroup();
       scenarioDao.create(scenario);
     }
+    /**
+     * Method test insert file to experiment.
+     * Identificator of test /PPT_S_3_EdiSce_F/. Contains document Testovaci scenare.docx.
+     */
     //@Test
     public void editScenarioTest(){
       scenario.setDescription("testovaci scenar");

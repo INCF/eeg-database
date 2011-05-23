@@ -48,6 +48,24 @@
     <bean name="HardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
     </bean>
 
+    <bean name="HearingImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHearingImpairmentDao">
+    </bean>
+
+        <bean name="PersonOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
+    </bean>
+
+        <bean name="ExperimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
+    </bean>
+
+        <bean name="FileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
+    </bean>
+
+        <bean name="VisualImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleVisualImpairmentDao">
+    </bean>
+
+        <bean name="WeatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
+    </bean>
+
     <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
     </bean>
 

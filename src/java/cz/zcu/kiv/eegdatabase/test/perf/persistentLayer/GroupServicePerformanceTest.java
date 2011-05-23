@@ -1,8 +1,7 @@
-package cz.zcu.kiv.eegdatabase.test.perf;
+package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
@@ -11,6 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
  * Date: 17.5.11
  * Time: 20:05
  * To change this template use File | Settings | File Templates.
+ * Test for group service.
  */
 public class GroupServicePerformanceTest extends PerformanceTest {
     @Autowired
