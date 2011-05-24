@@ -856,6 +856,7 @@
         <property name="hardwareDao" ref="hardwareDao"/>
         <property name="weatherDao" ref="weatherDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
         <property name="auth" ref="authorizationManager"/>
         <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
         <property name="dataFileDao" ref="dataFileDao"/>

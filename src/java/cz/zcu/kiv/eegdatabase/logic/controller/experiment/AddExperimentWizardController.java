@@ -35,6 +35,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     private Log log = LogFactory.getLog(getClass());
     private GenericDao<Experiment, Integer> experimentDao;
+    private ScenarioSchemasDao scenarioSchemasDao;
     private PersonDao personDao;
     private ScenarioDao scenarioDao;
     private GenericDao<Hardware, Integer> hardwareDao;
@@ -168,6 +169,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             case 1:
                 List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
                 map.put("researchGroupList", groups);
+                List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getScenarioSchemaNames();
+                map.put("schemaNamesList", schemaNames);
 
                 ResearchGroup defaultGroup1 = personDao.getLoggedPerson().getDefaultGroup();
                 int defaultGroupId1 = (defaultGroup1 != null) ? defaultGroup1.getResearchGroupId() : 0;
@@ -483,5 +486,13 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     public void setDataFileDao(GenericDao<DataFile, Integer> dataFileDao) {
         this.dataFileDao = dataFileDao;
 
+    }
+
+    public ScenarioSchemasDao getScenarioSchemasDao() {
+        return scenarioSchemasDao;
+    }
+
+    public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
+        this.scenarioSchemasDao = scenarioSchemasDao;
     }
 }

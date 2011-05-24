@@ -146,7 +146,7 @@
      <div id="dialog-form-scenario" title="Create new scenario">
         <p class="validateTips">All form fields are required.</p>
 
-        <form id="addScenarioForm" name="addScenarioForm" enctype="multipart/form-data">
+        <form id="addScenarioForm" name="addScenarioForm" enctype="multipart/form-data" method="post">
             <fieldset>
 
                 <label for="researchGroup"><fmt:message key="label.researchGroup"/></label>
@@ -165,12 +165,26 @@
                 <input type="text" name="length" id="length" class="text ui-widget-content ui-corner-all"/>
 
                 <label for="scenarioDescription"><fmt:message key="label.hardwareDescription"/></label>
-                <textarea rows="3" name="scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
+                <textarea rows="3" cols="40"name=" scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
                 </textarea>
-                <label for="dataFile" class="dataFile"><fmt:message key="label.dataFile"/></label>
+                <label for="dataFile"><fmt:message key="description.fileType.dataFile"/></label>
                 <input type="file" name="dataFile" id="dataFile" class="text ui-widget-content ui-corner-all"/>
+               <!-- <button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>-->
+                <label for="dataFileXml"><fmt:message key="label.xmlDataFile"/></label>
+                <input type="file" name="dataFileXml" id ="dataFileXml" class="text ui-widget-content ui-corner-all"/>
+                <label for="scenarioSchema"><fmt:message key="label.scenarioSchema"/></label>
+
+                <select name="scenarioSchema" id="scenarioSchema" class="text ui-widget-content ui-corner-all">
+                    <option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></option>
+
+                    <c:forEach items="${schemaNamesList}" var="schemaName">
+                        <option value="schemaName.schemaId" label="">
+                            <c:out value="${schemaName.schemaName}" />
+                        </option>
+                    </c:forEach>
+                  </select>
                 <label for="privateNote"><fmt:message key="label.private"/></label>
-                <input type="checkbox" name="privateNote" value="private"  />
+                <input type="checkbox" name="privateNote" id= "privateNote" value="private"  />
             </fieldset>
         </form>
     </div>

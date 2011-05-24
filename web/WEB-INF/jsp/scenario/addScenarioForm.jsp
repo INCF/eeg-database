@@ -77,7 +77,7 @@
 
             <div class="itemBox">
                 <form:label path="dataFile" cssClass="fileFieldLabel"
-                            cssErrorClass="fileFieldLabel errorLabel">Data file</form:label>
+                            cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="description.fileType.dataFile"/></form:label>
 
                 <input type="file" name="dataFile" class="fileField"/>
 
@@ -88,7 +88,7 @@
 
             <div class="itemBox">
                 <form:label path="dataFileXml" cssClass="fileFieldLabel"
-                            cssErrorClass="fileFieldLabel errorLabel">XML Data file</form:label>
+                            cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="label.xmlDataFile"/></form:label>
 
                 <input type="file" name="dataFileXml" class="fileField"/>
 
