@@ -178,7 +178,7 @@
                     <option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></option>
 
                     <c:forEach items="${schemaNamesList}" var="schemaName">
-                        <option value="schemaName.schemaId" label="">
+                        <option value="${schemaName.schemaId}" label="">
                             <c:out value="${schemaName.schemaName}" />
                         </option>
                     </c:forEach>
