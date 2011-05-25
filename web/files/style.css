@@ -204,6 +204,7 @@ while still visible in code, so it can be accessible without styles **/
     text-decoration: none;
 }
 
+
 .homepageHeading {
     padding-bottom: 0;
 }
@@ -222,6 +223,9 @@ while still visible in code, so it can be accessible without styles **/
     font-size: .7em;
     margin-left: 5px;
 }
+
+.notLogged ul.partners {list-style: none; position: relative; left: 45px;}
+
 
 /* Styles for data tables at home page */
 .homepageLeftColumn {
@@ -277,6 +281,28 @@ while still visible in code, so it can be accessible without styles **/
     float: left;
     width: 120px;
     padding-top: 0px;
+}
+
+.notLogged .showreel {display: block; height: 100px; position: relative; top: 20px;}
+
+.notLogged .showreel ul {
+	list-style: none;
+}
+.notLogged .showreel li {
+	float: left; display: block;
+}
+
+.notLogged .showreel li {
+	float: left; display: block;
+	margin-left: 10px;
+}
+
+.notLogged .showreel li a img {
+	border: 1px solid lightgray;
+}
+
+.notLogged .showreel li a:hover img {
+	border: 1px solid gray;
 }
 
 /*.homepageLeftColumn .left {float: left; display: block; width: 200px; }*/
@@ -389,6 +415,7 @@ div.articleDetail .content {
     height: 60px;
     position: relative;
     left: 270px;
+	width: 100px;
 }
 
 .articleDetail h1 {
