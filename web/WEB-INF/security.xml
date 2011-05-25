@@ -18,6 +18,7 @@
         <intercept-url pattern="/registration-confirmation.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
         <intercept-url pattern="/social/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/articles/rss.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/social/*.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
         <intercept-url pattern="/my-account/*.html" access="IS_AUTHENTICATED_FULLY"/>

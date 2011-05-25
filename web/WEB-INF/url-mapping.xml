@@ -37,6 +37,7 @@
                 <prop key="articles/detail.html">articleMultiController</prop>
                 <prop key="articles/delete.html">articleMultiController</prop>
                 <prop key="articles/settings.html">articleMultiController</prop>
+                <prop key="articles/rss.html">articleMultiController</prop>
                 <prop key="articles/*.html">articleMultiController</prop>
 
                 <prop key="articles/add-article-comment.html">addArticleCommentController</prop>

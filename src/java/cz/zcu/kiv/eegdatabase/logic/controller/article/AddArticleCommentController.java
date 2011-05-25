@@ -35,6 +35,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
 
+
 /**
  * @author Jiri Vlasimsky
  */
@@ -60,6 +61,7 @@ public class AddArticleCommentController extends SimpleFormController {
     protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
         ModelAndView mav = super.showForm(request, response, errors);
         setPermissionsToView(mav);
+
         return mav;
     }
 

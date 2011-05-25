@@ -266,6 +266,7 @@
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="auth" ref="authorizationManager"/>
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+        <property name="domain" value="${app.domain}"/>
     </bean>
 
     <bean name="addArticleController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleController">

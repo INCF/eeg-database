@@ -9,8 +9,17 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.stream.XMLEventFactory;
+import javax.xml.stream.XMLEventWriter;
+import javax.xml.stream.events.Characters;
+import javax.xml.stream.events.EndElement;
+import javax.xml.stream.events.StartElement;
+import javax.xml.stream.events.XMLEvent;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Set;
+
 
 /**
  * Controller for adding and editing an article
@@ -25,8 +34,55 @@ public class ArticleMultiController extends MultiActionController {
     private ArticleDao articleDao;
     private ArticleCommentDao articleCommentDao;
     private ResearchGroupDao researchGroupDao;
+    private String domain;
 
     public ArticleMultiController() {
+
+    }
+
+    public ModelAndView rss(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView("articles/rss");
+        SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z");
+        String today = formatter.format(new Date());
+        List<Article> articleList = articleDao.getAllArticles();
+        int groupId;
+
+        String copyright = "Copyright © The University of West Bohemia";
+        String title = "EEGbase articles RSS feed";
+        String description = "Articles from EEGbase content management system";
+        String language = "en";
+        String link = domain + "/files/articles.rss";
+
+        Feed rssFeeder = new Feed(title, link, description, language, copyright, today);
+
+
+        // Now add one example entry
+
+        for (Article article : articleList) {
+            FeedMessage feed = new FeedMessage();
+            feed.setTitle(article.getTitle());
+            feed.setDescription(article.getText().substring(0,(article.getText().length() > 200) ? 200 : article.getText().length()-1));
+            feed.setAuthor(article.getPerson().getUsername());
+            feed.setGuid("");
+            feed.setLink(domain + "/articles/detail.html?articleId=" + article.getArticleId());
+            rssFeeder.getMessages().add(feed);
+        }
+
+
+        // Now write the file
+        RSSFeedWriter writer = new RSSFeedWriter(rssFeeder, request.getRealPath("/") + "/files/articles.rss");
+        String rssFeedBuffer = "";
+        try {
+            rssFeedBuffer = writer.write();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        mav.addObject("rssFeedBuffer", rssFeedBuffer);
+        mav.addObject("articleList", articleList);
+        mav.addObject("articleListTitle", "pageTitle.allArticles");
+        mav = new ModelAndView("redirect:/files/articles.rss");
+        return mav;
     }
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
@@ -216,6 +272,27 @@ public class ArticleMultiController extends MultiActionController {
         }
     }
 
+    private void createNode(XMLEventWriter eventWriter, String name, String value) {
+        try {
+            XMLEventFactory eventFactory = XMLEventFactory.newInstance();
+            XMLEvent end = eventFactory.createDTD("\n");
+            XMLEvent tab = eventFactory.createDTD("\t");
+            // Create Start node
+            StartElement sElement = eventFactory.createStartElement("", "", name);
+            eventWriter.add(tab);
+            eventWriter.add(sElement);
+            // Create Content
+            Characters characters = eventFactory.createCharacters(value);
+            eventWriter.add(characters);
+            // Create End node
+            EndElement eElement = eventFactory.createEndElement("", "", name);
+            eventWriter.add(eElement);
+            eventWriter.add(end);
+        } catch (Exception e) {
+
+        }
+    }
+
     public ArticleDao getArticleDao() {
         return articleDao;
     }
@@ -254,5 +331,13 @@ public class ArticleMultiController extends MultiActionController {
 
     public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
         this.researchGroupDao = researchGroupDao;
+    }
+
+    public String getDomain() {
+        return domain;
+    }
+
+    public void setDomain(String domain) {
+        this.domain = domain;
     }
 }
