@@ -80,7 +80,12 @@ public class WaveletProcessingController extends AbstractProcessingController {
             mav.addObject("title", "Discrete Wavelet Transformation");
 
         }
-        ISignalProcessingResult res = wt.processSignal(signal);
+        ISignalProcessingResult res;
+        try {
+         res = wt.processSignal(signal);
+        } catch(OutOfMemoryError e) {
+            return new ModelAndView("services/outOfMemory");
+        }
         Map<String, Double[][]> map = res.toHashMap();
          if (map.containsKey("highestCoefficients")) {
             mav.addObject("name", "highest Coefficients");

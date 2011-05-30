@@ -52,7 +52,12 @@ public class FastFourierController extends AbstractProcessingController {
         byte[] bytes = binaryFile.getFileContent().getBytes(1, (int) binaryFile.getFileContent().length());
         double signal[] = transformer.readBinaryData(bytes, cmd.getChannel());
         ISignalProcessor fft = SignalProcessingFactory.getInstance().getFastFourier();
-        ISignalProcessingResult res = fft.processSignal(signal);
+        ISignalProcessingResult res;
+        try {
+         res = fft.processSignal(signal);
+        } catch(OutOfMemoryError e) {
+            return new ModelAndView("services/outOfMemory");
+        }
         Map<String, Double[][]> map = res.toHashMap();
         Double[][] result = map.get("coefficients");
         double[] real = new double[result.length];
