@@ -19,11 +19,11 @@
       <root url="file://$PROJECT_DIR$/lib/jstl" />
       <root url="file://$PROJECT_DIR$/lib/logger" />
       <root url="file://$PROJECT_DIR$/lib/lucene" />
-      <root url="file://$PROJECT_DIR$/lib/ojdbc" />
       <root url="file://$PROJECT_DIR$/lib/spring" />
       <root url="file://$PROJECT_DIR$/lib/jaxws21" />
       <root url="file://$PROJECT_DIR$/lib/cxf" />
       <root url="file://$PROJECT_DIR$/lib/geronimo" />
+      <root url="file://$PROJECT_DIR$/lib/ojdbc" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

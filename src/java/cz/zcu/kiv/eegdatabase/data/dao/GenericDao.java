@@ -37,7 +37,7 @@ public interface GenericDao <T, PK extends Serializable>{
 
     /**
      * Delete data from database.
-     * @param persistObject - Object that will be deleted from database
+     * @param persistentObject - Object that will be deleted from database
      */
     void delete(T persistentObject);
 

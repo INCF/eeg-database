@@ -1,11 +1,10 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
-import com.sun.xml.messaging.saaj.util.ByteInputStream;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType1;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -14,19 +13,14 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.w3c.dom.Document;
-import org.xml.sax.InputSource;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.*;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -110,6 +104,14 @@ public class AddScenarioController
         List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getScenarioSchemaNames();
         map.put("schemaNamesList", schemaNames);
 
+        Iterator iter = schemaNames.iterator();
+        while(iter.hasNext()) {
+            ScenarioSchemas schema = (ScenarioSchemas) iter.next();
+            int id = schema.getSchemaId();
+            String name = schema.getSchemaName();
+            System.out.println(id + " " + name);
+        }
+
         ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
@@ -146,14 +148,14 @@ public class AddScenarioController
         MultipartFile xmlFile = data.getDataFileXml();
 
         Scenario scenario;
-        ScenarioType1 scenarioType1;
+        ScenarioType scenarioType;
         if (id > 0) {
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
 
             //predelat!!!
-            scenarioType1 = new ScenarioType1();
+            scenarioType = new ScenarioType();
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -162,7 +164,7 @@ public class AddScenarioController
             log.debug("Setting owner to the logged user.");
             scenario.setPerson(personDao.getLoggedPerson());
 
-            scenarioType1 = new ScenarioType1();
+            scenarioType = new ScenarioType();
         }
 
         log.debug("Setting research group.");
@@ -194,27 +196,40 @@ public class AddScenarioController
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             InputStream inputStream = xmlFile.getInputStream();
 
-            //byte[] dataS = xmlFile.getBytes();
-            //String dataStr = new String(dataS);
-
-            //Document doc = docBuilder.parse(new ByteArrayInputStream(dataS));
             Document doc = docBuilder.parse(inputStream);
 
-            scenarioType1.setScenarioXml(doc);
+            scenarioType.setScenarioXml(doc);
 
         }
 
         log.debug("Setting private/public access");
         scenario.setPrivateScenario(data.getPrivateNote());
 
+        int schemaId = data.getScenarioSchema();
+        String entity;
+        if(schemaId == 0) {
+            entity = "noSchema";
+        }
+        else {
+            entity = "scenario" + schemaId;
+        }
+
         log.debug("Saving scenario object");
+
         if (id > 0) {
             // Editing existing
             scenarioDao.update(scenario);
         } else {
             // Creating new
-            scenarioTypeDao.create(scenarioType1);
-            scenarioDao.create(scenario);
+            scenarioTypeDao.create(scenarioType);
+
+            //scenario.setScenarioDoc(scenarioType);
+
+            scenarioType.setScenario(scenario);
+
+            scenarioTypeDao.create(scenarioType);
+
+            //scenarioDao.create(scenario);
         }
 
         log.debug("Returning MAV");

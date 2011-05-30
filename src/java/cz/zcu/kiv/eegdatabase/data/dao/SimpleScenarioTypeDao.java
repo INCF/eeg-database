@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType1;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,10 +9,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType1;
  * Time: 17:12
  * To change this template use File | Settings | File Templates.
  */
-public class SimpleScenarioTypeDao extends SimpleGenericDao<ScenarioType1, Integer>
+public class SimpleScenarioTypeDao extends SimpleGenericDao<ScenarioType, Integer>
                                    implements ScenarioTypeDao {
 
     public SimpleScenarioTypeDao() {
-        super(ScenarioType1.class);
+        super(ScenarioType.class);
     }
 }

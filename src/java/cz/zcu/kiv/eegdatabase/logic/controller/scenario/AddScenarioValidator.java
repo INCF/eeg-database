@@ -60,6 +60,18 @@ public class AddScenarioValidator implements Validator {
             errors.rejectValue("dataFile", "required.dataFile");
             log.debug("No data file was inserted!");
         }
+
+        if ((!(data.getId() > 0)) && (data.getDataFileXml().isEmpty())) {
+            // Creating new scenario and no file was uploaded
+            errors.rejectValue("dataFileXml", "required.dataFileXml");
+            log.debug("No XML data file was inserted!");
+        }
+
+        if(data.getScenarioSchema() == - 1) {
+            //scenario schema name not chosen
+            errors.rejectValue("scenarioSchema", "required.scenarioSchema");
+            log.debug("No scenario schema was selected!");
+        }
     }
 
     public AuthorizationManager getAuth() {

@@ -28,7 +28,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/../web" relative="/" />
         </webroots>
-        <context-artifact name="EEGDatabase" />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
@@ -91,24 +90,8 @@
     <orderEntry type="library" exported="" name="geronimo" level="project" />
     <orderEntry type="library" exported="" name="jstl" level="project" />
     <orderEntry type="library" name="oracle" level="project" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/ContiPerf/contiperf-1.07.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/JUnit/junit-4.8.2.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
+    <orderEntry type="library" name="junit" level="project" />
+    <orderEntry type="library" name="ojdbc" level="project" />
   </component>
 </module>
 

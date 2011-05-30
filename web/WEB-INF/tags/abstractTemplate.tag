@@ -18,6 +18,7 @@
 <%@attribute name="jaddWeather" %>
 <%@attribute name="jatoms" %>
 <%@attribute name="jaddData" %>
+<%@attribute name="addScenario" %>
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -146,6 +147,11 @@
         });
         </script>
     </c:if>
+
+    <c:if test="${addScenario}">
+        <script type="text/javascript" src="<c:url value='/files/js/addScenario.js' />"></script>
+    </c:if>
+
 </head>
 <body>
 <div class="page">

@@ -47,6 +47,8 @@ public class Scenario implements java.io.Serializable {
   private String scenarioName;
   private String mimetype;
 
+  private ScenarioType scenarioDoc;
+
   public Scenario() {
   }
 
@@ -168,6 +170,14 @@ public class Scenario implements java.io.Serializable {
 
   public void setScenarioName(String scenarioName) {
     this.scenarioName = scenarioName;
+  }
+
+  public ScenarioType getScenarioDoc() {
+    return scenarioDoc;
+  }
+
+  public void setScenarioDoc(ScenarioType scenarioDoc) {
+    this.scenarioDoc = scenarioDoc;
   }
 }
 

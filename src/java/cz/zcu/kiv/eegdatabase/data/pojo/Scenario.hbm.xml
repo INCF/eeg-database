@@ -46,5 +46,21 @@
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
     </set>
+
+    <!--
+    <many-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                 column="SCENARIO_ID" unique="true"/>
+
+
+    <many-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                 entity-name="noSchema" column="SCENARIO_ID" not-null="true" cascade="all" unique="true"/>
+
+
+
+
+    <one-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                entity-name="noSchema" cascade="all"/>
+    -->
+
   </class>
 </hibernate-mapping>

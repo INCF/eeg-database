@@ -58,7 +58,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
     * @param newInstance - Object that will be created in database
     * @return record (row) saving in database
     */
-
     public PK create(T newInstance) {
         return (PK) getHibernateTemplate().save(newInstance);
     }
@@ -88,7 +87,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
      * Delete data from database.
      * Method doesn't called by logic layer yet.
      *
-     * @param persistObject - Object that will be deleted from database
+     * @param persistentObject - Object that will be deleted from database
      */
     public void delete(T persistentObject) {
         getHibernateTemplate().delete(persistentObject);

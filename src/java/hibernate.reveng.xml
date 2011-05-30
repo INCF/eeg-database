@@ -13,6 +13,7 @@
     <type-mapping>
             <sql-type jdbc-type="NUMERIC" hibernate-type="int"/>
             <sql-type jdbc-type="DATE" hibernate-type="java.sql.Timestamp"/>
+            <!--<sql-type jdbc-type="XMLTYPE" hibernate-type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType"/>-->
     </type-mapping>
     <!--
     <table-filter match-name="DATA" match-schema="JPERGLER" package="data.pojo"/>

@@ -5,11 +5,12 @@
     <property name="hibernate.current_session_context_class">
             org.hibernate.context.ThreadLocalSessionContext
     </property>
-    <property name="hibernate.dialect">
-            cz.zcu.kiv.eegdatabase.dialect.UserDefinedOracleDialect
-    </property>
     <property name="hibernate.connection.driver_class">
-            oracle.jdbc.driver.OracleDriver
+        oracle.jdbc.driver.OracleDriver
+    </property>
+    <property name="hibernate.dialect">
+        <!--org.hibernate.dialect.Oracle10gDialect-->
+        cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
     <property name="hibernate.connection.url">
             jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students
@@ -39,7 +40,7 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType1.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

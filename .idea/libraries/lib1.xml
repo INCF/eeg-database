@@ -24,7 +24,6 @@
       <root url="jar://$PROJECT_DIR$/lib/commons-collections.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/xdb.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/xmlparserv2.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/ojdbc6.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

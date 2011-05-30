@@ -11,17 +11,13 @@ import org.w3c.dom.Document;
  * Mapping ScenarioType tables - ScenarioType objects
  * @author Jan Koren
  */
-public class ScenarioType1 implements java.io.Serializable {
+public class ScenarioType implements java.io.Serializable {
 
+  private Scenario scenario;
   private int scenarioId;
   private Document scenarioXml;
 
-  public ScenarioType1() {
-  }
-
-  public ScenarioType1(int scenarioId, Document scenarioXml) {
-    this.scenarioId = scenarioId;
-    this.scenarioXml = scenarioXml;
+  public ScenarioType() {
   }
 
   public int getScenarioId() {
@@ -39,5 +35,13 @@ public class ScenarioType1 implements java.io.Serializable {
   public void setScenarioXml(Document scenarioXml) {
     this.scenarioXml = scenarioXml;
   }
-  
+
+  public Scenario getScenario() {
+      return scenario;
+  }
+
+  public void setScenario(Scenario scenario) {
+      this.scenario = scenario;
+  }
+
 }

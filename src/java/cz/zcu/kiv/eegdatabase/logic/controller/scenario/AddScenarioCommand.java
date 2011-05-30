@@ -12,8 +12,11 @@ public class AddScenarioCommand {
     private String description;
     private MultipartFile dataFile;
     private MultipartFile dataFileXml;
+    private MultipartFile schemaFile;
     private boolean privateNote;
-    private String scenarioSchema;
+    private int scenarioSchema;
+    private boolean xmlFileCheckBox;
+    private String scenarioOption;
 
     public int getId() {
         return id;
@@ -71,11 +74,11 @@ public class AddScenarioCommand {
         this.privateNote = privateNote;
     }
 
-    public String getScenarioSchema() {
+    public int getScenarioSchema() {
       return scenarioSchema;
     }
 
-    public void setScenarioSchema(String scenarioSchema) {
+    public void setScenarioSchema(int scenarioSchema) {
       this.scenarioSchema = scenarioSchema;
     }
 
@@ -87,5 +90,28 @@ public class AddScenarioCommand {
       this.dataFileXml = dataFileXml;
     }
 
+    public MultipartFile getSchemaFile() {
+        return schemaFile;
+    }
+
+    public void setSchemaFile(MultipartFile schemaFile) {
+        this.schemaFile = schemaFile;
+    }
+
+    public boolean isXmlFileCheckBox() {
+        return xmlFileCheckBox;
+    }
+
+    public void setXmlFileCheckBox(boolean xmlFileCheckBox) {
+        this.xmlFileCheckBox = xmlFileCheckBox;
+    }
+
+    public String getScenarioOption() {
+        return scenarioOption;
+    }
+
+    public void setScenarioOption(String scenarioOption) {
+        this.scenarioOption = scenarioOption;
+    }
 
 }

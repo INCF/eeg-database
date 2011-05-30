@@ -75,7 +75,21 @@
                 <form:errors path="description" cssClass="errorBox"/>
             </div>
 
+
+
             <div class="itemBox">
+
+                <form:label path="xmlFileCheckBox" cssClass="textFieldLabel"
+                            cssErrorClass="textFieldLabel errorLabel">Data file is XML</form:label>
+
+                <form:checkbox path="xmlFileCheckBox" cssClass="checkBox" id="isScenarioXml"/>
+
+                <form:errors path="xmlFileCheckBox" cssClass="errorBox"/>
+            </div>
+
+
+
+            <div class="itemBox" id="dataFile">
                 <form:label path="dataFile" cssClass="fileFieldLabel"
                             cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="description.fileType.dataFile"/></form:label>
 
@@ -83,10 +97,9 @@
 
                 <form:errors path="dataFile" cssClass="errorBox"/>
             </div>
-            <div class="itemBox">
 
 
-            <div class="itemBox">
+            <div class="itemBox" id="dataFileXml">
                 <form:label path="dataFileXml" cssClass="fileFieldLabel"
                             cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="label.xmlDataFile"/></form:label>
 
@@ -94,6 +107,34 @@
 
                 <form:errors path="dataFileXml" cssClass="errorBox"/>
             </div>
+
+            <div class="itemBox" id="schemaSelect">
+                <form:label path="scenarioSchema" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.scenarioSchema"/></form:label>
+
+                <form:radiobutton path="scenarioOption" cssClass="radioButton" value="fromList" id="fromSchemaList"/>
+                <fmt:message key="radio.fromSchemaList"/>
+
+                <form:radiobutton path="scenarioOption" cssClass="radioButton" value="addNew" id="schemaAddNew"/>
+                <fmt:message key="radio.newSchema"/>
+
+                <form:select path="scenarioSchema" cssClass="selectBox"  id="schemaList">
+                    <form:option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></form:option>
+                    <option value="0" label="">
+                        <c:out value="No scenario schema"/>
+                    </option>
+                    <c:forEach items="${schemaNamesList}" var="schemaName">
+                        <option value="${schemaName.schemaId}" label="">
+                            <c:out value="${schemaName.schemaName}" />
+                        </option>
+                    </c:forEach>
+                </form:select>
+                <form:errors path="scenarioSchema" cssClass="errorBox" />
+
+                <input type="file" name="schemaFile" class="fileField" id="newSchema"/>
+                <form:errors path="schemaFile" cssClass="errorBox"/>
+            </div>
+
+
             <div class="itemBox">
 
                 <form:label path="privateNote" cssClass="textFieldLabel"
@@ -104,25 +145,11 @@
                 <form:errors path="privateNote" cssClass="errorBox"/>
             </div>
 
-            <div class="itemBox">
-                <form:label path="scenarioSchema" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.scenarioSchema"/></form:label>
-
-                <form:select path="scenarioSchema" cssClass="selectBox">
-                    <form:option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></form:option>
-
-                    <c:forEach items="${schemaNamesList}" var="schemaName">
-                        <option value="schemaName.schemaId" label="">
-                            <c:out value="${schemaName.schemaName}" />
-                        </option>
-                    </c:forEach>
-
-                </form:select>
-                <form:errors path="scenarioSchema" cssClass="errorBox" />
-            </div>
 
             <div class="itemBox">
                 <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink"/>
             </div>
+
 
         </fieldset>
     </form:form>

@@ -115,7 +115,6 @@ public class OracleXMLType implements UserType, Serializable {
         try {
             XMLType xmlType = null;
             if (value != null) {
-                Document val = (Document) value;
                 String xml = OracleXMLType.domToString((Document) value);
                 xmlType = XMLType.createXML(st.getConnection(), xml);
             }
