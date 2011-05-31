@@ -51,7 +51,6 @@ public class MatchingPursuitController extends AbstractProcessingController {
         ((MatchingPursuit) mp).setIterationCount(cmd.getAtom());
          res = mp.processSignal(binaryData);
         } catch(OutOfMemoryError e) {
-            System.out.println("error");
             return new ModelAndView("services/outOfMemory");
         }
         Map<String, Double[][]> result = res.toHashMap();

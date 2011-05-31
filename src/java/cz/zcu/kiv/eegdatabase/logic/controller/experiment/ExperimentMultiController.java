@@ -3,9 +3,11 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -13,6 +15,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 
@@ -49,7 +52,7 @@ public class ExperimentMultiController extends MultiActionController {
             item.setUserMemberOfGroup(userIsMember);
         }
         mav.addObject("measurationListTitle", "pageTitle.allExperiments");
-        mav.addObject("measurationList", list);
+        SignalProcessingUtils.splitExperimentToView(mav, list);
         mav.addObject("myExperiments", false);
 
         return mav;
@@ -65,7 +68,7 @@ public class ExperimentMultiController extends MultiActionController {
 
         List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
         mav.addObject("measurationListTitle", "pageTitle.myExperiments");
-        mav.addObject("measurationList", list);
+        SignalProcessingUtils.splitExperimentToView(mav, list);
         mav.addObject("myExperiments", true);
 
         return mav;
@@ -81,7 +84,7 @@ public class ExperimentMultiController extends MultiActionController {
 
         List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
         mav.addObject("measurationListTitle", "pageTitle.meAsSubject");
-        mav.addObject("measurationList", list);
+        SignalProcessingUtils.splitExperimentToView(mav, list);
 
         return mav;
     }
@@ -111,6 +114,8 @@ public class ExperimentMultiController extends MultiActionController {
         boolean userIsExperimenter = auth.userIsExperimenter();
         mav.addObject("userIsExperimenter", userIsExperimenter);
     }
+
+
 
     public ExperimentDao<Experiment, Integer> getExperimentDao() {
         return experimentDao;

@@ -10,21 +10,6 @@ public class EEGDataTransformer implements DataTransformer {
 
     private VhdrReader reader = new VhdrReader();
 
-    public boolean isSuitableExperiment(Experiment e) {
-        boolean vhdr = false;
-        boolean eeg = false;
-        Set<DataFile> files = e.getDataFiles();
-        for (DataFile file : files) {
-            if (file.getFilename().endsWith(".vhdr")) {
-                vhdr = true;
-            }
-            if ((file.getFilename().endsWith(".eeg")) || (file.getFilename().endsWith(".avg"))) {
-                eeg = true;
-            }
-        }
-        return (vhdr && eeg);
-    }
-
     public double[] readBinaryData(byte[] binaryFile, int channel) {
         EegReader eeg = new EegReader(reader);
        return eeg.readFile(binaryFile, channel);

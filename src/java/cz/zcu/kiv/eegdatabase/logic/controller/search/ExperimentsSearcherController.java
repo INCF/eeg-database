@@ -10,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -24,8 +25,6 @@ import java.util.Map;
  */
 public class ExperimentsSearcherController extends AbstractSearchController {
 
-
-    //private GenericDao<Object, Integer> genericDao;
     private GenericDao<Person, Integer> personDao;
     private ExperimentDao experimentDao;
     private GenericDao<Scenario, Integer> scenarioDao;
@@ -36,11 +35,6 @@ public class ExperimentsSearcherController extends AbstractSearchController {
         setCommandName("experimentsSearcherCommand");
     }
 
-    @Override
-    protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        ExperimentsSearcherCommand search = (ExperimentsSearcherCommand) super.formBackingObject(request);
-        return search;
-    }
 
     @Override
     protected Map referenceData(HttpServletRequest request) throws Exception {
@@ -58,7 +52,7 @@ public class ExperimentsSearcherController extends AbstractSearchController {
         ModelAndView mav = super.onSubmit(request, response, command);
         try {
             List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests);
-            mav.addObject("experimentsResults", experimentResults);
+            SignalProcessingUtils.splitExperimentToView(mav, experimentResults);
             mav.addObject("resultsEmpty", experimentResults.isEmpty());
 
         } catch (NumberFormatException e) {

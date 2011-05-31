@@ -8,8 +8,6 @@ import java.util.List;
 
 public interface DataTransformer {
 
-    public boolean isSuitableExperiment(Experiment e);
-
     public double[] readBinaryData(byte[] binaryFile, int channel);
 
     public void readVhdr(byte[] file);

@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -33,13 +34,11 @@ public class SignalProcessingController extends AbstractController {
     protected ModelAndView handleRequestInternal(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse)
             throws Exception {
 
-        //Experiment exp = experimentDao.read(156);   //tested experiment - eeg data
-       // Experiment exp = experimentDao.read(159);   //avg data
         int id = Integer.parseInt(httpServletRequest.getParameter("experimentId"));
         Experiment exp = experimentDao.read(id);
         ModelAndView mav = new ModelAndView("services/notSuitable");
         transformer = new EEGDataTransformer();
-        if (transformer.isSuitableExperiment(exp)) {
+        if (SignalProcessingUtils.isSuitableExperiment(exp)) {
             mav = new ModelAndView("services/index");
             mav.addObject("experimentId", id);
         }
