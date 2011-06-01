@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.helper;
 
+import java.io.File;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -16,7 +20,7 @@ import java.util.GregorianCalendar;
 public class DateFormater {
 
      public static String prefix;
-     public static String stringStamp;
+     public static File testFile;
 
 /**
  * Method crate test date, this date will as prefix to test data.
@@ -24,7 +28,7 @@ public class DateFormater {
  */
     public static String createTestDate(String name){
      Date today = Calendar.getInstance().getTime();
-       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd-hh-mm-ss");
+       SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
        prefix = formatter.format(today);
         return prefix + "_"+name;
     }
@@ -34,5 +38,13 @@ public class DateFormater {
          long millis = cal.getTime().getTime();
          Timestamp ts = new java.sql.Timestamp(millis);
          return ts;
+    }
+
+    public static File createTestFile(String name) throws IOException {
+            testFile = new File(name);
+            PrintWriter output = new PrintWriter(new FileWriter(testFile));
+            output.println("aaa");
+            output.close();
+            return testFile;
     }
 }
