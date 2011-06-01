@@ -18,64 +18,79 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  * Identificator of test  /PPT_A_1_WorWitArt_L/. Contains document Testovaci scenare.docx.
  */
-
    public class ArticleServicePerformanceTest  extends PerformanceTest {
 
-    public static final String ARTICLE_TITLE="testovaci clanek";
-    public static final String ARTICLE_TEXT="text clanku";
-
-
+    /**
+     * Constant for atribute of test data.
+     */
+    public static final String ARTICLE_TITLE = "testovaci clanek";
+    public static final String ARTICLE_TEXT = "text clanku";
+    public static final String ARTICLE_UPDATE_TEXT = "update text clanku";
+    public static final String ARTICLE_COMMENT = "komentar k clanku";
+    public static final String TEST_PERSON = "kaby";
 
     private ArticleDao articleDao;
-
     private PersonDao personDao;
-
     private ArticleCommentDao articleCommnetDao;
-
     private Article article;
     private ArticleComment articleComment;
 
-
-    public ArticleServicePerformanceTest(){
-         article = new Article();
-    }
-
+/**
+* Method test create article for next test.
+*
+*/
     public void createTestArticle(){
+        article = new Article();
         article.setTitle(DateFormater.createTestDate(ARTICLE_TITLE));
         article.setText(DateFormater.createTestDate(ARTICLE_TEXT));
         article.setTime(DateFormater.getTimestamp());
         System.out.println("time stamp je "+DateFormater.getTimestamp());
-        article.setPerson(personDao.getPerson("kaby"));
+        article.setPerson(personDao.getPerson(TEST_PERSON));
+    }
+
+    public void createArticleCommens(){
+        createTestArticle();
+        articleDao.create(article);
+        articleComment = new ArticleComment();
+        articleComment.setArticle(article);
+        articleComment.setPerson(personDao.getPerson(TEST_PERSON));
+        articleComment.setTime(DateFormater.getTimestamp());
+        articleComment.setText(ARTICLE_COMMENT);
+        articleComment.setUserIsOwnerOrAdmin(true);
+        articleComment.setUserMemberOfGroup(true);
+
     }
 
 /**
 * Method test create article.
-* User: Kabourek
 * Identificator of test / PPT_A_2_AddArt_F /. Contains document Testovaci scenare.docx.
 */
     @Test
     public void testCreateArticle(){
         createTestArticle();
         articleDao.create(article);
+        assertEquals(DateFormater.createTestDate(ARTICLE_TEXT), article.getText());
+        assertEquals(DateFormater.createTestDate(ARTICLE_TITLE), article.getTitle());
         articleDao.delete(article);
 
     }
 
-///**
-// * Method test edit article.
-// * User: Kabourek
-// * Identificator of test /PPT_A_3_EdiArt_F/. Contains document Testovaci scenare.docx.
-// */
-//    @Test
-//    @PerfTest(invocations = 2, threads = 2)
-//    public void editArticleTest(){
-//        article = new Article();
-//        article.setTitle("prvni_edit");
-//        article.setText("vvv");
-//        article.setPerson(personDao.getPerson("kaby"));
-//        articleDao.update(article);
-//
-//    }
+/**
+* Method test edit article.
+* User: Kabourek
+* Identificator of test /PPT_A_3_EdiArt_F/. Contains document Testovaci scenare.docx.
+*/
+    @Test
+    public void testEditArticle(){
+        createTestArticle();
+        String pom = DateFormater.createTestDate(ARTICLE_UPDATE_TEXT);
+        article.setText(pom);
+        article.setTitle("update_title");
+        articleDao.update(article);
+        assertEquals(pom, article.getText());
+        assertEquals("update_title", article.getTitle());
+        articleDao.delete(article);
+    }
 
 
 /**
@@ -86,38 +101,38 @@ import java.util.List;
     @Test
     public void testGetAllArticle(){
         List<Article> articleList = articleDao.getAllArticles() ;
-
+        assertTrue(articleList.size() > 0);
         System.out.println("pocet clanku "+articleList.size());
     }
-///**
-// * Method test create commons.
-// * User: Kabourek
-// * Identificator of test /PPT_A_4_AddComArt_F/. Contains document Testovaci scenare.docx.
-// */
-//    //@Test
-//    @PerfTest(invocations = 2, threads = 2)
-//    public void createCommonsTest(){
-//         articleComment = new ArticleComment();
-//         articleComment.setArticle(article);
-//         articleComment.setText("komentar");
-//         article.setArticleComments((Set<ArticleComment>) articleComment);
-//         articleCommnetDao.create(article);
-//
-//    }
-
 
 /**
 * Method test delete article.
 * User: Kabourek
 * Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
 */
-//    @Test
-//    public void testDeleteArticle() throws Exception {
-//      System.out.println("tohle je article pro smazani"+article.getTitle());
-//      articleCommnetDao.delete(article);
-//    }
+    @Test
+    public void testDeleteArticle() throws Exception {
+     createTestArticle();
+     articleDao.create(article);
+     articleDao.delete(article);
+    }
+/**
+* Method test create commons.
+* User: Kabourek
+* Identificator of test /PPT_A_4_AddComArt_F/. Contains document Testovaci scenare.docx.
+*/
+    @Test
+    public void createCommons(){
+         createArticleCommens();
+         articleCommnetDao.create(articleComment);
+         assertEquals(ARTICLE_COMMENT,articleComment.getText());
+         articleCommnetDao.delete(articleComment);
+    }
 
-    //setter  and getter
+
+    /**
+     * Setter for DAO object.
+     */
     public void setArticleDao(ArticleDao articleDao) {
     this.articleDao = articleDao;
     }
@@ -126,8 +141,12 @@ import java.util.List;
     this.personDao = personDao;
     }
 
-    public ArticleDao getArticleDao() {
-    return articleDao;
+    public void setArticleCommnetDao(ArticleCommentDao articleCommnetDao) {
+    this.articleCommnetDao = articleCommnetDao;
     }
+
+//    public ArticleDao getArticleDao() {
+//    return articleDao;
+//    }
 }
 
