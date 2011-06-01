@@ -1,14 +1,7 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer;
 
-import cz.zcu.kiv.eegdatabase.test.perf.service.GraphRenderer;
-import org.databene.contiperf.PerfTest;
-import org.databene.contiperf.junit.ContiPerfRule;
-import org.junit.After;
-import org.junit.Rule;
-import org.junit.runner.RunWith;
-import org.junit.runners.JUnit4;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
+import org.hibernate.SessionFactory;
+import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,23 +12,39 @@ import org.springframework.test.context.junit4.AbstractJUnit4SpringContextTests;
  * Abstract class includes setting for test.
  */
 
-@ContextConfiguration(locations = {"/test-context.xml"})
+//@ContextConfiguration(locations = {"/test-context.xml"})
 //setting perf. test
-@PerfTest(invocations = 10, threads = 30)
-@RunWith(JUnit4.class)
-public abstract class PerformanceTest extends AbstractJUnit4SpringContextTests {
+//@PerfTest(invocations = 10, threads = 1)
+//@RunWith(JUnit4.class)
+public class PerformanceTest extends AbstractTransactionalDataSourceSpringContextTests {
 
-   // @Autowired
-    GraphRenderer executionLogger = new GraphRenderer();
-    @Rule
-    public ContiPerfRule rule = new ContiPerfRule(executionLogger);
 
-     @After
-     /**
-      * Method called after test, generate report.
-      */
-	 public void saveContiPerfResults(){
-    	executionLogger.save();
-	 }
+//    GraphRenderer executionLogger = new GraphRenderer();
+//    @Rule
+//    public ContiPerfRule rule = new ContiPerfRule(executionLogger);
+     private SessionFactory sessionFactory;
+
+     public PerformanceTest() {
+        setDependencyCheck(false);
+        setAutowireMode(AUTOWIRE_BY_NAME);
+    }
+
+    protected String[] getConfigLocations() {
+        return new String[] {"test-context.xml"};
+    }
+
+    public void setSessionFactory(SessionFactory factory) {
+    this.sessionFactory = factory;
+    }
+
+//     @After
+//     /**
+//      * Method called after test, generate report.
+//      */
+//	 public void saveContiPerfResults(){
+//    	executionLogger.save();
+//	 }
+
+
 
 }

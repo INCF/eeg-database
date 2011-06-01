@@ -5,11 +5,12 @@ import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
-import org.databene.contiperf.PerfTest;
-import org.junit.Test;
-import org.springframework.beans.factory.annotation.Autowired;
+import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.helper.DateFormater;
 
-import java.util.Set;
+import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -22,50 +23,53 @@ import java.util.Set;
 
    public class ArticleServicePerformanceTest  extends PerformanceTest {
 
-    @Autowired
-    ArticleDao articleDao;
+    public static final String ARTICLE_TITLE="testovaci clanek";
 
-    @Autowired
-    PersonDao personeDao;
+    private ArticleDao articleDao;
 
-    @Autowired
-    ArticleCommentDao articleCommnetDao;
+    private PersonDao personDao;
+
+    private ArticleCommentDao articleCommnetDao;
 
     private Article article;
     private ArticleComment articleComment;
 
 
+
 /**
- * Method test create article.
- * User: Kabourek
- * Identificator of test / PPT_A_2_AddArt_F /. Contains document Testovaci scenare.docx.
- */
-    @Test
-    @PerfTest(invocations = 2, threads = 2)
-    public void createArticleTest(){
+* Method test create article.
+* User: Kabourek
+* Identificator of test / PPT_A_2_AddArt_F /. Contains document Testovaci scenare.docx.
+*/
+    //@Test
+    public void createArticle(){
+        Date today = Calendar.getInstance().getTime();
         article = new Article();
-        article.setTitle("prvni");
-        article.setText("aaa");
-        article.setPerson(personeDao.getPerson("kaby"));
+        article.setTitle(DateFormater.createTestDate(ARTICLE_TITLE));
+        article.setText("text");
+        article.setTime((Timestamp) today);
+        //article.set
+        System.out.println("ccccc"+DateFormater.createTestDate("testArticle"));
+        article.setPerson(personDao.getPerson("kaby"));
         articleDao.create(article);
 
     }
 
-/**
- * Method test edit article.
- * User: Kabourek
- * Identificator of test /PPT_A_3_EdiArt_F/. Contains document Testovaci scenare.docx.
- */
-    @Test
-    @PerfTest(invocations = 2, threads = 2)
-    public void editArticleTest(){
-        article = new Article();
-        article.setTitle("prvni_edit");
-        article.setText("vvv");
-        article.setPerson(personeDao.getPerson("kaby"));
-        articleDao.update(article);
-
-    }
+///**
+// * Method test edit article.
+// * User: Kabourek
+// * Identificator of test /PPT_A_3_EdiArt_F/. Contains document Testovaci scenare.docx.
+// */
+//    @Test
+//    @PerfTest(invocations = 2, threads = 2)
+//    public void editArticleTest(){
+//        article = new Article();
+//        article.setTitle("prvni_edit");
+//        article.setText("vvv");
+//        article.setPerson(personDao.getPerson("kaby"));
+//        articleDao.update(article);
+//
+//    }
 
 
 /**
@@ -73,46 +77,50 @@ import java.util.Set;
  * User: Kabourek
  * Identificator of test. Contains document Testovaci scenare.docx.
  */
-    @Test
-    @PerfTest(invocations = 2, threads = 2)
-    public void getAllArticleTest(){
-        articleDao.getAllArticles();
-
+   // @Test
+    public void testGetAllArticle(){
+        List<Article> articleList = articleDao.getAllArticles() ;
     }
+///**
+// * Method test create commons.
+// * User: Kabourek
+// * Identificator of test /PPT_A_4_AddComArt_F/. Contains document Testovaci scenare.docx.
+// */
+//    //@Test
+//    @PerfTest(invocations = 2, threads = 2)
+//    public void createCommonsTest(){
+//         articleComment = new ArticleComment();
+//         articleComment.setArticle(article);
+//         articleComment.setText("komentar");
+//         article.setArticleComments((Set<ArticleComment>) articleComment);
+//         articleCommnetDao.create(article);
+//
+//    }
 
 
-/**
- * Method test create commons.
- * User: Kabourek
- * Identificator of test /PPT_A_4_AddComArt_F/. Contains document Testovaci scenare.docx.
- */
-    @Test
-    @PerfTest(invocations = 2, threads = 2)
-    public void createCommonsTest(){
-         articleComment = new ArticleComment();
-         articleComment.setArticle(article);
-         articleComment.setText("komentar");
-         article.setArticleComments((Set<ArticleComment>) articleComment);
-         articleCommnetDao.create(article);
+///**
+// * Method test delete article.
+// * User: Kabourek
+// * Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
+// */
+//   //@Test
+//   // @PerfTest(invocations = 5, threads = 2)
+//   //@Required(max = 1200, average = 250)
+//    public void deleteArticle() throws Exception {
+//      articleCommnetDao.delete(article);
+//    }
 
-    }
-
-
-/**
- * Method test delete article.
- * User: Kabourek
- * Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
- */
-   //@Test
-   // @PerfTest(invocations = 5, threads = 2)
-   //@Required(max = 1200, average = 250)
-    public void deleteArticle() throws Exception {
-      articleCommnetDao.delete(article);
-    }
-
-    //setter
+    //setter  and getter
     public void setArticleDao(ArticleDao articleDao) {
     this.articleDao = articleDao;
+    }
+
+    public void setPersonDao(PersonDao personDao) {
+    this.personDao = personDao;
+    }
+
+    public ArticleDao getArticleDao() {
+    return articleDao;
     }
 }
 

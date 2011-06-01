@@ -80,7 +80,7 @@ public class GraphRenderer implements ExecutionLogger{
 	    	try {
 	    	    ChartUtilities.saveChartAsPNG(new File(method+".png"), chart,
 	    		    width, height);
-	    	    System.out.println("graf vygenerovan....");
+	    	    System.out.println("graf vygenerovan...."+method+".png");
 	    	} catch (IOException e) {
 
 	    }
