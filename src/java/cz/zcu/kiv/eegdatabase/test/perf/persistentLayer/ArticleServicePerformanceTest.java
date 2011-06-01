@@ -6,10 +6,8 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.helper.DateFormater;
+import org.junit.Test;
 
-import java.sql.Timestamp;
-import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 /**
@@ -24,6 +22,9 @@ import java.util.List;
    public class ArticleServicePerformanceTest  extends PerformanceTest {
 
     public static final String ARTICLE_TITLE="testovaci clanek";
+    public static final String ARTICLE_TEXT="text clanku";
+
+
 
     private ArticleDao articleDao;
 
@@ -35,23 +36,28 @@ import java.util.List;
     private ArticleComment articleComment;
 
 
+    public ArticleServicePerformanceTest(){
+         article = new Article();
+    }
+
+    public void createTestArticle(){
+        article.setTitle(DateFormater.createTestDate(ARTICLE_TITLE));
+        article.setText(DateFormater.createTestDate(ARTICLE_TEXT));
+        article.setTime(DateFormater.getTimestamp());
+        System.out.println("time stamp je "+DateFormater.getTimestamp());
+        article.setPerson(personDao.getPerson("kaby"));
+    }
 
 /**
 * Method test create article.
 * User: Kabourek
 * Identificator of test / PPT_A_2_AddArt_F /. Contains document Testovaci scenare.docx.
 */
-    //@Test
-    public void createArticle(){
-        Date today = Calendar.getInstance().getTime();
-        article = new Article();
-        article.setTitle(DateFormater.createTestDate(ARTICLE_TITLE));
-        article.setText("text");
-        article.setTime((Timestamp) today);
-        //article.set
-        System.out.println("ccccc"+DateFormater.createTestDate("testArticle"));
-        article.setPerson(personDao.getPerson("kaby"));
+    @Test
+    public void testCreateArticle(){
+        createTestArticle();
         articleDao.create(article);
+        articleDao.delete(article);
 
     }
 
@@ -77,9 +83,11 @@ import java.util.List;
  * User: Kabourek
  * Identificator of test. Contains document Testovaci scenare.docx.
  */
-   // @Test
+    @Test
     public void testGetAllArticle(){
         List<Article> articleList = articleDao.getAllArticles() ;
+
+        System.out.println("pocet clanku "+articleList.size());
     }
 ///**
 // * Method test create commons.
@@ -98,15 +106,14 @@ import java.util.List;
 //    }
 
 
-///**
-// * Method test delete article.
-// * User: Kabourek
-// * Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
-// */
-//   //@Test
-//   // @PerfTest(invocations = 5, threads = 2)
-//   //@Required(max = 1200, average = 250)
-//    public void deleteArticle() throws Exception {
+/**
+* Method test delete article.
+* User: Kabourek
+* Identificator of test /PPT_A_5_DelArt_F/. Contains document Testovaci scenare.docx.
+*/
+//    @Test
+//    public void testDeleteArticle() throws Exception {
+//      System.out.println("tohle je article pro smazani"+article.getTitle());
 //      articleCommnetDao.delete(article);
 //    }
 
