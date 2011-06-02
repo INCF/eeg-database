@@ -34,6 +34,7 @@ public class ExperimentOptParamDefPerformanceTest extends PerformanceTest {
         experimentOptParamDef = new ExperimentOptParamDef();
         experimentOptParamDef.setParamName(EXPERIMENT_OPT_PARAM_DEF_NAME);
         experimentOptParamDef.setParamDataType(EXPERIMENT_OPT_PARAM_DEF_DATA_TYPE);
+
     }
 
 /**
