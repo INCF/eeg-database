@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Richard Kocman
+ * User: Richard Kocman,Kabourek
  * Date: 23.5.11
  * Time: 14:03
  * To change this template use File | Settings | File Templates.
@@ -26,13 +26,13 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
     public static final String HARDWARE_TYPE = "Type";
 
     private Hardware hardware;
-    HardwareDao hardwareDao;
+    private HardwareDao hardwareDao;
 
 
-    /**
-* Method test create hardware for next test.
-*
-*/
+ /**
+   * Method test create hardware for next test.
+   *
+   */
 
     public void createTestHardware(){
         hardware = new Hardware();
@@ -47,14 +47,10 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
  */
     @Test
     public void testCreateHardwareTest(){
-
-       int countRecord = hardwareDao.getCountRecords();
-
+       //int countRecord = hardwareDao.getCountRecords();
        createTestHardware();
        hardwareDao.create(hardware);
-
-
-       assertEquals(hardwareDao.getCountRecords()-1, countRecord);
+       //assertEquals(hardwareDao.getCountRecords()-1, countRecord);
 
     }
 
@@ -65,12 +61,13 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
     @Test
     public void testEditHardwareTest(){
         List<Hardware> listRecords;
-
+        createTestHardware();
         hardware.setDescription(HARDWARE_DESCRIPTION+"EDITOAVANY");
         hardwareDao.update(hardware);
 
         listRecords=hardwareDao.getAllRecords();
         assertEquals(listRecords.get(listRecords.size()-1).getDescription(), hardware.getDescription());
+        hardwareDao.delete(hardware);
     }
 /**
  * Method test delete Hardware.

@@ -31,7 +31,7 @@ import java.util.List;
 
     private ArticleDao articleDao;
     private PersonDao personDao;
-    private ArticleCommentDao articleCommnetDao;
+    private ArticleCommentDao articleCommentDao;
     private Article article;
     private ArticleComment articleComment;
 
@@ -124,9 +124,9 @@ import java.util.List;
     @Test
     public void createCommons(){
          createArticleCommens();
-         articleCommnetDao.create(articleComment);
+         articleCommentDao.create(articleComment);
          assertEquals(ARTICLE_COMMENT,articleComment.getText());
-         articleCommnetDao.delete(articleComment);
+         articleCommentDao.delete(articleComment);
     }
 
 
@@ -141,8 +141,8 @@ import java.util.List;
     this.personDao = personDao;
     }
 
-    public void setArticleCommnetDao(ArticleCommentDao articleCommnetDao) {
-    this.articleCommnetDao = articleCommnetDao;
+    public void setArticleCommnetDao(ArticleCommentDao articleCommentDao) {
+    this.articleCommentDao = articleCommentDao;
     }
 
 //    public ArticleDao getArticleDao() {

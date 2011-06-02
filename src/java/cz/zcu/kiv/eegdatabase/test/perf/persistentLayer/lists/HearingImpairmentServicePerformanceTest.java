@@ -3,10 +3,10 @@ package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.helper.DateFormater;
 import org.junit.Test;
 
-import java.util.Set;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -36,7 +36,7 @@ public class HearingImpairmentServicePerformanceTest extends PerformanceTest {
 
      public void createTestHearingImpairment(){
         hearingImpairment = new HearingImpairment();
-        hearingImpairment.setDescription(HEARING_IMPAIRMENT_DESCRIPTION);
+        hearingImpairment.setDescription(DateFormater.createTestDate(HEARING_IMPAIRMENT_DESCRIPTION));
 
     }
 
@@ -52,6 +52,7 @@ public class HearingImpairmentServicePerformanceTest extends PerformanceTest {
       hearingImpairmentDao.create(hearingImpairment);
 
       assertEquals(hearingImpairmentDao.getCountRecords()-1, countRecord);
+        hearingImpairmentDao.delete(hearingImpairment);
     }
 
 /**
@@ -61,14 +62,14 @@ public class HearingImpairmentServicePerformanceTest extends PerformanceTest {
     @Test
     public void testEditHearingImpairmentTest(){
         List<HearingImpairment> listRecords;
-
-        hearingImpairment.setDescription(HEARING_IMPAIRMENT_DESCRIPTION+"EDITOAVANY");
+        createTestHearingImpairment();
+        hearingImpairment.setDescription("Edituji");
 
         hearingImpairmentDao.update(hearingImpairment);
 
         listRecords=hearingImpairmentDao.getAllRecords();
         assertEquals(listRecords.get(listRecords.size()-1).getDescription(), hearingImpairment.getDescription());
-
+        hearingImpairmentDao.delete(hearingImpairment);
 
     }
 /**

@@ -3,13 +3,14 @@ package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import java.util.List;
 import org.junit.Test;
+
+import java.util.List;
 
 
 /**
  * Created by IntelliJ IDEA.
- * User: Richard Kocman
+ * User: Richard Kocman, Kabourek
  * Date: 23.5.11
  * Time: 14:01
  * To change this template use File | Settings | File Templates.
