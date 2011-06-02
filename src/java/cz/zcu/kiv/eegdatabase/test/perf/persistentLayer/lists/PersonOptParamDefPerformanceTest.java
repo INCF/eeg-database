@@ -3,7 +3,8 @@ package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonOptParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,43 +17,79 @@ import org.springframework.beans.factory.annotation.Autowired;
 public class PersonOptParamDefPerformanceTest extends PerformanceTest {
 
 
+    /**
+     * Constant for atribute of test data.
+     */
 
-    @Autowired
+    public static final String PERSON_OPT_PARAM_DEF_NAME = "testovaci parametr";
+    public static final String PERSON_OPT_PARAM_DEF_DATA_TYPE = "testovaci datatype";
+
+
+
     PersonOptParamDefDao personOptParamDefDao;
 
     private PersonOptParamDef personOptParamDef;
 
-/**
- * Method test create Hearing Impairment.
- * Identificator of test / PPT_LOPP_7_AddOpp_F /. Contains document Testovaci scenare.docx.
- */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void createPersonOptParamTest(){
+
+    /**
+* Method test create article for next test.
+*
+*/
+
+     public void createTestPersonOptParamDef(){
         personOptParamDef = new PersonOptParamDef();
-        personOptParamDef.setParamName("personName");
-        personOptParamDef.setParamDataType("personDataTyoe");
-        personOptParamDefDao.create(personOptParamDef);
+        personOptParamDef.setParamName(PERSON_OPT_PARAM_DEF_NAME);
+        personOptParamDef.setParamDataType(PERSON_OPT_PARAM_DEF_DATA_TYPE);
+
+
     }
 
 /**
- * Method test edit Hearing Impairment.
+ * Method test create personOptParamDef
+ * Identificator of test / PPT_LOPP_7_AddOpp_F /. Contains document Testovaci scenare.docx.
+ */
+    @Test
+    public void testCreatePersonOptParamTest(){
+        int countRecord =  personOptParamDefDao.getCountRecords();
+
+        createTestPersonOptParamDef();
+        personOptParamDefDao.create(personOptParamDef);
+
+         assertEquals(personOptParamDefDao.getCountRecords()-1, countRecord);
+    }
+
+/**
+ * Method test edit personOptParamDef
  * Identificator of test / PPT_LOPP_8_EdiOpp_F/. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void editPersonOptParamTest(){
-        personOptParamDef.setParamName("personName");
-        personOptParamDef.setParamDataType("personDataTyoe");
+    @Test
+    public void testEditPersonOptParamTest(){
+        List<PersonOptParamDef> listRecords;
+
+        personOptParamDef.setParamName(PERSON_OPT_PARAM_DEF_NAME+"Editovany");
         personOptParamDefDao.update(personOptParamDef);
+
+        listRecords=personOptParamDefDao.getAllRecords();
+        assertEquals(listRecords.get(listRecords.size()-1).getParamName(), personOptParamDef.getParamName());
     }
 /**
- * Method test delete Hearing Impairment.
+ * Method test delete personOptParamDef
  * Identificator of test / PPT_LOPP_9_DelOpp_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void deletePersonOptParamTest(){
+    @Test
+    public void testDeletePersonOptParamTest(){
+
+        int countRecord =  personOptParamDefDao.getCountRecords();
         personOptParamDefDao.delete(personOptParamDef);
+
+
+        assertEquals(personOptParamDefDao.getCountRecords()+1, countRecord);
+    }
+
+      /**
+     * Setter for DAO object.
+     */
+    public void setPersonOptParamDefDao(PersonOptParamDefDao personOptParamDefDao) {
+        this.personOptParamDefDao = personOptParamDefDao;
     }
 }

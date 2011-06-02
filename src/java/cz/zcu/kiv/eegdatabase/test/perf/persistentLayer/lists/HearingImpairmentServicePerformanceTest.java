@@ -1,11 +1,10 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 
 import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.junit.Test;
 
 import java.util.Set;
 
@@ -19,47 +18,79 @@ import java.util.Set;
  */
 public class HearingImpairmentServicePerformanceTest extends PerformanceTest {
 
-    @Autowired
-    PersonDao personeDao;
-    @Autowired
+
+    /**
+     * Constant for atribute of test data.
+     */
+    public static final String HEARING_IMPAIRMENT_DESCRIPTION = "popis poskozeni";
+
+
     HearingImpairmentDao hearingImpairmentDao;
-
-
-
     private HearingImpairment hearingImpairment;
+
+
+    /**
+* Method test create article for next test.
+*
+*/
+
+     public void createTestHearingImpairment(){
+        hearingImpairment = new HearingImpairment();
+        hearingImpairment.setDescription(HEARING_IMPAIRMENT_DESCRIPTION);
+
+    }
 
 /**
  * Method test create Hearing Impairment.
  * Identificator of test / PPT_LHI_27_AddHi_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void createHearingImpairmentTest(){
-        hearingImpairment = new HearingImpairment();
-        hearingImpairment.setDescription("popisTest");
-        hearingImpairment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
-        hearingImpairmentDao.create(hearingImpairment);
+    @Test
+   public void testCreateHearingImpairmentTest(){
+      int countRecord = hearingImpairmentDao.getCountRecords();
+
+      createTestHearingImpairment();
+      hearingImpairmentDao.create(hearingImpairment);
+
+      assertEquals(hearingImpairmentDao.getCountRecords()-1, countRecord);
     }
 
 /**
  * Method test edit Hearing Impairment.
  * Identificator of test / PPT_LHI_28_EditHi_F/. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void editHearingImpairmentTest(){
-        hearingImpairment.setDescription("popisTest");
-        hearingImpairment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
+    @Test
+    public void testEditHearingImpairmentTest(){
+        List<HearingImpairment> listRecords;
+
+        hearingImpairment.setDescription(HEARING_IMPAIRMENT_DESCRIPTION+"EDITOAVANY");
+
         hearingImpairmentDao.update(hearingImpairment);
+
+        listRecords=hearingImpairmentDao.getAllRecords();
+        assertEquals(listRecords.get(listRecords.size()-1).getDescription(), hearingImpairment.getDescription());
+
+
     }
 /**
  * Method test delete Hearing Impairment.
  * Identificator of test / PPT_LHI_29_DelWi_F/. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void deleteHearingImpairmentTest(){
+    @Test
+        public void testDeleteHearingImpairmentTest(){
+
+        int countRecord = hearingImpairmentDao.getCountRecords();
+
         hearingImpairmentDao.delete(hearingImpairment);
+
+        assertEquals(hearingImpairmentDao.getCountRecords()+1, countRecord);
+    }
+
+       /**
+     * Setter for DAO object.
+     */
+
+    public void setHearingImpairmentDao(HearingImpairmentDao hearingImpairmentDao) {
+        this.hearingImpairmentDao = hearingImpairmentDao;
     }
 
 }

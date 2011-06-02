@@ -1,15 +1,14 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 
 import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.junit.Test;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Kabourek
+ * User: Richard Kocman
  * Date: 23.5.11
  * Time: 14:03
  * To change this template use File | Settings | File Templates.
@@ -17,47 +16,78 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class HardwareServicePerformanceTest extends PerformanceTest {
 
-        @Autowired
-        PersonDao personeDao;
-    @Autowired
-    HearingImpairmentDao hearingImpairmentDao;
-    @Autowired
+
+
+     /**
+     * Constant for atribute of test data.
+     */
+    public static final String HARDWARE_DESCRIPTION = "popis testu";
+    public static final String HARDWARE_TITLE = "Hlavicka";
+    public static final String HARDWARE_TYPE = "Type";
+
+    private Hardware hardware;
     HardwareDao hardwareDao;
 
 
-    private Hardware hardware;
+    /**
+* Method test create hardware for next test.
+*
+*/
+
+    public void createTestHardware(){
+        hardware = new Hardware();
+        hardware.setDescription(HARDWARE_DESCRIPTION);
+        hardware.setTitle(HARDWARE_TITLE);
+        hardware.setType(HARDWARE_TYPE);
+    }
 
 /**
- * Method test create Hearing Impairment.
+ * Method test create Hardware
  * Identificator of test / PPT_LHW_3_AddHw_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void createHardwareTest(){
-        hardware = new Hardware();
-        hardware.setDescription("popisTest");
-        hardware.setTitle("titulekHardware");
-        hardwareDao.create(hardware);
+    @Test
+    public void testCreateHardwareTest(){
+
+       int countRecord = hardwareDao.getCountRecords();
+
+       createTestHardware();
+       hardwareDao.create(hardware);
+
+
+       assertEquals(hardwareDao.getCountRecords()-1, countRecord);
+
     }
 
 /**
- * Method test edit Hearing Impairment.
+ * Method test edit Hardware
  * Identificator of test / PPT_LHW_4_EdiWitHw_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void editHardwareTest(){
-       hardware.setDescription("popisTest");
-        hardware.setTitle("titulekHardware");
+    @Test
+    public void testEditHardwareTest(){
+        List<Hardware> listRecords;
+
+        hardware.setDescription(HARDWARE_DESCRIPTION+"EDITOAVANY");
         hardwareDao.update(hardware);
+
+        listRecords=hardwareDao.getAllRecords();
+        assertEquals(listRecords.get(listRecords.size()-1).getDescription(), hardware.getDescription());
     }
 /**
- * Method test delete Hearing Impairment.
+ * Method test delete Hardware.
  * Identificator of test / PPT_LHW_4_DelWitHw_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void deleteHardwareTest(){
+    @Test
+    public void testDeleteHardwareTest(){
+
+        int countRecord = hardwareDao.getCountRecords();
+
         hardwareDao.delete(hardware);
+
+        assertEquals(hardwareDao.getCountRecords()+1, countRecord);
+    }
+
+
+     public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
     }
 }
