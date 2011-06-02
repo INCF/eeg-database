@@ -1,11 +1,10 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.VisualImpairmentDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.junit.Test;
 
 import java.util.Set;
 
@@ -19,44 +18,77 @@ import java.util.Set;
  */
 public class VisualImpairmentServicePerformanceTest extends PerformanceTest {
 
-    @Autowired
-    PersonDao personeDao;
-    @Autowired
+    /**
+     * Constant for atribute of test data.
+     */
+    public static final String VISUAL_IMPAIRMENT_DESCRIPTION = "popis poskozeni";
+
+
+
     VisualImpairmentDao visualImpairmentDao;
     private VisualImpairment visualImpairment;
 
+
+        /**
+* Method test create article for next test.
+*
+*/
+
+     public void createTestVisualImpairment(){
+        visualImpairment = new VisualImpairment();
+        visualImpairment.setDescription(VISUAL_IMPAIRMENT_DESCRIPTION);
+
+    }
 
 /**
  * Method test create Hearing Impairment.
  * Identificator of test / PPT_LWI_23_AddWi_F/. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void createVisualImpairmentTest(){
-        visualImpairment = new VisualImpairment();
-        visualImpairment.setDescription("popisTest");
-        visualImpairment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
-        visualImpairmentDao.create(visualImpairment);
+    @Test
+    public void testCreateVisualImpairmentTest(){
+
+      int countRecord = visualImpairmentDao.getCountRecords();
+
+      createTestVisualImpairment();
+      visualImpairmentDao.create(visualImpairment);
+
+      assertEquals(visualImpairmentDao.getCountRecords() - 1, countRecord);
     }
 
 /**
  * Method test edit Hearing Impairment.
  * Identificator of test / PPT_LWI_24_EditWi_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void editVisualImpairmentTest(){
-        visualImpairment.setDescription("popisTest");
-        visualImpairment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
+    @Test
+    public void testEditVisualImpairmentTest(){
+
+        List<VisualImpairment> listRecords;
+
+        visualImpairment.setDescription(VISUAL_IMPAIRMENT_DESCRIPTION+"EDITOAVANY");
+
         visualImpairmentDao.update(visualImpairment);
+
+        listRecords=visualImpairmentDao.getAllRecords();
+        assertEquals(listRecords.get(listRecords.size() - 1).getDescription(), visualImpairment.getDescription());
     }
 /**
  * Method test delete Hearing Impairment.
  * Identificator of test / PPT_LWI_25_DelWi_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void deleteVisualImpairmentTest(){
+    @Test
+    public void testDeleteVisualImpairmentTest(){
+
+        int countRecord = visualImpairmentDao.getCountRecords();
+
         visualImpairmentDao.delete(visualImpairment);
+
+        assertEquals(visualImpairmentDao.getCountRecords()+1, countRecord);
+    }
+
+      /**
+     * Setter for DAO object.
+     */
+     public void setVisualImpairmentDao(VisualImpairmentDao visualImpairmentDao) {
+        this.visualImpairmentDao = visualImpairmentDao;
     }
 }
