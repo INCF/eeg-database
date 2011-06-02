@@ -1,10 +1,10 @@
 package cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.lists;
 
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.test.perf.persistentLayer.PerformanceTest;
-import org.springframework.beans.factory.annotation.Autowired;
+import java.util.List;
+import org.junit.Test;
 
 /**
  * Created by IntelliJ IDEA.
@@ -16,45 +16,86 @@ import org.springframework.beans.factory.annotation.Autowired;
  */
 public class WeatherServicePerformanceTest extends PerformanceTest {
 
-   @Autowired
-    PersonDao personeDao;
-    @Autowired
+
+    /**
+     * Constant for atribute of test data.
+     */
+
+    public static final String WEATHER_DESCRIPTION = "mraky, slunce, dest";
+    public static final String WEATHER_TITLE = "Stridavo";
+
+
+
     WeatherDao weatherDao;
 
     private Weather weather;
 
 
+
+    /**
+* Method test create wheather for next test.
+*
+*/
+
+    public void createTestWheather(){
+        weather = new Weather();
+        weather.setDescription(WEATHER_DESCRIPTION);
+        weather.setTitle(WEATHER_TITLE);
+    }
+
+
 /**
- * Method test create Hearing Impairment.
+ * Method test create Wheather.
  * Identificator of test / PPT_LWD_19_AddWd_F/. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void createWeatherTest(){
-        weather = new Weather();
-        weather.setDescription("popisTest");
-        weather.setTitle("titleWeather");
-        weatherDao.create(weather);
+    @Test
+    public void testCreateWeatherTest(){
+      int countRecord = weatherDao.getCountRecords();
+
+       createTestWheather();
+       weatherDao.create(weather);
+
+
+       assertEquals(weatherDao.getCountRecords()-1, countRecord);
+
     }
 
 /**
- * Method test edit Hearing Impairment.
+ * Method test edit Wheathert.
  * Identificator of test / PPT_LWD_20_EdiWd_F/ /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void editWeatherTest(){
-        weather.setDescription("popisTest");
-       weather.setTitle("titleWeather");
+    @Test
+    public void testEditWeatherTest(){
+
+        List<Weather> listRecords;
+
+        weather.setDescription(WEATHER_DESCRIPTION+"EDITOAVANY");
         weatherDao.update(weather);
+
+        listRecords=weatherDao.getAllRecords();
+        assertEquals(listRecords.get(listRecords.size()-1).getDescription(), weather.getDescription());
+
+
     }
 /**
- * Method test delete Hearing Impairment.
+ * Method test delete Wheather.
  * Identificator of test / PPT_LWD_21_DelWd_F /. Contains document Testovaci scenare.docx.
  */
-    //@Test
-    //@PerfTest(invocations = 2, threads = 2)
-    public void deleteWeatherTest(){
+    @Test
+    public void testDeleteWeatherTest(){
+
+        int countRecord = weatherDao.getCountRecords();
+
         weatherDao.delete(weather);
+
+        assertEquals(weatherDao.getCountRecords()+1, countRecord);
+    }
+
+     /**
+     * Setter for DAO object.
+     */
+
+     public void setWeatherDao(WeatherDao weatherDao) {
+        this.weatherDao = weatherDao;
     }
 }
