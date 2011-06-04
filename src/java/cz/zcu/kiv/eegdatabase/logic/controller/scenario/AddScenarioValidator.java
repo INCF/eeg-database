@@ -55,20 +55,22 @@ public class AddScenarioValidator implements Validator {
             errors.rejectValue("title", "error.valueAlreadyInDatabase");
         }
 
-        if ((!(data.getId() > 0)) && (data.getDataFile().isEmpty())) {
+        if ((!(data.getId() > 0)) && (data.getDataFile().isEmpty())
+                && (data.getDataFileXml().isEmpty())) {
             // Creating new scenario and no file was uploaded
             errors.rejectValue("dataFile", "required.dataFile");
             log.debug("No data file was inserted!");
         }
 
-        if ((!(data.getId() > 0)) && (data.getDataFileXml().isEmpty())) {
+        if ((!(data.getId() > 0)) && (data.getDataFileXml().isEmpty())
+                && (data.getDataFile().isEmpty())) {
             // Creating new scenario and no file was uploaded
             errors.rejectValue("dataFileXml", "required.dataFileXml");
             log.debug("No XML data file was inserted!");
         }
 
-        if(data.getScenarioSchema() == - 1) {
-            //scenario schema name not chosen
+        if(data.getScenarioSchema() == - 1 && !(data.getDataFileXml().isEmpty())) {
+            //scenario schema name is not chosen
             errors.rejectValue("scenarioSchema", "required.scenarioSchema");
             log.debug("No scenario schema was selected!");
         }

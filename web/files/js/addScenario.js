@@ -9,7 +9,6 @@
 $(document).ready(function() {
   $('#schemaSelect').hide();
   $('#dataFileXml').hide();
-  $(':submit').attr('disabled',true);
   $("#fromSchemaList").attr("checked", "checked");
 
 

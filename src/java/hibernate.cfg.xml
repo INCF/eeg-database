@@ -29,6 +29,7 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/FileMetadataParams.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/HearingDefect.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/MeasurationAdditionalParams.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/PersonAddParamsValues.hbm.xml"/>
@@ -40,7 +41,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

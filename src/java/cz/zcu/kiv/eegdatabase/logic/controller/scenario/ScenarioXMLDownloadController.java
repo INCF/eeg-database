@@ -46,7 +46,7 @@ public class ScenarioXMLDownloadController extends AbstractController {
         log.debug("Processing download scenario.");
         int scenarioId = Integer.parseInt(request.getParameter("scenarioId"));
         Scenario scenario = scenarioDao.read(scenarioId);
-        Blob c = scenario.getScenarioXml();
+        Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
         Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         History history = new History();

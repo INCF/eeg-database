@@ -1,11 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
-import java.sql.Blob;
-import java.sql.Clob;
 import java.util.HashSet;
 import java.util.Set;
-import org.apache.lucene.analysis.SimpleAnalyzer;
+
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.Analyzer;
@@ -35,7 +33,7 @@ public class Scenario implements java.io.Serializable {
     @Field(name = "scenarioLength"),
     @Field(store = Store.YES)})
   private int scenarioLength;
-  private Blob scenarioXml;
+  //private Blob scenarioXml;
   @Fields({
     @Field(name = "description"),
     @Field(store = Store.YES)}) //use a different field name
@@ -47,7 +45,7 @@ public class Scenario implements java.io.Serializable {
   private String scenarioName;
   private String mimetype;
 
-  private ScenarioType scenarioDoc;
+  private ScenarioType scenarioType;
 
   public Scenario() {
   }
@@ -58,15 +56,17 @@ public class Scenario implements java.io.Serializable {
     this.researchGroup = researchGroup;
   }
 
-  public Scenario(int scenarioId, Person person, ResearchGroup researchGroup, String title, int scenarioLength, Blob scenarioXml, String description, Set<Experiment> experiments) {
+  public Scenario(int scenarioId, Person person, ResearchGroup researchGroup,
+                  String title, int scenarioLength, String description,
+                  Set<Experiment> experiments, ScenarioType scenarioType) {
     this.scenarioId = scenarioId;
     this.person = person;
     this.researchGroup = researchGroup;
     this.title = title;
     this.scenarioLength = scenarioLength;
-    this.scenarioXml = scenarioXml;
     this.description = description;
     this.experiments = experiments;
+    this.scenarioType = scenarioType;
   }
 
   public int getScenarioId() {
@@ -107,14 +107,6 @@ public class Scenario implements java.io.Serializable {
 
   public void setScenarioLength(int scenarioLength) {
     this.scenarioLength = scenarioLength;
-  }
-
-  public Blob getScenarioXml() {
-    return this.scenarioXml;
-  }
-
-  public void setScenarioXml(Blob scenarioXml) {
-    this.scenarioXml = scenarioXml;
   }
 
   public String getDescription() {
@@ -172,12 +164,12 @@ public class Scenario implements java.io.Serializable {
     this.scenarioName = scenarioName;
   }
 
-  public ScenarioType getScenarioDoc() {
-    return scenarioDoc;
+  public ScenarioType getScenarioType() {
+    return scenarioType;
   }
 
-  public void setScenarioDoc(ScenarioType scenarioDoc) {
-    this.scenarioDoc = scenarioDoc;
+  public void setScenarioType(ScenarioType scenarioDoc) {
+    this.scenarioType = scenarioDoc;
   }
 }
 

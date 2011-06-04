@@ -11,8 +11,7 @@
 <hibernate-mapping>
 
   <!-- binary storage for all XML documents with no available XML schemas -->
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TABLE_NONSCHEMA"
-          entity-name="noSchema">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TYPE_PARENT">
     <id name="scenarioId" type="int">
       <column name="SCENARIO_ID" precision="22" scale="0"/>
       <generator class="foreign">
@@ -20,60 +19,48 @@
       </generator>
     </id>
 
-    <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" constrained="true"/>
+    <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario"
+			constrained="true"/>
 
-    <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
-      <column name="SCENARIO_XML"/>
-    </property>
-  </class>
+    <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
+                     table="SCENARIO_TYPE_NONXML">
+        <key column="SCENARIO_ID"/>
+        <property name="scenarioXml" type="java.sql.Blob">
+            <column name="SCENARIO_XML"/>
+        </property>
+    </joined-subclass>
 
-  <!-- structured storage for all XML documents valid against the schema registered with SCENARIO_TABLE_1 -->
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TABLE_1"
-          entity-name="scenario1">
-    <id name="scenarioId" type="int">
-      <column name="SCENARIO_ID" precision="22" scale="0"/>
-      <generator class="foreign">
-        <param name="property">scenario</param>
-      </generator>
-    </id>
+    <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
+                     table="SCENARIO_TYPE_NONSCHEMA">
+        <key column="SCENARIO_ID"/>
+        <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
+            <column name="SCENARIO_XML"/>
+        </property>
+    </joined-subclass>
 
-    <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" constrained="true"/>
+    <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
+                     table="SCENARIO_TYPE_SCHEMA_1">
+        <key column="SCENARIO_ID"/>
+        <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
+            <column name="SCENARIO_XML"/>
+        </property>
+    </joined-subclass>
 
-    <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
-      <column name="SCENARIO_XML"/>
-    </property>
-  </class>
+    <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
+                     table="SCENARIO_TYPE_SCHEMA_2">
+        <key column="SCENARIO_ID"/>
+        <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
+            <column name="SCENARIO_XML"/>
+        </property>
+    </joined-subclass>
 
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TABLE_2"
-          entity-name="scenario2">
-    <id name="scenarioId" type="int">
-      <column name="SCENARIO_ID" precision="22" scale="0"/>
-      <generator class="foreign">
-        <param name="property">scenario</param>
-      </generator>
-    </id>
-
-    <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" constrained="true"/>
-
-    <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
-      <column name="SCENARIO_XML"/>
-    </property>
-  </class>
-
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TABLE_3"
-          entity-name="scenario3">
-    <id name="scenarioId" type="int">
-      <column name="SCENARIO_ID" precision="22" scale="0"/>
-      <generator class="foreign">
-        <param name="property">scenario</param>
-      </generator>
-    </id>
-
-    <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" constrained="true"/>
-
-    <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
-      <column name="SCENARIO_XML"/>
-    </property>
+    <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
+                     table="SCENARIO_TYPE_SCHEMA_3">
+        <key column="SCENARIO_ID"/>
+        <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
+            <column name="SCENARIO_XML"/>
+        </property>
+    </joined-subclass>
   </class>
 
 </hibernate-mapping>

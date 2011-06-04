@@ -22,9 +22,6 @@
     <property name="privateScenario" type="boolean">
       <column name="PRIVATE" precision="1" scale="0"/>
     </property>
-    <property name="scenarioXml" type="blob">
-      <column name="SCENARIO_XML"/>
-    </property>
     <property name="description" type="string">
       <column name="DESCRIPTION"/>
     </property>
@@ -47,20 +44,15 @@
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
     </set>
 
-    <!--
-    <many-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
-                 column="SCENARIO_ID" unique="true"/>
+    <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                 column="SCENARIO_ID" insert="false" update="false"
+                 cascade="save-update"/>
 
-
-    <many-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
-                 entity-name="noSchema" column="SCENARIO_ID" not-null="true" cascade="all" unique="true"/>
-
-
-
-
-    <one-to-one name="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
-                entity-name="noSchema" cascade="all"/>
-    -->
+      <!--
+    <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                 column="SCENARIO_ID" unique="true" insert="false" update="false"
+                 cascade="save-update"/>
+                 -->
 
   </class>
 </hibernate-mapping>

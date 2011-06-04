@@ -56,7 +56,7 @@ public class ZipGenerator implements Generator {
         OutputStream meta = getTransformer().transform(meas, isScenName);
         Scenario scen = meas.getScenario();
         log.debug("getting scenario file");
-        Blob scenarioXml = scen.getScenarioXml();
+        Blob scenarioXml = (Blob) scen.getScenarioType().getScenarioXml();
 
         byte[] xmlMetadata = null;
         if (meta instanceof ByteArrayOutputStream) {

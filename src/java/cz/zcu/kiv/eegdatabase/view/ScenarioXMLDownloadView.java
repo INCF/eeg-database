@@ -22,7 +22,7 @@ public class ScenarioXMLDownloadView extends AbstractView {
         log.debug("Processing view for scenario XML output");
 
         Scenario scenario = (Scenario) map.get("dataObject");
-        Blob c = scenario.getScenarioXml();
+        Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
         
         log.debug("Loading Scenario object - ID " + scenario.getScenarioId());
 

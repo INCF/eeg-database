@@ -1,10 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -148,14 +145,14 @@ public class AddScenarioController
         MultipartFile xmlFile = data.getDataFileXml();
 
         Scenario scenario;
-        ScenarioType scenarioType;
+        ScenarioType scenarioType = null;
         if (id > 0) {
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
 
             //predelat!!!
-            scenarioType = new ScenarioType();
+            scenarioType = new ScenarioTypeNonSchema();
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -164,7 +161,8 @@ public class AddScenarioController
             log.debug("Setting owner to the logged user.");
             scenario.setPerson(personDao.getLoggedPerson());
 
-            scenarioType = new ScenarioType();
+            //factory class!!!
+            //scenarioType = new ScenarioTypeNonSchema();
         }
 
         log.debug("Setting research group.");
@@ -183,36 +181,36 @@ public class AddScenarioController
 
         if ((file != null) && (!file.isEmpty())) {
             // File uploaded
-            log.debug("Setting XML data file");
+            log.debug("Setting data file");
             scenario.setScenarioName(file.getOriginalFilename());
+
             scenario.setMimetype(file.getContentType());
-            scenario.setScenarioXml(Hibernate.createBlob(file.getBytes()));
+            scenarioType = ScenarioTypeFactory.createScenarioType(-1);
+            //scenario.setScenarioXml(Hibernate.createBlob(file.getBytes()));
+            scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
         if ((xmlFile != null) && (!xmlFile.isEmpty())) {
-            //nahrani XML do tabulky s XMLType sloupcem
+            //load the XML file to a table with the XMLType column
+            log.debug("Setting data file");
+            scenario.setScenarioName(xmlFile.getOriginalFilename());
+
+            scenario.setMimetype(xmlFile.getContentType());
 
             DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
             DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
             InputStream inputStream = xmlFile.getInputStream();
-
             Document doc = docBuilder.parse(inputStream);
 
+            //set the right class instance
+            int schemaId = data.getScenarioSchema();
+            scenarioType = ScenarioTypeFactory.createScenarioType(schemaId);
             scenarioType.setScenarioXml(doc);
 
         }
 
         log.debug("Setting private/public access");
         scenario.setPrivateScenario(data.getPrivateNote());
-
-        int schemaId = data.getScenarioSchema();
-        String entity;
-        if(schemaId == 0) {
-            entity = "noSchema";
-        }
-        else {
-            entity = "scenario" + schemaId;
-        }
 
         log.debug("Saving scenario object");
 
@@ -221,15 +219,11 @@ public class AddScenarioController
             scenarioDao.update(scenario);
         } else {
             // Creating new
-            scenarioTypeDao.create(scenarioType);
+            //scenarioTypeDao.create(scenarioType);
 
-            //scenario.setScenarioDoc(scenarioType);
-
+            scenario.setScenarioType(scenarioType);
             scenarioType.setScenario(scenario);
-
-            scenarioTypeDao.create(scenarioType);
-
-            //scenarioDao.create(scenario);
+            scenarioDao.create(scenario);
         }
 
         log.debug("Returning MAV");

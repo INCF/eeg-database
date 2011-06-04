@@ -1,47 +1,29 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import org.w3c.dom.Document;
-
 /**
- * Mapping ScenarioType tables - ScenarioType objects
- * @author Jan Koren
+ * Created by IntelliJ IDEA.
+ * User: Jan Koren
+ * Date: 31.5.11
+ * Time: 19:46
+ * To change this template use File | Settings | File Templates.
  */
-public class ScenarioType implements java.io.Serializable {
+public abstract class ScenarioType<T> {
 
-  private Scenario scenario;
-  private int scenarioId;
-  private Document scenarioXml;
+    private int scenarioId;
 
-  public ScenarioType() {
-  }
+    public int getScenarioId() {
+      return scenarioId;
+    }
 
-  public int getScenarioId() {
-    return scenarioId;
-  }
+    public void setScenarioId(int scenarioId) {
+      this.scenarioId = scenarioId;
+    }
 
-  public void setScenarioId(int scenarioId) {
-    this.scenarioId = scenarioId;
-  }
+    public abstract T getScenarioXml();
 
-  public Document getScenarioXml() {
-    return scenarioXml;
-  }
+    public abstract void setScenarioXml(T scenarioXml);
 
-  public void setScenarioXml(Document scenarioXml) {
-    this.scenarioXml = scenarioXml;
-  }
+    public abstract Scenario getScenario();
 
-  public Scenario getScenario() {
-      return scenario;
-  }
-
-  public void setScenario(Scenario scenario) {
-      this.scenario = scenario;
-  }
-
+    public abstract void setScenario(Scenario scenario);
 }
