@@ -18,7 +18,14 @@
 @create_table_ARTICLES_SUBSCRIBTIONS.sql
 @create_table_RESEARCH_GROUP.sql
 @create_table_RESEARCH_GROUP_MEMBERSHIP.sql
+@create_table_SCENARIO_SCHEMA.sql
+@create_table_SCENARIO_TYPE_PARENT.sql
 @create_table_SCENARIO.sql
+@create_table_SCENARIO_TYPE_NONSCHEMA.sql
+@create_table_SCENARIO_TYPE_NONXML.sql
+@create_table_SCENARIO_TYPE_SCHEMA_1.sql
+@create_table_SCENARIO_TYPE_SCHEMA_2.sql
+@create_table_SCENARIO_TYPE_SCHEMA_3.sql
 @create_table_VISUAL_IMPAIRMENT.sql
 @create_table_VISUAL_IMPAIRMENT_REL.sql
 @create_table_WEATHER.sql
