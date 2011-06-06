@@ -45,7 +45,7 @@ public class Scenario implements java.io.Serializable {
   private String scenarioName;
   private String mimetype;
 
-  private ScenarioType scenarioType;
+  private IScenarioType scenarioType;
 
   public Scenario() {
   }
@@ -58,7 +58,7 @@ public class Scenario implements java.io.Serializable {
 
   public Scenario(int scenarioId, Person person, ResearchGroup researchGroup,
                   String title, int scenarioLength, String description,
-                  Set<Experiment> experiments, ScenarioType scenarioType) {
+                  Set<Experiment> experiments, IScenarioType scenarioType) {
     this.scenarioId = scenarioId;
     this.person = person;
     this.researchGroup = researchGroup;
@@ -164,11 +164,11 @@ public class Scenario implements java.io.Serializable {
     this.scenarioName = scenarioName;
   }
 
-  public ScenarioType getScenarioType() {
+  public IScenarioType getScenarioType() {
     return scenarioType;
   }
 
-  public void setScenarioType(ScenarioType scenarioDoc) {
+  public void setScenarioType(IScenarioType scenarioDoc) {
     this.scenarioType = scenarioDoc;
   }
 }

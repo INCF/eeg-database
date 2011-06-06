@@ -16,5 +16,17 @@
     <property name="schemaName" type="string">
       <column name="SCHEMA_NAME"/>
     </property>
+    <property name="sql" type="clob">
+        <column name="SQL"/>
+    </property>
+    <property name="hbmXml" type="clob">
+        <column name="HBM_XML"/>
+    </property>
+    <property name="pojo" type="clob">
+        <column name="POJO"/>
+    </property>
+    <property name="bean" type="string">
+        <column name="BEAN"/>
+    </property>
   </class>
 </hibernate-mapping>

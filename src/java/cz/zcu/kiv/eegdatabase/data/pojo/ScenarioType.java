@@ -7,9 +7,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
  * Time: 19:46
  * To change this template use File | Settings | File Templates.
  */
-public abstract class ScenarioType<T> {
+public abstract class ScenarioType<T> implements IScenarioType<T> {
 
     private int scenarioId;
+    private Scenario scenario;
 
     public int getScenarioId() {
       return scenarioId;
@@ -19,11 +20,15 @@ public abstract class ScenarioType<T> {
       this.scenarioId = scenarioId;
     }
 
+    public Scenario getScenario() {
+        return scenario;
+    }
+
+    public void setScenario(Scenario scenario) {
+        this.scenario = scenario;
+    }
+
     public abstract T getScenarioXml();
 
     public abstract void setScenarioXml(T scenarioXml);
-
-    public abstract Scenario getScenario();
-
-    public abstract void setScenario(Scenario scenario);
 }

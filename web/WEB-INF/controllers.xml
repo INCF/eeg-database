@@ -527,6 +527,33 @@
         <!-- validation by class itself -->
     </bean>
 
+
+
+    <bean id="scenarioSchemaDefault" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas" abstract="true">
+    </bean>
+
+    <bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
+          parent="scenarioSchemaDefault">
+    </bean>
+
+    <bean id="scenarioTypeNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
+          parent="scenarioSchemaDefault">
+    </bean>
+
+    <bean id="scenarioTypeSchema1" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
+          parent="scenarioSchemaDefault">
+    </bean>
+
+    <bean id="scenarioTypeSchema2" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
+          parent="scenarioSchemaDefault">
+    </bean>
+
+    <bean id="scenarioTypeSchema3" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
+          parent="scenarioSchemaDefault">
+    </bean>
+
+
+
     <bean name="measurationDataOutputController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.MeasurationDataOutputController">
         <property name="dataFileDao" ref="dataFileDao"/>

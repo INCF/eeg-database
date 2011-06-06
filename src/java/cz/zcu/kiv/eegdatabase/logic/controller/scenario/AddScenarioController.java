@@ -2,9 +2,12 @@ package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.schemagen.ScenarioSchemaGenerator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,6 +19,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import java.io.*;
+import java.sql.Clob;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -141,18 +145,20 @@ public class AddScenarioController
         }
 
         MultipartFile file = data.getDataFile();
-
         MultipartFile xmlFile = data.getDataFileXml();
+        MultipartFile schemaFile = data.getSchemaFile();
 
         Scenario scenario;
-        ScenarioType scenarioType = null;
+        //ScenarioType scenarioType = null;
+        IScenarioType scenarioType = null;
+        ScenarioSchemas scenarioSchema = null;
+
         if (id > 0) {
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
 
-            //predelat!!!
-            scenarioType = new ScenarioTypeNonSchema();
+            //TODO set the right values when editing
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -161,8 +167,6 @@ public class AddScenarioController
             log.debug("Setting owner to the logged user.");
             scenario.setPerson(personDao.getLoggedPerson());
 
-            //factory class!!!
-            //scenarioType = new ScenarioTypeNonSchema();
         }
 
         log.debug("Setting research group.");
@@ -179,20 +183,22 @@ public class AddScenarioController
         log.debug("Setting scenario length: " + data.getLength());
         scenario.setScenarioLength(Integer.parseInt(data.getLength()));
 
+        ApplicationContext context = getApplicationContext();
+
         if ((file != null) && (!file.isEmpty())) {
             // File uploaded
-            log.debug("Setting data file");
+            log.debug("Setting the data file");
             scenario.setScenarioName(file.getOriginalFilename());
 
             scenario.setMimetype(file.getContentType());
-            scenarioType = ScenarioTypeFactory.createScenarioType(-1);
-            //scenario.setScenarioXml(Hibernate.createBlob(file.getBytes()));
+
+            scenarioType = (IScenarioType)context.getBean("scenarioTypeNonXml");
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
         if ((xmlFile != null) && (!xmlFile.isEmpty())) {
             //load the XML file to a table with the XMLType column
-            log.debug("Setting data file");
+            log.debug("Setting the XML data file");
             scenario.setScenarioName(xmlFile.getOriginalFilename());
 
             scenario.setMimetype(xmlFile.getContentType());
@@ -202,11 +208,39 @@ public class AddScenarioController
             InputStream inputStream = xmlFile.getInputStream();
             Document doc = docBuilder.parse(inputStream);
 
-            //set the right class instance
             int schemaId = data.getScenarioSchema();
-            scenarioType = ScenarioTypeFactory.createScenarioType(schemaId);
+
+            //getting the right scenarioType bean, avoiding using the factory pattern
+            if(schemaId == 0) {
+                scenarioType = (IScenarioType)context.getBean("scenarioTypeNonSchema");
+            }
+            else {
+                scenarioType = (IScenarioType)context.getBean("scenarioTypeSchema" + schemaId);
+            }
+
             scenarioType.setScenarioXml(doc);
 
+            //set scenario schema file if needed
+            if((schemaFile != null) && (!schemaFile.isEmpty())) {
+                log.debug("Setting the scenario schema file");
+                String schemaName = schemaFile.getOriginalFilename();
+                scenarioSchema.setSchemaName(schemaName);
+                Clob schemaContent = Hibernate.createClob(schemaFile.getBytes().toString());
+
+                //TODO set new schema id
+                String newSchemaId = "5";
+                ScenarioSchemaGenerator schemaGenerator = new ScenarioSchemaGenerator(newSchemaId, schemaName,
+                        schemaContent);
+                Clob sql = schemaGenerator.generateSql();
+                Clob hbmXml = schemaGenerator.generateHbmXml();
+                String pojo = schemaGenerator.generatePojo();
+                String bean = schemaGenerator.generateBean();
+
+                scenarioSchema.setSql(sql);
+                scenarioSchema.setHbmXml(hbmXml);
+                scenarioSchema.setPojo(pojo);
+                scenarioSchema.setBean(bean);
+            }
         }
 
         log.debug("Setting private/public access");
@@ -219,7 +253,6 @@ public class AddScenarioController
             scenarioDao.update(scenario);
         } else {
             // Creating new
-            //scenarioTypeDao.create(scenarioType);
 
             scenario.setScenarioType(scenarioType);
             scenarioType.setScenario(scenario);

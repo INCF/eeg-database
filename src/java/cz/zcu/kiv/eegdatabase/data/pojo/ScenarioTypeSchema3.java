@@ -11,19 +11,9 @@ import org.w3c.dom.Document;
  */
 public class ScenarioTypeSchema3   extends ScenarioType<Document> implements java.io.Serializable {
 
-    private Scenario scenario;
-    private int scenarioId;
     private Document scenarioXml;
 
     public ScenarioTypeSchema3() {
-    }
-
-    public int getScenarioId() {
-      return scenarioId;
-    }
-
-    public void setScenarioId(int scenarioId) {
-      this.scenarioId = scenarioId;
     }
 
     public Document getScenarioXml() {
@@ -33,13 +23,4 @@ public class ScenarioTypeSchema3   extends ScenarioType<Document> implements jav
     public void setScenarioXml(Document scenarioXml) {
       this.scenarioXml = scenarioXml;
     }
-
-    public Scenario getScenario() {
-        return scenario;
-    }
-
-    public void setScenario(Scenario scenario) {
-        this.scenario = scenario;
-    }
-
 }
