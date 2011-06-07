@@ -23,53 +23,48 @@ import java.util.List;
 public class SimpleExperimentDao<T, PK extends Serializable>
         extends SimpleGenericDao<T, PK> implements ExperimentDao<T, PK> {
 
-  public SimpleExperimentDao(Class<T> type) {
-    super(type);
-  }
+    public SimpleExperimentDao(Class<T> type) {
+        super(type);
+    }
 
     public List<DataFile> getDataFilesWhereExpId(int experimentId){
         String HQLselect = "from DataFile file " + "where file.experiment.experimentId = :experimentId";
-        return getHibernateTemplate().
-            findByNamedParam(HQLselect, "experimentId", experimentId);
+        return getHibernateTemplate().findByNamedParam(HQLselect, "experimentId", experimentId);
     }
 
     public List<DataFile> getDataFilesWhereId(int dataFileId){
         String HQLselect = "from DataFile file " + "where file.dataFileId = :dataFileId";
-        return getHibernateTemplate().
-            findByNamedParam(HQLselect, "dataFileId", dataFileId);
+        return getHibernateTemplate().findByNamedParam(HQLselect, "dataFileId", dataFileId);
     }
 
-  public List<Experiment> getExperimentsWhereOwner(int personId) {
-    String HQLselect = "from Experiment experiment " + "where experiment.personByOwnerId.personId = :personId";
-    return getHibernateTemplate().
-            findByNamedParam(HQLselect, "personId", personId);
-  }
+    public List<Experiment> getExperimentsWhereOwner(int personId) {
+        String HQLselect = "SELECT e, s FROM Experiment e LEFT JOIN FETCH e.scenario s WHERE e.personByOwnerId.personId = :personId ORDER BY e.startTime DESC";
+        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+    }
 
-  public List getExperimentsWhereOwner(Person person, int limit) {
-    getHibernateTemplate().setMaxResults(limit);
-    List<Experiment> list = getExperimentsWhereOwner(person.getPersonId());
-    getHibernateTemplate().setMaxResults(0);
-    return list;
-  }
+    public List<Experiment> getExperimentsWhereOwner(int personId, int limit) {
+        getHibernateTemplate().setMaxResults(limit);
+        List<Experiment> list = this.getExperimentsWhereOwner(personId);
+        getHibernateTemplate().setMaxResults(0);
+        return list;
+    }
 
-  public List<Experiment> getExperimentsWhereSubject(int personId) {
-    String HQLselect = "from Experiment experiment " + "where experiment.personBySubjectPersonId.personId = :personId";
-    // find records with item personId = personId
-    return getHibernateTemplate().
-            findByNamedParam(HQLselect, "personId", personId);
-  }
+    public List<Experiment> getExperimentsWhereSubject(int personId) {
+        String HQLselect = "SELECT experiment, scenario FROM Experiment experiment LEFT JOIN FETCH experiment.scenario scenario " + "WHERE experiment.personBySubjectPersonId.personId = :personId";
+        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+    }
 
-  public List getExperimentsWhereSubject(Person person, int limit) {
-    getHibernateTemplate().setMaxResults(limit);
-    List<Experiment> list = getExperimentsWhereSubject(person.getPersonId());
-    getHibernateTemplate().setMaxResults(0);
-    return list;
-  }
+    public List<Experiment> getExperimentsWhereSubject(int personId, int limit) {
+        getHibernateTemplate().setMaxResults(limit);
+        List<Experiment> list = getExperimentsWhereSubject(personId);
+        getHibernateTemplate().setMaxResults(0);
+        return list;
+    }
 
-  public List<Experiment> getExperimentsWhereMember(int groupId) {
-    String HQLselect = "from Experiment experiment " + "where experiment.researchGroup.researchGroupId = :researchGroupId";
-    return getHibernateTemplate().findByNamedParam(HQLselect, "researchGroupId", groupId);
-  }
+    public List<Experiment> getAllExperimentsForUser(int personId) {
+        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) ORDER BY ex.startTime DESC";
+        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+    }
 
   public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException {
     List<Experiment> results;
@@ -123,7 +118,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         q.setTimestamp("ts"+i, date);
         i++;
       }
-      
+
       results = q.list();
     } catch (ParseException e) {
       throw new RuntimeException("Inserted date and time is not in valid format \n" +

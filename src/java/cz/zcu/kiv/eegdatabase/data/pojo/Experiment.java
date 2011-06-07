@@ -4,6 +4,8 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
+
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.lucene.analysis.SimpleAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.annotations.Entity;
@@ -53,7 +55,6 @@ public class Experiment implements java.io.Serializable {
   private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
   private Set<History> histories = new HashSet<History>(0);
   private boolean privateExperiment;
-  private boolean userMemberOfGroup;
 
   public Experiment() {
   }
@@ -208,20 +209,16 @@ public class Experiment implements java.io.Serializable {
     this.privateExperiment = privateExperiment;
   }
 
-  public void setUserMemberOfGroup(boolean userMemberOfGroup) {
-    this.userMemberOfGroup = userMemberOfGroup;
-  }
-
-  public boolean isUserMemberOfGroup() {
-    return userMemberOfGroup;
-  }
-
   public Set<History> getHistories() {
     return histories;
   }
 
   public void setHistories(Set<History> histories) {
     this.histories = histories;
+  }
+
+  public boolean isSuitable() {
+    return SignalProcessingUtils.isSuitableExperiment(this);
   }
 }
 

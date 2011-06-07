@@ -37,23 +37,9 @@ public class ExperimentMultiController extends MultiActionController {
 
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
-        List<Experiment> list = experimentDao.getAllRecords();
-        int groupId;
-        for (Experiment item : list) {
-            groupId = (int) item.getResearchGroup().getResearchGroupId();
-            Set<ResearchGroupMembership> researchGroupMemberships = item.getResearchGroup().getResearchGroupMemberships();
-            boolean userIsMember = false;
-            for (ResearchGroupMembership member : researchGroupMemberships) {
-                if (member.getPerson().getPersonId() == loggedUser.getPersonId()) {
-                    userIsMember = true;
-                    break;
-                }
-            }
-            item.setUserMemberOfGroup(userIsMember);
-        }
+        List<Experiment> list = experimentDao.getAllExperimentsForUser(loggedUser.getPersonId());
         mav.addObject("measurationListTitle", "pageTitle.allExperiments");
-        SignalProcessingUtils.splitExperimentToView(mav, list);
-        mav.addObject("myExperiments", false);
+        mav.addObject("measurationList", list);
 
         return mav;
     }
@@ -68,8 +54,7 @@ public class ExperimentMultiController extends MultiActionController {
 
         List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
         mav.addObject("measurationListTitle", "pageTitle.myExperiments");
-        SignalProcessingUtils.splitExperimentToView(mav, list);
-        mav.addObject("myExperiments", true);
+        mav.addObject("measurationList", list);
 
         return mav;
     }
@@ -84,7 +69,7 @@ public class ExperimentMultiController extends MultiActionController {
 
         List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
         mav.addObject("measurationListTitle", "pageTitle.meAsSubject");
-        SignalProcessingUtils.splitExperimentToView(mav, list);
+        mav.addObject("measurationList", list);
 
         return mav;
     }

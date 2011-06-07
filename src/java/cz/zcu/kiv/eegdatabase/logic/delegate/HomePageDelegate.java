@@ -105,11 +105,11 @@ public class HomePageDelegate {
 //          myExperiments.addAll(groupExp);
 //        }
 //      }
-      List myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
+      List myExperiments = experimentDao.getExperimentsWhereOwner(person.getPersonId(), LIMIT);
       mav.addObject("myExperiments", myExperiments);
       mav.addObject("myExperimentsEmpty", myExperiments.isEmpty());
 
-      List meAsSubjectList = experimentDao.getExperimentsWhereSubject(person, LIMIT);
+      List meAsSubjectList = experimentDao.getExperimentsWhereSubject(person.getPersonId(), LIMIT);
       mav.addObject("meAsSubjectList", meAsSubjectList);
       mav.addObject("meAsSubjectListEmpty", meAsSubjectList.isEmpty());
 
