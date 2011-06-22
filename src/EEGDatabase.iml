@@ -18,7 +18,11 @@
       </configuration>
     </facet>
     <facet type="Spring" name="Spring">
-      <configuration />
+      <configuration>
+        <fileset id="fileset1" name="My Fileset" removed="false">
+          <file>file://$MODULE_DIR$/java/test-context.xml</file>
+        </fileset>
+      </configuration>
     </facet>
     <facet type="web" name="Web">
       <configuration>
@@ -28,7 +32,6 @@
         <webroots>
           <root url="file://$MODULE_DIR$/../web" relative="/" />
         </webroots>
-        <context-artifact name="EEGDatabase" />
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
@@ -93,6 +96,7 @@
     <orderEntry type="library" name="oracle" level="project" />
     <orderEntry type="library" name="junit" level="project" />
     <orderEntry type="library" name="ojdbc" level="project" />
+    <orderEntry type="library" exported="" name="selenium" level="project" />
   </component>
 </module>
 
