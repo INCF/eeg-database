@@ -2,7 +2,6 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleCommentCommand;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -16,7 +15,6 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.File;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -169,7 +167,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             case 1:
                 List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
                 map.put("researchGroupList", groups);
-                List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getScenarioSchemaNames();
+                List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getSchemaNames();
                 map.put("schemaNamesList", schemaNames);
 
                 ResearchGroup defaultGroup1 = personDao.getLoggedPerson().getDefaultGroup();

@@ -28,5 +28,11 @@
     <property name="bean" type="string">
         <column name="BEAN"/>
     </property>
+    <property name="description" type="string">
+        <column name="DESCRIPTION"/>
+    </property>
+    <property name="approved" type="char">
+        <column name="APPROVED"/>
+    </property>
   </class>
 </hibernate-mapping>

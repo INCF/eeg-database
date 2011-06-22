@@ -14,5 +14,7 @@ import java.util.List;
  */
 public interface ScenarioSchemasDao extends GenericDao<ScenarioSchemas, Integer> {
 
-  public List<ScenarioSchemas> getScenarioSchemaNames();
+  public List<ScenarioSchemas> getSchemaNames();
+  public List<ScenarioSchemas> getSchemaDescriptions();
+  public int getNextSchemaId();
 }

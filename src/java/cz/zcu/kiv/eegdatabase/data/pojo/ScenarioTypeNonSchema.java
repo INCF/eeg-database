@@ -11,7 +11,7 @@ import org.w3c.dom.Document;
  *
  * @author Jan Koren
  */
-public class ScenarioTypeNonSchema extends ScenarioType<Document> implements java.io.Serializable {
+public class ScenarioTypeNonSchema extends ScenarioType<Document> {
 
   private Document scenarioXml;
 

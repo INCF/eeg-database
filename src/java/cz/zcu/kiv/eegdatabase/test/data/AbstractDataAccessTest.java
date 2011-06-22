@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.test.data;
 
+import junit.framework.TestCase;
 import org.hibernate.SessionFactory;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 

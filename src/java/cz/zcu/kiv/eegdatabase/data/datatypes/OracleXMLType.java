@@ -27,14 +27,11 @@ import org.hibernate.HibernateException;
 import org.hibernate.usertype.UserType;
 import org.w3c.dom.Document;
 import org.xml.sax.SAXException;
-import org.apache.xml.serialize.OutputFormat;
-import org.apache.xml.serialize.XMLSerializer;
 
 /**
  * @author Jan Koren
  */
 public class OracleXMLType implements UserType, Serializable {
-    // all other methods are ommitted at present for brevity
 
     private static final long serialVersionUID = 2308230823023l;
     private static final Class returnedClass = Document.class;
@@ -149,8 +146,6 @@ public class OracleXMLType implements UserType, Serializable {
         writer.flush();
 
         return writer.toString();
-        //String xmlString = result.getWriter().toString();
-        //return  xmlString;
     }
 
     protected static Document stringToDom(String xmlSource)

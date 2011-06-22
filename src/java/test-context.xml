@@ -2,8 +2,10 @@
 <!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
 <beans default-autowire="byName">
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="location">
-            <value>project.test.properties</value>
+        <property name="locations">
+            <list>
+                <value>project.test.properties</value>
+            </list>
         </property>
     </bean>
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
@@ -75,6 +77,48 @@
 
     <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
     </bean>
+
+    <bean name="scenarioSchemasDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioSchemasDao">
+    </bean>
+
+    <bean name="scenarioTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioTypeDao">
+    </bean>
+
+    <bean id="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario">
+        <property name="title" value="scenario title test"/>
+        <property name="scenarioName" value="scenario_name_test"/>
+        <property name="description" value="description test"/>
+        <property name="scenarioLength" value="123"/>
+    </bean>
+
+    <bean id="scenarioDoc" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
+        <property name="scenario" ref="scenario"/>
+    </bean>
+
+    <bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
+          parent="scenarioDoc">
+    </bean>
+
+    <bean id="nonXmlContent" class="java.lang.String">
+        <constructor-arg type="java.lang.String" value="test test test"></constructor-arg>
+    </bean>
+
+    <bean id="scenarioNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
+          parent="scenarioDoc">
+    </bean>
+
+    <bean id="scenarioTypeSchema1" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
+          parent="scenarioDoc">
+    </bean>
+
+    <bean id="scenarioTypeSchema2" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
+          parent="scenarioDoc">
+    </bean>
+
+    <bean id="scenarioTypeSchema3" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
+          parent="scenarioDoc">
+    </bean>
+
 
     <bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
         <property name="basenames">
