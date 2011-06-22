@@ -1,14 +1,19 @@
 package cz.zcu.kiv.eegdatabase.logic.schemagen;
 
 import com.sun.xml.xsom.XSElementDecl;
+import com.sun.xml.xsom.XSSchema;
+import com.sun.xml.xsom.XSSchemaSet;
 import com.sun.xml.xsom.parser.SchemaDocument;
 import com.sun.xml.xsom.parser.XSOMParser;
+import org.apache.commons.io.IOUtils;
 import org.xml.sax.SAXException;
 
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Clob;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -19,21 +24,23 @@ import java.util.Set;
  */
 public class ScenarioSchemaGenerator {
 
-    private String schemaId;
+    private int schemaId;
     private String schemaName;
-    private Clob content;
+    private byte[] content;
 
-    public ScenarioSchemaGenerator(String schemaId, String schemaName, Clob content) {
+    public ScenarioSchemaGenerator(int schemaId, String schemaName, byte[] content) {
         this.schemaId = schemaId;
         this.content = content;
         this.schemaName = schemaName;
     }
 
-    public Clob generateSql() {
+    public String generateSql() {
+
+        String xsd = new String(content);
 
         String registerSchema = "dbms_xmlschema.registerschema(\n" +
               "    SCHEMAURL => "+ schemaName +",\n" +
-              "    SCHEMADOC => " + content +",\n" +
+              "    SCHEMADOC => " + xsd +",\n" +
               "    LOCAL       => TRUE,\n" +
               "    GENTYPES    => TRUE,\n" +
               "    GENBEAN     => FALSE,\n" +
@@ -43,7 +50,7 @@ public class ScenarioSchemaGenerator {
               "  );";
 
         String createTable = "create table SCENARIO_TYPE_SCHEMA_" + schemaId + " (\n" +
-              "  SCENARIO_ID number not nulL,\n" +
+              "  SCENARIO_ID number not null,\n" +
               "  SCENARIO_XML xmltype,\n" +
               "  CONSTRAINT SCENARIO_TYPE_SCHEMA_" + schemaId + "_PK\n" +
               "    PRIMARY KEY(SCENARIO_ID),\n" +
@@ -54,20 +61,23 @@ public class ScenarioSchemaGenerator {
               "  )\n" +
               "  xmltype SCENARIO_XML store as object relational\n" +
               "  xmlschema \"" + schemaName + "\"\n" +
-              "  ELEMENT \"" + getElement() + "\";";
+              "  ELEMENT \"" + this.getElement() + "\";";
 
         String s = registerSchema + createTable;
-        Clob clob = null;
+
+        /*
         try {
-            clob.setString(0, s);
+            clob.setCharacterStream();
+                    setString(1, s);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        */
 
-        return clob;
+        return s;
     }
 
-    public Clob generateHbmXml() {
+    public String generateHbmXml() {
         String hbm = "<joined-subclass name=\"cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema"+ schemaId +"\"\n" +
               "                     table=\"SCENARIO_TYPE_SCHEMA_" + schemaId + "\">\n" +
               "        <key column=\"SCENARIO_ID\"/>\n" +
@@ -76,14 +86,16 @@ public class ScenarioSchemaGenerator {
               "        </property>\n" +
               "    </joined-subclass>";
 
+        /*
         Clob clob = null;
         try {
             clob.setString(0, hbm);
         } catch (SQLException e) {
             e.printStackTrace();
         }
+        */
 
-        return clob;
+        return hbm;
     }
 
     public String generatePojo() {
@@ -113,53 +125,56 @@ public class ScenarioSchemaGenerator {
 
     public String generateBean() {
 
-        return null;
+        String bean = "<bean id=\"scenarioTypeSchema" + schemaId + "\" " +
+                "class=\"cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema" + schemaId + "\"\n" +
+                "    parent=\"scenarioSchemaDefault\">\n" +
+                "</bean>";
+
+        return bean;
     }
 
     private String getElement() {
+
+        InputStream xsd = new ByteArrayInputStream(content);
+
         XSOMParser parser = new XSOMParser();
+        String myString = content.toString();
 
         try {
-            parser.parse(this.getContent().getCharacterStream());
+            parser.parse(xsd);
         } catch (SAXException e) {
-            e.printStackTrace();
-        } catch (SQLException e) {
-            e.printStackTrace();
+            if(e.getException() != null)
+                e.getException().printStackTrace();
         }
 
         Set<SchemaDocument> docSet = parser.getDocuments();
-
         Map<String, XSElementDecl> elementDeclMap = null;
         for(SchemaDocument doc : docSet) {
             elementDeclMap = doc.getSchema().getElementDecls();
+            if(!elementDeclMap.isEmpty()) break;
         }
 
-        String s = elementDeclMap.toString();
+        TreeSet<String> elementNameSet = new TreeSet(elementDeclMap.keySet());
+        String elementName = elementNameSet.first();
 
-        String elementName = elementDeclMap.get(elementDeclMap.get("element")).getName();
-
-        System.out.println(s);
         System.out.println(elementName);
-
-        //XSSchemaSet schemaSet = parser.getResult();
-        //Iterator iter = schemaSet.iterateSchema();
 
         return elementName;
     }
 
-    public String getSchemaId() {
+    public int getSchemaId() {
         return schemaId;
     }
 
-    public void setSchemaId(String schemaId) {
+    public void setSchemaId(int schemaId) {
         this.schemaId = schemaId;
     }
 
-    public Clob getContent() {
+    public byte[] getContent() {
         return content;
     }
 
-    public void setContent(Clob content) {
+    public void setContent(byte[] content) {
         this.content = content;
     }
 

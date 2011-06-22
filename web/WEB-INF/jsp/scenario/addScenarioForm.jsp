@@ -80,14 +80,12 @@
             <div class="itemBox">
 
                 <form:label path="xmlFileCheckBox" cssClass="textFieldLabel"
-                            cssErrorClass="textFieldLabel errorLabel">Data file is XML</form:label>
+                            cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.dataFileIsXml"/></form:label>
 
                 <form:checkbox path="xmlFileCheckBox" cssClass="checkBox" id="isScenarioXml"/>
 
                 <form:errors path="xmlFileCheckBox" cssClass="errorBox"/>
             </div>
-
-
 
             <div class="itemBox" id="dataFile">
                 <form:label path="dataFile" cssClass="fileFieldLabel"
@@ -97,7 +95,6 @@
 
                 <form:errors path="dataFile" cssClass="errorBox"/>
             </div>
-
 
             <div class="itemBox" id="dataFileXml">
                 <form:label path="dataFileXml" cssClass="fileFieldLabel"
@@ -111,28 +108,27 @@
             <div class="itemBox" id="schemaSelect">
                 <form:label path="scenarioSchema" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.scenarioSchema"/></form:label>
 
+                <form:radiobutton path="scenarioOption" cssClass="radioButton" value="noSchema" id="noSchema"/>
+                <fmt:message key="radio.noSchema"/>
+
                 <form:radiobutton path="scenarioOption" cssClass="radioButton" value="fromList" id="fromSchemaList"/>
                 <fmt:message key="radio.fromSchemaList"/>
 
-                <form:radiobutton path="scenarioOption" cssClass="radioButton" value="addNew" id="schemaAddNew"/>
-                <fmt:message key="radio.newSchema"/>
-
                 <form:select path="scenarioSchema" cssClass="selectBox"  id="schemaList">
-                    <form:option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></form:option>
-                    <option value="0" label="">
-                        <c:out value="No scenario schema"/>
-                    </option>
+                    <form:option value="0"><fmt:message key="select.option.noScenarioSchemaSelected"/></form:option>
                     <c:forEach items="${schemaNamesList}" var="schemaName">
-                        <option value="${schemaName.schemaId}" label="">
+                        <option value="${schemaName.schemaId}" label="" id="schema${schemaName.schemaId}">
                             <c:out value="${schemaName.schemaName}" />
                         </option>
                     </c:forEach>
                 </form:select>
                 <form:errors path="scenarioSchema" cssClass="errorBox" />
-
-                <input type="file" name="schemaFile" class="fileField" id="newSchema"/>
-                <form:errors path="schemaFile" cssClass="errorBox"/>
             </div>
+
+            <%--
+            <div class="itemBox" id="schemaDescription">
+                 --%>
+
 
 
             <div class="itemBox">

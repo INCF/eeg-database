@@ -63,6 +63,7 @@
                 <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>
 
                 <prop key="scenarios/add-scenario.html">addScenarioController</prop>
+                <prop key="scenarios/add-scenario-schema.html">addScenarioSchemaController</prop>
                 <prop key="scenarios/edit.html">addScenarioController</prop>
                 <prop key="scenarios/*.html">scenariosMultiController</prop>
 

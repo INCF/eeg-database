@@ -16,5 +16,6 @@
 <auth:experimenter>
   <ul class="commonButtonMenu">
     <li><a href="<c:url value='/scenarios/add-scenario.html'/>"><fmt:message key="menuItem.addScenario"/></a></li>
+    <li><a href="<c:url value='/scenarios/add-scenario-schema.html'/>"><fmt:message key="menuItem.addScenarioSchema"/></a></li>
   </ul>
 </auth:experimenter>

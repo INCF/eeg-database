@@ -8,6 +8,7 @@
 <%@attribute name="mainPage" %>
 <%@attribute name="history" %>
 <%@attribute name="search" %>
+<%@attribute name="addScenario" %>
 <%@attribute name="allowWYSIWYG" %>
 <%@attribute name="tableSorter" %>
 <%@attribute name="jqueryLatest" %>
@@ -18,7 +19,6 @@
 <%@attribute name="jaddWeather" %>
 <%@attribute name="jatoms" %>
 <%@attribute name="jaddData" %>
-<%@attribute name="addScenario" %>
 
 
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
@@ -52,6 +52,7 @@
     <script src="<c:url value='/files/js/jquery.tablesorter.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.timeentry.js'/>"></script>
     <script src="<c:url value='/files/js/jquery.dateentry.js'/>"></script>
+    <script src="<c:url value='/files/js/jquery.cookie.js'/>"></script>
     <script src="<c:url value='/files/js/ui.spinner.js'/>"></script>
     <script type="text/javascript" src="<c:url value="/files/js/global.js" />"></script>
 
@@ -70,6 +71,10 @@
     </c:if>
     <c:if test="${jMetadata}">
         <script type="text/javascript" src="<c:url value='/files/js/jquery.metadata.js' />"></script>
+    </c:if>
+
+    <c:if test="${addScenario}">
+        <script type="text/javascript" src="<c:url value='/files/js/addScenario.js' />"></script>
     </c:if>
 
     <c:if test="${allowWYSIWYG}">
@@ -146,10 +151,6 @@
             $("#atom").spinner({min: 1, max: 20});
         });
         </script>
-    </c:if>
-
-    <c:if test="${addScenario}">
-        <script type="text/javascript" src="<c:url value='/files/js/addScenario.js' />"></script>
     </c:if>
 
 </head>
