@@ -12,11 +12,11 @@ public class AddScenarioCommand {
     private String description;
     private MultipartFile dataFile;
     private MultipartFile dataFileXml;
-    private MultipartFile schemaFile;
     private boolean privateNote;
     private int scenarioSchema;
     private boolean xmlFileCheckBox;
     private String scenarioOption;
+    private String schemaDescription;
 
     public int getId() {
         return id;
@@ -90,14 +90,6 @@ public class AddScenarioCommand {
       this.dataFileXml = dataFileXml;
     }
 
-    public MultipartFile getSchemaFile() {
-        return schemaFile;
-    }
-
-    public void setSchemaFile(MultipartFile schemaFile) {
-        this.schemaFile = schemaFile;
-    }
-
     public boolean isXmlFileCheckBox() {
         return xmlFileCheckBox;
     }
@@ -112,6 +104,14 @@ public class AddScenarioCommand {
 
     public void setScenarioOption(String scenarioOption) {
         this.scenarioOption = scenarioOption;
+    }
+
+    public String getSchemaDescription() {
+        return schemaDescription;
+    }
+
+    public void setSchemaDescription(String schemaDescription) {
+        this.schemaDescription = schemaDescription;
     }
 
 }
