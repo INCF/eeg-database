@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="windows-1250"
+standalone="yes"?>
+
+<scenarios xmlns="urn:x-eegdatabase:schema:scenarios.1.0">
+  <scenario name="P300" src="p300.xml"/>
+<scenario src="070608_p300.xml" name="070608_p300" />
+<scenario src="cisla_070608.xml" name="cisla_070608" />
+</scenarios>

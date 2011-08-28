@@ -24,8 +24,10 @@ public class ScenarioSchemas implements java.io.Serializable {
   private String schemaName;
   private Clob sql;
   private Clob hbmXml;
-  private String pojo;
+  private Clob pojo;
   private String bean;
+  private String description;
+  private char approved;
 
   public ScenarioSchemas() {
   }
@@ -67,11 +69,11 @@ public class ScenarioSchemas implements java.io.Serializable {
     this.hbmXml = hbmXml;
   }
 
-  public String getPojo() {
+  public Clob getPojo() {
     return pojo;
   }
 
-  public void setPojo(String pojo) {
+  public void setPojo(Clob pojo) {
     this.pojo = pojo;
   }
 
@@ -81,6 +83,23 @@ public class ScenarioSchemas implements java.io.Serializable {
 
   public void setBean(String bean) {
     this.bean = bean;
+  }
+
+  public String getDescription() {
+    return description;
+  }
+
+  public void setDescription(String description) {
+    this.description = description;
+  }
+
+
+  public char getApproved() {
+    return approved;
+  }
+
+  public void setApproved(char approved) {
+    this.approved = approved;
   }
 
 }

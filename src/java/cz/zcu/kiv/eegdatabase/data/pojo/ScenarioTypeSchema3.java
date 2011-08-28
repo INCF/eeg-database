@@ -9,7 +9,7 @@ import org.w3c.dom.Document;
  * Time: 21:35
  * To change this template use File | Settings | File Templates.
  */
-public class ScenarioTypeSchema3   extends ScenarioType<Document> implements java.io.Serializable {
+public class ScenarioTypeSchema3   extends ScenarioType<Document> {
 
     private Document scenarioXml;
 

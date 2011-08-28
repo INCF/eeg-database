@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema;
 

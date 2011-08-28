@@ -527,29 +527,40 @@
         <!-- validation by class itself -->
     </bean>
 
+    <bean name="addScenarioSchemaController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioSchemaController">
+        <property name="auth" ref="authorizationManager"/>
+        <property name="formView" value="scenario/addScenarioSchemaForm"/>
+        <property name="successView" value="redirect:/scenarios/list.html"/>
+        <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
+        <property name="validator">
+            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioSchemaValidator"/>
+        </property>
+    </bean>
 
 
-    <bean id="scenarioSchemaDefault" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas" abstract="true">
+
+    <bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
     </bean>
 
     <bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
-          parent="scenarioSchemaDefault">
+          parent="scenarioTypeParent">
     </bean>
 
     <bean id="scenarioTypeNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
-          parent="scenarioSchemaDefault">
+          parent="scenarioTypeParent">
     </bean>
 
     <bean id="scenarioTypeSchema1" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
-          parent="scenarioSchemaDefault">
+          parent="scenarioTypeParent">
     </bean>
 
     <bean id="scenarioTypeSchema2" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
-          parent="scenarioSchemaDefault">
+          parent="scenarioTypeParent">
     </bean>
 
     <bean id="scenarioTypeSchema3" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
-          parent="scenarioSchemaDefault">
+          parent="scenarioTypeParent">
     </bean>
 
 

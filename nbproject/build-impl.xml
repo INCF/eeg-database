@@ -583,7 +583,10 @@ exists or setup the property manually. For example like this:
         </manifest>
     </target>
     <target depends="init" name="library-inclusion-in-archive" unless="dist.ear.dir">
-        <copyfiles files="${file.reference.ojdbc14.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <!--<copyfiles files="${file.reference.ojdbc14.jar}" todir="${build.web.dir}/WEB-INF/lib"/>-->
+        <copyfiles files="${file.reference.ojdbc6.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <copyfiles files="${file.reference.orai18n.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+
         <copyfiles files="${file.reference.log4j-1.2.14.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.spring-security-acl-2.0.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.spring-security-core-2.0.4.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
@@ -627,7 +630,7 @@ exists or setup the property manually. For example like this:
         <copyfiles files="${file.reference.slf4j-api-1.5.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.hibernate-core-3.3.1.GA.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.slf4j-log4j12-1.5.2.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
-        <copyfiles files="${file.reference.commons-collections-20040102.233541.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
+        <!--<copyfiles files="${file.reference.commons-collections-20040102.233541.jar}" todir="${build.web.dir}/WEB-INF/lib"/>-->
         <copyfiles files="${file.reference.lucene-core-2.4.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.lucene-snowball-2.4.1.jar}" todir="${build.web.dir}/WEB-INF/lib"/>
         <copyfiles files="${file.reference.solr-commons-csv-1.3.0.jar}" todir="${build.web.dir}/WEB-INF/lib"/>

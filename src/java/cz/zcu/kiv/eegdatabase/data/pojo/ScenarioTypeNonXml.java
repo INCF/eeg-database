@@ -11,7 +11,7 @@ import java.sql.Blob;
  *
  * @author Jan Koren
  */
-public class ScenarioTypeNonXml extends ScenarioType<Blob> implements java.io.Serializable {
+public class ScenarioTypeNonXml extends ScenarioType<Blob> {
 
   private Blob scenarioXml;
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="windows-1250" standalone="yes"?>
+<scenario xmlns="urn:x-eegdatabase:schema:p300.1.0">
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+	<phase src="p300\cisla.xml" type="slideshow" instruction="čísla 0-9"/>
+</scenario>

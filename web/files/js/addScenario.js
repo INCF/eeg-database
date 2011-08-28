@@ -6,50 +6,83 @@
  * To change this template use File | Settings | File Templates.
  */
 
-$(document).ready(function() {
-  $('#schemaSelect').hide();
-  $('#dataFileXml').hide();
-  $("#fromSchemaList").attr("checked", "checked");
+$(document).ready(function() {    //nacteni
 
+    $('#isScenarioXml').click(function() {
+        if ($("#isScenarioXml").is(':checked')) {
+            $("#dataFileXml").show();
+            $("#schemaSelect").show();
+            $("#dataFile").hide();
+            $("#schemaList").hide();
 
-  //kliknuti na checkbox kvuli tomu, jestli je scenar XML nebo ne
-  $('#isScenarioXml').click(function() {
-    if($('#isScenarioXml').is(':checked')) {
-      $('#dataFileXml').show();
-      $('#schemaSelect').show();
-      $('#dataFile').hide();
-      $('#newSchema').hide();
-      $('#schemaList').hide();
+            if ($("#fromSchemaList").is(':checked')) {
+                $("#schemaList").show();
+                $.cookie("xmlWithSchema", "yes");
+            }
 
-      if($('#fromSchemaList').is(':checked')) {
-        $('#schemaList').show();
-      }
+            $.cookie("xmlOptionSelected", "yes");
+            $.cookie("xmlWithSchema", "no");
+        }
+        else {
+            $('#dataFile').show();
+            $('#dataFileXml').hide();
+            $('#schemaSelect').hide();
 
-      if($('#schemaAddNew').is(':checked')) {
-      $('#newSchema').show();
-      }
+            $.cookie("xmlOptionSelected", "no");
+        }
+    });
+
+    //click on the radio button to select a schema
+    $('#fromSchemaList').click(function() {
+        if ($('#fromSchemaList').is(':checked')) {
+            $('#schemaList').show();
+            //$("#schemaDescription").show();
+            $.cookie("xmlWithSchema", "yes");
+        }
+    });
+
+    //click on the radio button not to use any schema
+    $('#noSchema').click(function() {
+        if ($('#noSchema').is(':checked')) {
+            $('#schemaList').hide();
+            //$('#schemaDescription').hide();
+            $.cookie("xmlWithSchema", "no");
+        }
+    });
+
+    //COOKIES
+    var xmlOptionSelected = $.cookie("xmlOptionSelected");
+    var xmlWithSchema = $.cookie("xmlWithSchema");
+
+    if(xmlOptionSelected == "yes") {
+        $("#isScenarioXml").attr('checked', true);
+        $("#dataFileXml").show();
+        $("#schemaSelect").show();
+        $("#dataFile").hide();
+        $("#schemaList").hide();
+
+        if(xmlWithSchema == "yes") {
+            $("#fromSchemaList").attr('checked',true);
+            $("#schemaList").show();
+        }
+        else {
+            $("#fromSchemaList").attr('checked',false);
+            $("#noSchema").attr('checked',true);
+        }
     }
     else {
-      $('#dataFile').show();
-      $('#dataFileXml').hide();
-      $('#schemaSelect').hide();
-    }
-  });
+        $("#isScenarioXml").attr('checked', false);
+        $('#dataFile').show();
+        $("#schemaList").show();
+        $('#dataFileXml').hide();
+        $('#schemaSelect').hide();
 
-// klik na radio button pro vyber schematu
-  $('#fromSchemaList').click(function() {
-    if($('#fromSchemaList').is(':checked')) {
-      $('#schemaList').show();
-      $('#newSchema').hide();
+        if(xmlWithSchema == "yes") {
+            $("#fromSchemaList").attr('checked',true);
+            $("#schemaList").show();
+        }
+        else {
+            $("#fromSchemaList").attr('checked',false);
+        }
     }
-  });
-
-  //kliknuti na radio button pro pridani noveho schematu
-  $('#schemaAddNew').click(function() {
-    if($('#schemaAddNew').is(':checked')) {
-      $('#newSchema').show();
-      $('#schemaList').hide();
-    }
-  });
-
 });

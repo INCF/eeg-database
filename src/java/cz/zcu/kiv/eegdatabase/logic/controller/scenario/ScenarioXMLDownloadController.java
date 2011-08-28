@@ -11,10 +11,17 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
+import org.w3c.dom.Document;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.xml.transform.*;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+import java.io.ByteArrayOutputStream;
+import java.io.StringWriter;
 import java.sql.Blob;
+import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 
@@ -46,7 +53,12 @@ public class ScenarioXMLDownloadController extends AbstractController {
         log.debug("Processing download scenario.");
         int scenarioId = Integer.parseInt(request.getParameter("scenarioId"));
         Scenario scenario = scenarioDao.read(scenarioId);
-        Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
+        //TODO set Blob or XMLType
+        Object data = scenario.getScenarioType().getScenarioXml();
+        byte[] fileOutput = toByteArray(data);
+        //Document xmlType = (Document) scenario.getScenarioType().getScenarioXml();
+        //Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
+
         Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         History history = new History();
@@ -58,12 +70,30 @@ public class ScenarioXMLDownloadController extends AbstractController {
         history.setDateOfDownload(currentTimestamp);
         log.debug("Saving download history");
         historyDao.create(history);
-        // System.out.println(scenario.getMimetype());
         response.setHeader("Content-Type", scenario.getMimetype());
         response.setHeader("Content-Disposition", "attachment;filename=" + scenario.getScenarioName());
-        response.getOutputStream().write(c.getBytes(1, (int) c.length()));
+        response.getOutputStream().write(fileOutput);
         response.flushBuffer();
         // mav.addObject("dataObject", scenarioDao.read(scenarioId));
+
+        return null;
+    }
+
+    private byte[] toByteArray(Object o) throws Exception {
+        if(o instanceof Blob) {
+            return ((Blob) o).getBytes(1, (int) ((Blob) o).length());
+        }
+        else if(o instanceof Document) {
+            Source source = new DOMSource((Document) o);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            StringWriter stringWriter = new StringWriter();
+            Result result = new StreamResult(out);
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.transform(source, result);
+
+            return out.toByteArray();
+        }
 
         return null;
     }

@@ -69,10 +69,12 @@ public class AddScenarioValidator implements Validator {
             log.debug("No XML data file was inserted!");
         }
 
-        if(data.getScenarioSchema() == - 1 && !(data.getDataFileXml().isEmpty())) {
-            //scenario schema name is not chosen
-            errors.rejectValue("scenarioSchema", "required.scenarioSchema");
-            log.debug("No scenario schema was selected!");
+        if (data.isXmlFileCheckBox()) {
+            if (data.getScenarioSchema() == 0 && (data.getScenarioOption().equals("fromList"))) {
+                //scenario schema name is not chosen
+                errors.rejectValue("scenarioSchema", "required.scenarioSchema");
+                log.debug("No scenario schema was selected!");
+            }
         }
     }
 

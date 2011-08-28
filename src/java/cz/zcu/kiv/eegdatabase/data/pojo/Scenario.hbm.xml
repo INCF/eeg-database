@@ -46,13 +46,6 @@
 
     <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
                  column="SCENARIO_ID" insert="false" update="false"
-                 cascade="save-update"/>
-
-      <!--
-    <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
-                 column="SCENARIO_ID" unique="true" insert="false" update="false"
-                 cascade="save-update"/>
-                 -->
-
+                 cascade="all" unique="true"/>
   </class>
 </hibernate-mapping>

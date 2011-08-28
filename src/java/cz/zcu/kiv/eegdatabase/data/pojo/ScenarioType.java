@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import java.io.Serializable;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Jan Koren
@@ -7,7 +9,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
  * Time: 19:46
  * To change this template use File | Settings | File Templates.
  */
-public abstract class ScenarioType<T> implements IScenarioType<T> {
+public abstract class ScenarioType<T> implements IScenarioType<T>, java.io.Serializable {
 
     private int scenarioId;
     private Scenario scenario;
