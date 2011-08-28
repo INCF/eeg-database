@@ -4,4 +4,6 @@
   <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="semanticService" url-pattern="/webservice/SemanticService"/>
   <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="UserDataImpl" url-pattern="/UserDataImpl"/>
   <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="SemanticServiceImpl" url-pattern="/SemanticServiceImpl"/>
+  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="UserDataImpl" url-pattern="/UserDataImpl"/>
+  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="SemanticServiceImpl" url-pattern="/SemanticServiceImpl"/>
 </endpoints>

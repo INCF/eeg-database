@@ -19,7 +19,6 @@
       <root url="file://$PROJECT_DIR$/lib/jstl" />
       <root url="file://$PROJECT_DIR$/lib/logger" />
       <root url="file://$PROJECT_DIR$/lib/lucene" />
-      <root url="file://$PROJECT_DIR$/lib/spring" />
       <root url="file://$PROJECT_DIR$/lib/jaxws21" />
       <root url="file://$PROJECT_DIR$/lib/cxf" />
       <root url="file://$PROJECT_DIR$/lib/geronimo" />
@@ -34,7 +33,6 @@
     <jarDirectory url="file://$PROJECT_DIR$/lib/logger" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/lucene" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/ojdbc" recursive="false" />
-    <jarDirectory url="file://$PROJECT_DIR$/lib/spring" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/spring-security" recursive="false" />
     <jarDirectory url="file://$PROJECT_DIR$/lib/struts" recursive="false" />
   </library>
