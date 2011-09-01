@@ -5,8 +5,8 @@
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/scenarios/list.html'/>"><fmt:message key="menuItem.listOfScenarios"/></a></li>
-  <li><a href="<c:url value='/scenarios/my-scenarios.html'/>"><fmt:message key="menuItem.myScenarios"/></a></li>
+  <li><a href="<c:url value='list.html'/>"><fmt:message key="menuItem.listOfScenarios"/></a></li>
+  <li><a href="<c:url value='my-scenarios.html'/>"><fmt:message key="menuItem.myScenarios"/></a></li>
 </ul>
 
 <ul class="commonButtonMenu">
@@ -15,7 +15,7 @@
 
 <auth:experimenter>
   <ul class="commonButtonMenu">
-    <li><a href="<c:url value='/scenarios/add-scenario.html'/>"><fmt:message key="menuItem.addScenario"/></a></li>
-    <li><a href="<c:url value='/scenarios/add-scenario-schema.html'/>"><fmt:message key="menuItem.addScenarioSchema"/></a></li>
+    <li><a href="<c:url value='add-scenario.html'/>"><fmt:message key="menuItem.addScenario"/></a></li>
+    <li><a href="<c:url value='add-scenario-schema.html'/>"><fmt:message key="menuItem.addScenarioSchema"/></a></li>
   </ul>
 </auth:experimenter>

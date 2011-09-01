@@ -23,11 +23,9 @@
         <c:otherwise>
             <!-- creating new -->
             <h1><fmt:message key="pageTitle.addExperiment"/></h1>
-
-            <c:url value="add-experiment.html" var="formUrl"/>
         </c:otherwise>
     </c:choose>
-    <!--action="${formUrl}" -->
+    <!-- -->
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm"
                name="addExperimentWizard">
         <fieldset>
