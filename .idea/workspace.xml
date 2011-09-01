@@ -19,21 +19,19 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/hibernate.xml" afterPath="$PROJECT_DIR$/.idea/libraries/hibernate.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/junit.xml" afterPath="$PROJECT_DIR$/.idea/libraries/junit.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/libraries/spring.xml" afterPath="$PROJECT_DIR$/.idea/libraries/spring.xml" />
+    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="#165 - Correction form for saving scenario, save scenarios are not yet">
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/vcs.xml" afterPath="$PROJECT_DIR$/.idea/vcs.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/build-impl.xml" afterPath="$PROJECT_DIR$/nbproject/build-impl.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/genfiles.properties" afterPath="$PROJECT_DIR$/nbproject/genfiles.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/project.properties" afterPath="$PROJECT_DIR$/nbproject/project.properties" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/nbproject/project.xml" afterPath="$PROJECT_DIR$/nbproject/project.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EEGDatabase.iml" afterPath="$PROJECT_DIR$/src/EEGDatabase.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/java/test-context.xml" afterPath="$PROJECT_DIR$/src/java/test-context.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/sun-jaxws.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/sun-jaxws.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jetty-web.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/jetty-web.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/services/fourierForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/services/fourierForm.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/services/matchingForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/services/matchingForm.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" afterPath="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
     </list>
-    <ignored path="$USER_HOME$/.griffon/" />
-    <ignored path="$USER_HOME$/.grails/" />
+    <ignored path="$USER_HOME_GRIFFON$/" />
+    <ignored path="$USER_HOME_GRAILS$/" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -46,7 +44,6 @@
     <rightPanel />
     <splitter proportion="0.5" />
   </component>
-  <component name="CoverageDataManager" choice="3" />
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="" />
     <option name="REVERSE_PATCH" value="false" />
@@ -114,186 +111,110 @@
       <favorite_root url="file://$PROJECT_DIR$/src/java/messages.properties" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/errors.properties" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/search" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/history" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/group" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/admin" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/person" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/myaccount" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/system" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/root" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/dao" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
       <favorite_root url="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-      <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
       <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" type="psiFile" klass="com.intellij.ide.projectView.impl.nodes.PsiFileNode" />
       <favorite_root url="file://$PROJECT_DIR$/web/WEB-INF/jsp" module="EEGDatabase" type="directory" klass="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
     </favorites_list>
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ScenarioTypeNonSchema.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeNonSchema.java">
+      <file leaf-file-name="chooseMetadata.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/chooseMetadata.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="20" column="12" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0">
+            <state line="11" column="18" selection-start="584" selection-end="584" vertical-scroll-proportion="-7.1923075">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scenario.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Scenario.java">
+      <file leaf-file-name="ZipGenerator.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/zip/ZipGenerator.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="47" column="10" selection-start="1481" selection-end="1481" vertical-scroll-proportion="0.0">
+            <state line="123" column="19" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Scenario.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml">
+      <file leaf-file-name="jetty-web.xml" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jetty-web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="9" column="4" selection-start="510" selection-end="510" vertical-scroll-proportion="0.0">
+            <state line="2" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.09659091">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScenarioTypeNonXml.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeNonXml.java">
+      <file leaf-file-name="DownloadMetadataZipController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="13" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0">
+            <state line="52" column="62" selection-start="1988" selection-end="1988" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScenarioTypeSchema1.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeSchema1.java">
+      <file leaf-file-name="XMLTransformer.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLTransformer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="11" column="0" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0">
+            <state line="38" column="2" selection-start="1008" selection-end="1008" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="Weather.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Weather.java">
+      <file leaf-file-name="fourierForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/fourierForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="17" column="13" selection-start="507" selection-end="507" vertical-scroll-proportion="0.0">
+            <state line="9" column="18" selection-start="432" selection-end="432" vertical-scroll-proportion="-4.576923">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="url-mapping.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
-          <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-            <state />
-          </provider>
+      <file leaf-file-name="matchingForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/matchingForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="138" column="52" selection-start="9778" selection-end="9803" vertical-scroll-proportion="0.0">
+            <state line="9" column="18" selection-start="450" selection-end="450" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SemanticFactory.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/semantic/SemanticFactory.java">
+      <file leaf-file-name="waveletForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="56" column="49" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0">
+            <state line="16" column="18" selection-start="700" selection-end="700" vertical-scroll-proportion="-0.65384614">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SemanticMultiController.java" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/semantic/SemanticMultiController.java">
+      <file leaf-file-name="menu.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="28" selection-start="835" selection-end="835" vertical-scroll-proportion="0.030797102">
+            <state line="16" column="29" selection-start="749" selection-end="749" vertical-scroll-proportion="-10.461538">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ScenarioType.hbm.xml" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml">
+      <file leaf-file-name="menu.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/menu.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="2" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0">
+            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
               <folding />
             </state>
           </provider>
@@ -313,22 +234,22 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp" />
-        <option value="$PROJECT_DIR$/src/java/messages.properties" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
-        <option value="$PROJECT_DIR$/web/files/modalForm.css" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/JSonView.jsp" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/views.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp" />
-        <option value="$PROJECT_DIR$/web/files/js/jmodalForm/modalForm.js" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioController.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/WizardAjaxMultiController.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/chooseMetadata.jsp" />
         <option value="$PROJECT_DIR$/out/artifacts/EEGDatabase/WEB-INF/classes/cz/zcu/kiv/eegdatabase/data/pojo/Article.class" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer/PerformanceTest.java" />
         <option value="$PROJECT_DIR$/src/java/test-context.xml" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer/ArticleServicePerformanceTest.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/project.properties" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/list.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/services/fourierForm.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/services/matchingForm.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp" />
+        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jetty-web.xml" />
       </list>
     </option>
   </component>
@@ -393,48 +314,6 @@
       <sortByType />
     </navigator>
     <panes>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="EEGDatabase">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
       <pane id="Favorites">
         <subPane>
           <PATH>
@@ -499,6 +378,442 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="template" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="services" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="scenario" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lists" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="lists" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eyesDefect" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="experiments" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="web" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="jsp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="articles" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="release-1.0.0" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="java" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="eegdatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="logic" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="controller" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="experiment" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="EEGDatabase">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -706,6 +1021,7 @@
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
         <option name="ValidateXdebugSetup" enabled="true" />
       </method>
     </configuration>
@@ -719,6 +1035,7 @@
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="FlexUnitRunConfigurationType" factoryName="FlexUnit" adl_options="" air_descriptor_path="" air_program_params="" air_publisher_id="" air_root_dir_path="" air_run_mode="AppDescriptor" browser_family="FIREFOX" class_name="" debugger_sdk="Module SDK" html_or_swf_file_path="" launcher_type="OSDefault" main_class_name="" method_name="" module_name="" output_log_level="" package_name="" player_path="FlashPlayer.exe" port="0" run_mode="HtmlOrSwfFile" run_trusted="false" scope="Class" socket_policy_port="0" url_to_launch="http://">
@@ -727,6 +1044,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="Applet" factoryName="Applet">
@@ -745,6 +1063,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="Application" factoryName="Application">
@@ -765,6 +1084,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="JavascriptDebugSession" factoryName="Remote">
@@ -776,6 +1096,7 @@
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
@@ -787,6 +1108,7 @@
           <server_name />
         </option>
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
         <option name="ValidateXdebugSetup" enabled="true" />
       </method>
     </configuration>
@@ -814,6 +1136,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
@@ -825,6 +1148,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote" APPLICATION_SERVER_NAME="Tomcat 6">
@@ -849,6 +1173,7 @@
         <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6">
@@ -909,6 +1234,7 @@
         </option>
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="false" name="EEG Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 6">
@@ -987,6 +1313,8 @@
   <component name="SvnConfiguration" maxAnnotateRevisions="500">
     <option name="USER" value="" />
     <option name="PASSWORD" value="" />
+    <option name="mySSHConnectionTimeout" value="30000" />
+    <option name="mySSHReadTimeout" value="30000" />
     <option name="LAST_MERGED_REVISION" />
     <option name="MERGE_DRY_RUN" value="false" />
     <option name="MERGE_DIFF_USE_ANCESTRY" value="true" />
@@ -997,7 +1325,7 @@
     <option name="IGNORE_SPACES_IN_ANNOTATE" value="true" />
     <option name="SHOW_MERGE_SOURCES_IN_ANNOTATE" value="true" />
     <option name="FORCE_UPDATE" value="false" />
-    <configuration useDefault="true">C:\Documents and Settings\Petr Jezek\Data aplikací\Subversion</configuration>
+    <configuration useDefault="true">C:\Users\pbruha\AppData\Roaming\Subversion</configuration>
     <myIsUseDefaultProxy>false</myIsUseDefaultProxy>
     <supportedVersion>125</supportedVersion>
   </component>
@@ -1005,16 +1333,16 @@
     <option name="myMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="C:\prace\BP\jpergler\eeg-database\trunk" />
-          <option name="myCopyRoot" value="C:\prace\BP\jpergler\eeg-database\trunk" />
+          <option name="myVcsRoot" value="C:\Users\pbruha\Documents\tags\release-1.0.0" />
+          <option name="myCopyRoot" value="C:\Users\pbruha\Documents\tags\release-1.0.0" />
         </SvnCopyRootSimple>
       </list>
     </option>
     <option name="myMoreRealMappingRoots">
       <list>
         <SvnCopyRootSimple>
-          <option name="myVcsRoot" value="C:\prace\BP\jpergler\eeg-database\trunk" />
-          <option name="myCopyRoot" value="C:\prace\BP\jpergler\eeg-database\trunk" />
+          <option name="myVcsRoot" value="C:\Users\pbruha\Documents\tags\release-1.0.0" />
+          <option name="myCopyRoot" value="C:\Users\pbruha\Documents\tags\release-1.0.0" />
         </SvnCopyRootSimple>
       </list>
     </option>
@@ -1048,10 +1376,11 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1372" height="746" extended-state="6" />
-    <editor active="false" />
+    <frame x="-8" y="-8" width="1382" height="744" extended-state="6" />
+    <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26825127" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32598785" sideWeight="0.46422893" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38145897" sideWeight="0.5627981" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1060,22 +1389,22 @@
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19452888" sideWeight="0.6706282" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942554" sideWeight="0.0" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4179357" sideWeight="0.0" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32767403" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.387538" sideWeight="0.25976232" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.47694755" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.06974981" sideWeight="0.67911714" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969605" sideWeight="0.6315789" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32953683" sideWeight="0.0" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3290938" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32903716" sideWeight="0.6717428" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3282572" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750398" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4302462" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.41812402" sideWeight="0.0" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
@@ -1083,6 +1412,15 @@
   <component name="VcsManagerConfiguration">
     <option name="OFFER_MOVE_TO_ANOTHER_CHANGELIST_ON_PARTIAL_COMMIT" value="false" />
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
+    <option name="CHECK_NEW_TODO" value="true" />
+    <option name="myTodoPanelSettings">
+      <value>
+        <are-packages-shown value="false" />
+        <are-modules-shown value="false" />
+        <flatten-packages value="false" />
+        <is-autoscroll-to-source value="false" />
+      </value>
+    </option>
     <option name="PERFORM_UPDATE_IN_BACKGROUND" value="true" />
     <option name="PERFORM_COMMIT_IN_BACKGROUND" value="true" />
     <option name="PERFORM_EDIT_IN_BACKGROUND" value="true" />
@@ -1094,6 +1432,7 @@
     <option name="CHANGED_ON_SERVER_INTERVAL" value="60" />
     <option name="SHOW_ONLY_CHANGED_IN_SELECTION_DIFF" value="true" />
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
+    <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
     <option name="LAST_COMMIT_MESSAGE" value="#165 - Correction form for saving scenario, save scenarios are not yet" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
@@ -1327,70 +1666,15 @@
       <treeView value="true" />
       <verbose value="true" />
       <viewClosedWhenNoErrors value="false" />
+      <expanded value="true" />
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/persistence.xml">
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/index.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="253" column="0" selection-start="10371" selection-end="10371" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/service/DataService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="10" column="17" selection-start="260" selection-end="260" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="jar://C:/Program Files/Java/jdk1.6.0_10/src.zip!/org/w3c/dom/Document.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="17" selection-start="1331" selection-end="1331" vertical-scroll-proportion="-2.4088786" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/service/WaveletProcessingController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="13" selection-start="1193" selection-end="1193" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/IScenarioType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="261" selection-end="261" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="16" selection-start="406" selection-end="406" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeNonSchema.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="12" selection-start="392" selection-end="392" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Scenario.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="47" column="10" selection-start="1481" selection-end="1481" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="9" column="4" selection-start="510" selection-end="510" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeNonXml.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="13" selection-start="212" selection-end="212" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioTypeSchema1.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="0" selection-start="224" selection-end="224" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/Weather.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="17" column="13" selection-start="507" selection-end="507" vertical-scroll-proportion="0.0" />
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
@@ -1398,22 +1682,110 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="138" column="52" selection-start="9778" selection-end="9803" vertical-scroll-proportion="0.0" />
+        <state line="142" column="28" selection-start="10048" selection-end="10048" vertical-scroll-proportion="-8.3">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/semantic/SemanticFactory.java">
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddExperimentWizardController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="56" column="49" selection-start="2096" selection-end="2096" vertical-scroll-proportion="0.0" />
+        <state line="195" column="55" selection-start="9251" selection-end="9251" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/semantic/SemanticMultiController.java">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/controllers.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="28" selection-start="835" selection-end="835" vertical-scroll-proportion="0.030797102" />
+        <state line="905" column="23" selection-start="45448" selection-end="45448" vertical-scroll-proportion="-10.0">
+          <folding />
+        </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml">
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/fourierForm.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="2" selection-start="519" selection-end="519" vertical-scroll-proportion="0.0" />
+        <state line="9" column="18" selection-start="432" selection-end="432" vertical-scroll-proportion="-4.576923">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/matchingForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="9" column="18" selection-start="450" selection-end="450" vertical-scroll-proportion="-0.65384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="18" selection-start="700" selection-end="700" vertical-scroll-proportion="-0.65384614">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="29" selection-start="749" selection-end="749" vertical-scroll-proportion="-10.461538">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/chooseMetadata.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="11" column="18" selection-start="584" selection-end="584" vertical-scroll-proportion="-7.1923075">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLTransformer.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="38" column="2" selection-start="1008" selection-end="1008" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLScenario.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="6" selection-start="247" selection-end="247" vertical-scroll-proportion="-0.014204546">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLMeasuration.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="19" column="6" selection-start="675" selection-end="675" vertical-scroll-proportion="-0.10227273">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="52" column="62" selection-start="1988" selection-end="1988" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/zip/ZipGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="19" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jetty-web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.09659091">
+          <folding />
+        </state>
       </provider>
     </entry>
   </component>

@@ -10,9 +10,9 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
 <ul class="commonButtonMenu">
-  <li><a href="<c:url value='/articles/list.html'/>"><fmt:message key='menuItem.articles.allArticles'/></a></li>
+  <li><a href="<c:url value='list.html'/>"><fmt:message key='menuItem.articles.allArticles'/></a></li>
   <c:if test="${userIsAdminInAnyGroup}">
-    <li><a href="<c:url value='/articles/add-article.html'/>"><fmt:message key='menuItem.articles.addArticle'/></a></li>
+    <li><a href="<c:url value='add-article.html'/>"><fmt:message key='menuItem.articles.addArticle'/></a></li>
   </c:if>
-  <li><a href="<c:url value='/articles/settings.html'/>"><fmt:message key='menuItem.articles.settings'/></a></li>
+  <li><a href="<c:url value='settings.html'/>"><fmt:message key='menuItem.articles.settings'/></a></li>
 </ul>

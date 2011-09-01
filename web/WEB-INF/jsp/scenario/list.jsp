@@ -20,7 +20,7 @@
 
                 <td><c:out value="${scenario.title}" /></td>
                 <td><c:out value="${scenario.scenarioLength}" /></td>
-                <td><a href="<c:url value='/scenarios/detail.html?scenarioId=${scenario.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
+                <td><a href="<c:url value='detail.html?scenarioId=${scenario.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
             </tr>
           </c:if>
         </c:forEach>
