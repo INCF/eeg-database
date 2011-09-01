@@ -19,6 +19,7 @@
             <h1><fmt:message key="pageTitle.editExperiment"/></h1>
 
             <c:url value="edit.html?id=${addExperimentWizard.measurationId}" var="formUrl"/>
+            <c:url value="add-experiment.html" var="next"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
@@ -27,7 +28,7 @@
     </c:choose>
     <!-- -->
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm"
-               name="addExperimentWizard">
+               name="addExperimentWizard" action="${next}" >
         <fieldset>
 
             <form:hidden path="measurationId"/>

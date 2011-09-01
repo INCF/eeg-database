@@ -14,9 +14,10 @@
 <ui:experimentsTemplate pageTitle="pageTitle.addDataFile" jaddData="true">
 
     <h1><fmt:message key="pageTitle.addDataFile"/></h1>
+    <c:url value="add-experiment.html" var="next"/>
 
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm" name="addExperimentWizard"
-               enctype="multipart/form-data">
+               enctype="multipart/form-data" action="${next}">
         <fieldset>
             <table class="formTable">
 

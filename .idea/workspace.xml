@@ -19,11 +19,11 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
+    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="Issues - Scenario links are relative">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/detail.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/detail.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/menu.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/menu.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment3Form.jsp" afterPath="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment3Form.jsp" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -125,19 +125,10 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ZipGenerator.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/zip/ZipGenerator.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="123" column="19" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="jetty-web.xml" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/jetty-web.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0">
+            <state line="4" column="0" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -164,10 +155,46 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="addExperiment1Form.jsp" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="addExperiment1Form.jsp" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="65" selection-start="978" selection-end="978" vertical-scroll-proportion="0.29392973">
+            <state line="30" column="58" selection-start="1225" selection-end="1241" vertical-scroll-proportion="-9.423077">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addExperiment2Form.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="15" column="53" selection-start="613" selection-end="660" vertical-scroll-proportion="-1.9615384">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addExperiment3Form.jsp" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment3Form.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="16" column="51" selection-start="693" selection-end="693" vertical-scroll-proportion="0.543131">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="AddDataFileController.java" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileController.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="28" column="13" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="addArticleForm.jsp" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/articles/addArticleForm.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="8" column="17" selection-start="478" selection-end="478" vertical-scroll-proportion="-5.230769">
               <folding />
             </state>
           </provider>
@@ -191,33 +218,6 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/scenario/menu.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="18" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="-9.807693">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="list.jsp" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="DownloadMetadataZipController.java" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="62" selection-start="1988" selection-end="1988" vertical-scroll-proportion="0.0">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
     </leaf>
   </component>
   <component name="FindManager">
@@ -232,8 +232,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/java/test-context.xml" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer/ArticleServicePerformanceTest.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/lists/eyesDefect/list.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
@@ -242,12 +240,14 @@
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/services/waveletForm.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/DownloadMetadataZipController.java" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jetty-web.xml" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/menu.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/scenario/detail.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/url-mapping.xml" />
-        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp" />
         <option value="$PROJECT_DIR$/web/WEB-INF/project.properties" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jetty-web.xml" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp" />
+        <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment3Form.jsp" />
       </list>
     </option>
   </component>
@@ -670,84 +670,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="release-1.0.0" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="eegdatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="logic" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="controller" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -870,7 +792,7 @@
             <option name="mySupportsDeletion" value="false" />
             <option name="myCanBeAbsent" value="false" />
             <option name="myId" value="UPDATED" />
-            <PATH vcs="svn" revision="952">C:\Users\pbruha\Documents\tags\release-1.0.0\src\java\log4j.xml</PATH>
+            <PATH vcs="svn" revision="954">C:\Users\pbruha\Documents\tags\release-1.0.0\web\WEB-INF\jetty-web.xml</PATH>
           </FILE-GROUP>
           <FILE-GROUP>
             <option name="myUpdateName" value="Created" />
@@ -928,7 +850,6 @@
           <option name="mySupportsDeletion" value="false" />
           <option name="myCanBeAbsent" value="false" />
           <option name="myId" value="MERGED" />
-          <PATH vcs="svn" revision="952">C:\Users\pbruha\Documents\tags\release-1.0.0\web\WEB-INF\url-mapping.xml</PATH>
         </FILE-GROUP>
         <FILE-GROUP>
           <option name="myUpdateName" value="Not in repository" />
@@ -1511,7 +1432,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Issues - Attempt to correction bad links." />
+    <option name="LAST_COMMIT_MESSAGE" value="Issues - Scenario links are relative" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1524,7 +1445,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="List of hearing impairments and visual impairments sorted alphabetically." />
     <MESSAGE value="Implemented editation of hardware definitions." />
     <MESSAGE value="Implemented editing of person optional parameters." />
     <MESSAGE value="Implemented editing of experiment optional parameters." />
@@ -1549,6 +1469,7 @@
     <MESSAGE value="#165 - Correction form for saving person,  added new form for saving scenario" />
     <MESSAGE value="#165 - Correction form for saving scenario, save scenarios are not yet" />
     <MESSAGE value="Issues - Attempt to correction bad links." />
+    <MESSAGE value="Issues - Scenario links are relative" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1747,34 +1668,6 @@
     </buildFile>
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/menu.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/articles/menu.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="29" selection-start="749" selection-end="749" vertical-scroll-proportion="-10.461538">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/chooseMetadata.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="18" selection-start="584" selection-end="584" vertical-scroll-proportion="-7.1923075">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLTransformer.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="38" column="2" selection-start="1008" selection-end="1008" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLScenario.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="6" selection-start="247" selection-end="247" vertical-scroll-proportion="-0.014204546">
@@ -1796,20 +1689,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/zip/ZipGenerator.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="123" column="19" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jetty-web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="2" selection-start="152" selection-end="152" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/scenario/menu.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="31" selection-start="883" selection-end="883" vertical-scroll-proportion="-9.807693">
@@ -1820,16 +1699,6 @@
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/scenario/list.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
-      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="142" column="27" selection-start="10047" selection-end="10047" vertical-scroll-proportion="-3.4">
           <folding />
         </state>
       </provider>
@@ -1855,9 +1724,61 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/zip/ZipGenerator.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="19" selection-start="4844" selection-end="4844" vertical-scroll-proportion="0.40117994">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jetty-web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="0" selection-start="210" selection-end="210" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/url-mapping.xml">
+      <provider editor-type-id="com.intellij.spring.perspectives.SpringBeansStructureEditorProvider">
+        <state />
+      </provider>
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="142" column="27" selection-start="10047" selection-end="10047" vertical-scroll-proportion="-3.4">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/AddDataFileController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="28" column="13" selection-start="1067" selection-end="1067" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/articles/addArticleForm.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="8" column="17" selection-start="478" selection-end="478" vertical-scroll-proportion="-5.230769">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment1Form.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="65" selection-start="978" selection-end="978" vertical-scroll-proportion="0.29392973">
+        <state line="30" column="58" selection-start="1225" selection-end="1241" vertical-scroll-proportion="-9.423077">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment2Form.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="15" column="53" selection-start="613" selection-end="660" vertical-scroll-proportion="-1.9615384">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/web/WEB-INF/jsp/experiments/addExperiment3Form.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="16" column="51" selection-start="693" selection-end="693" vertical-scroll-proportion="0.543131">
           <folding />
         </state>
       </provider>
