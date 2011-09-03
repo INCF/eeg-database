@@ -13,7 +13,7 @@
 <ui:experimentsTemplate pageTitle="pageTitle.addEditExperiment" addExperimentCalendar="true">
 
     <h1><fmt:message key="pageTitle.addExperiment"/></h1>
-     <c:url value="http://eegdatabase.kiv.zcu.cz/experiments/add-experiment.html" var="next"/>
+     <c:url value="add-experiment.html" var="next"/>
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm" name="addExperimentWizard"
                enctype="multipart/form-data" action="${next}">
         <input type="hidden" name="param"/>

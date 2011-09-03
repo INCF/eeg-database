@@ -19,7 +19,7 @@
             <h1><fmt:message key="pageTitle.editExperiment"/></h1>
 
             <c:url value="edit.html?id=${addExperimentWizard.measurationId}" var="formUrl"/>
-            <c:url value="http://eegdatabase.kiv.zcu.cz/experiments/add-experiment.html" var="next"/>
+            
         </c:when>
         <c:otherwise>
             <!-- creating new -->
@@ -27,6 +27,8 @@
         </c:otherwise>
     </c:choose>
     <!-- -->
+    
+<c:url value="add-experiment.html" var="next"/>
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm"
                name="addExperimentWizard" action="${next}" >
         <fieldset>
