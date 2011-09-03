@@ -22,3 +22,4 @@
 @insert_into_PERSON_OPT_PARAM_VAL.sql
 @insert_into_FILE_METADATA_PARAM_DEF.sql
 @insert_into_FILE_METADATA_PARAM_VAL.sql
+@insert_into_SCENARIO_SCHEMA.sql
