@@ -19,17 +19,18 @@
             <h1><fmt:message key="pageTitle.editExperiment"/></h1>
 
             <c:url value="edit.html?id=${addExperimentWizard.measurationId}" var="formUrl"/>
+
         </c:when>
         <c:otherwise>
             <!-- creating new -->
             <h1><fmt:message key="pageTitle.addExperiment"/></h1>
-
-            <c:url value="add-experiment.html" var="formUrl"/>
         </c:otherwise>
     </c:choose>
-    <!--action="${formUrl}" -->
+    <!-- -->
+
+<c:url value="add-experiment.html" var="next"/>
     <form:form method="post" commandName="addExperimentWizard" cssClass="standardInputForm"
-               name="addExperimentWizard">
+               name="addExperimentWizard" action="${next}" >
         <fieldset>
 
             <form:hidden path="measurationId"/>

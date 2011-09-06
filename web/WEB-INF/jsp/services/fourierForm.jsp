@@ -7,7 +7,7 @@
 
     <h1><fmt:message key="link.fastFourier"/></h1>
 
-    <c:url value="/services/resultsFF.html?experimentId=${experimentId}" var="formUrl"/>
+    <c:url value="resultsFF.html?experimentId=${experimentId}" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="fastFourier" cssClass="standardInputForm"
                name="fastFourier">
 

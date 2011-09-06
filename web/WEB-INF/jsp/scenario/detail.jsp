@@ -27,10 +27,10 @@
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='/scenarios/download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />"
+        <a href="<c:url value='download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />"
            class="lightButtonLink"><fmt:message key="link.downloadXMLFile"/></a>
         <c:if test="${isOwner}">
-            <a href="<c:url value='/scenarios/edit.html?id=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message key="button.edit"/></a>
+            <a href="<c:url value='edit.html?id=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message key="button.edit"/></a>
         </c:if>
     </div>
 

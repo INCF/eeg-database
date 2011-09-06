@@ -62,7 +62,38 @@
                   </entry>
                   <entry key="https://svn.origo.ethz.ch/eeg-database/tags">
                     <value>
-                      <list />
+                      <list>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1315060936078" />
+                          <option name="revision" value="957" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-1.0.0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1305638883812" />
+                          <option name="revision" value="905" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-0.3.2" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1305622023061" />
+                          <option name="revision" value="904" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-0.3.1" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1304516586113" />
+                          <option name="revision" value="891" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-0.3.0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1295087716346" />
+                          <option name="revision" value="772" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-0.2.0" />
+                        </SvnBranchItem>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1290679817267" />
+                          <option name="revision" value="701" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/tags/release-0.1.0" />
+                        </SvnBranchItem>
+                      </list>
                     </value>
                   </entry>
                 </map>

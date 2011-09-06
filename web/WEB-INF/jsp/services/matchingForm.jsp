@@ -7,7 +7,7 @@
 
     <h1><fmt:message key="link.matchingPursuit"/></h1>
 
-    <c:url value="/services/resultsMP.html?experimentId=${experimentId}" var="formUrl"/>
+    <c:url value="resultsMP.html?experimentId=${experimentId}" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="matchingPursuit" cssClass="standardInputForm"
                name="matchingPursuit">
 
