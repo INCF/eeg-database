@@ -124,14 +124,11 @@ public class DownloadMetadataZipController extends SimpleFormController {
         log.debug("Saving download history");
         historyDao.create(history);
 
-        List<Experiment> meases = new ArrayList<Experiment>();
-        meases.add(meas);
-        OutputStream out = getZipGenerator().generate(meases, mc.isTitle());
-        ByteArrayOutputStream bout = null;
+        OutputStream out = getZipGenerator().generate(meas, mc.isTitle());
 
-        response.setHeader("Content-Type", "application/zip");
+        response.setHeader("Content-Type", "text/xml");
         if (scenarioName == null) {
-            response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.zip");
+            response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.xml");
         } else {
             String[] names = scenarioName.split(" ");
             scenarioName = names[0];
@@ -139,20 +136,19 @@ public class DownloadMetadataZipController extends SimpleFormController {
                 scenarioName += "_" + names[i];
 
             }
-            response.setHeader("Content-Disposition", "attachment;filename=" + scenarioName + ".zip");
+            response.setHeader("Content-Disposition", "attachment;filename=" + scenarioName + ".xml");
         }
 
         if (out instanceof ByteArrayOutputStream) {
-            bout = (ByteArrayOutputStream) out;
+            ByteArrayOutputStream bout = (ByteArrayOutputStream) out;
             response.getOutputStream().write(bout.toByteArray());
         }
-        // mav.addObject("dataObject", meas);
         log.debug(zipGenerator);
         return null;
-//
     }
 
     protected Experiment setChoosenMetadata(MetadataCommand mc, Experiment fromDB) {
+
         Experiment meas = new Experiment();
         Person subject = new Person();
         meas.setPersonBySubjectPersonId(subject);
@@ -160,16 +156,15 @@ public class DownloadMetadataZipController extends SimpleFormController {
         scen.setTitle(fromDB.getScenario().getTitle());
         meas.setScenario(scen);
 
-
+        meas.getScenario().setScenarioLength(Integer.MIN_VALUE);
         if (mc.isDescription()) {
             meas.getScenario().setDescription(fromDB.getScenario().getDescription());
         }
         if (mc.isLength()) {
             meas.getScenario().setScenarioLength(fromDB.getScenario().getScenarioLength());
-        } else {
-            meas.getScenario().setScenarioLength(Integer.MIN_VALUE);
         }
         if (mc.isScenFile()) {
+            meas.getScenario().setScenarioType(fromDB.getScenario().getScenarioType());
             meas.getScenario().getScenarioType().setScenarioXml(fromDB.getScenario().getScenarioType().getScenarioXml());
         }
 
@@ -262,16 +257,13 @@ public class DownloadMetadataZipController extends SimpleFormController {
             }
         }
         meas.setPersons(persons);
-
-        if (!mc.isMeasuration()) {
+        meas.setTemperature(Integer.MIN_VALUE);
             if (mc.isTimes()) {
                 meas.setEndTime(fromDB.getEndTime());
                 meas.setStartTime(fromDB.getStartTime());
             }
             if (mc.isTemperature()) {
-                meas.setTemperature(meas.getTemperature());
-            } else {
-                meas.setTemperature(Integer.MIN_VALUE);
+                meas.setTemperature(fromDB.getTemperature());
             }
             if (mc.isWeather()) {
                 meas.setWeather(fromDB.getWeather());
@@ -286,7 +278,6 @@ public class DownloadMetadataZipController extends SimpleFormController {
             if (mc.isMeasurationAddParams()) {
                 meas.setExperimentOptParamVals(fromDB.getExperimentOptParamVals());
             }
-        }
         return meas;
     }
 
@@ -298,7 +289,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
     }
 
     /**
-     * @param zipGenerator the zipGenerator to set
+     * @param generator the zipGenerator to set
      */
     public void setZipGenerator(Generator generator) {
         this.zipGenerator = generator;

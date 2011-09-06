@@ -9,7 +9,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.List;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -18,5 +17,5 @@ import javax.xml.bind.JAXBException;
  */
 public interface Generator {
 
-  public OutputStream generate(List<Experiment> meases, boolean scenName) throws JAXBException, SQLException, IOException;
+  public OutputStream generate(Experiment exp, boolean scenName) throws JAXBException, SQLException, IOException;
 }
