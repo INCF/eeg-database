@@ -36,7 +36,6 @@ public class XMLTransformer implements DataTransformer {
   private String experimenter;
   private Log log = LogFactory.getLog(getClass());
 
-  @Override
   public OutputStream transform(Experiment meas, boolean scenarioName) throws JAXBException, IOException {
 
     if (meas == null) {

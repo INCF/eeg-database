@@ -73,9 +73,9 @@ public class DownloadMetadataZipController extends SimpleFormController {
                 params[i] = new FileMetadataParamValId(Integer.parseInt(tmp[1]), Integer.parseInt(tmp[0]));
             }
         }
-        Set<DataFile> newFiles = null;
+        Set<DataFile> newFiles = new HashSet<DataFile>();
         if (fileParam != null || contents != null) {
-            newFiles = new HashSet<DataFile>();
+           // newFiles = new HashSet<DataFile>();
             //go over data files selected from db
             for (DataFile item : files) {
                 DataFile newItem = null;
@@ -126,9 +126,9 @@ public class DownloadMetadataZipController extends SimpleFormController {
 
         OutputStream out = getZipGenerator().generate(meas, mc.isTitle());
 
-        response.setHeader("Content-Type", "text/xml");
+        response.setHeader("Content-Type", "application/zip");
         if (scenarioName == null) {
-            response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.xml");
+            response.setHeader("Content-Disposition", "attachment;filename=Experiment_data.zip");
         } else {
             String[] names = scenarioName.split(" ");
             scenarioName = names[0];
@@ -136,7 +136,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
                 scenarioName += "_" + names[i];
 
             }
-            response.setHeader("Content-Disposition", "attachment;filename=" + scenarioName + ".xml");
+            response.setHeader("Content-Disposition", "attachment;filename=" + scenarioName + ".zip");
         }
 
         if (out instanceof ByteArrayOutputStream) {
@@ -164,6 +164,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
             meas.getScenario().setScenarioLength(fromDB.getScenario().getScenarioLength());
         }
         if (mc.isScenFile()) {
+            meas.getScenario().setScenarioName(fromDB.getScenario().getScenarioName());
             meas.getScenario().setScenarioType(fromDB.getScenario().getScenarioType());
             meas.getScenario().getScenarioType().setScenarioXml(fromDB.getScenario().getScenarioType().getScenarioXml());
         }

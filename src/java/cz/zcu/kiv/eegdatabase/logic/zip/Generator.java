@@ -17,5 +17,5 @@ import javax.xml.bind.JAXBException;
  */
 public interface Generator {
 
-  public OutputStream generate(Experiment exp, boolean scenName) throws JAXBException, SQLException, IOException;
+  public OutputStream generate(Experiment exp, boolean scenName) throws Exception, SQLException, IOException;
 }

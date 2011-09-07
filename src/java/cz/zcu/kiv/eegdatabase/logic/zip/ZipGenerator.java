@@ -8,8 +8,8 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
  *
  * @author Jan Štěbeták
  */
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
+
+import java.io.*;
 import java.sql.Blob;
 import java.util.List;
 import java.util.Set;
@@ -18,187 +18,159 @@ import java.util.zip.ZipOutputStream;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.IScenarioType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import java.io.File;
-import java.io.IOException;
+
 import java.sql.SQLException;
 import javax.xml.bind.JAXBException;
+import javax.xml.transform.Result;
+import javax.xml.transform.Source;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
 import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
-import java.util.HashMap;
-import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
 
 public class ZipGenerator implements Generator {
 
-  protected DataTransformer transformer;
-  protected String metadata;
-  protected String dir;
-  protected String dataZip;
-  private Log log = LogFactory.getLog(getClass());
+    protected DataTransformer transformer;
+    protected String metadata;
+    protected String dir;
+    protected String dataZip;
+    private Log log = LogFactory.getLog(getClass());
 
-  public OutputStream generate(Experiment exp, boolean isScenName) throws JAXBException, SQLException, IOException {
-//    ZipOutputStream zos = null;
-//    ByteArrayOutputStream baos = null;
-//    Map<String, Integer> fileNamesAndCounts = new HashMap<String, Integer>();
-//    try {
-//      log.debug("creating output stream");
-//      baos = new ByteArrayOutputStream();
-//      zos = new ZipOutputStream(baos);
-//      int count = 1;
-//
-//      for (Experiment meas : meases) {
-//        String directory = getDir() + count + File.separator;
-//        log.debug("getting datas from measuration object");
-//        Set<DataFile> datas = meas.getDataFiles();
-//        log.debug("transforming metadata from database to xml file");
-//        OutputStream meta = getTransformer().transform(meas, isScenName);
-//        Scenario scen = meas.getScenario();
-//        log.debug("getting scenario file");
-//        Blob scenarioXml = (Blob) scen.getScenarioType().getScenarioXml();
-//
-//        byte[] xmlMetadata = null;
-//        if (meta instanceof ByteArrayOutputStream) {
-//          xmlMetadata = ((ByteArrayOutputStream) meta).toByteArray();
-//        }
-//        byte[] scenario = null;
-//        log.debug("creating experiment directory in zip file: " + directory);
-//        ZipEntry e = new ZipEntry(directory);
-//        zos.putNextEntry(e);
-//
-//        zos.closeEntry();
-//        if (scenarioXml != null) {
-//          scenario = scenarioXml.getBytes(1, (int) scenarioXml.length());
-//          log.debug("saving xml file of scenario (" + scen.getTitle() + ".xml) to zip file");
-//          e = new ZipEntry(directory + scen.getTitle() + ".xml");
-//          zos.putNextEntry(e);
-//          zos.write(scenario);
-//          zos.closeEntry();
-//        }
-//        if (xmlMetadata != null) {
-//          log.debug("saving xml file of metadata to zip file");
-//          e = new ZipEntry(directory + getMetadata() + ".xml");
-//          zos.putNextEntry(e);
-//          zos.write(xmlMetadata);
-//          zos.closeEntry();
-//        }
-//
-//        String dataDir = getDataZip() + File.separator;
-////        ZipEntry zipDir = new ZipEntry(directory + dataDir);
-////        zos.putNextEntry(zipDir);
-////        zos.closeEntry();
-//        log.debug("creating directory for data files: " + dataDir);
-//        if (datas != null) {
-//          if (datas.size() > 0) {
-//            for (DataFile data : datas) {
-//              Blob blob = data.getFileContent();
-//              if (blob != null) {
-//                byte[] pole = blob.getBytes(1, (int) blob.length());
-//                log.debug("saving data file to zip file");
-//                String fileName = data.getFilename();
-//                String newName = "";
-//                if (fileNamesAndCounts.containsKey(fileName)) {
-//                  String[] partOfName = fileName.split("[.]");
-//                  if (partOfName.length < 2) {
-//                   newName = partOfName[0]+""+fileNamesAndCounts.get(fileName);
-//                   fileNamesAndCounts.put(fileName, (fileNamesAndCounts.get(fileName))+1);
-//                  }
-//                  else {
-//                   for (int i = 0; i < partOfName.length-2; i++) {
-//                     newName = partOfName[i]+".";
-//                   }
-//                   newName = newName + partOfName[partOfName.length-2]+fileNamesAndCounts.get
-//                           (fileName)+"."+partOfName[partOfName.length-1];
-//                   fileNamesAndCounts.put(fileName, (fileNamesAndCounts.get(fileName))+1);
-//                  }
-//
-//                }
-//                else {
-//                  newName = fileName;
-//                  fileNamesAndCounts.put(fileName, 0);
-//                }
-//                ZipEntry z = new ZipEntry(directory + dataDir + newName);
-//                zos.putNextEntry(z);
-//                zos.write(pole);
-//                zos.closeEntry();
-//              }
-//            }
-//          }
-//        }
-//
-//        count++;
-//      }
-//
-//      log.debug("returning output stream of zip file");
-//
-//    } finally {
-//      fileNamesAndCounts.clear();
-//      zos.flush();
-//      zos.close();
-//      return baos;
-//    }
-      return getTransformer().transform(exp, isScenName);
-  }
+    public OutputStream generate(Experiment exp, boolean isScenName) throws Exception, SQLException, IOException {
+        ZipOutputStream zos = null;
+        ByteArrayOutputStream baos = null;
+        try {
+            log.debug("creating output stream");
+            baos = new ByteArrayOutputStream();
+            zos = new ZipOutputStream(baos);
 
-  /**
-   * @return the transformer
-   */
-  public DataTransformer getTransformer() {
-    return transformer;
-  }
+            log.debug("getting datas from experiment object");
+            Set<DataFile> datas = exp.getDataFiles();
+            log.debug("transforming metadata from database to xml file");
+            OutputStream meta = getTransformer().transform(exp, isScenName);
+            Scenario scen = exp.getScenario();
+            log.debug("getting scenario file");
 
-  /**
-   * @param transformer the transformer to set
-   */
-  public void setTransformer(DataTransformer transformer) {
-    this.transformer = transformer;
-  }
+            IScenarioType scenFile = scen.getScenarioType();
 
-  /**
-   * @return the metadata
-   */
-  public String getMetadata() {
-    return metadata;
-  }
+            byte[] xmlMetadata = null;
+            if (meta instanceof ByteArrayOutputStream) {
+                xmlMetadata = ((ByteArrayOutputStream) meta).toByteArray();
+            }
+            byte[] scenario;
+            ZipEntry e;
 
-  /**
-   * @param metadata the metadata to set
-   */
-  public void setMetadata(String metadata) {
-    this.metadata = metadata;
-  }
+            if (scenFile != null) {
+                try {
+                    scenario = toByteArray(scenFile.getScenarioXml());
+                    log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");
+                    e = new ZipEntry("Scenario/" + scen.getScenarioName());
+                    zos.putNextEntry(e);
+                    zos.write(scenario);
+                    zos.closeEntry();
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                }
+            }
+            if (xmlMetadata != null) {
+                log.debug("saving xml file of metadata to zip file");
+                e = new ZipEntry(getMetadata() + ".xml");
+                zos.putNextEntry(e);
+                zos.write(xmlMetadata);
+                zos.closeEntry();
+            }
 
-  /**
-   * @return the dir
-   */
-  public String getDir() {
-    return dir;
-  }
+            for (DataFile d : datas) {
+                e = new ZipEntry(getDataZip() + "/" + d.getFilename());
+                Blob blob = d.getFileContent();
+                if (blob != null) {
+                    byte[] pole = blob.getBytes(1, (int) blob.length());
+                    log.debug("saving data file to zip file");
+                    zos.putNextEntry(e);
+                    zos.write(pole);
+                    zos.closeEntry();
+                }
+            }
+            log.debug("returning output stream of zip file");
 
-  /**
-   * @param dir the dir to set
-   */
-  public void setDir(String dir) {
-    this.dir = dir;
-  }
+        } finally {
+            zos.flush();
+            zos.close();
 
-  /**
-   * @return the dataZip
-   */
-  public String getDataZip() {
-    return dataZip;
-  }
+        }
+        return baos;
+    }
 
-  /**
-   * @param dataZip the dataZip to set
-   */
-  public void setDataZip(String dataZip) {
-    this.dataZip = dataZip;
-  }
+    private byte[] toByteArray(Object o) throws Exception {
+        if (o instanceof Blob) {
+            return ((Blob) o).getBytes(1, (int) ((Blob) o).length());
+        } else if (o instanceof Document) {
+            Source source = new DOMSource((Document) o);
+            ByteArrayOutputStream out = new ByteArrayOutputStream();
+            Result result = new StreamResult(out);
+            TransformerFactory factory = TransformerFactory.newInstance();
+            Transformer transformer = factory.newTransformer();
+            transformer.transform(source, result);
 
-  @Override
-  public String toString() {
-    return "metadata: " + metadata;
-  }
+            return out.toByteArray();
+        }
+
+        return null;
+    }
+
+    /**
+     * @return the transformer
+     */
+    public DataTransformer getTransformer() {
+        return transformer;
+    }
+
+    /**
+     * @param transformer the transformer to set
+     */
+    public void setTransformer(DataTransformer transformer) {
+        this.transformer = transformer;
+    }
+
+    /**
+     * @return the metadata
+     */
+    public String getMetadata() {
+        return metadata;
+    }
+
+    /**
+     * @param metadata the metadata to set
+     */
+    public void setMetadata(String metadata) {
+        this.metadata = metadata;
+    }
+
+    /**
+     * @return the dataZip
+     */
+    public String getDataZip() {
+        return dataZip;
+    }
+
+    /**
+     * @param dataZip the dataZip to set
+     */
+    public void setDataZip(String dataZip) {
+        this.dataZip = dataZip;
+    }
+
+    @Override
+    public String toString() {
+        return "metadata: " + metadata;
+    }
 }
 

@@ -769,7 +769,6 @@
     <bean name="zipGenerator" class="cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator">
         <property name="metadata" value="${metadata.file}"/>
         <property name="transformer" ref="transformer"/>
-        <property name="dir" value="${experiment.dir}"/>
         <property name="dataZip" value="${data.zip}"/>
 
     </bean>
