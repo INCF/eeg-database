@@ -11,7 +11,6 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
 
 import java.io.*;
 import java.sql.Blob;
-import java.util.List;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipOutputStream;
@@ -22,7 +21,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.IScenarioType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 
 import java.sql.SQLException;
-import javax.xml.bind.JAXBException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
@@ -30,6 +28,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
 
 import org.apache.commons.logging.Log;
@@ -44,7 +43,7 @@ public class ZipGenerator implements Generator {
     protected String dataZip;
     private Log log = LogFactory.getLog(getClass());
 
-    public OutputStream generate(Experiment exp, boolean isScenName) throws Exception, SQLException, IOException {
+    public OutputStream generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles) throws Exception, SQLException, IOException {
         ZipOutputStream zos = null;
         ByteArrayOutputStream baos = null;
         try {
@@ -52,10 +51,8 @@ public class ZipGenerator implements Generator {
             baos = new ByteArrayOutputStream();
             zos = new ZipOutputStream(baos);
 
-            log.debug("getting datas from experiment object");
-            Set<DataFile> datas = exp.getDataFiles();
             log.debug("transforming metadata from database to xml file");
-            OutputStream meta = getTransformer().transform(exp, isScenName);
+            OutputStream meta = getTransformer().transform(exp, mc, dataFiles);
             Scenario scen = exp.getScenario();
             log.debug("getting scenario file");
 
@@ -68,7 +65,7 @@ public class ZipGenerator implements Generator {
             byte[] scenario;
             ZipEntry e;
 
-            if (scenFile != null) {
+            if (mc.isScenFile()) {
                 try {
                     scenario = toByteArray(scenFile.getScenarioXml());
                     log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");
@@ -88,7 +85,7 @@ public class ZipGenerator implements Generator {
                 zos.closeEntry();
             }
 
-            for (DataFile d : datas) {
+            for (DataFile d : dataFiles) {
                 e = new ZipEntry(getDataZip() + "/" + d.getFilename());
                 Blob blob = d.getFileContent();
                 if (blob != null) {
