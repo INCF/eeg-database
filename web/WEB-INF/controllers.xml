@@ -777,6 +777,7 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.ChooseMetadataController">
         <property name="experimentDao" ref="experimentDao"/>
         <property name="auth" ref="authorizationManager"/>
+        <property name="personDao" ref="personDao"/>
     </bean>
 
     <!-- Download history  -->

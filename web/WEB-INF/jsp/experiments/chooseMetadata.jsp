@@ -23,7 +23,7 @@
       <td><input id="personId" type="checkbox" name="person" onclick="checkedAll('personsTable', document.getElementById('personId').checked);"/></td>
     </tr>
     <tr>
-      <security:authorize ifAllGranted="ROLE_ADMIN">
+      <c:if test="${userCanSeePersonDetail}">
       <th><fmt:message key="label.name"/></th>
       <td><input type="checkbox" name="name"/></td>
       <th><fmt:message key="label.phoneNumber"/></th>
@@ -35,7 +35,7 @@
       <th><fmt:message key="label.dateOfBirth"/></th>
       <td><input type="checkbox" name="birth"/></td>
     </tr>
-    </security:authorize>
+    </c:if>
     <tr>
       <th><fmt:message key="label.gender"/></th>
       <td><input type="checkbox" name="gender"/></td>
