@@ -217,7 +217,7 @@ public class Experiment implements java.io.Serializable {
     this.histories = histories;
   }
 
-  public boolean isSuitable() {
+  public boolean isSuitable() throws Exception{
     return SignalProcessingUtils.isSuitableExperiment(this);
   }
 }
