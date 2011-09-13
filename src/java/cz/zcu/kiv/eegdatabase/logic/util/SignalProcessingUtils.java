@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import org.springframework.web.servlet.ModelAndView;
 
 import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
@@ -23,13 +24,12 @@ import java.util.zip.ZipInputStream;
  */
 public class SignalProcessingUtils {
 
-       public static boolean isSuitableExperiment(Experiment e) throws SQLException, IOException {
+    public static boolean isSuitableExperiment(Experiment e) throws SQLException, IOException {
         boolean vhdr = false;
         boolean eeg = false;
         Set<DataFile> files = e.getDataFiles();
         for (DataFile file : files) {
             if (file.getFilename().endsWith(".zip")) {
-                System.out.println("zip detected");
                 Blob zipFile = file.getFileContent();
                 ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream
                         (zipFile.getBytes(1, (int) zipFile.length())));
@@ -58,15 +58,25 @@ public class SignalProcessingUtils {
     public static void splitExperimentToView(ModelAndView mav, List<Experiment> list) throws SQLException, IOException {
         List<Experiment> suitable = new ArrayList<Experiment>();
         List<Experiment> notSuitable = new ArrayList<Experiment>();
-        for (Experiment e: list) {
+        for (Experiment e : list) {
             if (isSuitableExperiment(e)) {
                 suitable.add(e);
-            }
-            else {
+            } else {
                 notSuitable.add(e);
             }
         }
         mav.addObject("suitable", suitable);
         mav.addObject("notSuitable", notSuitable);
+    }
+
+    public static byte[] extractZipEntry(ZipInputStream zis) throws Exception {
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        int data = 0;
+        while ((data = zis.read()) != -1) {
+            out.write(data);
+        }
+        byte[] bytes = out.toByteArray();
+        out.close();
+        return bytes;
     }
 }

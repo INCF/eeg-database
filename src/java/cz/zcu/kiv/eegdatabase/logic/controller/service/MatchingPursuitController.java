@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -17,7 +18,11 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.sql.Blob;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class MatchingPursuitController extends AbstractProcessingController {
@@ -36,14 +41,27 @@ public class MatchingPursuitController extends AbstractProcessingController {
         MatchingPursuitCommand cmd = (MatchingPursuitCommand) command;
         ModelAndView mav = new ModelAndView(getSuccessView());
         Experiment experiment = experimentDao.read(Integer.parseInt(request.getParameter("experimentId")));
-        DataFile binaryFile = null;
+       byte[] bytes = null;
         for (DataFile file : experiment.getDataFiles()) {
+            if (file.getFilename().endsWith(".zip")) {
+                Blob zipFile = file.getFileContent();
+                ZipInputStream zis = new ZipInputStream
+                        (new ByteArrayInputStream(zipFile.getBytes(1, (int) zipFile.length())));
+                ZipEntry entry = zis.getNextEntry();
+                while (entry != null) {
+                    if ((entry.getName().endsWith(".eeg"))||(entry.getName().endsWith(".avg"))) {
+                        bytes = SignalProcessingUtils.extractZipEntry(zis);
+                        break;
+                    }
+                    entry = zis.getNextEntry();
+                }
+                break;
+            }
             if (file.getFilename().equals(transformer.getProperties().get("CI").get("DataFile"))) {
-                binaryFile = file;
+                bytes = file.getFileContent().getBytes(1, (int) file.getFileContent().length());
                 break;
             }
         }
-        byte[] bytes = binaryFile.getFileContent().getBytes(1, (int) binaryFile.getFileContent().length());
         double[] binaryData = transformer.readBinaryData(bytes, cmd.getChannel());
         ISignalProcessingResult res = null;
         try {

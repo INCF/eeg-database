@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -19,9 +20,13 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
+import java.sql.Blob;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 
 public class WaveletProcessingController extends AbstractProcessingController {
@@ -54,14 +59,27 @@ public class WaveletProcessingController extends AbstractProcessingController {
         WaveletCommand cmd = (WaveletCommand) command;
         ModelAndView mav = new ModelAndView(getSuccessView());
         Experiment experiment = experimentDao.read(Integer.parseInt(request.getParameter("experimentId")));
-        DataFile binaryFile = null;
+        byte[] bytes = null;
         for (DataFile file : experiment.getDataFiles()) {
+            if (file.getFilename().endsWith(".zip")) {
+                Blob zipFile = file.getFileContent();
+                ZipInputStream zis = new ZipInputStream
+                        (new ByteArrayInputStream(zipFile.getBytes(1, (int) zipFile.length())));
+                ZipEntry entry = zis.getNextEntry();
+                while (entry != null) {
+                    if ((entry.getName().endsWith(".eeg"))||(entry.getName().endsWith(".avg"))) {
+                        bytes = SignalProcessingUtils.extractZipEntry(zis);
+                        break;
+                    }
+                    entry = zis.getNextEntry();
+                }
+                break;
+            }
             if (file.getFilename().equals(transformer.getProperties().get("CI").get("DataFile"))) {
-                binaryFile = file;
+                bytes = file.getFileContent().getBytes(1, (int) file.getFileContent().length());
                 break;
             }
         }
-        byte[] bytes = binaryFile.getFileContent().getBytes(1, (int) binaryFile.getFileContent().length());
         double signal[] = transformer.readBinaryData(bytes, cmd.getChannel());
         ISignalProcessor wt = null;
         if (type.equals("CWT")) {
