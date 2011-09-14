@@ -57,7 +57,13 @@
                 <map>
                   <entry key="https://svn.origo.ethz.ch/eeg-database/branches">
                     <value>
-                      <list />
+                      <list>
+                        <SvnBranchItem>
+                          <option name="creationDateMillis" value="1289748451047" />
+                          <option name="revision" value="679" />
+                          <option name="url" value="https://svn.origo.ethz.ch/eeg-database/branches/db_enhancement" />
+                        </SvnBranchItem>
+                      </list>
                     </value>
                   </entry>
                   <entry key="https://svn.origo.ethz.ch/eeg-database/tags">
