@@ -5,14 +5,8 @@
     <br/>
     <fmt:message key='web.footer.copyright.part1'/>
     <a href="<fmt:message key='web.footer.copyright.linkAddress'/>" title="<fmt:message key='web.footer.copyright.linkTitle'/>">
-    <fmt:message
-        key='web.footer.copyright.linkTitle'/></a> <fmt:message key='web.footer.copyright.part2'/>
     <jsp:useBean id="now" class="java.util.Date" scope="page"/>
-    <fmt:formatDate value="${now}" pattern="yyyy"/>
-
+    <fmt:message
+        key='web.footer.copyright.linkTitle'/></a> <fmt:message key='web.footer.copyright.part2'/><fmt:formatDate value="${now}" pattern="yyyy"/>
 </div>
-<div class="nifButton">
-    <p>
 
-    </p>
-</div>

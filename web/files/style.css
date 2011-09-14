@@ -127,11 +127,6 @@ while still visible in code, so it can be accessible without styles **/
         clear: both;
     }
 
-    .nifButton {
-        background: white;
-        text-align: center;
-    }
-
     .mainContent {
         padding: 10px 0;
     }
