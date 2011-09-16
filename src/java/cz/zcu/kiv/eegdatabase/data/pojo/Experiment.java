@@ -218,7 +218,7 @@ public class Experiment implements java.io.Serializable {
   }
 
   public boolean isSuitable() throws Exception{
-    return SignalProcessingUtils.isSuitableExperiment(this);
+    return (SignalProcessingUtils.getHeaders(this).size() > 0);
   }
 }
 

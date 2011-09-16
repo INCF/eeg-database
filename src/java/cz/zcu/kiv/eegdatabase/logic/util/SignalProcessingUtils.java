@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.xml.crypto.Data;
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -24,42 +25,55 @@ import java.util.zip.ZipInputStream;
  */
 public class SignalProcessingUtils {
 
-    public static boolean isSuitableExperiment(Experiment e) throws SQLException, IOException {
-        boolean vhdr = false;
-        boolean eeg = false;
-        Set<DataFile> files = e.getDataFiles();
-        for (DataFile file : files) {
+    public static List<String> getHeaders(Experiment e) throws Exception {
+        List<String> headers = new ArrayList<String>();
+        for (DataFile file: e.getDataFiles()) {
             if (file.getFilename().endsWith(".zip")) {
                 Blob zipFile = file.getFileContent();
                 ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream
                         (zipFile.getBytes(1, (int) zipFile.length())));
                 ZipEntry entry = zis.getNextEntry();
+                List<String> entryNames = new ArrayList<String>();
                 while (entry != null) {
-                    if (entry.getName().endsWith(".vhdr")) {
-                        vhdr = true;
-                    }
-                    if ((entry.getName().endsWith(".eeg")) || (entry.getName().endsWith(".avg"))) {
-                        eeg = true;
-                    }
+                    entryNames.add(entry.getName());
                     entry = zis.getNextEntry();
                 }
-                zis.close();
+                for (String entryName: entryNames) {
+                    if (entryName.endsWith(".vhdr")) {
+                        int index = entryName.lastIndexOf(".");
+                        String name = entryName.substring(0, index);
+                        for (String entryName2: entryNames) {
+                            if ((entryName2.endsWith(".eeg")) || (entryName2.endsWith(".avg"))) {
+                                if (entryName2.startsWith(name)) {
+                                    headers.add(name);
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                }
             }
             if (file.getFilename().endsWith(".vhdr")) {
-                vhdr = true;
-            }
-            if ((file.getFilename().endsWith(".eeg")) || (file.getFilename().endsWith(".avg"))) {
-                eeg = true;
+                int index = file.getFilename().lastIndexOf(".");
+                String name = file.getFilename().substring(0, index);
+                for (DataFile file2: e.getDataFiles()) {
+                    if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
+                        if (file2.getFilename().startsWith(name)) {
+                            headers.add(name);
+                            break;
+                        }
+                    }
+                }
             }
         }
-        return (vhdr && eeg);
+        return headers;
     }
 
-    public static void splitExperimentToView(ModelAndView mav, List<Experiment> list) throws SQLException, IOException {
+    public static void splitExperimentToView(ModelAndView mav, List<Experiment> list) throws Exception {
         List<Experiment> suitable = new ArrayList<Experiment>();
         List<Experiment> notSuitable = new ArrayList<Experiment>();
         for (Experiment e : list) {
-            if (isSuitableExperiment(e)) {
+            if (getHeaders(e).size() > 0) {
                 suitable.add(e);
             } else {
                 notSuitable.add(e);

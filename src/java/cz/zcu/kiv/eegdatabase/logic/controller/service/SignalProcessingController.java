@@ -21,6 +21,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 
@@ -38,7 +39,8 @@ public class SignalProcessingController extends AbstractController {
         Experiment exp = experimentDao.read(id);
         ModelAndView mav = new ModelAndView("services/notSuitable");
         transformer = new EEGDataTransformer();
-        if (SignalProcessingUtils.isSuitableExperiment(exp)) {
+        List<String> headers = SignalProcessingUtils.getHeaders(exp);
+        if (SignalProcessingUtils.getHeaders(exp).size() > 0) {
             mav = new ModelAndView("services/index");
             mav.addObject("experimentId", id);
         }
