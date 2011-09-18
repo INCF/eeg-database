@@ -25,8 +25,11 @@ public abstract class AbstractProcessingController extends SimpleFormController 
 
     protected GenericDao<Experiment, Integer> experimentDao;
     protected DataTransformer transformer;
+    protected byte[] data;
 
     protected Map referenceData(HttpServletRequest request) throws Exception {
+        String header = request.getParameter("headerName");
+        data = null;
         Map map = new HashMap<String, Object>();
         int id = Integer.parseInt(request.getParameter("experimentId"));
         Experiment experiment = experimentDao.read(id);
@@ -38,18 +41,22 @@ public abstract class AbstractProcessingController extends SimpleFormController 
                         (new ByteArrayInputStream(zipFile.getBytes(1, (int) zipFile.length())));
                 ZipEntry entry = zis.getNextEntry();
                 while (entry != null) {
-                    if (entry.getName().endsWith(".vhdr")) {
+                    if ((entry.getName().endsWith(".vhdr"))&&(entry.getName().startsWith(header))) {
                         bytes = SignalProcessingUtils.extractZipEntry(zis);
-                        break;
+                        //break;
+                    }
+                    if (!(entry.getName().endsWith(".vhdr"))&&(entry.getName().startsWith(header))) {
+                        data = SignalProcessingUtils.extractZipEntry(zis);
                     }
                     entry = zis.getNextEntry();
                 }
                 break;
             }
-            if (d.getFilename().endsWith(".vhdr")) {
+            if ((d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
                 bytes = d.getFileContent().getBytes(1, (int) d.getFileContent().length());
-
-                break;
+            }
+            if (!(d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
+               data = d.getFileContent().getBytes(1, (int) d.getFileContent().length());
             }
         }
         transformer.readVhdr(bytes);

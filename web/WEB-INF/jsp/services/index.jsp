@@ -35,6 +35,7 @@
         </fieldset>
         <div class="actionBox">
             <input type="submit" value="<fmt:message key="button.select"/>" class="lightButtonLink"/>
+            <fmt:message key="text.operation" />
         </div>
     </form:form>
 

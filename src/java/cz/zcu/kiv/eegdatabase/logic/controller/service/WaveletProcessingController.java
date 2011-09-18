@@ -58,29 +58,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         WaveletCommand cmd = (WaveletCommand) command;
         ModelAndView mav = new ModelAndView(getSuccessView());
-        Experiment experiment = experimentDao.read(Integer.parseInt(request.getParameter("experimentId")));
-        byte[] bytes = null;
-        for (DataFile file : experiment.getDataFiles()) {
-            if (file.getFilename().endsWith(".zip")) {
-                Blob zipFile = file.getFileContent();
-                ZipInputStream zis = new ZipInputStream
-                        (new ByteArrayInputStream(zipFile.getBytes(1, (int) zipFile.length())));
-                ZipEntry entry = zis.getNextEntry();
-                while (entry != null) {
-                    if ((entry.getName().endsWith(".eeg"))||(entry.getName().endsWith(".avg"))) {
-                        bytes = SignalProcessingUtils.extractZipEntry(zis);
-                        break;
-                    }
-                    entry = zis.getNextEntry();
-                }
-                break;
-            }
-            if (file.getFilename().equals(transformer.getProperties().get("CI").get("DataFile"))) {
-                bytes = file.getFileContent().getBytes(1, (int) file.getFileContent().length());
-                break;
-            }
-        }
-        double signal[] = transformer.readBinaryData(bytes, cmd.getChannel());
+        double signal[] = transformer.readBinaryData(this.data, cmd.getChannel());
         ISignalProcessor wt = null;
         if (type.equals("CWT")) {
             wt = SignalProcessingFactory.getInstance().getWaveletContinuous();
