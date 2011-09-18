@@ -142,7 +142,8 @@
 
                 <prop key="experiments/add-experiment.html">addExperimentWizardController</prop>
 
-                <prop key="services/index.html">signalProcessingController</prop>
+                <prop key="services/index.html">serviceChooserController</prop>
+                <prop key="services/select-service.html">serviceChooserController</prop>
 
                 <prop key="services/matchingForm.html">matchingPursuitController</prop>
                 <prop key="services/resultsMP.html">matchingPursuitController</prop>

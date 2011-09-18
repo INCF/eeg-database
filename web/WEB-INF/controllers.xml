@@ -925,11 +925,6 @@
 
     <bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
-    <bean id="signalProcessingController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.SignalProcessingController">
-        <property name="experimentDao" ref="experimentDao" />
-        <property name="transformer" ref="dataTransformer" />
-    </bean>
-
     <bean id="matchingPursuitController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.MatchingPursuitController">
         <property name="experimentDao" ref="experimentDao" />
         <property name="transformer" ref="dataTransformer" />
@@ -946,6 +941,10 @@
         <property name="experimentDao" ref="experimentDao" />
         <property name="transformer" ref="dataTransformer" />
         <property name="successView" value="services/results"/>
+    </bean>
+
+    <bean id="serviceChooserController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.ServiceChooserController">
+        <property name="experimentDao" ref="experimentDao" />
     </bean>
 
 </beans>
