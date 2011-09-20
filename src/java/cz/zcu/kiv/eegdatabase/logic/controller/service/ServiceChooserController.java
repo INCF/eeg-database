@@ -3,7 +3,6 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
-import org.apache.jasper.tagplugins.jstl.core.Choose;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
