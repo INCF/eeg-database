@@ -2,3 +2,11 @@
 @20101010_create_table_ARTICLES.sql
 @20101010_alter.sql
 @20101015_alter.sql
+@20110903_alter.sql
+@20110920_alter.sql
+@20110920_create_table_SCENARIO_TYPE_NONSCHEMA.sql
+@20110920_create_table_SCENARIO_TYPE_NONXML.sql
+@20110920_create_table_SCENARIO_TYPE_PARENT.sql
+@20110920_create_table_SCENARIO_TYPE_SCHEMA_1.sql
+@20110920_create_table_SCENARIO_TYPE_SCHEMA_2.sql
+@20110920_create_table_SCENARIO_TYPE_SCHEMA_3.sql
