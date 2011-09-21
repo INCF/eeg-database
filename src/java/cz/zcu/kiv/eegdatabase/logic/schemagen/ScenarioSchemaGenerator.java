@@ -17,7 +17,7 @@ import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Toshiba
+ * User: Jan Koren
  * Date: 6.6.11
  * Time: 20:59
  * To change this template use File | Settings | File Templates.
@@ -39,8 +39,8 @@ public class ScenarioSchemaGenerator {
         String xsd = new String(content);
 
         String registerSchema = "dbms_xmlschema.registerschema(\n" +
-              "    SCHEMAURL => "+ schemaName +",\n" +
-              "    SCHEMADOC => " + xsd +",\n" +
+              "    SCHEMAURL => '"+ schemaName +"',\n" +
+              "    SCHEMADOC => '" + xsd +"',\n" +
               "    LOCAL       => TRUE,\n" +
               "    GENTYPES    => TRUE,\n" +
               "    GENBEAN     => FALSE,\n" +
@@ -65,15 +65,6 @@ public class ScenarioSchemaGenerator {
 
         String s = registerSchema + createTable;
 
-        /*
-        try {
-            clob.setCharacterStream();
-                    setString(1, s);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        */
-
         return s;
     }
 
@@ -85,15 +76,6 @@ public class ScenarioSchemaGenerator {
               "            <column name=\"SCENARIO_XML\"/>\n" +
               "        </property>\n" +
               "    </joined-subclass>";
-
-        /*
-        Clob clob = null;
-        try {
-            clob.setString(0, hbm);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        */
 
         return hbm;
     }
