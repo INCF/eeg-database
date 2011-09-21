@@ -2,7 +2,6 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -40,12 +39,24 @@ public class MatchingPursuitController extends AbstractProcessingController {
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         MatchingPursuitCommand cmd = (MatchingPursuitCommand) command;
         ModelAndView mav = new ModelAndView(getSuccessView());
-        double[] binaryData = transformer.readBinaryData(super.data, cmd.getChannel());
+              int id = Integer.parseInt(request.getParameter("experimentId"));
+        Experiment ex = experimentDao.read(id);
+        byte[] data = null;
+        for (DataFile dataFile : ex.getDataFiles()) {
+            int index = dataFile.getFilename().lastIndexOf(".");
+            if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
+                if ((dataFile.getFilename().endsWith(".avg"))||(dataFile.getFilename().endsWith(".eeg"))) {
+                    data = dataFile.getFileContent().getBytes(1, (int) dataFile.getFileContent().length());
+                    break;
+                }
+            }
+        }
+        double signal[] = transformer.readBinaryData(data, cmd.getChannel());
         ISignalProcessingResult res = null;
         try {
         ISignalProcessor mp = SignalProcessingFactory.getInstance().getMatchingPursuit();
         ((MatchingPursuit) mp).setIterationCount(cmd.getAtom());
-         res = mp.processSignal(binaryData);
+         res = mp.processSignal(signal);
         } catch(OutOfMemoryError e) {
             return new ModelAndView("services/outOfMemory");
         }
@@ -54,7 +65,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
         Double[][] rec = result.get("reconstruction");
         XYSeries XYatom = new XYSeries("Gabor atom");
         XYSeries XYrec = new XYSeries("Reconstructed signal");
-        for (int i = 0; i < binaryData.length; i++) {
+        for (int i = 0; i < signal.length; i++) {
             XYatom.add(i, atoms[0][i]);
             XYrec.add(i, rec[0][i]);
         }

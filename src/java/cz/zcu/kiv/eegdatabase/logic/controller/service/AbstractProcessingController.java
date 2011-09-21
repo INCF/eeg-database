@@ -25,38 +25,20 @@ public abstract class AbstractProcessingController extends SimpleFormController 
 
     protected GenericDao<Experiment, Integer> experimentDao;
     protected DataTransformer transformer;
-    protected byte[] data;
+    protected String fileName;
 
     protected Map referenceData(HttpServletRequest request) throws Exception {
         String header = request.getParameter("headerName");
-        data = null;
         Map map = new HashMap<String, Object>();
         int id = Integer.parseInt(request.getParameter("experimentId"));
         Experiment experiment = experimentDao.read(id);
         byte[] bytes = null;
         for (DataFile d : experiment.getDataFiles()) {
-            if (d.getFilename().endsWith(".zip")) {
-                Blob zipFile = d.getFileContent();
-                ZipInputStream zis = new ZipInputStream
-                        (new ByteArrayInputStream(zipFile.getBytes(1, (int) zipFile.length())));
-                ZipEntry entry = zis.getNextEntry();
-                while (entry != null) {
-                    if ((entry.getName().endsWith(".vhdr"))&&(entry.getName().startsWith(header))) {
-                        bytes = SignalProcessingUtils.extractZipEntry(zis);
-                        //break;
-                    }
-                    if (!(entry.getName().endsWith(".vhdr"))&&(entry.getName().startsWith(header))) {
-                        data = SignalProcessingUtils.extractZipEntry(zis);
-                    }
-                    entry = zis.getNextEntry();
-                }
-                break;
-            }
             if ((d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
                 bytes = d.getFileContent().getBytes(1, (int) d.getFileContent().length());
-            }
-            if (!(d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
-               data = d.getFileContent().getBytes(1, (int) d.getFileContent().length());
+                int index = d.getFilename().lastIndexOf(".");
+                fileName = d.getFilename().substring(0, index);
+                break;
             }
         }
         transformer.readVhdr(bytes);

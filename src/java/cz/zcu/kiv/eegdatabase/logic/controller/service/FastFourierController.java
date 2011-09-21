@@ -46,8 +46,20 @@ public class FastFourierController extends AbstractProcessingController {
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
         FastFourierCommand cmd = (FastFourierCommand) command;
         ModelAndView mav = new ModelAndView(getSuccessView());
-
-        double signal[] = transformer.readBinaryData(super.data, cmd.getChannel());
+        int id = Integer.parseInt(request.getParameter("experimentId"));
+        Experiment ex = experimentDao.read(id);
+        byte[] data = null;
+        for (DataFile dataFile : ex.getDataFiles()) {
+            int index = dataFile.getFilename().lastIndexOf(".");
+            if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
+                if ((dataFile.getFilename().endsWith(".avg"))||(dataFile.getFilename().endsWith(".eeg"))) {
+                    Blob blob = dataFile.getFileContent();
+                    data = blob.getBytes(1, (int) blob.length());
+                    break;
+                }
+            }
+        }
+        double signal[] = transformer.readBinaryData(data, cmd.getChannel());
         ISignalProcessor fft = SignalProcessingFactory.getInstance().getFastFourier();
         ISignalProcessingResult res;
         try {

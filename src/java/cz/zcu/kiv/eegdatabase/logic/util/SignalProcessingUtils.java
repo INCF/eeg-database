@@ -28,31 +28,6 @@ public class SignalProcessingUtils {
     public static List<String> getHeaders(Experiment e) throws Exception {
         List<String> headers = new ArrayList<String>();
         for (DataFile file: e.getDataFiles()) {
-//            if (file.getFilename().endsWith(".zip")) {
-//                Blob zipFile = file.getFileContent();
-//                ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream
-//                        (zipFile.getBytes(1, (int) zipFile.length())));
-//                ZipEntry entry = zis.getNextEntry();
-//                List<String> entryNames = new ArrayList<String>();
-//                while (entry != null) {
-//                    entryNames.add(entry.getName());
-//                    entry = zis.getNextEntry();
-//                }
-//                for (String entryName: entryNames) {
-//                    if (entryName.endsWith(".vhdr")) {
-//                        int index = entryName.lastIndexOf(".");
-//                        String name = entryName.substring(0, index);
-//                        for (String entryName2: entryNames) {
-//                            if ((entryName2.endsWith(".eeg")) || (entryName2.endsWith(".avg"))) {
-//                                if (entryName2.startsWith(name)) {
-//                                    headers.add(name);
-//                                    break;
-//                                }
-//                            }
-//                        }
-//                    }
-//                }
-//            }
             if (file.getFilename().endsWith(".vhdr")) {
                 int index = file.getFilename().lastIndexOf(".");
                 String name = file.getFilename().substring(0, index);
@@ -84,10 +59,11 @@ public class SignalProcessingUtils {
     }
 
     public static byte[] extractZipEntry(ZipInputStream zis) throws Exception {
+        byte[] buff = new byte[1024];
         ByteArrayOutputStream out = new ByteArrayOutputStream();
         int data = 0;
-        while ((data = zis.read()) != -1) {
-            out.write(data);
+        while ((data = zis.read(buff, 0, 1024)) != -1) {
+            out.write(buff, 0, data);
         }
         byte[] bytes = out.toByteArray();
         out.close();
