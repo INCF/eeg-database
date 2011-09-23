@@ -7,7 +7,7 @@
 
     <h1><fmt:message key='pageTitle.forgottenPassword'/></h1>
 
-    <c:url value="/forgotten-password.html" var="formUrl"/>
+    <c:url value="forgotten-password.html" var="formUrl"/>
     <form:form action="${formUrl}" method="post" commandName="forgottenPassword" cssClass="standardInputForm">
         <fieldset>
 
