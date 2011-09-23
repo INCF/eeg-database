@@ -5,6 +5,7 @@
       <root url="jar://$PROJECT_DIR$/lib/spring/spring-2.5.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring/spring-webmvc.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/spring/cglib-2.2.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/spring/spring-test-2.5.6.SEC01.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

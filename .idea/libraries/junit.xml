@@ -1,8 +1,8 @@
 <component name="libraryTable">
   <library name="junit">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/JUnit/junit-4.8.2.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/JUnit/contiperf-1.07.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/JUnit/junit-4.8.2.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />
