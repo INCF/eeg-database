@@ -9,72 +9,59 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 public class DataFileInfo {
 
     private int fileId;
-    private int experimentId;
-    private String scenarioName;
-    private String filename;
-    private String mimeType;
-    private long length;
+	private double samplingRate;
+	private String fileName;
+	private long fileLength;
+	private int experimentId;
+	private String mimeType;
 
-    public DataFileInfo() {
-    }
+	public DataFileInfo() {}
 
-    public DataFileInfo(int experimentId, String scenarioName, int fileId, String filename,
-                        String mimeType, long length) {
+	public int getExperimentId() {
+		return experimentId;
+	}
 
-        this.fileId = fileId;
-        this.filename = filename;
-        this.mimeType = mimeType;
-        this.experimentId = experimentId;
-        this.scenarioName = scenarioName;
-        this.length = length;
-    }
+	public int getFileId() {
+		return fileId;
+	}
 
-    public String getScenarioName() {
-        return scenarioName;
-    }
+	public String getFileName() {
+		return fileName;
+	}
 
-    public void setScenarioName(String scenarioName) {
-        this.scenarioName = scenarioName;
-    }
+	public long getFileLength() {
+		return fileLength;
+	}
 
-    public int getExperimentId() {
-        return experimentId;
-    }
+	public double getSamplingRate() {
+		return samplingRate;
+	}
 
-    public void setExperimentId(int experimentId) {
-        this.experimentId = experimentId;
-    }
+	public String getMimeType() {
+		return mimeType;
+	}
 
+	public void setExperimentId(int experimentId) {
+		this.experimentId = experimentId;
+	}
 
-    public String getFilename() {
-        return filename;
-    }
+	public void setFileId(int fileId) {
+		this.fileId = fileId;
+	}
 
-    public void setFilename(String filename) {
-        this.filename = filename;
-    }
+	public void setFileName(String fileName) {
+		this.fileName = fileName;
+	}
 
-    public String getMimeType() {
-        return mimeType;
-    }
+	public void setFileLength(long fileLength) {
+		this.fileLength = fileLength;
+	}
 
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
+	public void setSamplingRate(double samplingRate) {
+		this.samplingRate = samplingRate;
+	}
 
-    public long getLength() {
-        return length;
-    }
-
-    public void setLength(long length) {
-        this.length = length;
-    }
-
-    public int getFileId() {
-        return fileId;
-    }
-
-    public void setFileId(int fileId) {
-        this.fileId = fileId;
-    }
+	public void setMimeType(String mimeType) {
+		this.mimeType = mimeType;
+	}
 }

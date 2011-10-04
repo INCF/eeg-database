@@ -8,8 +8,6 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
-import javax.xml.soap.SOAPException;
-import javax.xml.ws.WebServiceException;
 import java.util.List;
 
 /**
@@ -41,18 +39,18 @@ public interface UserDataService {
      *
      * @param experimentId Number defining explored experiment
      * @return List of information about experiment's data files
-     * @throws SOAPException wrapped SQLException
+     * @throws DataDownloadException exception occurred on side of web service
      */
     public List<DataFileInfo> getExperimentFiles(int experimentId)
-            throws SOAPException;
+            throws DataDownloadException;
 
     /**
      * Method streaming desired file back to user.
      *
      * @param dataFileId Id of file to download
      * @return Stream of bytes (file)
-     * @throws SOAPException Wrapped SQLException and IOException
+     * @throws DataDownloadException exception occurred on side of web service
      */
     @XmlMimeType("application/octet-stream")
-    public DataHandler downloadFile(int dataFileId) throws SOAPException;
+    public DataHandler downloadFile(int dataFileId) throws DataDownloadException;
 }

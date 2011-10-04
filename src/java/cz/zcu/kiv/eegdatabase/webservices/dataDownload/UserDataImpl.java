@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
@@ -12,7 +11,6 @@ import org.apache.commons.logging.LogFactory;
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
 import javax.jws.WebService;
-import javax.xml.soap.SOAPException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,40 +32,21 @@ public class UserDataImpl implements UserDataService {
     private ExperimentDao experimentDao;
     private Log log = LogFactory.getLog(getClass());
 
-    public ExperimentDao getExperimentDao() {
-        return experimentDao;
-    }
-
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
-    }
-
-    public PersonDao getPersonDao() {
-        return personDao;
     }
 
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
 
-    /**
-     * Method just for checking web service availability.
-     * (user needs to connect through Spring security but doesn't wish to do anything more)
-     *
-     * @return true
-     */
     public boolean isServiceAvailable() {
+
         log.debug("User " + personDao.getLoggedPerson().getUsername() +
                 " verified connection with dataDownload web service.");
         return true;
     }
 
-    /**
-     * Method returning List of information about available experiments.
-     *
-     * @param rights defines rights that user has in desired experiments (user, subject)
-     * @return List of information about available experiments
-     */
     public List<ExperimentInfo> getExperiments(Rights rights) {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
@@ -80,8 +59,21 @@ public class UserDataImpl implements UserDataService {
             experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
 
         for (Experiment experiment : experiments) {
-            exps.add(new ExperimentInfo(experiment.getExperimentId(), experiment.getScenario().getScenarioId(),
-                    experiment.getScenario().getTitle()));
+
+            ExperimentInfo info = new ExperimentInfo();
+            info.setExperimentId(experiment.getExperimentId());
+            info.setOwnerId(experiment.getPersonByOwnerId().getPersonId());
+            info.setSubjectPersonId(experiment.getPersonBySubjectPersonId().getPersonId());
+            info.setScenarioId(experiment.getScenario().getScenarioId());
+            info.setStartTimeInMilis(experiment.getStartTime().getTime());
+            info.setEndTimeInMilis(experiment.getEndTime().getTime());
+            info.setWeatherId(experiment.getWeather().getWeatherId());
+            info.setWeatherNote(experiment.getWeathernote());
+            info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
+            info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
+            info.setTemperature(experiment.getTemperature());
+
+            exps.add(info);
         }
 
         log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list with " + rights.toString() + " rights.");
@@ -89,42 +81,38 @@ public class UserDataImpl implements UserDataService {
         return exps;
     }
 
-    /**
-     * Method returning list of files, which belong to experiment defined by id.
-     *
-     * @param experimentId Number defining explored experiment
-     * @return List of information about experiment's data files
-     * @throws SOAPException wrapped SQLException
-     */
-    public List<DataFileInfo> getExperimentFiles(int experimentId) throws SOAPException {
+    public List<DataFileInfo> getExperimentFiles(int experimentId) throws DataDownloadException {
         List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
         try {
 
             for (DataFile file : files) {
-                fileInfos.add(new DataFileInfo(experimentId, file.getExperiment().getScenario().getTitle(),
-                        file.getDataFileId(), file.getFilename(), file.getMimetype(), file.getFileContent().length()));
+
+                DataFileInfo info = new DataFileInfo();
+
+                info.setExperimentId(file.getExperiment().getExperimentId());
+                info.setFileId(file.getDataFileId());
+                info.setFileLength(file.getFileContent().length());
+                info.setFileName(file.getFilename());
+                info.setMimeType(file.getMimetype());
+                info.setSamplingRate(file.getSamplingRate());
+
+                fileInfos.add(info);
             }
 
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of experiment " + experimentId + " data files.");
         } catch (SQLException e) {
+            DataDownloadException exception = new DataDownloadException(e);
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of experiment " + experimentId + " data files!");
-            log.error(e);
-            throw new SOAPException(e);
+            log.error(e.getMessage(), e);
+            throw exception;
         }
 
         return fileInfos;
     }
 
-    /**
-     * Method streaming desired file back to user.
-     *
-     * @param dataFileId Id of file to download
-     * @return Stream of bytes (file)
-     * @throws SOAPException Wrapped SQLException and IOException
-     */
-    public DataHandler downloadFile(int dataFileId) throws SOAPException {
+    public DataHandler downloadFile(int dataFileId) throws DataDownloadException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
@@ -151,9 +139,10 @@ public class UserDataImpl implements UserDataService {
             };
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved file " + dataFileId);
         } catch (SQLException e) {
+            DataDownloadException exception = new DataDownloadException(e);
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
-            log.error(e);
-            throw new SOAPException(e);
+            log.error(e.getMessage(), e);
+            throw exception;
         }
 
         return new DataHandler(rawData);
