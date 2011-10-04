@@ -16,24 +16,24 @@ var lang = "en";
 function localizeHTML()
 {
     $("[rel*=localize]").localize(messages, {
-        language: lang
-    });
+                language: lang
+            });
 }
 
 var url = getHost() + "" + getScriptURL() + "" + messages + "-" + lang + ".json";
 $.ajax({
-    url: url,
-    dataType: "json",
-    async: false,
-    success: function(data)
-    {
-        localization = data;
-    },
-    error: function (xhr, ajaxOptions, thrownError)
-    {
-        alert("Error while getting localization file! E" + xhr.status + "\nPlease mail me to jendakolena@gmail.com and report this error.");
-    }
-});
+            url: url,
+            dataType: "json",
+            async: false,
+            success: function(data)
+            {
+                localization = data;
+            },
+            error: function (xhr, ajaxOptions, thrownError)
+            {
+                alert("Error while getting localization file! E" + xhr.status + "\nPlease mail me to jendakolena@gmail.com and report this error.");
+            }
+        });
 
 /**
  * Gets localized message.
@@ -75,7 +75,7 @@ function replaceAll(text, strA, strB)
 
 function getScriptURL()
 {
-    var myName = /(^|[\/\\])jquery\.localize\.js(\?|$)/;
+    var myName = /jquery\.localize\.js/;
     var scripts = document.getElementsByTagName("script");
     for (var i = 0; i < scripts.length; i++)
     {
@@ -258,7 +258,7 @@ function getHost()
     $.defaultLanguage = normaliseLang(navigator.language
             ? navigator.language       // Mozilla
             : navigator.userLanguage   // IE
-            );
+    );
 
     // Ensure language code is in the format aa-AA.
     function normaliseLang(lang)
