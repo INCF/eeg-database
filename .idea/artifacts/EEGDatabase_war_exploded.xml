@@ -1,0 +1,13 @@
+<component name="ArtifactManager">
+  <artifact type="exploded-war" name="EEGDatabase:war exploded">
+    <output-path>$PROJECT_DIR$/target/eegdatabase-0.0.1-SNAPSHOT</output-path>
+    <root id="root">
+      <element id="javaee-facet-resources" facet="EEGDatabase/web/Web" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="classes">
+          <element id="module-output" name="EEGDatabase" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>

@@ -21,6 +21,9 @@
           <element id="library" level="project" name="semantic" />
           <element id="library" level="project" name="pdf" />
           <element id="library" level="project" name="social" />
+          <element id="library" level="project" name="ojdbc" />
+          <element id="library" level="project" name="jstl" />
+          <element id="library" level="project" name="junit" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="EEGDatabase/web/Web" />

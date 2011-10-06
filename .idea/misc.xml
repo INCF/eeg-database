@@ -18,6 +18,11 @@
           <module name="EEGDatabase" />
         </modules>
       </facet-type>
+      <facet-type id="web">
+        <modules>
+          <module name="EEGDatabase" />
+        </modules>
+      </facet-type>
     </autodetection-disabled>
   </component>
   <component name="IdProvider" IDEtalkID="B233C33AF8142225EF065BBC3F961789" />
@@ -37,6 +42,13 @@
     <option name="HEAP_SIZE" />
     <option name="LOCALE" />
     <option name="OPEN_IN_BROWSER" value="true" />
+  </component>
+  <component name="MavenProjectsManager">
+    <option name="originalFiles">
+      <list>
+        <option value="$PROJECT_DIR$/pom.xml" />
+      </list>
+    </option>
   </component>
   <component name="ProjectDetails">
     <option name="projectName" value="trunk" />

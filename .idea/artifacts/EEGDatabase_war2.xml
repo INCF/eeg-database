@@ -1,0 +1,15 @@
+<component name="ArtifactManager">
+  <artifact type="war" build-on-make="true" name="EEGDatabase_war">
+    <output-path>$PROJECT_DIR$/out/artifacts/</output-path>
+    <root id="archive" name="EEGDatabase.war">
+      <element id="artifact" artifact-name="EEGDatabase" />
+      <element id="directory" name="WEB-INF">
+        <element id="directory" name="lib">
+          <element id="library" level="project" name="jstl" />
+          <element id="library" level="project" name="junit" />
+          <element id="library" level="project" name="ojdbc" />
+        </element>
+      </element>
+    </root>
+  </artifact>
+</component>
