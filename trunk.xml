@@ -184,7 +184,7 @@
    </javac2>
    
    <copy todir="${eegdatabase.output.dir}">
-     <fileset dir="${module.eegdatabase.basedir}/src/java">
+     <fileset dir="/">
        <patternset refid="compiler.resources"/>
        <type type="file"/>
      </fileset>
@@ -237,10 +237,10 @@
 
 
    <copy todir="${artifact.output.eegdatabase}">
-     <fileset dir="${basedir}/web"/>
+     <fileset dir="/"/>
    </copy>
    <mkdir dir="${artifact.output.eegdatabase}/WEB-INF"/>
-   <copy file="${basedir}/web/WEB-INF/web.xml" tofile="${artifact.output.eegdatabase}/WEB-INF/web.xml"/>
+   <copy file="//WEB-INF/web.xml" tofile="${artifact.output.eegdatabase}/WEB-INF/web.xml"/>
  </target>
  
  <target name="artifact.eegdatabase_war" depends="init.artifacts, artifact.eegdatabase, convertToJSON" description="Build &apos;EEGDatabase_war&apos; artifact">

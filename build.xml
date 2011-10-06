@@ -104,11 +104,11 @@
 	<target name="generate_xml">
 		<hibernatetool>
 			<jdbcconfiguration
-                    configurationfile="src/java/hibernate.cfg.xml"
+                    configurationfile="src/main/java/hibernate.cfg.xml"
                     revengfile = "src/java/hibernate.reveng.xml"
                     packagename="cz.zcu.kiv.eegdatabase.data.pojo"
                     reversestrategy="cz.zcu.kiv.eegdatabase.data.persistent.ReverseEngStrategy"/>
-		<hbm2hbmxml destdir="src/java"/>
+		<hbm2hbmxml destdir="src/main/java"/>
 		</hibernatetool>
 	</target>
 
@@ -117,9 +117,9 @@
 	-->
 	<target name="generate_java">
 		<hibernatetool>
-			<jdbcconfiguration configurationfile="src/java/hibernate.cfg.xml"
+			<jdbcconfiguration configurationfile="src/main/java/hibernate.cfg.xml"
 			revengfile = "src/java/hibernate.reveng.xml" packagename="cz.zcu.kiv.eegdatabase.data.pojo"/>
-		<hbm2java jdk5="true" ejb3="false" destdir="src/java"/>
+		<hbm2java jdk5="true" ejb3="false" destdir="src/main/java"/>
 		</hibernatetool>
 	</target>
 	

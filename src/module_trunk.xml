@@ -98,7 +98,7 @@
     </javac2>
     
     <copy todir="${trunk.output.dir}">
-      <fileset dir="${module.trunk.basedir}/java">
+      <fileset dir="/">
         <patternset refid="compiler.resources"/>
         <type type="file"/>
       </fileset>

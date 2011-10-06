@@ -392,7 +392,7 @@ exists or setup the property manually. For example like this:
     </target>
     <target name="-copy-webdir">
         <copy todir="${build.web.dir}">
-            <fileset dir="${web.docbase.dir}" excludes="${build.web.excludes},${excludes}" includes="${includes}"/>
+            <fileset dir="../src/main/web" excludes="${build.web.excludes},${excludes}" includes="${includes}"/>
         </copy>
         <copy todir="${build.web.dir}/WEB-INF">
             <fileset dir="${webinf.dir}" excludes="${build.web.excludes}"/>
@@ -690,7 +690,7 @@ exists or setup the property manually. For example like this:
     </target>
     <target name="-init-deploy-ant" unless="netbeans.home">
         <property name="deploy.ant.archive" value="${dist.war}"/>
-        <property name="deploy.ant.docbase.dir" value="${web.docbase.dir}"/>
+        <property name="deploy.ant.docbase.dir" value="../src/main/web"/>
         <property name="deploy.ant.resource.dir" value="${resource.dir}"/>
         <property name="deploy.ant.enabled" value="true"/>
     </target>
