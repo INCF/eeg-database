@@ -33,9 +33,10 @@ public class AddScenarioValidator implements Validator {
         if (data.getResearchGroup() == -1) {
             // research group not chosen
             errors.rejectValue("researchGroup", "required.researchGroup");
-        } else if (!auth.personAbleToWriteIntoGroup(data.getResearchGroup())) {
-            errors.rejectValue("researchGroup", "invalid.notAbleToAddExperimentInGroup");
         }
+// else if (!auth.personAbleToWriteIntoGroup(data.getResearchGroup())) {
+//            errors.rejectValue("researchGroup", "invalid.notAbleToAddExperimentInGroup");
+//        }
 
         try {
             int len = Integer.parseInt(data.getLength());

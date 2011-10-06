@@ -142,7 +142,7 @@ public class AddDataFileController
         AddDataFileCommand data = (AddDataFileCommand) command;
 
         // First check the permission
-        if (!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId())) {
+        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId()))&&(!auth.isAdmin())) {
             errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
         } else {
 

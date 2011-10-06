@@ -87,7 +87,7 @@ public class AddExperimentOptParamValController
     public void validate(Object command, Errors errors) {
         AddExperimentOptParamValCommand data = (AddExperimentOptParamValCommand) command;
 
-        if (!auth.userIsOwnerOrCoexperimenter(data.getMeasurationFormId())) {
+        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationFormId()))&&(!auth.isAdmin())) {
             // First check whether the user has permission to add data
             errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
         } else {

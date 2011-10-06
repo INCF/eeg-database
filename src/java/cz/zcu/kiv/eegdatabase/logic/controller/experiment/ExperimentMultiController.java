@@ -86,7 +86,7 @@ public class ExperimentMultiController extends MultiActionController {
         }
         Experiment m = experimentDao.read(id);
 
-        mav.addObject("userIsOwnerOrCoexperimenter", auth.userIsOwnerOrCoexperimenter(id));
+        mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id))||(auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
         mav.addObject("userCanViewPersonDetails", auth.userCanViewPersonDetails(subjectPersonId));
 

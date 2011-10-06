@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+
 /**
  * DAO for checking permissions of users.
  *
@@ -24,6 +26,8 @@ public interface AuthorizationManager {
      *         <code>false</code>
      */
     public boolean userIsExperimenter();
+
+    public boolean isAdmin();
 
     /**
      * Checks whether the logged user is member with

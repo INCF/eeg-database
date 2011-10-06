@@ -58,7 +58,7 @@ public class ScenarioMultiController extends MultiActionController {
         }
         Scenario scenario = scenarioDao.read(id);
         mav.addObject("scenarioDetail", scenario);
-        mav.addObject("isOwner", auth.userIsOwnerOfScenario(id));
+        mav.addObject("isOwner", (auth.userIsOwnerOfScenario(id))||(auth.isAdmin()));
 
         return mav;
     }
