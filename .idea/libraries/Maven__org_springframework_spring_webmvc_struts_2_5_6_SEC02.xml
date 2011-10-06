@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.springframework:spring-webmvc-struts:2.5.6.SEC02">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc-struts/2.5.6.SEC02/spring-webmvc-struts-2.5.6.SEC02.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc-struts/2.5.6.SEC02/spring-webmvc-struts-2.5.6.SEC02-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/springframework/spring-webmvc-struts/2.5.6.SEC02/spring-webmvc-struts-2.5.6.SEC02-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

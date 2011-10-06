@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.jhlabs:imaging:01012005">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jhlabs/imaging/01012005/imaging-01012005.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jhlabs/imaging/01012005/imaging-01012005-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/jhlabs/imaging/01012005/imaging-01012005-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.databene:contiperf:1.07">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/databene/contiperf/1.07/contiperf-1.07.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/databene/contiperf/1.07/contiperf-1.07-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/databene/contiperf/1.07/contiperf-1.07-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
