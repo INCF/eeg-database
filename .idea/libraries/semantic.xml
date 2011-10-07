@@ -1,9 +1,0 @@
-<component name="libraryTable">
-  <library name="semantic">
-    <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/semantic/owlapi-bin.jar!/" />
-    </CLASSES>
-    <JAVADOC />
-    <SOURCES />
-  </library>
-</component>

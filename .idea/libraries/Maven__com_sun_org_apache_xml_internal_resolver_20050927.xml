@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.sun.org.apache.xml.internal:resolver:20050927">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/org/apache/xml/internal/resolver/20050927/resolver-20050927-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

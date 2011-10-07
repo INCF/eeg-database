@@ -1,0 +1,10 @@
+<component name="libraryTable">
+  <library name="ZCU libraries">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/zcu/library_1.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/zcu/JavaToSemanticWeb.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>

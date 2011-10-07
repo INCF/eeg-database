@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.sun.net.httpserver:http:20070405">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/net/httpserver/http/20070405/http-20070405.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/net/httpserver/http/20070405/http-20070405-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/sun/net/httpserver/http/20070405/http-20070405-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
