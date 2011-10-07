@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 
 import java.util.ArrayList;
@@ -39,6 +40,12 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
 
     private int getLoggedPersonId() {
         return personDao.getLoggedPerson().getPersonId();
+    }
+
+    public boolean isAdmin() {
+        Person p = personDao.getLoggedPerson();
+        return (p.getAuthority().equals(Util.ROLE_ADMIN));
+
     }
 
     public boolean userIsExperimenter() {

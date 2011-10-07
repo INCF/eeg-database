@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -18,8 +19,11 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 /**
  * Controller for adding data file to database
@@ -82,7 +86,26 @@ public class AddDataFileController
                 log.debug("Creating measuration with ID " + addDataCommand.getMeasurationId());
                 Experiment experiment = new Experiment();
                 experiment.setExperimentId(addDataCommand.getMeasurationId());
-
+                if (file.getOriginalFilename().endsWith(".zip")) {
+                    ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(file.getBytes()));
+                    ZipEntry en = zis.getNextEntry();
+                    while (en != null) {
+                        if (en.isDirectory()) {
+                            en = zis.getNextEntry();
+                            continue;
+                        }
+                        DataFile data = new DataFile();
+                        data.setExperiment(experiment);
+                        String name[] = en.getName().split("/");
+                        data.setFilename(name[name.length-1]);
+                        data.setSamplingRate(Double.parseDouble(addDataCommand.getSamplingRate()));
+                        data.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
+                        String[] partOfName = en.getName().split("[.]");
+                        data.setMimetype(partOfName[partOfName.length-1]);
+                        dataFileDao.create(data);
+                        en = zis.getNextEntry();
+                    }
+                } else {
                 log.debug("Creating new Data object.");
                 DataFile data = new DataFile();
                 data.setExperiment(experiment);
@@ -102,6 +125,7 @@ public class AddDataFileController
 
                 dataFileDao.create(data);
                 log.debug("Data stored into database.");
+                }
             }
         }
 
@@ -118,7 +142,7 @@ public class AddDataFileController
         AddDataFileCommand data = (AddDataFileCommand) command;
 
         // First check the permission
-        if (!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId())) {
+        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId()))&&(!auth.isAdmin())) {
             errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
         } else {
 

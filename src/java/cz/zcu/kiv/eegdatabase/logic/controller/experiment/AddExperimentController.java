@@ -150,7 +150,7 @@ public class AddExperimentController
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
         ModelAndView mav = new ModelAndView(getSuccessView());
 
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
+        mav.addObject("userIsExperimenter", (auth.userIsExperimenter())||(auth.isAdmin()));
 
         AddExperimentCommand data = (AddExperimentCommand) command;
 
@@ -163,7 +163,7 @@ public class AddExperimentController
             log.debug("Processing measuration form - editing existing measuration");
 
             log.debug("Checking the permission level.");
-            if (!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId())) {
+            if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId()))&&(!auth.isAdmin())) {
                 log.debug("User is not owner or co-experimenter - unable to edit experiment. Returning MAV.");
                 mav.setViewName("experiments/unableToEditExperiment");
                 return mav;
@@ -187,7 +187,7 @@ public class AddExperimentController
             log.debug("Processing measuration form - adding new measuration");
 
             log.debug("Checking the permission level.");
-            if (!auth.userIsExperimenter()) {
+            if ((!auth.userIsExperimenter())) {
                 log.debug("User is not experimenter - unable to add experiment. Returning MAV.");
                 mav.setViewName("experiments/userNotExperimenter");
                 return mav;

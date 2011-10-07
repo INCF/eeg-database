@@ -38,7 +38,7 @@ public class SignalProcessingController extends AbstractController {
         Experiment exp = experimentDao.read(id);
         ModelAndView mav = new ModelAndView("services/notSuitable");
         transformer = new EEGDataTransformer();
-        if (SignalProcessingUtils.isSuitableExperiment(exp)) {
+        if (SignalProcessingUtils.getHeaders(exp).size() > 0) {
             mav = new ModelAndView("services/index");
             mav.addObject("experimentId", id);
         }

@@ -73,12 +73,14 @@ public class AddScenarioController
 
         String idString = request.getParameter("id");
         if (idString != null) {
-            int id = Integer.parseInt(idString);
+            if (!auth.isAdmin()) {
+                int id = Integer.parseInt(idString);
 
-            if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
-                // Editing existing scenario and user is not owner
-                mav.setViewName("redirect:/scenarios/list.html");
-                return mav;
+                if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
+                    // Editing existing scenario and user is not owner
+                    mav.setViewName("redirect:/scenarios/list.html");
+                    return mav;
+                }
             }
         }
 
@@ -94,8 +96,17 @@ public class AddScenarioController
     @Override
     protected Map referenceData(HttpServletRequest request) throws Exception {
         Map map = new HashMap<String, Object>();
-
-        List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
+        String idString = request.getParameter("id");
+        Person owner = null;
+        Scenario scen = null;
+        if (idString != null) {
+            scen = scenarioDao.read(Integer.parseInt(idString));
+            owner = scen.getPerson();
+        }
+        if (owner == null) {
+            owner = personDao.getLoggedPerson();
+        }
+        List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(owner);
         map.put("researchGroupList", groups);
 
         List<ScenarioSchemas> schemaNames = scenarioSchemasDao.getSchemaNames();
@@ -105,6 +116,9 @@ public class AddScenarioController
         map.put("schemaDescriptionsList", schemaDescriptions);
 
         ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
+        if (scen != null) {
+            defaultGroup = scen.getResearchGroup();
+        }
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
 
@@ -123,16 +137,17 @@ public class AddScenarioController
         if (idString != null) {
             id = Integer.parseInt(idString);
         }
+        if (!auth.isAdmin()) {
+            if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
+                // Editing existing scenario and user is not owner
+                mav.setViewName("redirect:/scenarios/list.html");
+                return mav;
+            }
 
-        if ((id > 0) && (!auth.userIsOwnerOfScenario(id))) {
-            // Editing existing scenario and user is not owner
-            mav.setViewName("redirect:/scenarios/list.html");
-            return mav;
-        }
-
-        if (!auth.userIsExperimenter()) {
-            mav.setViewName("scenario/userNotExperimenter");
-            return mav;
+            if (!auth.userIsExperimenter()) {
+                mav.setViewName("scenario/userNotExperimenter");
+                return mav;
+            }
         }
 
         MultipartFile file = data.getDataFile();
@@ -180,7 +195,7 @@ public class AddScenarioController
 
             scenario.setMimetype(file.getContentType());
 
-            scenarioType = (IScenarioType)context.getBean("scenarioTypeNonXml");
+            scenarioType = (IScenarioType) context.getBean("scenarioTypeNonXml");
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
@@ -202,13 +217,13 @@ public class AddScenarioController
 
             //getting the right scenarioType bean
             //no schema - binary storage
-            if(schemaNeeded.equals("noSchema")) {
-                scenarioType = (IScenarioType)context.getBean("scenarioTypeNonSchema");
+            if (schemaNeeded.equals("noSchema")) {
+                scenarioType = (IScenarioType) context.getBean("scenarioTypeNonSchema");
             }
             //schema selected - structured storage
             else {
-                if(schemaId > 0) {
-                scenarioType = (IScenarioType)context.getBean("scenarioTypeSchema" + schemaId);
+                if (schemaId > 0) {
+                    scenarioType = (IScenarioType) context.getBean("scenarioTypeSchema" + schemaId);
                 }
             }
 

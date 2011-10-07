@@ -217,8 +217,8 @@ public class Experiment implements java.io.Serializable {
     this.histories = histories;
   }
 
-  public boolean isSuitable() {
-    return SignalProcessingUtils.isSuitableExperiment(this);
+  public boolean isSuitable() throws Exception{
+    return (SignalProcessingUtils.getHeaders(this).size() > 0);
   }
 }
 

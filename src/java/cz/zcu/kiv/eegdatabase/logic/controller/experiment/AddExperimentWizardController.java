@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
+import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -15,10 +16,13 @@ import org.springframework.web.servlet.mvc.AbstractWizardFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayInputStream;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
 
 import org.springframework.validation.ValidationUtils;
 import org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver;
@@ -296,7 +300,26 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         Set set = m.keySet();
         for (Object key: set) {
             MultipartFile file = (MultipartFile) m.get(key);
-
+             if (file.getOriginalFilename().endsWith(".zip")) {
+                    ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(file.getBytes()));
+                    ZipEntry en = zis.getNextEntry();
+                    while (en != null) {
+                        if (en.isDirectory()) {
+                            en = zis.getNextEntry();
+                            continue;
+                        }
+                        DataFile dataFile = new DataFile();
+                        dataFile.setExperiment(experiment);
+                        String name[] = en.getName().split("/");
+                        dataFile.setFilename(name[name.length-1]);
+                        data.setSamplingRate(data.getSamplingRate());
+                        dataFile.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
+                        String[] partOfName = en.getName().split("[.]");
+                        dataFile.setMimetype(partOfName[partOfName.length-1]);
+                        dataFileDao.create(dataFile);
+                        en = zis.getNextEntry();
+                    }
+                } else {
             DataFile dataFile = new DataFile();
             dataFile.setExperiment(experiment);
 
@@ -315,6 +338,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
             dataFileDao.create(dataFile);
             log.debug("Data stored into database.");
+        }
         }
 
         log.debug("Returning MAV object");
