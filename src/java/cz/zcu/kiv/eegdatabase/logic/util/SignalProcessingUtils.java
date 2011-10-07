@@ -4,16 +4,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import org.springframework.web.servlet.ModelAndView;
 
-import javax.xml.crypto.Data;
-import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
-import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 
 /**
