@@ -1,21 +1,7 @@
 <component name="libraryTable">
   <library name="semantic">
     <CLASSES>
-      <root url="jar://$PROJECT_DIR$/lib/semantic/iri-0.8-sources.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/iri-0.8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/arq-2.8.4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/icu4j-3.4.4.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/jena-2.6.3.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/junit-4.5.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/jenabean-1.0.6.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/log4j-1.2.13.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/owlapi-src.jar!/" />
       <root url="jar://$PROJECT_DIR$/lib/semantic/owlapi-bin.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/slf4j-log4j12-1.5.8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/slf4j-api-1.5.8.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/wstx-asl-3.2.9.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/stax-api-1.0.1.jar!/" />
-      <root url="jar://$PROJECT_DIR$/lib/semantic/xercesImpl-2.7.1.jar!/" />
     </CLASSES>
     <JAVADOC />
     <SOURCES />

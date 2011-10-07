@@ -54,18 +54,8 @@
     </content>
     <orderEntry type="jdk" jdkName="JDK 1.6" jdkType="JavaSDK" />
     <orderEntry type="sourceFolder" forTests="false" />
-    <orderEntry type="module-library" exported="">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../lib/hibernate-search-3.1.1.GA/dist/hibernate-search-3.1.1.GA.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
     <orderEntry type="library" exported="" name="lib1" level="project" />
     <orderEntry type="library" exported="" name="hibernate" level="project" />
-    <orderEntry type="library" exported="" name="lib" level="project" />
     <orderEntry type="library" exported="" name="Tomcat 6" level="application_server_libraries" />
     <orderEntry type="module-library" exported="">
       <library name="PHP 5.3.1">
@@ -94,12 +84,12 @@
     <orderEntry type="library" scope="TEST" name="Maven: org.seleniumhq.selenium:selenium-htmlunit-driver:2.7.0" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.sourceforge.htmlunit:htmlunit:2.9" level="project" />
     <orderEntry type="library" name="Maven: xalan:xalan:2.5.1" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: xml-apis:xml-apis:1.3.04" level="project" />
+    <orderEntry type="library" name="Maven: xml-apis:xml-apis:1.0.b2" level="project" />
     <orderEntry type="library" name="Maven: commons-collections:commons-collections:20040616" level="project" />
     <orderEntry type="library" name="Maven: commons-lang:commons-lang:2.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.apache.httpcomponents:httpmime:4.1.2" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.sourceforge.htmlunit:htmlunit-core-js:2.9" level="project" />
-    <orderEntry type="library" scope="TEST" name="Maven: xerces:xercesImpl:2.9.1" level="project" />
+    <orderEntry type="library" name="Maven: xerces:xercesImpl:2.7.1" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.sourceforge.nekohtml:nekohtml:1.9.15" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: net.sourceforge.cssparser:cssparser:0.9.5" level="project" />
     <orderEntry type="library" scope="TEST" name="Maven: org.w3c.css:sac:1.3" level="project" />
@@ -145,31 +135,51 @@
     <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:2.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-dao:2.0.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:2.0.4" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate:3.2.5.ga" level="project" />
-    <orderEntry type="library" name="Maven: net.sf.ehcache:ehcache:1.2.3" level="project" />
-    <orderEntry type="library" name="Maven: javax.transaction:jta:1.0.1B" level="project" />
-    <orderEntry type="library" name="Maven: asm:asm-attrs:1.5.3" level="project" />
-    <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
-    <orderEntry type="library" name="Maven: antlr:antlr:2.7.6" level="project" />
-    <orderEntry type="library" name="Maven: cglib:cglib:2.1_3" level="project" />
-    <orderEntry type="library" name="Maven: asm:asm:1.5.3" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search:3.1.0.GA" level="project" />
+    <orderEntry type="library" name="Maven: org.hibernate:hibernate-search:3.1.1.GA" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-core:3.3.1.GA" level="project" />
+    <orderEntry type="library" name="Maven: antlr:antlr:2.7.2" level="project" />
+    <orderEntry type="library" name="Maven: dom4j:dom4j:1.6.1" level="project" />
+    <orderEntry type="library" name="Maven: javax.transaction:jta:1.1" level="project" />
     <orderEntry type="library" name="Maven: org.slf4j:slf4j-api:1.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:hibernate-commons-annotations:3.1.0.GA" level="project" />
     <orderEntry type="library" name="Maven: org.hibernate:ejb3-persistence:1.0.2.GA" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-core:2.4.1" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-tools:3.2.4.GA" level="project" />
-    <orderEntry type="library" name="Maven: org.beanshell:bsh:2.0b4" level="project" />
-    <orderEntry type="library" name="Maven: freemarker:freemarker:2.3.8" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:jtidy:r8-20060801" level="project" />
-    <orderEntry type="library" name="Maven: org.hibernate:hibernate-annotations:3.3.1.GA" level="project" />
+    <orderEntry type="library" name="Maven: hsqldb:hsqldb:1.8.0.2" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-core:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-common:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-solrj:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: commons-httpclient:commons-httpclient:3.1" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.commons:commons-io:1.3.2" level="project" />
+    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: stax:stax:1.2.0" level="project" />
+    <orderEntry type="library" name="Maven: stax:stax-api:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: net.java.dev.stax-utils:stax-utils:20040917" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-analyzers:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-core:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-highlighter:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-queries:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-snowball:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-lucene-spellchecker:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.solr:solr-commons-csv:1.3.0" level="project" />
+    <orderEntry type="library" name="Maven: woodstox:wstx-asl:3.2.7" level="project" />
+    <orderEntry type="library" name="Maven: org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:1.0.1" level="project" />
+    <orderEntry type="library" name="Maven: jboss:javassist:3.4.ga" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-analyzers:2.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-highlighter:2.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-queries:2.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-spellchecker:2.4.1" level="project" />
     <orderEntry type="library" name="Maven: org.apache.lucene:lucene-snowball:2.4.1" level="project" />
-    <orderEntry type="library" name="Maven: commons-fileupload:commons-fileupload:1.2.2" level="project" />
+    <orderEntry type="library" name="Maven: com.hp.hpl.jena:arq:2.8.4" level="project" />
+    <orderEntry type="library" name="Maven: com.hp.hpl.jena:jena:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: com.hp.hpl.jena:iri:0.8" level="project" />
+    <orderEntry type="library" name="Maven: com.ibm.icu:icu4j:3.4.4" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.hp.hpl.jena:iri:sources:0.8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: org.slf4j:slf4j-log4j12:1.5.8" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: log4j:log4j:1.2.13" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.hp.hpl.jena:jena:sources:2.6.3" level="project" />
+    <orderEntry type="library" scope="RUNTIME" name="Maven: com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3" level="project" />
+    <orderEntry type="library" name="Maven: org.codehaus.woodstox:wstx-asl:3.2.9" level="project" />
+    <orderEntry type="library" name="Maven: thewebsemantic:jenabean:1.0.6" level="project" />
     <orderEntry type="library" name="Maven: com.itextpdf:itextpdf:5.1.2" level="project" />
     <orderEntry type="library" name="Maven: com.restfb:restfb:1.6.4" level="project" />
     <orderEntry type="library" name="Maven: struts:struts:1.2.9" level="project" />
@@ -200,6 +210,7 @@
     <orderEntry type="library" name="Maven: org.jvnet.staxex:stax-ex:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-rt-frontend-jaxws:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: xml-resolver:xml-resolver:1.2" level="project" />
+    <orderEntry type="library" name="Maven: asm:asm:3.3" level="project" />
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-api:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.cxf:cxf-common-utilities:2.4.2" level="project" />
     <orderEntry type="library" name="Maven: org.apache.ws.xmlschema:xmlschema-core:2.0" level="project" />
