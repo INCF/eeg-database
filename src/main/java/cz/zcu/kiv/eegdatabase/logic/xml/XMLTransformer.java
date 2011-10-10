@@ -30,7 +30,7 @@ import org.apache.commons.logging.LogFactory;
 public class XMLTransformer implements DataTransformer {
 
   private String encoding;
-  private final String XSDSchema = "experiment.xsd";
+  private final String XSDSchema = "src/main/resources/experiment.xsd";
   private String objects;
   private JAXBContext jc;
   private ObjectFactory of;
