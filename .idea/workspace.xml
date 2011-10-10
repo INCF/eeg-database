@@ -20,93 +20,87 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/data" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/logic/controller/group" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/logic/controller" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/logic/util" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/logic" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/mock" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/helper" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/perf/service" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/perf" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test/selenium" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java/test" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/java" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test/resources" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/test" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\derbyclient.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/cxf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/hibernate" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/data/dao/files" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/data/dao" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/data" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/load" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/logic/controller/group" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/logic/controller" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/logic/util" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/logic" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/mock" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf/combinedTest" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer/helper" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer/lists" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf/persistentLayer" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf/service" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/perf" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test/selenium" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/test" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war2.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war2.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/misc.xml" afterPath="$PROJECT_DIR$/.idea/misc.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005/imaging-01012005.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0/ojdbc6-11.2.0.3.0.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0/orai18n-11.1.0.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12/xdb-2009_08_12.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0/eegdsp-1.0.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01/javatosemanticweb-2011_04_01.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413/owlapi-bin-3.0.0.1413.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6/jenabean-1.0.6.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_ojdbc6_11_2_0_3_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_orai18n_11_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_xdb_2009_08_12.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_xmlparserv_2009_07_19.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cz_zcu_kiv_eegdsp_1_0.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cz_zcu_kiv_javatosemanticweb_2011_04_01.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_annotations_3_4_0_GA.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__owlapi_owlapi_bin_3_0_0_1413.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__thewebsemantic_jenabean_1_0_6.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005/imaging-01012005.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0/ojdbc6-11.2.0.3.0.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0/orai18n-11.1.0.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12/xdb-2009_08_12.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0/eegdsp-1.0.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01/javatosemanticweb-2011_04_01.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413/owlapi-bin-3.0.0.1413.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/maven-metadata-local.xml" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6/jenabean-1.0.6.pom" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/maven-metadata-local.xml" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\libraries\Third_party_libraries.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\libraries\ZCU_libraries.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\jenabean-1.0.6.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\ojdbc6.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\orai18n.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\owlapi-bin.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\xdb.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\xmlparserv2.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/third-party" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\zcu\JavaToSemanticWeb.jar" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\zcu\library_1.0.jar" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/zcu" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/lib" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EEGDatabase.iml" afterPath="$PROJECT_DIR$/src/EEGDatabase.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLTransformer.java" afterPath="$PROJECT_DIR$/src/main/java/cz/zcu/kiv/eegdatabase/logic/xml/XMLTransformer.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\AbstractDataAccessTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/AbstractDataAccessTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\ArticleDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/ArticleDaoTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\DaoCollection.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/DaoCollection.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\ExperimentTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/ExperimentTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\SimpleReservationDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/SimpleReservationDaoTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\SimpleScenarioSchemasDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/SimpleScenarioSchemasDaoTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\SimpleScenarioTypeDaoTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/SimpleScenarioTypeDaoTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\files\noxml.txt" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files/noxml.txt" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\files\p300.xml" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files/p300.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\files\scenarios.xml" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files/scenarios.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\files\settings.xml" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files/settings.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\data\dao\files\subjects.xml" afterPath="$PROJECT_DIR$/src/test/java/test/data/dao/files/subjects.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\logic\AbstractControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/logic/AbstractControllerTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\logic\controller\group\AddBookingRoomViewParamsControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/logic/controller/group/AddBookingRoomViewParamsControllerTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\logic\controller\group\BookingRoomAjaxControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/logic/controller/group/BookingRoomAjaxControllerTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\logic\controller\group\BookingRoomControllerTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/logic/controller/group/BookingRoomControllerTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\logic\util\BookingRoomUtilsTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/logic/util/BookingRoomUtilsTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\mock\MockFactory.java" afterPath="$PROJECT_DIR$/src/test/java/test/mock/MockFactory.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\mock\SimplePersonDao.java" afterPath="$PROJECT_DIR$/src/test/java/test/mock/SimplePersonDao.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\ArticleServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/ArticleServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\ExperimentsServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/ExperimentsServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\PerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/PerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\ScenarioServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/ScenarioServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\helper\DateFormater.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/helper/DateFormater.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\ExperimentOptParamDefPerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/ExperimentOptParamDefPerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\FileMetadataParamDefPerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/FileMetadataParamDefPerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\HardwareServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/HardwareServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\HearingImpairmentServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/HearingImpairmentServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\PersonOptParamDefPerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/PersonOptParamDefPerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\VisualImpairmentServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/VisualImpairmentServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\persistentLayer\lists\WeatherServicePerformanceTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/lists/WeatherServicePerformanceTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\perf\service\GraphRenderer.java" afterPath="$PROJECT_DIR$/src/test/java/test/perf/service/GraphRenderer.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\selenium\AddScenarioSchemaTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/selenium/AddScenarioSchemaTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\cz\zcu\kiv\eegdatabase\test\selenium\AddScenarioTest.java" afterPath="$PROJECT_DIR$/src/test/java/test/selenium/AddScenarioTest.java" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\experiment.xsd" afterPath="$PROJECT_DIR$/src/main/resources/experiment.xsd" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\hibernate.cfg.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.cfg.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\hibernate.reveng.xml" afterPath="$PROJECT_DIR$/src/main/resources/hibernate.reveng.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\log4j.dtd" afterPath="$PROJECT_DIR$/src/main/resources/log4j.dtd" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\log4j.xml" afterPath="$PROJECT_DIR$/src/main/resources/log4j.xml" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\messages.properties" afterPath="$PROJECT_DIR$/src/main/resources/messages.properties" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\project.test.properties" afterPath="$PROJECT_DIR$/src/main/resources/project.test.properties" />
-      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\java\test-context.xml" afterPath="$PROJECT_DIR$/src/test/resources/test-context.xml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -211,12 +205,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/persistence.xml" />
         <option value="$PROJECT_DIR$/src/java/test-context.xml" />
         <option value="$PROJECT_DIR$/src/main/java/log4j.xml" />
-        <option value="$PROJECT_DIR$/pom.xml" />
         <option value="$PROJECT_DIR$/src/main/resources/experiment.xsd" />
         <option value="$PROJECT_DIR$/src/test/java/test/data/AbstractDataAccessTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/test/logic/AbstractControllerTest.java" />
         <option value="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/PerformanceTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/test-context.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -237,6 +231,56 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="eegdatabase" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="eegdatabase" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="com.octo.captcha:jcaptcha:1.0" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependencyNode" />
+        </PATH_ELEMENT>
+      </PATH>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="eegdatabase" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="javax.mail:mail:1.4.2" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependencyNode" />
+        </PATH_ELEMENT>
+      </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="" />
@@ -386,200 +430,6 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="java" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="test" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="data" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="webapp" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="WEB-INF" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="resources" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="src" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="main" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="lib" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
         </subPane>
       </pane>
       <pane id="Scope">
@@ -619,7 +469,7 @@
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="true" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="124" />
-    <property name="project.structure.last.edited" value="Modules" />
+    <property name="project.structure.last.edited" value="Artifacts" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="143" />
     <property name="project.structure.proportion" value="0.15" />
@@ -1215,7 +1065,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-4" y="-4" width="1288" height="778" extended-state="6" />
+    <frame x="-4" y="-4" width="1288" height="778" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32646593" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
@@ -1367,13 +1217,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="32" selection-start="574" selection-end="574" vertical-scroll-proportion="0.037777778">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/json-converter.xml">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="44" selection-start="622" selection-end="622" vertical-scroll-proportion="0.7064935">
@@ -1437,13 +1280,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/test/data/AbstractDataAccessTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="50" selection-start="651" selection-end="651" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/logic/AbstractControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="34" column="66" selection-start="1140" selection-end="1140" vertical-scroll-proportion="0.5066225">
@@ -1478,6 +1314,20 @@
       </provider>
       <provider selected="true" editor-type-id="text-editor">
         <state line="18" column="36" selection-start="814" selection-end="814" vertical-scroll-proportion="-4.852459">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/java/test/data/AbstractDataAccessTest.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="22" column="50" selection-start="651" selection-end="651" vertical-scroll-proportion="0.8831169">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="253" column="75" selection-start="8453" selection-end="8453" vertical-scroll-proportion="0.7532467">
           <folding />
         </state>
       </provider>
@@ -1549,7 +1399,7 @@
       </state>
       <state key="ProjectLibrariesConfigurable.UI">
         <settings>
-          <last-edited>Maven: antlr:antlr:2.7.6</last-edited>
+          <last-edited>Maven: xml-resolver:xml-resolver:1.2</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>

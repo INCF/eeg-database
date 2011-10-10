@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: com.oracle:xmlparserv:2009_07_19">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

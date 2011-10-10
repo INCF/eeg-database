@@ -136,8 +136,6 @@
           <element id="library" level="project" name="Maven: taglibs:standard:1.1.2" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.1.2" />
           <element id="library" level="project" name="Maven: net.sf.ehcache:ehcache:1.2.3" />
-          <element id="library" level="project" name="Third-party libraries" />
-          <element id="library" level="project" name="ZCU libraries" />
           <element id="library" level="project" name="Maven: org.apache.geronimo.specs:geronimo-jms_1.1_spec:1.1.1" />
           <element id="library" level="project" name="Maven: org.apache.xmlbeans:xmlbeans:2.4.0" />
           <element id="library" level="project" name="Maven: org.codehaus.jra:jra:1.0-alpha-4" />
@@ -226,6 +224,15 @@
           <element id="library" level="project" name="Maven: cglib:cglib:2.2" />
           <element id="library" level="project" name="Maven: asm:asm:3.1" />
           <element id="library" level="project" name="Maven: asm:asm-attrs:1.5.3" />
+          <element id="library" level="project" name="Maven: com.oracle:ojdbc6:11.2.0.3.0" />
+          <element id="library" level="project" name="Maven: com.oracle:orai18n:11.1.0" />
+          <element id="library" level="project" name="Maven: com.oracle:xdb:2009_08_12" />
+          <element id="library" level="project" name="Maven: com.oracle:xmlparserv:2009_07_19" />
+          <element id="library" level="project" name="Maven: cz.zcu.kiv:eegdsp:1.0" />
+          <element id="library" level="project" name="Maven: cz.zcu.kiv:javatosemanticweb:2011_04_01" />
+          <element id="library" level="project" name="Maven: org.hibernate:hibernate-annotations:3.4.0.GA" />
+          <element id="library" level="project" name="Maven: owlapi:owlapi-bin:3.0.0.1413" />
+          <element id="library" level="project" name="Maven: thewebsemantic:jenabean:1.0.6" />
         </element>
       </element>
       <element id="javaee-facet-resources" facet="EEGDatabase/web/Web" />

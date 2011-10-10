@@ -20,6 +20,53 @@
 	</properties>
 
 	<dependencies>
+		<!-- ================================ Locally stored libs ============================== -->
+		<dependency>
+			<groupId>thewebsemantic</groupId>
+			<artifactId>jenabean</artifactId>
+			<version>1.0.6</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>ojdbc6</artifactId>
+			<version>11.2.0.3.0</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>orai18n</artifactId>
+			<version>11.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>owlapi</groupId>
+			<artifactId>owlapi-bin</artifactId>
+			<version>3.0.0.1413</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>xdb</artifactId>
+			<version>2009_08_12</version>
+		</dependency>
+		<dependency>
+			<groupId>com.oracle</groupId>
+			<artifactId>xmlparserv</artifactId>
+			<version>2009_07_19</version>
+		</dependency>
+		<dependency>
+			<groupId>com.jhlabs</groupId>
+			<artifactId>imaging</artifactId>
+			<version>01012005</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.zcu.kiv</groupId>
+			<artifactId>javatosemanticweb</artifactId>
+			<version>2011_04_01</version>
+		</dependency>
+		<dependency>
+			<groupId>cz.zcu.kiv</groupId>
+			<artifactId>eegdsp</artifactId>
+			<version>1.0</version>
+		</dependency>
+
 		<!--=================================== Test scoped libraries ================================== -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -244,6 +291,12 @@
             <artifactId>hibernate-core</artifactId>
             <version>3.3.1.GA</version>
         </dependency>
+
+		<dependency>
+		    <groupId>org.hibernate</groupId>
+		    <artifactId>hibernate-annotations</artifactId>
+		    <version>3.4.0.GA</version>
+		</dependency>
 
         <dependency>
             <groupId>org.hibernate</groupId>
@@ -499,6 +552,12 @@
 	</dependencies>
 
 	<repositories>
+	
+		<!-- Local repository for in-house libs and jars not available in public repos -->
+		<repository>
+			<id>cz.zcu.kiv.eegdatabase.repo.local</id>
+			<url>file://${basedir}/repo</url>
+		</repository>
 
 		<!-- SpringSource Enterprise Bundle Repository (release + external) -->
 		<repository>
@@ -524,14 +583,6 @@
 			<id>net.java.download.maven.2</id>
 			<name>java.net Repository for Maven</name>
 			<url>http://download.java.net/maven/2/</url>
-		</repository>
-
-
-		<!-- Jahia (for jcaptcha dependency com.jhlabs:imaging:jar) -->
-		<repository>
-			<id>org.jahia.maven.maven2</id>
-			<name>Jahia repository</name>
-			<url>http://maven.jahia.org/maven2/</url>
 		</repository>
 
 	</repositories>
