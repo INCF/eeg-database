@@ -16,6 +16,7 @@
 		<spring.security.version>2.0.4</spring.security.version>
 		<spring.webmvc.struts.version>2.5.6.SEC02</spring.webmvc.struts.version>
 		<lucene.version>2.4.1</lucene.version>
+		<slf4j-version>1.6.1</slf4j-version>
 	</properties>
 
 	<dependencies>
@@ -50,6 +51,21 @@
 			<version>1.0</version>
 			<scope>test</scope>
 		</dependency>
+		
+		<!-- ====================================== Slf4j ============================================== -->
+
+		<dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>compile</scope>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-log4j12</artifactId>
+            <version>${slf4j-version}</version>
+            <scope>compile</scope>
+        </dependency>
 
 		<!--=======================================Java.net jars ======================================= -->
 		<dependency>
@@ -124,7 +140,7 @@
 			<version>${spring.version}</version>
 			<exclusions>
 				<exclusion>
-					<groupId>commons-logging</groupId>
+					<groupId>commons-;logging</groupId>
 					<artifactId>commons-logging</artifactId>
 				</exclusion>
 			</exclusions>
@@ -222,11 +238,24 @@
 		</dependency>
 
 		<!--======================================= Hibernate ============================================= -->
+
+        <dependency>
+            <groupId>org.hibernate</groupId>
+            <artifactId>hibernate-core</artifactId>
+            <version>3.3.1.GA</version>
+        </dependency>
+
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>
             <version>3.1.1.GA</version>
         </dependency>
+
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-tools</artifactId>
+			<version>3.2.4.GA</version>
+		</dependency>
 
         <dependency>
             <groupId>org.apache.solr</groupId>
@@ -238,7 +267,19 @@
             <groupId>jboss</groupId>
             <artifactId>javassist</artifactId>
             <version>3.4.ga</version>
-        </dependency>
+	    </dependency>
+	
+		<dependency>
+			<groupId>cglib</groupId>
+			<artifactId>cglib</artifactId>
+			<version>2.2</version>
+		</dependency>
+
+		<dependency>
+			<groupId>asm</groupId>
+			<artifactId>asm-attrs</artifactId>
+			<version>1.5.3</version>
+		</dependency>
 
 		<!--======================================= Lucene ============================================= -->
 		<dependency>
@@ -352,6 +393,24 @@
 
         <!-- ============================== Cxf libraries - lots of transitive dependencies ===================== -->
 
+        <dependency>
+            <groupId>org.apache.cxf</groupId>
+            <artifactId>cxf-distribution-manifest</artifactId>
+            <version>2.4.3</version>
+            <exclusions>
+				<exclusion>
+					<groupId>org.slf4j</groupId>
+					<artifactId>slf4j-jdk14</artifactId>
+				</exclusion>
+			</exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.ws.xmlschema</groupId>
+            <artifactId>xmlschema-core</artifactId>
+            <version>2.0</version>
+        </dependency>
+
         <!-- ===================================== Semantic web libs ============================================ -->
 
         <dependency>
@@ -412,13 +471,6 @@
 			<version>1.07.00</version>
 		</dependency>
 		<dependency>
-			<groupId>org.apache.cxf</groupId>
-			<artifactId>cxf-rt-frontend-jaxws</artifactId>
-			<version>2.4.2</version>
-			<type>jar</type>
-			<scope>compile</scope>
-		</dependency>
-		<dependency>
 			<groupId>aspectj</groupId>
 			<artifactId>aspectjtools</artifactId>
 			<version>1.5.4</version>
@@ -444,9 +496,6 @@
             <artifactId>jfreechart</artifactId>
             <version>1.0.13</version>
         </dependency>
-
-		
-		
 	</dependencies>
 
 	<repositories>
