@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ArtifactsWorkspaceSettings">
     <artifacts-to-build>
-      <artifact name="EEGDatabase_war" />
+      <artifact name="EEGDatabase:war exploded" />
     </artifacts-to-build>
   </component>
   <component name="CCaseConfig">
@@ -20,86 +20,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005/imaging-01012005.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0/ojdbc6-11.2.0.3.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0/orai18n-11.1.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12/xdb-2009_08_12.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0/eegdsp-1.0.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01/javatosemanticweb-2011_04_01.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413/owlapi-bin-3.0.0.1413.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6/jenabean-1.0.6.jar" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_ojdbc6_11_2_0_3_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_orai18n_11_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_xdb_2009_08_12.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__com_oracle_xmlparserv_2009_07_19.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cz_zcu_kiv_eegdsp_1_0.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__cz_zcu_kiv_javatosemanticweb_2011_04_01.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__org_hibernate_hibernate_annotations_3_4_0_GA.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__owlapi_owlapi_bin_3_0_0_1413.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__thewebsemantic_jenabean_1_0_6.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/01012005/imaging-01012005.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/jhlabs/imaging/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/11.2.0.3.0/ojdbc6-11.2.0.3.0.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/ojdbc6/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/11.1.0/orai18n-11.1.0.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/orai18n/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/2009_08_12/xdb-2009_08_12.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xdb/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/2009_07_19/xmlparserv-2009_07_19.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/com/oracle/xmlparserv/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/1.0/eegdsp-1.0.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/eegdsp/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/2011_04_01/javatosemanticweb-2011_04_01.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/cz/zcu/kiv/javatosemanticweb/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/3.0.0.1413/owlapi-bin-3.0.0.1413.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/owlapi/owlapi-bin/maven-metadata-local.xml" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/1.0.6/jenabean-1.0.6.pom" />
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/repo/thewebsemantic/jenabean/maven-metadata-local.xml" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\libraries\Third_party_libraries.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\libraries\ZCU_libraries.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\jenabean-1.0.6.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\ojdbc6.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\orai18n.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\owlapi-bin.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\xdb.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\third-party\xmlparserv2.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/third-party" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\zcu\JavaToSemanticWeb.jar" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\zcu\library_1.0.jar" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib/zcu" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/lib" afterPath="" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase.xml" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\artifacts\EEGDatabase.xml" afterPath="" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\artifacts\EEGDatabase_war2.xml" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EEGDatabase.iml" afterPath="$PROJECT_DIR$/src/EEGDatabase.iml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
@@ -240,56 +164,6 @@
           <option name="myItemId" value="eegdatabase" />
           <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
         </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="eegdatabase" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="com.octo.captcha:jcaptcha:1.0" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependencyNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="eegdatabase" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="Dependencies" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="javax.mail:mail:1.4.2" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependencyNode" />
-        </PATH_ELEMENT>
-      </PATH>
-      <PATH>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
-        </PATH_ELEMENT>
-        <PATH_ELEMENT>
-          <option name="myItemId" value="eegdatabase" />
-          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
-        </PATH_ELEMENT>
       </PATH>
     </treeState>
   </component>
@@ -344,6 +218,58 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="PackagesPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="trunk" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="EEGDatabase" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="ProjectPane">
+        <subPane>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="maven_build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="maven_build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="maven_build" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
+          <PATH>
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="EEGDatabase">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT USER_OBJECT="trunk">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
+            </PATH_ELEMENT>
+          </PATH>
+        </subPane>
+      </pane>
       <pane id="Favorites">
         <subPane>
           <PATH>
@@ -408,58 +334,6 @@
             <PATH_ELEMENT>
               <option name="myItemId" value="social" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="ProjectPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-          </PATH>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="maven_build" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="Scope">
-        <subPane subId="Project Files">
-          <PATH>
-            <PATH_ELEMENT USER_OBJECT="Root">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="EEGDatabase">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT USER_OBJECT="trunk">
-              <option name="myItemId" value="" />
-              <option name="myItemType" value="" />
-            </PATH_ELEMENT>
-          </PATH>
-        </subPane>
-      </pane>
-      <pane id="PackagesPane">
-        <subPane>
-          <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="trunk" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewProjectNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="EEGDatabase" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PackageViewModuleNode" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
@@ -538,160 +412,19 @@
       <recent name="cz.zcu.kiv.eegdatabase.logic.controller.group" />
     </key>
   </component>
-  <component name="RestoreUpdateTree">
-    <UpdateInfo date="Moments ago" ActionInfo="_Update">
-      <UpdatedFiles>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Updated from server" />
-          <option name="myStatusName" value="Changed on server" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="CHANGED_ON_SERVER" />
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Updated" />
-            <option name="myStatusName" value="Changed" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="UPDATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Created" />
-            <option name="myStatusName" value="Created" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="CREATED" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Deleted" />
-            <option name="myStatusName" value="Deleted" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="true" />
-            <option name="myId" value="REMOVED_FROM_REPOSITORY" />
-          </FILE-GROUP>
-          <FILE-GROUP>
-            <option name="myUpdateName" value="Restored" />
-            <option name="myStatusName" value="Will be restored" />
-            <option name="mySupportsDeletion" value="false" />
-            <option name="myCanBeAbsent" value="false" />
-            <option name="myId" value="RESTORED" />
-          </FILE-GROUP>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Modified" />
-          <option name="myStatusName" value="Modified" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MODIFIED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Skipped" />
-          <option name="myStatusName" value="Skipped" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SKIPPED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with conflicts" />
-          <option name="myStatusName" value="Will be merged with conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_CONFLICTS" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with tree conflicts" />
-          <option name="myStatusName" value="Merged with tree conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_TREE_CONFLICT" />
-          <PATH vcs="svn" revision="994">D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\cxf</PATH>
-          <PATH vcs="svn" revision="994">D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\lib\hibernate</PATH>
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged" />
-          <option name="myStatusName" value="Will be merged" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Not in repository" />
-          <option name="myStatusName" value="Not in repository" />
-          <option name="mySupportsDeletion" value="true" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="UNKNOWN" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally added" />
-          <option name="myStatusName" value="Locally added" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_ADDED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Locally removed" />
-          <option name="myStatusName" value="Locally removed" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="LOCALLY_REMOVED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Switched" />
-          <option name="myStatusName" value="Switched" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="SWITCHED" />
-        </FILE-GROUP>
-        <FILE-GROUP>
-          <option name="myUpdateName" value="Merged with property conflicts" />
-          <option name="myStatusName" value="Will be merged with property conflicts" />
-          <option name="mySupportsDeletion" value="false" />
-          <option name="myCanBeAbsent" value="false" />
-          <option name="myId" value="MERGED_WITH_PROPERTY_CONFLICT" />
-        </FILE-GROUP>
-      </UpdatedFiles>
-    </UpdateInfo>
-  </component>
   <component name="RunManager" selected="Tomcat Server.EEG Tomcat">
-    <configuration default="false" name="All in EEGDatabase" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false" />
+    <configuration default="false" name="All tests in EEGDatabase" type="JUnit" factoryName="JUnit" temporary="true">
+      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
       <module name="EEGDatabase" />
       <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
+      <option name="ALTERNATIVE_JRE_PATH" value="" />
       <option name="PACKAGE_NAME" value="" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
+      <option name="MAIN_CLASS_NAME" value="" />
+      <option name="METHOD_NAME" value="" />
       <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="moduleWithDependencies" />
-      </option>
-      <envs />
-      <patterns />
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method />
-    </configuration>
-    <configuration default="false" name="test.data in EEGDatabase" type="JUnit" factoryName="JUnit" temporary="true">
-      <extension name="coverage" enabled="false" merge="false">
-        <pattern>
-          <option name="PATTERN" value="test.data.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="EEGDatabase" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="test.data" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="package" />
-      <option name="VM_PARAMETERS" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="VM_PARAMETERS" value="" />
+      <option name="PARAMETERS" value="" />
+      <option name="WORKING_DIRECTORY" value="file://$PROJECT_DIR$" />
       <option name="ENV_VARIABLES" />
       <option name="PASS_PARENT_ENVS" value="true" />
       <option name="TEST_SEARCH_SCOPE">
@@ -927,9 +660,9 @@
     <configuration default="false" name="EEG Tomcat" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Idea Tomcat 6">
       <option name="OPEN_IN_BROWSER_URL" value="http://localhost:8080/EEGDatabase/" />
       <option name="COMMON_VM_ARGUMENTS" value="-Xms256m -Xmx512m" />
-      <option name="UPDATING_POLICY" value="hot-swap-classes" />
+      <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
-        <artifact name="EEGDatabase_war">
+        <artifact name="EEGDatabase:war exploded">
           <settings>
             <option name="CONTEXT_PATH" value="/EEGDatabase" />
           </settings>
@@ -982,12 +715,15 @@
           <option name="IS_PREDEFINED" value="false" />
         </EnvironmentVariables>
       </ConfigurationWrapper>
-      <method />
+      <method>
+        <option name="BuildArtifacts" enabled="true">
+          <artifact name="EEGDatabase:war exploded" />
+        </option>
+      </method>
     </configuration>
-    <list size="3">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.EEG Tomcat" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.All in EEGDatabase" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.test.data in EEGDatabase" />
+    <list size="2">
+      <item index="0" class="java.lang.String" itemvalue="JUnit.All tests in EEGDatabase" />
+      <item index="1" class="java.lang.String" itemvalue="Tomcat Server.EEG Tomcat" />
     </list>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
       <Host>localhost</Host>
@@ -1068,12 +804,11 @@
     <frame x="-4" y="-4" width="1288" height="778" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32646593" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3423138" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" sideWeight="0.2282092" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" sideWeight="0.21711569" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4308426" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24867323" sideWeight="0.65025467" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60780984" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
@@ -1083,17 +818,18 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32767403" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26601785" sideWeight="0.19017433" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.47694755" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.22465532" sideWeight="0.6735341" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34144363" sideWeight="0.65768623" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969605" sideWeight="0.6315789" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.25871858" sideWeight="0.6735341" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4199683" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32927817" sideWeight="0.65768623" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5340729" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="SVN Properties" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32750398" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4308426" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="RESTClient" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Duplicates" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3998045" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
@@ -1124,7 +860,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Removed empty lib directories&#10;&#10;Corrected &lt;xs:attribute name=&quot;fileName&quot; type=&quot;xs:String&quot;&gt;&lt;/xs:attribute&gt; to &lt;xs:attribute name=&quot;fileName&quot; &#10;type=&quot;xs:string&quot;&gt;&lt;/xs:attribute&gt; in experiment.xsd&#10;&#10;Moved test sources to a separate directory, as by maven conventions. The test are failing when executed.&#10;&#10;Moved application resources from the source directory to resource directory." />
+    <option name="LAST_COMMIT_MESSAGE" value="Added hibernate-annotations to the dependencies.&#10;&#10;Created an ad-hoc local repository to host the in-house and non-public libs.&#10;&#10;Removed the old lib directory.&#10;&#10;ALL dependencies without an exception are now managed by Maven.&#10; &#10;The project can now be imported to Eclipse or other IDEs with Maven support!" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -1137,7 +873,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Implemented control of uniqueness of description when adding or creating visual impairment." />
     <MESSAGE value="Implemented control of uniqueness of title when adding or editing hardware." />
     <MESSAGE value="Implemented control of uniqueness of title and description when adding or editing weather." />
     <MESSAGE value="Created basic validation of form for creating new group." />
@@ -1162,6 +897,7 @@
     <MESSAGE value="Removed local libs from SVN where possible.&#10;&#10;There are two new lib directories including jars not available in central Maven repository:&#10;1) ZCU jars &#10;2) Third party jars restricting uploads by licence or small projects not uploaded to the central repo.&#10;&#10;All other libs, with the exception of cxf and hibernate are under maven control. Conflicts in csf and hibernate are not yet resolved." />
     <MESSAGE value="Corrected a misconfiguration in log4j.xml ignoring Error entries in the console output.&#10;&#10;Cxf libs are now managed by Maven (due to an incompatibility in cxf 2.2x vs ws.xmlschema 2.0, cxf version was updated to 2.4.3, &#10;slf4j version was updated to 1.6.1)&#10;Hibernate libs are now managed by Maven (core upgraded to 3.3.1, tools downgraded(!) to 3.2.4.GA as newer versions aren't available &#10;in the repos, jdbc2_0-stdext.jar removed as no longer needed &#10;http://www.javakb.com/Uwe/Forum.aspx/java-databases/2175/difference-between-jdbc2-0-stdext-jar-and-ojdbc14-jar)&#10;&#10;Removed hibernate and cxf jar files from the SVN.&#10;&#10;All public JARs are now managed by Maven." />
     <MESSAGE value="Removed empty lib directories&#10;&#10;Corrected &lt;xs:attribute name=&quot;fileName&quot; type=&quot;xs:String&quot;&gt;&lt;/xs:attribute&gt; to &lt;xs:attribute name=&quot;fileName&quot; &#10;type=&quot;xs:string&quot;&gt;&lt;/xs:attribute&gt; in experiment.xsd&#10;&#10;Moved test sources to a separate directory, as by maven conventions. The test are failing when executed.&#10;&#10;Moved application resources from the source directory to resource directory." />
+    <MESSAGE value="Added hibernate-annotations to the dependencies.&#10;&#10;Created an ad-hoc local repository to host the in-house and non-public libs.&#10;&#10;Removed the old lib directory.&#10;&#10;ALL dependencies without an exception are now managed by Maven.&#10; &#10;The project can now be imported to Eclipse or other IDEs with Maven support!" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -1217,25 +953,14 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/json-converter.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="44" selection-start="622" selection-end="622" vertical-scroll-proportion="0.7064935">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/json-converter.properties">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/EEGDatabase.iml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/Trunk.iml">
@@ -1245,67 +970,47 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/selenium/AddScenarioSchemaTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="14" column="13" selection-start="316" selection-end="316" vertical-scroll-proportion="0.48693585">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
+        <state line="14" column="13" selection-start="316" selection-end="316" vertical-scroll-proportion="0.48693585" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/resources/experiment.xsd">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="53" column="8" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.6864608">
-          <folding />
-        </state>
+        <state line="53" column="8" selection-start="2248" selection-end="2248" vertical-scroll-proportion="0.6864608" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/data/dao/files/settings.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/data/dao/SimpleReservationDaoTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="13" selection-start="390" selection-end="390" vertical-scroll-proportion="0.33937824">
-          <folding />
-        </state>
+        <state line="18" column="13" selection-start="390" selection-end="390" vertical-scroll-proportion="0.33937824" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/data/ArticleDaoTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="15" column="44" selection-start="381" selection-end="381" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="15" column="44" selection-start="381" selection-end="381" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/logic/AbstractControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="34" column="66" selection-start="1140" selection-end="1140" vertical-scroll-proportion="0.5066225">
-          <folding />
-        </state>
+        <state line="34" column="66" selection-start="1140" selection-end="1140" vertical-scroll-proportion="0.5066225" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/logic/controller/group/BookingRoomAjaxControllerTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="61" selection-start="712" selection-end="712" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="23" column="61" selection-start="712" selection-end="712" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/ArticleServicePerformanceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="20" column="59" selection-start="704" selection-end="704" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="20" column="59" selection-start="704" selection-end="704" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/PerformanceTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="32" column="56" selection-start="992" selection-end="992" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
+        <state line="32" column="56" selection-start="992" selection-end="992" vertical-scroll-proportion="0.0" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/resources/test-context.xml">
@@ -1313,21 +1018,22 @@
         <state />
       </provider>
       <provider selected="true" editor-type-id="text-editor">
-        <state line="18" column="36" selection-start="814" selection-end="814" vertical-scroll-proportion="-4.852459">
-          <folding />
-        </state>
+        <state line="18" column="36" selection-start="814" selection-end="814" vertical-scroll-proportion="-4.852459" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/data/AbstractDataAccessTest.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="22" column="50" selection-start="651" selection-end="651" vertical-scroll-proportion="0.8831169">
-          <folding />
-        </state>
+        <state line="22" column="50" selection-start="651" selection-end="651" vertical-scroll-proportion="0.8831169" />
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/pom.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="253" column="75" selection-start="8453" selection-end="8453" vertical-scroll-proportion="0.7532467">
+        <state line="253" column="75" selection-start="8453" selection-end="8453" vertical-scroll-proportion="10.641559" />
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.8984772">
           <folding />
         </state>
       </provider>
@@ -1338,7 +1044,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>EEGDatabase</last-edited>
+          <last-edited>EEGDatabase:war exploded</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1351,7 +1057,7 @@
       </state>
       <state key="FacetStructureConfigurable.UI">
         <settings>
-          <last-edited>Bean Validation</last-edited>
+          <last-edited>Hibernate</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
@@ -1366,7 +1072,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.26967594" />
+                <option value="0.23487544" />
               </list>
             </option>
           </splitter-proportions>
@@ -1378,7 +1084,7 @@
           <splitter-proportions>
             <option name="proportions">
               <list>
-                <option value="0.26967594" />
+                <option value="0.23487544" />
               </list>
             </option>
           </splitter-proportions>
@@ -1386,12 +1092,11 @@
       </state>
       <state key="ModuleStructureConfigurable.UI">
         <settings>
-          <last-edited>EEGDatabase</last-edited>
+          <last-edited>Web|EEGDatabase</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
                 <option value="0.23487544" />
-                <option value="0.5" />
               </list>
             </option>
           </splitter-proportions>

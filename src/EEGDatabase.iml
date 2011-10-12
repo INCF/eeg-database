@@ -32,6 +32,10 @@
         <webroots>
           <root url="file://$MODULE_DIR$/main/webapp" relative="/" />
         </webroots>
+        <sourceRoots>
+          <root url="file://$MODULE_DIR$/main/java" />
+          <root url="file://$MODULE_DIR$/main/resources" />
+        </sourceRoots>
       </configuration>
     </facet>
     <facet type="jpa" name="JPA">
