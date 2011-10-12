@@ -32,7 +32,6 @@
           <element id="library" level="project" name="Maven: commons-codec:commons-codec:1.5" />
           <element id="library" level="project" name="Maven: xalan:xalan:2.5.1" />
           <element id="library" level="project" name="Maven: xalan:serializer:2.7.1" />
-          <element id="library" level="project" name="Maven: xml-apis:xml-apis:1.0.b2" />
           <element id="library" level="project" name="Maven: commons-collections:commons-collections:3.2" />
           <element id="library" level="project" name="Maven: commons-lang:commons-lang:2.5" />
           <element id="library" level="project" name="Maven: commons-io:commons-io:2.0.1" />

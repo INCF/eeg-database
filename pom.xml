@@ -136,6 +136,13 @@
             <artifactId>standard</artifactId>
             <version>1.1.2</version>
         </dependency>
+        <dependency>
+        	<groupId>javax.servlet.jsp</groupId>
+        	<artifactId>jsp-api</artifactId>
+        	<version>2.1</version>
+        	<type>jar</type>
+        	<scope>provided</scope>
+        </dependency>
 
         <!--================================== Sun jaxb and jaxws ======================================= -->
 
@@ -290,6 +297,12 @@
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-core</artifactId>
             <version>3.3.1.GA</version>
+            <exclusions>
+            	<exclusion>
+            		<artifactId>xml-apis</artifactId>
+            		<groupId>xml-apis</groupId>
+            	</exclusion>
+            </exclusions>
         </dependency>
 
 		<dependency>

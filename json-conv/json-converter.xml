@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="main" default="convertToJSON" basedir=".">
+<project name="main" default="convertToJSON" basedir="../">
     <description>
         Serves for conversion properties file to JSON format.
     </description>
 
     <property name="app.name" value="Convert Properties to JSON"/>
-    <property file="json-converter.properties"/>
+    <property file="json-conv/json-converter.properties"/>
 
     <!--####### target: compile #######-->
     <target name="compile">

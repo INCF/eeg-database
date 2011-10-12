@@ -1,5 +1,5 @@
 <component name="ArtifactManager">
-  <artifact type="war" name="EEGDatabase:war">
+  <artifact type="war" build-on-make="true" name="EEGDatabase:war">
     <output-path>$PROJECT_DIR$/target</output-path>
     <root id="archive" name="eegdatabase-0.0.1-SNAPSHOT.war">
       <element id="artifact" artifact-name="EEGDatabase:war exploded" />

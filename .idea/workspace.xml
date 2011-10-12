@@ -19,12 +19,18 @@
     <option name="historyRevisionsNumber" value="4" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="">
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\artifacts\EEGDatabase.xml" afterPath="" />
-      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\artifacts\EEGDatabase_war2.xml" afterPath="" />
+    <list default="true" readonly="true" id="cc1cd349-854a-4067-9ece-7f3cb20bb229" name="Default" comment="Artifact and setup cleanup">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/json-conv/jsonconverter.jar" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/json-conv" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/.idea/libraries/Maven__javax_servlet_jsp_jsp_api_2_1.xml" />
+      <change type="DELETED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\.idea\libraries\Maven__xml_apis_xml_apis_1_0_b2.xml" afterPath="" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/EEGDatabase_war_exploded.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/pom.xml" afterPath="$PROJECT_DIR$/pom.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/EEGDatabase.iml" afterPath="$PROJECT_DIR$/src/EEGDatabase.iml" />
+      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\json-converter.properties" afterPath="$PROJECT_DIR$/json-conv/json-converter.properties" />
+      <change type="MOVED" beforePath="D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\json-converter.xml" afterPath="$PROJECT_DIR$/json-conv/json-converter.xml" />
     </list>
     <ignored path="$USER_HOME_GRIFFON$/" />
     <ignored path="$USER_HOME_GRAILS$/" />
@@ -95,8 +101,8 @@
       <property name="field_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByClasses" value="true" />
       <property name="exception_breakpoints_viewId" value="TABLE" />
-      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="field_breakpoints_viewId" value="TABLE" />
+      <property name="exception_breakpoints_groupByClasses" value="true" />
       <property name="method_breakpoints_groupByMethods" value="false" />
     </ui_properties>
   </component>
@@ -119,8 +125,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/web/files/js/jmodalForm/modalForm.js" />
-        <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/scenario/AddScenarioController.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/controllers.xml" />
         <option value="$PROJECT_DIR$/src/java/cz/zcu/kiv/eegdatabase/logic/controller/experiment/WizardAjaxMultiController.java" />
         <option value="$PROJECT_DIR$/web/WEB-INF/jsp/experiments/chooseMetadata.jsp" />
@@ -135,6 +139,8 @@
         <option value="$PROJECT_DIR$/src/test/java/test/perf/persistentLayer/PerformanceTest.java" />
         <option value="$PROJECT_DIR$/src/test/resources/test-context.xml" />
         <option value="$PROJECT_DIR$/pom.xml" />
+        <option value="$PROJECT_DIR$/json-conv/json-converter.properties" />
+        <option value="$PROJECT_DIR$/json-conv/json-converter.xml" />
       </list>
     </option>
   </component>
@@ -155,6 +161,20 @@
   </component>
   <component name="MavenProjectNavigator">
     <treeState>
+      <PATH>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$RootNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="eegdatabase" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$ProjectNode" />
+        </PATH_ELEMENT>
+        <PATH_ELEMENT>
+          <option name="myItemId" value="Dependencies" />
+          <option name="myItemType" value="org.jetbrains.idea.maven.navigator.MavenProjectsStructure$DependenciesNode" />
+        </PATH_ELEMENT>
+      </PATH>
       <PATH>
         <PATH_ELEMENT>
           <option name="myItemId" value="" />
@@ -342,17 +362,17 @@
   </component>
   <component name="PropertiesComponent">
     <property name="GenerateAntBuildDialog.generateIdeaHomeProperty" value="true" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="124" />
     <property name="project.structure.last.edited" value="Artifacts" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth0" value="124" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth3" value="46" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="143" />
-    <property name="project.structure.proportion" value="0.15" />
     <property name="OverrideImplement.combined" value="true" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
+    <property name="project.structure.proportion" value="0.15" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth2" value="143" />
     <property name="options.splitter.main.proportions" value="0.3" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder1" value="1" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder0" value="0" />
-    <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder3" value="3" />
+    <property name="Repository.Attach.JavaDocs" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatOrder2" value="2" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeWidth2" value="120" />
     <property name="recentsLimit" value="5" />
@@ -368,26 +388,26 @@
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="Repository.Attach.Sources" value="false" />
     <property name="MemberChooser.showClasses" value="true" />
+    <property name="Repository.Attach.Sources" value="false" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_flatWidth4" value="818" />
     <property name="GoToClass.includeLibraries" value="false" />
-    <property name="Downloaded.Files.Path" value="C:\Users\pbruha\Documents\trunk\lib" />
     <property name="options.splitter.details.proportions" value="0.2" />
+    <property name="Downloaded.Files.Path" value="C:\Users\pbruha\Documents\trunk\lib" />
     <property name="GoToFile.includeJavaFiles" value="false" />
     <property name="RESOURCE_BUNDLE_SPLITTER_PROPORTION" value="0.5" />
     <property name="options.lastSelected" value="preferences.externalResources" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder3" value="3" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder4" value="4" />
     <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder1" value="1" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
-    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
     <property name="project.structure.side.proportion" value="0.23487544" />
-    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
+    <property name="GenerateAntBuildDialog.forceTargetJdk" value="true" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder2" value="2" />
     <property name="MemberChooser.copyJavadoc" value="false" />
+    <property name="FileHistory.org.jetbrains.idea.svn.history.SvnHistoryProvider_treeOrder0" value="0" />
     <property name="GenerateAntBuildDialog.backupFiles" value="false" />
-    <property name="dynamic.classpath" value="false" />
     <property name="options.searchVisible" value="true" />
+    <property name="dynamic.classpath" value="false" />
   </component>
   <component name="RecentsManager">
     <key name="CopyClassDialog.RECENTS_KEY">
@@ -519,6 +539,19 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
+    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="FtpUpload" enabled="false">
+          <server_id />
+          <server_name />
+        </option>
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
+        <option name="ValidateXdebugSetup" enabled="true" />
+      </method>
+    </configuration>
     <configuration default="true" type="JUnit" factoryName="JUnit">
       <extension name="coverage" enabled="false" merge="false" />
       <module name="" />
@@ -546,17 +579,41 @@
         <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
-    <configuration default="true" type="PhpUnitRemoteRunConfigurationType" factoryName="PHPUnit on Server">
+    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
+      <option name="VM_PARAMETERS" value="" />
+      <option name="USER_CFG_CLASS" />
+      <option name="CONTEXT_PROVIDER" />
       <method>
         <option name="AntTarget" enabled="false" />
         <option name="BuildArtifacts" enabled="false" />
-        <option name="FtpUpload" enabled="false">
-          <server_id />
-          <server_name />
-        </option>
+        <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
         <option name="PhingTarget" enabled="false" />
-        <option name="ValidateXdebugSetup" enabled="true" />
+      </method>
+    </configuration>
+    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
+      <option name="LOCAL" value="false" />
+      <option name="UPDATING_POLICY" value="hot-swap-classes" />
+      <server-settings>
+        <option name="DEPLOY_TOMCAT_APPS" value="false" />
+        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
+      </server-settings>
+      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
+      <extension name="coverage" />
+      <RunnerSettings RunnerId="Debug">
+        <option name="DEBUG_PORT" value="62601" />
+        <option name="TRANSPORT" value="0" />
+        <option name="LOCAL" value="false" />
+      </RunnerSettings>
+      <RunnerSettings RunnerId="Run" />
+      <ConfigurationWrapper RunnerId="Debug" />
+      <ConfigurationWrapper RunnerId="Run" />
+      <method>
+        <option name="AntTarget" enabled="false" />
+        <option name="BuildArtifacts" enabled="false" />
+        <option name="Make" enabled="true" />
+        <option name="Maven.BeforeRunTask" enabled="false" />
+        <option name="PhingTarget" enabled="false" />
       </method>
     </configuration>
     <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local">
@@ -615,43 +672,6 @@
         <option name="BuildArtifacts" enabled="true">
           <artifact name="EEGDatabase_war" />
         </option>
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="PhingTarget" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Remote">
-      <option name="LOCAL" value="false" />
-      <option name="UPDATING_POLICY" value="hot-swap-classes" />
-      <server-settings>
-        <option name="DEPLOY_TOMCAT_APPS" value="false" />
-        <option name="BASE_DIRECTORY_NAME" value="_trunk5cd811fb" />
-      </server-settings>
-      <predefined_log_file id="TOMCAT_LOCALHOST_LOG_ID" enabled="true" />
-      <extension name="coverage" />
-      <RunnerSettings RunnerId="Debug">
-        <option name="DEBUG_PORT" value="62601" />
-        <option name="TRANSPORT" value="0" />
-        <option name="LOCAL" value="false" />
-      </RunnerSettings>
-      <RunnerSettings RunnerId="Run" />
-      <ConfigurationWrapper RunnerId="Debug" />
-      <ConfigurationWrapper RunnerId="Run" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
-        <option name="Make" enabled="true" />
-        <option name="Maven.BeforeRunTask" enabled="false" />
-        <option name="PhingTarget" enabled="false" />
-      </method>
-    </configuration>
-    <configuration default="true" type="com.intellij.persistence.run.ConsoleRunConfigurationType" factoryName="Query Language Console">
-      <option name="VM_PARAMETERS" value="" />
-      <option name="USER_CFG_CLASS" />
-      <option name="CONTEXT_PROVIDER" />
-      <method>
-        <option name="AntTarget" enabled="false" />
-        <option name="BuildArtifacts" enabled="false" />
         <option name="Make" enabled="true" />
         <option name="Maven.BeforeRunTask" enabled="false" />
         <option name="PhingTarget" enabled="false" />
@@ -804,12 +824,12 @@
     <frame x="-4" y="-4" width="1288" height="778" extended-state="0" />
     <editor active="false" />
     <layout>
-      <window_info id="Changes" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3423138" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39302695" sideWeight="0.0" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" sideWeight="0.2282092" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="JavaEE:App" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32927817" sideWeight="0.21711569" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24867323" sideWeight="0.65025467" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24817519" sideWeight="0.60697305" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60780984" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.19452888" sideWeight="0.6706282" order="4" side_tool="false" content_ui="tabs" />
@@ -818,11 +838,11 @@
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32767403" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.26601785" sideWeight="0.19017433" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32978722" sideWeight="0.47694755" order="1" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.34144363" sideWeight="0.65768623" order="5" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24898621" sideWeight="0.518225" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39969605" sideWeight="0.6315789" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Dependency Viewer" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.32927817" sideWeight="0.65768623" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.5340729" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.2214112" sideWeight="0.6386688" order="0" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.36133122" sideWeight="0.0" order="2" side_tool="false" content_ui="tabs" x="-86" y="587" width="1870" height="332" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Database Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32942328" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Data Sources" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20855615" sideWeight="0.67155427" order="6" side_tool="false" content_ui="tabs" />
@@ -860,7 +880,7 @@
     <option name="CHECK_COMMIT_MESSAGE_SPELLING" value="true" />
     <option name="DEFAULT_PATCH_EXTENSION" value="patch" />
     <option name="FORCE_NON_EMPTY_COMMENT" value="false" />
-    <option name="LAST_COMMIT_MESSAGE" value="Added hibernate-annotations to the dependencies.&#10;&#10;Created an ad-hoc local repository to host the in-house and non-public libs.&#10;&#10;Removed the old lib directory.&#10;&#10;ALL dependencies without an exception are now managed by Maven.&#10; &#10;The project can now be imported to Eclipse or other IDEs with Maven support!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Artifact and setup cleanup" />
     <option name="MAKE_NEW_CHANGELIST_ACTIVE" value="true" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_FILES_UP_TO_DATE_BEFORE_COMMIT" value="false" />
@@ -873,7 +893,6 @@
     <option name="UPDATE_GROUP_BY_CHANGELIST" value="false" />
     <option name="SHOW_FILE_HISTORY_AS_TREE" value="false" />
     <option name="FILE_HISTORY_SPLITTER_PROPORTION" value="0.6" />
-    <MESSAGE value="Implemented control of uniqueness of title when adding or editing hardware." />
     <MESSAGE value="Implemented control of uniqueness of title and description when adding or editing weather." />
     <MESSAGE value="Created basic validation of form for creating new group." />
     <MESSAGE value="Restructured the rest of the classes of controllers, command objects and validators." />
@@ -898,6 +917,7 @@
     <MESSAGE value="Corrected a misconfiguration in log4j.xml ignoring Error entries in the console output.&#10;&#10;Cxf libs are now managed by Maven (due to an incompatibility in cxf 2.2x vs ws.xmlschema 2.0, cxf version was updated to 2.4.3, &#10;slf4j version was updated to 1.6.1)&#10;Hibernate libs are now managed by Maven (core upgraded to 3.3.1, tools downgraded(!) to 3.2.4.GA as newer versions aren't available &#10;in the repos, jdbc2_0-stdext.jar removed as no longer needed &#10;http://www.javakb.com/Uwe/Forum.aspx/java-databases/2175/difference-between-jdbc2-0-stdext-jar-and-ojdbc14-jar)&#10;&#10;Removed hibernate and cxf jar files from the SVN.&#10;&#10;All public JARs are now managed by Maven." />
     <MESSAGE value="Removed empty lib directories&#10;&#10;Corrected &lt;xs:attribute name=&quot;fileName&quot; type=&quot;xs:String&quot;&gt;&lt;/xs:attribute&gt; to &lt;xs:attribute name=&quot;fileName&quot; &#10;type=&quot;xs:string&quot;&gt;&lt;/xs:attribute&gt; in experiment.xsd&#10;&#10;Moved test sources to a separate directory, as by maven conventions. The test are failing when executed.&#10;&#10;Moved application resources from the source directory to resource directory." />
     <MESSAGE value="Added hibernate-annotations to the dependencies.&#10;&#10;Created an ad-hoc local repository to host the in-house and non-public libs.&#10;&#10;Removed the old lib directory.&#10;&#10;ALL dependencies without an exception are now managed by Maven.&#10; &#10;The project can now be imported to Eclipse or other IDEs with Maven support!" />
+    <MESSAGE value="Artifact and setup cleanup" />
   </component>
   <component name="VssConfiguration">
     <option name="CLIENT_PATH" value="" />
@@ -953,21 +973,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/json-converter.properties">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/EEGDatabase.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/Trunk.iml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/test/java/test/selenium/AddScenarioSchemaTest.java">
       <provider selected="true" editor-type-id="text-editor">
         <state line="14" column="13" selection-start="316" selection-end="316" vertical-scroll-proportion="0.48693585" />
@@ -1026,14 +1031,751 @@
         <state line="22" column="50" selection-start="651" selection-end="651" vertical-scroll-proportion="0.8831169" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/pom.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="253" column="75" selection-start="8453" selection-end="8453" vertical-scroll-proportion="10.641559" />
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.idea/workspace.xml">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.8984772">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="-1.8984772" />
+      </provider>
+    </entry>
+    <entry file="uml://MAVEN/cz.zcu.kiv.eegdatabase:eegdatabase:0.0.1-SNAPSHOT">
+      <provider selected="true" editor-type-id="UmlEditorProvider">
+        <state>
+          <ID>MAVEN</ID>
+          <OriginalElement>cz.zcu.kiv.eegdatabase:eegdatabase:0.0.1-SNAPSHOT</OriginalElement>
+          <nodes>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-security:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/commons-io:commons-io:jar:2.0.1</node>
+            <node x="" y="">net.sf.ehcache:ehcache:jar:1.2.3/commons-collections:commons-collections:jar:2.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-aop:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE/org.springframework:spring-core:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-js:jar:2.4.3/rhino:js:jar:1.7R2</node>
+            <node x="" y="">org.springframework:org.springframework.context.support:jar:3.0.5.RELEASE/org.springframework:org.springframework.context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2/javax.annotation:jsr250-api:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/com.sun.istack:istack-commons-runtime:jar:2.2/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">org.springframework:org.springframework.context.support:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.codehaus.jettison:jettison:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-core:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/org.slf4j:slf4j-log4j12:jar:1.5.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">cglib:cglib:jar:2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-object:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/com.hp.hpl.jena:iri:jar:0.8</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE/org.springframework:org.springframework.expression:jar:3.0.5.RELEASE</node>
+            <node x="" y="">struts:struts:jar:1.2.9/antlr:antlr:jar:2.7.2</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE/org.springframework:org.springframework.aop:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/commons-codec:commons-codec:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.springframework:spring-core:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.aop:jar:3.0.5.RELEASE/org.aopalliance:com.springsource.org.aopalliance:jar:1.0.0</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/rhino:js:jar:1.7R2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-annotation_1.0_spec:jar:1.1.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/commons-collections:commons-collections:jar:3.2.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/xalan:serializer:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">commons-codec:commons-codec:jar:1.5</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-validator:commons-validator:jar:1.1.4</node>
+            <node x="" y="">org.springframework:org.springframework.orm:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.apache.cxf:cxf-rt-transports-common:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/org.slf4j:slf4j-api:jar:1.5.8</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/com.ibm.icu:icu4j:jar:3.4.4</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-aop:jar:2.0.8/org.springframework:spring-core:jar:2.0.8</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0</node>
+            <node x="" y="">org.springframework:org.springframework.test:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-object:jar:2.4.3/org.apache.cxf:cxf-rt-transports-local:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.ws.security:wss4j:jar:1.6.3</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/org.springframework:spring-context:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-local:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/xerces:xercesImpl:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.velocity:velocity:jar:1.7/commons-collections:commons-collections:jar:3.2.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/net.sourceforge.nekohtml:nekohtml:jar:1.9.15</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.context.support:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-iphone-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE/org.springframework:spring-asm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.slf4j:slf4j-log4j12:jar:1.6.1/org.slf4j:slf4j-api:jar:1.6.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.aop:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/net.java.dev.msv:msv-core:jar:2011.1/com.sun.msv.datatype.xsd:xsdlib:jar:2010.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.springframework:spring-web:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:openws:jar:1.4.2-1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-policy:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/org.springframework:spring-core:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-taglibs:jar:2.0.4/org.springframework.security:spring-security-core:jar:2.0.4</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.org.apache.xml.internal:resolver:jar:20050927</node>
+            <node x="" y="">org.springframework:org.springframework.beans:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/commons-httpclient:commons-httpclient:jar:3.1/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/org.springframework:spring-beans:jar:2.5.6.SEC02</node>
+            <node x="" y="">com.oracle:ojdbc6:jar:11.2.0.3.0</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8/org.springframework:spring-core:jar:2.0.8</node>
+            <node x="" y="">org.hibernate:hibernate-tools:jar:3.2.4.GA</node>
+            <node x="" y="">com.jhlabs:imaging:jar:01012005</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/com.sun.xml.fastinfoset:FastInfoset:jar:1.2.9</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/commons-collections:commons-collections:jar:3.2.1</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.apache.cxf:cxf-rt-transports-common:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium.core:selenium-core:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.eclipse.jetty:jetty-server:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-management:jar:2.4.3</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:jar:1.1.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/commons-httpclient:commons-httpclient:jar:3.1/commons-codec:commons-codec:jar:1.2</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/org.hibernate:hibernate-core:jar:3.3.0.SP1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-aegis:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.octo.captcha:jcaptcha:jar:1.0/commons-collections:commons-collections:jar:3.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-io:jar:7.4.5.v20110725/org.eclipse.jetty:jetty-util:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.springframework:org.springframework.orm:jar:3.0.5.RELEASE/org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/com.hp.hpl.jena:iri:jar:sources:0.8/com.ibm.icu:icu4j:jar:3.4.4</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/net.sf.ezmorph:ezmorph:jar:1.0.6</node>
+            <node x="" y="">com.restfb:restfb:jar:1.6.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:openws:jar:1.4.2-1/org.opensaml:xmltooling:jar:1.3.2-1</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/xerces:xercesImpl:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-boolean:jar:2.4.0</node>
+            <node x="" y="">javax.mail:mail:jar:1.4.2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/org.apache.httpcomponents:httpmime:jar:4.1.2/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">jfree:jfreechart:jar:1.0.13/jfree:jcommon:jar:1.0.16</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-io:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-ie-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1/org.slf4j:slf4j-api:jar:1.6.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-spellchecker:jar:1.3.0</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2/javax.xml.soap:saaj-api:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE/org.springframework:spring-context:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework:org.springframework.jdbc:jar:3.0.5.RELEASE/org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-beans:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/javax.ws.rs:jsr311-api:jar:1.1.1</node>
+            <node x="" y="">org.apache.lucene:lucene-analyzers:jar:2.4.1/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3</node>
+            <node x="" y="">commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.codehaus.woodstox:wstx-asl:jar:3.2.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/net.sourceforge.cssparser:cssparser:jar:0.9.5</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/javax.ws.rs:jsr311-api:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE/org.springframework:spring-expression:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.eclipse.jetty:jetty-security:jar:7.4.5.v20110725</node>
+            <node x="" y="">com.sun.net.httpserver:http:jar:20070405</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/org.slf4j:slf4j-log4j12:jar:1.5.8</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE</node>
+            <node x="" y="">jfree:jcommon:jar:1.0.16</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.apache.geronimo.specs:geronimo-servlet_2.5_spec:jar:1.1.2</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar:1.6</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar:1.7.1</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-impl:jar:2.2/javax.xml.bind:jaxb-api:jar:2.2/javax.xml.stream:stax-api:jar:1.0-2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-core:jar:2.0.8</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/com.hp.hpl.jena:iri:jar:sources:0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-local:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/org.hibernate:hibernate-commons-annotations:jar:3.1.0.GA</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-js:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/antlr:antlr:jar:2.7.7</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-aegis:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/hsqldb:hsqldb:jar:1.8.0.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/commons-httpclient:commons-httpclient:jar:3.1</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/commons-logging:commons-logging:jar:1.1</node>
+            <node x="" y="">net.sf.ehcache:ehcache:jar:1.2.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/org.springframework:spring-beans:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-context-support:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">javax.xml:jsr173:jar:1.0</node>
+            <node x="" y="">net.sf.ehcache:ehcache:jar:1.2.3/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-api:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-js:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/net.java.dev.stax-utils:stax-utils:jar:20040917</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1/org.opensaml:openws:jar:1.4.2-1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.eclipse.jetty:jetty-server:jar:7.4.5.v20110725/org.eclipse.jetty:jetty-http:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/org.springframework:spring-webmvc:jar:2.5.6.SEC02</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/org.apache.httpcomponents:httpclient:jar:4.1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-bug671:jar:2.4.0</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.jvnet.staxex:stax-ex:jar:1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-coloc:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/net.java.dev.msv:msv-core:jar:2011.1/com.sun.msv.datatype.xsd:xsdlib:jar:2010.1/relaxngDatatype:relaxngDatatype:jar:20020414</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2</node>
+            <node x="" y="">org.springframework.security:spring-security-taglibs:jar:2.0.4/org.springframework:spring-web:jar:2.0.8</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3/org.codehaus.jra:jra:jar:1.0-alpha-4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/commons-codec:commons-codec:jar:1.3</node>
+            <node x="" y="">org.slf4j:slf4j-log4j12:jar:1.6.1</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-beanutils:commons-beanutils:jar:1.7.0/commons-logging:commons-logging:jar:1.0.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/commons-httpclient:commons-httpclient:jar:3.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8/org.springframework:spring-beans:jar:2.0.8</node>
+            <node x="" y="">junit:junit:jar:4.8.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.jvnet.staxex:stax-ex:jar:1.2/junit:junit:jar:3.8</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/com.ibm.icu:icu4j:jar:3.4.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/net.java.dev.stax-utils:stax-utils:jar:20040917</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.codehaus.jettison:jettison:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1/commons-lang:commons-lang:jar:2.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8/commons-logging:commons-logging:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.slf4j:slf4j-api:jar:1.6.2</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE/org.springframework:org.springframework.aop:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/org.slf4j:slf4j-api:jar:1.5.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-dv:jar:2.4.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-management:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.codehaus.woodstox:woodstox-core-asl:jar:4.1.1</node>
+            <node x="" y="">org.springframework:org.springframework.context.support:jar:3.0.5.RELEASE</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-fileupload:commons-fileupload:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-queries:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/stax:stax:jar:1.2.0/stax:stax-api:jar:1.0.1</node>
+            <node x="" y="">org.springframework:org.springframework.aop:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE/org.springframework:spring-beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.ws.security:wss4j:jar:1.6.3/org.opensaml:opensaml:jar:2.5.1-1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-web:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">com.oracle:orai18n:jar:11.1.0</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA/javax.transaction:jta:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-http:jar:7.4.5.v20110725/org.eclipse.jetty:jetty-io:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.apache.lucene:lucene-snowball:jar:2.4.1/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.stream.buffer:streambuffer:jar:1.0/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-firefox-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.velocity:velocity:jar:1.7</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/commons-fileupload:commons-fileupload:jar:1.2</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-digester:commons-digester:jar:1.6/commons-logging:commons-logging:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-js:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-management:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-beanutils:commons-beanutils:jar:1.7.0</node>
+            <node x="" y="">org.databene:contiperf:jar:1.07</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-management:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-highlighter:jar:1.3.0/org.apache.solr:solr-lucene-core:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-xmlbeans:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-aop:jar:2.0.8</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-support:jar:2.7.0/org.seleniumhq.selenium:selenium-api:jar:2.7.0</node>
+            <node x="" y="">org.springframework:org.springframework.expression:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-firefox-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-chrome-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.ws.security:wss4j:jar:1.6.3/org.apache.santuario:xmlsec:jar:1.4.5</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE/org.springframework:spring-aop:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.hibernate:hibernate-tools:jar:3.2.4.GA/org.beanshell:bsh:jar:2.0b4</node>
+            <node x="" y="">org.apache.ws.xmlschema:xmlschema-core:jar:2.0</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-spellchecker:jar:1.3.0/org.apache.solr:solr-lucene-core:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/org.apache.velocity:velocity:jar:1.7</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/joda-time:joda-time:jar:1.6.2</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.ws:policy:jar:2.0-b01</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-queries:jar:1.3.0/org.apache.solr:solr-lucene-core:jar:1.3.0</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:iri:jar:0.8</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-annotation_1.0_spec:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE/org.aopalliance:com.springsource.org.aopalliance:jar:1.0.0</node>
+            <node x="" y="">org.springframework.security:spring-security-core-tiger:jar:2.0.4/org.springframework.security:spring-security-core:jar:2.0.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-asm:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-snowball:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-context-support:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1/org.apache.santuario:xmlsec:jar:1.4.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">asm:asm-attrs:jar:1.5.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-corba:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.oracle:xdb:jar:2009_08_12</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-web:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.codehaus.jettison:jettison:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-ts:jar:2.4.0/commons-lang:commons-lang:jar:2.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1/commons-collections:commons-collections:jar:3.1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.jvnet:mimepull:jar:1.4</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/log4j:log4j:jar:1.2.13</node>
+            <node x="" y="">org.springframework:org.springframework.orm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/com.ibm.icu:icu4j:jar:3.4.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.codehaus.woodstox:woodstox-core-asl:jar:4.1.1/org.codehaus.woodstox:stax2-api:jar:3.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.orm:jar:3.0.5.RELEASE/org.springframework:org.springframework.jdbc:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/commons-lang:commons-lang:jar:2.6</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.springframework:org.springframework.aop:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/org.apache.lucene:lucene-core:jar:2.3.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:openws:jar:1.4.2-1/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.commons:commons-io:jar:1.3.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/commons-codec:commons-codec:jar:1.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-context-support:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.cxf:cxf-rt-management:jar:2.4.3</node>
+            <node x="" y="">org.ostermiller:utils:jar:1.07.00</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.2.4-1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.santuario:xmlsec:jar:1.4.5</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-continuation:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3</node>
+            <node x="" y="">owlapi:owlapi-bin:jar:3.0.0.1413</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.2.4-1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.messaging.saaj:saaj-impl:jar:1.3.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-taglibs:jar:2.0.4</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-impl:jar:2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-corba:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.expression:jar:3.0.5.RELEASE</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/org.hibernate:hibernate-commons-annotations:jar:3.1.0.GA</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/xerces:xercesImpl:jar:2.7.1</node>
+            <node x="" y="">org.apache.lucene:lucene-snowball:jar:2.4.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">taglibs:standard:jar:1.1.2</node>
+            <node x="" y="">org.springframework.security:spring-security-taglibs:jar:2.0.4/org.springframework.security:spring-security-acl:jar:2.0.4</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2/javax.jws:jsr181-api:jar:1.0-MR1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-jaxws_2.1_spec:jar:1.0/org.apache.geronimo.specs:geronimo-activation_1.1_spec:jar:1.0.2</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE/org.springframework:org.springframework.context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">javax.servlet:jstl:jar:1.1.2</node>
+            <node x="" y="">com.octo.captcha:jcaptcha:jar:1.0/com.octo.captcha:jcaptcha-api:jar:1.0</node>
+            <node x="" y="">cglib:cglib:jar:2.2/asm:asm:jar:3.1</node>
+            <node x="" y="">com.octo.captcha:jcaptcha:jar:1.0/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-context:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/org.codehaus.woodstox:woodstox-core-asl:jar:4.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/org.apache.httpcomponents:httpmime:jar:4.1.2/org.apache.httpcomponents:httpcore:jar:4.1.2</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/org.hibernate:hibernate-core:jar:3.3.1.GA</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">struts:struts:jar:1.2.9/xalan:xalan:jar:2.5.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/org.apache.httpcomponents:httpmime:jar:4.1.2</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/org.springframework:spring-aop:jar:3.0.6.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.jvnet.staxex:stax-ex:jar:1.2/javax.xml.stream:stax-api:jar:1.0</node>
+            <node x="" y="">org.springframework:org.springframework.jdbc:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2/javax.xml.soap:saaj-api:jar:1.3/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-corba:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework.security:spring-security-core:jar:2.0.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-local:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.stream.buffer:streambuffer:jar:1.0</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/com.sun.istack:istack-commons-runtime:jar:2.2/stax:stax-api:jar:1.0.1</node>
+            <node x="" y="">thewebsemantic:jenabean:jar:1.0.6</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/org.hibernate:ejb3-persistence:jar:1.0.2.GA</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/net.sourceforge.cssparser:cssparser:jar:0.9.5/org.w3c.css:sac:jar:1.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.orm:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.neethi:neethi:jar:3.0.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-api:jar:2.7.0/com.google.guava:guava:jar:r09</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">struts:struts:jar:1.2.9/oro:oro:jar:2.0.7</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-aegis:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core-tiger:jar:2.0.4</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/dom4j:dom4j:jar:1.6.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/org.springframework:spring-tx:jar:3.0.6.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-tools:jar:2.2/com.sun.xml.ws:jaxws-rt:jar:2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-ts:jar:2.4.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/antlr:antlr:jar:2.7.7</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.slf4j:slf4j-api:jar:1.6.2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0/org.apache.httpcomponents:httpclient:jar:4.1.2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-ie-driver:jar:2.7.0/net.java.dev.jna:jna:jar:3.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.ws.security:wss4j:jar:1.6.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.velocity:velocity:jar:1.7</node>
+            <node x="" y="">org.apache.lucene:lucene-highlighter:jar:2.4.1/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/stax:stax-api:jar:1.0.1</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/com.hp.hpl.jena:iri:jar:sources:0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxrs:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE/org.springframework:org.springframework.asm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-ie-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-policy:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8/commons-logging:commons-logging:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-servlet_2.5_spec:jar:1.1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-api:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:xmltooling:jar:1.3.2-1/joda-time:joda-time:jar:1.6.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-jaxws_2.2_spec:jar:1.1</node>
+            <node x="" y="">com.sun.xml.fastinfoset:FastInfoset:jar:1.2.8</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0/org.json:json:jar:20080701</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-context:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.apache.lucene:lucene-highlighter:jar:2.4.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-firefox-driver:jar:2.7.0/commons-io:commons-io:jar:2.0.1</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/org.codehaus.woodstox:wstx-asl:jar:3.2.9</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-chrome-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/org.slf4j:slf4j-api:jar:1.4.2</node>
+            <node x="" y="">org.hibernate:hibernate-tools:jar:3.2.4.GA/org.hibernate:jtidy:jar:r8-20060801</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-android-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0/cglib:cglib-nodep:jar:2.1_3</node>
+            <node x="" y="">commons-collections:commons-collections:jar:3.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3</node>
+            <node x="" y="">org.apache.lucene:lucene-spellchecker:jar:2.4.1/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-expression:jar:3.0.6.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/com.hp.hpl.jena:iri:jar:0.8</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-core:jar:2.0.8</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/commons-beanutils:commons-beanutils:jar:1.8.0</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">cz.zcu.kiv:javatosemanticweb:jar:2011_04_01</node>
+            <node x="" y="">thewebsemantic:jenabean:jar:1.0.6/com.hp.hpl.jena:arq:jar:2.8.2</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8</node>
+            <node x="" y="">commons-io:commons-io:jar:2.0.1</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/org.apache.commons:commons-io:jar:1.3.2</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE/org.springframework:org.springframework.context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:sources:2.6.3/log4j:log4j:jar:1.2.13</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/org.hibernate:ejb3-persistence:jar:1.0.2.GA</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/commons-lang:commons-lang:jar:2.6</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/org.slf4j:slf4j-api:jar:1.4.2</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/net.sourceforge.htmlunit:htmlunit-core-js:jar:2.9</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-common:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-corba:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/stax:stax:jar:1.2.0</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.stream.buffer:streambuffer:jar:1.0/org.jvnet.staxex:stax-ex:jar:RELEASE</node>
+            <node x="" y="">com.itextpdf:itextpdf:jar:5.1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-aegis:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-simple:jar:2.4.3</node>
+            <node x="" y="">org.apache.lucene:lucene-spellchecker:jar:2.4.1</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/commons-collections:commons-collections:jar:3.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.eclipse.jetty:jetty-security:jar:7.4.5.v20110725/org.eclipse.jetty:jetty-server:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/asm:asm:jar:3.3</node>
+            <node x="" y="">cz.zcu.kiv:eegdsp:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-policy:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-analyzers:jar:1.3.0</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-asm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/org.springframework:spring-core:jar:2.5.6.SEC02</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-aegis:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-highlighter:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.geronimo.specs:geronimo-jms_1.1_spec:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3</node>
+            <node x="" y="">com.octo.captcha:jcaptcha:jar:1.0/com.jhlabs:imaging:jar:01012005</node>
+            <node x="" y="">org.hibernate:hibernate-search:jar:3.1.1.GA/javax.transaction:jta:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-ws-metadata_2.0_spec:jar:1.1.3</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-java2ws:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-addr:jar:2.4.3</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/org.apache.solr:solr-common:jar:1.3.0</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/com.hp.hpl.jena:iri:jar:0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-http:jar:7.4.5.v20110725</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-object:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/commons-collections:commons-collections:jar:3.2.1</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-digester:commons-digester:jar:1.6</node>
+            <node x="" y="">com.oracle:xmlparserv:jar:2009_07_19</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-context:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.context.support:jar:3.0.5.RELEASE</node>
+            <node x="" y="">aspectj:aspectjweaver:jar:1.5.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/net.java.dev.msv:msv-core:jar:2011.1/isorelax:isorelax:jar:20030108</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-aop:jar:2.0.8/org.springframework:spring-beans:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-beans:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework:org.springframework.transaction:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-util:jar:7.4.5.v20110725</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.messaging.saaj:saaj-impl:jar:1.3.4/javax.xml.soap:saaj-api:jar:1.3.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-policy:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-jms:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-tools:jar:2.2/com.sun.xml.bind:jaxb-xjc:jar:2.2</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/javax.xml.ws:jaxws-api:jar:2.2/javax.xml.bind:jaxb-api:jar:2.2</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-aop:jar:2.0.8/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-aop:jar:2.0.8/commons-logging:commons-logging:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf.xjcplugins:cxf-xjc-bug671:jar:2.4.0/commons-lang:commons-lang:jar:2.4</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/commons-lang:commons-lang:jar:2.5</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8/org.springframework:spring-core:jar:2.0.8</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE/org.springframework:spring-asm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/com.sun.xml.messaging.saaj:saaj-impl:jar:1.3.12</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/woodstox:wstx-asl:jar:3.2.7</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/org.slf4j:slf4j-api:jar:1.5.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.geronimo.specs:geronimo-activation_1.1_spec:jar:1.1</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-xmlbeans:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.messaging.saaj:saaj-impl:jar:1.3.4/org.jvnet:mimepull:jar:1.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3/wsdl4j:wsdl4j:jar:1.6.2</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/com.sun.istack:istack-commons-runtime:jar:2.2</node>
+            <node x="" y="">javax.servlet:javax.servlet-api:jar:3.0.1</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE/org.springframework:spring-beans:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/javax.xml.bind:jaxb-api:jar:2.2.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/org.apache.httpcomponents:httpclient:jar:4.1.2/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-jaxws:jar:2.4.3/asm:asm:jar:3.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-context-support:jar:3.0.5.RELEASE/org.springframework:spring-beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.springframework:org.springframework.web.servlet:jar:3.0.5.RELEASE/org.springframework:org.springframework.web:jar:3.0.5.RELEASE/org.aopalliance:com.springsource.org.aopalliance:jar:1.0.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/log4j:log4j:jar:1.2.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/org.springframework:spring-web:jar:2.5.6.SEC02</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.cxf:cxf-rt-transports-common:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/com.sun.xml.bind:jaxb-impl:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.jdbc:jar:3.0.5.RELEASE/org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">javax.mail:mail:jar:1.4.2/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">javax.servlet.jsp:jsp-api:jar:2.1</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-context:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.codehaus.woodstox:woodstox-core-asl:jar:4.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-frontend-jaxws:jar:2.4.3</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-stax-api_1.0_spec:jar:1.0.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-corba:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-jaxb:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.glassfish.gmbal:gmbal-api-only:jar:3.0.0-b023/org.glassfish.external:management-api:jar:3.0.0-b012</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:openws:jar:1.4.2-1/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-xjc:jar:2.2/com.sun.xml.bind:jaxb-impl:jar:2.2</node>
+            <node x="" y="">org.springframework:org.springframework.jdbc:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-tools:jar:2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.eclipse.jetty:jetty-server:jar:7.4.5.v20110725</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/org.codehaus.woodstox:wstx-asl:jar:3.2.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.codehaus.woodstox:wstx-asl:jar:3.2.3/stax:stax-api:jar:1.0.1</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.slf4j:slf4j-log4j12:jar:1.6.1/log4j:log4j:jar:1.2.16</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/javax.xml.soap:saaj-api:jar:1.3.4</node>
+            <node x="" y="">org.apache.lucene:lucene-analyzers:jar:2.4.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/org.apache.httpcomponents:httpclient:jar:4.1.2/org.apache.httpcomponents:httpcore:jar:4.1.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.codehaus.jra:jra:jar:1.0-alpha-4</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-snowball:jar:1.3.0/org.apache.solr:solr-lucene-core:jar:1.3.0</node>
+            <node x="" y="">org.apache.lucene:lucene-queries:jar:2.4.1</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8/org.springframework:spring-context:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8/org.springframework:spring-context:jar:2.0.8</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-expression:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.aspectj:aspectjtools:jar:1.5.4</node>
+            <node x="" y="">org.springframework:org.springframework.context:jar:3.0.5.RELEASE/org.springframework:org.springframework.aop:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.springframework:org.springframework.core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.beans:jar:3.0.5.RELEASE/org.springframework:org.springframework.asm:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-javascript:jar:2.4.3/org.apache.cxf:cxf-rt-transports-local:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3/org.apache.neethi:neethi:jar:3.0.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-core:jar:2.4.3/org.apache.velocity:velocity:jar:1.7</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/net.java.dev.msv:msv-core:jar:2011.1/relaxngDatatype:relaxngDatatype:jar:20020414</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-commons-csv:jar:1.3.0</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/stax:stax-api:jar:1.0.1</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA/commons-collections:commons-collections:jar:3.1</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.jvnet.staxex:stax-ex:jar:1.2/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/com.hp.hpl.jena:iri:jar:sources:0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-rm:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/org.glassfish.gmbal:gmbal-api-only:jar:3.0.0-b023</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/commons-lang:commons-lang:jar:2.6</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/xerces:xercesImpl:jar:2.9.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">org.springframework:spring-webmvc:jar:3.0.5.RELEASE/org.springframework:spring-expression:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/org.slf4j:slf4j-api:jar:1.5.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.velocity:velocity:jar:1.7</node>
+            <node x="" y="">org.apache.lucene:lucene-queries:jar:2.4.1/org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-coloc:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.jvnet:mimepull:jar:1.4</node>
+            <node x="" y="">org.springframework.security:spring-security-core:jar:2.0.4/org.springframework:spring-support:jar:2.0.8/aopalliance:aopalliance:jar:1.0</node>
+            <node x="" y="">org.springframework:spring-webmvc-struts:jar:2.5.6.SEC02/org.springframework:spring-context:jar:2.5.6.SEC02</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-beans:jar:3.0.5.RELEASE/org.springframework:spring-core:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-coloc:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3/org.codehaus.woodstox:woodstox-core-asl:jar:4.1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-xmlbeans:jar:2.4.3/org.apache.xmlbeans:xmlbeans:jar:2.4.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http-jetty:jar:2.4.3/org.eclipse.jetty:jetty-server:jar:7.4.5.v20110725/org.eclipse.jetty:jetty-continuation:jar:7.4.5.v20110725</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-digester:commons-digester:jar:1.6/commons-beanutils:commons-beanutils:jar:1.6</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-wsdlto-databinding-jaxb:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.opensaml:opensaml:jar:2.5.1-1/xalan:xalan:jar:2.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4/org.springframework:spring-jdbc:jar:2.0.8/org.springframework:spring-dao:jar:2.0.8/org.springframework:spring-beans:jar:2.0.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.velocity:velocity:jar:1.7/commons-lang:commons-lang:jar:2.6</node>
+            <node x="" y="">commons-fileupload:commons-fileupload:jar:1.2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-wstx-msv-validation:jar:2.4.3/net.java.dev.msv:msv-core:jar:2011.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.springframework:spring-tx:jar:3.0.6.RELEASE</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-iphone-driver:jar:2.7.0/org.seleniumhq.selenium:selenium-remote-driver:jar:2.7.0</node>
+            <node x="" y="">struts:struts:jar:1.2.9/commons-digester:commons-digester:jar:1.6/commons-collections:commons-collections:jar:2.1</node>
+            <node x="" y="">struts:struts:jar:1.2.9</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.santuario:xmlsec:jar:1.4.5/commons-logging:commons-logging:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-frontend-js:jar:2.4.3/org.apache.xmlbeans:xmlbeans:jar:2.4.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/xml-resolver:xml-resolver:jar:1.2</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA/org.slf4j:slf4j-api:jar:1.5.2</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-jaxws_2.1_spec:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-http:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-policy:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA/dom4j:dom4j:jar:1.6.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-corba:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-misctools:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/asm:asm:jar:3.3</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-xml:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-htmlunit-driver:jar:2.7.0/net.sourceforge.htmlunit:htmlunit:jar:2.9/commons-codec:commons-codec:jar:1.4</node>
+            <node x="" y="">net.sf.json-lib:json-lib:jar:jdk15:2.4/net.sf.ezmorph:ezmorph:jar:1.0.6/commons-lang:commons-lang:jar:2.3</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-xjc:jar:2.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-lucene-analyzers:jar:1.3.0/org.apache.solr:solr-lucene-core:jar:1.3.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3/org.apache.ws.xmlschema:xmlschema-core:jar:2.0.1</node>
+            <node x="" y="">com.sun.xml.ws:policy:jar:2.2.1/com.sun.xml.txw2:txw2:jar:20090102</node>
+            <node x="" y="">jboss:javassist:jar:3.4.ga</node>
+            <node x="" y="">com.sun.xml.ws:jaxws-rt:jar:2.2/com.sun.xml.bind:jaxb-impl:jar:2.2</node>
+            <node x="" y="">org.slf4j:slf4j-api:jar:1.6.1</node>
+            <node x="" y="">org.seleniumhq.selenium.client-drivers:selenium-java-client-driver:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-http:jar:2.4.3/org.apache.cxf:cxf-rt-transports-common:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3</node>
+            <node x="" y="">org.hibernate:hibernate-tools:jar:3.2.4.GA/freemarker:freemarker:jar:2.3.8</node>
+            <node x="" y="">org.springframework:spring-web:jar:3.0.5.RELEASE/org.springframework:spring-context:jar:3.0.5.RELEASE/org.springframework:spring-aop:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.cxf:cxf-common-utilities:jar:2.4.3</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-impl:jar:2.2/javax.xml.bind:jaxb-api:jar:2.2/javax.activation:activation:jar:1.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-core:jar:2.4.3/org.apache.geronimo.specs:geronimo-javamail_1.4_spec:jar:1.7.1</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-ws-security:jar:2.4.3/org.apache.ws.security:wss4j:jar:1.6.3/commons-logging:commons-logging:jar:1.1.1</node>
+            <node x="" y="">com.sun.xml.bind:jaxb-impl:jar:2.2/javax.xml.bind:jaxb-api:jar:2.2</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:jar:2.6.3/org.slf4j:slf4j-log4j12:jar:1.5.8</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-xmlbeans:jar:2.4.3/org.apache.cxf:cxf-tools-common:jar:2.4.3</node>
+            <node x="" y="">org.springframework.security:spring-security-acl:jar:2.0.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-databinding-xmlbeans:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.apache.lucene:lucene-core:jar:2.4.1</node>
+            <node x="" y="">org.springframework:org.springframework.beans:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.codehaus.woodstox:stax2-api:jar:3.1.1</node>
+            <node x="" y="">org.hibernate:hibernate-core:jar:3.3.1.GA/antlr:antlr:jar:2.7.6</node>
+            <node x="" y="">com.octo.captcha:jcaptcha:jar:1.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-bundle:jar:2.4.3/org.apache.xmlbeans:xmlbeans:jar:2.4.0</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-transports-jms:jar:2.4.3/org.apache.cxf:cxf-api:jar:2.4.3</node>
+            <node x="" y="">org.seleniumhq.selenium:selenium-java:jar:2.7.0/org.seleniumhq.selenium:selenium-support:jar:2.7.0</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/org.apache.solr:solr-solrj:jar:1.3.0/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-rt-bindings-soap:jar:2.4.3</node>
+            <node x="" y="">org.springframework:org.springframework.expression:jar:3.0.5.RELEASE</node>
+            <node x="" y="">org.apache.cxf:cxf-distribution-manifest:jar:2.4.3/org.apache.cxf:cxf-tools-validator:jar:2.4.3/com.sun.xml.bind:jaxb-xjc:jar:2.1.13</node>
+            <node x="" y="">cz.zcu.kiv.eegdatabase:eegdatabase:0.0.1-SNAPSHOT</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:iri:jar:0.8/com.ibm.icu:icu4j:jar:3.4.4</node>
+            <node x="" y="">jfree:jfreechart:jar:1.0.13</node>
+            <node x="" y="">com.hp.hpl.jena:arq:jar:2.8.4/com.hp.hpl.jena:jena:test-jar:test-sources:2.6.3/xerces:xercesImpl:jar:2.7.1</node>
+            <node x="" y="">org.hibernate:hibernate-annotations:jar:3.4.0.GA/org.hibernate:hibernate-commons-annotations:jar:3.1.0.GA/org.slf4j:slf4j-api:jar:1.4.2</node>
+            <node x="" y="">org.apache.solr:solr-core:jar:1.3.0/commons-logging:commons-logging:jar:1.0.4</node>
+            <node x="" y="">org.apache.geronimo.specs:geronimo-activation_1.1_spec:jar:1.0.2</node>
+          </nodes>
+          <notes />
+          <edges />
+          <settings layout="Hierarchic Group" zoom="0.020081078533044215" x="446.0" y="10597.0" />
+          <SelectedNodes />
+          <Categories />
+          <VISIBILITY>All</VISIBILITY>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="624" column="35" selection-start="19776" selection-end="19776" vertical-scroll-proportion="2.71777">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/json-conv/json-converter.properties">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="4" column="40" selection-start="207" selection-end="207" vertical-scroll-proportion="0.15668203">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/json-conv/json-converter.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="21" column="102" selection-start="969" selection-end="969" vertical-scroll-proportion="0.51543945">
           <folding />
         </state>
       </provider>
@@ -1044,7 +1786,7 @@
       <state key="ArtifactsStructureConfigurable.UI">
         <settings>
           <artifact-editor />
-          <last-edited>EEGDatabase:war exploded</last-edited>
+          <last-edited>EEGDatabase:war</last-edited>
           <splitter-proportions>
             <option name="proportions">
               <list>
