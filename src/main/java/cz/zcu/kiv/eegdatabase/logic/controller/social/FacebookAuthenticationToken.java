@@ -1,8 +1,10 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.providers.AbstractAuthenticationToken;
+import org.springframework.security.authentication.AbstractAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+
+import java.util.Collection;
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,7 +15,7 @@ import org.springframework.security.providers.AbstractAuthenticationToken;
 public class FacebookAuthenticationToken extends AbstractAuthenticationToken {
     private Person person;
 
-    public FacebookAuthenticationToken(GrantedAuthority[] authorities, Person person) {
+    public FacebookAuthenticationToken(Collection<GrantedAuthority> authorities, Person person) {
         super(authorities);
         this.person = person;
     }
