@@ -147,37 +147,25 @@
     <orderEntry type="library" name="Maven: com.sun.xml.ws:jaxws-tools:2.2" level="project" />
     <orderEntry type="library" name="Maven: javax.xml:jsr173:1.0" level="project" />
     <orderEntry type="library" name="Maven: com.sun.net.httpserver:http:20070405" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.core:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.beans:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.asm:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.context:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.aop:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.aopalliance:com.springsource.org.aopalliance:1.0.0" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.expression:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.context.support:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.test:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.transaction:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.jdbc:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.orm:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-web:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-core:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-asm:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-beans:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.0.6.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-aop:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: aopalliance:aopalliance:1.0" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-expression:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.web.servlet:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:org.springframework.web:3.0.5.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-context-support:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" scope="TEST" name="Maven: org.springframework:spring-test:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-orm:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-web:3.0.5.RELEASE" level="project" />
+    <orderEntry type="library" name="Maven: org.springframework:spring-webmvc:3.0.5.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework:spring-webmvc-struts:2.5.6.SEC02" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-core:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-tx:3.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjrt:1.6.8" level="project" />
     <orderEntry type="library" name="Maven: org.aspectj:aspectjweaver:1.6.8" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-acl:3.0.7.RELEASE" level="project" />
-    <orderEntry type="library" name="Maven: org.springframework:spring-jdbc:3.0.6.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-config:3.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-web:3.0.7.RELEASE" level="project" />
     <orderEntry type="library" name="Maven: org.springframework.security:spring-security-taglibs:3.0.7.RELEASE" level="project" />
