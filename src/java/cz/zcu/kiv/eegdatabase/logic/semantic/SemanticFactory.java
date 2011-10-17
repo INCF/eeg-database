@@ -1,16 +1,18 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.jenaBean.JenaBean;
-import cz.zcu.kiv.jenaBean.JenaBeanTool;
-import cz.zcu.kiv.owlApi.OwlApi;
-import cz.zcu.kiv.owlApi.OwlApiTool;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import tools.JenaBeanExtension;
+import tools.JenaBeanExtensionTool;
+import tools.OwlApi;
+import tools.OwlApiTool;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -27,6 +29,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
     private ApplicationContext context;
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List dataList = new ArrayList();
+    private JenaBeanExtension jenaBean;
 
     /**
      * Creates list of instances of DAO
@@ -50,7 +53,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      */
     public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException, OWLOntologyStorageException, OWLOntologyCreationException {
         InputStream is = null;
-        OwlApi owlApi = new OwlApiTool(creatingJenaBean());
+        OwlApi owlApi = new OwlApiTool(creatingJenaBean().getOntologyDocument());
         is = owlApi.convertToSemanticStandard(typeTransform);
         return is;
     }
@@ -62,7 +65,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      */
      public InputStream  generateRDF() throws IOException{
         InputStream is = null;
-        is = creatingJenaBean().getOutJB();
+        is = creatingJenaBean().getOntologyDocument();
         return is;
     }
 
@@ -72,10 +75,12 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @return jenaBean - Jena bean
      * @throws IOException
      */
-    private JenaBeanTool creatingJenaBean() throws IOException {
-       loadData();
-       JenaBean jenaBean = new JenaBeanTool(dataList);
-       return (JenaBeanTool)jenaBean;
+    private JenaBeanExtensionTool creatingJenaBean() throws IOException {
+        if (jenaBean == null) {
+            loadData();
+            jenaBean = new JenaBeanExtensionTool(dataList, null);
+        }
+        return (JenaBeanExtensionTool) jenaBean;
     }
 
     /**
@@ -84,7 +89,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
     private void loadData() {
          for (GenericDao gDao : gDaoList) {
             dataList.addAll(gDao.getAllRecords());
-        }
+         }
     }
 
     /**
