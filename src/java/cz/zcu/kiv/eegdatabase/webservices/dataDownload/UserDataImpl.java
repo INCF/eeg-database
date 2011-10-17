@@ -5,6 +5,10 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.DataFileInfo;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.ExperimentInfo;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.PersonInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -65,8 +69,8 @@ public class UserDataImpl implements UserDataService {
             info.setOwnerId(experiment.getPersonByOwnerId().getPersonId());
             info.setSubjectPersonId(experiment.getPersonBySubjectPersonId().getPersonId());
             info.setScenarioId(experiment.getScenario().getScenarioId());
-            info.setStartTimeInMilis(experiment.getStartTime().getTime());
-            info.setEndTimeInMilis(experiment.getEndTime().getTime());
+            info.setStartTimeInMillis(experiment.getStartTime().getTime());
+            info.setEndTimeInMillis(experiment.getEndTime().getTime());
             info.setWeatherId(experiment.getWeather().getWeatherId());
             info.setWeatherNote(experiment.getWeathernote());
             info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
@@ -74,11 +78,33 @@ public class UserDataImpl implements UserDataService {
             info.setTemperature(experiment.getTemperature());
 
             exps.add(info);
+
         }
 
         log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list with " + rights.toString() + " rights.");
 
         return exps;
+    }
+
+    public List<PersonInfo> getPeople() {
+
+        List<PersonInfo> people = new LinkedList<PersonInfo>();
+        List<Person> peopleDb = personDao.getAllRecords();
+
+        for(Person subject : peopleDb){
+            PersonInfo person = new PersonInfo();
+
+            person.setPersonId(subject.getPersonId());
+            person.setDefaultGroupId(subject.getDefaultGroup().getResearchGroupId());
+            person.setGender(subject.getGender());
+            person.setGivenName(subject.getGivenname());
+            person.setSurname(subject.getSurname());
+
+            people.add(person);
+        }
+
+        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of people.");
+        return people;
     }
 
     public List<DataFileInfo> getExperimentFiles(int experimentId) throws DataDownloadException {

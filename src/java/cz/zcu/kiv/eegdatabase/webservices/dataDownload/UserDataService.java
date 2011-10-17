@@ -5,6 +5,10 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.DataFileInfo;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.ExperimentInfo;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.PersonInfo;
+
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
@@ -32,7 +36,14 @@ public interface UserDataService {
      * @param rights defines rights that user has in desired experiments (user, subject)
      * @return List of information about available experiments
      */
-    public List<ExperimentInfo> getExperiments (Rights rights);
+    public List<ExperimentInfo> getExperiments(Rights rights);
+
+    /**
+     * Method for obtaining list of all EEG base users.
+     *
+     * @return list of users
+     */
+    public List<PersonInfo> getPeople();
 
     /**
      * Method returning list of files, which belong to experiment defined by id.
