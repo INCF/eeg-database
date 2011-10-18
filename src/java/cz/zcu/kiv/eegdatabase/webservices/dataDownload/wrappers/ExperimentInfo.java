@@ -19,6 +19,7 @@ public class ExperimentInfo {
     private int temperature;
     private String weatherNote;
     private int privateFlag;
+    private String title;
 
     /**
      * Getter of experiment's identifier.
@@ -216,5 +217,21 @@ public class ExperimentInfo {
      */
     public void setPrivateFlag(int privateFlag) {
         this.privateFlag = privateFlag;
+    }
+
+    /**
+     * Getter of a scenario name in accordance to experiment identifier.
+     * @return scenario name
+     */
+    public String getTitle() {
+        return title;
+    }
+
+    /**
+     * Setter of "experiment" (scenario) name.
+     * @param title scenario name
+     */
+    public void setTitle(String title) {
+        this.title = title;
     }
 }

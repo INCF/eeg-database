@@ -102,6 +102,7 @@ public class UserDataImpl implements UserDataService {
             info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
             info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
             info.setTemperature(experiment.getTemperature());
+            info.setTitle(experiment.getScenario().getTitle());
 
             exps.add(info);
 
@@ -142,10 +143,14 @@ public class UserDataImpl implements UserDataService {
             PersonInfo person = new PersonInfo();
 
             person.setPersonId(subject.getPersonId());
-            person.setDefaultGroupId(subject.getDefaultGroup().getResearchGroupId());
             person.setGender(subject.getGender());
             person.setGivenName(subject.getGivenname());
             person.setSurname(subject.getSurname());
+
+            if (subject.getDefaultGroup() != null)
+                person.setDefaultGroupId(subject.getDefaultGroup().getResearchGroupId());
+            else
+                person.setDefaultGroupId(-1);
 
             people.add(person);
         }
@@ -178,6 +183,7 @@ public class UserDataImpl implements UserDataService {
         List<DataFile> files = null;
 
         try {
+
             for (Experiment experiment : experiments) {
 
                 files = experimentDao.getDataFilesWhereExpId(experiment.getExperimentId());
