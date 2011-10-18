@@ -43,11 +43,11 @@ public class UserDataImpl implements UserDataService {
         this.personDao = personDao;
     }
 
-    public void setScenarioDao(ScenarioDao scenarioDao){
+    public void setScenarioDao(ScenarioDao scenarioDao) {
         this.scenarioDao = scenarioDao;
     }
 
-    public void setWeatherDao(WeatherDao weatherDao){
+    public void setWeatherDao(WeatherDao weatherDao) {
         this.weatherDao = weatherDao;
     }
 
@@ -70,8 +70,8 @@ public class UserDataImpl implements UserDataService {
         List<Weather> weathers = weatherDao.getAllRecords();
         List<WeatherInfo> whs = new LinkedList<WeatherInfo>();
 
-        for(Weather weather : weathers){
-           WeatherInfo info = new WeatherInfo();
+        for (Weather weather : weathers) {
+            WeatherInfo info = new WeatherInfo();
             info.setDescription(weather.getDescription());
             info.setTitle(weather.getTitle());
             info.setWeatherId(weather.getWeatherId());
@@ -116,7 +116,7 @@ public class UserDataImpl implements UserDataService {
         List<Scenario> scenarios = scenarioDao.getAllRecords();
         List<ScenarioInfo> scens = new LinkedList<ScenarioInfo>();
 
-        for(Scenario scenario : scenarios){
+        for (Scenario scenario : scenarios) {
             ScenarioInfo info = new ScenarioInfo();
 
             info.setDescription(scenario.getDescription());
@@ -158,7 +158,7 @@ public class UserDataImpl implements UserDataService {
         List<ResearchGroup> rGroups = researchGroupDao.getAllRecords();
         List<ResearchGroupInfo> rgps = new LinkedList<ResearchGroupInfo>();
 
-        for(ResearchGroup rGroup : rGroups){
+        for (ResearchGroup rGroup : rGroups) {
             ResearchGroupInfo info = new ResearchGroupInfo();
 
             info.setDescription(rGroup.getDescription());
@@ -172,23 +172,27 @@ public class UserDataImpl implements UserDataService {
     }
 
     public List<DataFileInfo> getDataFiles() throws DataDownloadException {
-        List<DataFile> files = experimentDao.getAllRecords();
+        List<Experiment> experiments = experimentDao.getAllRecords();
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
+        DataFileInfo info;
+        List<DataFile> files = null;
 
         try {
+            for (Experiment experiment : experiments) {
 
-            for (DataFile file : files) {
+                files = experimentDao.getDataFilesWhereExpId(experiment.getExperimentId());
 
-                DataFileInfo info = new DataFileInfo();
+                for (DataFile file : files) {
+                    info = new DataFileInfo();
 
-                info.setExperimentId(file.getExperiment().getExperimentId());
-                info.setFileId(file.getDataFileId());
-                info.setFileLength(file.getFileContent().length());
-                info.setFileName(file.getFilename());
-                info.setMimeType(file.getMimetype());
-                info.setSamplingRate(file.getSamplingRate());
-
-                fileInfos.add(info);
+                    info.setExperimentId(file.getExperiment().getExperimentId());
+                    info.setFileId(file.getDataFileId());
+                    info.setFileLength(file.getFileContent().length());
+                    info.setFileName(file.getFilename());
+                    info.setMimeType(file.getMimetype());
+                    info.setSamplingRate(file.getSamplingRate());
+                    fileInfos.add(info);
+                }
             }
 
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of data files.");
@@ -206,7 +210,7 @@ public class UserDataImpl implements UserDataService {
         List<SyncChanges> changes = syncChangesDao.getAllRecords();
         List<SyncChangesInfo> chngs = new LinkedList<SyncChangesInfo>();
 
-        for(SyncChanges change : changes){
+        for (SyncChanges change : changes) {
             SyncChangesInfo info = new SyncChangesInfo();
 
             info.setLastChangeInMillis(change.getLastChange().getTime());
