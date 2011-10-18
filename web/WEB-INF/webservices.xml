@@ -36,6 +36,10 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
     <bean id="userData" class="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl">
         <property name="personDao" ref="personDao"/>
         <property name="experimentDao" ref="experimentDao"/>
+        <property name="scenarioDao" ref="scenarioDao" />
+        <property name="weatherDao" ref="weatherDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao" />
+        <property name="syncChangesDao" ref="syncChangesDao" />
     </bean>
 
     <bean id="semanticDataService" class="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl">

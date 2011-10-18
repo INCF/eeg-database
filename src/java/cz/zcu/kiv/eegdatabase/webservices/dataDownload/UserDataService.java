@@ -5,9 +5,8 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.DataFileInfo;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.ExperimentInfo;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.PersonInfo;
+import cz.zcu.kiv.eegdatabase.data.pojo.SyncChanges;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
@@ -31,12 +30,25 @@ public interface UserDataService {
     public boolean isServiceAvailable();
 
     /**
+     * Method returning List of available weather information.
+     *
+     * @return weather information
+     */
+    public List<WeatherInfo> getWeather();
+
+    /**
      * Method returning List of information about available experiments.
      *
-     * @param rights defines rights that user has in desired experiments (user, subject)
      * @return List of information about available experiments
      */
-    public List<ExperimentInfo> getExperiments(Rights rights);
+    public List<ExperimentInfo> getExperiments();
+
+    /**
+     * Method returning List of information about available scenarios.
+     *
+     * @return list of scenarios
+     */
+    public List<ScenarioInfo> getScenarios();
 
     /**
      * Method for obtaining list of all EEG base users.
@@ -46,14 +58,25 @@ public interface UserDataService {
     public List<PersonInfo> getPeople();
 
     /**
-     * Method returning list of files, which belong to experiment defined by id.
+     * Method for obtaining list of all EEG base research groups.
      *
-     * @param experimentId Number defining explored experiment
-     * @return List of information about experiment's data files
-     * @throws DataDownloadException exception occurred on side of web service
+     * @return list of research groups
      */
-    public List<DataFileInfo> getExperimentFiles(int experimentId)
-            throws DataDownloadException;
+    public List<ResearchGroupInfo> getResearchGroups();
+
+    /**
+     * Method returning List of information about available data files.
+     *
+     * @return list of data files
+     */
+    public List<DataFileInfo> getDataFiles() throws DataDownloadException;
+
+    /**
+     * Method for obtaining information about last changes upon monitored data tables.
+     *
+     * @return table names and timestamps of their last change
+     */
+    public List<SyncChangesInfo> getSyncChanges();
 
     /**
      * Method streaming desired file back to user.
@@ -63,5 +86,5 @@ public interface UserDataService {
      * @throws DataDownloadException exception occurred on side of web service
      */
     @XmlMimeType("application/octet-stream")
-    public DataHandler downloadFile(int dataFileId) throws DataDownloadException;
+    public DataHandler downloadDataFile(int dataFileId) throws DataDownloadException;
 }

@@ -7,7 +7,7 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
  *
  * @author: Petr Miko (miko.petr at gmail.com)
  */
-public class ResearchGroup {
+public class ResearchGroupInfo {
 
     private int researchGroupId;
     private int ownerId;

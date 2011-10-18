@@ -143,6 +143,13 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="syncChangesDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSyncChangesDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.SyncChanges</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

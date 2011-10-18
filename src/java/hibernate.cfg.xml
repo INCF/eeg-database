@@ -5,18 +5,14 @@
     <property name="hibernate.current_session_context_class">
             org.hibernate.context.ThreadLocalSessionContext
     </property>
-    <property name="hibernate.connection.driver_class">
-        oracle.jdbc.driver.OracleDriver
-    </property>
+    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.dialect">
         <!--org.hibernate.dialect.Oracle10gDialect-->
         cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
-    <property name="hibernate.connection.url">
-            jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students
-    </property>
-    <property name="hibernate.connection.username">jpergler</property>
-    <property name="hibernate.connection.password">jpergler</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students</property>
+    <property name="hibernate.connection.username">JPERGLER</property>
+    <property name="hibernate.connection.password">JPERGLER</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider
     </property>
@@ -42,5 +38,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/SyncChanges.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

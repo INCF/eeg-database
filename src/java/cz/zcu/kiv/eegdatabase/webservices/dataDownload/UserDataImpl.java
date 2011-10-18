@@ -1,14 +1,9 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.DataFileInfo;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.ExperimentInfo;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.PersonInfo;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -34,6 +29,10 @@ public class UserDataImpl implements UserDataService {
     /* necessary Dao objects*/
     private PersonDao personDao;
     private ExperimentDao experimentDao;
+    private WeatherDao weatherDao;
+    private ScenarioDao scenarioDao;
+    private ResearchGroupDao researchGroupDao;
+    private SyncChangesDao syncChangesDao;
     private Log log = LogFactory.getLog(getClass());
 
     public void setExperimentDao(ExperimentDao experimentDao) {
@@ -44,6 +43,22 @@ public class UserDataImpl implements UserDataService {
         this.personDao = personDao;
     }
 
+    public void setScenarioDao(ScenarioDao scenarioDao){
+        this.scenarioDao = scenarioDao;
+    }
+
+    public void setWeatherDao(WeatherDao weatherDao){
+        this.weatherDao = weatherDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
+    }
+
+    public void setSyncChangesDao(SyncChangesDao syncChangesDao) {
+        this.syncChangesDao = syncChangesDao;
+    }
+
     public boolean isServiceAvailable() {
 
         log.debug("User " + personDao.getLoggedPerson().getUsername() +
@@ -51,16 +66,27 @@ public class UserDataImpl implements UserDataService {
         return true;
     }
 
-    public List<ExperimentInfo> getExperiments(Rights rights) {
+    public List<WeatherInfo> getWeather() {
+        List<Weather> weathers = weatherDao.getAllRecords();
+        List<WeatherInfo> whs = new LinkedList<WeatherInfo>();
+
+        for(Weather weather : weathers){
+           WeatherInfo info = new WeatherInfo();
+            info.setDescription(weather.getDescription());
+            info.setTitle(weather.getTitle());
+            info.setWeatherId(weather.getWeatherId());
+
+            whs.add(info);
+        }
+
+        return whs;
+    }
+
+    public List<ExperimentInfo> getExperiments() {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        if (rights == Rights.ALL) {
-            experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
-        } else if (rights == Rights.SUBJECT)
-            experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForSubjectPersonId());
-        else
-            experiments = new LinkedList<Experiment>(personDao.getLoggedPerson().getExperimentsForOwnerId());
+        experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
 
         for (Experiment experiment : experiments) {
 
@@ -81,9 +107,30 @@ public class UserDataImpl implements UserDataService {
 
         }
 
-        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list with " + rights.toString() + " rights.");
+        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list.");
 
         return exps;
+    }
+
+    public List<ScenarioInfo> getScenarios() {
+        List<Scenario> scenarios = scenarioDao.getAllRecords();
+        List<ScenarioInfo> scens = new LinkedList<ScenarioInfo>();
+
+        for(Scenario scenario : scenarios){
+            ScenarioInfo info = new ScenarioInfo();
+
+            info.setDescription(scenario.getDescription());
+            info.setMimeType(scenario.getMimetype());
+            info.setOwnerId(scenario.getPerson().getPersonId());
+            info.setResearchGroupId(scenario.getResearchGroup().getResearchGroupId());
+            info.setScenarioId(scenario.getScenarioId());
+            info.setScenarioLength(scenario.getScenarioLength());
+            info.setScenarioName(scenario.getScenarioName());
+            info.setTitle(scenario.getTitle());
+
+            scens.add(info);
+        }
+        return scens;
     }
 
     public List<PersonInfo> getPeople() {
@@ -91,7 +138,7 @@ public class UserDataImpl implements UserDataService {
         List<PersonInfo> people = new LinkedList<PersonInfo>();
         List<Person> peopleDb = personDao.getAllRecords();
 
-        for(Person subject : peopleDb){
+        for (Person subject : peopleDb) {
             PersonInfo person = new PersonInfo();
 
             person.setPersonId(subject.getPersonId());
@@ -107,8 +154,25 @@ public class UserDataImpl implements UserDataService {
         return people;
     }
 
-    public List<DataFileInfo> getExperimentFiles(int experimentId) throws DataDownloadException {
-        List<DataFile> files = experimentDao.getDataFilesWhereExpId(experimentId);
+    public List<ResearchGroupInfo> getResearchGroups() {
+        List<ResearchGroup> rGroups = researchGroupDao.getAllRecords();
+        List<ResearchGroupInfo> rgps = new LinkedList<ResearchGroupInfo>();
+
+        for(ResearchGroup rGroup : rGroups){
+            ResearchGroupInfo info = new ResearchGroupInfo();
+
+            info.setDescription(rGroup.getDescription());
+            info.setResearchGroupId(rGroup.getResearchGroupId());
+            info.setOwnerId(rGroup.getPerson().getPersonId());
+            info.setTitle(rGroup.getTitle());
+
+            rgps.add(info);
+        }
+        return rgps;
+    }
+
+    public List<DataFileInfo> getDataFiles() throws DataDownloadException {
+        List<DataFile> files = experimentDao.getAllRecords();
         List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
 
         try {
@@ -127,10 +191,10 @@ public class UserDataImpl implements UserDataService {
                 fileInfos.add(info);
             }
 
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of experiment " + experimentId + " data files.");
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of data files.");
         } catch (SQLException e) {
             DataDownloadException exception = new DataDownloadException(e);
-            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of experiment " + experimentId + " data files!");
+            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of data files!");
             log.error(e.getMessage(), e);
             throw exception;
         }
@@ -138,7 +202,23 @@ public class UserDataImpl implements UserDataService {
         return fileInfos;
     }
 
-    public DataHandler downloadFile(int dataFileId) throws DataDownloadException {
+    public List<SyncChangesInfo> getSyncChanges() {
+        List<SyncChanges> changes = syncChangesDao.getAllRecords();
+        List<SyncChangesInfo> chngs = new LinkedList<SyncChangesInfo>();
+
+        for(SyncChanges change : changes){
+            SyncChangesInfo info = new SyncChangesInfo();
+
+            info.setLastChangeInMillis(change.getLastChange().getTime());
+            info.setTableName(change.getTableName());
+
+            chngs.add(info);
+        }
+
+        return chngs;
+    }
+
+    public DataHandler downloadDataFile(int dataFileId) throws DataDownloadException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);

@@ -1,0 +1,17 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC
+        "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.SyncChanges" schema="JPERGLER" table="SYNC_CHANGES">
+        <id name="tableName" type="string">
+            <column name="TABLE_NAME" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="lastChange">
+            <column name="LAST_CHANGE" sql-type="timestamp(6)" length="11" precision="6" not-null="true"/>
+        </property>
+    </class>
+</hibernate-mapping>
