@@ -13,7 +13,7 @@ public class DashedUrlMethodNameResolver implements MethodNameResolver {
   public String getHandlerMethodName(HttpServletRequest request) throws NoSuchRequestHandlingMethodException {
     String url = request.getRequestURL().toString();
     int lastSlash = url.lastIndexOf("/") + 1;
-    int extensionPosition = url.lastIndexOf("lib/lucene");
+    int extensionPosition = url.lastIndexOf(".");
 
     String fileName = null;
     if (extensionPosition > lastSlash) {
