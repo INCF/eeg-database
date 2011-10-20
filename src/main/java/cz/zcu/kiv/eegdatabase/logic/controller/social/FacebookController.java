@@ -10,10 +10,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.HierarchicalMessageSource;
-import org.springframework.security.Authentication;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.GrantedAuthorityImpl;
-import org.springframework.security.context.SecurityContextHolder;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.GrantedAuthorityImpl;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -21,6 +21,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.text.Normalizer;
+import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 /**
@@ -51,7 +53,7 @@ public class FacebookController extends MultiActionController {
     public ModelAndView user(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("social/user");
 
-        /* Getting user´s credentials from Facebook */
+        /* Getting userï¿½s credentials from Facebook */
         String code = request.getParameter("code");
         String accessToken = fbStuffKeeper.retrieveAccessToken(code);
         facebookClient = new DefaultFacebookClient(accessToken);
@@ -114,8 +116,8 @@ public class FacebookController extends MultiActionController {
                 person.setFacebookId(userFb.getId());
                 personDao.create(person);
             }
-            GrantedAuthority[] grantedAuthorities = new GrantedAuthorityImpl[1];
-            grantedAuthorities[0] = new GrantedAuthorityImpl(person.getAuthority());
+            GrantedAuthority grantedAuthority = new GrantedAuthorityImpl(person.getAuthority());
+            List<GrantedAuthority> grantedAuthorities = Collections.singletonList(grantedAuthority);
             Authentication a = new FacebookAuthenticationToken(grantedAuthorities, person);
             a.setAuthenticated(true);
             SecurityContextHolder.getContext().setAuthentication(a);

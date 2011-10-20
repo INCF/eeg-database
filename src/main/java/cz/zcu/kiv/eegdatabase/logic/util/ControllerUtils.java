@@ -6,13 +6,14 @@ package cz.zcu.kiv.eegdatabase.logic.util;
 
 import com.Ostermiller.util.RandPass;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import org.springframework.security.GrantedAuthority;
-import org.springframework.security.context.SecurityContextHolder;
-import org.springframework.security.userdetails.UserDetails;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
+import java.util.Collection;
 
 /**
  *
@@ -45,7 +46,7 @@ public class ControllerUtils {
     public static String getLoggedUserName() {
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (o != null) {
-            GrantedAuthority[] authorities =
+            Collection<GrantedAuthority> authorities =
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         }
 

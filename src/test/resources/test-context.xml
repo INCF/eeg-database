@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN 2.0//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
 <beans xmlns="http://www.springframework.org/schema/beans"
      xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
      xmlns:context="http://www.springframework.org/schema/context"
@@ -13,7 +13,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>../resources/project.test.properties</value>
+                <value>project.test.properties</value>
             </list>
         </property>
     </bean>
@@ -140,7 +140,7 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/FileMetadataParamVal.hbm.xml"/>
+        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>

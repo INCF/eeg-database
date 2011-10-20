@@ -51,7 +51,7 @@
             <xs:element name="fileMetadata" type="FileMetadataType"
                 maxOccurs="unbounded" minOccurs="0"></xs:element>
     	</xs:sequence>
-        <xs:attribute name="fileName" type="xs:String"></xs:attribute>
+        <xs:attribute name="fileName" type="xs:string"></xs:attribute>
     	<xs:attribute name="samplingRate" type="xs:float"></xs:attribute>
     </xs:complexType>
 
