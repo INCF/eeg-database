@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE log4j:configuration SYSTEM "D:\Projects\EEG-Database\Idea-SVN\trunk\src\main\resources\log4j.dtd">
+<!--
+	Basic log4j logger configuration.
+	It's configured to save all debugs or errors into the log file by the append at the end of log file method.
+
+-->
+<log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="all">
+
+	<appender name="appender" class="org.apache.log4j.DailyRollingFileAppender">
+		<param name="File" value="c:/logs/eeg_database.log"/>
+		<param name="Append" value="true"/>
+                <param name="DatePattern" value=".yyyy-MM-dd" />
+                <param name="maxBackupIndex" value="90" />
+        <param name="MaxFileSize" value="30000KB"/>
+		<layout class="org.apache.log4j.PatternLayout">
+			<param name="ConversionPattern" value="%d [%t] %C %p - %m%n"/>
+
+		</layout>
+	</appender>
+
+	<root>
+		<priority value="error"/>
+		<appender-ref ref="appender"/>
+	</root>
+
+</log4j:configuration>
