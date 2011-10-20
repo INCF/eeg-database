@@ -7,7 +7,6 @@
     </property>
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.dialect">
-        <!--org.hibernate.dialect.Oracle10gDialect-->
         cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students</property>

@@ -21,16 +21,11 @@
 
 	<dependencies>
 		<!-- ================================ Locally stored libs ============================== -->
-		<dependency>
-			<groupId>thewebsemantic</groupId>
-			<artifactId>jenabean</artifactId>
-			<version>1.0.6</version>
-		</dependency>
-		<dependency>
-			<groupId>com.oracle</groupId>
-			<artifactId>ojdbc6</artifactId>
-			<version>11.2.0.3.0</version>
-		</dependency>
+        <dependency>
+            <groupId>com.oracle</groupId>
+            <artifactId>ojdbc6</artifactId>
+            <version>11.2.0.3.0</version>
+        </dependency>
 		<dependency>
 			<groupId>com.oracle</groupId>
 			<artifactId>orai18n</artifactId>
@@ -58,8 +53,8 @@
 		</dependency>
 		<dependency>
 			<groupId>cz.zcu.kiv</groupId>
-			<artifactId>javatosemanticweb</artifactId>
-			<version>2011_04_01</version>
+			<artifactId>jenabeanextension</artifactId>
+			<version>2.2</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.zcu.kiv</groupId>
@@ -478,7 +473,13 @@
         <dependency>
             <groupId>com.hp.hpl.jena</groupId>
         <artifactId>arq</artifactId>
-        <version>2.8.4</version>
+        <version>2.8.7</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.hp.hpl.jena</groupId>
+            <artifactId>jena</artifactId>
+            <version>2.6.4</version>
         </dependency>
 
         <!--======================================= Other libraries ============================================= -->

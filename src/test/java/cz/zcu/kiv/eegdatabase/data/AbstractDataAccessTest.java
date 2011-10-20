@@ -19,7 +19,7 @@ public class AbstractDataAccessTest extends AbstractTransactionalDataSourceSprin
     }
 
     protected String[] getConfigLocations() {
-        return new String[] {"src/test/resources/test-context.xml"};
+        return new String[] {"test-context.xml"};
     }
 
     public void setSessionFactory(SessionFactory factory) {

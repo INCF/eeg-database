@@ -3,7 +3,7 @@
     xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <modelVersion>4.0.0</modelVersion>
   <groupId>cz.zcu.kiv</groupId>
-  <artifactId>javatosemanticweb</artifactId>
-  <version>2011_04_01</version>
+  <artifactId>jenabeanextension</artifactId>
+  <version>2.2</version>
   <description>POM was created from install:install-file</description>
 </project>
