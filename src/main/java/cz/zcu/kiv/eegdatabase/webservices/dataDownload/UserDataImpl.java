@@ -86,7 +86,7 @@ public class UserDataImpl implements UserDataService {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
+        experiments = new LinkedList<Experiment>(experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson().getPersonId()));
 
         for (Experiment experiment : experiments) {
 
@@ -178,9 +178,9 @@ public class UserDataImpl implements UserDataService {
 
     public List<DataFileInfo> getDataFiles() throws DataDownloadException {
         List<Experiment> experiments = experimentDao.getAllRecords();
-        List<DataFileInfo> fileInfos = new LinkedList<DataFileInfo>();
+        List<DataFileInfo> fileInformation = new LinkedList<DataFileInfo>();
         DataFileInfo info;
-        List<DataFile> files = null;
+        List<DataFile> files;
 
         try {
 
@@ -197,7 +197,7 @@ public class UserDataImpl implements UserDataService {
                     info.setFileName(file.getFilename());
                     info.setMimeType(file.getMimetype());
                     info.setSamplingRate(file.getSamplingRate());
-                    fileInfos.add(info);
+                    fileInformation.add(info);
                 }
             }
 
@@ -209,7 +209,7 @@ public class UserDataImpl implements UserDataService {
             throw exception;
         }
 
-        return fileInfos;
+        return fileInformation;
     }
 
     public List<SyncChangesInfo> getSyncChanges() {
@@ -233,7 +233,7 @@ public class UserDataImpl implements UserDataService {
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
 
-        DataSource rawData = null;
+        DataSource rawData;
         try {
             final InputStream in = file.getFileContent().getBinaryStream();
             rawData = new DataSource() {
