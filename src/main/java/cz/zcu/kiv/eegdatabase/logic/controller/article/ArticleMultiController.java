@@ -47,7 +47,7 @@ public class ArticleMultiController extends MultiActionController {
         List<Article> articleList = articleDao.getAllArticles();
         int groupId;
 
-        String copyright = "Copyright © The University of West Bohemia";
+        String copyright = "Copyright Â© The University of West Bohemia";
         String title = "EEGbase articles RSS feed";
         String description = "Articles from EEGbase content management system";
         String language = "en";
