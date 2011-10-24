@@ -1,8 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
