@@ -15,6 +15,12 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         return list;
     }
 
+    public List<Hardware> getRecordsNewerThan(long oracleScn) {
+        String hqlQuery = "from Hardware h where h.scn > :oracleScn";
+        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
+        return list;
+    }
+
     public boolean canSaveTitle(String title, int id) {
         String hqlQuery = "from Hardware h where h.title = :title and h.hardwareId != :id";
         String[] names = {"title", "id"};
@@ -25,10 +31,11 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
 
     /**
      * Title of hardware must be unique
-     * @param title  - hardware title
+     *
+     * @param title - hardware title
      * @return
      */
-     public boolean canSaveTitle(String title) {
+    public boolean canSaveTitle(String title) {
         String hqlQuery = "from Hardware h where h.title = :title";
         String name = "title";
         Object value = title;

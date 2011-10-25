@@ -53,6 +53,9 @@ public class SimpleGenericDao<T, PK extends Serializable>
         this.type = type;
     }
 
+    public SimpleGenericDao() {
+    }
+
     /*
     * Create new record (row) in database.
     * @param newInstance - Object that will be created in database

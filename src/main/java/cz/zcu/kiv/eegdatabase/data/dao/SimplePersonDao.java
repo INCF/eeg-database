@@ -113,7 +113,7 @@ public class SimplePersonDao
      * content of database. If the list is empty, then
      * email wasn´t found in the database.
      *
-     * @param email - searched email
+     * @param facebookId - searched email
      * @return true if email exists (was founded},
      *         else return false
      */
@@ -157,6 +157,13 @@ public class SimplePersonDao
             info = new HashMap<String, String>();
         }
         return info;
+    }
+
+    @Override
+    public List<Person> getRecordsNewerThan(long oracleScn) {
+         String hqlQuery = "from Person p where p.scn > :oracleScn";
+        List<Person> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
+        return list;
     }
 
     public boolean userNameInGroup(String userName, int groupId) {

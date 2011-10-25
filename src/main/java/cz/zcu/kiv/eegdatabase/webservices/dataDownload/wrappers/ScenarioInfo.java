@@ -15,6 +15,7 @@ public class ScenarioInfo {
     private String description;
     private String scenarioName;
     private String mimeType;
+    private long scn;
 
     /**
      * Getter of scenario identifier.
@@ -158,5 +159,22 @@ public class ScenarioInfo {
      */
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    /**
+     * Getter of revision number (oracle scn).
+     * @return revision number
+     */
+    public long getScn() {
+        return scn;
+    }
+
+    /**
+     * Setter of revision number (oracle scn).
+     *
+     * @param scn revision number
+     */
+    public void setScn(long scn) {
+        this.scn = scn;
     }
 }

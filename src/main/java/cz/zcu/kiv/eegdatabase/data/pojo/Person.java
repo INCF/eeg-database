@@ -56,7 +56,7 @@ public class Person implements Serializable {
     private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
     private Set<ResearchGroup> articlesGroupSubscribtions = new HashSet<ResearchGroup>(0);
     private String facebookId;
-
+    private long scn;
 
     public Person() {
     }
@@ -176,6 +176,14 @@ public class Person implements Serializable {
 
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public long getScn() {
+        return scn;
+    }
+
+    public void setScn(long scn) {
+        this.scn = scn;
     }
 
     public Set<VisualImpairment> getVisualImpairments() {

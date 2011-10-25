@@ -20,6 +20,7 @@ public class ExperimentInfo {
     private String weatherNote;
     private int privateFlag;
     private String title;
+    private long scn;
 
     /**
      * Getter of experiment's identifier.
@@ -233,5 +234,22 @@ public class ExperimentInfo {
      */
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    /**
+     * Getter of revision number (oracle scn).
+     * @return revision number
+     */
+    public long getScn() {
+        return scn;
+    }
+
+    /**
+     * Setter of revision number (oracle scn).
+     *
+     * @param scn revision number
+     */
+    public void setScn(long scn) {
+        this.scn = scn;
     }
 }

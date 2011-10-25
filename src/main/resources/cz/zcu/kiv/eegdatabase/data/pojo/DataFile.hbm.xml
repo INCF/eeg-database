@@ -1,38 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" schema="JPERGLER" table="DATA_FILE">
-    <id name="dataFileId" type="int">
-      <column name="DATA_FILE_ID" precision="22" scale="0"/>
-      <generator class="increment"/>
-    </id>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" name="experiment">
-      <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
-    </many-to-one>
-    <property name="samplingRate" type="double">
-      <column name="SAMPLING_RATE" not-null="true" precision="126" scale="0"/>
-    </property>
-    <property name="fileContent" type="blob">
-      <column name="FILE_CONTENT" not-null="true"/>
-    </property>
-    <property name="mimetype" type="string">
-      <column length="40" name="MIMETYPE" not-null="true"/>
-    </property>
-    <property name="filename" type="string">
-      <column length="80" name="FILENAME" not-null="true"/>
-    </property>
-    <set inverse="true" name="fileMetadataParamVals">
-      <key>
-        <column name="DATA_FILE_ID" not-null="true" precision="22" scale="0"/>
-      </key>
-      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal"/>
-    </set>
-    <set inverse="true" name="histories">
-      <key>
-        <column name="DATA_FILE_ID" precision="22" scale="0"/>
-      </key>
-      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
-    </set>
-  </class>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" schema="JPERGLER" table="DATA_FILE">
+        <id name="dataFileId" type="int">
+            <column name="DATA_FILE_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" name="experiment">
+            <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
+        <property name="samplingRate" type="double">
+            <column name="SAMPLING_RATE" not-null="true" precision="126" scale="0"/>
+        </property>
+        <property name="fileContent" type="blob">
+            <column name="FILE_CONTENT" not-null="true"/>
+        </property>
+        <property name="mimetype" type="string">
+            <column length="40" name="MIMETYPE" not-null="true"/>
+        </property>
+        <property name="filename" type="string">
+            <column length="80" name="FILENAME" not-null="true"/>
+        </property>
+        <property name="scn" type="long">
+            <column name="ORA_ROWSCN"/>
+        </property>
+        <set inverse="true" name="fileMetadataParamVals">
+            <key>
+                <column name="DATA_FILE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal"/>
+        </set>
+        <set inverse="true" name="histories">
+            <key>
+                <column name="DATA_FILE_ID" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
+        </set>
+    </class>
 </hibernate-mapping>

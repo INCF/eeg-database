@@ -15,6 +15,7 @@ public class DataFileInfo {
     private long fileLength;
     private int experimentId;
     private String mimeType;
+    private long scn;
 
     /**
      * Getter of experiment identifier.
@@ -122,5 +123,22 @@ public class DataFileInfo {
      */
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    /**
+     * Getter of revision number (oracle scn).
+     * @return revision number
+     */
+    public long getScn() {
+        return scn;
+    }
+
+    /**
+     * Setter of revision number (oracle scn).
+     *
+     * @param scn revision number
+     */
+    public void setScn(long scn) {
+        this.scn = scn;
     }
 }

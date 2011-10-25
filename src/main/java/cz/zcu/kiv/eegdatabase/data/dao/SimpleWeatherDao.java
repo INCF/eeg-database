@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import java.util.List;
 
 public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> implements WeatherDao {
+
     public SimpleWeatherDao() {
         super(Weather.class);
     }
@@ -50,5 +51,12 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
        Object value = description;
        List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
        return (list.size() == 0);
+    }
+
+    public List<Weather> getRecordsNewerThan(long oracleScn) {
+      String hqlQuery = "from Weather w where w.scn > :oracleScn";
+       String name = "oracleScn";
+       Object value = oracleScn;
+      return getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
     }
 }

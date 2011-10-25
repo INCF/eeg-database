@@ -9,6 +9,7 @@ import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -66,7 +67,14 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
     }
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException {
+    public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {
+       String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
+        String[] stringParams = {"personId", "oracleScn"};
+        Object[] objectParams = {personId, oracleScn};
+        return getHibernateTemplate().findByNamedParam(HQLselect, stringParams, objectParams);
+    }
+
+    public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException {
     List<Experiment> results;
     boolean ignoreChoice = false;
     int index = 0;

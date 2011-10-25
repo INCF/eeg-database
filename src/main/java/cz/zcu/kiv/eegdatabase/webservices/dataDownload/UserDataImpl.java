@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -14,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -32,8 +34,8 @@ public class UserDataImpl implements UserDataService {
     private WeatherDao weatherDao;
     private ScenarioDao scenarioDao;
     private ResearchGroupDao researchGroupDao;
-    private SyncChangesDao syncChangesDao;
     private Log log = LogFactory.getLog(getClass());
+    private HardwareDao hardwareDao;
 
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
@@ -55,8 +57,8 @@ public class UserDataImpl implements UserDataService {
         this.researchGroupDao = researchGroupDao;
     }
 
-    public void setSyncChangesDao(SyncChangesDao syncChangesDao) {
-        this.syncChangesDao = syncChangesDao;
+    public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
     }
 
     public boolean isServiceAvailable() {
@@ -66,8 +68,8 @@ public class UserDataImpl implements UserDataService {
         return true;
     }
 
-    public List<WeatherInfo> getWeather() {
-        List<Weather> weathers = weatherDao.getAllRecords();
+    public List<WeatherInfo> getWeather(long oracleScn) {
+        List<Weather> weathers = weatherDao.getRecordsNewerThan(oracleScn);
         List<WeatherInfo> whs = new LinkedList<WeatherInfo>();
 
         for (Weather weather : weathers) {
@@ -75,6 +77,7 @@ public class UserDataImpl implements UserDataService {
             info.setDescription(weather.getDescription());
             info.setTitle(weather.getTitle());
             info.setWeatherId(weather.getWeatherId());
+            info.setScn(weather.getScn());
 
             whs.add(info);
         }
@@ -82,11 +85,12 @@ public class UserDataImpl implements UserDataService {
         return whs;
     }
 
-    public List<ExperimentInfo> getExperiments() {
+    public List<ExperimentInfo> getExperiments(long oracleScn) {
+
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        experiments = new LinkedList<Experiment>(experimentDao.getAllExperimentsForUser(personDao.getLoggedPerson().getPersonId()));
+        experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(oracleScn, personDao.getLoggedPerson().getPersonId()));
 
         for (Experiment experiment : experiments) {
 
@@ -103,6 +107,7 @@ public class UserDataImpl implements UserDataService {
             info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
             info.setTemperature(experiment.getTemperature());
             info.setTitle(experiment.getScenario().getTitle());
+            info.setScn(experiment.getScn());
 
             exps.add(info);
 
@@ -113,8 +118,8 @@ public class UserDataImpl implements UserDataService {
         return exps;
     }
 
-    public List<ScenarioInfo> getScenarios() {
-        List<Scenario> scenarios = scenarioDao.getAllRecords();
+    public List<ScenarioInfo> getScenarios(long oracleScn) {
+        List<Scenario> scenarios = scenarioDao.getRecordsNewerThan(oracleScn);
         List<ScenarioInfo> scens = new LinkedList<ScenarioInfo>();
 
         for (Scenario scenario : scenarios) {
@@ -128,16 +133,17 @@ public class UserDataImpl implements UserDataService {
             info.setScenarioLength(scenario.getScenarioLength());
             info.setScenarioName(scenario.getScenarioName());
             info.setTitle(scenario.getTitle());
+            info.setScn(scenario.getScn());
 
             scens.add(info);
         }
         return scens;
     }
 
-    public List<PersonInfo> getPeople() {
+    public List<PersonInfo> getPeople(long oracleScn) {
 
         List<PersonInfo> people = new LinkedList<PersonInfo>();
-        List<Person> peopleDb = personDao.getAllRecords();
+        List<Person> peopleDb = personDao.getRecordsNewerThan(oracleScn);
 
         for (Person subject : peopleDb) {
             PersonInfo person = new PersonInfo();
@@ -146,6 +152,7 @@ public class UserDataImpl implements UserDataService {
             person.setGender(subject.getGender());
             person.setGivenName(subject.getGivenname());
             person.setSurname(subject.getSurname());
+            person.setScn(subject.getScn());
 
             if (subject.getDefaultGroup() != null)
                 person.setDefaultGroupId(subject.getDefaultGroup().getResearchGroupId());
@@ -159,8 +166,8 @@ public class UserDataImpl implements UserDataService {
         return people;
     }
 
-    public List<ResearchGroupInfo> getResearchGroups() {
-        List<ResearchGroup> rGroups = researchGroupDao.getAllRecords();
+    public List<ResearchGroupInfo> getResearchGroups(long oracleScn) {
+        List<ResearchGroup> rGroups = researchGroupDao.getRecordsNewerThan(oracleScn);
         List<ResearchGroupInfo> rgps = new LinkedList<ResearchGroupInfo>();
 
         for (ResearchGroup rGroup : rGroups) {
@@ -170,13 +177,14 @@ public class UserDataImpl implements UserDataService {
             info.setResearchGroupId(rGroup.getResearchGroupId());
             info.setOwnerId(rGroup.getPerson().getPersonId());
             info.setTitle(rGroup.getTitle());
+            info.setScn(rGroup.getScn());
 
             rgps.add(info);
         }
         return rgps;
     }
 
-    public List<DataFileInfo> getDataFiles() throws DataDownloadException {
+    public List<DataFileInfo> getDataFiles(long oracleScn) throws DataDownloadException {
         List<Experiment> experiments = experimentDao.getAllRecords();
         List<DataFileInfo> fileInformation = new LinkedList<DataFileInfo>();
         DataFileInfo info;
@@ -189,15 +197,19 @@ public class UserDataImpl implements UserDataService {
                 files = experimentDao.getDataFilesWhereExpId(experiment.getExperimentId());
 
                 for (DataFile file : files) {
-                    info = new DataFileInfo();
+                    if (file.getScn() > oracleScn) {
+                        info = new DataFileInfo();
 
-                    info.setExperimentId(file.getExperiment().getExperimentId());
-                    info.setFileId(file.getDataFileId());
-                    info.setFileLength(file.getFileContent().length());
-                    info.setFileName(file.getFilename());
-                    info.setMimeType(file.getMimetype());
-                    info.setSamplingRate(file.getSamplingRate());
-                    fileInformation.add(info);
+                        info.setExperimentId(file.getExperiment().getExperimentId());
+                        info.setFileId(file.getDataFileId());
+                        info.setFileLength(file.getFileContent().length());
+                        info.setFileName(file.getFilename());
+                        info.setMimeType(file.getMimetype());
+                        info.setSamplingRate(file.getSamplingRate());
+                        info.setScn(file.getScn());
+
+                        fileInformation.add(info);
+                    }
                 }
             }
 
@@ -212,20 +224,23 @@ public class UserDataImpl implements UserDataService {
         return fileInformation;
     }
 
-    public List<SyncChangesInfo> getSyncChanges() {
-        List<SyncChanges> changes = syncChangesDao.getAllRecords();
-        List<SyncChangesInfo> chngs = new LinkedList<SyncChangesInfo>();
+    public List<HardwareInfo> getHardware(long oracleScn) {
+        List<HardwareInfo> hardware = new ArrayList<HardwareInfo>();
+        List<Hardware> hardwareDb = hardwareDao.getRecordsNewerThan(oracleScn);
 
-        for (SyncChanges change : changes) {
-            SyncChangesInfo info = new SyncChangesInfo();
+        for(Hardware piece : hardwareDb){
+            HardwareInfo info = new HardwareInfo();
 
-            info.setLastChangeInMillis(change.getLastChange().getTime());
-            info.setTableName(change.getTableName());
+            info.setDescription(piece.getDescription());
+            info.setHardwareId(piece.getHardwareId());
+            info.setScn(piece.getScn());
+            info.setTitle(piece.getTitle());
+            info.setType(piece.getType());
 
-            chngs.add(info);
+            hardware.add(info);
         }
 
-        return chngs;
+        return hardware;
     }
 
     public DataHandler downloadDataFile(int dataFileId) throws DataDownloadException {
@@ -263,6 +278,4 @@ public class UserDataImpl implements UserDataService {
 
         return new DataHandler(rawData);
     }
-
-
 }

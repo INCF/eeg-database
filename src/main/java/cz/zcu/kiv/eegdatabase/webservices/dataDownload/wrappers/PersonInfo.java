@@ -12,6 +12,7 @@ public class PersonInfo {
     private String givenName;
     private String surname;
     private char gender;
+    private long scn;
 
     /**
      * Getter of person's identifier.
@@ -101,5 +102,22 @@ public class PersonInfo {
      */
     public void setGender(char gender) {
         this.gender = gender;
+    }
+
+    /**
+     * Getter of revision number (oracle scn).
+     * @return revision number
+     */
+    public long getScn() {
+        return scn;
+    }
+
+    /**
+     * Setter of revision number (oracle scn).
+     *
+     * @param scn revision number
+     */
+    public void setScn(long scn) {
+        this.scn = scn;
     }
 }

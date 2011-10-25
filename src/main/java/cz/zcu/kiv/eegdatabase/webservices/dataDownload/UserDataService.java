@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.SyncChanges;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 
@@ -32,51 +33,58 @@ public interface UserDataService {
     /**
      * Method returning List of available weather information.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return weather information
      */
-    public List<WeatherInfo> getWeather();
+    public List<WeatherInfo> getWeather(long oracleScn);
 
     /**
      * Method returning List of information about available experiments.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return List of information about available experiments
      */
-    public List<ExperimentInfo> getExperiments();
+    public List<ExperimentInfo> getExperiments(long oracleScn);
 
     /**
      * Method returning List of information about available scenarios.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of scenarios
      */
-    public List<ScenarioInfo> getScenarios();
+    public List<ScenarioInfo> getScenarios(long oracleScn);
 
     /**
      * Method for obtaining list of all EEG base users.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of users
      */
-    public List<PersonInfo> getPeople();
+    public List<PersonInfo> getPeople(long oracleScn);
 
     /**
      * Method for obtaining list of all EEG base research groups.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of research groups
      */
-    public List<ResearchGroupInfo> getResearchGroups();
+    public List<ResearchGroupInfo> getResearchGroups(long oracleScn);
 
     /**
      * Method returning List of information about available data files.
      *
+     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of data files
      */
-    public List<DataFileInfo> getDataFiles() throws DataDownloadException;
+    public List<DataFileInfo> getDataFiles(long oracleScn) throws DataDownloadException;
 
     /**
-     * Method for obtaining information about last changes upon monitored data tables.
+     * Method returning List of information about available hardware.
      *
-     * @return table names and timestamps of their last change
+     * @param oracleScn number of last revision (Oracle SCN value)
+     * @return list of hardware
      */
-    public List<SyncChangesInfo> getSyncChanges();
+    public List<HardwareInfo> getHardware(long oracleScn);
 
     /**
      * Method streaming desired file back to user.

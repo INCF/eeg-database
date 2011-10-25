@@ -1,28 +1,32 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.Hardware" schema="JPERGLER" table="HARDWARE">
-    <id name="hardwareId" type="int">
-      <column name="HARDWARE_ID" precision="22" scale="0"/>
-      <generator class="increment"/>
-    </id>
-    <property name="title" type="string">
-      <column length="50" name="TITLE" not-null="true" unique="true"/>
-    </property>
-    <property name="type" type="string">
-      <column length="30" name="TYPE" not-null="true" unique="true"/>
-    </property>
-    <property name="description" type="string">
-      <column length="30" name="DESCRIPTION" unique="true"/>
-    </property>
-    <set inverse="false" name="experiments" table="HARDWARE_USAGE_REL">
-      <key>
-        <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
-      </key>
-      <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
-        <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
-      </many-to-many>
-    </set>
-  </class>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Hardware" schema="JPERGLER" table="HARDWARE">
+        <id name="hardwareId" type="int">
+            <column name="HARDWARE_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+        <property name="title" type="string">
+            <column length="50" name="TITLE" not-null="true" unique="true"/>
+        </property>
+        <property name="type" type="string">
+            <column length="30" name="TYPE" not-null="true" unique="true"/>
+        </property>
+        <property name="description" type="string">
+            <column length="30" name="DESCRIPTION" unique="true"/>
+        </property>
+        <property name="scn" type="long">
+            <column name="ORA_ROWSCN"/>
+        </property>
+        <set inverse="false" name="experiments" table="HARDWARE_USAGE_REL">
+            <key>
+                <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
+                <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+    </class>
 </hibernate-mapping>

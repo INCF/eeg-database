@@ -7,6 +7,8 @@ import java.util.List;
 public interface WeatherDao extends GenericDao<Weather, Integer> {
     public List<Weather> getItemsForList();
 
+    public List<Weather> getRecordsNewerThan(long oracleScn);
+
     public boolean canSaveTitle(String title, int id);
 
     public boolean canSaveDescription(String description, int id);

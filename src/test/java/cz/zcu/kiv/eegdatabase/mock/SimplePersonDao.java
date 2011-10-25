@@ -1,10 +1,12 @@
 package cz.zcu.kiv.eegdatabase.mock;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.lucene.queryParser.ParseException;
 
+import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 
@@ -14,7 +16,7 @@ import java.util.Map;
  * @author Jenda Kolena, jendakolena@gmail.com
  * @version 0.1
  */
-public class SimplePersonDao implements PersonDao
+public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implements PersonDao
 {
     PersonDao realPersonDao = null;
 
@@ -76,6 +78,12 @@ public class SimplePersonDao implements PersonDao
     public Map getInfoForAccountOverview(Person loggedPerson)
     {
         return (realPersonDao == null) ? null : realPersonDao.getInfoForAccountOverview(loggedPerson);
+    }
+
+    public List<Person> getRecordsNewerThan(long oracleScn) {
+        String hqlQuery = "from Person p where p.scn > :oracleScn";
+        List<Person> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
+        return list;
     }
 
     public boolean userNameInGroup(String userName, int groupId)

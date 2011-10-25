@@ -1,51 +1,55 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" schema="JPERGLER" table="SCENARIO">
-    <id name="scenarioId" type="int">
-      <column name="SCENARIO_ID" precision="22" scale="0"/>
-      <generator class="increment"/>
-    </id>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
-      <column name="OWNER_ID" not-null="true" precision="22" scale="0"/>
-    </many-to-one>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
-      <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
-    </many-to-one>
-    <property name="title" type="string">
-      <column length="40" name="TITLE" unique="true"/>
-    </property>
-    <property name="scenarioLength" type="int">
-      <column name="SCENARIO_LENGTH" precision="22" scale="0"/>
-    </property>
-    <property name="privateScenario" type="boolean">
-      <column name="PRIVATE" precision="1" scale="0"/>
-    </property>
-    <property name="description" type="string">
-      <column name="DESCRIPTION"/>
-    </property>
-    <property name="scenarioName" type="string">
-      <column name="SCENARIO_NAME"/>
-    </property>
-    <property name="mimetype" type="string">
-      <column name="MIMETYPE"/>
-    </property>
-    <set inverse="true" name="histories">
-      <key>
-        <column name="SCENARIO_ID" precision="22" scale="0"/>
-      </key>
-      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
-    </set>
-    <set inverse="true" name="experiments">
-      <key>
-        <column name="SCENARIO_ID" not-null="true" precision="22" scale="0"/>
-      </key>
-      <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
-    </set>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" schema="JPERGLER" table="SCENARIO">
+        <id name="scenarioId" type="int">
+            <column name="SCENARIO_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
+            <column name="OWNER_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
+            <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
+        <property name="title" type="string">
+            <column length="40" name="TITLE" unique="true"/>
+        </property>
+        <property name="scenarioLength" type="int">
+            <column name="SCENARIO_LENGTH" precision="22" scale="0"/>
+        </property>
+        <property name="privateScenario" type="boolean">
+            <column name="PRIVATE" precision="1" scale="0"/>
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION"/>
+        </property>
+        <property name="scenarioName" type="string">
+            <column name="SCENARIO_NAME"/>
+        </property>
+        <property name="mimetype" type="string">
+            <column name="MIMETYPE"/>
+        </property>
+        <property name="scn" type="long">
+            <column name="ORA_ROWSCN"/>
+        </property>
+        <set inverse="true" name="histories">
+            <key>
+                <column name="SCENARIO_ID" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
+        </set>
+        <set inverse="true" name="experiments">
+            <key>
+                <column name="SCENARIO_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
+        </set>
 
-    <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
-                 column="SCENARIO_ID" insert="false" update="false"
-                 cascade="all" unique="true"/>
-  </class>
+        <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
+                     column="SCENARIO_ID" insert="false" update="false"
+                     cascade="all" unique="true"/>
+    </class>
 </hibernate-mapping>
