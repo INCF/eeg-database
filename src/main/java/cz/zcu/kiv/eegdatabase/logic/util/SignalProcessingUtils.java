@@ -22,7 +22,7 @@ public class SignalProcessingUtils {
         List<String> headers = new ArrayList<String>();
         for (DataFile file: e.getDataFiles()) {
             if (file.getFilename().endsWith(".vhdr")) {
-                int index = file.getFilename().lastIndexOf("lib/lucene");
+                int index = file.getFilename().lastIndexOf("[.]");
                 String name = file.getFilename().substring(0, index);
                 for (DataFile file2: e.getDataFiles()) {
                     if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
