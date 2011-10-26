@@ -17,8 +17,8 @@
    <pathelement location="${javac2.home}/asm-commons.jar"/>
    <pathelement location="${javac2.home}/jgoodies-forms.jar"/>
  </path>
- <taskdef name="javac2" classname="com.intellij.ant.Javac2" classpathref="javac2.classpath"/>
- <taskdef name="instrumentIdeaExtensions" classname="com.intellij.ant.InstrumentIdeaExtensions" classpathref="javac2.classpath"/>
+ 
+
  
  <!-- Compiler options -->
  
@@ -175,13 +175,13 @@
  
  <target name="compile.module.eegdatabase.production" description="Compile module EEGDatabase; production classes">
    <mkdir dir="${eegdatabase.output.dir}"/>
-   <javac2 destdir="${eegdatabase.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eegdatabase}/javac">
+   <javac destdir="${eegdatabase.output.dir}" debug="${compiler.debug}" nowarn="${compiler.generate.no.warnings}" memorymaximumsize="${compiler.max.memory}" fork="true" executable="${module.jdk.bin.eegdatabase}/javac" encoding="ISO-8859-1">
      <compilerarg line="${compiler.args.eegdatabase}"/>
      <bootclasspath refid="eegdatabase.module.bootclasspath"/>
      <classpath refid="eegdatabase.module.production.classpath"/>
      <src refid="eegdatabase.module.sourcepath"/>
      <patternset refid="excluded.from.compilation.eegdatabase"/>
-   </javac2>
+   </javac>
    
    <copy todir="${eegdatabase.output.dir}">
      <fileset dir="${module.eegdatabase.basedir}/src/java">

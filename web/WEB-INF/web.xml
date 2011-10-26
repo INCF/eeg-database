@@ -147,4 +147,12 @@
         <location>/error404.jsp</location>
     </error-page>
 
+<context-param>
+    <param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
+    <param-value>JSESSIONID</param-value>
+  </context-param>
+<context-param>
+    <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
+    <param-value>jsession</param-value>
+</context-param>
 </web-app>
