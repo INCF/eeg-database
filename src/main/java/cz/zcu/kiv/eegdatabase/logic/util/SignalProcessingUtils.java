@@ -23,6 +23,8 @@ public class SignalProcessingUtils {
         for (DataFile file: e.getDataFiles()) {
             if (file.getFilename().endsWith(".vhdr")) {
                 int index = file.getFilename().lastIndexOf("[.]");
+                if (index <= 0)
+                    continue;
                 String name = file.getFilename().substring(0, index);
                 for (DataFile file2: e.getDataFiles()) {
                     if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
