@@ -18,15 +18,10 @@ import org.apache.lucene.queryParser.ParseException;
 import org.apache.lucene.search.IndexSearcher;
 import org.apache.lucene.search.Query;
 
-import org.apache.lucene.search.highlight.Encoder;
+import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.search.highlight.Formatter;
-import org.apache.lucene.search.highlight.Fragmenter;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.QueryScorer;
-import org.apache.lucene.search.highlight.SimpleFragmenter;
-import org.apache.lucene.search.highlight.SimpleHTMLEncoder;
-import org.apache.lucene.search.highlight.SimpleHTMLFormatter;
 import org.apache.lucene.store.Directory;
+import org.apache.lucene.util.Version;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 
@@ -45,6 +40,8 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class SimpleGenericDao<T, PK extends Serializable>
         extends HibernateDaoSupport implements GenericDao<T, PK> {
+
+    protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_34;
 
     protected Class<T> type;
     protected Log log = LogFactory.getLog(getClass());
@@ -142,7 +139,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         String[] fields = new String[fieldsList.size()];
         fields = fieldsList.toArray(fields);
 
-        MultiFieldQueryParser parser = new MultiFieldQueryParser(fields, new StandardAnalyzer(new HashSet()));
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(LUCENE_COMPATIBILITY_VERSION,fields, new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION));
         Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
         FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
 
@@ -160,7 +157,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         Map<T, String> map = new HashMap<T, String>();
         try {
             searcher = new IndexSearcher(d);
-            Analyzer analyzer = new StandardAnalyzer();
+            Analyzer analyzer = new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION);
             Encoder encoder = new SimpleHTMLEncoder();
             Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
             Fragmenter fragmenter = new SimpleFragmenter(150);
@@ -187,7 +184,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         return map;
     }
 
-    protected String getHighlightedText(String[] fields, T t, Highlighter ht, Analyzer analyzer) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException {
+    protected String getHighlightedText(String[] fields, T t, Highlighter ht, Analyzer analyzer) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException, InvalidTokenOffsetsException {
         Field[] field = new Field[fields.length];
         String text = "";
         for (int i = 0; i < field.length; i++) {
