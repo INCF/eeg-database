@@ -41,7 +41,7 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 public class SimpleGenericDao<T, PK extends Serializable>
         extends HibernateDaoSupport implements GenericDao<T, PK> {
 
-    protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_34;
+    protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_31;
 
     protected Class<T> type;
     protected Log log = LogFactory.getLog(getClass());
