@@ -62,7 +62,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
         Experiment ex = experimentDao.read(id);
         byte[] data = null;
         for (DataFile dataFile : ex.getDataFiles()) {
-            int index = dataFile.getFilename().lastIndexOf("lib/lucene");
+            int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg"))||(dataFile.getFilename().endsWith(".eeg"))) {
                     Blob blob = dataFile.getFileContent();
