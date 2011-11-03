@@ -50,7 +50,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @throws OWLOntologyCreationException
      */
     public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException, OWLOntologyStorageException, OWLOntologyCreationException {
-        InputStream is = null;
+        InputStream is;
         OwlApi owlApi = new OwlApiTool(creatingJenaBean().getOntologyDocument());
         is = owlApi.convertToSemanticStandard(typeTransform);
         return is;
@@ -62,7 +62,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @throws IOException
      */
      public InputStream  generateRDF() throws IOException{
-        InputStream is = null;
+        InputStream is;
         is = creatingJenaBean().getOntologyDocument();
         return is;
     }
