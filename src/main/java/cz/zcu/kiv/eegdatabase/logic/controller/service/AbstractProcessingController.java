@@ -36,7 +36,7 @@ public abstract class AbstractProcessingController extends SimpleFormController 
         for (DataFile d : experiment.getDataFiles()) {
             if ((d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
                 bytes = d.getFileContent().getBytes(1, (int) d.getFileContent().length());
-                int index = d.getFilename().lastIndexOf("lib/lucene");
+                int index = d.getFilename().lastIndexOf(".");
                 fileName = d.getFilename().substring(0, index);
                 break;
             }
