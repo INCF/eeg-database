@@ -155,11 +155,7 @@
     <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
     <param-value>none</param-value>
   </context-param>
-    <context-param>
-    <param-name>org.mortbay.jetty.servlet.MaxAge</param-name>
-    <param-value>90</param-value>
-  </context-param>
-      <context-param>
+  <context-param>
     <param-name>org.mortbay.jetty.servlet.SessionPath</param-name>
     <param-value>/</param-value>
   </context-param>
