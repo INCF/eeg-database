@@ -11,7 +11,7 @@
             <!-- editation -->
             <h1><fmt:message key="pageTitle.editScenario"/></h1>
 
-            <c:url value="/scenarios/edit.html?id=${addScenario.id}" var="formUrl"/>
+            <c:url value="scenarios/edit.html?id=${addScenario.id}" var="formUrl"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
