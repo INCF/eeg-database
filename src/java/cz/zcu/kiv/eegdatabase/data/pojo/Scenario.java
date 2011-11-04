@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -19,7 +20,7 @@ import org.hibernate.search.annotations.Store;
 @Entity
 @Indexed
 @Analyzer(impl = StandardAnalyzer.class)
-public class Scenario implements java.io.Serializable {
+public class Scenario implements Serializable, Comparable<Scenario> {
 
   @DocumentId
   private int scenarioId;
@@ -171,6 +172,9 @@ public class Scenario implements java.io.Serializable {
   public void setScenarioType(IScenarioType scenarioDoc) {
     this.scenarioType = scenarioDoc;
   }
+    public int compareTo(Scenario scen) {
+        return this.title.compareTo(scen.getTitle());
+    }
 }
 
 
