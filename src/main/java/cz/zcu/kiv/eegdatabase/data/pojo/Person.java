@@ -16,7 +16,7 @@ import java.util.Set;
 @Entity
 @Indexed
 @Analyzer(impl = StandardAnalyzer.class)
-public class Person implements Serializable {
+public class Person implements Serializable, Comparable<Person> {
 
     @DocumentId
     private int personId;
@@ -329,6 +329,12 @@ public class Person implements Serializable {
     public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
     }
+
+    public int compareTo(Person person){
+        return this.surname.compareTo(person.getSurname());
+
+    }
+
 
 }
 

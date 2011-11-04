@@ -158,6 +158,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         switch (page) {
             case 0:
                 List<Person> personList = personDao.getAllRecords();
+                Collections.sort(personList);
                 map.put("personList", personList);
 
                 List<ResearchGroup> researchGroupList =
@@ -178,6 +179,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
                 int defaultGroupId1 = (defaultGroup1 != null) ? defaultGroup1.getResearchGroupId() : 0;
                 map.put("defaultGroupId", defaultGroupId1);
                 List<Scenario> scenarioList = scenarioDao.getAllRecords();
+                Collections.sort(scenarioList);
                 map.put("scenarioList", scenarioList);
 
                 List<Hardware> hardwareList = hardwareDao.getAllRecords();

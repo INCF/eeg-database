@@ -15,7 +15,7 @@ import java.util.Set;
 @Entity
 @Indexed
 @Analyzer(impl = StandardAnalyzer.class)
-public class Scenario implements Serializable {
+public class Scenario implements Serializable, Comparable<Scenario> {
 
     @DocumentId
     private int scenarioId;
@@ -176,6 +176,9 @@ public class Scenario implements Serializable {
 
     public void setScenarioType(IScenarioType scenarioDoc) {
         this.scenarioType = scenarioDoc;
+    }
+    public int compareTo(Scenario scen) {
+        return this.title.compareTo(scen.getTitle());
     }
 }
 

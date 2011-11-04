@@ -89,7 +89,7 @@
                 <form:select path="subjectPerson" id="subjectPerson" cssClass="selectBox">
                     <option value="-1"><fmt:message key="select.option.noSubjectPersonSelected"/></option>
                     <c:forEach items="${personList}" var="person">
-                        <option value="${person.personId}">${person.givenname} ${person.surname}</option>
+                        <option value="${person.personId}">${person.surname} ${person.givenname}</option>
                     </c:forEach>
                 </form:select>
                 <input type="button" name="new_person" id="create-person"
@@ -104,7 +104,7 @@
                 <form:select path="coExperimenters" multiple="multiple" cssClass="multipleSelectBox">
                     <c:forEach items="${personList}" var="person">
                         <form:option value="${person.personId}"
-                                     label="${person.givenname} ${person.surname}"></form:option>
+                                     label="${person.surname} ${person.givenname}"></form:option>
                     </c:forEach>
                 </form:select>
 
