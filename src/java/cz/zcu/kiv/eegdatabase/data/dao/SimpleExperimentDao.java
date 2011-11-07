@@ -66,7 +66,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
     }
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests) throws NumberFormatException {
+  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId) throws NumberFormatException {
     List<Experiment> results;
     boolean ignoreChoice = false;
     int index = 0;
@@ -106,11 +106,12 @@ public class SimpleExperimentDao<T, PK extends Serializable>
           hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
         } else {
           hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource()) +
-                  "lower('%" + request.getCondition() + "%')";
+                  "lower('%" + request.getCondition() + "%') ";
+
         }
         ignoreChoice = false;
       }
-
+      hqlQuery += " and e.experimentId IN(SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = "+ personId +")";
       Session ses = getSession();
       Query q = ses.createQuery(hqlQuery);
       int i = 0;

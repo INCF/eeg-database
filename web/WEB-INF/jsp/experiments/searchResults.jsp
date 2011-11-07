@@ -36,7 +36,7 @@
             </tr>
             </thead>
             <c:forEach items="${suitable}" var="experiment">
-                <c:if test="${experiment.userMemberOfGroup || !experiment.privateExperiment}">
+
                     <tr>
 
                         <td><fmt:formatDate value="${experiment.startTime}" pattern="dd.MM.yyyy, HH:mm"/></td>
@@ -49,10 +49,9 @@
                             <a href="<c:url value='../services/index.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                     key='menuItem.services'/></a></td>
                     </tr>
-                </c:if>
+
             </c:forEach>
             <c:forEach items="${notSuitable}" var="experiment">
-                <c:if test="${experiment.userMemberOfGroup || !experiment.privateExperiment}">
                     <tr>
 
                         <td><fmt:formatDate value="${experiment.startTime}" pattern="dd.MM.yyyy, HH:mm"/></td>
@@ -64,7 +63,6 @@
                         <td><fmt:message key="label.notAvailable"/></td>
 
                     </tr>
-                </c:if>
             </c:forEach>
         </c:otherwise>
     </c:choose>

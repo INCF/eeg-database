@@ -61,7 +61,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         }
         List<Scenario> results;
 
-        hqlQuery += ") and (private=0 or person.personId = " + personId + ")";
+        hqlQuery += ")";
         try {
             results = getHibernateTemplate().find(hqlQuery);
         } catch (Exception e) {

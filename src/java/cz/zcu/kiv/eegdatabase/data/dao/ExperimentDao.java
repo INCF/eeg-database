@@ -29,5 +29,6 @@ public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T,
 
   public List<Experiment> getAllExperimentsForUser(int personId);
 
-  public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests);
+
+    public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId);
 }

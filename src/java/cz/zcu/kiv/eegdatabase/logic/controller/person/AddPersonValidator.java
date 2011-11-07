@@ -54,10 +54,10 @@ public class AddPersonValidator implements Validator {
             }
 
         }
-        if (!Pattern.matches("[a-zA-Z·-û¡-é][a-zA-Z·-û¡-é\\s]*", apc.getGivenname())) {
+        if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*", apc.getGivenname())) {
             errors.rejectValue("givenname", "invalid.givenname");
         }
-        if (!Pattern.matches("[a-zA-Z·-û¡-é][a-zA-Z·-û¡-é\\s]*", apc.getSurname())) {
+        if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*", apc.getSurname())) {
             errors.rejectValue("surname", "invalid.surname");
         }
 
