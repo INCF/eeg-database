@@ -10,7 +10,7 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <ui:experimentsTemplate pageTitle="pageTitle.advancedSearch" addExperimentCalendar="true">
-  <c:url value="/experiments/search-results.html" var="formUrl"/>
+  <c:url value="search-results.html" var="formUrl"/>
   <h1><fmt:message key="pageTitle.advancedSearch"/></h1>
 
  <form:form action="${formUrl}" method="post" commandName="experimentsSearcherCommand" cssClass="standardInputForm" name="searchMeasuration">

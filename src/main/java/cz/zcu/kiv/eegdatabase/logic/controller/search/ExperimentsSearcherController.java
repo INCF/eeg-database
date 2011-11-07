@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -25,7 +26,7 @@ import java.util.Map;
  */
 public class ExperimentsSearcherController extends AbstractSearchController {
 
-    private GenericDao<Person, Integer> personDao;
+    private PersonDao personDao;
     private ExperimentDao experimentDao;
     private GenericDao<Scenario, Integer> scenarioDao;
     private GenericDao<Hardware, Integer> hardwareDao;
@@ -51,7 +52,7 @@ public class ExperimentsSearcherController extends AbstractSearchController {
         logger.debug("Search experiments controller");
         ModelAndView mav = super.onSubmit(request, response, command);
         try {
-            List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests);
+            List<Experiment> experimentResults = experimentDao.getExperimentSearchResults(requests, personDao.getLoggedPerson().getPersonId());
             SignalProcessingUtils.splitExperimentToView(mav, experimentResults);
             mav.addObject("resultsEmpty", experimentResults.isEmpty());
 
@@ -68,11 +69,11 @@ public class ExperimentsSearcherController extends AbstractSearchController {
     }
 
 
-    public GenericDao<Person, Integer> getPersonDao() {
+    public PersonDao getPersonDao() {
         return personDao;
     }
 
-    public void setPersonDao(GenericDao<Person, Integer> personDao) {
+    public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
 

@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 import java.io.Serializable;
@@ -30,5 +31,5 @@ public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T,
 
     public List<Experiment> getRecordsNewerThan(long oracleScn, int personId);
 
-    public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests);
+    public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId);
 }
