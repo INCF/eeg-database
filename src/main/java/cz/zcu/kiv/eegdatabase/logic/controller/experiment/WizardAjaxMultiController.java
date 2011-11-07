@@ -158,13 +158,13 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("WizardAjaxMultiController - Add new person.");
 
         Person person = null;
-        String givenname;
-        String surname;
-        String dateOfBirthS;
-        String email;
-        String gender;
-        String phoneNumber;
-        String note;
+        String givenname = "";
+        String surname = "";
+        String dateOfBirthS = "";
+        String email = "";
+        String gender = "";
+        String phoneNumber = "";
+        String note = "";
 
         givenname = request.getParameter("givenname");
         surname = request.getParameter("surname");
@@ -236,7 +236,7 @@ public class WizardAjaxMultiController extends MultiActionController {
 
         personDao.create(person);
 
-         log.debug("Hashing the username");
+        log.debug("Hashing the username");
         String authHash = ControllerUtils.getMD5String(givenname);
 
         String userName = "<b>" + person.getUsername() + "</b>";
@@ -304,7 +304,6 @@ public class WizardAjaxMultiController extends MultiActionController {
         }
 
 
-
         log.debug("Saving attribute - success: true");
         jo.put("success", true);
         log.debug("Saving attribute - personId: " + person.getPersonId());
@@ -345,9 +344,9 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("Setting scenario title: " + scenarioTitle);
         scenario.setTitle(scenarioTitle);
 
-         scenarioLength = multipartRequest.getParameter("length");
-         log.debug("Setting scenario length: " + scenarioLength);
-         scenario.setScenarioLength(Integer.parseInt(scenarioLength));
+        scenarioLength = multipartRequest.getParameter("length");
+        log.debug("Setting scenario length: " + scenarioLength);
+        scenario.setScenarioLength(Integer.parseInt(scenarioLength));
 
         scenarioDescription = multipartRequest.getParameter("scenarioDescription");
         log.debug("Setting scenario description: " + scenarioDescription);
@@ -355,9 +354,9 @@ public class WizardAjaxMultiController extends MultiActionController {
 
         MultipartFile multipartFile = multipartRequest.getFile("dataFile");
 
-         scenario.setScenarioName(scenarioTitle + "text.fileTypeXml");
-         scenario.setMimetype("text/xml");
-         scenario.getScenarioType().setScenarioXml(Hibernate.createBlob(multipartFile.getBytes()));
+        scenario.setScenarioName(scenarioTitle + "text.fileTypeXml");
+        scenario.setMimetype("text/xml");
+        scenario.getScenarioType().setScenarioXml(Hibernate.createBlob(multipartFile.getBytes()));
 
         /* researchGroupId = Integer.parseInt(request.getParameter("researchGroup"));
                 scenarioTitle = request.getParameter("scenarioTitle");
