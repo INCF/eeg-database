@@ -234,10 +234,13 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("Setting authority to ROLE_READER");
         person.setAuthority("ROLE_READER");
 
-        personDao.create(person);
-
         log.debug("Hashing the username");
         String authHash = ControllerUtils.getMD5String(givenname);
+
+        log.debug("Setting authentication hash code");
+        person.setAuthenticationHash(authHash);
+
+        personDao.create(person);
 
         String userName = "<b>" + person.getUsername() + "</b>";
         String pass = "<b>" + person.getPassword() + "</b>";
