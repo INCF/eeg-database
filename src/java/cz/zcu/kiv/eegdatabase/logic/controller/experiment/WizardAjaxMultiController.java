@@ -158,13 +158,13 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("WizardAjaxMultiController - Add new person.");
 
         Person person = null;
-        String givenname;
-        String surname;
-        String dateOfBirthS;
-        String email;
-        String gender;
-        String phoneNumber;
-        String note;
+        String givenname = "";
+        String surname = "";
+        String dateOfBirthS = "";
+        String email = "";
+        String gender = "";
+        String phoneNumber = "";
+        String note = "";
 
         givenname = request.getParameter("givenname");
         surname = request.getParameter("surname");
@@ -234,10 +234,16 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("Setting authority to ROLE_READER");
         person.setAuthority("ROLE_READER");
 
-        personDao.create(person);
-
-         log.debug("Hashing the username");
+        log.debug("Hashing the username");
         String authHash = ControllerUtils.getMD5String(givenname);
+
+        log.debug("Setting authentication hash code");
+        person.setAuthenticationHash(authHash);
+
+        log.debug("Setting registration date");
+        person.setRegistrationDate(new Timestamp(System.currentTimeMillis()));
+
+        personDao.create(person);
 
         String userName = "<b>" + person.getUsername() + "</b>";
         String pass = "<b>" + person.getPassword() + "</b>";
