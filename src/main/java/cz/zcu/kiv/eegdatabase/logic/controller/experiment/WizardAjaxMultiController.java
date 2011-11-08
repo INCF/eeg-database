@@ -240,6 +240,9 @@ public class WizardAjaxMultiController extends MultiActionController {
         log.debug("Setting authentication hash code");
         person.setAuthenticationHash(authHash);
 
+        log.debug("Setting registration date");
+        person.setRegistrationDate(new Timestamp(System.currentTimeMillis()));
+
         personDao.create(person);
 
         String userName = "<b>" + person.getUsername() + "</b>";
