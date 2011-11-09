@@ -145,5 +145,11 @@
                 <column name="RESEARCH_GROUP_ID" precision="22" scale="0"/>
             </many-to-many>
         </set>
+        <set inverse="true" name="results">
+            <key>
+                <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult"/>
+        </set>
     </class>
 </hibernate-mapping>

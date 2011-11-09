@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult" schema="JPERGLER" table="SERVICE_RESULT">
+        <id name="serviceResultId" type="int">
+            <column name="RESULT_ID" precision="22" scale="0" />
+            <generator class="increment" />
+        </id>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="owner">
+            <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
+         <property name="figure" type="blob">
+            <column name="FIGURE" not-null="true"/>
+        </property>
+        <property name="filename" type="string">
+            <column length="80" name="FILENAME" not-null="true"/>
+        </property>
+                <property name="success" type="boolean">
+            <column name="SUCCESS"/>
+        </property>
+    </class>
+</hibernate-mapping>

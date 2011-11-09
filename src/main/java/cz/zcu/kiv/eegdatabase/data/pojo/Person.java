@@ -55,6 +55,7 @@ public class Person implements Serializable, Comparable<Person> {
     private Set<History> histories = new HashSet<History>(0);
     private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
     private Set<ResearchGroup> articlesGroupSubscribtions = new HashSet<ResearchGroup>(0);
+    private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
     private String facebookId;
     private long scn;
 
@@ -328,6 +329,14 @@ public class Person implements Serializable, Comparable<Person> {
 
     public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
+    }
+
+    public Set<ServiceResult> getResults() {
+        return results;
+    }
+
+    public void setResults(Set<ServiceResult> results) {
+        this.results = results;
     }
 
     public int compareTo(Person person){

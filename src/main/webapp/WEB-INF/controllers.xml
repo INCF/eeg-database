@@ -201,6 +201,9 @@
     <bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <bean name="serviceResultDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 
     <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService">
