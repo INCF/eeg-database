@@ -8,7 +8,7 @@
                          http://www.springframework.org/schema/security/spring-security-2.0.1.xsd">
 
 
-    <http auto-config="true" access-denied-page="/access-denied.html" session-fixation-protection="newSession" >
+    <http auto-config="true" access-denied-page="/access-denied.html" session-fixation-protection="migrateSession" >
         <intercept-url pattern="/home.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/captcha.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/registration.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
