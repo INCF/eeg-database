@@ -10,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -99,6 +100,10 @@ public class ExperimentMultiController extends MultiActionController {
         boolean userIsExperimenter = auth.userIsExperimenter();
         mav.addObject("userIsExperimenter", userIsExperimenter);
     }
+
+public ModelAndView servicesResult(HttpServletRequest request, HttpServletResponse response) {
+    return new ModelAndView("services/results");
+}
 
 
 

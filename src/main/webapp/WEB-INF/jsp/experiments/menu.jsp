@@ -18,3 +18,6 @@
     <li><a href="<c:url value='add-experiment.html'/>" title="Add experiment">Add experiment</a></li>
   </ul>
 </auth:experimenter>
+<ul class="commonButtonMenu">
+  <li><a href="<c:url value='services-result.html'/>"><fmt:message key="menuItem.serviceResult"/></a></li>
+</ul>
