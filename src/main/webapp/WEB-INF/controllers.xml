@@ -254,6 +254,7 @@
         <property name="experimentDao" ref="experimentDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="auth" ref="authorizationManager"/>
+        <property name="resultDao" ref="serviceResultDao" />
     </bean>
 
     <bean name="addExperimentController"

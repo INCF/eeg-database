@@ -3,11 +3,16 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <ui:servicesTemplate pageTitle="pageTitle.services">
-   <%-- <h1><c:out value="${title}"/></h1>
-    <c:if test="${coefs}">
-        <c:out value="${name}:"/> <br><br>
-        <c:forEach items="${values}" var="value">
-            <c:out value="${value}"/><br>
-        </c:forEach>
-    </c:if>               --%>
+   <h1><fmt:message key="pageTitle.servicesResult"/></h1>
+    <c:choose>
+        <c:when test="${resultsEmpty}">
+             <div class="emptyDataTable">
+                <fmt:message key="emptyTable.noItems"/>
+            </div>
+        </c:when>
+        <c:otherwise>
+
+        </c:otherwise>
+    </c:choose>
+
 </ui:servicesTemplate>

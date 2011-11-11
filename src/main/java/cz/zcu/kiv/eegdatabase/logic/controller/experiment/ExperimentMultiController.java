@@ -3,10 +3,8 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,6 +29,7 @@ public class ExperimentMultiController extends MultiActionController {
     private AuthorizationManager auth;
     private PersonDao personDao;
     private ExperimentDao<Experiment, Integer> experimentDao;
+    private ServiceResultDao resultDao;
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
@@ -102,7 +101,11 @@ public class ExperimentMultiController extends MultiActionController {
     }
 
 public ModelAndView servicesResult(HttpServletRequest request, HttpServletResponse response) {
-    return new ModelAndView("services/results");
+    ModelAndView mav = new ModelAndView("services/results");
+    List<ServiceResult> results = resultDao.getResultByPerson(personDao.getLoggedPerson().getPersonId());
+    mav.addObject("results", results);
+    mav.addObject("resultsEmpty", results.isEmpty());
+    return mav;
 }
 
 
@@ -129,5 +132,13 @@ public ModelAndView servicesResult(HttpServletRequest request, HttpServletRespon
 
     public void setAuth(AuthorizationManager auth) {
         this.auth = auth;
+    }
+
+    public ServiceResultDao getResultDao() {
+        return resultDao;
+    }
+
+    public void setResultDao(ServiceResultDao resultDao) {
+        this.resultDao = resultDao;
     }
 }
