@@ -12,13 +12,16 @@
             <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
          <property name="figure" type="blob">
-            <column name="FIGURE" not-null="true"/>
+            <column name="FIGURE" not-null="false"/>
         </property>
         <property name="filename" type="string">
-            <column length="80" name="FILENAME" not-null="true"/>
+            <column length="80" name="FILENAME" not-null="false"/>
         </property>
-                <property name="success" type="boolean">
-            <column name="SUCCESS"/>
+                <property name="title" type="string">
+            <column length="80" name="TITLE" not-null="true"/>
+        </property>
+                <property name="status" type="string">
+            <column name="STATUS" length="20" not-null="true"/>
         </property>
     </class>
 </hibernate-mapping>

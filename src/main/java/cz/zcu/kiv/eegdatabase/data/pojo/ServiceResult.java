@@ -15,7 +15,8 @@ public class ServiceResult implements Serializable {
     private int serviceResultId;
     private Blob figure;
     private String filename;
-    private boolean success;
+    private String status;
+    private String title;
     private Person owner;
 
     public int getServiceResultId() {
@@ -42,12 +43,12 @@ public class ServiceResult implements Serializable {
         this.filename = filename;
     }
 
-    public boolean isSuccess() {
-        return success;
+    public String getStatus() {
+        return status;
     }
 
-    public void setSuccess(boolean success) {
-        this.success = success;
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     public Person getOwner() {
@@ -56,5 +57,13 @@ public class ServiceResult implements Serializable {
 
     public void setOwner(Person owner) {
         this.owner = owner;
+    }
+
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
     }
 }
