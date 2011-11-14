@@ -86,7 +86,7 @@ public class ExperimentMultiController extends MultiActionController {
         }
         Experiment m = experimentDao.read(id);
 
-        mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id))||(auth.isAdmin()));
+        mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id)) || (auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
         mav.addObject("userCanViewPersonDetails", auth.userCanViewPersonDetails(subjectPersonId));
 
@@ -100,15 +100,21 @@ public class ExperimentMultiController extends MultiActionController {
         mav.addObject("userIsExperimenter", userIsExperimenter);
     }
 
-public ModelAndView servicesResult(HttpServletRequest request, HttpServletResponse response) {
-    ModelAndView mav = new ModelAndView("services/results");
-    List<ServiceResult> results = resultDao.getResultByPerson(personDao.getLoggedPerson().getPersonId());
-    mav.addObject("results", results);
-    mav.addObject("resultsEmpty", results.isEmpty());
-    return mav;
-}
+    public ModelAndView servicesResult(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView("services/results");
+        List<ServiceResult> results = resultDao.getResultByPerson(personDao.getLoggedPerson().getPersonId());
+        mav.addObject("results", results);
+        mav.addObject("resultsEmpty", results.isEmpty());
+        return mav;
+    }
 
+    public ModelAndView download(HttpServletRequest request, HttpServletResponse response) {
+        return  new ModelAndView("services/results");
+    }
 
+    public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
+        return  new ModelAndView("services/results");
+    }
 
     public ExperimentDao<Experiment, Integer> getExperimentDao() {
         return experimentDao;
