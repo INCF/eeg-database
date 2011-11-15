@@ -110,8 +110,24 @@ public class ExperimentMultiController extends MultiActionController {
         return mav;
     }
 
-    public ModelAndView download(HttpServletRequest request, HttpServletResponse response) {
-        return  new ModelAndView("redirect:services-result.html");
+    public ModelAndView download(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter("serviceId"));
+
+        } catch (Exception e) {
+        }
+        ServiceResult service = resultDao.read(id);
+        if (service.getFilename().endsWith(".txt")) {
+            response.setHeader("Content-Type", "plain/text");
+        }
+        else {
+            response.setHeader("Content-Type", "application/png");
+        }
+        response.setHeader("Content-Disposition", "attachment;filename="+service.getFilename());
+        response.getOutputStream().write(service.getFigure().getBytes(1, (int) service.getFigure().length()));
+        //return new ModelAndView("redirect:services-result.html");
+        return null;
     }
 
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
