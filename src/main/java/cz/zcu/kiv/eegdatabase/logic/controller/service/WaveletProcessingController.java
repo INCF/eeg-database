@@ -1,12 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
-import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
-import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
-import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -16,17 +11,11 @@ import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletTransformationDiscrete;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.algorithm.wavelets.WaveletDWT;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayInputStream;
 import java.sql.Blob;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
 
 public class WaveletProcessingController extends AbstractProcessingController {
@@ -93,7 +82,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
         try {
          res = wt.processSignal(signal);
         } catch(OutOfMemoryError e) {
-            return new ModelAndView("services/outOfMemory");
+            return new ModelAndView("services/backgroundRun");
         }
         Map<String, Double[][]> map = res.toHashMap();
          if (map.containsKey("highestCoefficients")) {

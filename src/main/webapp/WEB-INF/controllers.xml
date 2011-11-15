@@ -943,7 +943,7 @@
     <bean id="matchingPursuitController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.MatchingPursuitController">
         <property name="experimentDao" ref="experimentDao" />
         <property name="transformer" ref="dataTransformer" />
-        <property name="successView" value="services/results"/>
+        <property name="successView" value="services/backgroundRun"/>
         <property name="resultDao" ref="serviceResultDao" />
         <property name="personDao" ref="personDao"/>
     </bean>
@@ -951,7 +951,7 @@
     <bean id="waveletController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.WaveletProcessingController">
         <property name="experimentDao" ref="experimentDao" />
         <property name="transformer" ref="dataTransformer" />
-        <property name="successView" value="services/results"/>
+        <property name="successView" value="services/backgroundRun"/>
         <property name="resultDao" ref="serviceResultDao" />
         <property name="personDao" ref="personDao"/>
     </bean>
@@ -959,7 +959,7 @@
     <bean id="fastFourierController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.FastFourierController">
         <property name="experimentDao" ref="experimentDao" />
         <property name="transformer" ref="dataTransformer" />
-        <property name="successView" value="services/results"/>
+        <property name="successView" value="services/backgroundRun"/>
         <property name="resultDao" ref="serviceResultDao" />
         <property name="personDao" ref="personDao"/>
     </bean>

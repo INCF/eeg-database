@@ -5,6 +5,6 @@
 <ui:servicesTemplate pageTitle="pageTitle.services">
 
     <h1><fmt:message key="pageTitle.services"/></h1>
-    <fmt:message key="error.outOfMemory"/>
+    <fmt:message key="text.runningOnBackground"/>
 
 </ui:servicesTemplate>
