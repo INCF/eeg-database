@@ -2,9 +2,11 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
+import org.hibernate.Hibernate;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -16,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.ByteArrayOutputStream;
 import java.sql.Blob;
 import java.util.Map;
 
@@ -48,14 +51,30 @@ public class FastFourierController extends AbstractProcessingController {
                 }
             }
         }
+        ServiceResult service = new ServiceResult();
+        service.setOwner(personDao.getLoggedPerson());
+        service.setStatus("running");
+        service.setTitle(super.fileName + "_Fast_Fourier");
+        service.setFilename(super.fileName + "_FFT.png");
+        resultDao.create(service);
         double signal[] = transformer.readBinaryData(data, cmd.getChannel());
-        ISignalProcessor fft = SignalProcessingFactory.getInstance().getFastFourier();
-        ISignalProcessingResult res;
-        try {
-         res = fft.processSignal(signal);
-        } catch(OutOfMemoryError e) {
-            return new ModelAndView("services/backgroundRun");
+        new FFTProcess(service, signal).start();
+
+        return mav;
+    }
+     private class FFTProcess extends Thread {
+        private ServiceResult service;
+        private double[] signal;
+
+        public FFTProcess(ServiceResult result, double[] signal) {
+            this.service = result;
+            this.signal = signal;
         }
+
+        public void run() {
+             ISignalProcessor fft = SignalProcessingFactory.getInstance().getFastFourier();
+        ISignalProcessingResult res;
+        res = fft.processSignal(signal);
         Map<String, Double[][]> map = res.toHashMap();
         Double[][] result = map.get("coefficients");
         double[] real = new double[result.length];
@@ -83,12 +102,16 @@ public class FastFourierController extends AbstractProcessingController {
                 true, // Use tooltips
                 false // Configure chart to generate URLs?
         );
-        ChartUtilities.writeChartAsPNG(response.getOutputStream(), chart, 800, 500);
-        response.getOutputStream().close();
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+            try {
+                ChartUtilities.writeChartAsPNG(out, chart, 800, 500);
+            } catch (Exception e) {
 
+            }
+            service.setFigure(Hibernate.createBlob(out.toByteArray()));
+            service.setStatus("finished");
+            resultDao.update(service);
 
-        mav.addObject("coefs", false);
-        mav.addObject("title", "Fast Fourier Transformation");
-        return mav;
-    }
+        }
+     }
 }
