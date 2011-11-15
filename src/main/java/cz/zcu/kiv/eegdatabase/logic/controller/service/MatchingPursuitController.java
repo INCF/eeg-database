@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
@@ -52,6 +53,11 @@ public class MatchingPursuitController extends AbstractProcessingController {
             }
         }
         double signal[] = transformer.readBinaryData(data, cmd.getChannel());
+        ServiceResult service = new ServiceResult();
+        service.setOwner(personDao.getLoggedPerson());
+        service.setStatus("running");
+        service.setTitle("MP test");
+        resultDao.create(service);
         ISignalProcessingResult res = null;
         try {
         ISignalProcessor mp = SignalProcessingFactory.getInstance().getMatchingPursuit();
@@ -86,6 +92,8 @@ public class MatchingPursuitController extends AbstractProcessingController {
         response.getOutputStream().close();
         mav.addObject("coefs", false);
         mav.addObject("title", "Matching Pursuit");
+        service.setStatus("finished");
+        resultDao.update(service);
         return mav;
     }
 }

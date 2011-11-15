@@ -1,11 +1,12 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.service;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
-import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
@@ -24,6 +25,8 @@ import java.util.zip.ZipInputStream;
 public abstract class AbstractProcessingController extends SimpleFormController {
 
     protected GenericDao<Experiment, Integer> experimentDao;
+    protected ServiceResultDao resultDao;
+    protected PersonDao personDao;
     protected DataTransformer transformer;
     protected String fileName;
 
@@ -63,5 +66,21 @@ public abstract class AbstractProcessingController extends SimpleFormController 
 
     public void setTransformer(DataTransformer transformer) {
         this.transformer = transformer;
+    }
+
+    public ServiceResultDao getResultDao() {
+        return resultDao;
+    }
+
+    public void setResultDao(ServiceResultDao resultDao) {
+        this.resultDao = resultDao;
+    }
+
+    public PersonDao getPersonDao() {
+        return personDao;
+    }
+
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 }

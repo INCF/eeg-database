@@ -27,9 +27,9 @@
                         <c:set var="str" value="${result.status}" />
                         <jsp:useBean id="str" type="java.lang.String" />
                         <c:if test='<%=!str.equals("running")%>'>
-                            <td><a href="<c:url value='download.html?scenarioId=${result.serviceResultId}' />"><fmt:message key="link.download"/>
+                            <td><a href="<c:url value='download.html?serviceId=${result.serviceResultId}' />"><fmt:message key="link.download"/>
                             </a></td>
-                            <td><a href="<c:url value='delete.html?scenarioId=${result.serviceResultId}' />"><fmt:message key="link.delete"/>
+                            <td><a href="<c:url value='delete.html?serviceId=${result.serviceResultId}' />"><fmt:message key="link.delete"/>
                             </a></td>
                         </c:if>
                     </tr>

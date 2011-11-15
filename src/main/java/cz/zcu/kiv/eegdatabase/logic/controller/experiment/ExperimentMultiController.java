@@ -14,6 +14,7 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.security.Provider;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -102,6 +103,7 @@ public class ExperimentMultiController extends MultiActionController {
 
     public ModelAndView servicesResult(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("services/results");
+
         List<ServiceResult> results = resultDao.getResultByPerson(personDao.getLoggedPerson().getPersonId());
         mav.addObject("results", results);
         mav.addObject("resultsEmpty", results.isEmpty());
@@ -109,11 +111,20 @@ public class ExperimentMultiController extends MultiActionController {
     }
 
     public ModelAndView download(HttpServletRequest request, HttpServletResponse response) {
-        return  new ModelAndView("services/results");
+        return  new ModelAndView("redirect:services-result.html");
     }
 
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
-        return  new ModelAndView("services/results");
+        ModelAndView mav = new ModelAndView("redirect:services-result.html");
+        int id = 0;
+        try {
+            id = Integer.parseInt(request.getParameter("serviceId"));
+
+        } catch (Exception e) {
+        }
+        ServiceResult service = resultDao.read(id);
+        resultDao.delete(service);
+        return mav;
     }
 
     public ExperimentDao<Experiment, Integer> getExperimentDao() {

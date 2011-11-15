@@ -14,6 +14,9 @@ import java.util.Map;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleServiceResultDao extends SimpleGenericDao<ServiceResult, Integer> implements ServiceResultDao {
+    public SimpleServiceResultDao() {
+        super(ServiceResult.class);
+    }
 
     @Override
     public List<ServiceResult> getResultByPerson(int personId) {
