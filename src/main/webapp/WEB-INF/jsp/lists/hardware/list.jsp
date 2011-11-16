@@ -3,9 +3,26 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
+<%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 <ui:listsTemplate pageTitle="pageTitle.hardwareList">
     <h1><fmt:message key="pageTitle.hardwareList"/></h1>
+
+    <form:form method="post" commandName="selectGroupCommand" cssClass="standardInputForm"
+               name="selectGroupCommand" action="${next}" >
+        <form:label path="researchGroup" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+
+        <form:select path="researchGroup" cssClass="selectBox" onChange="this.form.submit()">
+                        <c:forEach items="${researchGroupList}" var="researchGroup">
+                            <option value="${researchGroup.researchGroupId}" label="" <c:if test="${selectGroupCommand.researchGroup==researchGroup.researchGroupId}"><c:out value="selected=\"selected\""/></c:if>>
+                                <c:out value="${researchGroup.title}"/>
+                            </option>
+                        </c:forEach>
+                    </form:select>
+
+                    <form:errors path="researchGroup" cssClass="errorBox"/>
+    </form:form>
+
 
     <table class="dataTable">
         <thead>

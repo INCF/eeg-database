@@ -29,7 +29,9 @@ public class Hardware implements Serializable {
             @Field(name = "description")}) //use a different field name
     private String description;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
     private long scn;
+    private int defaultNumber;
 
     public Hardware() {
     }
@@ -46,6 +48,16 @@ public class Hardware implements Serializable {
         this.type = type;
         this.description = description;
         this.experiments = experiments;
+    }
+
+    public Hardware(int hardwareId, String title, String type, String description, int defaultNumber, Set<Experiment> experiments, Set<ResearchGroup> researchGroups) {
+        this.hardwareId = hardwareId;
+        this.title = title;
+        this.type = type;
+        this.description = description;
+        this.defaultNumber = defaultNumber;
+        this.experiments = experiments;
+        this.researchGroups = researchGroups;
     }
 
     public int getHardwareId() {
@@ -88,6 +100,14 @@ public class Hardware implements Serializable {
         this.description = description;
     }
 
+    public void setDefaultNumber(int defaultNumber){
+        this.defaultNumber = defaultNumber;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
     public Set<Experiment> getExperiments() {
         return this.experiments;
     }
@@ -95,6 +115,15 @@ public class Hardware implements Serializable {
     public void setExperiments(Set<Experiment> experiments) {
         this.experiments = experiments;
     }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
+
 }
 
 

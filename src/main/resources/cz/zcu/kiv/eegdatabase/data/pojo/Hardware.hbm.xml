@@ -17,6 +17,9 @@
         <property name="description" type="string">
             <column length="30" name="DESCRIPTION" unique="true"/>
         </property>
+        <property name="defaultNumber" type="int">
+            <column name="IS_DEFAULT" precision="1" scale="0"/>
+        </property>
         <property name="scn" type="long">
             <column name="ORA_ROWSCN"/>
         </property>
@@ -26,6 +29,14 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="false" name="researchGroups" table="HARDWARE_GROUP_REL">
+            <key>
+                <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
     </class>

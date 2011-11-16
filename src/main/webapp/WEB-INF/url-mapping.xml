@@ -92,7 +92,8 @@
 
                 <prop key="lists/hardware-definitions/add.html">addHardwareController</prop>
                 <prop key="lists/hardware-definitions/edit.html">addHardwareController</prop>
-                <prop key="lists/hardware-definitions/*.html">hardwareMultiController</prop>
+                <!--<prop key="lists/hardware-definitions/list.html">selectGroupController</prop>  -->
+                <!--<prop key="lists/hardware-definitions/*.html">hardwareMultiController</prop>  -->
 
                 <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>
                 <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
@@ -154,5 +155,7 @@
             </props>
         </property>
     </bean>
+       <bean class="org.springframework.web.servlet.mvc.annotation.DefaultAnnotationHandlerMapping"/>
+
 
 </beans>

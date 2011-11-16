@@ -26,7 +26,10 @@
             </map>
         </property>
         <property name="defaultErrorView" value="errors/generalError"/>
-    </bean>                                           -->
+    </bean>
+
+                                             -->
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic" />
 
     <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
         <property name="formView" value="system/registrationForm"/>
@@ -226,7 +229,6 @@
             <bean class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator"/>
         </property>
     </bean>
-
 
     <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${email.smtp}"/>
@@ -967,5 +969,6 @@
     <bean id="serviceChooserController" class="cz.zcu.kiv.eegdatabase.logic.controller.service.ServiceChooserController">
         <property name="experimentDao" ref="experimentDao" />
     </bean>
+
 
 </beans>

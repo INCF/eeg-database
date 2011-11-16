@@ -50,6 +50,16 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest"/>
         </set>
+
+         <set inverse="true" name="hardwares" table="HARDWARE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Hardware">
+                <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
         <set name="articlesSubscribers" table="ARTICLES_GROUP_SUBSCRIBTIONS">
             <key>
                 <column name="RESEARCH_GROUP_ID" precision="22" scale="0"/>

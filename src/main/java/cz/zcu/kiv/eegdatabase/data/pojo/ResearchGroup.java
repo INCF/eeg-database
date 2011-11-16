@@ -28,6 +28,7 @@ public class ResearchGroup implements Serializable {
     private Set<Person> usersWithThisAsDefault = new HashSet<Person>(0);
     private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
     private Set<Person> articlesSubscribers = new HashSet<Person>(0);
+    private Set<Hardware> hardwares = new HashSet<Hardware>(0);
     private long scn;
 
     public ResearchGroup() {
@@ -40,7 +41,7 @@ public class ResearchGroup implements Serializable {
         this.description = description;
     }
 
-    public ResearchGroup(int researchGroupId, Person person, String title, String description, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experiments) {
+    public ResearchGroup(int researchGroupId, Person person, String title, String description, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experiments, Set<Hardware> hardwares) {
         this.researchGroupId = researchGroupId;
         this.person = person;
         this.title = title;
@@ -48,6 +49,7 @@ public class ResearchGroup implements Serializable {
         this.researchGroupMemberships = researchGroupMemberships;
         this.scenarios = scenarios;
         this.experiments = experiments;
+        this.hardwares = hardwares;
     }
 
     public int getResearchGroupId() {
@@ -136,6 +138,14 @@ public class ResearchGroup implements Serializable {
 
     public void setArticlesSubscribers(Set<Person> articlesSubscribers) {
         this.articlesSubscribers = articlesSubscribers;
+    }
+
+    public Set<Hardware> getHardwares() {
+        return this.hardwares;
+    }
+
+    public void setHardwares(Set<Hardware> hardwares) {
+        this.hardwares = hardwares;
     }
 
 
