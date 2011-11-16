@@ -154,7 +154,7 @@ public class AddScenarioController
         MultipartFile xmlFile = data.getDataFileXml();
 
         Scenario scenario;
-        IScenarioType scenarioType = null;
+        ScenarioType scenarioType = null;
 
         if (id > 0) {
             // Editing existing
@@ -195,7 +195,8 @@ public class AddScenarioController
 
             scenario.setMimetype(file.getContentType());
 
-            scenarioType = (IScenarioType) context.getBean("scenarioTypeNonXml");
+           // scenarioType = (ScenarioType) context.getBean("scenarioTypeNonXml");
+            scenarioType = new ScenarioTypeNonXml();
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
@@ -218,12 +219,13 @@ public class AddScenarioController
             //getting the right scenarioType bean
             //no schema - binary storage
             if (schemaNeeded.equals("noSchema")) {
-                scenarioType = (IScenarioType) context.getBean("scenarioTypeNonSchema");
+                scenarioType = new ScenarioTypeNonSchema();
             }
             //schema selected - structured storage
             else {
                 if (schemaId > 0) {
-                    scenarioType = (IScenarioType) context.getBean("scenarioTypeSchema" + schemaId);
+                    Class c = Class.forName("ScenarioTypeSchema"+schemaId);
+                    scenarioType = (ScenarioType)  c.newInstance();
                 }
             }
 
@@ -244,6 +246,7 @@ public class AddScenarioController
             scenario.setScenarioType(scenarioType);
             scenarioType.setScenario(scenario);
             scenarioDao.create(scenario);
+            //scenarioTypeDao.create(scenarioType);
         }
 
         log.debug("Returning MAV");
