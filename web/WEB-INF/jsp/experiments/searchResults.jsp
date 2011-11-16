@@ -32,7 +32,7 @@
                 <th style="width: 60px;"><fmt:message key="dataTable.heading.id"/></th>
                 <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
                 <th style="width: 80px;"></th>
-                <th style="width: 80px;"></th>
+             <%--   <th style="width: 80px;"></th>  --%>
             </tr>
             </thead>
             <c:forEach items="${suitable}" var="experiment">
@@ -46,8 +46,8 @@
                         <td><a href="<c:url value='detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                 key="link.detail"/></a></td>
                         <td>
-                            <a href="<c:url value='../services/index.html?experimentId=${experiment.experimentId}'/>"><fmt:message
-                                    key='menuItem.services'/></a></td>
+                     <%--       <a href="<c:url value='../services/index.html?experimentId=${experiment.experimentId}'/>"><fmt:message
+                                    key='menuItem.services'/></a></td>     --%>
                     </tr>
 
             </c:forEach>
@@ -60,7 +60,7 @@
                         <td><c:out value="${experiment.scenario.title}"/></td>
                         <td><a href="<c:url value='detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                 key="link.detail"/></a></td>
-                        <td><fmt:message key="label.notAvailable"/></td>
+                    <%--    <td><fmt:message key="label.notAvailable"/></td>     --%>
 
                     </tr>
             </c:forEach>
