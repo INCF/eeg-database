@@ -118,10 +118,6 @@ public class Scenario implements Serializable, Comparable<Scenario> {
         return scn;
     }
 
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
-
     public Set<Experiment> getExperiments() {
         return this.experiments;
     }

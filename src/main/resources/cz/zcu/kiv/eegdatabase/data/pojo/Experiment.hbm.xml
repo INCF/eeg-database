@@ -38,7 +38,7 @@
         <property name="weathernote" type="string">
             <column name="WEATHERNOTE"/>
         </property>
-        <property name="scn" type="long">
+        <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>
         </property>
         <set inverse="true" name="persons" table="COEXPERIMENTER_REL">

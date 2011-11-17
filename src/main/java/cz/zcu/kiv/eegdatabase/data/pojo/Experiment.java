@@ -223,10 +223,6 @@ public class Experiment implements Serializable {
     public long getScn() {
         return scn;
     }
-
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
 }
 
 

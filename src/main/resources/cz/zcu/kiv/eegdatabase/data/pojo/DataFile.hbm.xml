@@ -23,7 +23,7 @@
         <property name="filename" type="string">
             <column length="80" name="FILENAME" not-null="true"/>
         </property>
-        <property name="scn" type="long">
+        <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>
         </property>
         <set inverse="true" name="fileMetadataParamVals">

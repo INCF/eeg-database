@@ -107,10 +107,6 @@ public class DataFile implements Serializable {
         return scn;
     }
 
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
-
     public Set<FileMetadataParamVal> getFileMetadataParamVals() {
         return this.fileMetadataParamVals;
     }

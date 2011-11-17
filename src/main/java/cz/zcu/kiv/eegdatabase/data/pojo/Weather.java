@@ -66,10 +66,6 @@ public class Weather implements Serializable {
         return scn;
     }
 
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
-
     public void setTitle(String title) {
         this.title = title;
     }

@@ -92,10 +92,6 @@ public class Hardware implements Serializable {
         return scn;
     }
 
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
-
     public void setDescription(String description) {
         this.description = description;
     }

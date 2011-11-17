@@ -183,10 +183,6 @@ public class Person implements Serializable, Comparable<Person> {
         return scn;
     }
 
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
-
     public Set<VisualImpairment> getVisualImpairments() {
         return this.visualImpairments;
     }

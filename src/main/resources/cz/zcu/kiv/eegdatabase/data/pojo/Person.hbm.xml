@@ -50,7 +50,7 @@
         <property name="authenticationHash" type="string">
             <column length="50" name="AUTHENTICATION"/>
         </property>
-        <property name="scn" type="long">
+        <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>
         </property>
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="defaultGroup">
