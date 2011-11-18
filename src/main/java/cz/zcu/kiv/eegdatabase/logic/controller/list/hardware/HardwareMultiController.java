@@ -1,56 +1,130 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.list.hardware;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.AbstractController;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.SessionAttributes;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
- * @author JiPER
+ * @author František Liška
  */
-public class HardwareMultiController extends MultiActionController {
-
+@Controller
+@SessionAttributes("selectGroupCommand")
+public class HardwareMultiController {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private AuthorizationManager auth;
     @Autowired
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
     private HardwareDao hardwareDao;
+    @Autowired
+    private PersonDao personDao;
+    private Person loggedUser;
+    private List<ResearchGroup> researchGroupList;
+    private List<Hardware> hardwareList;
+    private final int DEFAULT_ID = -1;
 
-    public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
+    @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.GET)
+    public String showSelectForm(ModelMap model){
         log.debug("Processing hardware list controller");
-        ModelAndView mav = new ModelAndView("lists/hardware/list");
+        loggedUser =  personDao.getLoggedPerson();
+        fillAuthResearchGroupList();
+        if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+            fillHardwareList(DEFAULT_ID);
+        }else{
+            if(!researchGroupList.isEmpty()){
+                int myGroup = researchGroupList.get(0).getResearchGroupId();
+                fillHardwareList(myGroup);
+            }
+        }
 
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
+        SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        model.addAttribute("selectGroupCommand",selectGroupCommand);
+        model.addAttribute("hardwareList", hardwareList);
+        model.addAttribute("researchGroupList", researchGroupList);
 
-        List<Hardware> list = hardwareDao.getItemsForList();
-        mav.addObject("hardwareList", list);
-        return mav;
+
+        return "lists/hardware/list";
     }
 
-    public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
-        log.debug("Deleting hardware.");
-        ModelAndView mav = new ModelAndView("lists/itemDeleted");
+    @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.POST)
+    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
+        fillAuthResearchGroupList();
+        fillHardwareList(selectGroupCommand.getResearchGroup());
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        model.addAttribute("researchGroupList", researchGroupList);
+        model.addAttribute("hardwareList", hardwareList);
+        return "lists/hardware/list";
+    }
 
-        String idString = request.getParameter("id");
+    @RequestMapping(value="lists/hardware-definitions/delete.html")
+    public String delete(@RequestParam("id") String idString) {
+        log.debug("Deleting hardware.");
         if (idString != null) {
             int id = Integer.parseInt(idString);
 
             if (hardwareDao.canDelete(id)) {
                 hardwareDao.delete(hardwareDao.read(id));
             } else {
-                mav.setViewName("lists/itemUsed");
+                return "lists/itemUsed";
             }
         }
 
-        return mav;
+        return "lists/itemDeleted";
     }
+
+    private void fillAuthResearchGroupList(){
+        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,"Default Hardware","-");
+
+        if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+            researchGroupList = researchGroupDao.getAllRecords();
+            researchGroupList.add(0,defaultGroup);
+        }else{
+            researchGroupList = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+        }
+    }
+
+    private void fillHardwareList(int selectedGroupId){
+        if(selectedGroupId == DEFAULT_ID){
+            hardwareList = hardwareDao.getDefaultRecords();
+        }else{
+            if(!researchGroupList.isEmpty()){
+                hardwareList = hardwareDao.getRecordsByGroup(selectedGroupId);
+            }
+        }
+    }
+
+    public ResearchGroupDao getResearchGroupDao() {
+        return researchGroupDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
+    }
+
+    public HardwareDao getHardwareDao() {
+        return hardwareDao;
+    }
+
+    public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
+    }
+
 }

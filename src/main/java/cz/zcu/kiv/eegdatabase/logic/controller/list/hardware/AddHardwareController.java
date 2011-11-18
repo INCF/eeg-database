@@ -6,31 +6,35 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-public class AddHardwareController extends SimpleFormController {
-
+@Controller
+@SessionAttributes("addHardware")
+public class AddHardwareController{
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private AuthorizationManager auth;
     @Autowired
     private HardwareDao hardwareDao;
 
-    public AddHardwareController() {
-        setCommandClass(AddHardwareCommand.class);
-        setCommandName("addHardware");
-    }
+    AddHardwareValidator addHardwareValidator;
 
-    @Override
-    protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        AddHardwareCommand data = (AddHardwareCommand) super.formBackingObject(request);
+    @Autowired
+	public AddHardwareController(AddHardwareValidator addHardwareValidator){
+		this.addHardwareValidator = addHardwareValidator;
+	}
 
-        String idString = request.getParameter("id");
+    @RequestMapping(value="lists/hardware-definitions/edit.html", method=RequestMethod.GET)
+    protected String showEditForm(@RequestParam("id") String idString, ModelMap model){
+        AddHardwareCommand data = new AddHardwareCommand();
+        if (!auth.userIsExperimenter()) {
+            return "lists/userNotExperimenter";
+        }
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+
         if (idString != null) {
             // Editation of existing hardware
             int id = Integer.parseInt(idString);
@@ -43,31 +47,35 @@ public class AddHardwareController extends SimpleFormController {
             data.setTitle(hardware.getTitle());
             data.setType(hardware.getType());
         }
+        model.addAttribute("addHardware",data);
 
-        return data;
+        return "lists/hardware/addItemForm";
     }
 
-    @Override
-    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        ModelAndView mav = super.showForm(request, response, errors);
-
+    @RequestMapping(value="lists/hardware-definitions/add.html",method=RequestMethod.GET)
+    protected String showAddForm(ModelMap model) throws Exception {
+        AddHardwareCommand data = new AddHardwareCommand();
         if (!auth.userIsExperimenter()) {
-            mav.setViewName("lists/userNotExperimenter");
+           return "lists/userNotExperimenter";
         }
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        return mav;
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        model.addAttribute("addHardware",data);
+        return "lists/hardware/addItemForm";
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        ModelAndView mav = new ModelAndView(getSuccessView());
 
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addHardware") AddHardwareCommand data, BindingResult result,ModelMap model) {
         log.debug("Processing form data.");
-        AddHardwareCommand data = (AddHardwareCommand) command;
 
         if (!auth.userIsExperimenter()) {
-            mav.setViewName("lists/userNotExperimenter");
+            return "lists/userNotExperimenter";
         }
+
+        addHardwareValidator.validate(data,result);
+        if (result.hasErrors()) {
+			return "lists/hardware/addItemForm";
+		}
 
         Hardware hardware;
         if (data.getId() > 0) {
@@ -88,7 +96,8 @@ public class AddHardwareController extends SimpleFormController {
             hardwareDao.create(hardware);
         }
 
+
         log.debug("Returning MAV");
-        return mav;
+        return "redirect:list.html";
     }
 }

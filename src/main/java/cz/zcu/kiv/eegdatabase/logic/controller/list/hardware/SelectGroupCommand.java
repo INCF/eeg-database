@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.group;
+package cz.zcu.kiv.eegdatabase.logic.controller.list.hardware;
 
 /**
  * @author František Liška

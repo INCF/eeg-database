@@ -9,6 +9,15 @@ public class AddHardwareCommand {
     private String title;
     private String type;
     private String description;
+    private int researchGroupId;
+
+    public int getResearchGroupId() {
+        return researchGroupId;
+    }
+
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
+    }
 
     public int getId() {
         return id;

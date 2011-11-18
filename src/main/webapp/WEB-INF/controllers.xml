@@ -630,9 +630,6 @@
     <bean name="visualImpairmentMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentMultiController"/>
 
-    <bean name="hardwareMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.HardwareMultiController"/>
-
     <bean name="personOptionalParametersMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefMultiController"/>
 
@@ -663,14 +660,7 @@
         </property>
     </bean>
 
-    <bean name="addHardwareController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareController">
-        <property name="formView" value="lists/hardware/addItemForm"/>
-        <property name="successView" value="redirect:/lists/hardware-definitions/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
-        </property>
-    </bean>
+    <bean name="addHardwareValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
 
     <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherController">
         <property name="formView" value="lists/weather/addItemForm"/>
