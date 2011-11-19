@@ -23,6 +23,7 @@ public class ResearchGroup implements Serializable {
 //    @Field(name = "RESEARCHGROUPDESCRIPTION")}) //use a different field name
     private String description;
     private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(0);
+    private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<Person> usersWithThisAsDefault = new HashSet<Person>(0);
@@ -130,6 +131,14 @@ public class ResearchGroup implements Serializable {
 
     public Set<Person> getArticlesSubscribers() {
         return articlesSubscribers;
+    }
+
+    public Set<HardwareGroupRel> getHardwareGroupRels() {
+        return hardwareGroupRels;
+    }
+
+    public void setHardwareGroupRels(Set<HardwareGroupRel> hardwareGroupRels) {
+        this.hardwareGroupRels = hardwareGroupRels;
     }
 
     public void setArticlesSubscribers(Set<Person> articlesSubscribers) {

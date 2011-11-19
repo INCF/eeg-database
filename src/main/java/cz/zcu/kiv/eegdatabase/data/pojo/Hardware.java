@@ -30,6 +30,7 @@ public class Hardware implements Serializable {
     private String description;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
     private long scn;
     private int defaultNumber;
 
@@ -114,6 +115,14 @@ public class Hardware implements Serializable {
 
     public Set<ResearchGroup> getResearchGroups() {
         return researchGroups;
+    }
+
+    public Set<HardwareGroupRel> getHardwareGroupRels() {
+        return hardwareGroupRels;
+    }
+
+    public void setHardwareGroupRels(Set<HardwareGroupRel> hardwareGroupRels) {
+        this.hardwareGroupRels = hardwareGroupRels;
     }
 
     public void setResearchGroups(Set<ResearchGroup> researchGroups) {

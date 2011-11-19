@@ -1,12 +1,23 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
 
 import java.util.List;
 
 public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> implements HardwareDao {
     public SimpleHardwareDao() {
         super(Hardware.class);
+    }
+
+    public void createDefaultRecord(Hardware hardware){
+        hardware.setDefaultNumber(1);
+        create(hardware);
+    }
+
+    public void createGroupRecord(HardwareGroupRel hardwareGroupRel){
+        hardwareGroupRel.getHardware().setDefaultNumber(0);
+        getHibernateTemplate().save(hardwareGroupRel);
     }
 
     public List<Hardware> getItemsForList() {
@@ -28,7 +39,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
     }
 
     public List<Hardware> getDefaultRecords(){
-        String hqlQuery = "from Hardware h where h.defaultNumber='1'";
+        String hqlQuery = "from Hardware h where h.defaultNumber=1";
         List<Hardware> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }

@@ -35,7 +35,7 @@ public class HardwareMultiController {
     private HardwareDao hardwareDao;
     @Autowired
     private PersonDao personDao;
-    private Person loggedUser;
+
     private List<ResearchGroup> researchGroupList;
     private List<Hardware> hardwareList;
     private final int DEFAULT_ID = -1;
@@ -43,19 +43,23 @@ public class HardwareMultiController {
     @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.GET)
     public String showSelectForm(ModelMap model){
         log.debug("Processing hardware list controller");
-        loggedUser =  personDao.getLoggedPerson();
+        SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
         fillAuthResearchGroupList();
-        if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+
+        if(auth.isAdmin()){
             fillHardwareList(DEFAULT_ID);
+            selectGroupCommand.setResearchGroup(DEFAULT_ID);
+            model.addAttribute("userIsExperimenter", true);
         }else{
             if(!researchGroupList.isEmpty()){
                 int myGroup = researchGroupList.get(0).getResearchGroupId();
                 fillHardwareList(myGroup);
+                selectGroupCommand.setResearchGroup(myGroup);
+                model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+            }else{
+                model.addAttribute("userIsExperimenter", false);
             }
         }
-
-        SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
-        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
         model.addAttribute("selectGroupCommand",selectGroupCommand);
         model.addAttribute("hardwareList", hardwareList);
         model.addAttribute("researchGroupList", researchGroupList);
@@ -67,8 +71,11 @@ public class HardwareMultiController {
     @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.POST)
     public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
         fillAuthResearchGroupList();
-        fillHardwareList(selectGroupCommand.getResearchGroup());
-        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        if(!researchGroupList.isEmpty()){
+            fillHardwareList(selectGroupCommand.getResearchGroup());
+        }
+        boolean canEdit = auth.isAdmin() || auth.userIsExperimenter();
+        model.addAttribute("userIsExperimenter", canEdit);
         model.addAttribute("researchGroupList", researchGroupList);
         model.addAttribute("hardwareList", hardwareList);
         return "lists/hardware/list";
@@ -91,6 +98,7 @@ public class HardwareMultiController {
     }
 
     private void fillAuthResearchGroupList(){
+        Person loggedUser = personDao.getLoggedPerson();
         ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,"Default Hardware","-");
 
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){

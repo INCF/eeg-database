@@ -55,7 +55,7 @@
 
     <auth:experimenter>
         <div class="actionBox">
-            <a href="<c:url value='add.html' />" class="lightButtonLink"><fmt:message
+            <a href="<c:url value='add.html?groupid=${selectGroupCommand.researchGroup}' />" class="lightButtonLink"><fmt:message
                     key="link.addHardwareDefinition"/></a>
         </div>
     </auth:experimenter>

@@ -1,10 +1,15 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
 
 import java.util.List;
 
 public interface HardwareDao extends GenericDao<Hardware, Integer> {
+    public void createDefaultRecord(Hardware hardware);
+
+    public void createGroupRecord(HardwareGroupRel hardwareGroupRel);
+
     public List<Hardware> getItemsForList();
 
     public List<Hardware> getRecordsNewerThan(long oracleScn);
