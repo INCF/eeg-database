@@ -54,12 +54,12 @@ public class ServiceChooserController extends SimpleFormController implements Va
         if (service.equals(ServicesList.MATCHING_PURSUIT.getName())) {
           mav = new ModelAndView("redirect:matchingForm.html?experimentId="+id);
         }
-//        if (service.equals(ServicesList.DISCRETE_WAVELET.getName())) {
-//          mav = new ModelAndView("redirect:waveletForm.html?experimentId="+id+"&type=DWT");
-//        }
-//        if (service.equals(ServicesList.CONTINUOUS_WAVELET.getName())) {
-//          mav = new ModelAndView("redirect:waveletForm.html?experimentId="+id+"&type=CWT");
-//        }
+        if (service.equals(ServicesList.DISCRETE_WAVELET.getName())) {
+          mav = new ModelAndView("redirect:waveletForm.html?experimentId="+id+"&type=DWT");
+        }
+        if (service.equals(ServicesList.CONTINUOUS_WAVELET.getName())) {
+          mav = new ModelAndView("redirect:waveletForm.html?experimentId="+id+"&type=CWT");
+        }
         if (service.equals(ServicesList.FAST_FOURIER.getName())) {
           mav = new ModelAndView("redirect:fourierForm.html?experimentId="+id);
         }

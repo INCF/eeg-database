@@ -9,8 +9,8 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
  */
 public enum ServicesList {
     MATCHING_PURSUIT("Matching Pursuit"),
-//    DISCRETE_WAVELET("Discrete Wavelet Transformation"),
-//    CONTINUOUS_WAVELET("Continuous Wavelet Transformation"),
+    DISCRETE_WAVELET("Discrete Wavelet Transformation"),
+    CONTINUOUS_WAVELET("Continuous Wavelet Transformation"),
     FAST_FOURIER("Fast Fourier");
 
     private final String name;
