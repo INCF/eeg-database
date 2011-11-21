@@ -15,7 +15,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         create(hardware);
     }
 
-    public void createGroupRecord(HardwareGroupRel hardwareGroupRel){
+    public void createGroupRel(HardwareGroupRel hardwareGroupRel){
         hardwareGroupRel.getHardware().setDefaultNumber(0);
         getHibernateTemplate().save(hardwareGroupRel);
     }
@@ -33,7 +33,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
     }
 
     public List<Hardware> getRecordsByGroup(int groupId){
-        String hqlQuery = "from Hardware h inner join fetch h.researchGroups as rg where rg.researchGroupId='"+groupId+"'";
+        String hqlQuery = "from Hardware h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" ";
         List<Hardware> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
@@ -72,5 +72,34 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         Object[] values = {id};
         List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
+    }
+
+    public boolean hasGroupRel(int id){
+        String hqlQuery = "from HardwareGroupRel r where r.id.hardwareId =" +id+ " ";
+        List<HardwareGroupRel> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() > 0);
+    }
+
+    public void deleteGroupRel(HardwareGroupRel hardwareGroupRel){
+        getHibernateTemplate().delete(hardwareGroupRel);
+    }
+
+    public HardwareGroupRel getGroupRel(int hardwareId, int researchGroupId){
+        String hqlQuery = "from HardwareGroupRel r where r.id.hardwareId="+hardwareId+" and r.id.researchGroupId="+researchGroupId+" ";
+        List<HardwareGroupRel> list = getHibernateTemplate().find(hqlQuery);
+        return list.get(0);
+    }
+
+    public boolean isDefault(int id){
+        String hqlQuery = "select h.defaultNumber from Hardware h where h.hardwareId="+id+" ";
+        List<Integer> list = getHibernateTemplate().find(hqlQuery);
+        if(list.isEmpty()){
+            return false;
+        }
+        if(list.get(0)==1){
+            return true;
+        }else{
+            return false;
+        }
     }
 }

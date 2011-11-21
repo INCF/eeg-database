@@ -113,7 +113,7 @@ public class AddHardwareController{
                     HardwareGroupRelId hardwareGroupRelId = new HardwareGroupRelId(pkHardware,pkGroup);
                     ResearchGroup researchGroup = researchGroupDao.read(pkGroup);
                     HardwareGroupRel hardwareGroupRel = new HardwareGroupRel(hardwareGroupRelId,researchGroup,hardware);
-                    hardwareDao.createGroupRecord(hardwareGroupRel);
+                    hardwareDao.createGroupRel(hardwareGroupRel);
                 }
 
             }

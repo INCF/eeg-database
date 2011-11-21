@@ -8,7 +8,7 @@ import java.util.List;
 public interface HardwareDao extends GenericDao<Hardware, Integer> {
     public void createDefaultRecord(Hardware hardware);
 
-    public void createGroupRecord(HardwareGroupRel hardwareGroupRel);
+    public void createGroupRel(HardwareGroupRel hardwareGroupRel);
 
     public List<Hardware> getItemsForList();
 
@@ -21,6 +21,14 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
     public boolean canSaveTitle(String title, int id);
 
     public boolean canDelete(int id);
+
+    public boolean isDefault(int id);
+
+    public void deleteGroupRel(HardwareGroupRel hardwareGroupRel);
+
+    public HardwareGroupRel getGroupRel(int hardwareId, int researchGroupId);
+
+    public boolean hasGroupRel(int id);
 
     /**
      * Title of hardware must be unique

@@ -1,10 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.list.hardware;
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
@@ -82,14 +80,33 @@ public class HardwareMultiController {
     }
 
     @RequestMapping(value="lists/hardware-definitions/delete.html")
-    public String delete(@RequestParam("id") String idString) {
+    public String delete(@RequestParam("id") String idString, @RequestParam("groupid") String idString2) {
         log.debug("Deleting hardware.");
         if (idString != null) {
             int id = Integer.parseInt(idString);
 
             if (hardwareDao.canDelete(id)) {
-                hardwareDao.delete(hardwareDao.read(id));
+                if(idString2 !=null){
+                    int groupId = Integer.parseInt(idString2);
+
+                    if(groupId==DEFAULT_ID){ // delete default hardware if it's from default group
+                        if(!hardwareDao.hasGroupRel(id)){ // delete only if it doesn't have group relationship
+                            hardwareDao.delete(hardwareDao.read(id));
+                        }else{
+                            System.out.println("hasGroupRel");
+                            return "lists/itemUsed";
+                        }
+                    }else{
+                        HardwareGroupRel h = hardwareDao.getGroupRel(id,groupId);
+                        if(!hardwareDao.isDefault(id)){ // delete only non default hardware
+                            hardwareDao.delete(hardwareDao.read(id));
+                        }
+                        hardwareDao.deleteGroupRel(h);
+                    }
+                }
+
             } else {
+                System.out.println("cannotDelete");
                 return "lists/itemUsed";
             }
         }
