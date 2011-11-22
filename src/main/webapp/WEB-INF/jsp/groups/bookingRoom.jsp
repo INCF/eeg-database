@@ -33,7 +33,7 @@
 <script src="<c:url value="/files/js/bookRoom/bookRoomView.js"/>" type="text/javascript"></script>
 
 <h1><fmt:message key="pageTitle.bookingRoom"/></h1>
-<c:url value="/groups/book-room.html" var="formUrl"/>
+<c:url value="book-room.html" var="formUrl"/>
 
 <c:if test="${fn:trim(status)!=''}"><span class="messageToggle" id="toggle_message" title="<fmt:message key='bookRoom.toggle.message'/>" onclick="toggleDiv('message')"><hr></span></c:if>
 <div id="message">
