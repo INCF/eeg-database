@@ -164,17 +164,28 @@
                 <label for="length"><fmt:message key="label.lenght"/></label>
                 <input type="text" name="length" id="length" class="text ui-widget-content ui-corner-all"/>
 
-                <label for="scenarioDescription"><fmt:message key="label.hardwareDescription"/></label>
+                <label for="scenarioDescription"><fmt:message key="label.scenarioDescription"/></label>
+
                 <textarea rows="3" cols="40"name=" scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
                 </textarea>
-                <label for="dataFile"><fmt:message key="description.fileType.dataFile"/></label>
-                <input type="file" name="dataFile" id="dataFile" class="text ui-widget-content ui-corner-all"/>
-               <!-- <button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>-->
-                <label for="dataFileXml"><fmt:message key="label.xmlDataFile"/></label>
-                <input type="file" name="dataFileXml" id ="dataFileXml" class="text ui-widget-content ui-corner-all"/>
-                <label for="scenarioSchema"><fmt:message key="label.scenarioSchema"/></label>
 
-                <select name="scenarioSchema" id="scenarioSchema" class="text ui-widget-content ui-corner-all">
+                <label for="isScenarioXml"><fmt:message key="label.dataFileIsXml"/></label>
+                <input type="checkbox" name="isScenarioXML" id= "isScenarioXml" value="xmlDataFile"  />
+
+                <div id="dataFile">
+                <label for="dataFile"><fmt:message key="description.fileType.dataFile"/></label>
+                <input type="file" name="dataFile" id="dataNonXml" class="text ui-widget-content ui-corner-all"/>
+                </div>
+               <!-- <button class="button" id="buttonUpload" onclick="return ajaxFileUpload();">Upload</button>-->
+                <div id="dataFileXml">
+                <label for="dataFileXml"><fmt:message key="label.xmlDataFile"/></label>
+                <input type="file" name="dataFileXml" id ="dataXml" class="text ui-widget-content ui-corner-all"/>
+                </div>
+                <div id="schemaSelect">
+                <label for="scenarioSchemaLabel" id="scenarioschemalabel"><fmt:message key="label.scenarioSchema"/></label>
+                <input type="radio" name="noSchema" value="noSchema" id="noSchema"> <fmt:message key="radio.noSchema"/>
+                <input type="radio" name="fromSchemaList" value="fromList" id="fromSchemaList"><fmt:message key="radio.fromSchemaList"/>
+                  <select name="scenarioSchema" id="schemaList" class="text ui-widget-content ui-corner-all">
                     <option value="-1"><fmt:message key="select.option.noScenarioSchemaSelected"/></option>
 
                     <c:forEach items="${schemaNamesList}" var="schemaName">
@@ -183,6 +194,8 @@
                         </option>
                     </c:forEach>
                   </select>
+                    </div>
+
                 <label for="privateNote"><fmt:message key="label.private"/></label>
                 <input type="checkbox" name="privateNote" id= "privateNote" value="private"  />
             </fieldset>

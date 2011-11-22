@@ -311,8 +311,8 @@ $("#dialog-form-person").dialog({
 
     $("#dialog-form-scenario").dialog({
         autoOpen: false,
-        height: 550,
-        width: 370,
+        height: 600,
+        width: 550,
         modal: true,
         buttons: {
             "Create new scenario": function() {
