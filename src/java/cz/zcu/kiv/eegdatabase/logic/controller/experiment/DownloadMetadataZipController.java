@@ -170,7 +170,10 @@ public class DownloadMetadataZipController extends SimpleFormController {
             meas.getScenario().setScenarioLength(Integer.MIN_VALUE);
         }
         if (mc.isScenFile()) {
-            meas.getScenario().getScenarioType().setScenarioXml(fromDB.getScenario().getScenarioType().getScenarioXml());
+            if (meas.getScenario().getScenarioType() != null) {
+                meas.getScenario().getScenarioType().setScenarioXml(fromDB.getScenario().getScenarioType().getScenarioXml());
+            }
+
         }
 
         Set<Person> persons = new HashSet<Person>();
