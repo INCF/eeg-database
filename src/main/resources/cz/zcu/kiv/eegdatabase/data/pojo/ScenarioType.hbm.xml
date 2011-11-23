@@ -14,9 +14,10 @@
   <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TYPE_PARENT">
     <id name="scenarioId" type="int">
       <column name="SCENARIO_ID" precision="22" scale="0"/>
-      <generator class="foreign">
+        <generator class="increment" />
+   <!--   <generator class="foreign">
         <param name="property">scenario</param>
-      </generator>
+      </generator>     -->
     </id>
 
     <one-to-one name="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario"
