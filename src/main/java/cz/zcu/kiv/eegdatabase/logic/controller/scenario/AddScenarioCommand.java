@@ -14,6 +14,7 @@ public class AddScenarioCommand {
     private MultipartFile dataFileXml;
     private boolean privateNote;
     private int scenarioSchema;
+    private boolean dataFileAvailable;
     private boolean xmlFileCheckBox;
     private String scenarioOption;
     private String schemaDescription;
@@ -80,6 +81,14 @@ public class AddScenarioCommand {
 
     public void setScenarioSchema(int scenarioSchema) {
       this.scenarioSchema = scenarioSchema;
+    }
+
+    public boolean isDataFileAvailable() {
+        return dataFileAvailable;
+    }
+
+    public void setDataFileAvailable(boolean dataFileAvailable) {
+        this.dataFileAvailable = dataFileAvailable;
     }
 
     public MultipartFile getDataFileXml() {

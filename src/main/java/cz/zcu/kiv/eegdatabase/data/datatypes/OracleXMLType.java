@@ -97,7 +97,12 @@ public class OracleXMLType implements UserType, Serializable {
             if (op != null) {
                 xmlType = XMLType.createXML(op);
             }
+            if(xmlType != null) {
             doc = xmlType.getDocument();
+            }
+            else {
+                doc = null;
+            }
         } finally {
             if (null != xmlType) {
                 xmlType.close();

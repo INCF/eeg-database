@@ -8,6 +8,23 @@
 
 $(document).ready(function() {    //nacteni
 
+    $('#dataFileAvailableCheckbox').click(function() {
+        if ($("#dataFileAvailableCheckbox").is(':checked')) {
+            $("#scenarioXml").show();
+            $("#dataFile").show();
+            $("#dataFileXml").hide();
+            $("#schemaSelect").hide();
+            $("#schemaList").hide();
+        }
+        else {
+            $("#scenarioXml").hide();
+            $("#dataFile").hide();
+            $("#dataFileXml").hide();
+            $("#schemaSelect").hide();
+            $("#schemaList").hide();
+        }
+    });
+
     $('#isScenarioXml').click(function() {
         if ($("#isScenarioXml").is(':checked')) {
             $("#dataFileXml").show();

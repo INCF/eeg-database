@@ -3,9 +3,8 @@ package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioTypeDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -21,6 +20,7 @@ public class ScenarioMultiController extends MultiActionController {
 
     private AuthorizationManager auth;
     private ScenarioDao scenarioDao;
+    private ScenarioTypeDao scenarioTypeDao;
     private PersonDao personDao;
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
@@ -57,8 +57,10 @@ public class ScenarioMultiController extends MultiActionController {
         } catch (Exception e) {
         }
         Scenario scenario = scenarioDao.read(id);
+        IScenarioType scenarioType = scenario.getScenarioType();
         mav.addObject("scenarioDetail", scenario);
         mav.addObject("isOwner", (auth.userIsOwnerOfScenario(id))||(auth.isAdmin()));
+        mav.addObject("containsFile", scenarioType.getScenarioXml() != null);
 
         return mav;
     }

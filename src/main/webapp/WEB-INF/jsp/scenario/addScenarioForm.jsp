@@ -75,9 +75,16 @@
                 <form:errors path="description" cssClass="errorBox"/>
             </div>
 
-
-
             <div class="itemBox">
+                <form:label path="dataFileAvailable" cssClass="fileFieldLabel"
+                            cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="description.fileType.dataFileAvailable"/></form:label>
+
+                <form:checkbox path="dataFileAvailable" cssClass="checkBox" id="dataFileAvailableCheckbox"/>
+
+                <form:errors path="dataFileAvailable" cssClass="errorBox"/>
+            </div>
+
+            <div class="itemBox" id="scenarioXml">
 
                 <form:label path="xmlFileCheckBox" cssClass="textFieldLabel"
                             cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.dataFileIsXml"/></form:label>
