@@ -16,6 +16,7 @@ public class AddHardwareValidator implements Validator {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private HardwareDao hardwareDao;
+    private final int DEFAULT_ID = -1;
 
     public boolean supports(Class clazz) {
         return clazz.equals(AddHardwareCommand.class);
@@ -28,8 +29,14 @@ public class AddHardwareValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "type", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
 
-        if (!hardwareDao.canSaveTitle(data.getTitle(), data.getId())) {
-            errors.rejectValue("title", "error.valueAlreadyInDatabase");
+        if(data.getResearchGroupId()==DEFAULT_ID){
+            if (!hardwareDao.canSaveDefaultTitle(data.getTitle(),data.getId())) {
+                errors.rejectValue("title", "error.valueAlreadyInDatabase");
+            }
+        }else{
+            if (!hardwareDao.canSaveTitle(data.getTitle(), data.getResearchGroupId(),data.getId())) {
+                errors.rejectValue("title", "error.valueAlreadyInDatabase");
+            }
         }
     }
 }

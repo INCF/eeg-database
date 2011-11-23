@@ -35,18 +35,20 @@ public class AddHardwareController{
 	}
 
     @RequestMapping(value="lists/hardware-definitions/edit.html", method=RequestMethod.GET)
-    protected String showEditForm(@RequestParam("id") String idString, ModelMap model){
+    protected String showEditForm(@RequestParam("id") String idString, @RequestParam("groupid") String idString2, ModelMap model){
         AddHardwareCommand data = new AddHardwareCommand();
         if (auth.userIsExperimenter() || auth.isAdmin()) {
             model.addAttribute("userIsExperimenter", true);
-
+            if (idString2 != null) {
+                int id = Integer.parseInt(idString2);
+                data.setResearchGroupId(id);
+            }
             if (idString != null) {
                 // Editation of existing hardware
                 int id = Integer.parseInt(idString);
 
                 log.debug("Loading hardware to the command object for editing.");
                 Hardware hardware = hardwareDao.read(id);
-
                 data.setId(id);
                 data.setDescription(hardware.getDescription());
                 data.setTitle(hardware.getTitle());
@@ -86,16 +88,48 @@ public class AddHardwareController{
             if (result.hasErrors()) {
                 return "lists/hardware/addItemForm";
             }
-
+            int hwId = data.getId();
             Hardware hardware;
-            if (data.getId() > 0) {
+            if (hwId > 0) {
                 // Editing
                 log.debug("Editing existing hardware object.");
-                hardware = hardwareDao.read(data.getId());
-                hardware.setDescription(data.getDescription());
-                hardware.setTitle(data.getTitle());
-                hardware.setType(data.getType());
-                hardwareDao.update(hardware);
+                hardware = hardwareDao.read(hwId);
+
+                if(hardwareDao.isDefault(hwId)){
+                     if(data.getResearchGroupId()!=DEFAULT_ID){
+                         // new hw
+                         Hardware newHw = new Hardware();
+                         newHw.setDefaultNumber(0);
+                         newHw.setDescription(data.getDescription());
+                         newHw.setTitle(data.getTitle());
+                         newHw.setType(data.getType());
+                         int newId = hardwareDao.create(newHw);
+                         HardwareGroupRel rel = hardwareDao.getGroupRel(hwId,data.getResearchGroupId());
+                         // delete old rel, create new one
+                         HardwareGroupRelId newRelId = new HardwareGroupRelId();
+                         HardwareGroupRel newRel = new HardwareGroupRel();
+                         newRelId.setHardwareId(newId);
+                         newRelId.setResearchGroupId(data.getResearchGroupId());
+                         newRel.setId(newRelId);
+                         newRel.setHardware(newHw);
+                         ResearchGroup r = researchGroupDao.read(data.getResearchGroupId());
+                         newRel.setResearchGroup(r);
+                         hardwareDao.deleteGroupRel(rel);
+                         hardwareDao.createGroupRel(newRel);
+                     }else{
+                        if(!hardwareDao.hasGroupRel(hwId) && hardwareDao.canDelete(hwId)){
+                            hardware.setDescription(data.getDescription());
+                            hardware.setTitle(data.getTitle());
+                            hardware.setType(data.getType());
+                        }else{
+                            return "lists/itemUsed";
+                        }
+                     }
+                }else{
+                    hardware.setDescription(data.getDescription());
+                    hardware.setTitle(data.getTitle());
+                    hardware.setType(data.getType());
+                }
             } else {
                 // Creating new
                 hardware = new Hardware();

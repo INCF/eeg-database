@@ -41,7 +41,7 @@
                 <td><c:out value="${hardware.type}" /></td>
                 <td><c:out value="${hardware.description}" /></td>
                 <td>
-                    <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}' />"><fmt:message
+                    <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroup}' />"><fmt:message
                             key="link.edit"/></a>
                     <auth:experimenter>
                         <a href="<c:url value='/lists/hardware-definitions/delete.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroup}' />"

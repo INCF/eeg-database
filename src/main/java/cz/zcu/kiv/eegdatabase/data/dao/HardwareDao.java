@@ -18,8 +18,6 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
 
     public List<Hardware> getDefaultRecords();
 
-    public boolean canSaveTitle(String title, int id);
-
     public boolean canDelete(int id);
 
     public boolean isDefault(int id);
@@ -36,5 +34,9 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
      * @return
      */
     public boolean canSaveTitle(String title);
+
+    public boolean canSaveTitle(String title, int groupId, int hwId);
+
+    public boolean canSaveDefaultTitle(String title, int hwId);
 
 }

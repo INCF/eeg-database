@@ -10,7 +10,7 @@
             <!-- editation -->
             <h1><fmt:message key="pageTitle.editHardwareDefinition"/></h1>
 
-            <c:url value="edit.html?id=${addHardware.id}" var="formUrl"/>
+            <c:url value="edit.html?id=${addHardware.id}&groupid=${addHardware.researchGroupId}" var="formUrl"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
