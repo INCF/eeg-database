@@ -5,12 +5,14 @@
 
 package cz.zcu.kiv.eegdatabase.logic.zip;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+
 import java.io.IOException;
 import java.io.OutputStream;
 import java.sql.SQLException;
-import java.util.List;
-import javax.xml.bind.JAXBException;
+import java.util.Set;
 
 /**
  *
@@ -18,5 +20,5 @@ import javax.xml.bind.JAXBException;
  */
 public interface Generator {
 
-  public OutputStream generate(List<Experiment> meases, boolean scenName) throws JAXBException, SQLException, IOException;
+  public OutputStream generate(Experiment exp, MetadataCommand mc, Set<DataFile> datas) throws Exception, SQLException, IOException;
 }

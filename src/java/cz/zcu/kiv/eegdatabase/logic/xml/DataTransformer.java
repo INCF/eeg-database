@@ -5,9 +5,13 @@
 
 package cz.zcu.kiv.eegdatabase.logic.xml;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+
 import java.io.IOException;
 import java.io.OutputStream;
+import java.util.Set;
 import javax.xml.bind.JAXBException;
 
 /**
@@ -16,5 +20,5 @@ import javax.xml.bind.JAXBException;
  */
 public interface DataTransformer {
 
-  public OutputStream transform(Experiment m, boolean scenarioName) throws JAXBException, IOException;
+  public OutputStream transform(Experiment m, MetadataCommand mc, Set<DataFile> datas) throws JAXBException, IOException;
 }

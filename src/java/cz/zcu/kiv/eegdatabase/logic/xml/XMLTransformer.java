@@ -12,12 +12,14 @@ import cz.zcu.kiv.eegdatabase.data.xmlObjects.*;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.List;
+import java.util.Set;
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.ScenarioType;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -36,8 +38,7 @@ public class XMLTransformer implements DataTransformer {
   private String experimenter;
   private Log log = LogFactory.getLog(getClass());
 
-  @Override
-  public OutputStream transform(Experiment meas, boolean scenarioName) throws JAXBException, IOException {
+  public OutputStream transform(Experiment meas, MetadataCommand mc, Set<DataFile> datas) throws JAXBException, IOException {
 
     if (meas == null) {
       return null;
@@ -47,36 +48,37 @@ public class XMLTransformer implements DataTransformer {
     log.debug("Creating JAXB context");
     MeasurationType measType = of.createMeasurationType();
     XMLMeasuration mea = new XMLMeasuration(measType);
-    if ((meas.getEndTime() != null) && (meas.getStartTime() != null)) {
+    if (mc.isTimes()) {
       mea.writeStartAndEndTime(meas.getEndTime().toString(),
               meas.getStartTime().toString());
       log.debug("Written start and end time: " + measType.getStartTime() + ", "
               + measType.getEndTime());
     }
-
     Scenario scenario = meas.getScenario();
-    if (scenario != null) {
       ScenarioType scType = of.createScenarioType();
       XMLScenario scen = new XMLScenario(scType);
-      if (scenarioName) {
+      if (mc.isTitle()) {
         scen.writeTitle(scenario.getTitle());
       }
+      if (mc.isLength()) {
       scen.writeLength("" + scenario.getScenarioLength());
+      }
+      if (mc.isDescription()) {
       scen.writeDescription(scenario.getDescription());
+      }
       measType.setScenario(scType);
       log.debug("Written Scenario metadata: " + scType);
-    }
-    if (meas.getTemperature() != Integer.MIN_VALUE) {
+    if (mc.isTemperature()) {
       measType.setTemperature(meas.getTemperature());
     }
-    if (meas.getHardwares() != null) {
+    if (mc.isHardware()) {
       List<HardwareType> hwType = measType.getHardware();
       for (Hardware hw : meas.getHardwares()) {
         hwType.add(mea.writeHardware(hw, of));
         log.debug("Written hardware: " + hw);
       }
     }
-    if (meas.getExperimentOptParamVals() != null) {
+    if (mc.isMeasurationAddParams()) {
       List<MeasurationAddParam> param = measType.getAddParam();
       for (ExperimentOptParamVal measAddParam : meas.getExperimentOptParamVals()) {
         param.add(mea.writeAdditionalParams(measAddParam, of));
@@ -84,25 +86,26 @@ public class XMLTransformer implements DataTransformer {
       }
     }
 
-    if (meas.getWeather() != null) {
+    if (mc.isWeather()) {
       WeatherType wType = of.createWeatherType();
       wType.setTitle(meas.getWeather().getTitle());
       wType.setDescription(meas.getWeather().getDescription());
       measType.setWeather(wType);
       log.debug("Written weather: " + wType);
     }
+    if (mc.isWeatherNote()) {
     measType.setWeatherNote(meas.getWeathernote());
-
+    }
     List<PersonType> perType = measType.getPerson();
-    writePerson(perType, meas.getPersonBySubjectPersonId(), measured);
+    writePerson(perType, meas.getPersonBySubjectPersonId(), measured, mc);
     for (Person person : meas.getPersons()) {
-      writePerson(perType, person, experimenter);
+      writePerson(perType, person, experimenter, mc);
       log.debug("Written Person metadata: " + person);
     }
 
     List<DataType> dataType = measType.getData();
     if (meas.getDataFiles() != null) {
-      for (DataFile data : meas.getDataFiles()) {
+      for (DataFile data : datas) {
         log.debug("creating data into output xml: " + data.getFilename());
         DataType datat = of.createDataType();
         datat.setFileName(data.getFilename());
@@ -133,39 +136,47 @@ public class XMLTransformer implements DataTransformer {
   }
 
   protected void writePerson(List<PersonType> perType, Person per,
-          String position) {
+          String position, MetadataCommand mc) {
     if (per == null) {
       return;
     }
     PersonType pert = of.createPersonType();
     XMLPerson p = new XMLPerson(pert);
+    if (mc.isName()) {
     p.writeName(per.getGivenname(), per.getSurname());
-    if (per.getDateOfBirth() != null) {
+    }
+    if (mc.isBirth()) {
       pert.setDateOfBirth(per.getDateOfBirth().toString());
     }
+    if (mc.isEmail()) {
     pert.setEmail(per.getEmail());
-    if (per.getGender() != ' ') {
+    }
+    if (mc.isGender()) {
       pert.setGender("" + per.getGender());
     }
+    if (mc.isNote()) {
     pert.setNote(per.getNote());
+    }
+    if (mc.isPhoneNumber()) {
     pert.setPhoneNumber(per.getPhoneNumber());
+    }
     pert.setPosition(position);
     log.debug("Written person simple attributes: " + pert);
-    if (per.getVisualImpairments() != null) {
+    if (mc.isEyesDefects()) {
       List<EyesDefectType> edefType = pert.getEyesDefect();
       for (VisualImpairment eyesDefect : per.getVisualImpairments()) {
         edefType.add(p.writeEyesDefects(eyesDefect, of));
         log.debug("Written eyes defect: " + eyesDefect);
       }
     }
-    if (per.getHearingImpairments() != null) {
+    if (mc.isHearingDefects()) {
       List<HearingDefectType> hdefType = pert.getHearingDefect();
       for (HearingImpairment hearingDefect : per.getHearingImpairments()) {
         hdefType.add(p.writeHearingDefects(hearingDefect, of));
         log.debug("Written hearing defect: " + hearingDefect);
       }
     }
-    if (per.getPersonOptParamVals() != null) {
+    if (mc.isPersonAddParams()) {
       List<PersonAddParam> param = pert.getAddParam();
       for (PersonOptParamVal personAddParam : per.getPersonOptParamVals()) {
         param.add(p.writeAdditionalParams(personAddParam, of));
