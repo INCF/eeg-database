@@ -10,7 +10,7 @@
     <table class="standardValueTable">
         <tr>
             <th><fmt:message key="valueTable.scenarioTitle"/></th>
-            <td><c:out value="${scenarioDetail.title}" /></td>
+            <td><c:out value="${scenarioDetail.title}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioLength"/></th>
@@ -18,7 +18,7 @@
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioDescription"/></th>
-            <td><c:out value="${scenarioDetail.description}" /></td>
+            <td><c:out value="${scenarioDetail.description}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.private"/></th>
@@ -27,10 +27,19 @@
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />"
-           class="lightButtonLink"><fmt:message key="link.downloadXMLFile"/></a>
+        <c:choose>
+            <c:when test="${containsFile}">
+                <a href="<c:url value='download-xml.html?scenarioId=${scenarioDetail.scenarioId}' />"
+                   class="lightButtonLink"><fmt:message key="link.downloadXMLFile"/></a>
+            </c:when>
+            <c:otherwise>
+                <fmt:message key="scenarioDetail.noFile"/>
+            </c:otherwise>
+        </c:choose>
+
         <c:if test="${isOwner}">
-            <a href="<c:url value='edit.html?id=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message key="button.edit"/></a>
+            <a href="<c:url value='edit.html?id=${scenarioDetail.scenarioId}' />" class="lightButtonLink"><fmt:message
+                    key="button.edit"/></a>
         </c:if>
     </div>
 

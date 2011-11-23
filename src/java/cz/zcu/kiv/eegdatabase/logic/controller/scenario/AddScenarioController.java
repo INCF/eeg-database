@@ -185,8 +185,6 @@ public class AddScenarioController
         log.debug("Setting scenario length: " + data.getLength());
         scenario.setScenarioLength(Integer.parseInt(data.getLength()));
 
-        ApplicationContext context = getApplicationContext();
-
         //loading non-XML
         if ((file != null) && (!file.isEmpty())) {
             // File uploaded
@@ -242,11 +240,14 @@ public class AddScenarioController
             scenarioDao.update(scenario);
         } else {
             // Creating new
-
+            if(!data.isDataFileAvailable()) {
+                scenarioType = new ScenarioTypeNonXml();
+            }
             scenario.setScenarioType(scenarioType);
+
             scenarioType.setScenario(scenario);
+
             scenarioDao.create(scenario);
-            //scenarioTypeDao.create(scenarioType);
         }
 
         log.debug("Returning MAV");
