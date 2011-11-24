@@ -154,7 +154,7 @@ public class AddScenarioController
         MultipartFile xmlFile = data.getDataFileXml();
 
         Scenario scenario;
-        ScenarioType scenarioType = null;
+        IScenarioType scenarioType = null;
 
         if (id > 0) {
             // Editing existing
@@ -192,9 +192,13 @@ public class AddScenarioController
             scenario.setScenarioName(file.getOriginalFilename());
 
             scenario.setMimetype(file.getContentType());
+            if (id > 0) {
+            // scenarioType = (ScenarioType) context.getBean("scenarioTypeNonXml");
+            scenarioType = scenario.getScenarioType();
+            } else {
+                scenarioType = new ScenarioTypeNonXml();
+            }
 
-           // scenarioType = (ScenarioType) context.getBean("scenarioTypeNonXml");
-            scenarioType = new ScenarioTypeNonXml();
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
@@ -222,11 +226,13 @@ public class AddScenarioController
             //schema selected - structured storage
             else {
                 if (schemaId > 0) {
-                    Class c = Class.forName("ScenarioTypeSchema"+schemaId);
-                    scenarioType = (ScenarioType)  c.newInstance();
+                    Class c = Class.forName("ScenarioTypeSchema" + schemaId);
+                    scenarioType = (ScenarioType) c.newInstance();
                 }
             }
-
+            if (id > 0) {
+                scenarioType = scenario.getScenarioType();
+            }
             scenarioType.setScenarioXml(doc);
         }
 
@@ -234,18 +240,17 @@ public class AddScenarioController
         scenario.setPrivateScenario(data.getPrivateNote());
 
         log.debug("Saving scenario object");
-
+        if (!data.isDataFileAvailable()) {
+            scenarioType = new ScenarioTypeNonXml();
+        }
+        scenario.setScenarioType(scenarioType);
+        scenarioType.setScenario(scenario);
         if (id > 0) {
             // Editing existing
-            scenarioDao.update(scenario);
+           scenarioDao.update(scenario);
         } else {
             // Creating new
-            if(!data.isDataFileAvailable()) {
-                scenarioType = new ScenarioTypeNonXml();
-            }
-            scenario.setScenarioType(scenarioType);
 
-            scenarioType.setScenario(scenario);
 
             scenarioDao.create(scenario);
         }
