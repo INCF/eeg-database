@@ -169,6 +169,9 @@
                 <textarea rows="3" cols="40"name=" scenarioDescription" id="scenarioDescription" class="text ui-widget-content ui-corner-all">
                 </textarea>
 
+                <label for="dataFileAvailable"><fmt:message key="description.fileType.dataFileAvailable"/></label>
+                <input type="checkbox" name="dataFileAvailable" id="dataFileAvailable" value="dataFileAvailable" />
+
                 <label for="isScenarioXml"><fmt:message key="label.dataFileIsXml"/></label>
                 <input type="checkbox" name="isScenarioXML" id= "isScenarioXml" value="xmlDataFile"  />
 
