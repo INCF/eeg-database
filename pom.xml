@@ -63,7 +63,6 @@
 			<artifactId>eegdsp</artifactId>
 			<version>1.0</version>
 		</dependency>
-
 		<!--=================================== Test scoped libraries ================================== -->
 		<dependency>
 			<groupId>junit</groupId>
@@ -532,11 +531,6 @@
             <artifactId>jcommon</artifactId>
             <version>1.0.16</version>
         </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-context</artifactId>
-            <version>3.0.5.RELEASE</version>
-        </dependency>
     </dependencies>
 
 	<build>
@@ -554,7 +548,54 @@
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>
 			</plugin>
+			<plugin>
+				<groupId>cz.zcu.kiv</groupId>
+				<artifactId>jsonconverter</artifactId>
+				<version>1.2</version>
+				<executions>
+				<execution>
+					<configuration>
+					   <srcFile>src/main/resources/messages.properties</srcFile>
+					   <destFile>src/main/webapp/files/js/messages-en.json</destFile>
+					   <saveAsJSON>true</saveAsJSON>
+					</configuration>
+				<goals>
+					<goal>json</goal>
+				</goals>
+				</execution>
+			   </executions>
+		 </plugin>
 		</plugins>
+		<pluginManagement>
+		<plugins>
+		 <plugin>
+	      <groupId>org.eclipse.m2e</groupId>
+	      <artifactId>lifecycle-mapping</artifactId>
+	      <version>1.0.0</version>
+	      <configuration>
+	        <lifecycleMappingMetadata>
+	          <pluginExecutions>
+	            <pluginExecution>
+	              <pluginExecutionFilter>
+	                <groupId>cz.zcu.kiv</groupId>
+	                <artifactId>jsonconverter</artifactId>
+	                <versionRange>[1,)</versionRange>
+	                <goals>
+	                  <goal>json</goal>
+	                </goals>
+	              </pluginExecutionFilter>
+	              <action>
+	                <execute >
+	                  <runOnIncremental>false</runOnIncremental>
+	                </execute >
+	              </action>
+	            </pluginExecution>
+	          </pluginExecutions>
+	        </lifecycleMappingMetadata>
+	      </configuration>
+	    </plugin>
+	    </plugins>
+		</pluginManagement>
 	</build>
 
 	<repositories>
@@ -594,6 +635,11 @@
 	</repositories>
 
 	<pluginRepositories>
+		<!-- Local repository for plugins not available in public repos -->
+		<pluginRepository>
+			<id>cz.zcu.kiv.eegdatabase.repo.local</id>
+			<url>file://${basedir}/repo</url>
+		</pluginRepository>
 		<!-- java.net (for maven-processor-plugin) -->
 		<pluginRepository>
 			<id>net.java.download.maven.2</id>

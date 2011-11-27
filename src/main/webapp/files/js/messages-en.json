@@ -1,868 +1,924 @@
 {
-    "actionBox":
+  "actionBox":
+  {
+    "noAction":"No action is available"
+  },
+  "articles":
+  {
+    "comments":
     {
-        "noAction":"No action is available"
-    },
-    "articles":
-    {
-        "comments":
+      "email":
+      {
+        "subscribtion":
         {
-            "email":
+          "body":
+          {
+            "text":
             {
-                "subscribtion":
-                {
-                    "body":
-                    {
-                        "text":
-                        {
-                            "part1":"There is a new comment on the article {0}",
-                            "part2":"To manage your subscriptions or to block all notifications from this site, set it in article settings in menu or each article individualy by clicking subscribe/unsubscribe."
-                        }
-                    },
-                    "subject":"New comment on {0}"
-                }
+              "part1":"There is a new comment on the article {0}",
+              "part2":"To manage your subscriptions or to block all notifications from this site, set it in article settings in menu or each article individualy by clicking subscribe/unsubscribe."
             }
-        },
-        "group":
+          },
+          "subject":"New comment on {0}"
+        }
+      }
+    },
+    "group":
+    {
+      "email":
+      {
+        "subscribtion":
         {
-            "email":
+          "body":
+          {
+            "text":
             {
-                "subscribtion":
-                {
-                    "body":
-                    {
-                        "text":
-                        {
-                            "part1":"There is a article \"{0}\" posted to {1}",
-                            "part2":"To manage your subscriptions or to block all notifications from this site, set it in article settings in menu or each article individualy by clicking subscribe/unsubscribe."
-                        }
-                    },
-                    "subject":"New article \"{0}\" by {1}"
-                }
+              "part1":"There is a article \"{0}\" posted to {1}",
+              "part2":"To manage your subscriptions or to block all notifications from this site, set it in article settings in menu or each article individualy by clicking subscribe/unsubscribe."
             }
+          },
+          "subject":"New article \"{0}\" by {1}"
         }
-    },
-    "bookRoom":
+      }
+    }
+  },
+  "authentication":
+  {
+    "error":"Authentication error"
+  },
+  "bookRoom":
+  {
+    "ajax":
     {
-        "ajax":
-        {
-            "info":
-            {
-                "by":"by",
-                "closeButtonHint":"Close this info",
-                "date":"Date",
-                "email":"Contact",
-                "end":"End",
-                "heading":"Reservation",
-                "start":"Start"
-            }
-        },
-        "clickToIcon":"Click to icon at the right side for getting more information",
-        "collisionWithSelected":"Collision with selected time range",
-        "collisions":"You must solve the collisions first!",
-        "collisionsList":"Collisions in next weeks:",
-        "controllerMessages":
-        {
-            "comment":
-            {
-                "booked":
-                {
-                    "multiple":
-                    {
-                        "part1":"A reservations to:<br>",
-                        "part2":"have been created! (totally %d reservations)"
-                    },
-                    "single":"A reservation to %s, from %s to %s has been created!"
-                },
-                "error":
-                {
-                    "exception":"An exception was thrown:",
-                    "unknown":"Unknown error"
-                }
-            },
-            "status":
-            {
-                "fail":"failed",
-                "ok":"booked"
-            }
-        },
-        "create":"Create reservation!",
-        "day":"Day",
-        "delete":
-        {
-            "error":"Reservation was not deleted due to error!",
-            "success":"Reservation was successfully deleted."
-        },
-        "deleteConfirmation":"Are you sure you want to delete this reservation?",
-        "deleteYourReservation":"Delete your reservation",
-        "displayed":
-        {
-            "day":"Displayed only for",
-            "group":"for",
-            "week":"Displayed week from %s to %s"
-        },
-        "displayedMonth":"Displayed month",
-        "downloadPDF":
-        {
-            "hint":"Select reservations and then click to this icon for download PDF report.",
-            "label":"Download selected in PDF"
-        },
-        "error":"An error has occurred.\nPlease mail me to jendakolena@gmail.com and report error value:",
-        "fail":"An error has occurred while booking the room...",
-        "filter":
-        {
-            "date":
-            {
-                "click":"--select date--",
-                "hint":"Click for date selection or keep clear for showing whole week.",
-                "label":"and only for"
-            },
-            "group":
-            {
-                "forAll":"for all groups",
-                "label":"Show reservations",
-                "onlyFor":"only for"
-            },
-            "reset":"Reset filter"
-        },
-        "gettingLate":"It's getting late, don't you want to make reservation to next day?",
-        "group":"Group",
-        "info":"Info",
-        "invalidTime":"You have selected invalid time range!",
-        "label":
-        {
-            "chooseEndTime":"Choose end time",
-            "chooseGroup":"Choose group",
-            "chooseStartTime":"Choose start time",
-            "endAfter":"end after",
-            "legend":"Legend",
-            "occurrences":"occurrences",
-            "recur":"Recur",
-            "selectedDates":"Selected dates",
-            "week":"week"
-        },
-        "longOperation":"Current operation tooks more time than expected...",
-        "more":
-        {
-            "download":"Download more information about this reservation in PDF file",
-            "info":"Show more information about this reservation"
-        },
-        "noReservationsMatch":"No reservations match your selection.",
-        "reservationToSameDate":"All reservations for",
-        "select":
-        {
-            "all":"Select all reservations",
-            "this":"Select this reservation"
-        },
-        "selectedTime":"Selected time range",
-        "success":"Room has been booked for selected date!",
-        "time":"Time range",
-        "timeInPast":"You have selected time in past, now it's",
-        "toggle":
-        {
-            "message":"Click for toggle message",
-            "toolbar":"Click for toggle toolbar"
-        },
-        "waitForControl":"Wait for control of reservations and then try it again!"
+      "info":
+      {
+        "by":"by",
+        "closeButtonHint":"Close this info",
+        "date":"Date",
+        "email":"Contact",
+        "end":"End",
+        "heading":"Reservation",
+        "start":"Start"
+      }
     },
-    "button":
+    "clickToIcon":"Click to icon at the right side for getting more information",
+    "clickToResetFilter":"Click here to reset the filter",
+    "collisionInNotVisible":"There are conflicting reservations outside the visible range:",
+    "collisionWithSelected":"Collision with selected time range",
+    "collisions":"You must solve the collisions first!",
+    "collisionsList":"There are some collisions in next weeks:",
+    "controllerMessages":
     {
-        "add":"Add",
-        "addDataFile":"Add data file",
-        "addExperimentOptionalParameter":"Add optional parameter",
-        "addEyesDefectToPerson":"Add eyes defect",
-        "addFileMetadataDefinition":"Add file metadata definition",
-        "addHardwareDefinition":"Add hardware definition",
-        "addHearingDefectToPerson":"Add hearing defect",
-        "addHearingImpairment":"Add hearing impairment",
-        "addMemberToGroup":"Add member to group",
-        "addOptionalParameter":"Add optional parameter",
-        "addPerson":"Add person",
-        "addPersonOptionalParameter":"Add optional parameter",
-        "addScenario":"Add scenario",
-        "addVisualImpairment":"Add visual impairment",
-        "addWeatherDefinition":"Add weather definition",
-        "advancedSearch":"Search",
-        "applyForWritingPermission":"Request for data uploading permission",
-        "backToGroupDetail":"Back to group detail",
-        "backToMeasuration":"Back to measuration",
-        "changeRole":"Change role",
-        "confirm":"Confirm",
-        "createAccount":"Create account",
-        "downloadFile":"Download file",
-        "downloadMetadataZip":"Download metadata",
-        "edit":"Edit",
-        "editExperiment":"Edit experiment",
-        "fulltextSearch":"Search",
-        "listOfMembers":"List of members",
-        "logIn":"Log in",
-        "reset":"Reset",
-        "run":"Run Service",
-        "save":"Save",
-        "search":"Search",
-        "send":"Send",
-        "sendRequest":"Send request",
-        "show":"Show"
-    },
-    "dataTable":
-    {
-        "heading":
+      "comment":
+      {
+        "booked":
         {
-            "articleTitle":"Article title",
-            "changeRoleTo":"Change role to",
-            "count":"Count",
-            "date":"Date",
-            "description":"Description",
-            "detailOfUser":"Detail of user",
-            "downloads":"Downloads",
-            "entity":"Entity",
-            "eyesDefectDescription":"Description",
-            "eyesDefectId":"ID",
-            "fileMetadataParameterDataType":"Data type",
-            "fileMetadataParameterName":"Parameter name",
-            "fileMetadataParamsId":"ID",
-            "fileName":"File name",
-            "groupName":"Group name",
-            "groupTitle":"Group title",
-            "hardwareDescription":"Description",
-            "hardwareId":"ID",
-            "hardwareTitle":"Title",
-            "hardwareType":"Type",
-            "hearingDefectDescription":"Description",
-            "hearingDefectId":"ID",
-            "id":"ID",
-            "link":"Link",
-            "measurationAdditionalParamsDataType":"Data type",
-            "measurationAdditionalParamsId":"ID",
-            "measurationAdditionalParamsName":"Parameter name",
-            "measurationOptionalParamName":"Parameter name",
-            "measurationOptionalParamValue":"Value",
-            "name":"Name",
-            "note":"Note",
-            "parameterName":"Parameter name",
-            "personAdditionalParamsDataType":"Data type",
-            "personAdditionalParamsId":"ID",
-            "personAdditionalParamsName":"Parameter name",
-            "personOptionalParamName":"Parameter name",
-            "personOptionalParamValue":"Value",
-            "requirementReason":"Requirement reason",
-            "roleInGroup":"Role in group",
-            "samplingRate":"Sampling rate",
-            "scenarioLength":"Length",
-            "scenarioTitle":"Scenario title",
-            "searchedString":"Searched string",
-            "surname":"Surname",
-            "title":"Title",
-            "type":"Type",
-            "username":"Username",
-            "usersDefaultGroup":"User's default group",
-            "value":"Value"
+          "multiple":
+          {
+            "part1":"A reservations to:<br>",
+            "part2":"have been created! (totally %d reservations)"
+          },
+          "single":"A reservation to %s, from %s to %s has been created!"
+        },
+        "error":
+        {
+          "exception":"An exception was thrown:",
+          "unknown":"Unknown error"
         }
+      },
+      "status":
+      {
+        "fail":"failed",
+        "ok":"booked"
+      }
     },
-    "description":
+    "create":"Create reservation!",
+    "day":"Day",
+    "delete":
     {
-        "fileType":
-        {
-            "dataFile":"Data file",
-            "experiment":"Experimet data(*.zip)",
-            "scenario":"Scenario(*.xml)"
-        }
+      "error":"Reservation was not deleted due to error!",
+      "success":"Reservation was successfully deleted."
     },
-    "editgrouprole":
+    "deleteConfirmation":"Are you sure you want to delete this reservation?",
+    "deleteYourReservation":"Delete your reservation",
+    "displayed":
     {
-        "email":
-        {
-            "body":
-            {
-                "hello":"Hello!",
-                "text":
-                {
-                    "part1":"User: {0} - wants change role in research group: {1}",
-                    "part2":"Please, click on the link below to edit or confirm the request."
-                }
-            },
-            "subject":"Change group role request"
-        }
+      "day":"Displayed only for",
+      "group":"for",
+      "week":"Displayed week from %s to %s"
     },
-    "emptyTable":
+    "displayedMonth":"Displayed month",
+    "downloadPDF":
     {
-        "noItems":"No items.",
-        "notMemberOfAnyGroup":"You are not member of any group."
+      "hint":"Select reservations and then click to this icon for download PDF report.",
+      "label":"Download selected in PDF"
     },
-    "error":
+    "error":"An error has occurred.\nPlease mail me to jendakolena@gmail.com and report error value:",
+    "fail":"An error has occurred while booking the room...",
+    "filter":
     {
-        "databaseError":
-        {
-            "message":"A database error occured.",
-            "title":"Database error"
-        },
-        "generalError":
-        {
-            "message":"An application error occured.",
-            "title":"Application error"
-        },
-        "notSuitable":"This experiment is not suitable for EEG processing services because this experiment does not contain .vhdr and .eeg or .avg file type."
+      "date":
+      {
+        "click":"--select date--",
+        "hint":"Click for date selection or keep clear for showing whole week.",
+        "label":"and only for"
+      },
+      "group":
+      {
+        "forAll":"for all groups",
+        "label":"Show reservations",
+        "onlyFor":"only for"
+      },
+      "reset":"Reset filter"
     },
-    "form":
-    {
-        "note":
-        {
-            "dateFormatDDMMYYYY":"Date format DD/MM/YYYY.",
-            "dateFormatDDMMYYYYHHMM":"Date format for field Start time and End time is DD/MM/YYYY HH:mm or DD/MM/YYYY.",
-            "timeFormatHHMM":"Time format HH:MM.",
-            "usernameFormatNote":"Allowed chars are small letters [a-z], numbers [0-9], dot [.] and dash [-]. Username musts begin with small letter. Minimal length is up to 2 characters."
-        },
-        "option":
-        {
-            "maxLength":"Max lenght",
-            "minLength":"Min length",
-            "scenarioTitle":"Scenario title"
-        }
-    },
-    "gotoHomepage":
-    {
-        "gotoHomepage":"Go to homepage"
-    },
-    "heading":
-    {
-        "ArticlesSettings":"Articles Settings",
-        "ArticlesSubscriptions":"Articles Subscribtions",
-        "comments":"Comments",
-        "dataFiles":"Data files",
-        "eyesDefects":"Eyes defects",
-        "hearingDefects":"Hearing defects",
-        "meAsSubject":"Me as subject",
-        "memberGroups":"Member groups",
-        "membershipInGroups":"Membership in groups",
-        "metadata":"Metadata",
-        "myArticles":"Articles",
-        "myExperiments":"My experiments",
-        "myGroups":"My groups",
-        "myMemberGroups":"My member groups",
-        "myScenarios":"My scenarios",
-        "optionalParameters":"Optional parameters",
-        "ownedGroups":"Owned groups",
-        "scenario":"Scenario",
-        "searchFor":"Search for",
-        "searchResult":"Search Results",
-        "subjectPerson":"Subject person",
-        "usedHardware":"Used hardware"
-    },
-    "homePage":
-    {
-        "description1":"This is homepage of project of neuroinformatic database.",
-        "description2":"For continuing further in this website you need to log in. If you don't have an account, you can create one.",
-        "welcomeHeading":"Welcome to the homepage of EEGbase"
-    },
+    "gettingLate":"It's getting late, don't you want to make reservation to next day?",
+    "group":"Group",
+    "info":"Info",
+    "invalidTime":"You have selected invalid time range!",
     "label":
     {
-        "From":"From:",
-        "To":"To:",
-        "addAnotherField":"Add another field",
-        "addComment":"Post new comment",
-        "addParams":"Add parameters",
-        "age":"Age",
-        "ageMax":"Maximum age",
-        "ageMin":"Minimum age",
-        "atom":"Count of atoms",
-        "author":"Author",
-        "beginningOfMeasuration":"Beginning of measuration",
-        "channel":"Channel",
-        "chooseAll":"Choose all",
-        "chooseFile":"Choose all data files",
-        "coExperimenters":"Co-experimenters",
-        "comment":"Comment",
-        "controlText":"Control text",
-        "data":"Data files",
-        "dataFile":"Data file",
-        "datafile":
-        {
-            "content":"File content",
-            "datatype":"Data type",
-            "name":"Name",
-            "value":"Value"
-        },
-        "date":"Date",
-        "dateFrom":"From(dd/mm/yyyy):",
-        "dateOfBirth":"Date of birth",
-        "dateTo":"To(dd/mm/yyyy):",
-        "defect":"Without defect",
-        "delete":"Delete",
-        "description":"Description",
-        "edit":"Edit",
-        "email":"E-mail",
-        "endDate":"End date",
-        "endDateTime":"End date and time",
-        "endOfMeasuration":"End of measuration",
-        "eyesDefect":"Eyes defect",
-        "fileMetadata":"File metadata",
-        "fileName":"File name",
-        "fromDate":"From:",
-        "fullName":"Full name",
-        "gender":
-        {
-            "female":"Female"
-        },
-        "givenname":"Givenname",
-        "globalPermissionLevel":"Global permission level",
-        "hardware":"Hardware",
-        "hardwareDescription":"Description",
-        "hardwareTitle":"Title",
-        "hardwareType":"Type",
-        "hearingDefect":"Hearing defect",
-        "in":"in",
-        "lenght":"Lenght",
-        "measuration":"Measuration",
-        "measurationId":"Measuration ID",
-        "minutes":"minutes",
-        "name":"Name",
-        "note":"Note",
-        "parameterDataType":"Parameter data type",
-        "parameterName":"Parameter name",
-        "parameterType":"Parameter type",
-        "parameterValue":"Value",
-        "password":"Password",
-        "person":"Person",
-        "phoneNumber":"Phone number",
-        "private":"Private",
-        "publicArticle":"Public article",
-        "rememberMe":"Remember me on this computer.",
-        "repeatPassword":"Repeat password",
-        "researchGroup":"Research group",
-        "researchGroupDescription":"Group description",
-        "researchGroupTitle":"Group title",
-        "samplingRate":"Sampling rate",
-        "scenario":"Scenario",
-        "scenarioDescription":"Description",
-        "scenarioFile":"Scenario file",
-        "scenarioLength":"Length",
-        "scenarioSchema":"Scenario schema",
-        "scenarioTitle":"Scenario title",
-        "selectResearchGroup":"Select research group",
-        "startDate":"Start date",
-        "startDateTime":"Start date and time",
-        "subjectPerson":"Subject person",
-        "subscribe":"Subscribe",
-        "surname":"Surname",
-        "temperature":"Temperature",
-        "text":"Text",
-        "times":"Start and end time",
-        "title":"Title",
-        "toDate":"To:",
-        "type":"Type",
-        "unableToEditArticle":"Unable to add or edit article (low level of permissions)",
-        "unsubscribe":"Unsubscribe",
-        "usedHardware":"Used hardware",
-        "usedHarware":"Used hardware",
-        "userName":"User name",
-        "userNote":"Note",
-        "userRole":"User role",
-        "username":"User name",
-        "wavelets":"Wavelets",
-        "weather":"Weather",
-        "weatherNote":"Weather note",
-        "yearOfBirth":"Year of birth"
+      "chooseEndTime":"Choose end time",
+      "chooseGroup":"Choose group",
+      "chooseStartTime":"Choose start time",
+      "endAfter":"end after",
+      "legend":"Legend",
+      "occurrences":"occurrences",
+      "recur":"Recur",
+      "selectedDates":"Selected dates",
+      "week":"week"
     },
-    "legend":
+    "longOperation":"Current operation took longer than expected...",
+    "more":
     {
-        "advancedSearchMeasurations":"Measuration - searcher",
-        "advancedSearchPerson":"People - searcher",
-        "advancedSearchScenario":"Scenario - searcher"
+      "download":"Download more information about this reservation in PDF file",
+      "info":"Show more information about this reservation"
     },
-    "link":
+    "noReservationsMatch":"No reservations match your selection.",
+    "reservationToSameDate":"All reservations for",
+    "select":
     {
-        "addExperimentOptionalParameter":"Add optional parameter for experiment",
-        "addFileMetadataDefinition":"Add file metadata definition",
-        "addHardwareDefinition":"Add hardware definition        ",
-        "addHearingImpairment":"Add hearing impairment",
-        "addPersonOptionalParameter":"Add optional parameter for people     ",
-        "addVisualImpairment":"Add visual impairment",
-        "addWeatherDefinition":"Add weather definition",
-        "back":"Back",
-        "backToListOfItems":"Back to list of items",
-        "changeGroupRole":
-        {
-            "admin":"Administrator",
-            "experimenter":"Experimenter",
-            "reader":"Reader",
-            "remove":"Remove"
-        },
-        "confirm":
-        {
-            "sureToRemoveUserFromGroup":"Are you sure you want to remove the user from group?"
-        },
-        "continuousWavelet":"Continuous Wavelet Transformation",
-        "delete":"Delete",
-        "detail":"Detail",
-        "discreteWavelet":"Discrete Wavelet Transformation",
-        "downloadXMLFile":"Download scenario file",
-        "edit":"Edit",
-        "fastFourier":"Fast Fourier Transformation",
-        "matchingPursuit":"Matching Pursuit",
-        "services":"Services",
-        "viewDetailOfPerson":"View detail of person",
-        "viewDetailOfScenario":"View detail of scenario"
+      "all":"Select all reservations",
+      "this":"Select this reservation"
     },
-    "menuItem":
+    "selectedTime":"Selected time range",
+    "success":"Room has been booked for selected date!",
+    "time":"Time range",
+    "timeInPast":"You have selected time in past, now it's",
+    "toggle":
     {
-        "addScenario":"Add scenario",
-        "administration":"Administration",
-        "articles":
+      "message":"Click for toggle message",
+      "toolbar":"Click for toggle toolbar"
+    },
+    "waitForControl":"Wait for control of reservations and then try it again!"
+  },
+  "button":
+  {
+    "add":"Add",
+    "addDataFile":"Add data file",
+    "addExperimentOptionalParameter":"Add optional parameter",
+    "addEyesDefectToPerson":"Add eyes defect",
+    "addFileMetadataDefinition":"Add file metadata definition",
+    "addHardwareDefinition":"Add hardware definition",
+    "addHearingDefectToPerson":"Add hearing defect",
+    "addHearingImpairment":"Add hearing impairment",
+    "addMemberToGroup":"Add member to group",
+    "addOptionalParameter":"Add optional parameter",
+    "addPerson":"Add person",
+    "addPersonOptionalParameter":"Add optional parameter",
+    "addScenario":"Add scenario",
+    "addVisualImpairment":"Add visual impairment",
+    "addWeatherDefinition":"Add weather definition",
+    "advancedSearch":"Search",
+    "applyForWritingPermission":"Request for data uploading permission",
+    "backToGroupDetail":"Back to group detail",
+    "backToMeasuration":"Back to measuration",
+    "changeRole":"Change role",
+    "confirm":"Confirm",
+    "createAccount":"Create account",
+    "downloadFile":"Download file",
+    "downloadMetadataZip":"Download metadata",
+    "edit":"Edit",
+    "editExperiment":"Edit experiment",
+    "fulltextSearch":"Search",
+    "listOfMembers":"List of members",
+    "logIn":"Log in",
+    "reset":"Reset",
+    "run":"Run Service",
+    "save":"Save",
+    "search":"Search",
+    "select":"Select",
+    "send":"Send",
+    "sendRequest":"Send request",
+    "show":"Show"
+  },
+  "dataTable":
+  {
+    "heading":
+    {
+      "articleTitle":"Article title",
+      "changeRoleTo":"Change role to",
+      "count":"Count",
+      "date":"Date",
+      "delete":"Delete",
+      "description":"Description",
+      "detail":"Detail",
+      "detailOfUser":"Detail of user",
+      "download":"Download",
+      "downloads":"Downloads",
+      "entity":"Entity",
+      "eyesDefectDescription":"Description",
+      "eyesDefectId":"ID",
+      "fileMetadataParameterDataType":"Data type",
+      "fileMetadataParameterName":"Parameter name",
+      "fileMetadataParamsId":"ID",
+      "fileName":"File name",
+      "groupName":"Group name",
+      "groupTitle":"Group title",
+      "hardwareDescription":"Description",
+      "hardwareId":"ID",
+      "hardwareTitle":"Title",
+      "hardwareType":"Type",
+      "hearingDefectDescription":"Description",
+      "hearingDefectId":"ID",
+      "id":"ID",
+      "link":"Link",
+      "measurationAdditionalParamsDataType":"Data type",
+      "measurationAdditionalParamsId":"ID",
+      "measurationAdditionalParamsName":"Parameter name",
+      "measurationOptionalParamName":"Parameter name",
+      "measurationOptionalParamValue":"Value",
+      "name":"Name",
+      "note":"Note",
+      "parameterName":"Parameter name",
+      "personAdditionalParamsDataType":"Data type",
+      "personAdditionalParamsId":"ID",
+      "personAdditionalParamsName":"Parameter name",
+      "personOptionalParamName":"Parameter name",
+      "personOptionalParamValue":"Value",
+      "requirementReason":"Requirement reason",
+      "resultStatus":"Status",
+      "resultTitle":"Title",
+      "roleInGroup":"Role in group",
+      "samplingRate":"Sampling rate",
+      "scenarioLength":"Length",
+      "scenarioTitle":"Scenario title",
+      "searchedString":"Searched string",
+      "services":"Services",
+      "surname":"Surname",
+      "title":"Title",
+      "type":"Type",
+      "username":"Username",
+      "usersDefaultGroup":"User's default group",
+      "value":"Value"
+    }
+  },
+  "description":
+  {
+    "fileType":
+    {
+      "dataFile":"Data file",
+      "dataFileAvailable":"Data file available",
+      "experiment":"Experimet data(*.zip)",
+      "scenario":"Scenario(*.xml)"
+    }
+  },
+  "editgrouprole":
+  {
+    "email":
+    {
+      "body":
+      {
+        "hello":"Hello!",
+        "text":
         {
-            "settings":"Articles Settings"
-        },
-        "bookingRoom":"Book room for group",
-        "changeUserRole":"Change user role",
-        "createGroup":"Create group",
-        "editGroupRole":"Edit group role",
-        "experiments":"Experiments",
-        "fileMetadataDefinitions":"File metadata definitions",
-        "groups":"Groups",
-        "hardwareDefinitions":"Hardware definitions",
-        "hearingImpairments":"Hearing impairments",
-        "history":
-        {
-            "dailyHistory":"Daily history",
-            "monthlyHistory":"Monthly history",
-            "searchByExperiment":"Search by experiment",
-            "weeklyHistory":"Weekly history"
-        },
-        "home":"Home",
-        "listOfGroups":"List of groups",
-        "listOfScenarios":"List of scenarios",
-        "lists":"Lists",
-        "myAccount":
-        {
-            "applyForWritingPermission":"Request for data uploading permission",
-            "changeDefaultGroup":"Change Default Group",
-            "changePassword":"Change password",
-            "overview":"Account overview"
-        },
-        "myGroups":"My groups",
-        "myScenarios":"My scenarios",
-        "optionalParametersForExperiments":"Optional parameters for experiments",
-        "optionalParametersForPeople":"Optional parameters for people",
-        "people":"People",
-        "scenarios":"Scenarios",
-        "searchMeasuration":"Search experiment",
-        "searchPeople":"Search people",
-        "searchScenario":"Search scenario",
-        "services":"Services",
-        "visualImpairments":"Visual impairments",
-        "weatherDefinitions":"Weather definitions",
-        "writeRequests":"Write requests"
+          "part1":"User: {0} - wants change role in research group: {1}",
+          "part2":"Please, click on the link below to edit or confirm the request."
+        }
+      },
+      "subject":"Change group role request"
+    }
+  },
+  "emptyTable":
+  {
+    "noItems":"No items.",
+    "notMemberOfAnyGroup":"You are not member of any group."
+  },
+  "error":
+  {
+    "databaseError":
+    {
+      "message":"A database error occured.",
+      "title":"Database error"
+    },
+    "generalError":
+    {
+      "message":"An application error occured.",
+      "title":"Application error"
+    },
+    "notSuitable":"This experiment is not suitable for EEG processing services because this experiment does not contain .vhdr and .eeg or .avg file type.",
+    "outOfMemory":"The binary data size is too high for used method."
+  },
+  "form":
+  {
+    "note":
+    {
+      "dateFormatDDMMYYYY":"Date format DD/MM/YYYY.",
+      "dateFormatDDMMYYYYHHMM":"Date format for field Start time and End time is DD/MM/YYYY HH:mm or DD/MM/YYYY.",
+      "timeFormatHHMM":"Time format HH:MM.",
+      "usernameFormatNote":"Allowed chars are small letters [a-z], numbers [0-9], dot [.] and dash [-]. Username musts begin with small letter. Minimal length is up to 2 characters."
     },
     "option":
     {
-        "And":"AND",
-        "None":"NONE",
-        "Or":"OR"
-    },
-    "page":
+      "maxLength":"Max lenght",
+      "minLength":"Min length",
+      "scenarioTitle":"Scenario title"
+    }
+  },
+  "gotoHomepage":
+  {
+    "gotoHomepage":"Go to homepage"
+  },
+  "heading":
+  {
+    "ArticlesSettings":"Articles Settings",
+    "ArticlesSubscriptions":"Articles Subscribtions",
+    "comments":"Comments",
+    "dataFiles":"Data files",
+    "eyesDefects":"Eyes defects",
+    "hearingDefects":"Hearing defects",
+    "meAsSubject":"Me as subject",
+    "memberGroups":"Member groups",
+    "membershipInGroups":"Membership in groups",
+    "metadata":"Metadata",
+    "myArticles":"Articles",
+    "myExperiments":"My experiments",
+    "myGroups":"My groups",
+    "myMemberGroups":"My member groups",
+    "myScenarios":"My scenarios",
+    "optionalParameters":"Optional parameters",
+    "ownedGroups":"Owned groups",
+    "scenario":"Scenario",
+    "searchFor":"Search for",
+    "searchResult":"Search Results",
+    "subjectPerson":"Subject person",
+    "usedHardware":"Used hardware"
+  },
+  "homePage":
+  {
+    "description1":"<strong>EEG base</strong> is a system for  storage and management of EEG/ERP resources - data, metadata, tools and materials related to EEG/ERP experiments. <strong>EEG base</strong> advances electrophysiology research by enabling access to public data, tools and  results of research groups.",
+    "description2":"For continuing on this website you need to log in. If you don't have an account, you can create one.",
+    "discoverHeading":"Discover the EEGbase 2.0",
+    "featuresHeading":"Features:",
+    "featuresList":"<ul><li>Management of EEG/ERP data and metadata</li><li>Management of EEG/ERP experimental design (experimental scenarios)</li><li>Management of data related to tested subjects</li><li>Sharing of knowledge and working within groups</li>	<li>Signal processing tools</li><li>Content management system</li><li>Fulltext search</li>	</ul>",
+    "welcomeHeading":"Welcome to EEGbase 2.0"
+  },
+  "infoPage":
+  {
+    "FacebookDuplicateFbUid":"Your Facebook account is already connected with another user account and it cannot be duplicated due to security aspects. Please login using Facebook Login button or contact system administrator.",
+    "FacebookEmailExists":"It seems that you are already user of EEGbase. Please login using your current credentials and connect your account with Facebook manually.",
+    "generalInfoPage":
     {
-        "forgottenPassword":
-        {
-            "username":"User name"
-        },
-        "myAccount":
-        {
-            "changePasswordButton":"Change password",
-            "changePasswordHeading":"Change password",
-            "currentPassword":"Current password",
-            "newPassword":"New password",
-            "newPasswordAgain":"New password again"
-        },
-        "permissionGrantedRejected":
-        {
-            "backToTheList":"Back to the list"
-        },
-        "writeRequestsList":
-        {
-            "grant":"Grant",
-            "reject":"Reject"
-        }
-    },
-    "pageTitle":
+      "title":"Information"
+    }
+  },
+  "label":
+  {
+    "From":"From:",
+    "To":"To:",
+    "addAnotherField":"Add another field",
+    "addComment":"Post new comment",
+    "addFile":"Attach next file",
+    "addParams":"Add parameters",
+    "age":"Age",
+    "ageMax":"Maximum age",
+    "ageMin":"Minimum age",
+    "atom":"Count of atoms",
+    "author":"Author",
+    "beginningOfMeasuration":"Beginning of measuration",
+    "channel":"Channel",
+    "chooseAll":"Choose all",
+    "chooseFile":"Choose all data files",
+    "chooseGroup":"Choose group",
+    "coExperimenters":"Co-experimenters",
+    "comment":"Comment",
+    "controlText":"Control text",
+    "data":"Data files",
+    "dataFile":"Data file(s)",
+    "dataFileIsXml":"Data file is XML",
+    "datafile":
     {
-        "accessDenied":"Access denied",
-        "accountOverview":"Account overview",
-        "addArticle":"Add new article",
-        "addDataFile":"Add data file",
-        "addEditArticle":"Add or edit an article",
-        "addEditExperiment":"Add/edit experiment",
-        "addEditExperimentOptionalParameterDefinition":"Add/edit experiment optional parameter",
-        "addEditFileMetadataDefinition":"Add/edit file metadata definition",
-        "addEditHardwareDefinition":"Add/edit hardware definition",
-        "addEditHearingImpairment":"Add/edit hearing impairment",
-        "addEditPerson":"Add/edit person",
-        "addEditPersonOptionalParameterDefinition":"Add/edit optional parameter",
-        "addEditScenario":"Add/edit scenario",
-        "addEditVisualImpairment":"Add/edit visual impairment",
-        "addEditWeatherDefinition":"Add/edit weather definition",
-        "addExperiment":"Add experiment",
-        "addExperimentOptionalParameter":"Add optional parameter for experiment",
-        "addEyesDefectToPerson":"Add eyes defect",
-        "addFileMetadataDefinition":"Add file metadata definition",
-        "addHardwareDefinition":"Add hardware definition",
-        "addHearingDefectToPerson":"Add hearing defect",
-        "addHearingImpairment":"Add hearing impairment",
-        "addMemberToGroup":"Add member to group",
-        "addOptionalParameterForMeasuration":"Add optional parameter for measuration",
-        "addPerson":"Add person",
-        "addPersonOptionalParameter":"Add optional parameter for people",
-        "addScenario":"Add scenario",
-        "addVisualImpairment":"Add visual impairment",
-        "addWeather":"Add weather definition",
-        "addWeatherDefinition":"Add weather definition",
-        "advancedSearch":"Advanced search",
-        "allArticles":"All articles",
-        "allExperiments":"All experiments",
-        "applianceSent":"Appliance sent",
-        "applyForWritingPermission":"Request for data uploading permission",
-        "articleDeleted":"Article succesfully deleted",
-        "articlesSettings":"Articles Settings",
-        "bookingRoom":"Book UU403 for experiment",
-        "changeDefaultGroup":"Change default group",
-        "changePassword":"Change password",
-        "changeUserRole":"Change user role",
-        "changesWereMade":"Changes were made",
-        "chooseMetadata":"Choose metadata",
-        "confirmationRepeated":"Confirmation repeated",
-        "confirmationSuccessfull":"Confirmation successfull",
-        "createEditGroup":"Create/edit group",
-        "createGroup":"Create group",
-        "dailyDownloadHistory":"Daily download history",
-        "editArticle":"Edit article",
-        "editExperiment":"Edit experiment",
-        "editExperimentOptionalParameterDefinition":"Edit experiment optional parameter",
-        "editFileMetadataDefinition":"Edit file metadata definition",
-        "editGroup":"Edit group",
-        "editHardwareDefinition":"Edit hardware definition",
-        "editHearingImpairment":"Edit hearing impairment",
-        "editPerson":"Edit person",
-        "editPersonOptionalParameterDefinition":"Edit optional parameter",
-        "editScenario":"Edit scenario",
-        "editVisualImpairment":"Edit visual impairment",
-        "editWeatherDefinition":"Edit weather definition",
-        "experimentDetail":"Experiment detail",
-        "experimentOptionalParameterList":"List of optional parameters for experiment",
-        "fileMetadataDefinitionsList":"List of file metadata definitions",
-        "forgottenPassword":"Forgotten password",
-        "forgottenPasswordFailed":"Password was not sent",
-        "forgottenPasswordSuccess":"New password was sent",
-        "fulltextSearch":"Fulltext Search",
-        "groupRoleEdit":"Group role edit",
-        "hardwareList":"List of hardware definitions",
-        "hearingImpairmentList":"List of hearing impairments",
-        "homePage":"Home page",
-        "itemDeleted":"Item deleted",
-        "itemInUse":"Item in use",
-        "listOfGroupMembers":"List of group members",
-        "listOfGroups":"List of groups",
-        "listOfPeople":"List of people",
-        "listOfScenarios":"List of scenarios",
-        "listOfVisualImpairments":"List of visual impairments",
-        "listsIndex":"Lists",
-        "logIn":"Log in",
-        "meAsSubject":"Me as subject",
-        "measurationSearch":"Search measurements",
-        "monthlyDownloadHistory":"Monthly download history",
-        "myAccount":"My account",
-        "myExperiments":"My experiments",
-        "myGroups":"My groups",
-        "myScenarios":"My scenarios",
-        "pendingRequest":"Pending request",
-        "permissionGranted":"Permission granted",
-        "permissionRejected":"Permission rejected",
-        "personDetail":"Detail of person",
-        "personOptionalParameterList":"List of optional parameters for people",
-        "registration":"Registration",
-        "registrationFalse":"Registration false",
-        "registrationSuccessfull":"Registration successfull",
-        "requestNotNeeded":"Request not needed",
-        "requestSent":"Request sent",
-        "researchGroupDetail":"Group detail",
-        "roleChanged":"Role changed",
-        "scenarioDetail":"Scenario detail",
-        "searchResult":"List of download history",
-        "services":"EEG Signal Processing Services",
-        "userNotExperimenter":"Experimenter role needed",
-        "weatherDefinitionsList":"List of weather definitions",
-        "weeklyDownloadHistory":"Weekly download history",
-        "writeRequestsList":"Write requests",
-        "youDontHavePermission":"You don't have permisson"
+      "content":"File content",
+      "datatype":"Data type",
+      "name":"Name",
+      "value":"Value"
     },
-    "registration":
+    "date":"Date",
+    "dateFrom":"From(dd/mm/yyyy):",
+    "dateOfBirth":"Date of birth",
+    "dateTo":"To(dd/mm/yyyy):",
+    "defect":"Without defect",
+    "delete":"Delete",
+    "description":"Description",
+    "edit":"Edit",
+    "email":"E-mail",
+    "endDate":"End date",
+    "endDateTime":"End date and time",
+    "endOfMeasuration":"End of measuration",
+    "eyesDefect":"Eyes defect",
+    "facebookId":"Facebook ID",
+    "fileMetadata":"File metadata",
+    "fileName":"File name",
+    "fromDate":"From:",
+    "fullName":"Full name",
+    "gender":
     {
-        "email":
-        {
-            "body":
-            {
-                "hello":"Hello!",
-                "text":
-                {
-                    "part1":"Your access credentials to EEGbase are:",
-                    "part2":"Username: {0}",
-                    "part3":"Password: {0}",
-                    "part4":"Please, click on the link below to confirm your registration, thank you."
-                }
-            },
-            "subject":"Your access to EEG-base"
-        }
+      "female":"Female"
     },
-    "resetArticlesFilter":
+    "givenname":"Givenname",
+    "globalPermissionLevel":"Global permission level",
+    "hardware":"Hardware",
+    "hardwareDescription":"Description",
+    "hardwareTitle":"Title",
+    "hardwareType":"Type",
+    "header":"Select a filename",
+    "hearingDefect":"Hearing defect",
+    "in":"in",
+    "lenght":"Lenght",
+    "measuration":"Measuration",
+    "measurationId":"Measuration ID",
+    "minutes":"minutes",
+    "name":"Name",
+    "notAvailable":"Not Available",
+    "note":"Note",
+    "parameterDataType":"Parameter data type",
+    "parameterName":"Parameter name",
+    "parameterType":"Parameter type",
+    "parameterValue":"Value",
+    "password":"Password",
+    "person":"Person",
+    "phoneNumber":"Phone number",
+    "private":"Private",
+    "publicArticle":"Public article",
+    "rememberMe":"Remember me on this computer.",
+    "repeatPassword":"Repeat password",
+    "researchGroup":"Research group",
+    "researchGroupDescription":"Group description",
+    "researchGroupTitle":"Group title",
+    "samplingRate":"Sampling rate",
+    "scenario":"Scenario",
+    "scenarioDescription":"Description",
+    "scenarioFile":"Scenario file",
+    "scenarioLength":"Length",
+    "scenarioSchema":"Scenario schema",
+    "scenarioSchemaDescription":"Schema description",
+    "scenarioTitle":"Scenario title",
+    "selectResearchGroup":"Select research group",
+    "service":"Select a service",
+    "startDate":"Start date",
+    "startDateTime":"Start date and time",
+    "subjectPerson":"Subject person",
+    "subscribe":"Subscribe",
+    "surname":"Surname",
+    "temperature":"Temperature",
+    "text":"Text",
+    "times":"Start and end time",
+    "title":"Title",
+    "toDate":"To:",
+    "type":"Type",
+    "unableToEditArticle":"Unable to add or edit article (low level of permissions)",
+    "unsubscribe":"Unsubscribe",
+    "usedHardware":"Used hardware",
+    "usedHarware":"Used hardware",
+    "userName":"User name",
+    "userNote":"Note",
+    "userRole":"User role",
+    "username":"User name",
+    "wavelets":"Wavelets",
+    "weather":"Weather",
+    "weatherNote":"Weather note",
+    "xmlDataFile":"XML data file",
+    "xsdDataFile":"Scenario schema data file",
+    "yearOfBirth":"Year of birth"
+  },
+  "legend":
+  {
+    "advancedSearchMeasurations":"Measuration - searcher",
+    "advancedSearchPerson":"People - searcher",
+    "advancedSearchScenario":"Scenario - searcher"
+  },
+  "link":
+  {
+    "addExperimentOptionalParameter":"Add optional parameter for experiment",
+    "addFileMetadataDefinition":"Add file metadata definition",
+    "addHardwareDefinition":"Add hardware definition        ",
+    "addHearingImpairment":"Add hearing impairment",
+    "addPersonOptionalParameter":"Add optional parameter for people     ",
+    "addVisualImpairment":"Add visual impairment",
+    "addWeatherDefinition":"Add weather definition",
+    "back":"Back",
+    "backToListOfItems":"Back to list of items",
+    "changeGroupRole":
     {
-        "resetArticlesFilter":"reset filter"
+      "admin":"Administrator",
+      "experimenter":"Experimenter",
+      "reader":"Reader",
+      "remove":"Remove"
     },
-    "seeAll":
+    "confirm":
     {
-        "seeAll":"see all"
+      "sureToRemoveUserFromGroup":"Are you sure you want to remove the user from group?"
     },
-    "select":
+    "continuousWavelet":"Continuous Wavelet Transformation",
+    "delete":"Delete",
+    "detail":"Detail",
+    "discreteWavelet":"Discrete Wavelet Transformation",
+    "download":"Download",
+    "downloadXMLFile":"Download scenario file",
+    "edit":"Edit",
+    "fastFourier":"Fast Fourier Transformation",
+    "matchingPursuit":"Matching Pursuit",
+    "services":"Services",
+    "viewDetailOfPerson":"View detail of person",
+    "viewDetailOfScenario":"View detail of scenario"
+  },
+  "menuItem":
+  {
+    "addScenario":"Add scenario",
+    "addScenarioSchema":"Add scenario schema",
+    "administration":"Administration",
+    "articles":
     {
-        "option":
-        {
-            "allGroups":"All groups",
-            "article":
-            {
-                "public":"All groups (make article public)"
-            },
-            "groupAdmin":"Group administrator",
-            "groupExperimenter":"Experimenter",
-            "groupReader":"Reader",
-            "noEyesDefectSelected":"-- Select eyes defect --",
-            "noHearingDefectSelected":"-- Select hearing defect --",
-            "noParameterSelected":"-- Select parameter --",
-            "noParameterTypeSelected":"-- Select parameter type --",
-            "noResearchGroupSelected":"-- Select research group --",
-            "noScenarioAuthorSelected":"-- Select author --",
-            "noScenarioSchemaSelected":"-- Select scenario schema --",
-            "noScenarioSelected":"-- Select scenario --",
-            "noScenarioTitleSelected":"-- Select title of scenario --",
-            "noSubjectPersonSelected":"-- Select subject person --",
-            "noUserRoleSelected":"-- Select role --",
-            "noWeatherSelected":"-- Select weather --",
-            "roleAdmin":"Administrator",
-            "roleExperimentator":"Experimentator",
-            "roleUser":"Standard user"
-        }
+      "settings":"Articles Settings"
     },
-    "system":
+    "bookingRoom":"Book room for group",
+    "changeUserRole":"Change user role",
+    "createGroup":"Create group",
+    "editGroupRole":"Edit group role",
+    "experiments":"Experiments",
+    "fileMetadataDefinitions":"File metadata definitions",
+    "groups":"Groups",
+    "hardwareDefinitions":"Hardware definitions",
+    "hearingImpairments":"Hearing impairments",
+    "history":
     {
-        "forgottenPassword":"Forgotten password",
-        "logIn":"Log in",
-        "logOut":"Log out",
-        "loggedUser":"Logged user",
-        "loginNotSuccessfull":"Log in not successfull.",
-        "myAccount":"My account",
-        "noUserLogged":"No user logged",
-        "register":"Register"
+      "dailyHistory":"Daily history",
+      "monthlyHistory":"Monthly history",
+      "searchByExperiment":"Search by experiment",
+      "weeklyHistory":"Weekly history"
     },
-    "table":
+    "home":"Home",
+    "listOfGroups":"List of groups",
+    "listOfScenarios":"List of scenarios",
+    "lists":"Lists",
+    "myAccount":
     {
+      "applyForWritingPermission":"Request for data uploading permission",
+      "changeDefaultGroup":"Change Default Group",
+      "changePassword":"Change password",
+      "overview":"Account overview"
+    },
+    "myGroups":"My groups",
+    "myScenarios":"My scenarios",
+    "optionalParametersForExperiments":"Optional parameters for experiments",
+    "optionalParametersForPeople":"Optional parameters for people",
+    "people":"People",
+    "scenarios":"Scenarios",
+    "searchMeasuration":"Search experiment",
+    "searchPeople":"Search people",
+    "searchScenario":"Search scenario",
+    "serviceResult":"Services results",
+    "services":"Services",
+    "visualImpairments":"Visual impairments",
+    "weatherDefinitions":"Weather definitions",
+    "writeRequests":"Write requests"
+  },
+  "option":
+  {
+    "And":"AND",
+    "None":"NONE",
+    "Or":"OR"
+  },
+  "page":
+  {
+    "forgottenPassword":
+    {
+      "username":"User name"
+    },
+    "myAccount":
+    {
+      "changePasswordButton":"Change password",
+      "changePasswordHeading":"Change password",
+      "connectWithFacebook":"Connect user account with Facebook profile",
+      "currentPassword":"Current password",
+      "newPassword":"New password",
+      "newPasswordAgain":"New password again"
+    },
+    "permissionGrantedRejected":
+    {
+      "backToTheList":"Back to the list"
+    },
+    "writeRequestsList":
+    {
+      "grant":"Grant",
+      "reject":"Reject"
+    }
+  },
+  "pageTitle":
+  {
+    "accessDenied":"Access denied",
+    "accountOverview":"Account overview",
+    "addArticle":"Add new article",
+    "addDataFile":"Add data file",
+    "addEditArticle":"Add or edit an article",
+    "addEditExperiment":"Add/edit experiment",
+    "addEditExperimentOptionalParameterDefinition":"Add/edit experiment optional parameter",
+    "addEditFileMetadataDefinition":"Add/edit file metadata definition",
+    "addEditHardwareDefinition":"Add/edit hardware definition",
+    "addEditHearingImpairment":"Add/edit hearing impairment",
+    "addEditPerson":"Add/edit person",
+    "addEditPersonOptionalParameterDefinition":"Add/edit optional parameter",
+    "addEditScenario":"Add/edit scenario",
+    "addEditScenarioSchema":"Add/edit scenario schema",
+    "addEditVisualImpairment":"Add/edit visual impairment",
+    "addEditWeatherDefinition":"Add/edit weather definition",
+    "addExperiment":"Add experiment",
+    "addExperimentOptionalParameter":"Add optional parameter for experiment",
+    "addEyesDefectToPerson":"Add eyes defect",
+    "addFileMetadataDefinition":"Add file metadata definition",
+    "addHardwareDefinition":"Add hardware definition",
+    "addHearingDefectToPerson":"Add hearing defect",
+    "addHearingImpairment":"Add hearing impairment",
+    "addMemberToGroup":"Add member to group",
+    "addOptionalParameterForMeasuration":"Add optional parameter for measuration",
+    "addPerson":"Add person",
+    "addPersonOptionalParameter":"Add optional parameter for people",
+    "addScenario":"Add scenario",
+    "addScenarioSchema":"Add scenario schema",
+    "addVisualImpairment":"Add visual impairment",
+    "addWeather":"Add weather definition",
+    "addWeatherDefinition":"Add weather definition",
+    "advancedSearch":"Advanced search",
+    "allArticles":"All articles",
+    "allExperiments":"All experiments",
+    "applianceSent":"Appliance sent",
+    "applyForWritingPermission":"Request for data uploading permission",
+    "articleDeleted":"Article succesfully deleted",
+    "articlesSettings":"Articles Settings",
+    "bookingRoom":"Book UU403 for experiment",
+    "changeDefaultGroup":"Change default group",
+    "changePassword":"Change password",
+    "changeUserRole":"Change user role",
+    "changesWereMade":"Changes were made",
+    "chooseMetadata":"Choose metadata",
+    "confirmationRepeated":"Confirmation repeated",
+    "confirmationSuccessfull":"Confirmation successfull",
+    "createEditGroup":"Create/edit group",
+    "createGroup":"Create group",
+    "dailyDownloadHistory":"Daily download history",
+    "editArticle":"Edit article",
+    "editExperiment":"Edit experiment",
+    "editExperimentOptionalParameterDefinition":"Edit experiment optional parameter",
+    "editFileMetadataDefinition":"Edit file metadata definition",
+    "editGroup":"Edit group",
+    "editHardwareDefinition":"Edit hardware definition",
+    "editHearingImpairment":"Edit hearing impairment",
+    "editPerson":"Edit person",
+    "editPersonOptionalParameterDefinition":"Edit optional parameter",
+    "editScenario":"Edit scenario",
+    "editScenarioSchema":"Edit scenario schema",
+    "editVisualImpairment":"Edit visual impairment",
+    "editWeatherDefinition":"Edit weather definition",
+    "experimentDetail":"Experiment detail",
+    "experimentOptionalParameterList":"List of optional parameters for experiment",
+    "fileMetadataDefinitionsList":"List of file metadata definitions",
+    "forgottenPassword":"Forgotten password",
+    "forgottenPasswordFailed":"Password was not sent",
+    "forgottenPasswordSuccess":"New password was sent",
+    "fulltextSearch":"Fulltext Search",
+    "groupRoleEdit":"Group role edit",
+    "hardwareList":"List of hardware definitions",
+    "hearingImpairmentList":"List of hearing impairments",
+    "homePage":"Home page",
+    "itemDeleted":"Item deleted",
+    "itemInUse":"Item in use",
+    "listOfGroupMembers":"List of group members",
+    "listOfGroups":"List of groups",
+    "listOfPeople":"List of people",
+    "listOfScenarios":"List of scenarios",
+    "listOfVisualImpairments":"List of visual impairments",
+    "listsIndex":"Lists",
+    "logIn":"Log in",
+    "meAsSubject":"Me as subject",
+    "measurationSearch":"Search measurements",
+    "monthlyDownloadHistory":"Monthly download history",
+    "myAccount":"My account",
+    "myExperiments":"My experiments",
+    "myGroups":"My groups",
+    "myScenarios":"My scenarios",
+    "pendingRequest":"Pending request",
+    "permissionGranted":"Permission granted",
+    "permissionRejected":"Permission rejected",
+    "personDetail":"Detail of person",
+    "personOptionalParameterList":"List of optional parameters for people",
+    "registration":"Registration",
+    "registrationFalse":"Registration false",
+    "registrationSuccessfull":"Registration successfull",
+    "requestNotNeeded":"Request not needed",
+    "requestSent":"Request sent",
+    "researchGroupDetail":"Group detail",
+    "roleChanged":"Role changed",
+    "scenarioDetail":"Scenario detail",
+    "searchResult":"List of download history",
+    "services":"EEG Signal Processing Services",
+    "servicesResult":"Services Results",
+    "userNotExperimenter":"Experimenter role needed",
+    "weatherDefinitionsList":"List of weather definitions",
+    "weeklyDownloadHistory":"Weekly download history",
+    "writeRequestsList":"Write requests",
+    "youDontHavePermission":"You don't have permisson"
+  },
+  "radio":
+  {
+    "fromSchemaList":"Select from available schemas",
+    "noSchema":"No scenario schema"
+  },
+  "registration":
+  {
+    "email":
+    {
+      "body":
+      {
+        "hello":"Hello!",
         "text":
         {
-            "noGroup":"no group"
+          "part1":"Your access credentials to EEGbase are:",
+          "part2":"Username: {0}",
+          "part3":"Password: {0}",
+          "part4":"Please, click on the link below to confirm your registration, thank you."
         }
-    },
-    "tag":
+      },
+      "subject":"Your access to EEG-base"
+    }
+  },
+  "resetArticlesFilter":
+  {
+    "resetArticlesFilter":"reset filter"
+  },
+  "scenarioDetail":
+  {
+    "noFile":"This scenario contains no data file."
+  },
+  "seeAll":
+  {
+    "seeAll":"see all"
+  },
+  "select":
+  {
+    "option":
     {
-        "globalAuthority":
-        {
-            "roleAdmin":"System administrator",
-            "roleUser":"Standard user"
-        },
-        "groupAuthority":
-        {
-            "groupAdmin":"Group administrator",
-            "groupExperimenter":"Experimenter",
-            "groupReader":"Reader"
-        }
-    },
+      "allGroups":"All groups",
+      "article":
+      {
+        "public":"All groups (make article public)"
+      },
+      "groupAdmin":"Group administrator",
+      "groupExperimenter":"Experimenter",
+      "groupReader":"Reader",
+      "noEyesDefectSelected":"-- Select eyes defect --",
+      "noHearingDefectSelected":"-- Select hearing defect --",
+      "noParameterSelected":"-- Select parameter --",
+      "noParameterTypeSelected":"-- Select parameter type --",
+      "noResearchGroupSelected":"-- Select research group --",
+      "noScenarioAuthorSelected":"-- Select author --",
+      "noScenarioSchemaSelected":"-- Select scenario schema --",
+      "noScenarioSelected":"-- Select scenario --",
+      "noScenarioTitleSelected":"-- Select title of scenario --",
+      "noSubjectPersonSelected":"-- Select subject person --",
+      "noUserRoleSelected":"-- Select role --",
+      "noWeatherSelected":"-- Select weather --",
+      "roleAdmin":"Administrator",
+      "roleExperimentator":"Experimentator",
+      "roleUser":"Standard user"
+    }
+  },
+  "system":
+  {
+    "forgottenPassword":"Forgotten password",
+    "logIn":"Log in",
+    "logOut":"Log out",
+    "loggedUser":"Logged user",
+    "loginNotSuccessfull":"Log in not successfull.",
+    "myAccount":"My account",
+    "noUserLogged":"No user logged",
+    "register":"Register"
+  },
+  "table":
+  {
     "text":
     {
-        "accessDenied":
-        {
-            "description":"You don't have the permission for this area."
-        },
-        "choosenGroup":"Choosen group",
-        "downloadFiles":"Count of downloaded files:",
-        "experimenter":"Experimenter",
-        "fileTypeXml":".xml",
-        "fileTypeZip":".zip",
-        "forgottenPassword":
-        {
-            "passwordWillBeSent":"New password will be sent to e-mail registered with the user name."
-        },
-        "itemInUse":"Item is used and therefore cannot be deleted. You need first remove all the usage before deleting.",
-        "itemWasDeletedFromDatabase":"Item was deleted from database.",
-        "listsIndexPage":"This is area for viewing data and adding data into lists. Please select option from the left menu.",
-        "myAccount":
-        {
-            "requestIsPending":"Your request is waiting for confirmation by the administrator.",
-            "requestNotNeeded":"You already have a writing permission.",
-            "writingPermissionReason":"Describe shortly which type of experiments you will add into system"
-        },
-        "registration":
-        {
-            "email":""
-        },
-        "registrationConfirmedOnce":"You have confirmed your registration once before. Thank you anyway, EEG team.",
-        "registrationExpired":"Sorry, but your username is not in our database. Probably the time (8 days) for confirmation has expired.",
-        "registrationSuccessfull":
-        {
-            "youCanLogIn":
-            {
-                "part1":"Now you can",
-                "part2":"to the system."
-            },
-            "youNeedConfirm":"Thank you, for your registration to EEG base. A confirmation email has been sent to your email address:"
-        },
-        "requestSent":"Your request has been sent to the admin of the research group. Wait for confirmation, thank you.",
-        "system":
-        {
-            "permissionGranted":
-            {
-                "part1":"Permission for the user",
-                "part2":"was granted."
-            }
-        },
-        "youNeedExperimenterRole":"You need experimenter role in a group to add data.",
-        "youNeedToBeOwnerOrCoexperimenterToEditExperiment":"You need to be owner or co-experimenter to edit experiment."
-    },
-    "title":
-    {
-        "accessInfo":"Accessible only to group administrator and administrator.",
-        "accessIsDenied":"\"Access is denied\"",
-        "allDailyRecords":"All daily records",
-        "allMonthlyRecords":"All monthly records",
-        "allWeeklyRecords":"All weekly records",
-        "dailyStatistic":"Daily statistic",
-        "lastDownloaded":"Last downloaded",
-        "monthlyStatistic":"Monthly statistic",
-        "topDownloads":"Top downloads",
-        "weeklyStatistic":"Weekly statistic"
-    },
-    "valueTable":
-    {
-        "scenarioDescription":"Description",
-        "scenarioLength":"Length",
-        "scenarioTitle":"Scenario title"
-    },
-    "web":
-    {
-        "footer":
-        {
-            "copyright":
-            {
-                "linkAddress":"http://www.zcu.cz/",
-                "linkTitle":"The University of West Bohemia",
-                "part1":"Copyright &copy;",
-                "part2":"2008-2010"
-            },
-            "note":"EEGbase - database for data gained in encephalography research."
-        },
-        "searchedTitle":"Searched string:",
-        "title":"EEGbase"
+      "noGroup":"no group"
     }
+  },
+  "tag":
+  {
+    "globalAuthority":
+    {
+      "roleAdmin":"System administrator",
+      "roleUser":"Standard user"
+    },
+    "groupAuthority":
+    {
+      "groupAdmin":"Group administrator",
+      "groupExperimenter":"Experimenter",
+      "groupReader":"Reader"
+    }
+  },
+  "text":
+  {
+    "accessDenied":
+    {
+      "description":"You don't have the permission for this area."
+    },
+    "choosenGroup":"Choosen group",
+    "downloadFiles":"Count of downloaded files:",
+    "experimenter":"Experimenter",
+    "fileTypeXml":".xml",
+    "fileTypeZip":".zip",
+    "forgottenPassword":
+    {
+      "passwordWillBeSent":"New password will be sent to e-mail registered with the user name."
+    },
+    "itemInUse":"Item is used and therefore cannot be deleted. You need first remove all the usage before deleting.",
+    "itemWasDeletedFromDatabase":"Item was deleted from database.",
+    "listsIndexPage":"This is area for viewing data and adding data into lists. Please select option from the left menu.",
+    "myAccount":
+    {
+      "requestIsPending":"Your request is waiting for confirmation by the administrator.",
+      "requestNotNeeded":"You already have a writing permission.",
+      "writingPermissionReason":"Describe shortly which type of experiments you will add into system"
+    },
+    "operation":"This operation reads data from database. It can take several minutes.",
+    "registration":
+    {
+      "email":""
+    },
+    "registrationConfirmedOnce":"You have confirmed your registration once before. Thank you anyway, EEG team.",
+    "registrationExpired":"Sorry, but your username is not in our database. Probably the time (8 days) for confirmation has expired.",
+    "registrationSuccessfull":
+    {
+      "youCanLogIn":
+      {
+        "part1":"Now you can",
+        "part2":"to the system."
+      },
+      "youNeedConfirm":"Thank you, for your registration to EEG base. A confirmation email has been sent to your email address:"
+    },
+    "requestSent":"Your request has been sent to the admin of the research group. Wait for confirmation, thank you.",
+    "runningOnBackground":"Selected service is running on background. You can click to label \"Services result\" and obtain result of selected service.",
+    "system":
+    {
+      "permissionGranted":
+      {
+        "part1":"Permission for the user",
+        "part2":"was granted."
+      }
+    },
+    "youNeedExperimenterRole":"You need experimenter role in a group to add data.",
+    "youNeedToBeOwnerOrCoexperimenterToEditExperiment":"You need to be owner or co-experimenter to edit experiment."
+  },
+  "title":
+  {
+    "accessInfo":"Accessible only to group administrator and administrator.",
+    "accessIsDenied":"\"Access is denied\"",
+    "allDailyRecords":"All daily records",
+    "allMonthlyRecords":"All monthly records",
+    "allWeeklyRecords":"All weekly records",
+    "dailyStatistic":"Daily statistic",
+    "lastDownloaded":"Last downloaded",
+    "monthlyStatistic":"Monthly statistic",
+    "topDownloads":"Top downloads",
+    "weeklyStatistic":"Weekly statistic"
+  },
+  "valueTable":
+  {
+    "scenarioDescription":"Description",
+    "scenarioLength":"Length",
+    "scenarioTitle":"Scenario title"
+  },
+  "web":
+  {
+    "footer":
+    {
+      "copyright":
+      {
+        "linkAddress":"http://www.zcu.cz/",
+        "linkTitle":"The University of West Bohemia",
+        "part1":"Copyright &copy;",
+        "part2":"2008-"
+      },
+      "note":"EEGbase - database for data gained in encephalography research."
+    },
+    "searchedTitle":"Searched string:",
+    "title":"EEGbase"
+  }
 }
