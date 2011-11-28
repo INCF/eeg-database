@@ -21,6 +21,8 @@ public interface ResearchGroupDao extends GenericDao<ResearchGroup, Integer> {
 
     public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
 
+    public String getResearchGroupTitle(int groupId);
+
     public List getGroupDataForAccountOverview(Person person);
 
     public List getListOfGroupMembers(int groupId);

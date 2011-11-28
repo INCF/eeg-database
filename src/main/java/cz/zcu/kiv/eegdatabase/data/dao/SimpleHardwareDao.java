@@ -67,7 +67,6 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
      * @return
      */
     public boolean canSaveDefaultTitle(String title, int hwId) {
-        // TODO - must be changed for group support
         String hqlQuery = "from Hardware h where h.title = :title and h.defaultNumber=1 and h.hardwareId<>"+hwId+" ";
         String name = "title";
         Object value = title;
@@ -80,16 +79,12 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         String[] names = {"id"};
         Object[] values = {id};
         List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
-        //TODO odstranit print
-        System.out.println("canDelete-list size: "+list.size());
         return (list.size() == 0);
     }
 
     public boolean hasGroupRel(int id){
         String hqlQuery = "from HardwareGroupRel r where r.id.hardwareId =" +id+ " ";
         List<HardwareGroupRel> list = getHibernateTemplate().find(hqlQuery);
-        //TODO odstranit print
-        System.out.println("hasGroupRel-list size: "+list.size());
         return (list.size() > 0);
     }
 

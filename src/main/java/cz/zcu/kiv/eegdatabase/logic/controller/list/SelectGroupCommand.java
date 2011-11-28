@@ -1,10 +1,10 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.list.hardware;
+package cz.zcu.kiv.eegdatabase.logic.controller.list;
 
 /**
  * @author František Liška
  */
 public class SelectGroupCommand {
-    private int researchGroup;
+    private int researchGroupId;
     private String title;
     private String description;
 
@@ -24,12 +24,12 @@ public class SelectGroupCommand {
         this.description = description;
     }
 
-    public int getResearchGroup() {
-        return researchGroup;
+    public int getResearchGroupId() {
+        return researchGroupId;
     }
 
-    public void setResearchGroup(int researchGroup) {
-        this.researchGroup = researchGroup;
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
     }
 
 }

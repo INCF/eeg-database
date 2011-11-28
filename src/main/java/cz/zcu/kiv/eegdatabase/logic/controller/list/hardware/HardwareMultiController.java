@@ -5,16 +5,14 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.controller.list.SelectGroupCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
 import java.util.List;
 
@@ -39,20 +37,38 @@ public class HardwareMultiController {
     private final int DEFAULT_ID = -1;
 
     @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.GET)
-    public String showSelectForm(ModelMap model){
+    public String showSelectForm(WebRequest webRequest,ModelMap model ){
         log.debug("Processing hardware list controller");
         SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
         fillAuthResearchGroupList();
-
+        String idString = webRequest.getParameter("groupid");
         if(auth.isAdmin()){
-            fillHardwareList(DEFAULT_ID);
-            selectGroupCommand.setResearchGroup(DEFAULT_ID);
+            if (idString != null) {
+                int id = Integer.parseInt(idString);
+                if(id!=DEFAULT_ID){
+                    fillHardwareList(id);
+                    selectGroupCommand.setResearchGroupId(id);
+                }else{
+                   fillHardwareList(DEFAULT_ID);
+                    selectGroupCommand.setResearchGroupId(DEFAULT_ID);
+                }
+
+            }else{
+                fillHardwareList(DEFAULT_ID);
+                selectGroupCommand.setResearchGroupId(DEFAULT_ID);
+            }
             model.addAttribute("userIsExperimenter", true);
         }else{
             if(!researchGroupList.isEmpty()){
-                int myGroup = researchGroupList.get(0).getResearchGroupId();
-                fillHardwareList(myGroup);
-                selectGroupCommand.setResearchGroup(myGroup);
+                if (idString != null) {
+                    int id = Integer.parseInt(idString);
+                    fillHardwareList(id);
+                    selectGroupCommand.setResearchGroupId(id);
+                }else{
+                    int myGroup = researchGroupList.get(0).getResearchGroupId();
+                    fillHardwareList(myGroup);
+                    selectGroupCommand.setResearchGroupId(myGroup);
+                }
                 model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
             }else{
                 model.addAttribute("userIsExperimenter", false);
@@ -70,7 +86,7 @@ public class HardwareMultiController {
     public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
         fillAuthResearchGroupList();
         if(!researchGroupList.isEmpty()){
-            fillHardwareList(selectGroupCommand.getResearchGroup());
+            fillHardwareList(selectGroupCommand.getResearchGroupId());
         }
         boolean canEdit = auth.isAdmin() || auth.userIsExperimenter();
         model.addAttribute("userIsExperimenter", canEdit);

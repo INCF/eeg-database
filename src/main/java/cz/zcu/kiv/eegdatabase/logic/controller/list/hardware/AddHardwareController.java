@@ -42,6 +42,12 @@ public class AddHardwareController{
             if (idString2 != null) {
                 int id = Integer.parseInt(idString2);
                 data.setResearchGroupId(id);
+                 if(id!=DEFAULT_ID){
+                     String title = researchGroupDao.getResearchGroupTitle(id);
+                     data.setResearchGroupTitle(title);
+                 }else{
+                     data.setResearchGroupTitle("Default Hardware");
+                 }
             }
             if (idString != null) {
                 // Editation of existing hardware
@@ -69,6 +75,12 @@ public class AddHardwareController{
             if (idString != null) {
                 int id = Integer.parseInt(idString);
                  data.setResearchGroupId(id);
+                 if(id!=DEFAULT_ID){
+                     String title = researchGroupDao.getResearchGroupTitle(id);
+                     data.setResearchGroupTitle(title);
+                 }else{
+                     data.setResearchGroupTitle("Default Hardware");
+                 }
             }
             model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
             model.addAttribute("addHardware",data);
@@ -152,7 +164,8 @@ public class AddHardwareController{
 
             }
             log.debug("Returning MAV");
-            return "redirect:list.html";
+            String redirect = "redirect:list.html?groupid="+data.getResearchGroupId();
+            return redirect;
         }else{
             return "lists/userNotExperimenter";
         }

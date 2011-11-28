@@ -112,6 +112,17 @@ public class SimpleResearchGroupDao
         return list;
     }
 
+    public String getResearchGroupTitle(int groupId){
+        String hqlQuery = "select title from ResearchGroup r where r.researchGroupId="+groupId+" ";
+        List<String> list = getHibernateTemplate().find(hqlQuery);
+        if(!list.isEmpty()){
+            return list.get(0);
+        }else{
+            return "";
+        }
+    }
+
+
     public List<ResearchGroup> getRecordsNewerThan(long oracleScn) {
         String hqlQuery = "from ResearchGroup r where r.scn > :oracleScn";
         List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);

@@ -10,6 +10,7 @@ public class AddHardwareCommand {
     private String type;
     private String description;
     private int researchGroupId;
+    private String researchGroupTitle;
 
     public int getResearchGroupId() {
         return researchGroupId;
@@ -49,5 +50,13 @@ public class AddHardwareCommand {
 
     public void setType(String type) {
         this.type = type;
+    }
+
+    public String getResearchGroupTitle() {
+        return researchGroupTitle;
+    }
+
+    public void setResearchGroupTitle(String researchGroupTitle) {
+        this.researchGroupTitle = researchGroupTitle;
     }
 }

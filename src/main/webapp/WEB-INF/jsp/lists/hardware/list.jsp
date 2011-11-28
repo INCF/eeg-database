@@ -10,17 +10,17 @@
 
     <form:form method="post" commandName="selectGroupCommand" cssClass="standardInputForm"
                name="selectGroupCommand" action="${next}" >
-        <form:label path="researchGroup" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+        <form:label path="researchGroupId" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
 
-        <form:select path="researchGroup" cssClass="selectBox" onChange="this.form.submit()">
+        <form:select path="researchGroupId" cssClass="selectBox" onChange="this.form.submit()">
                         <c:forEach items="${researchGroupList}" var="researchGroup">
-                            <option value="${researchGroup.researchGroupId}" label="" <c:if test="${selectGroupCommand.researchGroup==researchGroup.researchGroupId}"><c:out value="selected=\"selected\""/></c:if>>
+                            <option value="${researchGroup.researchGroupId}" label="" <c:if test="${selectGroupCommand.researchGroupId==researchGroup.researchGroupId}"><c:out value="selected=\"selected\""/></c:if>>
                                 <c:out value="${researchGroup.title}"/>
                             </option>
                         </c:forEach>
                     </form:select>
 
-                    <form:errors path="researchGroup" cssClass="errorBox"/>
+                    <form:errors path="researchGroupId" cssClass="errorBox"/>
     </form:form>
 
 
@@ -41,10 +41,10 @@
                 <td><c:out value="${hardware.type}" /></td>
                 <td><c:out value="${hardware.description}" /></td>
                 <td>
-                    <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroup}' />"><fmt:message
+                    <a href="<c:url value='/lists/hardware-definitions/edit.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroupId}' />"><fmt:message
                             key="link.edit"/></a>
                     <auth:experimenter>
-                        <a href="<c:url value='/lists/hardware-definitions/delete.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroup}' />"
+                        <a href="<c:url value='/lists/hardware-definitions/delete.html?id=${hardware.hardwareId}&groupid=${selectGroupCommand.researchGroupId}' />"
                            onclick="return confirm('Are you sure you want to delete item?');"><fmt:message
                                 key="link.delete"/></a>
                     </auth:experimenter>
@@ -55,7 +55,7 @@
 
     <auth:experimenter>
         <div class="actionBox">
-            <a href="<c:url value='add.html?groupid=${selectGroupCommand.researchGroup}' />" class="lightButtonLink"><fmt:message
+            <a href="<c:url value='add.html?groupid=${selectGroupCommand.researchGroupId}' />" class="lightButtonLink"><fmt:message
                     key="link.addHardwareDefinition"/></a>
         </div>
     </auth:experimenter>

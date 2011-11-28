@@ -8,7 +8,7 @@
      <c:choose>
         <c:when test="${addHardware.id > 0}">
             <!-- editation -->
-            <h1><fmt:message key="pageTitle.editHardwareDefinition"/></h1>
+            <h1><fmt:message key="pageTitle.editHardwareDefinition"/> </h1>
 
             <c:url value="edit.html?id=${addHardware.id}&groupid=${addHardware.researchGroupId}" var="formUrl"/>
         </c:when>
@@ -21,8 +21,13 @@
     </c:choose>
 
     <form:form action="${formUrl}" method="post" commandName="addHardware" cssClass="standardInputForm">
-        <fieldset>
 
+
+        <fieldset>
+            <div class="itemBox">
+                <form:label path="researchGroupTitle" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+                <form:input path="researchGroupTitle" cssClass="textField" value="${addHardware.researchGroupTitle}" disabled="true" maxlength="50" />
+            </div>
             <div class="itemBox">
                 <form:label path="title" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.title"/></form:label>
 
