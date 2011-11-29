@@ -46,13 +46,15 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @param typeTransform - param from user (rdf, owl, ttl)
      * @return  bout - generated resource of semantic web(rdf, owl, ttl)
      * @throws IOException
-     * @throws OWLOntologyStorageException
-     * @throws OWLOntologyCreationException
      */
-    public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException, OWLOntologyStorageException, OWLOntologyCreationException {
+    public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException {
         InputStream is;
-        OwlApi owlApi = new OwlApiTool(creatingJenaBean().getOntologyDocument());
-        is = owlApi.convertToSemanticStandard(typeTransform);
+        String type = null;
+        if (typeTransform.equals("rdf") || typeTransform.equals("owl"))
+            type = JenaBeanExtensionTool.RDF_XML;
+        else if (typeTransform.equals("ttl"))
+            type = JenaBeanExtensionTool.TURTLE;
+        is = creatingJenaBean().getOntologyDocument(type);
         return is;
     }
 
@@ -61,7 +63,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @return  is - RDF
      * @throws IOException
      */
-     public InputStream  generateRDF() throws IOException{
+     public InputStream generateRDF() throws IOException{
         InputStream is;
         is = creatingJenaBean().getOntologyDocument();
         return is;

@@ -80,12 +80,6 @@ public class SemanticServiceImpl implements SemanticService {
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
-        } catch (OWLOntologyStorageException e) {
-            log.error(e);
-            throw new SOAPException(e);
-        } catch (OWLOntologyCreationException e) {
-            log.error(e);
-            throw new SOAPException(e);
         } catch (IOException e) {
             log.error(e);
             throw new SOAPException(e);
