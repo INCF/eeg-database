@@ -10,9 +10,26 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         super(Hardware.class);
     }
 
-    public void createDefaultRecord(Hardware hardware){
-        hardware.setDefaultNumber(1);
-        create(hardware);
+    /**
+     * Title of hardware must be unique
+     *
+     * @param title - hardware title
+     * @return
+     */
+    public boolean canSaveTitle(String title) {
+        String hqlQuery = "from Hardware h where h.title = :title";
+        String name = "title";
+        Object value = title;
+        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
+        return (list.size() == 0);
+    }
+
+    public boolean canDelete(int id) {
+        String hqlQuery = "select h.experiments from Hardware h where h.hardwareId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
     }
 
     public List<Hardware> getItemsForList() {
@@ -33,6 +50,11 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         return list;
     }
 
+    public void createDefaultRecord(Hardware hardware){
+        hardware.setDefaultNumber(1);
+        create(hardware);
+    }
+
     public List<Hardware> getDefaultRecords(){
         String hqlQuery = "from Hardware h where h.defaultNumber=1";
         List<Hardware> list = getHibernateTemplate().find(hqlQuery);
@@ -46,19 +68,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         return (list.size() == 0);
     }
 
-    /**
-     * Title of hardware must be unique in a research group or between default
-     *
-     * @param title - hardware title
-     * @return
-     */
-    public boolean canSaveTitle(String title) {
-        String hqlQuery = "from Hardware h where h.title = :title";
-        String name = "title";
-        Object value = title;
-        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
-        return (list.size() == 0);
-    }
+
 
      /**
      * Title of hardware must be unique in a research group or between default
@@ -74,13 +84,7 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         return (list.size() == 0);
     }
 
-    public boolean canDelete(int id) {
-        String hqlQuery = "select h.experiments from Hardware h where h.hardwareId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
-        return (list.size() == 0);
-    }
+
 
     public boolean hasGroupRel(int id){
         String hqlQuery = "from HardwareGroupRel r where r.id.hardwareId =" +id+ " ";

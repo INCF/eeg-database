@@ -661,14 +661,7 @@
     </bean>
 
     <bean name="addHardwareValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
-
-    <bean name="addWeatherController" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherController">
-        <property name="formView" value="lists/weather/addItemForm"/>
-        <property name="successView" value="redirect:/lists/weather-definitions/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
-        </property>
-    </bean>
+    <bean name="addWeatherValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
 
     <bean name="addPersonOptionalParameterController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">

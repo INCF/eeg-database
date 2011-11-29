@@ -17,11 +17,28 @@
         <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>
         </property>
+        <property name="defaultNumber" type="int">
+            <column name="IS_DEFAULT" precision="1" scale="0"/>
+        </property>
         <set inverse="true" name="experiments">
             <key>
                 <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
+        </set>
+        <set inverse="false" name="researchGroups" table="WEATHER_GROUP_REL">
+            <key>
+                <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="weatherGroupRels">
+            <key>
+                <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Weather"/>
         </set>
     </class>
 </hibernate-mapping>

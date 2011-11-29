@@ -10,7 +10,7 @@
             <!-- editation -->
             <h1><fmt:message key="pageTitle.editWeatherDefinition"/></h1>
 
-            <c:url value="edit.html?id=${addWeather.id}" var="formUrl"/>
+            <c:url value="edit.html?id=${addWeather.id}&groupid=${addWeather.researchGroupId}" var="formUrl"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
@@ -22,7 +22,10 @@
 
     <form:form action="${formUrl}" method="post" commandName="addWeather" cssClass="standardInputForm">
         <fieldset>
-
+            <div class="itemBox">
+                <form:label path="researchGroupTitle" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+                <form:input path="researchGroupTitle" cssClass="textField" value="${addWeather.researchGroupTitle}" disabled="true" maxlength="50" />
+            </div>
             <div class="itemBox">
                 <form:label path="title" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.title"/></form:label>
 

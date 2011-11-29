@@ -1,52 +1,171 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.list.weather;
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.controller.list.SelectGroupCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
-public class WeatherMultiController extends MultiActionController {
-
+/**
+ * @author František Liška
+ */
+@Controller
+@SessionAttributes("selectGroupCommand")
+public class WeatherMultiController {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private AuthorizationManager auth;
     @Autowired
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
     private WeatherDao weatherDao;
+    @Autowired
+    private PersonDao personDao;
 
-    public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
+    private List<ResearchGroup> researchGroupList;
+    private List<Weather> weatherList;
+    private final int DEFAULT_ID = -1;
+
+    @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.GET)
+    public String showSelectForm(WebRequest webRequest,ModelMap model ){
         log.debug("Processing weather list controller");
-        ModelAndView mav = new ModelAndView("lists/weather/list");
+        SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
+        fillAuthResearchGroupList();
+        String idString = webRequest.getParameter("groupid");
+        if(auth.isAdmin()){
+            if (idString != null) {
+                int id = Integer.parseInt(idString);
+                if(id!=DEFAULT_ID){
+                    fillWeatherList(id);
+                    selectGroupCommand.setResearchGroupId(id);
+                }else{
+                   fillWeatherList(DEFAULT_ID);
+                    selectGroupCommand.setResearchGroupId(DEFAULT_ID);
+                }
 
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
+            }else{
+                fillWeatherList(DEFAULT_ID);
+                selectGroupCommand.setResearchGroupId(DEFAULT_ID);
+            }
+            model.addAttribute("userIsExperimenter", true);
+        }else{
+            if(!researchGroupList.isEmpty()){
+                if (idString != null) {
+                    int id = Integer.parseInt(idString);
+                    fillWeatherList(id);
+                    selectGroupCommand.setResearchGroupId(id);
+                }else{
+                    int myGroup = researchGroupList.get(0).getResearchGroupId();
+                    fillWeatherList(myGroup);
+                    selectGroupCommand.setResearchGroupId(myGroup);
+                }
+                model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+            }else{
+                model.addAttribute("userIsExperimenter", false);
+            }
+        }
+        model.addAttribute("selectGroupCommand",selectGroupCommand);
+        model.addAttribute("weatherList", weatherList);
+        model.addAttribute("researchGroupList", researchGroupList);
 
-        List<Weather> list = weatherDao.getItemsForList();
-        mav.addObject("weatherList", list);
-        return mav;
+
+        return "lists/weather/list";
     }
 
-    public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
-        log.debug("Deleting weather.");
-        ModelAndView mav = new ModelAndView("lists/itemDeleted");
+    @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.POST)
+    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
+        fillAuthResearchGroupList();
+        if(!researchGroupList.isEmpty()){
+            fillWeatherList(selectGroupCommand.getResearchGroupId());
+        }
+        boolean canEdit = auth.isAdmin() || auth.userIsExperimenter();
+        model.addAttribute("userIsExperimenter", canEdit);
+        model.addAttribute("researchGroupList", researchGroupList);
+        model.addAttribute("weatherList", weatherList);
+        return "lists/weather/list";
+    }
 
-        String idString = request.getParameter("id");
+    @RequestMapping(value="lists/weather-definitions/delete.html")
+    public String delete(@RequestParam("id") String idString, @RequestParam("groupid") String idString2) {
+        log.debug("Deleting weather.");
         if (idString != null) {
             int id = Integer.parseInt(idString);
 
             if (weatherDao.canDelete(id)) {
-                weatherDao.delete(weatherDao.read(id));
+                if(idString2 !=null){
+                    int groupId = Integer.parseInt(idString2);
+
+                    if(groupId==DEFAULT_ID){ // delete default weather if it's from default group
+                        if(!weatherDao.hasGroupRel(id)){ // delete only if it doesn't have group relationship
+                            weatherDao.delete(weatherDao.read(id));
+                        }else{
+                            System.out.println("hasGroupRel");
+                            return "lists/itemUsed";
+                        }
+                    }else{
+                        WeatherGroupRel h = weatherDao.getGroupRel(id,groupId);
+                        if(!weatherDao.isDefault(id)){ // delete only non default weather
+                            weatherDao.delete(weatherDao.read(id));
+                        }
+                        weatherDao.deleteGroupRel(h);
+                    }
+                }
+
             } else {
-                mav.setViewName("lists/itemUsed");
+                System.out.println("cannotDelete");
+                return "lists/itemUsed";
             }
         }
 
-        return mav;
+        return "lists/itemDeleted";
     }
+
+    private void fillAuthResearchGroupList(){
+        Person loggedUser = personDao.getLoggedPerson();
+        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,"Default Weather","-");
+
+        if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+            researchGroupList = researchGroupDao.getAllRecords();
+            researchGroupList.add(0,defaultGroup);
+        }else{
+            researchGroupList = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+        }
+    }
+
+    private void fillWeatherList(int selectedGroupId){
+        if(selectedGroupId == DEFAULT_ID){
+            weatherList = weatherDao.getDefaultRecords();
+        }else{
+            if(!researchGroupList.isEmpty()){
+                weatherList = weatherDao.getRecordsByGroup(selectedGroupId);
+            }
+        }
+    }
+
+    public ResearchGroupDao getResearchGroupDao() {
+        return researchGroupDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
+    }
+
+    public WeatherDao getWeatherDao() {
+        return weatherDao;
+    }
+
+    public void setWeatherDao(WeatherDao weatherDao) {
+        this.weatherDao = weatherDao;
+    }
+
 }

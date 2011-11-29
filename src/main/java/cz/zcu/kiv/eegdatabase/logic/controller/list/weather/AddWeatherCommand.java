@@ -8,6 +8,8 @@ public class AddWeatherCommand {
     private int id;
     private String title;
     private String description;
+    private int researchGroupId;
+    private String researchGroupTitle;
 
     public void setId(int id) {
         this.id = id;
@@ -31,5 +33,21 @@ public class AddWeatherCommand {
 
     public void setTitle(String title) {
         this.title = title;
+    }
+
+    public int getResearchGroupId() {
+        return researchGroupId;
+    }
+
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
+    }
+
+    public String getResearchGroupTitle() {
+        return researchGroupTitle;
+    }
+
+    public void setResearchGroupTitle(String researchGroupTitle) {
+        this.researchGroupTitle = researchGroupTitle;
     }
 }

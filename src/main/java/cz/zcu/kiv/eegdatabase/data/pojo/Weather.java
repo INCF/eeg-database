@@ -25,7 +25,10 @@ public class Weather implements Serializable {
             @Field(name = "title")}) //use a different field name
     private String title;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
     private long scn;
+    private int defaultNumber;
 
     public Weather() {
     }
@@ -72,6 +75,30 @@ public class Weather implements Serializable {
 
     public Set<Experiment> getExperiments() {
         return this.experiments;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
+
+    public Set<WeatherGroupRel> getWeatherGroupRels() {
+        return weatherGroupRels;
+    }
+
+    public void setWeatherGroupRels(Set<WeatherGroupRel> weatherGroupRels) {
+        this.weatherGroupRels = weatherGroupRels;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
     }
 
     public void setExperiments(Set<Experiment> experiments) {

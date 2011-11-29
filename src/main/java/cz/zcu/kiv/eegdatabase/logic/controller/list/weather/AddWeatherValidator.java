@@ -27,11 +27,12 @@ public class AddWeatherValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
 
-        if (!weatherDao.canSaveTitle(data.getTitle(), data.getId())) {
-            errors.rejectValue("title", "error.valueAlreadyInDatabase");
-        }
-        if (!weatherDao.canSaveDescription(data.getDescription(), data.getId())) {
-            errors.rejectValue("description", "error.valueAlreadyInDatabase");
-        }
+        //TODO dodelat save
+        //if (!weatherDao.canSaveTitle(data.getTitle(), data.getId())) {
+        //    errors.rejectValue("title", "error.valueAlreadyInDatabase");
+        //}
+        //if (!weatherDao.canSaveDescription(data.getDescription(), data.getId())) {
+        //    errors.rejectValue("description", "error.valueAlreadyInDatabase");
+        //}
     }
 }

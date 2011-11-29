@@ -32,6 +32,12 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel"/>
         </set>
+        <set inverse="true" name="weatherGroupRels">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel"/>
+        </set>
         <set inverse="true" name="scenarios">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
@@ -63,6 +69,15 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Hardware">
                 <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
+        <set inverse="true" name="weathers" table="WEATHER_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Weather">
+                <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
 

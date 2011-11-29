@@ -23,13 +23,15 @@ public class ResearchGroup implements Serializable {
 //    @Field(name = "RESEARCHGROUPDESCRIPTION")}) //use a different field name
     private String description;
     private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(0);
-    private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<Person> usersWithThisAsDefault = new HashSet<Person>(0);
     private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
     private Set<Person> articlesSubscribers = new HashSet<Person>(0);
+    private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
+    private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
+    private Set<Weather> weathers = new HashSet<Weather>(0);
     private long scn;
 
     public ResearchGroup() {
@@ -141,6 +143,14 @@ public class ResearchGroup implements Serializable {
         this.hardwareGroupRels = hardwareGroupRels;
     }
 
+    public Set<WeatherGroupRel> getWeatherGroupRels() {
+        return weatherGroupRels;
+    }
+
+    public void setWeatherGroupRels(Set<WeatherGroupRel> weatherGroupRels) {
+        this.weatherGroupRels = weatherGroupRels;
+    }
+
     public void setArticlesSubscribers(Set<Person> articlesSubscribers) {
         this.articlesSubscribers = articlesSubscribers;
     }
@@ -153,7 +163,13 @@ public class ResearchGroup implements Serializable {
         this.hardwares = hardwares;
     }
 
+    public Set<Weather> getWeathers() {
+        return weathers;
+    }
 
+    public void setWeathers(Set<Weather> weathers) {
+        this.weathers = weathers;
+    }
 }
 
 
