@@ -1,0 +1,11 @@
+Scenario title;Length;Description;Scenario details
+Steady State 3 Hz;10 minutes;Flashing LED with 3 Hz.;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=9
+Steady State 5 Hz;10 minutes;Flashing LED with 5 Hz.;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=11
+Steady State 8 Hz;10 minutes;Flashing LED with 8 Hz.;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=12
+Steady State 12 Hz;10 minutes;Flashing LED with 12 Hz;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=13
+P3 LED (D,T,N);10 minutes;Classic oddball experiment.;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=10
+Drinkability scenario;45 minutes;drinkability scenario - presentation;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=4
+p300 number sequence;30 minutes;sequence of numbers targets and not targets;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=1
+ERP_Janák;40 minutes;DRIVER´S ATTENTION AND VISUAL STIMULATION;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=6
+ERP_Gorschenek;40 minutes;Driver's attention : audio and visual stimulation;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=5
+ERP_Rericha_scenario;40 minutes;audio stimulation - driver's attention;http://eegdatabase.kiv.zcu.cz/scenarios/detail.html?scenarioId=4
