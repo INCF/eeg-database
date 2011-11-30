@@ -41,41 +41,63 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         }
     }
 
+
     /**
-     * Transforms POJO object to resouces of semantic web
-     * @param typeTransform - param from user (rdf, owl, ttl)
-     * @return  bout - generated resource of semantic web(rdf, owl, ttl)
-     * @throws IOException
+     * Generates an ontology document from POJO objects.<br>
+     * This method returns a serialization of the Jena's ontology model
+     * of POJO objects in a specified syntax.
+     * @param syntax - required syntax of the ontology document
+     * @return  is - ontology document
+     * @throws IOException - if an I/O error occurs.
      */
-    public InputStream transformPOJOToSemanticResource(String typeTransform) throws IOException {
+    public InputStream generateRDF(String syntax) throws IOException {
         InputStream is;
-        String type = null;
-        if (typeTransform.equals("rdf") || typeTransform.equals("owl"))
-            type = JenaBeanExtensionTool.RDF_XML;
-        else if (typeTransform.equals("ttl"))
-            type = JenaBeanExtensionTool.TURTLE;
-        is = creatingJenaBean().getOntologyDocument(type);
+        String lang = null;
+
+        if (syntax.equals("rdf") || syntax.equals("owl")) {
+            lang = JenaBeanExtensionTool.RDF_XML;
+        }
+        else if (syntax.equals("ttl"))
+            lang = JenaBeanExtensionTool.TURTLE;
+        else if (syntax.equals("n3"))
+            lang = JenaBeanExtensionTool.N3;
+        else if (syntax.equals("ntriple"))
+            lang = JenaBeanExtensionTool.N_TRIPLE;
+
+        is = creatingJenaBean().getOntologyDocument(lang);
         return is;
     }
 
+
     /**
-     * Generates RDF
-     * @return  is - RDF
-     * @throws IOException
+     * Generates an ontology document from POJO objects.<br>
+     * This method gets a serialization of the Jena's ontology model in a default
+     * syntax and transforms it using Owl-Api. The Owl-Api's output syntax
+     * is specified by the syntax parameter.
+     * @param syntax - param from user (rdf, owl, ttl)
+     * @return is - generated ontology document (rdf, owl, ttl)
+     * @throws IOException - if an I/O error occurs.
+     * @throws OWLOntologyCreationException - if an error occurs in Owl-Api while loading the ontology.
+     * @throws OWLOntologyStorageException - if an error occurs in Owl-Api while creating the output.
      */
-     public InputStream generateRDF() throws IOException{
+    public InputStream transformPOJOToSemanticResource(String syntax) throws IOException,
+                                    OWLOntologyCreationException, OWLOntologyStorageException {
         InputStream is;
-        is = creatingJenaBean().getOntologyDocument();
+        OwlApi owlApi;
+
+        is = creatingJenaBean().getOntologyDocument(null);
+        owlApi = new OwlApiTool(is);
+        is = owlApi.convertToSemanticStandard(syntax);
+
         return is;
     }
 
 
     /**
-     * Creates Jena bean for creating RDF
+     * Creates JenaBeanExtensionTool for transforming POJO objects into an ontology document.
      * @return jenaBean - Jena bean
-     * @throws IOException
      */
-    private JenaBeanExtensionTool creatingJenaBean() throws IOException {
+    private JenaBeanExtensionTool creatingJenaBean() {
         if (jenaBean == null) {
             loadData();
             jenaBean = new JenaBeanExtensionTool(dataList, null);
@@ -83,8 +105,9 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         return (JenaBeanExtensionTool) jenaBean;
     }
 
+
     /**
-     * Loads date for transforms POJO object to resouces of semantic web
+     * Loads date for transforms POJO object to resouces of semantic web.
      */
     private void loadData() {
          for (GenericDao gDao : gDaoList) {
@@ -93,7 +116,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
     }
 
     /**
-     * Sets application context
+     * Sets application context.
      * @param ac - application context
      * @throws BeansException
      */

@@ -27,8 +27,44 @@ public class SemanticMultiController extends MultiActionController {
 
     }
 
+
     /**
-     * Transforms POJO object to resources of semantic web
+     * Generates an ontology document from POJO objects.
+     * This method gives the Jena's output.
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        log.debug("Controller for transforming POJO object to resources of semantic web");
+        OutputStream out = null;
+        InputStream is = null;
+        int headerBufferSize = 8096;
+        String type = request.getParameter("type");
+
+        response.setHeader("Content-Type", "application/rdf+xml");
+        response.setContentType("application/rdf+xml");
+        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase." + type);
+
+        log.debug("Creating output stream");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setBufferSize(headerBufferSize);
+        out = response.getOutputStream();
+        log.debug("Generating RDF");
+
+        is = semanticFactory.generateRDF(type);
+
+        copy(is, out);
+        out.flush();
+        out.close();
+        return null;
+    }
+
+    /**
+     * Generates an ontology document from POJO objects.
+     * This method transforms the Jena's output using Owl-Api.
      *
      * @param request
      * @param response
@@ -37,7 +73,7 @@ public class SemanticMultiController extends MultiActionController {
      */
     public ModelAndView generateOWL(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
-        String typeTransform = "";
+        String typeTransform;
         OutputStream out = null;
         InputStream is = null;
         int headerBufferSize = 8096;
@@ -45,7 +81,7 @@ public class SemanticMultiController extends MultiActionController {
         typeTransform = request.getParameter("type");
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.owl");
+        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase." + typeTransform);
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -56,36 +92,6 @@ public class SemanticMultiController extends MultiActionController {
 
         copy(is, out);
 
-        out.flush();
-        out.close();
-        return null;
-    }
-
-    /**
-     * Transforms POJO object to RDF
-     *
-     * @param request
-     * @param response
-     * @return
-     * @throws Exception
-     */
-    public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
-        log.debug("Controller for transforming POJO object to resources of semantic web");
-        OutputStream out = null;
-        int headerBufferSize = 8096;
-
-        response.setHeader("Content-Type", "application/rdf+xml");
-        response.setContentType("application/rdf+xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase.rdf");
-
-        log.debug("Creating output stream");
-        response.setStatus(HttpServletResponse.SC_OK);
-        response.setBufferSize(headerBufferSize);
-        out = response.getOutputStream();
-        log.debug("Generating RDF");
-        InputStream is = semanticFactory.generateRDF();
-
-        copy(is, out);
         out.flush();
         out.close();
         return null;

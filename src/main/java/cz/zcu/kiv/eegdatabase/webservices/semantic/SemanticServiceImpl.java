@@ -47,7 +47,7 @@ public class SemanticServiceImpl implements SemanticService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = semanticFactory.generateRDF();
+            is = semanticFactory.generateRDF(null);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
@@ -80,6 +80,12 @@ public class SemanticServiceImpl implements SemanticService {
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
+        } catch (OWLOntologyCreationException e) {
+            log.error(e);
+            throw new SOAPException(e);
+        } catch (OWLOntologyStorageException e) {
+            log.error(e);
+            throw new SOAPException(e);
         } catch (IOException e) {
             log.error(e);
             throw new SOAPException(e);
