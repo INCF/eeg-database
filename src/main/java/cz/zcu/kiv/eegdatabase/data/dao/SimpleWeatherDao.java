@@ -18,14 +18,6 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         return list;
     }
 
-    public boolean canSaveDescription(String description, int id) {
-        String hqlQuery = "from Weather w where w.description = :description and w.weatherId != :id";
-        String[] names = {"description", "id"};
-        Object[] values = {description, id};
-        List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
-        return (list.size() == 0);
-    }
-
     public boolean canDelete(int id) {
         String hqlQuery = "select w.experiments from Weather w where w.id = :id";
         String[] names = {"id"};
@@ -34,17 +26,23 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         return (list.size() == 0);
     }
 
-    /**
-     * Description of weather must be unique
-     * @param description - description of weather
-     * @return
-     */
+    //TODO odstranit s wizardem
     public boolean canSaveNewDescription(String description) {
-       String hqlQuery = "from Weather w where w.description = :description";
-       String name = "description";
-       Object value = description;
-       List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
-       return (list.size() == 0);
+        String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where h.description=\'" + description + "\'";
+        List<Weather> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() == 0);
+    }
+
+    public boolean canSaveNewDescription(String description, int groupId) {
+        String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.description=\'" + description + "\'";
+        List<Weather> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() == 0);
+    }
+
+    public boolean canSaveDescription(String description, int groupId, int weatherId) {
+        String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.description=\'" + description + "\' and h.weatherId<>"+weatherId+" ";
+        List<Weather> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() == 0);
     }
 
     public List<Weather> getRecordsNewerThan(long oracleScn) {
@@ -73,7 +71,6 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
     }
 
     public boolean canSaveTitle(String title, int groupId, int weatherId) {
-        //String hqlQuery = "from Weather h where h.title = :title and h.weatherId != :id";
         String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.title=\'" + title + "\' and h.weatherId<>"+weatherId+" ";
         List<Weather> list = getHibernateTemplate().find(hqlQuery);
         return (list.size() == 0);
@@ -92,6 +89,21 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
         return (list.size() == 0);
     }
+
+    /**
+    * Description of weather must be unique in a research group or between default
+    *
+    * @param description - weather description
+    * @return
+    */
+   public boolean canSaveDefaultDescription(String description, int weatherId) {
+       String hqlQuery = "from Weather h where h.description = :description and h.defaultNumber=1 and h.weatherId<>"+weatherId+" ";
+       String name = "description";
+       Object value = description;
+       List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
+       return (list.size() == 0);
+   }
+
 
 
 

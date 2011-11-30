@@ -16,6 +16,7 @@ public class AddWeatherValidator implements Validator {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private WeatherDao weatherDao;
+    private final int DEFAULT_ID = -1;
 
     public boolean supports(Class clazz) {
         return clazz.equals(AddWeatherCommand.class);
@@ -27,12 +28,21 @@ public class AddWeatherValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
 
-        //TODO dodelat save
-        //if (!weatherDao.canSaveTitle(data.getTitle(), data.getId())) {
-        //    errors.rejectValue("title", "error.valueAlreadyInDatabase");
-        //}
-        //if (!weatherDao.canSaveDescription(data.getDescription(), data.getId())) {
-        //    errors.rejectValue("description", "error.valueAlreadyInDatabase");
-        //}
+        if(data.getResearchGroupId()==DEFAULT_ID){
+            if (!weatherDao.canSaveDefaultTitle(data.getTitle(),data.getId())) {
+                errors.rejectValue("title", "error.valueAlreadyInDatabase");
+            }
+            if (!weatherDao.canSaveDefaultDescription(data.getDescription(),data.getId())){
+                errors.rejectValue("description", "error.valueAlreadyInDatabase");
+            }
+        }else{
+            if (!weatherDao.canSaveTitle(data.getTitle(), data.getResearchGroupId(),data.getId())) {
+                errors.rejectValue("title", "error.valueAlreadyInDatabase");
+            }
+            if (!weatherDao.canSaveDescription(data.getTitle(), data.getResearchGroupId(),data.getId())) {
+                errors.rejectValue("description", "error.valueAlreadyInDatabase");
+            }
+        }
+
     }
 }

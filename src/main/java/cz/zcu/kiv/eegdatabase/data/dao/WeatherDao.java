@@ -10,18 +10,20 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
 
     public List<Weather> getRecordsNewerThan(long oracleScn);
 
-    public boolean canSaveDescription(String description, int id);
+    public boolean canSaveDescription(String description, int groupId, int weatherId);
+
+    public boolean canSaveDefaultDescription(String description, int weatherId);
 
     public boolean canDelete(int id);
 
     /**
-     * Description of weather must be unique
+     * Description of weather must be unique in a research group
      * @param description - description of weather
      * @return
      */
+    public boolean canSaveNewDescription(String description, int groupId);
+    //TODO upravit spolu s wizardem
     public boolean canSaveNewDescription(String description);
-    
-    //TODO dodelat canSaveDescription pro grupu
 
     public void createDefaultRecord(Weather weather);
 
