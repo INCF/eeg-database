@@ -1,0 +1,101 @@
+<disco format="disco.interop" format-version="1.0">
+  <site-info
+    nif-id="nif-0000-08190"
+    site-name="EEGbase"
+		site-longname="EEGbase"
+    site-url="http://eegdatabase.kiv.zcu.cz"
+    version="" />
+  <technical-contact>interop2@mail.neuinfo.org</technical-contact>
+	<technical-contact>pbruha@kiv.zcu.cz</technical-contact>
+
+  <interfaces>
+    <interface-group
+				id="eegbase"
+				name="eegbase"
+				comment="EEG base is a system for storage and management of EEG/ERP resources - data, metadata, tools and materials related to EEG/ERP experiments. EEG base advances electrophysiology research by enabling access to public data, tools and results of research groups. "
+				baseurl="http://eegdatabase.kiv.zcu.cz" 
+				revision-date="" >
+				
+			<interface
+        id="data"
+        name="data"
+        comment="EEGbase data example"
+        interface-type="data"
+        pk_separator = "_"
+        targeturl="http://eegdatabase.kiv.zcu.cz/EEGbase_data_example_2011.csv"
+        >
+       <parameters >
+					<parameter IOtype="o" id="subject"               name="Subject"             datatype="string" precision="50" pk="1"/>       
+        	<parameter IOtype="o" id="gender"                name="Gender"              datatype="string" precision="20" />
+				  <parameter IOtype="o" id="year_of_birth"         name="Year of birth"       datatype="integer" />
+				  <parameter IOtype="o" id="scenario_title"        name="Scenario title"      datatype="string" precision="50" />
+          <parameter IOtype="o" id="used_hardware"         name="Used hardware"       datatype="string" precision="50" />
+          <parameter IOtype="o" id="experiment_details"    name="Experiment details"  datatype="string" precision="250" />
+							          
+				</parameters>
+        <output >
+         	<format
+	          type="csv"
+	          quote_character="&quot;"
+	          escape_character="\"
+	          ignore-lines="1"
+	          set-ascii-delimiter=";"
+	     		>
+	     		</format>
+					<parameter idref="subject"                 container="[0]"    container-type="text"/>       
+        	<parameter idref="gender"                  container="[1]"    container-type="text"/>
+				  <parameter idref="year_of_birth"           container="[2]"    container-type="text"/>
+				  <parameter idref="scenario_title"          container="[3]"    container-type="text"/>
+          <parameter idref="used_hardware"           container="[4]"    container-type="text"/>
+          <parameter idref="experiment_details"      container="[5]"    container-type="text"/>
+      </output>			
+			</interface>
+			
+			<interface
+        id="scenario"
+        name="scenario"
+        comment="EEGbase scenario example"
+        interface-type="data"
+        pk_separator = "_"
+        targeturl="http://eegdatabase.kiv.zcu.cz/EEGbase_scenarios_example_2011.csv"
+        >
+       <parameters >
+					<parameter IOtype="o" id="scenario_title"     name="Scenario title"     datatype="string" precision="50" pk="1"/>       
+        	<parameter IOtype="o" id="length"             name="Length"             datatype="double"/>
+				  <parameter IOtype="o" id="length_unit"        name="Length"             datatype="string" precision="20" />
+				  <parameter IOtype="o" id="description"        name="Description"        datatype="string" precision="200" />
+          <parameter IOtype="o" id="scenario_details"   name="Scenario details"   datatype="string" precision="250" />
+							          
+				</parameters>
+        <output >
+         	<format
+	          type="csv"
+	          quote_character="&quot;"
+	          escape_character="\"
+	          ignore-lines="1"
+	          set-ascii-delimiter=";"
+	     		>
+	     		</format>
+					<parameter idref="scenario_title"          container="[0]"    container-type="text"/>       
+        	<parameter idref="length"                  container="[1]"    container-type="text">
+        		<replace method="regex" search=" \D+$" by="" />
+        	</parameter>
+				  <parameter idref="length_unit"             container="[1]"    container-type="text">
+				  	<replace method="regex" search="^\d+\.?\d*" by="" />
+        	</parameter>
+				  <parameter idref="description"             container="[2]"    container-type="text"/>
+          <parameter idref="scenario_details"        container="[3]"    container-type="text"/>
+      </output>			
+			</interface>			
+			
+    </interface-group>
+		
+  </interfaces>
+ 
+  <global-parameter-values>
+    <parameter idref="categories" nifstd_id="" url="?">
+      <value value="" text="" nifstd_id="" />
+    </parameter>
+  </global-parameter-values>
+  
+</disco>
