@@ -9,6 +9,7 @@
 
     <services>
         <service format="disco.rd.nif.rdf" type="Resource Description"
-                 url="http://disco.neuinfo.org/discolocal/resource/nif-0000-08190/disco.rd.xml"/>
+                 url="./disco.rd.xml"/>
+        <service format="disco.interop" type="Interoperation" url="./eegdatabase.xml"/>
     </services>
 </disco>
