@@ -30,8 +30,10 @@ public class ResearchGroup implements Serializable {
     private Set<Person> articlesSubscribers = new HashSet<Person>(0);
     private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
     private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
+    private Set<HearingImpairmentGroupRel> hearingImpairmentGroupRels = new HashSet<HearingImpairmentGroupRel>(0);
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
     private Set<Weather> weathers = new HashSet<Weather>(0);
+    private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
     private long scn;
 
     public ResearchGroup() {
@@ -169,6 +171,22 @@ public class ResearchGroup implements Serializable {
 
     public void setWeathers(Set<Weather> weathers) {
         this.weathers = weathers;
+    }
+
+    public Set<HearingImpairmentGroupRel> getHearingImpairmentGroupRels() {
+        return hearingImpairmentGroupRels;
+    }
+
+    public void setHearingImpairmentGroupRels(Set<HearingImpairmentGroupRel> hearingImpairmentGroupRels) {
+        this.hearingImpairmentGroupRels = hearingImpairmentGroupRels;
+    }
+
+    public Set<HearingImpairment> getHearingImpairments() {
+        return hearingImpairments;
+    }
+
+    public void setHearingImpairments(Set<HearingImpairment> hearingImpairments) {
+        this.hearingImpairments = hearingImpairments;
     }
 }
 

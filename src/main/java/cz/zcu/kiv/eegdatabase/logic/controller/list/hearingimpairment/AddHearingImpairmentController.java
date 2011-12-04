@@ -2,87 +2,171 @@ package cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
+import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairmentGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairmentGroupRelId;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.validation.BindException;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.ui.ModelMap;
+import org.springframework.stereotype.Controller;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 
-public class AddHearingImpairmentController extends SimpleFormController {
-
+@Controller
+@SessionAttributes("addHearingImpairment")
+public class AddHearingImpairmentController{
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private AuthorizationManager auth;
     @Autowired
     private HearingImpairmentDao hearingImpairmentDao;
+    @Autowired
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
+    private HierarchicalMessageSource messageSource;
 
-    public AddHearingImpairmentController() {
-        setCommandClass(AddHearingImpairmentCommand.class);
-        setCommandName("addHearingDefect");
-    }
+    private final int DEFAULT_ID = -1;
+    AddHearingImpairmentValidator addHearingImpairmentValidator;
 
-    @Override
-    protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        AddHearingImpairmentCommand data = (AddHearingImpairmentCommand) super.formBackingObject(request);
+    @Autowired
+	public AddHearingImpairmentController(AddHearingImpairmentValidator addHearingImpairmentValidator){
+		this.addHearingImpairmentValidator = addHearingImpairmentValidator;
+	}
 
-        String idString = request.getParameter("id");
-        if (idString != null) {
-            // Editation of existing impairment
-            int id = Integer.parseInt(idString);
+    @RequestMapping(value="lists/hearing-impairments/edit.html", method= RequestMethod.GET)
+    protected String showEditForm(@RequestParam("id") String idString, @RequestParam("groupid") String idString2, ModelMap model, HttpServletRequest request){
+        AddHearingImpairmentCommand data = new AddHearingImpairmentCommand();
+        if (auth.userIsExperimenter() || auth.isAdmin()) {
+            model.addAttribute("userIsExperimenter", true);
+            if (idString2 != null) {
+                int id = Integer.parseInt(idString2);
+                data.setResearchGroupId(id);
+                 if(id!=DEFAULT_ID){
+                     String title = researchGroupDao.getResearchGroupTitle(id);
+                     data.setResearchGroupTitle(title);
+                 }else{
+                     String defaultHearingImpairment = messageSource.getMessage("label.defaultHearingImpairments", null, RequestContextUtils.getLocale(request));
+                     data.setResearchGroupTitle(defaultHearingImpairment);
+                 }
+            }
+            if (idString != null) {
+                // Editation of existing hearingImpairment
+                int id = Integer.parseInt(idString);
 
-            log.debug("Loading hearing impairment to the command object for editing.");
-            HearingImpairment impairment = hearingImpairmentDao.read(id);
+                log.debug("Loading hearingImpairment to the command object for editing.");
+                HearingImpairment hearingImpairment = hearingImpairmentDao.read(id);
+    
+                data.setHearingImpairmentId(id);
+                data.setDescription(hearingImpairment.getDescription());
+            }
+            model.addAttribute("addHearingImpairment",data);
 
-            data.setHearingImpairmentId(id);
-            data.setDescription(impairment.getDescription());
+            return "lists/hearingDefect/addItemForm";
+        }else{
+           return "lists/userNotExperimenter";
         }
-
-        return data;
     }
 
-    @Override
-    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        ModelAndView mav = super.showForm(request, response, errors);
-        if (!auth.userIsExperimenter()) {
-            mav.setViewName("lists/userNotExperimenter");
+    @RequestMapping(value="lists/hearing-impairments/add.html",method=RequestMethod.GET)
+    protected String showAddForm(@RequestParam("groupid") String idString, ModelMap model, HttpServletRequest request) throws Exception {
+        AddHearingImpairmentCommand data = new AddHearingImpairmentCommand();
+        if (auth.userIsExperimenter() || auth.isAdmin()) {
+            if (idString != null) {
+                int id = Integer.parseInt(idString);
+                 data.setResearchGroupId(id);
+                 if(id!=DEFAULT_ID){
+                     String title = researchGroupDao.getResearchGroupTitle(id);
+                     data.setResearchGroupTitle(title);
+                 }else{
+                     String defaultHearingImpairment = messageSource.getMessage("label.defaultHearingImpairments", null, RequestContextUtils.getLocale(request));
+                     data.setResearchGroupTitle(defaultHearingImpairment);
+                 }
+            }
+            model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+            model.addAttribute("addHearingImpairment",data);
+            return "lists/hearingDefect/addItemForm";
+        }else{
+            return "lists/userNotExperimenter";
         }
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        return mav;
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        ModelAndView mav = new ModelAndView(getSuccessView());
 
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addHearingImpairment") AddHearingImpairmentCommand data, BindingResult result,ModelMap model) {
         log.debug("Processing form data.");
-        AddHearingImpairmentCommand data = (AddHearingImpairmentCommand) command;
 
-        if (!auth.userIsExperimenter()) {
-            mav.setViewName("lists/userNotExperimenter");
+        if (auth.userIsExperimenter() || auth.isAdmin()) {
+            addHearingImpairmentValidator.validate(data,result);
+            if (result.hasErrors()) {
+                return "lists/hearingDefect/addItemForm";
+            }
+            int hearingImpairmentId = data.getHearingImpairmentId();
+            HearingImpairment hearingImpairment;
+            if (hearingImpairmentId > 0) {
+                // Editing
+                log.debug("Editing existing hearing impairment object.");
+                hearingImpairment = hearingImpairmentDao.read(hearingImpairmentId);
+
+                if(hearingImpairmentDao.isDefault(hearingImpairmentId)){
+                     if(data.getResearchGroupId()!=DEFAULT_ID){
+                         // new hearingImpairment
+                         HearingImpairment newHearingImpairment = new HearingImpairment();
+                         newHearingImpairment.setDefaultNumber(0);
+                         newHearingImpairment.setDescription(data.getDescription());
+                         int newId = hearingImpairmentDao.create(newHearingImpairment);
+                         HearingImpairmentGroupRel rel = hearingImpairmentDao.getGroupRel(hearingImpairmentId,data.getResearchGroupId());
+                         // delete old rel, create new one
+                         HearingImpairmentGroupRelId newRelId = new HearingImpairmentGroupRelId();
+                         HearingImpairmentGroupRel newRel = new HearingImpairmentGroupRel();
+                         newRelId.setHearingImpairmentId(newId);
+                         newRelId.setResearchGroupId(data.getResearchGroupId());
+                         newRel.setId(newRelId);
+                         newRel.setHearingImpairment(newHearingImpairment);
+                         ResearchGroup r = researchGroupDao.read(data.getResearchGroupId());
+                         newRel.setResearchGroup(r);
+                         hearingImpairmentDao.deleteGroupRel(rel);
+                         hearingImpairmentDao.createGroupRel(newRel);
+                     }else{
+                        if(!hearingImpairmentDao.hasGroupRel(hearingImpairmentId) && hearingImpairmentDao.canDelete(hearingImpairmentId)){;
+                            hearingImpairment.setDescription(data.getDescription());
+                        }else{
+                            return "lists/itemUsed";
+                        }
+                     }
+                }else{
+                     hearingImpairment.setDescription(data.getDescription());
+                }
+            } else {
+                // Creating new
+                hearingImpairment = new HearingImpairment();
+                hearingImpairment.setDescription(data.getDescription());
+                int pkGroup = data.getResearchGroupId();
+                if(pkGroup == DEFAULT_ID){
+                    log.debug("Creating new default hearing impairment object.");
+                    hearingImpairmentDao.createDefaultRecord(hearingImpairment);
+                }else{
+                    log.debug("Creating new group hearing impairment object.");
+                    int pkHearingImpairment = hearingImpairmentDao.create(hearingImpairment);
+
+                    HearingImpairmentGroupRelId hearingImpairmentGroupRelId = new HearingImpairmentGroupRelId(pkHearingImpairment,pkGroup);
+                    ResearchGroup researchGroup = researchGroupDao.read(pkGroup);
+                    HearingImpairmentGroupRel hearingImpairmentGroupRel = new HearingImpairmentGroupRel(hearingImpairmentGroupRelId,researchGroup,hearingImpairment);
+                    hearingImpairmentDao.createGroupRel(hearingImpairmentGroupRel);
+                }
+
+            }
+            log.debug("Returning MAV");
+            String redirect = "redirect:list.html?groupid="+data.getResearchGroupId();
+            return redirect;
+        }else{
+            return "lists/userNotExperimenter";
         }
-
-        HearingImpairment hearingImpairment;
-        if (data.getHearingImpairmentId() > 0) {
-            // Editing
-            log.debug("Editing existing object.");
-            hearingImpairment = hearingImpairmentDao.read(data.getHearingImpairmentId());
-            hearingImpairment.setDescription(data.getDescription());
-            hearingImpairmentDao.update(hearingImpairment);
-        } else {
-            // Creating new
-            log.debug("Creating new object.");
-            hearingImpairment = new HearingImpairment();
-            hearingImpairment.setDescription(data.getDescription());
-            hearingImpairmentDao.create(hearingImpairment);
-        }
-
-
-        log.debug("Returning MAV.");
-        return mav;
     }
 }

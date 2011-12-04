@@ -300,6 +300,8 @@
         <property name="auth" ref="authorizationManager"/>
     </bean>
 
+
+
     <bean name="addArticleCommentController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleCommentController">
         <property name="formView" value="articles/addArticleCommentForm"/>
@@ -642,15 +644,6 @@
     <bean name="fileMetadataParametersMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>
 
-    <bean name="addHearingImpairmentController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentController">
-        <property name="formView" value="lists/hearingDefect/addItemForm"/>
-        <property name="successView" value="redirect:/lists/hearing-impairments/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
-        </property>
-    </bean>
-
     <bean name="addVisualImpairmentController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentController">
         <property name="formView" value="lists/eyesDefect/addItemForm"/>
@@ -662,6 +655,7 @@
 
     <bean name="addHardwareValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
     <bean name="addWeatherValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
+    <bean name="addHearingImpairmentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
 
     <bean name="addPersonOptionalParameterController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">

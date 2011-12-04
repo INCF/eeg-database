@@ -82,9 +82,9 @@
 
                 <prop key="lists/index.html">listsIndexController</prop>
 
-                <prop key="lists/hearing-impairments/add.html">addHearingImpairmentController</prop>
-                <prop key="lists/hearing-impairments/edit.html">addHearingImpairmentController</prop>
-                <prop key="lists/hearing-impairments/*.html">hearingImpairmentMultiController</prop>
+                <!--<prop key="lists/hearing-impairments/add.html">addHearingImpairmentController</prop> -->
+                <!--<prop key="lists/hearing-impairments/edit.html">addHearingImpairmentController</prop> -->
+                <!--<prop key="lists/hearing-impairments/*.html">hearingImpairmentMultiController</prop> -->
 
                 <prop key="lists/visual-impairments/add.html">addVisualImpairmentController</prop>
                 <prop key="lists/visual-impairments/edit.html">addVisualImpairmentController</prop>

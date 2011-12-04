@@ -10,10 +10,14 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.ui.ModelMap;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.RequestContextUtils;
+
+import javax.servlet.http.HttpServletRequest;
 
 @Controller
 @SessionAttributes("addHardware")
@@ -25,6 +29,8 @@ public class AddHardwareController{
     private HardwareDao hardwareDao;
     @Autowired
     private ResearchGroupDao researchGroupDao;
+    @Autowired
+    private HierarchicalMessageSource messageSource;
 
     private final int DEFAULT_ID = -1;
     AddHardwareValidator addHardwareValidator;
@@ -35,7 +41,7 @@ public class AddHardwareController{
 	}
 
     @RequestMapping(value="lists/hardware-definitions/edit.html", method=RequestMethod.GET)
-    protected String showEditForm(@RequestParam("id") String idString, @RequestParam("groupid") String idString2, ModelMap model){
+    protected String showEditForm(@RequestParam("id") String idString, @RequestParam("groupid") String idString2, ModelMap model,HttpServletRequest request){
         AddHardwareCommand data = new AddHardwareCommand();
         if (auth.userIsExperimenter() || auth.isAdmin()) {
             model.addAttribute("userIsExperimenter", true);
@@ -46,7 +52,8 @@ public class AddHardwareController{
                      String title = researchGroupDao.getResearchGroupTitle(id);
                      data.setResearchGroupTitle(title);
                  }else{
-                     data.setResearchGroupTitle("Default Hardware");
+                     String defaultHardware = messageSource.getMessage("label.defaultHardware", null, RequestContextUtils.getLocale(request));
+                     data.setResearchGroupTitle(defaultHardware);
                  }
             }
             if (idString != null) {
@@ -69,7 +76,7 @@ public class AddHardwareController{
     }
 
     @RequestMapping(value="lists/hardware-definitions/add.html",method=RequestMethod.GET)
-    protected String showAddForm(@RequestParam("groupid") String idString, ModelMap model) throws Exception {
+    protected String showAddForm(@RequestParam("groupid") String idString, ModelMap model, HttpServletRequest request) throws Exception {
         AddHardwareCommand data = new AddHardwareCommand();
         if (auth.userIsExperimenter() || auth.isAdmin()) {
             if (idString != null) {
@@ -79,7 +86,8 @@ public class AddHardwareController{
                      String title = researchGroupDao.getResearchGroupTitle(id);
                      data.setResearchGroupTitle(title);
                  }else{
-                     data.setResearchGroupTitle("Default Hardware");
+                     String defaultHardware = messageSource.getMessage("label.defaultHardware", null, RequestContextUtils.getLocale(request));
+                     data.setResearchGroupTitle(defaultHardware);
                  }
             }
             model.addAttribute("userIsExperimenter", auth.userIsExperimenter());

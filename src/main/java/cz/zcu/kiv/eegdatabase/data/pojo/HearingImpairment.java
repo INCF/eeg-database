@@ -21,8 +21,11 @@ public class HearingImpairment implements java.io.Serializable {
   @Fields({
     @Field(index = Index.TOKENIZED), //same property indexed multiple times
     @Field(name = "description")}) //use a different field name
-  private String description;
-  private Set<Person> persons = new HashSet<Person>(0);
+    private String description;
+    private Set<Person> persons = new HashSet<Person>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    private Set<HearingImpairmentGroupRel> hearingImpairmentGroupRels = new HashSet<HearingImpairmentGroupRel>(0);
+    private int defaultNumber;
 
   public HearingImpairment() {
   }
@@ -61,6 +64,30 @@ public class HearingImpairment implements java.io.Serializable {
   public void setPersons(Set<Person> persons) {
     this.persons = persons;
   }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
+
+    public Set<HearingImpairmentGroupRel> getHearingImpairmentGroupRels() {
+        return hearingImpairmentGroupRels;
+    }
+
+    public void setHearingImpairmentGroupRels(Set<HearingImpairmentGroupRel> hearingImpairmentGroupRels) {
+        this.hearingImpairmentGroupRels = hearingImpairmentGroupRels;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
+    }
 }
 
 
