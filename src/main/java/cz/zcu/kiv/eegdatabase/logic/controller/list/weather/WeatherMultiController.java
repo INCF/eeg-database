@@ -8,12 +8,17 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.controller.list.SelectGroupCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.web.servlet.support.RequestContextUtils;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
+
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -31,16 +36,19 @@ public class WeatherMultiController {
     private WeatherDao weatherDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private HierarchicalMessageSource messageSource;
 
     private List<ResearchGroup> researchGroupList;
     private List<Weather> weatherList;
     private final int DEFAULT_ID = -1;
 
     @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.GET)
-    public String showSelectForm(WebRequest webRequest,ModelMap model ){
+    public String showSelectForm(WebRequest webRequest,ModelMap model, HttpServletRequest request){
         log.debug("Processing weather list controller");
         SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
-        fillAuthResearchGroupList();
+        String defaultWeather = messageSource.getMessage("label.defaultWeather", null, RequestContextUtils.getLocale(request));
+        fillAuthResearchGroupList(defaultWeather);
         String idString = webRequest.getParameter("groupid");
         if(auth.isAdmin()){
             if (idString != null) {
@@ -83,8 +91,9 @@ public class WeatherMultiController {
     }
 
     @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.POST)
-    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
-        fillAuthResearchGroupList();
+    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model, HttpServletRequest request){
+        String defaultWeather = messageSource.getMessage("label.defaultWeather", null, RequestContextUtils.getLocale(request));
+        fillAuthResearchGroupList(defaultWeather);
         if(!researchGroupList.isEmpty()){
             fillWeatherList(selectGroupCommand.getResearchGroupId());
         }
@@ -130,9 +139,10 @@ public class WeatherMultiController {
         return "lists/itemDeleted";
     }
 
-    private void fillAuthResearchGroupList(){
+    private void fillAuthResearchGroupList(String defaultName){
         Person loggedUser = personDao.getLoggedPerson();
-        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,"Default Weather","-");
+
+        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,defaultName,"-");
 
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
             researchGroupList = researchGroupDao.getAllRecords();
@@ -166,6 +176,16 @@ public class WeatherMultiController {
 
     public void setWeatherDao(WeatherDao weatherDao) {
         this.weatherDao = weatherDao;
+    }
+
+    public HierarchicalMessageSource getMessageSource()
+    {
+        return messageSource;
+    }
+
+    public void setMessageSource(HierarchicalMessageSource messageSource)
+    {
+        this.messageSource = messageSource;
     }
 
 }

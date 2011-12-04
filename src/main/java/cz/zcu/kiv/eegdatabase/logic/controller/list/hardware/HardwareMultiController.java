@@ -8,12 +8,15 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.controller.list.SelectGroupCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.stereotype.Controller;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 /**
@@ -31,16 +34,19 @@ public class HardwareMultiController {
     private HardwareDao hardwareDao;
     @Autowired
     private PersonDao personDao;
+    @Autowired
+    private HierarchicalMessageSource messageSource;
 
     private List<ResearchGroup> researchGroupList;
     private List<Hardware> hardwareList;
     private final int DEFAULT_ID = -1;
 
     @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.GET)
-    public String showSelectForm(WebRequest webRequest,ModelMap model ){
+    public String showSelectForm(WebRequest webRequest,ModelMap model, HttpServletRequest request){
         log.debug("Processing hardware list controller");
         SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
-        fillAuthResearchGroupList();
+        String defaultHardware = messageSource.getMessage("label.defaultHardware", null, RequestContextUtils.getLocale(request));
+        fillAuthResearchGroupList(defaultHardware);
         String idString = webRequest.getParameter("groupid");
         if(auth.isAdmin()){
             if (idString != null) {
@@ -83,8 +89,9 @@ public class HardwareMultiController {
     }
 
     @RequestMapping(value="lists/hardware-definitions/list.html",method=RequestMethod.POST)
-    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model){
-        fillAuthResearchGroupList();
+    public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model, HttpServletRequest request){
+        String defaultHardware = messageSource.getMessage("label.defaultHardware", null, RequestContextUtils.getLocale(request));
+        fillAuthResearchGroupList(defaultHardware);
         if(!researchGroupList.isEmpty()){
             fillHardwareList(selectGroupCommand.getResearchGroupId());
         }
@@ -130,9 +137,9 @@ public class HardwareMultiController {
         return "lists/itemDeleted";
     }
 
-    private void fillAuthResearchGroupList(){
+    private void fillAuthResearchGroupList(String defaultName){
         Person loggedUser = personDao.getLoggedPerson();
-        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,"Default Hardware","-");
+        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,defaultName,"-");
 
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
             researchGroupList = researchGroupDao.getAllRecords();
@@ -167,5 +174,16 @@ public class HardwareMultiController {
     public void setHardwareDao(HardwareDao hardwareDao) {
         this.hardwareDao = hardwareDao;
     }
+
+    public HierarchicalMessageSource getMessageSource()
+    {
+        return messageSource;
+    }
+
+    public void setMessageSource(HierarchicalMessageSource messageSource)
+    {
+        this.messageSource = messageSource;
+    }
+
 
 }
