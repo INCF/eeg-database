@@ -16,6 +16,7 @@ public class AddVisualImpairmentValidator implements Validator {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private VisualImpairmentDao visualImpairmentDao;
+    private final int DEFAULT_ID = -1;
 
     public boolean supports(Class clazz) {
         return clazz.equals(AddVisualImpairmentCommand.class);
@@ -26,8 +27,14 @@ public class AddVisualImpairmentValidator implements Validator {
 
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
 
-        if (!visualImpairmentDao.canSaveDescription(data.getDescription(), data.getVisualImpairmentId())) {
-            errors.rejectValue("description", "error.valueAlreadyInDatabase");
+        if(data.getResearchGroupId()==DEFAULT_ID){
+            if (!visualImpairmentDao.canSaveDefaultDescription(data.getDescription(), data.getVisualImpairmentId())) {
+                errors.rejectValue("description", "error.valueAlreadyInDatabase");
+            }
+        }else{
+            if (!visualImpairmentDao.canSaveDescription(data.getDescription(),data.getResearchGroupId(), data.getVisualImpairmentId())) {
+                errors.rejectValue("description", "error.valueAlreadyInDatabase");
+            }
         }
     }
 }

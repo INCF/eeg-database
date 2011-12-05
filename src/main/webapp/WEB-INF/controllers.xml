@@ -644,18 +644,10 @@
     <bean name="fileMetadataParametersMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>
 
-    <bean name="addVisualImpairmentController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentController">
-        <property name="formView" value="lists/eyesDefect/addItemForm"/>
-        <property name="successView" value="redirect:/lists/visual-impairments/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
-        </property>
-    </bean>
-
     <bean name="addHardwareValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
     <bean name="addWeatherValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
     <bean name="addHearingImpairmentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
+    <bean name="addVisualImpairmentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
 
     <bean name="addPersonOptionalParameterController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">

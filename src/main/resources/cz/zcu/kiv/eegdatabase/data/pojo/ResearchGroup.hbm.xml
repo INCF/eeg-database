@@ -44,6 +44,12 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairmentGroupRel"/>
         </set>
+        <set inverse="true" name="visualImpairmentGroupRels">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairmentGroupRel"/>
+        </set>
         <set inverse="true" name="scenarios">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
@@ -93,6 +99,15 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment">
                 <column name="HEARING_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
+        <set inverse="true" name="visualImpairments" table="VISUAL_IMPAIRMENT_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment">
+                <column name="VISUAL_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
 

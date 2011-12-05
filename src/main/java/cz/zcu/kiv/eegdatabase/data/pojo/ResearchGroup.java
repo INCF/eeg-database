@@ -31,9 +31,11 @@ public class ResearchGroup implements Serializable {
     private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
     private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
     private Set<HearingImpairmentGroupRel> hearingImpairmentGroupRels = new HashSet<HearingImpairmentGroupRel>(0);
+    private Set<VisualImpairmentGroupRel> visualImpairmentGroupRels = new HashSet<VisualImpairmentGroupRel>(0);
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
     private Set<Weather> weathers = new HashSet<Weather>(0);
     private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
+    private Set<VisualImpairment> visualImpairments = new HashSet<VisualImpairment>(0);
     private long scn;
 
     public ResearchGroup() {
@@ -187,6 +189,22 @@ public class ResearchGroup implements Serializable {
 
     public void setHearingImpairments(Set<HearingImpairment> hearingImpairments) {
         this.hearingImpairments = hearingImpairments;
+    }
+
+    public Set<VisualImpairmentGroupRel> getVisualImpairmentGroupRels() {
+        return visualImpairmentGroupRels;
+    }
+
+    public void setVisualImpairmentGroupRels(Set<VisualImpairmentGroupRel> visualImpairmentGroupRels) {
+        this.visualImpairmentGroupRels = visualImpairmentGroupRels;
+    }
+
+    public Set<VisualImpairment> getVisualImpairments() {
+        return visualImpairments;
+    }
+
+    public void setVisualImpairments(Set<VisualImpairment> visualImpairments) {
+        this.visualImpairments = visualImpairments;
     }
 }
 

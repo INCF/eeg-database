@@ -10,7 +10,11 @@
     <property name="description" type="string">
       <column length="30" name="DESCRIPTION" not-null="true" unique="true"/>
     </property>
-    <set inverse="false" name="persons" table="VISUAL_IMPAIRMENT_REL">
+    <property name="defaultNumber" type="int">
+        <column name="IS_DEFAULT" precision="1" scale="0"/>
+    </property>
+
+    <set inverse="true" name="persons" table="VISUAL_IMPAIRMENT_REL">
       <key>
         <column name="VISUAL_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
       </key>
@@ -18,5 +22,19 @@
         <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
       </many-to-many>
     </set>
+    <set inverse="false" name="researchGroups" table="VISUAL_IMPAIRMENT_GROUP_REL">
+        <key>
+            <column name="VISUAL_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+            <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-many>
+    </set>
+    <set inverse="true" name="visualImpairmentGroupRels">
+        <key>
+            <column name="VISUAL_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment"/>
+    </set>      
   </class>
 </hibernate-mapping>
