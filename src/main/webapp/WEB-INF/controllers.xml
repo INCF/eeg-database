@@ -625,49 +625,13 @@
 
     <bean name="personDetailController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonDetailController"/>
 
-   <!--
-    <bean name="hearingImpairmentMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.HearingImpairmentMultiController"/>
-
-    <bean name="visualImpairmentMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.VisualImpairmentMultiController"/>
-
-    <bean name="weatherMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.WeatherMultiController"/>
-
-    <bean name="fileMetadataParametersMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.FileMetadataParamDefMultiController"/>  -->
-
-    <bean name="personOptionalParametersMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.PersonOptParamDefMultiController"/>
-
-    <bean name="experimentOptionalParametersMultiController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.ExperimentOptParamDefMultiController"/>
-
     <bean name="addHardwareValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
     <bean name="addWeatherValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
     <bean name="addHearingImpairmentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
     <bean name="addVisualImpairmentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
     <bean name="addFileMetadataParamDefValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefValidator"/>
-
-
-    <bean name="addPersonOptionalParameterController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefController">
-        <property name="formView" value="lists/personAdditionalParams/addItemForm"/>
-        <property name="successView" value="redirect:/lists/person-optional-parameters/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
-        </property>
-    </bean>
-
-    <bean name="addExperimentOptionalParameterController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefController">
-        <property name="formView" value="lists/measurationAdditionalParams/addItemForm"/>
-        <property name="successView" value="redirect:/lists/experiment-optional-parameters/list.html"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefValidator"/>
-        </property>
-    </bean>
+    <bean name="addPersonOptParamDefValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
+    <bean name="addExperimentOptParamDefValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefValidator"/>
 
     <bean name="addExperimentOptParamValController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentOptParamValController">

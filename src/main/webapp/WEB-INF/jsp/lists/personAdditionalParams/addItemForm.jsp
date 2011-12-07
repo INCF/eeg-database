@@ -14,7 +14,7 @@
             <!-- editation -->
             <h1><fmt:message key="pageTitle.editPersonOptionalParameterDefinition"/></h1>
 
-            <c:url value="edit.html?id=${addPersonAdditionalParam.id}" var="formUrl"/>
+            <c:url value="edit.html?id=${addPersonAdditionalParam.id}&groupid=${addFileMetadataParamDef.researchGroupId}" var="formUrl"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
@@ -24,13 +24,14 @@
         </c:otherwise>
     </c:choose>
 
-    <form:form action="${formUrl}" method="post" commandName="addPersonAdditionalParam" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>
+    <form:form action="${formUrl}" method="post" commandName="addPersonOptParamDef" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>
         <fieldset>
-
             <div class="itemBox">
-                <form:label path="paramName" cssClass="textFieldLabel"
-                            cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                        key="label.parameterName"/></form:label>
+                <form:label path="researchGroupTitle" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+                <form:input path="researchGroupTitle" cssClass="textField" value="${addPersonOptParamDef.researchGroupTitle}" disabled="true" maxlength="50" />
+            </div>
+            <div class="itemBox">
+                <form:label path="paramName" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.parameterName"/></form:label>
 
                 <form:input path="paramName" cssClass="textField" cssErrorClass="textField errorField" maxlength="30"/>
 
@@ -38,12 +39,9 @@
             </div>
 
             <div class="itemBox">
-                <form:label path="paramDataType" cssClass="textFieldLabel"
-                            cssErrorClass="textFieldLabel errorLabel"><fmt:message
-                        key="label.parameterDataType"/></form:label>
+                <form:label path="paramDataType" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.parameterDataType"/></form:label>
 
-                <form:input path="paramDataType" cssClass="textField" cssErrorClass="textField errorField"
-                            maxlength="20"/>
+                <form:input path="paramDataType" cssClass="textField" cssErrorClass="textField errorField" maxlength="20"/>
 
                 <form:errors path="paramDataType" cssClass="errorBox"/>
             </div>

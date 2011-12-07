@@ -36,6 +36,10 @@ public class ResearchGroup implements Serializable {
     private Set<Weather> weathers = new HashSet<Weather>(0);
     private Set<FileMetadataParamDef> fileMetadataParamDefs = new HashSet<FileMetadataParamDef>(0);
     private Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels = new HashSet<FileMetadataParamDefGroupRel>(0);
+    private Set<PersonOptParamDef> personOptParamDefs = new HashSet<PersonOptParamDef>(0);
+    private Set<PersonOptParamDefGroupRel> personOptParamDefGroupRels = new HashSet<PersonOptParamDefGroupRel>(0);
+    private Set<ExperimentOptParamDef> experimentOptParamDefs = new HashSet<ExperimentOptParamDef>(0);
+    private Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels = new HashSet<ExperimentOptParamDefGroupRel>(0);
     private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
     private Set<VisualImpairment> visualImpairments = new HashSet<VisualImpairment>(0);
     private long scn;
@@ -223,6 +227,38 @@ public class ResearchGroup implements Serializable {
 
     public void setFileMetadataParamDefGroupRels(Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels) {
         this.fileMetadataParamDefGroupRels = fileMetadataParamDefGroupRels;
+    }
+
+    public Set<PersonOptParamDef> getPersonOptParamDefs() {
+        return personOptParamDefs;
+    }
+
+    public void setPersonOptParamDefs(Set<PersonOptParamDef> personOptParamDefs) {
+        this.personOptParamDefs = personOptParamDefs;
+    }
+
+    public Set<PersonOptParamDefGroupRel> getPersonOptParamDefGroupRels() {
+        return personOptParamDefGroupRels;
+    }
+
+    public void setPersonOptParamDefGroupRels(Set<PersonOptParamDefGroupRel> personOptParamDefGroupRels) {
+        this.personOptParamDefGroupRels = personOptParamDefGroupRels;
+    }
+
+    public Set<ExperimentOptParamDef> getExperimentOptParamDefs() {
+        return experimentOptParamDefs;
+    }
+
+    public void setExperimentOptParamDefs(Set<ExperimentOptParamDef> experimentOptParamDefs) {
+        this.experimentOptParamDefs = experimentOptParamDefs;
+    }
+
+    public Set<ExperimentOptParamDefGroupRel> getExperimentOptParamDefGroupRels() {
+        return experimentOptParamDefGroupRels;
+    }
+
+    public void setExperimentOptParamDefGroupRels(Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels) {
+        this.experimentOptParamDefGroupRels = experimentOptParamDefGroupRels;
     }
 }
 

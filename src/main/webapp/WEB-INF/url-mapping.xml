@@ -82,18 +82,6 @@
 
                 <prop key="lists/index.html">listsIndexController</prop>
 
-                <prop key="lists/visual-impairments/add.html">addVisualImpairmentController</prop>
-                <prop key="lists/visual-impairments/edit.html">addVisualImpairmentController</prop>
-                <prop key="lists/visual-impairments/*.html">visualImpairmentMultiController</prop>
-
-                <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>
-                <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
-                <prop key="lists/person-optional-parameters/*.html">personOptionalParametersMultiController</prop>
-
-                <prop key="lists/experiment-optional-parameters/add.html">addExperimentOptionalParameterController</prop>
-                <prop key="lists/experiment-optional-parameters/edit.html">addExperimentOptionalParameterController</prop>
-                <prop key="lists/experiment-optional-parameters/*.html">experimentOptionalParametersMultiController</prop>
-
                 <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 
                 <!-- the url is without extension so the file can be downloaded with whatever file extension (known issue when using e.g. Opera browser -->

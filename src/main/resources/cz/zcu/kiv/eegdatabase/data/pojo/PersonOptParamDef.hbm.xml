@@ -13,11 +13,28 @@
     <property name="paramDataType" type="string">
       <column length="20" name="PARAM_DATA_TYPE" not-null="true"/>
     </property>
+    <property name="defaultNumber" type="int">
+        <column name="IS_DEFAULT" precision="1" scale="0"/>
+    </property>
     <set inverse="true" name="personOptParamVals">
       <key>
         <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal"/>
     </set>
+    <set inverse="false" name="researchGroups" table="PERSON_OPT_PARAM_GROUP_REL">
+        <key>
+            <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+            <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-many>
+    </set>
+    <set inverse="true" name="personOptParamDefGroupRels">
+        <key>
+            <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef"/>
+    </set>        
   </class>
 </hibernate-mapping>

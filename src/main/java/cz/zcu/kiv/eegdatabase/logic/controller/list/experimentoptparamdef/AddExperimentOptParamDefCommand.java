@@ -8,6 +8,8 @@ public class AddExperimentOptParamDefCommand {
     private int id;
     private String paramName;
     private String paramDataType;
+    private int researchGroupId;
+    private String researchGroupTitle;
 
     public int getId() {
         return id;
@@ -31,5 +33,21 @@ public class AddExperimentOptParamDefCommand {
 
     public void setParamName(String paramName) {
         this.paramName = paramName;
+    }
+
+    public int getResearchGroupId() {
+        return researchGroupId;
+    }
+
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
+    }
+
+    public String getResearchGroupTitle() {
+        return researchGroupTitle;
+    }
+
+    public void setResearchGroupTitle(String researchGroupTitle) {
+        this.researchGroupTitle = researchGroupTitle;
     }
 }

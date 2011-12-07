@@ -108,7 +108,36 @@
                 <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
+        <set inverse="true" name="personOptParamDefGroupRels">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRel"/>
+        </set>
 
+        <set inverse="true" name="personOptParamDefs" table="PERSON_OPT_PARAM_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef">
+                <column name="PERSON_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="experimentOptParamDefGroupRels">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel"/>
+        </set>
+
+        <set inverse="true" name="experimentOptParamDefs" table="EXPERIMENT_OPT_PARAM_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef">
+                <column name="EXPERIMENT_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
         <set inverse="true" name="hearingImpairments" table="HEARING_IMPAIRMENT_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>

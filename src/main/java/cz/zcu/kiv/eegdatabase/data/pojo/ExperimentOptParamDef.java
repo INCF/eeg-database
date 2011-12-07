@@ -28,6 +28,9 @@ public class ExperimentOptParamDef implements java.io.Serializable {
     @Field(name = "paramDataType")}) //use a different field name
   private String paramDataType;
   private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
+  private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+  private Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels = new HashSet<ExperimentOptParamDefGroupRel>(0);
+  private int defaultNumber;
 
   public ExperimentOptParamDef() {
   }
@@ -76,6 +79,30 @@ public class ExperimentOptParamDef implements java.io.Serializable {
   public void setExperimentOptParamVals(Set<ExperimentOptParamVal> experimentOptParamVals) {
     this.experimentOptParamVals = experimentOptParamVals;
   }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
+
+    public Set<ExperimentOptParamDefGroupRel> getExperimentOptParamDefGroupRels() {
+        return experimentOptParamDefGroupRels;
+    }
+
+    public void setExperimentOptParamDefGroupRels(Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels) {
+        this.experimentOptParamDefGroupRels = experimentOptParamDefGroupRels;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
+    }
 }
 
 

@@ -36,11 +36,6 @@
         </key>
         <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef"/>
     </set>  
-  
-      
-      
-      
-      
-      
+
   </class>
 </hibernate-mapping>

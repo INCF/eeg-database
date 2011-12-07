@@ -29,7 +29,7 @@ public class FileMetadataParamDef implements java.io.Serializable {
   private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(0);
   private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
   private Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels = new HashSet<FileMetadataParamDefGroupRel>(0);
-  private int defaultNumber;  
+  private int defaultNumber;
 
   public FileMetadataParamDef() {
   }
