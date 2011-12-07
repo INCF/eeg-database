@@ -27,6 +27,9 @@ public class FileMetadataParamDef implements java.io.Serializable {
 //    @Field(name = "FILEPARAMDATATYPE")}) //use a different field name
   private String paramDataType;
   private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(0);
+  private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+  private Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels = new HashSet<FileMetadataParamDefGroupRel>(0);
+  private int defaultNumber;  
 
   public FileMetadataParamDef() {
   }
@@ -75,6 +78,30 @@ public class FileMetadataParamDef implements java.io.Serializable {
   public void setFileMetadataParamVals(Set<FileMetadataParamVal> fileMetadataParamVals) {
     this.fileMetadataParamVals = fileMetadataParamVals;
   }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
+
+    public Set<FileMetadataParamDefGroupRel> getFileMetadataParamDefGroupRels() {
+        return fileMetadataParamDefGroupRels;
+    }
+
+    public void setFileMetadataParamDefGroupRels(Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels) {
+        this.fileMetadataParamDefGroupRels = fileMetadataParamDefGroupRels;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
+    }
 }
 
 

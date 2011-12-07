@@ -93,6 +93,22 @@
             </many-to-many>
         </set>
 
+        <set inverse="true" name="fileMetadataParamDefGroupRels">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel"/>
+        </set>
+
+        <set inverse="true" name="fileMetadataParamDefs" table="FILE_METADATA_PARAM_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef">
+                <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
         <set inverse="true" name="hearingImpairments" table="HEARING_IMPAIRMENT_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>

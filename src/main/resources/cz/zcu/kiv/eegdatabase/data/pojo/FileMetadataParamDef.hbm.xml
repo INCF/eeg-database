@@ -13,11 +13,34 @@
     <property name="paramDataType" type="string">
       <column length="20" name="PARAM_DATA_TYPE" not-null="true"/>
     </property>
+    <property name="defaultNumber" type="int">
+        <column name="IS_DEFAULT" precision="1" scale="0"/>
+    </property>
     <set inverse="true" name="fileMetadataParamVals">
       <key>
         <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal"/>
     </set>
+    <set inverse="false" name="researchGroups" table="FILE_METADATA_PARAM_GROUP_REL">
+        <key>
+            <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+            <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-many>
+    </set>
+    <set inverse="true" name="fileMetadataParamDefGroupRels">
+        <key>
+            <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
+        </key>
+        <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef"/>
+    </set>  
+  
+      
+      
+      
+      
+      
   </class>
 </hibernate-mapping>

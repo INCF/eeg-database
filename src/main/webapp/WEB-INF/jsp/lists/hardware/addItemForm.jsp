@@ -4,6 +4,10 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="submitDisable">
+  <fmt:message key='button.submitDisable'/>
+</c:set>
+
 <ui:listsTemplate pageTitle="pageTitle.addEditHardwareDefinition">
      <c:choose>
         <c:when test="${addHardware.id > 0}">
@@ -20,7 +24,7 @@
         </c:otherwise>
     </c:choose>
 
-    <form:form action="${formUrl}" method="post" commandName="addHardware" cssClass="standardInputForm">
+    <form:form action="${formUrl}" method="post" commandName="addHardware" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>
 
 
         <fieldset>
@@ -54,7 +58,7 @@
 
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" id="saveButton" />
             </div>
 
         </fieldset>

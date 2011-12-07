@@ -82,18 +82,9 @@
 
                 <prop key="lists/index.html">listsIndexController</prop>
 
-                <!--<prop key="lists/hearing-impairments/add.html">addHearingImpairmentController</prop> -->
-                <!--<prop key="lists/hearing-impairments/edit.html">addHearingImpairmentController</prop> -->
-                <!--<prop key="lists/hearing-impairments/*.html">hearingImpairmentMultiController</prop> -->
-
                 <prop key="lists/visual-impairments/add.html">addVisualImpairmentController</prop>
                 <prop key="lists/visual-impairments/edit.html">addVisualImpairmentController</prop>
                 <prop key="lists/visual-impairments/*.html">visualImpairmentMultiController</prop>
-
-                <!--<prop key="lists/hardware-definitions/add.html">addHardwareController</prop>  -->
-                <!--<prop key="lists/hardware-definitions/edit.html">addHardwareController</prop>   -->
-                <!--<prop key="lists/hardware-definitions/list.html">selectGroupController</prop>  -->
-                <!--<prop key="lists/hardware-definitions/*.html">hardwareMultiController</prop>  -->
 
                 <prop key="lists/person-optional-parameters/add.html">addPersonOptionalParameterController</prop>
                 <prop key="lists/person-optional-parameters/edit.html">addPersonOptionalParameterController</prop>
@@ -102,14 +93,6 @@
                 <prop key="lists/experiment-optional-parameters/add.html">addExperimentOptionalParameterController</prop>
                 <prop key="lists/experiment-optional-parameters/edit.html">addExperimentOptionalParameterController</prop>
                 <prop key="lists/experiment-optional-parameters/*.html">experimentOptionalParametersMultiController</prop>
-
-                <prop key="lists/file-metadata-definitions/add.html">addFileMetadataParameterController</prop>
-                <prop key="lists/file-metadata-definitions/edit.html">addFileMetadataParameterController</prop>
-                <prop key="lists/file-metadata-definitions/*.html">fileMetadataParametersMultiController</prop>
-
-                <!--<prop key="lists/weather-definitions/add.html">addWeatherController</prop>-->
-                <!--<prop key="lists/weather-definitions/edit.html">addWeatherController</prop>-->
-                <!--<prop key="lists/weather-definitions/*.html">weatherMultiController</prop>-->
 
                 <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 

@@ -34,6 +34,8 @@ public class ResearchGroup implements Serializable {
     private Set<VisualImpairmentGroupRel> visualImpairmentGroupRels = new HashSet<VisualImpairmentGroupRel>(0);
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
     private Set<Weather> weathers = new HashSet<Weather>(0);
+    private Set<FileMetadataParamDef> fileMetadataParamDefs = new HashSet<FileMetadataParamDef>(0);
+    private Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels = new HashSet<FileMetadataParamDefGroupRel>(0);
     private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
     private Set<VisualImpairment> visualImpairments = new HashSet<VisualImpairment>(0);
     private long scn;
@@ -205,6 +207,22 @@ public class ResearchGroup implements Serializable {
 
     public void setVisualImpairments(Set<VisualImpairment> visualImpairments) {
         this.visualImpairments = visualImpairments;
+    }
+
+    public Set<FileMetadataParamDef> getFileMetadataParamDefs() {
+        return fileMetadataParamDefs;
+    }
+
+    public void setFileMetadataParamDefs(Set<FileMetadataParamDef> fileMetadataParamDefs) {
+        this.fileMetadataParamDefs = fileMetadataParamDefs;
+    }
+
+    public Set<FileMetadataParamDefGroupRel> getFileMetadataParamDefGroupRels() {
+        return fileMetadataParamDefGroupRels;
+    }
+
+    public void setFileMetadataParamDefGroupRels(Set<FileMetadataParamDefGroupRel> fileMetadataParamDefGroupRels) {
+        this.fileMetadataParamDefGroupRels = fileMetadataParamDefGroupRels;
     }
 }
 

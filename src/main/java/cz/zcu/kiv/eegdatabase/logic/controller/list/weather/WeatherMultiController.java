@@ -138,10 +138,8 @@ public class WeatherMultiController {
 
     private void fillAuthResearchGroupList(String defaultName){
         Person loggedUser = personDao.getLoggedPerson();
-
-        ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,defaultName,"-");
-
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+            ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,defaultName,"-");
             researchGroupList = researchGroupDao.getAllRecords();
             researchGroupList.add(0,defaultGroup);
         }else{
