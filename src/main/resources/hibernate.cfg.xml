@@ -9,8 +9,8 @@
     <property name="hibernate.dialect">
         cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
-    <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students</property>
-    <property name="hibernate.connection.username">JPERGLER</property>
+    <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:EEGERP</property>
+    <property name="hibernate.connection.username">EEGTEST</property>
     <property name="hibernate.connection.password">JPERGLER</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider

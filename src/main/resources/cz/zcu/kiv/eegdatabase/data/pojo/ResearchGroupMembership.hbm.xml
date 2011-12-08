@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership" schema="JPERGLER" table="RESEARCH_GROUP_MEMBERSHIP">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership" schema="EEGTEST" table="RESEARCH_GROUP_MEMBERSHIP">
     <composite-id class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId" name="id">
       <key-property name="personId" type="int">
         <column name="PERSON_ID" precision="22" scale="0"/>

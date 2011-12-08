@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" schema="JPERGLER" table="EXPERIMENT">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" schema="EEGTEST" table="EXPERIMENT">
         <id name="experimentId" type="int">
             <column name="EXPERIMENT_ID" precision="22" scale="0"/>
             <generator class="increment"/>
