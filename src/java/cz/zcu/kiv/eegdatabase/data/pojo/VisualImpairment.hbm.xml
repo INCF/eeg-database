@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment" schema="PBORIK" table="VISUAL_IMPAIRMENT">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment" schema="EEGPRODUCTION" table="VISUAL_IMPAIRMENT">
     <id name="visualImpairmentId" type="int">
       <column name="VISUAL_IMPAIRMENT_ID" precision="22" scale="0"/>
       <generator class="increment"/>

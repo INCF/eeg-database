@@ -13,9 +13,9 @@
         cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
     <property name="hibernate.connection.url">
-            jdbc:oracle:thin:@students.kiv.zcu.cz:1521:students
+            jdbc:oracle:thin:@students.kiv.zcu.cz:1521:EEGERP
     </property>
-    <property name="hibernate.connection.username">jpergler</property>
+    <property name="hibernate.connection.username">EEGPRODUCTION</property>
     <property name="hibernate.connection.password">jpergler</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider

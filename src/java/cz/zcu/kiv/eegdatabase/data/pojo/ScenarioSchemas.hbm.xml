@@ -8,7 +8,7 @@
         Purpose of the document follows.
 -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas" schema="PBORIK" table="SCENARIO_SCHEMA">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas" schema="EEGPRODUCTION" table="SCENARIO_SCHEMA">
     <id name="schemaId" type="int">
       <column name="SCHEMA_ID" precision="22" scale="0"/>
       <generator class="increment"/>
