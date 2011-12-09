@@ -1,82 +1,109 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.dao.VisualImpairmentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class AddEyesDefectToPersonController extends SimpleFormController {
+
+@Controller
+@SessionAttributes("addDefectToPerson")
+public class AddEyesDefectToPersonController {
 
     private Log log = LogFactory.getLog(getClass());
-    private GenericDao<Person, Integer> personDao;
-    private GenericDao<VisualImpairment, Integer> eyesDefectDao;
+    @Autowired
+    private PersonDao personDao;
+    @Autowired
+    private VisualImpairmentDao visualImpairmentDao;
+    @Autowired
+    private ResearchGroupDao researchGroupDao;
 
-    public AddEyesDefectToPersonController() {
-        setCommandClass(AddDefectToPersonCommand.class);
-        setCommandName("addDefectToPerson");
-    }
+    private AddEyesDefectToPersonValidator addEyesDefectToPersonValidator;
 
-    @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+    @Autowired
+	public AddEyesDefectToPersonController(AddEyesDefectToPersonValidator addEyesDefectToPersonValidator){
+		this.addEyesDefectToPersonValidator = addEyesDefectToPersonValidator;
+	}
+
+    @RequestMapping(value="people/add-eyes-defect.html",method=RequestMethod.GET)
+    protected String showForm( ModelMap model){
         log.debug("Preparing data for form");
-        Map map = new HashMap<String, Object>();
+        AddDefectToPersonCommand data = new AddDefectToPersonCommand();
+        model.addAttribute("addDefectToPerson",data);
 
-        log.debug("Loading person info");
-        int personId = Integer.parseInt(request.getParameter("personId"));
-        Person person = personDao.read(personId);
-        map.put("personDetail", person);
+        return "people/addEyesDefectForm";
 
-        log.debug("Loading parameter list for select box");
-        List<VisualImpairment> list = eyesDefectDao.getAllRecords();
-        map.put("eyesDefectParams", list);
-
-        log.debug("Returning map object");
-        return map;
     }
-
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        log.debug("Processing form data.");
-        AddDefectToPersonCommand data = (AddDefectToPersonCommand) command;
-
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addDefectToPerson") AddDefectToPersonCommand data, BindingResult result){
+        addEyesDefectToPersonValidator.validate(data, result);
+        if (result.hasErrors()) {
+            return "people/addEyesDefectForm";
+        }
         log.debug("Creating new object");
-        VisualImpairment defect = eyesDefectDao.read(data.getDefectId());
+        VisualImpairment defect = visualImpairmentDao.read(data.getDefectId());
         Person person = personDao.read(data.getSubjectId());
         defect.getPersons().add(person);
         person.getVisualImpairments().add(defect);
 
         log.debug("Saving data to database");
-        eyesDefectDao.update(defect);
+        visualImpairmentDao.update(defect);
 
-        log.debug("Returning MAV");
-        ModelAndView mav = new ModelAndView(getSuccessView() + data.getSubjectId());
-        return mav;
+        String redirect =  "redirect:/people/detail.html?personId="+data.getSubjectId();
+        return redirect;
+    }
+    @ModelAttribute("eyesDefectParams")
+    private List<VisualImpairment> populateResearchGroupList(){
+        log.debug("Loading parameter list for select box");
+        List<VisualImpairment> list = new ArrayList<VisualImpairment>();
+        Person loggedUser = personDao.getLoggedPerson();
+         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+               list.addAll(visualImpairmentDao.getAllRecords());
+         }else{
+            List<ResearchGroup> researchGroups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+            for(int i =0; i<researchGroups.size();i++){
+            list.addAll(visualImpairmentDao.getRecordsByGroup(researchGroups.get(i).getResearchGroupId()));
+            }
+         }
+
+        return list;
     }
 
-    public GenericDao<VisualImpairment, Integer> getEyesDefectDao() {
-        return eyesDefectDao;
+    @ModelAttribute("personDetail")
+    private Person populatePersonDetail(@RequestParam("personId") String idString){
+        log.debug("Loading person info");
+        int personId = Integer.parseInt(idString);
+        Person person = personDao.read(personId);
+        return person;
     }
 
-    public void setEyesDefectDao(GenericDao<VisualImpairment, Integer> eyesDefectDao) {
-        this.eyesDefectDao = eyesDefectDao;
+    public VisualImpairmentDao getVisualImpairmentDao() {
+        return visualImpairmentDao;
     }
 
-    public GenericDao<Person, Integer> getPersonDao() {
+    public void setVisualImpairmentDao(VisualImpairmentDao visualImpairmentDao) {
+        this.visualImpairmentDao = visualImpairmentDao;
+    }
+
+    public PersonDao getPersonDao() {
         return personDao;
     }
 
-    public void setPersonDao(GenericDao<Person, Integer> personDao) {
+    public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
 }
+

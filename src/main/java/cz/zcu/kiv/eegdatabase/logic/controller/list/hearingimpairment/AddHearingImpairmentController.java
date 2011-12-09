@@ -99,7 +99,7 @@ public class AddHearingImpairmentController{
 
 
     @RequestMapping(method=RequestMethod.POST)
-    protected String onSubmit(@ModelAttribute("addHearingImpairment") AddHearingImpairmentCommand data, BindingResult result,ModelMap model) {
+    protected String onSubmit(@ModelAttribute("addHearingImpairment") AddHearingImpairmentCommand data, BindingResult result) {
         log.debug("Processing form data.");
 
         if (auth.userIsExperimenter() || auth.isAdmin()) {

@@ -1,55 +1,58 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.HearingImpairmentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class AddHearingDefectToPersonController extends SimpleFormController {
+
+@Controller
+@SessionAttributes("addDefectToPerson")
+public class AddHearingDefectToPersonController {
 
     private Log log = LogFactory.getLog(getClass());
-    private GenericDao<Person, Integer> personDao;
-    private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
+    @Autowired
+    private PersonDao personDao;
+    @Autowired
+    private HearingImpairmentDao hearingImpairmentDao;
+    @Autowired
+    private ResearchGroupDao researchGroupDao;
 
-    public AddHearingDefectToPersonController() {
-        setCommandClass(AddDefectToPersonCommand.class);
-        setCommandName("addDefectToPerson");
-    }
+    private AddHearingDefectToPersonValidator addHearingDefectToPersonValidator;
 
-    @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+    @Autowired
+	public AddHearingDefectToPersonController(AddHearingDefectToPersonValidator addHearingDefectToPersonValidator){
+		this.addHearingDefectToPersonValidator = addHearingDefectToPersonValidator;
+	}
+
+    @RequestMapping(value="people/add-hearing-defect.html",method=RequestMethod.GET)
+    protected String showForm( ModelMap model){
         log.debug("Preparing data for form");
-        Map map = new HashMap<String, Object>();
+        AddDefectToPersonCommand data = new AddDefectToPersonCommand();
+        model.addAttribute("addDefectToPerson",data);
 
-        log.debug("Loading person info");
-        int personId = Integer.parseInt(request.getParameter("personId"));
-        Person person = personDao.read(personId);
-        map.put("personDetail", person);
+        return "people/addHearingDefectForm";
 
-        log.debug("Loading parameter list for select box");
-        List<HearingImpairment> list = hearingImpairmentDao.getAllRecords();
-        map.put("hearingDefectParams", list);
-
-        log.debug("Returning map object");
-        return map;
     }
-
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        log.debug("Processing form data.");
-        AddDefectToPersonCommand data = (AddDefectToPersonCommand) command;
-
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addDefectToPerson") AddDefectToPersonCommand data, BindingResult result){
+        addHearingDefectToPersonValidator.validate(data, result);
+        if (result.hasErrors()) {
+            return "people/addHearingDefectForm";
+        }
         log.debug("Creating new object");
         HearingImpairment defect = hearingImpairmentDao.read(data.getDefectId());
         Person person = personDao.read(data.getSubjectId());
@@ -59,24 +62,46 @@ public class AddHearingDefectToPersonController extends SimpleFormController {
         log.debug("Saving data to database");
         hearingImpairmentDao.update(defect);
 
-        log.debug("Returning MAV");
-        ModelAndView mav = new ModelAndView(getSuccessView() + data.getSubjectId());
-        return mav;
+        String redirect =  "redirect:/people/detail.html?personId="+data.getSubjectId();
+        return redirect;
+    }
+    @ModelAttribute("hearingDefectParams")
+    private List<HearingImpairment> populateResearchGroupList(){
+        log.debug("Loading parameter list for select box");
+        List<HearingImpairment> list = new ArrayList<HearingImpairment>();
+        Person loggedUser = personDao.getLoggedPerson();
+         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+               list.addAll(hearingImpairmentDao.getAllRecords());
+         }else{
+            List<ResearchGroup> researchGroups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+            for(int i =0; i<researchGroups.size();i++){
+            list.addAll(hearingImpairmentDao.getRecordsByGroup(researchGroups.get(i).getResearchGroupId()));
+            }
+         }
+        return list;
     }
 
-    public GenericDao<HearingImpairment, Integer> getHearingImpairmentDao() {
+    @ModelAttribute("personDetail")
+    private Person populatePersonDetail(@RequestParam("personId") String idString){
+        log.debug("Loading person info");
+        int personId = Integer.parseInt(idString);
+        Person person = personDao.read(personId);
+        return person;
+    }
+
+    public HearingImpairmentDao getHearingImpairmentDao() {
         return hearingImpairmentDao;
     }
 
-    public void setHearingImpairmentDao(GenericDao<HearingImpairment, Integer> hearingImpairmentDao) {
+    public void setHearingImpairmentDao(HearingImpairmentDao hearingImpairmentDao) {
         this.hearingImpairmentDao = hearingImpairmentDao;
     }
 
-    public GenericDao<Person, Integer> getPersonDao() {
+    public PersonDao getPersonDao() {
         return personDao;
     }
 
-    public void setPersonDao(GenericDao<Person, Integer> personDao) {
+    public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
 }

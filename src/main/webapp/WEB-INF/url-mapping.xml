@@ -58,9 +58,6 @@
                 <prop key="people/detail.html">personDetailController</prop>
                 <prop key="people/add-person.html">addPersonController</prop>
                 <prop key="people/edit.html">editPersonController</prop>
-                <prop key="people/add-optional-parameter.html">addPersonAdditionalParamValueController</prop>
-                <prop key="people/add-hearing-defect.html">addHearingDefectToPersonController</prop>
-                <prop key="people/add-eyes-defect.html">addEyesDefectToPersonController</prop>
 
                 <prop key="scenarios/add-scenario.html">addScenarioController</prop>
                 <prop key="scenarios/add-scenario-schema.html">addScenarioSchemaController</prop>

@@ -97,6 +97,7 @@ public class SimpleVisualImpairmentDao extends SimpleGenericDao<VisualImpairment
         getHibernateTemplate().save(visualImpairmentGroupRel);
     }
 
+
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from VisualImpairment h where h.visualImpairmentId="+id+" ";
         List<Integer> list = getHibernateTemplate().find(hqlQuery);

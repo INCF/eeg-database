@@ -644,7 +644,7 @@
         <property name="validator" ref="addExperimentOptParamValController"/>
     </bean>
 
-    <bean name="addPersonAdditionalParamValueController"
+   <!-- <bean name="addPersonAdditionalParamValueController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueController">
         <property name="formView" value="people/optionalParams/addItemForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
@@ -656,29 +656,12 @@
                 <property name="personOptParamValDao" ref="personOptParamValDao"/>
             </bean>
         </property>
+    </bean> -->
+    <bean name="addPersonAdditionalParamValueValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
+        <property name="personOptParamValDao" ref="personOptParamValDao"/>
     </bean>
-
-    <bean name="addHearingDefectToPersonController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonController">
-        <property name="formView" value="people/addHearingDefectForm"/>
-        <property name="successView" value="redirect:/people/detail.html?personId="/>
-        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
-        <property name="personDao" ref="personDao"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonValidator"/>
-        </property>
-    </bean>
-
-    <bean name="addEyesDefectToPersonController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonController">
-        <property name="formView" value="people/addEyesDefectForm"/>
-        <property name="successView" value="redirect:/people/detail.html?personId="/>
-        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
-        <property name="personDao" ref="personDao"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonValidator"/>
-        </property>
-    </bean>
+    <bean name="addHearingDefectToPersonValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonValidator"/>
+    <bean name="addEyesDefectToPersonValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonValidator"/>
 
     <bean name="downloadMetadataZipController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DownloadMetadataZipController">

@@ -4,11 +4,15 @@
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/"%>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 
+<c:set var="submitDisable">
+  <fmt:message key='button.submitDisable'/>
+</c:set>
+
 <ui:personsTemplate pageTitle="pageTitle.addHearingDefectToPerson">
     <h1><fmt:message key="pageTitle.addHearingDefectToPerson"/></h1>
 
     <c:url value="add-hearing-defect.html?personId=${personDetail.personId}" var="formUrl"/>
-    <form:form action="${formUrl}" method="post" commandName="addDefectToPerson" cssClass="standardInputForm">
+    <form:form action="${formUrl}" method="post" commandName="addDefectToPerson" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>
         <fieldset>
 
             <input type="hidden" name="subjectId" value="${personDetail.personId}" />
@@ -27,7 +31,7 @@
             </div>
 
             <div class="itemBox">
-                <input type="submit" value="<fmt:message key='button.addHearingDefectToPerson'/>" class="submitButton lightButtonLink" />
+                <input type="submit" value="<fmt:message key='button.addHearingDefectToPerson'/>" class="submitButton lightButtonLink" id="saveButton" />
             </div>
 
         </fieldset>
