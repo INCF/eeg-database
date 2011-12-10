@@ -21,6 +21,7 @@ import java.util.List;
  * Time: 13:36
  */
 public class SemanticFactory implements InitializingBean, ApplicationContextAware {
+
     private ApplicationContext context;
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List dataList = new ArrayList();
@@ -51,15 +52,9 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         InputStream is;
         String lang = null;
 
-        if (syntax.equals("rdf") || syntax.equals("owl")) {
-            lang = Syntax.RDF_XML;
-        }
-        else if (syntax.equals("ttl"))
-            lang = Syntax.TURTLE;
-        else if (syntax.equals("n3"))
-            lang = Syntax.N3;
-        else if (syntax.equals("ntriple"))
-            lang = Syntax.N_TRIPLE;
+        lang = syntax.toUpperCase();
+        /*if (! Syntax.isValidSyntaxName(lang))
+            lang = Syntax.RDF_XML;*/
 
         is = creatingJenaBean().getOntologyDocument(lang);
         return is;
@@ -82,7 +77,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         InputStream is;
         OwlApi owlApi;
 
-        is = creatingJenaBean().getOntologyDocument(null);
+        is = creatingJenaBean().getOntologyDocument();
         owlApi = new OwlApiTool(is);
         is = owlApi.convertToSemanticStandard(syntax);
 
