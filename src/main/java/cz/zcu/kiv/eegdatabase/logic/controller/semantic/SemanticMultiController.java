@@ -46,7 +46,7 @@ public class SemanticMultiController extends MultiActionController {
 
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase." + type);
+        response.setHeader("Content-Disposition", "attachment;filename=eegdatabase.owl");
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -81,7 +81,7 @@ public class SemanticMultiController extends MultiActionController {
         typeTransform = request.getParameter("type");
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
-        response.setHeader("Content-Disposition", "attachment;filename=" + "eegdatabase." + typeTransform);
+        response.setHeader("Content-Disposition", "attachment;filename=eegdatabase.owl");
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);

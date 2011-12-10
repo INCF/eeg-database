@@ -52,6 +52,8 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         InputStream is;
         String lang = null;
 
+        if (syntax == null || syntax.equals("owl"))
+            syntax = Syntax.RDF_XML;
         lang = syntax.toUpperCase();
         /*if (! Syntax.isValidSyntaxName(lang))
             lang = Syntax.RDF_XML;*/
