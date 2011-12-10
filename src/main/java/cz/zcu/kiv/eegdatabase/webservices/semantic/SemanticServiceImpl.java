@@ -34,20 +34,21 @@ public class SemanticServiceImpl implements SemanticService {
     }
 
     /**
-     * Transforms POJO object to RDF
+     * Generates an ontology document from POJO objects.
+     * This method gives the Jena's output.
      *
      * @return
      * @throws WebServiceException
      * @throws IOException
      */
-    public DataHandler generateRDF() throws SOAPException {
+    public DataHandler getOntology() throws SOAPException {
         InputStream is = null;
         byte[] bytes = null;
         ByteArrayDataSource rdf = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = semanticFactory.generateRDF(null);
+            is = semanticFactory.generateOntology(null);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
@@ -60,7 +61,8 @@ public class SemanticServiceImpl implements SemanticService {
     }
 
     /**
-     * Transforms POJO object to resources of semantic web
+     * Generates an ontology document from POJO objects.
+     * This method transforms the Jena's output using Owl-Api.
      *
      * @param syntaxType - syntax (rdf,owl,ttl)
      * @return
@@ -69,14 +71,14 @@ public class SemanticServiceImpl implements SemanticService {
      * @throws OWLOntologyStorageException
      * @throws OWLOntologyCreationException
      */
-    public DataHandler generateOWL(String syntaxType) throws SOAPException {
+    public DataHandler getOntologyOwlApi(String syntaxType) throws SOAPException {
         InputStream is = null;
         byte[] bytes = null;
         ByteArrayDataSource owl = null;
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = semanticFactory.transformPOJOToSemanticResource(syntaxType);
+            is = semanticFactory.generateOntologyOwlApi(syntaxType);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }

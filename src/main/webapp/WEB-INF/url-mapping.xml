@@ -106,8 +106,8 @@
                 <prop key="history/search-results.html">searchHistoryController</prop>
                 <prop key="history/graph.html">graphController</prop>
                 <!-- Transformer POJO to resource of semantic web-->
-                <prop key="semantic/generateOWL.html">semanticMultiController</prop>
-                <prop key="semantic/generateRDF.html">semanticMultiController</prop>
+                <prop key="semantic/getOntology.html">semanticMultiController</prop>
+                <prop key="semantic/getOntologyOwlApi.html">semanticMultiController</prop>
 
                 <prop key="experiments/add-experiment.html">addExperimentWizardController</prop>
 

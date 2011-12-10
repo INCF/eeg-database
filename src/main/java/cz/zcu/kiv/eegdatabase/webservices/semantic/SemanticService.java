@@ -26,22 +26,24 @@ public interface SemanticService {
     public boolean isServiceAvailable();
 
     /**
-     * Transforms POJO object to RDF
+     * Generates an ontology document from POJO objects.
+     * This method gives the Jena's output.
      *
      * @return
      * @throws WebServiceException
      * @throws IOException
      */
     @XmlMimeType("application/octet-stream")
-    public DataHandler generateRDF() throws SOAPException;
+    public DataHandler getOntology() throws SOAPException;
 
     /**
-     * Transforms POJO object to resources of semantic web
+     * Generates an ontology document from POJO objects.
+     * This method transforms the Jena's output using Owl-Api.
      *
      * @param type  - syntax (rdf,owl,ttl)
      * @return
      * @throws WebServiceException
      */
     @XmlMimeType("application/octet-stream")
-    public DataHandler generateOWL(String type) throws SOAPException;
+    public DataHandler getOntologyOwlApi(String type) throws SOAPException;
 }

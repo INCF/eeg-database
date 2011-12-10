@@ -47,7 +47,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @return  is - ontology document
      * @throws IOException - if an I/O error occurs.
      */
-    public InputStream generateRDF(String syntax) throws IOException {
+    public InputStream generateOntology(String syntax) throws IOException {
         InputStream is;
         String lang = null;
 
@@ -77,7 +77,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
      * @throws OWLOntologyCreationException - if an error occurs in Owl-Api while loading the ontology.
      * @throws OWLOntologyStorageException - if an error occurs in Owl-Api while creating the output.
      */
-    public InputStream transformPOJOToSemanticResource(String syntax) throws IOException,
+    public InputStream generateOntologyOwlApi(String syntax) throws IOException,
                                     OWLOntologyCreationException, OWLOntologyStorageException {
         InputStream is;
         OwlApi owlApi;

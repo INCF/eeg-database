@@ -37,7 +37,7 @@ public class SemanticMultiController extends MultiActionController {
      * @return
      * @throws Exception
      */
-    public ModelAndView generateRDF(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView getOntology(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         OutputStream out = null;
         InputStream is = null;
@@ -54,7 +54,7 @@ public class SemanticMultiController extends MultiActionController {
         out = response.getOutputStream();
         log.debug("Generating RDF");
 
-        is = semanticFactory.generateRDF(type);
+        is = semanticFactory.generateOntology(type);
 
         copy(is, out);
         out.flush();
@@ -71,7 +71,7 @@ public class SemanticMultiController extends MultiActionController {
      * @return
      * @throws Exception
      */
-    public ModelAndView generateOWL(HttpServletRequest request, HttpServletResponse response) throws Exception {
+    public ModelAndView getOntologyOwlApi(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
         String typeTransform;
         OutputStream out = null;
@@ -88,7 +88,7 @@ public class SemanticMultiController extends MultiActionController {
         response.setBufferSize(headerBufferSize);
         out = response.getOutputStream();
         log.debug("Generating OWL");
-        is = semanticFactory.transformPOJOToSemanticResource(typeTransform);
+        is = semanticFactory.generateOntologyOwlApi(typeTransform);
 
         copy(is, out);
 
