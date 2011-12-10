@@ -7,10 +7,7 @@ import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-import tools.JenaBeanExtension;
-import tools.JenaBeanExtensionTool;
-import tools.OwlApi;
-import tools.OwlApiTool;
+import tools.*;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -55,14 +52,14 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
         String lang = null;
 
         if (syntax.equals("rdf") || syntax.equals("owl")) {
-            lang = JenaBeanExtensionTool.RDF_XML;
+            lang = Syntax.RDF_XML;
         }
         else if (syntax.equals("ttl"))
-            lang = JenaBeanExtensionTool.TURTLE;
+            lang = Syntax.TURTLE;
         else if (syntax.equals("n3"))
-            lang = JenaBeanExtensionTool.N3;
+            lang = Syntax.N3;
         else if (syntax.equals("ntriple"))
-            lang = JenaBeanExtensionTool.N_TRIPLE;
+            lang = Syntax.N_TRIPLE;
 
         is = creatingJenaBean().getOntologyDocument(lang);
         return is;
@@ -100,7 +97,7 @@ public class SemanticFactory implements InitializingBean, ApplicationContextAwar
     private JenaBeanExtensionTool creatingJenaBean() {
         if (jenaBean == null) {
             loadData();
-            jenaBean = new JenaBeanExtensionTool(dataList, null);
+            jenaBean = new JenaBeanExtensionTool(dataList);
         }
         return (JenaBeanExtensionTool) jenaBean;
     }
