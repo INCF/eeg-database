@@ -813,7 +813,9 @@
     <!-- Transformer POJO to resource of semantic web-->
     <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory"/>
     <!-- Creating csv file with our experiments and scenarios for NIF -->
-    <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.CSVFactory"/>
+    <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.CSVFactory">
+        <property name="domain" value="${app.domain}"/>
+    </bean>
     <bean name="nifMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.nif.NIFMultiController">
     </bean>
@@ -850,8 +852,8 @@
             </list>
         </property>
         <!--<property name="validator">
-          <bean class="com.mkyong.common.validator.UserValidator" />
-         </property>-->
+         <bean class="com.mkyong.common.validator.UserValidator" />
+        </property>-->
     </bean>
 
     <bean id="wizardAjaxMultiController"
