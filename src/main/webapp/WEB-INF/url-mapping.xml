@@ -120,6 +120,8 @@
                 <prop key="services/resultsWT.html">waveletController</prop>
                 <prop key="services/fourierForm.html">fastFourierController</prop>
                 <prop key="services/resultsFF.html">fastFourierController</prop>
+
+                 <prop key="nif/getCSVFile.html">nifMultiController</prop>
             </props>
         </property>
     </bean>
