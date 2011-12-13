@@ -14,7 +14,7 @@ import java.io.OutputStream;
 
 
 /**
- * Created by IntelliJ IDEA.
+ * Generating csv file from experiments or scenarios
  * User: pbruha
  * Date: 13.12.11
  * Time: 7:30
@@ -26,27 +26,54 @@ public class NIFMultiController extends MultiActionController {
     private CSVFactory csvFactory;
 
     /**
-     * Generates a csv file from experiments
+     * Generates a csv file from scenarios
      * @param request
      * @param response
      * @return
      * @throws Exception
      */
-     public ModelAndView getCSVFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+     public ModelAndView getScenariosCSVFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
                    log.debug("Controller for creating csv file for NIF");
         OutputStream out = null;
         int headerBufferSize = 8096;
 
         response.setHeader("Content-Type", "text/csv");
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment;filename=eegdatabase.csv");
+        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_scenarios_example_2011.csv");
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);
         response.setBufferSize(headerBufferSize);
 
         log.debug("Generating csv");
-        out = csvFactory.generateCsvFile();
+        out = csvFactory.generateScenariosCsvFile();
+        ByteArrayOutputStream bout = (ByteArrayOutputStream) out;
+        response.getOutputStream().write(bout.toByteArray());
+        return null;
+     }
+
+       /**
+     * Generates a csv file from experiments
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+     public ModelAndView getExperimentsCSVFile(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        log.debug("Controller for csv file with creating experiments for NIF");
+        OutputStream out = null;
+        int headerBufferSize = 8096;
+
+        response.setHeader("Content-Type", "text/csv");
+        response.setContentType("text/csv");
+        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_experiments_example_2011.csv");
+
+        log.debug("Creating output stream");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setBufferSize(headerBufferSize);
+
+        log.debug("Generating csv");
+        out = csvFactory.generateExperimentsCsvFile();
         ByteArrayOutputStream bout = (ByteArrayOutputStream) out;
         response.getOutputStream().write(bout.toByteArray());
         return null;
