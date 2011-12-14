@@ -635,31 +635,9 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.personoptparamdef.AddPersonOptParamDefValidator"/>
     <bean name="addExperimentOptParamDefValidator"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef.AddExperimentOptParamDefValidator"/>
+    <bean name="addExperimentOptParamValValidator"
+              class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentOptParamValValidator"/>
 
-    <bean name="addExperimentOptParamValController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentOptParamValController">
-        <property name="auth" ref="authorizationManager"/>
-        <property name="formView" value="experiments/optionalParams/addItemForm"/>
-        <property name="successView" value="redirect:/experiments/detail.html?experimentId="/>
-        <property name="experimentDao" ref="experimentDao"/>
-        <property name="experimentOptParamValDao" ref="experimentOptParamValDao"/>
-        <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
-        <property name="validator" ref="addExperimentOptParamValController"/>
-    </bean>
-
-    <!-- <bean name="addPersonAdditionalParamValueController"
-         class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueController">
-       <property name="formView" value="people/optionalParams/addItemForm"/>
-       <property name="successView" value="redirect:/people/detail.html?personId="/>
-       <property name="personDao" ref="personDao"/>
-       <property name="personOptParamValDao" ref="personOptParamValDao"/>
-       <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
-       <property name="validator">
-           <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
-               <property name="personOptParamValDao" ref="personOptParamValDao"/>
-           </bean>
-       </property>
-   </bean> -->
     <bean name="addPersonAdditionalParamValueValidator"
           class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
         <property name="personOptParamValDao" ref="personOptParamValDao"/>

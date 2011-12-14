@@ -1,71 +1,65 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.util.HashMap;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
 
-public class AddExperimentOptParamValController
-        extends SimpleFormController
-        implements Validator {
-
+/**
+ * @author František Liška
+ */
+@Controller
+@SessionAttributes("addMeasurationAdditionalParameter")
+public class AddExperimentOptParamValController{
     private Log log = LogFactory.getLog(getClass());
+    @Autowired
     private AuthorizationManager auth;
-    private GenericDao<Experiment, Integer> experimentDao;
+    @Autowired
+    private PersonDao personDao;
+    @Autowired
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
+    private ExperimentDao experimentDao;
+    @Autowired
+    @Qualifier("experimentOptParamValDao")
     private GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao;
-    private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDefDao;
+    @Autowired
+    private ExperimentOptParamDefDao experimentOptParamDefDao;
 
-    public AddExperimentOptParamValController() {
-        setCommandClass(AddExperimentOptParamValCommand.class);
-        setCommandName("addMeasurationAdditionalParameter");
+    private AddExperimentOptParamValValidator addExperimentOptParamValValidator;
+
+    @Autowired
+    public AddExperimentOptParamValController(AddExperimentOptParamValValidator addExperimentOptParamValValidator){
+        this.addExperimentOptParamValValidator = addExperimentOptParamValValidator;
     }
 
-    @Override
-    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        ModelAndView mav = super.showForm(request, response, errors);
 
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        return mav;
-    }
-
-    @Override
-    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+    @RequestMapping(value="experiments/add-optional-parameter.html",method= RequestMethod.GET)
+    protected String showForm(ModelMap model){
         log.debug("Preparing data for form");
-        Map map = new HashMap<String, Object>();
+        AddExperimentOptParamValCommand data = new AddExperimentOptParamValCommand();
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        model.addAttribute("addMeasurationAdditionalParameter", data);
+        return "experiments/optionalParams/addItemForm";
 
-        log.debug("Loading measuration info");
-        int measurationId = Integer.parseInt(request.getParameter("experimentId"));
-        Experiment measuration = experimentDao.read(measurationId);
-        map.put("measurationDetail", measuration);
-
-        log.debug("Loading parameter list for select box");
-        List<ExperimentOptParamDef> list = experimentOptParamDefDao.getAllRecords();
-        map.put("measurationAdditionalParams", list);
-
-        log.debug("Returning map object");
-        return map;
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addMeasurationAdditionalParameter") AddExperimentOptParamValCommand data, BindingResult result){
+        addExperimentOptParamValValidator.validate(data, result);
+        if (result.hasErrors()) {
+            return "experiments/optionalParams/addItemForm";
+        }
+
         log.debug("Processing form data.");
-        AddExperimentOptParamValCommand data = (AddExperimentOptParamValCommand) command;
 
         log.debug("Creating new object");
         ExperimentOptParamVal val = new ExperimentOptParamVal();
@@ -75,44 +69,49 @@ public class AddExperimentOptParamValController
         log.debug("Saving object to database");
         experimentOptParamValDao.create(val);
 
-        log.debug("Returning MAV");
-        ModelAndView mav = new ModelAndView(getSuccessView() + data.getMeasurationFormId());
-        return mav;
+       String redirect =  "redirect:/experiments/detail.html?experimentId="+data.getMeasurationFormId();
+        return redirect;
     }
 
-    public boolean supports(Class clazz) {
-        return clazz.equals(AddExperimentOptParamValCommand.class);
-    }
-
-    public void validate(Object command, Errors errors) {
-        AddExperimentOptParamValCommand data = (AddExperimentOptParamValCommand) command;
-
-        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationFormId()))&&(!auth.isAdmin())) {
-            // First check whether the user has permission to add data
-            errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
-        } else {
-
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paramValue", "required.field");
-
-            if (data.getParamId() < 0) {
-                errors.rejectValue("paramId", "required.field");
+    @ModelAttribute("measurationAdditionalParams")
+    protected List<ExperimentOptParamDef> populateOptParamList(){
+       log.debug("Loading parameter list for select box");
+        List<ExperimentOptParamDef> list = new ArrayList<ExperimentOptParamDef>();
+        Person loggedUser = personDao.getLoggedPerson();
+        if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
+           list.addAll(experimentOptParamDefDao.getAllRecords());
+        }else{
+            List<ResearchGroup> researchGroups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+            for(int i =0; i<researchGroups.size();i++){
+                list.addAll(experimentOptParamDefDao.getRecordsByGroup(researchGroups.get(i).getResearchGroupId()));
             }
-
-            ExperimentOptParamVal val = experimentOptParamValDao.read(new ExperimentOptParamValId(data.getMeasurationFormId(), data.getParamId()));
-            if (val != null) {  // field already exists
-                errors.rejectValue("paramId", "invalid.paramIdAlreadyInserted");
-            }
-
         }
 
+       return list;
     }
 
-    public GenericDao<Experiment, Integer> getExperimentDao() {
-        return experimentDao;
+    @ModelAttribute("measurationDetail")
+    private Experiment populateExperimentDetail(@RequestParam("experimentId") String idString){
+        log.debug("Loading experiment info");
+        int experimentId = Integer.parseInt(idString);
+        Experiment experiment = (Experiment) experimentDao.read(experimentId);
+        return experiment;
     }
 
-    public void setExperimentDao(GenericDao<Experiment, Integer> experimentDao) {
-        this.experimentDao = experimentDao;
+    public PersonDao getPersonDao() {
+        return personDao;
+    }
+
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    public ResearchGroupDao getResearchGroupDao() {
+        return researchGroupDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
     }
 
     public GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> getExperimentOptParamValDao() {
@@ -123,19 +122,20 @@ public class AddExperimentOptParamValController
         this.experimentOptParamValDao = experimentOptParamValDao;
     }
 
-    public GenericDao<ExperimentOptParamDef, Integer> getExperimentOptParamDefDao() {
+    public ExperimentOptParamDefDao getExperimentOptParamDefDao() {
         return experimentOptParamDefDao;
     }
 
-    public void setExperimentOptParamDefDao(GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDefDao) {
+    public void setExperimentOptParamDefDao(ExperimentOptParamDefDao experimentOptParamDefDao) {
         this.experimentOptParamDefDao = experimentOptParamDefDao;
     }
 
-    public AuthorizationManager getAuth() {
-        return auth;
+    public AddExperimentOptParamValValidator getAddExperimentOptParamValValidator() {
+        return addExperimentOptParamValValidator;
     }
 
-    public void setAuth(AuthorizationManager auth) {
-        this.auth = auth;
+    public void setAddExperimentOptParamValValidator(AddExperimentOptParamValValidator addExperimentOptParamValValidator) {
+        this.addExperimentOptParamValValidator = addExperimentOptParamValValidator;
     }
 }
+

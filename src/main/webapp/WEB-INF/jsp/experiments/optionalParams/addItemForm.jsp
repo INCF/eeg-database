@@ -5,11 +5,15 @@
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="f" tagdir="/WEB-INF/tags/format/" %>
 
+<c:set var="submitDisable">
+  <fmt:message key='button.submitDisable'/>
+</c:set>
+
 <ui:experimentsTemplate pageTitle="pageTitle.addExperimentOptionalParameter">
   <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
 
   <c:url value="add-optional-parameter.html?experimentId=${measurationDetail.experimentId}" var="formUrl"/>
-  <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParameter" cssClass="standardInputForm">
+  <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParameter" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>
     <fieldset>
 
       <f:errorBox/>
@@ -39,7 +43,7 @@
 
 
       <div class="itemBox">
-        <input type="submit" value="<fmt:message key='button.addExperimentOptionalParameter'/>" class="submitButton lightButtonLink" />
+        <input type="submit" value="<fmt:message key='button.addExperimentOptionalParameter'/>" class="submitButton lightButtonLink" id="saveButton"/>
       </div>
 
     </fieldset>
