@@ -15,11 +15,6 @@ import java.io.InputStream;
  * To change this template use File | Settings | File Templates.
  */
 public interface SemanticFactory {
-    /**
-     * Creates list of instances of DAO
-     * @throws Exception - Dao objects are not loaded
-     */
-    public void afterPropertiesSet() throws Exception;
 
     /**
      * Generates an ontology document from POJO objects.<br>
@@ -48,13 +43,4 @@ public interface SemanticFactory {
      */
     public InputStream generateOntologyOwlApi(String syntax) throws IOException,
             OWLOntologyCreationException, OWLOntologyStorageException;
-
-    /**
-     * Sets application context.
-     *
-     * @param ac - application context
-     * @throws org.springframework.beans.BeansException
-     *
-     */
-    public void setApplicationContext(ApplicationContext ac);
 }
