@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.semantic;
 
-import cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory;
+import cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
@@ -21,7 +21,7 @@ import java.io.*;
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticService")
 public class SemanticServiceImpl implements SemanticService {
-    private SemanticFactory semanticFactory;
+    private SimpleSemanticFactory simpleSemanticFactory;
     private Log log = LogFactory.getLog(getClass());
 
     /**
@@ -48,7 +48,7 @@ public class SemanticServiceImpl implements SemanticService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = semanticFactory.generateOntology(null);
+            is = simpleSemanticFactory.generateOntology(null);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
@@ -78,7 +78,7 @@ public class SemanticServiceImpl implements SemanticService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = semanticFactory.generateOntologyOwlApi(syntaxType);
+            is = simpleSemanticFactory.generateOntologyOwlApi(syntaxType);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
@@ -98,9 +98,9 @@ public class SemanticServiceImpl implements SemanticService {
 
     /**
      * Setting semantic factory
-     * @param semanticFactory - semantic factory
+     * @param simpleSemanticFactory - semantic factory
      */
-    public void setSemanticFactory(SemanticFactory semanticFactory) {
-        this.semanticFactory = semanticFactory;
+    public void setSimpleSemanticFactory(SimpleSemanticFactory simpleSemanticFactory) {
+        this.simpleSemanticFactory = simpleSemanticFactory;
     }
 }

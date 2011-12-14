@@ -811,9 +811,9 @@
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
     </bean>
     <!-- Transformer POJO to resource of semantic web-->
-    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory"/>
+    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory"/>
     <!-- Creating csv file with our experiments and scenarios for NIF -->
-    <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.CSVFactory">
+    <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
         <property name="domain" value="${app.domain}"/>
     </bean>
     <bean name="nifMultiController"
@@ -822,7 +822,6 @@
 
     <bean name="semanticMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.semantic.SemanticMultiController">
-        <property name="semanticFactory" ref="semanticFactory"/>
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
     </bean>
     <bean name="addExperimentWizardController"

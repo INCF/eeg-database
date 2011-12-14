@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.nif;
 
 import cz.zcu.kiv.eegdatabase.logic.csv.CSVFactory;
+import cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
