@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface FileMetadataParamDefDao extends GenericDao<FileMetadataParamDef
     public FileMetadataParamDefGroupRel getGroupRel(int fileMetadataParamDefId, int researchGroupId);
 
     public void createGroupRel(FileMetadataParamDefGroupRel fileMetadataParamDefGroupRel);
+
+    public void createGroupRel(FileMetadataParamDef fileMetadataParamDef, ResearchGroup researchGroup);
 
     public boolean isDefault(int id);
 }

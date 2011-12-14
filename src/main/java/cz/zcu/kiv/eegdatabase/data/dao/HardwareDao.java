@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -9,6 +10,8 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
     public void createDefaultRecord(Hardware hardware);
 
     public void createGroupRel(HardwareGroupRel hardwareGroupRel);
+
+    public void createGroupRel(Hardware hardware, ResearchGroup researchGroup);
 
     public List<Hardware> getItemsForList();
 

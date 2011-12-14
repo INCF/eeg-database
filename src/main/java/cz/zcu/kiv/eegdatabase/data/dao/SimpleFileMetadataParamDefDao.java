@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
 
 import java.util.List;
 
@@ -64,6 +66,11 @@ public class SimpleFileMetadataParamDefDao extends SimpleGenericDao<FileMetadata
         getHibernateTemplate().save(fileMetadataParamDefGroupRel);
     }
 
+    public void createGroupRel(FileMetadataParamDef fileMetadataParamDef, ResearchGroup researchGroup){
+        fileMetadataParamDef.getResearchGroups().add(researchGroup);
+        researchGroup.getFileMetadataParamDefs().add(fileMetadataParamDef);
+    }
+    
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from FileMetadataParamDef h where h.fileMetadataParamDefId="+id+" ";
         List<Integer> list = getHibernateTemplate().find(hqlQuery);

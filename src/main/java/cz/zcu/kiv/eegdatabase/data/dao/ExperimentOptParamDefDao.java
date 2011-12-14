@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -23,6 +24,8 @@ public interface ExperimentOptParamDefDao extends GenericDao<ExperimentOptParamD
     public ExperimentOptParamDefGroupRel getGroupRel(int experimentOptParamDefId, int researchGroupId);
 
     public void createGroupRel(ExperimentOptParamDefGroupRel experimentOptParamDefGroupRel);
+
+    public void createGroupRel(ExperimentOptParamDef experimentOptParamDef, ResearchGroup researchGroup);
 
     public boolean isDefault(int id);
 }

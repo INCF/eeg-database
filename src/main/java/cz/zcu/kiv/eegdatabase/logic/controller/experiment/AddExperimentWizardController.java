@@ -40,8 +40,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private ScenarioSchemasDao scenarioSchemasDao;
     private PersonDao personDao;
     private ScenarioDao scenarioDao;
-    private GenericDao<Hardware, Integer> hardwareDao;
-    private GenericDao<Weather, Integer> weatherDao;
+    private HardwareDao hardwareDao;
+    private WeatherDao weatherDao;
     private ResearchGroupDao researchGroupDao;
     private AuthorizationManager auth;
     private GenericDao<DataFile, Integer> dataFileDao;
@@ -182,11 +182,13 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
                 Collections.sort(scenarioList);
                 map.put("scenarioList", scenarioList);
 
-                List<Hardware> hardwareList = hardwareDao.getAllRecords();
+                AddExperimentWizardCommand data = (AddExperimentWizardCommand)command;
+                int researchGroupId = data.getResearchGroup();
+                List<Hardware> hardwareList = hardwareDao.getRecordsByGroup(researchGroupId);
+                List<Weather> weatherList = weatherDao.getRecordsByGroup(researchGroupId);
                 map.put("hardwareList", hardwareList);
-
-                List<Weather> weatherList = weatherDao.getAllRecords();
                 map.put("weatherList", weatherList);
+
                 break;
             case 2:
                 break;
@@ -260,6 +262,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         int[] hardwareArray = data.getHardware();
         Set<Hardware> hardwareSet = new HashSet<Hardware>();
         for (int hardwareId : hardwareArray) {
+            System.out.println("hardwareId "+ hardwareId);
             Hardware tempHardware = hardwareDao.read(hardwareId);
             hardwareSet.add(tempHardware);
             tempHardware.getExperiments().add(experiment);
@@ -455,11 +458,19 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         this.experimentDao = experimentDao;
     }
 
-    public GenericDao<Hardware, Integer> getHardwareDao() {
+    public WeatherDao getWeatherDao() {
+        return weatherDao;
+    }
+
+    public void setWeatherDao(WeatherDao weatherDao) {
+        this.weatherDao = weatherDao;
+    }
+
+    public HardwareDao getHardwareDao() {
         return hardwareDao;
     }
 
-    public void setHardwareDao(GenericDao<Hardware, Integer> hardwareDao) {
+    public void setHardwareDao(HardwareDao hardwareDao) {
         this.hardwareDao = hardwareDao;
     }
 
@@ -477,14 +488,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setScenarioDao(ScenarioDao scenarioDao) {
         this.scenarioDao = scenarioDao;
-    }
-
-    public GenericDao<Weather, Integer> getWeatherDao() {
-        return weatherDao;
-    }
-
-    public void setWeatherDao(GenericDao<Weather, Integer> weatherDao) {
-        this.weatherDao = weatherDao;
     }
 
     public ResearchGroupDao getResearchGroupDao() {

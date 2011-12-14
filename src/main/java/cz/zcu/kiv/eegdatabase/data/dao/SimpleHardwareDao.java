@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRelId;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -105,6 +107,11 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
     public void createGroupRel(HardwareGroupRel hardwareGroupRel){
         hardwareGroupRel.getHardware().setDefaultNumber(0);
         getHibernateTemplate().save(hardwareGroupRel);
+    }
+
+    public void createGroupRel(Hardware hardware, ResearchGroup researchGroup){
+        hardware.getResearchGroups().add(researchGroup);
+        researchGroup.getHardwares().add(hardware);
     }
 
     public boolean isDefault(int id){

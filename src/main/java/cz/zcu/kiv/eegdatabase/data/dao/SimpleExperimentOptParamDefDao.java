@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 
 import java.util.List;
 
@@ -63,6 +65,11 @@ public class SimpleExperimentOptParamDefDao extends SimpleGenericDao<ExperimentO
         experimentOptParamDefGroupRel.getExperimentOptParamDef().setDefaultNumber(0);
         getHibernateTemplate().save(experimentOptParamDefGroupRel);
     }
+
+    public void createGroupRel(ExperimentOptParamDef experimentOptParamDef, ResearchGroup researchGroup){
+        experimentOptParamDef.getResearchGroups().add(researchGroup);
+        researchGroup.getExperimentOptParamDefs().add(experimentOptParamDef);
+    }    
 
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from ExperimentOptParamDef h where h.experimentOptParamDefId="+id+" ";

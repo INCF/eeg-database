@@ -93,6 +93,8 @@ public class HibernateDatabaseService implements DataService {
     return membership;
   }
 
+
+
   public boolean userNameInGroup(String userName, int groupId) {
     return personDao.userNameInGroup(userName, groupId);
   }

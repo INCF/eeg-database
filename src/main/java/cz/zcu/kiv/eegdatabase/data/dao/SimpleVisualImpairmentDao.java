@@ -1,7 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairmentGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 
 import java.util.List;
 
@@ -96,7 +98,11 @@ public class SimpleVisualImpairmentDao extends SimpleGenericDao<VisualImpairment
         visualImpairmentGroupRel.getVisualImpairment().setDefaultNumber(0);
         getHibernateTemplate().save(visualImpairmentGroupRel);
     }
-
+    
+    public void createGroupRel(VisualImpairment visualImpairment, ResearchGroup researchGroup){
+        visualImpairment.getResearchGroups().add(researchGroup);
+        researchGroup.getVisualImpairments().add(visualImpairment);
+    }
 
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from VisualImpairment h where h.visualImpairmentId="+id+" ";

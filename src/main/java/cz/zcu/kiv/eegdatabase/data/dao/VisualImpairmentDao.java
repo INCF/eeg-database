@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairmentGroupRel;
 
@@ -24,6 +25,8 @@ public interface VisualImpairmentDao extends GenericDao<VisualImpairment, Intege
     public VisualImpairmentGroupRel getGroupRel(int visualImpairmentId, int researchGroupId);
 
     public void createGroupRel(VisualImpairmentGroupRel visualImpairmentGroupRel);
+
+    public void createGroupRel(VisualImpairment visualImpairment, ResearchGroup researchGroup);
 
     public boolean isDefault(int id);
 

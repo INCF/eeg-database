@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 
 import java.util.List;
 
@@ -63,7 +65,12 @@ public class SimplePersonOptParamDefDao extends SimpleGenericDao<PersonOptParamD
         personOptParamDefGroupRel.getPersonOptParamDef().setDefaultNumber(0);
         getHibernateTemplate().save(personOptParamDefGroupRel);
     }
-
+    
+    public void createGroupRel(PersonOptParamDef personOptParamDef, ResearchGroup researchGroup){
+        personOptParamDef.getResearchGroups().add(researchGroup);
+        researchGroup.getPersonOptParamDefs().add(personOptParamDef);
+    }
+    
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from PersonOptParamDef h where h.personOptParamDefId="+id+" ";
         List<Integer> list = getHibernateTemplate().find(hqlQuery);

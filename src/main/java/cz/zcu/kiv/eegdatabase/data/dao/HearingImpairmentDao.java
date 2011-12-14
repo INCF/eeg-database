@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairmentGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -22,6 +23,8 @@ public interface HearingImpairmentDao extends GenericDao<HearingImpairment, Inte
     public void deleteGroupRel(HearingImpairmentGroupRel hearingImpairmentGroupRel);
 
     public HearingImpairmentGroupRel getGroupRel(int hearingImpairmentId, int researchGroupId);
+
+    public void createGroupRel(HearingImpairment hearingImpairment, ResearchGroup researchGroup);
 
     public void createGroupRel(HearingImpairmentGroupRel hearingImpairmentGroupRel);
 

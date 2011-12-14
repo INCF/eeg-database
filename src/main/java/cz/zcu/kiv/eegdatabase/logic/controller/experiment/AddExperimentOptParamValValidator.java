@@ -24,7 +24,7 @@ public class AddExperimentOptParamValValidator implements Validator {
     private GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao;
 
     public boolean supports(Class clazz) {
-        return clazz.equals(AddPersonAdditionalParamValueCommand.class);
+        return clazz.equals(AddExperimentOptParamValCommand.class);
     }
 
     public void validate(Object command, Errors errors) {

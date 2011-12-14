@@ -20,7 +20,7 @@
   </table>
 
   <h2><fmt:message key="heading.metadata"/></h2>
-  <c:url value="data/detail.html?fileId=${dataDetail.dataFileId}" var="formUrl"/>
+  <c:url value="detail.html?fileId=${dataDetail.dataFileId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addMetadata" cssClass="standardInputForm">
     <fieldset>
 

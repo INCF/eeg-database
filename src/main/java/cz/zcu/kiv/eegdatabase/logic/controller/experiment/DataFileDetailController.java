@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
@@ -32,7 +33,7 @@ public class DataFileDetailController
     private AuthorizationManager auth;
     private GenericDao<DataFile, Integer> dataFileDao;
     private GenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao;
-    private GenericDao<FileMetadataParamDef, Integer> fileMetadataParamDefDao;
+    private FileMetadataParamDefDao fileMetadataParamDefDao;
 
     public DataFileDetailController() {
         setCommandClass(AddFileMetadataCommand.class);
@@ -66,8 +67,7 @@ public class DataFileDetailController
         int fileId = Integer.parseInt(request.getParameter("fileId"));
         DataFile data = dataFileDao.read(fileId);
         map.put("dataDetail", data);
-
-        List<FileMetadataParamDef> list = fileMetadataParamDefDao.getAllRecords();
+        List<FileMetadataParamDef> list = fileMetadataParamDefDao.getRecordsByGroup(data.getExperiment().getResearchGroup().getResearchGroupId());
         map.put("fileMetadataParams", list);
 
         return map;
@@ -137,11 +137,11 @@ public class DataFileDetailController
         this.fileMetadataParamValDao = fileMetadataParamValDao;
     }
 
-    public GenericDao<FileMetadataParamDef, Integer> getFileMetadataParamDefDao() {
+    public FileMetadataParamDefDao getFileMetadataParamDefDao() {
         return fileMetadataParamDefDao;
     }
 
-    public void setFileMetadataParamDefDao(GenericDao<FileMetadataParamDef, Integer> fileMetadataParamDefDao) {
+    public void setFileMetadataParamDefDao(FileMetadataParamDefDao fileMetadataParamDefDao) {
         this.fileMetadataParamDefDao = fileMetadataParamDefDao;
     }
 

@@ -223,12 +223,7 @@
     </bean>
 
 
-    <bean name="createGroupController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupController">
-        <property name="formView" value="groups/createGroupForm"/>
-        <property name="validator">
-            <bean class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator"/>
-        </property>
-    </bean>
+    <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator"/>
 
     <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${email.smtp}"/>
@@ -259,21 +254,7 @@
         <property name="resultDao" ref="serviceResultDao"/>
     </bean>
 
-    <bean name="addExperimentController"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentController">
-        <property name="formView" value="experiments/addExperimentForm"/>
-        <property name="successView" value="redirect:/experiments/my-experiments.html"/>
-        <!-- don't need special view after successfull adding -->
-        <property name="experimentDao" ref="experimentDao"/>
-        <property name="personDao" ref="personDao"/>
-        <property name="scenarioDao" ref="scenarioDao"/>
-        <property name="hardwareDao" ref="hardwareDao"/>
-        <property name="weatherDao" ref="weatherDao"/>
-        <property name="researchGroupDao" ref="researchGroupDao"/>
-        <property name="auth" ref="authorizationManager"/>
-        <property name="validator" ref="addExperimentController"/>
-        <!-- validation by class itself -->
-    </bean>
+    <bean name="addExperimentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentValidator"/>
 
     <!-- Articles -->
     <bean name="articleMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleMultiController">

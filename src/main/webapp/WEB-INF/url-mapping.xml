@@ -46,8 +46,8 @@
                 <prop key="articles/edit-article-comment.html">addArticleCommentController</prop>
                 <prop key="articles/delete-article-comment.html">addArticleCommentController</prop>
 
-                <prop key="experiments/add-experiment.html">addExperimentController</prop>
-                <prop key="experiments/edit.html">addExperimentController</prop>
+                <!--<prop key="experiments/add-experiment.html">addExperimentController</prop> -->
+                <!--<prop key="experiments/edit.html">addExperimentController</prop> -->
                 <prop key="experiments/*.html">experimentsMultiController</prop>
                 <prop key="experiments/data/add.html">addDataFileController</prop>
                 <prop key="experiments/data/detail.html">dataFileDetailController</prop>
@@ -64,8 +64,8 @@
                 <prop key="scenarios/edit.html">addScenarioController</prop>
                 <prop key="scenarios/*.html">scenariosMultiController</prop>
 
-                <prop key="groups/create-group.html">createGroupController</prop>
-                <prop key="groups/edit.html">createGroupController</prop>
+                <!--<prop key="groups/create-group.html">createGroupController</prop>
+                <prop key="groups/edit.html">createGroupController</prop>    -->
                 <prop key="groups/accept-role-request.html">acceptRoleRequestController</prop>
                 <prop key="groups/add-member.html">addMemberToGroupController</prop>
                 <prop key="groups/edit-group-role.html">editGroupRoleController</prop>

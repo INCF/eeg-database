@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 
 import java.util.List;
@@ -130,6 +129,11 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         getHibernateTemplate().save(weatherGroupRel);
     }
 
+    public void createGroupRel(Weather weather, ResearchGroup researchGroup){
+        weather.getResearchGroups().add(researchGroup);
+        researchGroup.getWeathers().add(weather);
+    }
+    
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from Weather h where h.weatherId="+id+" ";
         List<Integer> list = getHibernateTemplate().find(hqlQuery);

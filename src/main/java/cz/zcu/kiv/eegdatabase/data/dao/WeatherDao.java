@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
 
@@ -28,6 +29,8 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
     public void createDefaultRecord(Weather weather);
 
     public void createGroupRel(WeatherGroupRel weatherGroupRel);
+
+    public void createGroupRel(Weather weather, ResearchGroup researchGroup);
 
     public List<Weather> getRecordsByGroup(int groupId);
 

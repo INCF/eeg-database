@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairmentGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 
 import java.util.List;
 
@@ -96,6 +98,11 @@ public class SimpleHearingImpairmentDao extends SimpleGenericDao<HearingImpairme
         hearingImpairmentGroupRel.getHearingImpairment().setDefaultNumber(0);
         getHibernateTemplate().save(hearingImpairmentGroupRel);
     }
+
+    public void createGroupRel(HearingImpairment hearingImpairment, ResearchGroup researchGroup){
+        hearingImpairment.getResearchGroups().add(researchGroup);
+        researchGroup.getHearingImpairments().add(hearingImpairment);
+    }    
 
     public boolean isDefault(int id){
         String hqlQuery = "select h.defaultNumber from HearingImpairment h where h.hearingImpairmentId="+id+" ";

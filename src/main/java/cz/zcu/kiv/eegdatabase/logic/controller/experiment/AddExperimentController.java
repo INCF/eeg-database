@@ -5,58 +5,65 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.BindException;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.SimpleFormController;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
 import java.sql.Timestamp;
-import java.text.ParseException;
 import java.util.*;
 
 /**
- * Controller which processes form for adding experiment. Processes also
- * the form validation.
+ * Controller which processes form for adding experiment.
  *
  * @author Jindra
  */
-public class AddExperimentController
-        extends SimpleFormController
-        implements Validator {
-
+@Controller
+@SessionAttributes("addMeasuration")
+public class AddExperimentController {
     private Log log = LogFactory.getLog(getClass());
+    @Autowired
+    @Qualifier("experimentDao")
     private GenericDao<Experiment, Integer> experimentDao;
+    @Autowired
     private PersonDao personDao;
+    @Autowired
     private ScenarioDao scenarioDao;
-    private GenericDao<Hardware, Integer> hardwareDao;
-    private GenericDao<Weather, Integer> weatherDao;
+    @Autowired
+    private HardwareDao hardwareDao;
+    @Autowired
+    private WeatherDao weatherDao;
+    @Autowired
     private ResearchGroupDao researchGroupDao;
+    @Autowired
     private AuthorizationManager auth;
+    private AddExperimentValidator addExperimentValidator;
 
-    public AddExperimentController() {
-        setCommandClass(AddExperimentCommand.class);
-        setCommandName("addMeasuration");
+    @Autowired
+    public AddExperimentController(AddExperimentValidator addExperimentValidator){
+        this.addExperimentValidator = addExperimentValidator;
     }
 
-    @Override
-    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
-        ModelAndView mav = super.showForm(request, response, errors);
+    /**@RequestMapping(value="experiments/add-experiment.html",method= RequestMethod.GET)
+    protected String showAddForm(ModelMap model) {
         if (!auth.userIsExperimenter()) {
-            mav.setViewName("experiments/userNotExperimenter");
+            return "experiments/userNotExperimenter";
         }
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        return mav;
-    }
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        AddExperimentCommand data = new AddExperimentCommand();
 
-    @Override
-    protected Object formBackingObject(HttpServletRequest request) throws Exception {
-        AddExperimentCommand data = (AddExperimentCommand) super.formBackingObject(request);
+        model.addAttribute("addMeasuration",data);
+        return "experiments/addExperimentForm";
+    }     */
 
-        String measurationIdString = request.getParameter("id");
+    @RequestMapping(value="experiments/edit.html",method= RequestMethod.GET)
+    protected String showEditForm(@RequestParam("id") String measurationIdString, ModelMap model) {
+        if (!auth.userIsExperimenter()) {
+            return "experiments/userNotExperimenter";
+        }
+        model.addAttribute("userIsExperimenter", auth.userIsExperimenter());
+        AddExperimentCommand data = new AddExperimentCommand();
         if (measurationIdString != null) {  // it is a form for editing
             int measurationId = Integer.parseInt(measurationIdString);
 
@@ -115,44 +122,65 @@ public class AddExperimentController
 
             data.setPrivateNote(measuration.isPrivateExperiment());
         }
-
-        return data;
+        model.addAttribute("addMeasuration", data);
+        return "experiments/addExperimentForm";
     }
 
-    @Override
-    protected Map referenceData(HttpServletRequest request) throws Exception {
-        Map map = new HashMap<String, Object>();
-
+    @ModelAttribute("personList")
+    private List<Person> populatePersonList(){
         List<Person> personList = personDao.getAllRecords();
-        map.put("personList", personList);
+        return personList;
+    }
 
+    @ModelAttribute("scenarioList")
+    private List<Scenario> populateScenarioList(){
         List<Scenario> scenarioList = scenarioDao.getAllRecords();
-        map.put("scenarioList", scenarioList);
+        return scenarioList;
+    }
 
-        List<Hardware> hardwareList = hardwareDao.getAllRecords();
-        map.put("hardwareList", hardwareList);
+    @ModelAttribute("hardwareList")
+    private List<Hardware> populateHardwareList(@RequestParam("id") String idString){
+        int experimentId = 0;
+        if(idString!=null){
+            experimentId = Integer.parseInt(idString) ;
+        }
+        int groupId = experimentDao.read(experimentId).getResearchGroup().getResearchGroupId();
+        List<Hardware> list = hardwareDao.getRecordsByGroup(groupId);
+        return list;
+    }
 
-        List<Weather> weatherList = weatherDao.getAllRecords();
-        map.put("weatherList", weatherList);
+    @ModelAttribute("weatherList")
+    private List<Weather> populateWeatherList(@RequestParam("id") String idString){
+        int experimentId = 0;
+        if(idString!=null){
+            experimentId = Integer.parseInt(idString) ;
+        }
+        int groupId = experimentDao.read(experimentId).getResearchGroup().getResearchGroupId();
+        List<Weather> list = weatherDao.getRecordsByGroup(groupId);
+        return list;
+    }
 
-        List<ResearchGroup> researchGroupList =
-                researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
-        map.put("researchGroupList", researchGroupList);
+    @ModelAttribute("researchGroupList")
+    private List<ResearchGroup> populateResearchGroupList(){
+        List<ResearchGroup> researchGroupList = researchGroupDao.getResearchGroupsWhereAbleToWriteInto(personDao.getLoggedPerson());
+        return researchGroupList;
+    }
 
+    @ModelAttribute("defaultGroupId")
+    private int populateDefaultGroupId(){
         ResearchGroup defaultGroup = personDao.getLoggedPerson().getDefaultGroup();
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
-        map.put("defaultGroupId", defaultGroupId);
-
-        return map;
+        return defaultGroupId;
     }
 
-    @Override
-    protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
-        ModelAndView mav = new ModelAndView(getSuccessView());
+    @RequestMapping(method=RequestMethod.POST)
+    protected String onSubmit(@ModelAttribute("addMeasuration") AddExperimentCommand data, BindingResult result, ModelMap model) throws Exception{
+        addExperimentValidator.validate(data, result);
+        if (result.hasErrors()) {
+            return "experiments/addExperimentForm";
+        }
 
-        mav.addObject("userIsExperimenter", (auth.userIsExperimenter())||(auth.isAdmin()));
-
-        AddExperimentCommand data = (AddExperimentCommand) command;
+        model.addAttribute("userIsExperimenter", (auth.userIsExperimenter()) || (auth.isAdmin()));
 
         Experiment experiment;
 
@@ -165,8 +193,7 @@ public class AddExperimentController
             log.debug("Checking the permission level.");
             if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId()))&&(!auth.isAdmin())) {
                 log.debug("User is not owner or co-experimenter - unable to edit experiment. Returning MAV.");
-                mav.setViewName("experiments/unableToEditExperiment");
-                return mav;
+                return "experiments/unableToEditExperiment";
             }
 
             log.debug("Loading existing measuration object");
@@ -189,8 +216,7 @@ public class AddExperimentController
             log.debug("Checking the permission level.");
             if ((!auth.userIsExperimenter())) {
                 log.debug("User is not experimenter - unable to add experiment. Returning MAV.");
-                mav.setViewName("experiments/userNotExperimenter");
-                return mav;
+                return "experiments/userNotExperimenter";
             }
 
             log.debug("Creating new Measuration object");
@@ -264,7 +290,6 @@ public class AddExperimentController
         log.debug("Setting private/public access");
         experiment.setPrivateExperiment(data.isPrivateNote());
 
-
         if (data.getMeasurationId() > 0) {  // editing existing measuration
             log.debug("Saving the Measuration object to database using DAO - update()");
             experimentDao.update(experiment);
@@ -273,87 +298,13 @@ public class AddExperimentController
             experimentDao.create(experiment);
         }
 
-
-        log.debug("Returning MAV object");
-        return mav;
+        return "redirect:/experiments/my-experiments.html";
     }
 
     public boolean supports(Class clazz) {
         return clazz.equals(AddExperimentCommand.class);
     }
 
-    public void validate(Object command, Errors errors) {
-        AddExperimentCommand data = (AddExperimentCommand) command;
-
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startDate", "required.date");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "startTime", "required.time");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endDate", "required.date");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "endTime", "required.time");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "temperature", "required.field");
-
-        if (data.getMeasurationId() > 0) {
-            // Edit of existing experiment
-            // No special actions yet
-        } else {
-            // Creating new experiment
-            if (data.getResearchGroup() == -1) {
-                // research group not chosen
-                errors.rejectValue("researchGroup", "required.researchGroup");
-            } else if (!auth.personAbleToWriteIntoGroup(data.getResearchGroup())) {
-                errors.rejectValue("researchGroup", "invalid.notAbleToAddExperimentInGroup");
-            }
-        }
-
-        if (data.getSubjectPerson() == -1) {  // measured person not chosen
-            errors.rejectValue("subjectPerson", "required.subjectPerson");
-        }
-
-        if (data.getScenario() == -1) {  // scenario not selected
-            errors.rejectValue("scenario", "required.scenario");
-        }
-
-        if (data.getHardware().length == 0) {  // no hardware selected
-            errors.rejectValue("hardware", "required.hardware");
-        }
-
-        if (data.getWeather() == -1) {  // weather not selected
-            errors.rejectValue("weather", "required.weather");
-        }
-
-        try {
-            ControllerUtils.getDateFormat().parse(data.getStartDate());
-        } catch (ParseException ex) {
-            errors.rejectValue("startDate", "invalid.date");
-        }
-
-        try {
-            ControllerUtils.getDateFormat().parse(data.getEndDate());
-        } catch (ParseException ex) {
-            errors.rejectValue("endDate", "invalid.date");
-        }
-
-        try {
-            ControllerUtils.getTimeFormat().parse(data.getStartTime());
-        } catch (ParseException ex) {
-            errors.rejectValue("startTime", "invalid.time");
-        }
-
-        try {
-            ControllerUtils.getTimeFormat().parse(data.getEndTime());
-        } catch (ParseException ex) {
-            errors.rejectValue("endTime", "invalid.time");
-        }
-
-        try {
-            int temp = Integer.parseInt(data.getTemperature());
-            if (temp < -273) {
-                errors.rejectValue("temperature", "invalid.minTemp");
-            }
-        } catch (NumberFormatException e) {
-            errors.rejectValue("temperature", "invalid.temperature");
-        }
-
-    }
 
     public GenericDao<Experiment, Integer> getExperimentDao() {
         return experimentDao;
@@ -363,13 +314,6 @@ public class AddExperimentController
         this.experimentDao = experimentDao;
     }
 
-    public GenericDao<Hardware, Integer> getHardwareDao() {
-        return hardwareDao;
-    }
-
-    public void setHardwareDao(GenericDao<Hardware, Integer> hardwareDao) {
-        this.hardwareDao = hardwareDao;
-    }
 
     public PersonDao getPersonDao() {
         return personDao;
@@ -387,12 +331,28 @@ public class AddExperimentController
         this.scenarioDao = scenarioDao;
     }
 
-    public GenericDao<Weather, Integer> getWeatherDao() {
+    public HardwareDao getHardwareDao() {
+        return hardwareDao;
+    }
+
+    public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
+    }
+
+    public WeatherDao getWeatherDao() {
         return weatherDao;
     }
 
-    public void setWeatherDao(GenericDao<Weather, Integer> weatherDao) {
+    public void setWeatherDao(WeatherDao weatherDao) {
         this.weatherDao = weatherDao;
+    }
+
+    public AddExperimentValidator getAddExperimentValidator() {
+        return addExperimentValidator;
+    }
+
+    public void setAddExperimentValidator(AddExperimentValidator addExperimentValidator) {
+        this.addExperimentValidator = addExperimentValidator;
     }
 
     public ResearchGroupDao getResearchGroupDao() {
