@@ -93,8 +93,9 @@ public class SimpleCSVFactory implements CSVFactory {
         for (Hardware hardware : hardwareSet) {
             if (countOfHardware > 0) {
                 usedHardware = usedHardware + "," + hardware.getTitle();
-            }
+            } else {
             usedHardware = usedHardware+hardware.getTitle();
+            }
             countOfHardware++;
         }
         return usedHardware;
