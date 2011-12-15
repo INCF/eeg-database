@@ -69,7 +69,8 @@ public class FullTextSearchController extends SimpleFormController {
     ArrayList<String> mistakes = new ArrayList<String>();
     FullTextSearchCommand fullTextSearchCommand = (FullTextSearchCommand) command;
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
-    String fullTextQuery = fullTextSearchCommand.getSearchTI();
+    //String fullTextQuery = fullTextSearchCommand.getSearchTI();
+      String fullTextQuery = request.getParameter("searchTI");
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
       Set<FulltextResult> results = new HashSet<FulltextResult>();
       Wrapper w;

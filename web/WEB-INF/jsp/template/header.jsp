@@ -19,7 +19,7 @@
     </div>
   </security:authorize>
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
- <c:url value="/experiments/fulltext.html" var="formUrl"/>
+ <c:url value="/fulltext.html" var="formUrl"/>
  <form:form action="${formUrl}" method="post" commandName="fullTextSearchCommand" cssClass="globalSearch">
       <input type="text" name="searchTI" value="" size="20" class="textfield" />
       <input type="submit" value="<fmt:message key='button.fulltextSearch'/>" name="searchBT" class="button" />
