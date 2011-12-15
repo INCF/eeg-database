@@ -39,7 +39,6 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
     </bean>
 
     <bean id="semanticDataService" class="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl">
-        <property name="semanticFactory" ref="semanticFactory"/>
     </bean>
 
 </beans>

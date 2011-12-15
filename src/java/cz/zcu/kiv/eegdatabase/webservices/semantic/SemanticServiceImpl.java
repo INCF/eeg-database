@@ -5,6 +5,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
@@ -21,6 +22,7 @@ import java.io.*;
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticService")
 public class SemanticServiceImpl implements SemanticService {
+    @Autowired
     private SemanticFactory semanticFactory;
     private Log log = LogFactory.getLog(getClass());
 

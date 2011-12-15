@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.semantic;
 
 import cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -21,6 +22,7 @@ import static org.apache.commons.io.IOUtils.copy;
  */
 public class SemanticMultiController extends MultiActionController {
     private Log log = LogFactory.getLog(getClass());
+    @Autowired
     private SemanticFactory semanticFactory;
 
     public SemanticMultiController() {
@@ -89,14 +91,5 @@ public class SemanticMultiController extends MultiActionController {
         out.flush();
         out.close();
         return null;
-    }
-
-    /**
-     * Sets semantic factory
-     *
-     * @param semanticFactory - semantic factory
-     */
-    public void setSemanticFactory(SemanticFactory semanticFactory) {
-        this.semanticFactory = semanticFactory;
     }
 }
