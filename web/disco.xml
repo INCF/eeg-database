@@ -4,7 +4,7 @@
         <resource name="EEGbase" uuid="nif-0000-08190"/>
         <resource_base_location url="http://eegdatabase.kiv.zcu.cz/"/>
         <technical_contact email="jezekp@kiv.zcu.cz" name="Petr Jezek"/>
-        <update by="DISCO-Dashboard" date="2011/04/05 16:24:06 PDT"/>
+        <update by="DISCO-Dashboard" date="2011/12/15 14:01:06 PDT"/>
     </information>
 
     <services>

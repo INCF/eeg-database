@@ -22,7 +22,7 @@
         comment="EEGbase data example"
         interface-type="data"
         pk_separator = "_"
-        targeturl="http://eegdatabase.kiv.zcu.cz/EEGbase_data_example_2011.csv"
+        targeturl="http://eegdatabase.kiv.zcu.cz/nif/getExperimentsCSVFile.html"
         >
        <parameters >
 					<parameter IOtype="o" id="subject"               name="Subject"             datatype="string" precision="50" pk="1"/>       
@@ -57,7 +57,7 @@
         comment="EEGbase scenario example"
         interface-type="data"
         pk_separator = "_"
-        targeturl="http://eegdatabase.kiv.zcu.cz/EEGbase_scenarios_example_2011.csv"
+        targeturl="http://eegdatabase.kiv.zcu.cz/nif/getScenariosCSVFile.html"
         >
        <parameters >
 					<parameter IOtype="o" id="scenario_title"     name="Scenario title"     datatype="string" precision="50" pk="1"/>       
