@@ -1,9 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.fileupload.FileItemIterator;
@@ -58,6 +55,8 @@ public class WizardAjaxMultiController extends MultiActionController {
     @Autowired
     private PersonDao personDao;
     @Autowired
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
     private ScenarioDao scenarioDao;
     @Autowired
     private JavaMailSenderImpl mailSender;
@@ -88,7 +87,11 @@ public class WizardAjaxMultiController extends MultiActionController {
             weather = new Weather();
             weather.setTitle(weatherTitle);
             weather.setDescription(weatherDescription);
+            weather.setDefaultNumber(0);
             weatherDao.create(weather);
+            AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
+            ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
+            weatherDao.createGroupRel(weather, researchGroup);
             log.debug("Saving attribute - success: true");
             jo.put("success", true);
             log.debug("Saving attribute - weatherId: " + weather.getWeatherId());
@@ -131,7 +134,11 @@ public class WizardAjaxMultiController extends MultiActionController {
             hardware.setTitle(hardwareTitle);
             hardware.setType(hardwareType);
             hardware.setDescription(hardwareDescription);
+            hardware.setDefaultNumber(0);
             hardwareDao.create(hardware);
+            AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
+            ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
+            hardwareDao.createGroupRel(hardware, researchGroup);
             log.debug("Saving attribute - success: true");
             jo.put("success", true);
             log.debug("Saving attribute - hardwareId: " + hardware.getHardwareId());
