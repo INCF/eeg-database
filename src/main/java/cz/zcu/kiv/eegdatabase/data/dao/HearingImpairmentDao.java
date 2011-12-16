@@ -9,9 +9,6 @@ import java.util.List;
 public interface HearingImpairmentDao extends GenericDao<HearingImpairment, Integer> {
     public List<HearingImpairment> getItemsForList();
 
-    //TODO odstranit s wizardem
-    public boolean canSaveDescription(String description, int id);
-
     public boolean canSaveDescription(String description, int groupId, int hearingImpairmentId);
 
     public boolean canDelete(int id);

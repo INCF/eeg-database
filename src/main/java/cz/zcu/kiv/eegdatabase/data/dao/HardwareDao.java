@@ -31,14 +31,9 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
 
     public boolean hasGroupRel(int id);
 
-    /**
-     * Title of hardware must be unique
-     * @param title
-     * @return
-     */
-    public boolean canSaveTitle(String title);
-
     public boolean canSaveTitle(String title, int groupId, int hwId);
+
+    public boolean canSaveNewTitle(String title, int groupId);
 
     public boolean canSaveDefaultTitle(String title, int hwId);
 

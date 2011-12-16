@@ -9,9 +9,6 @@ import java.util.List;
 public interface VisualImpairmentDao extends GenericDao<VisualImpairment, Integer> {
     public List<VisualImpairment> getItemsForList();
 
-    //TODO odstranit s wizardem
-    public boolean canSaveDescription(String description, int id);
-
     public boolean canSaveDescription(String description, int groupId, int visualImpairmentId);
 
     public boolean canDelete(int id);

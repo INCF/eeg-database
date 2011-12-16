@@ -23,8 +23,6 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
      * @return
      */
     public boolean canSaveNewDescription(String description, int groupId);
-    //TODO upravit spolu s wizardem
-    public boolean canSaveNewDescription(String description);
 
     public void createDefaultRecord(Weather weather);
 
@@ -45,6 +43,8 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
     public boolean hasGroupRel(int id);
 
     public boolean canSaveTitle(String title, int groupId, int weatherId);
+
+    public boolean canSaveNewTitle(String title, int groupId);
 
     public boolean canSaveDefaultTitle(String title, int weatherId);
 }

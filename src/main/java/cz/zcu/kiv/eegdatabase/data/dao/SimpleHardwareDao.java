@@ -12,20 +12,6 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         super(Hardware.class);
     }
 
-    /**
-     * Title of hardware must be unique
-     *
-     * @param title - hardware title
-     * @return
-     */
-    public boolean canSaveTitle(String title) {
-        String hqlQuery = "from Hardware h where h.title = :title";
-        String name = "title";
-        Object value = title;
-        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
-        return (list.size() == 0);
-    }
-
     public boolean canDelete(int id) {
         String hqlQuery = "select h.experiments from Hardware h where h.hardwareId = :id";
         String[] names = {"id"};
@@ -64,8 +50,13 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
     }
 
     public boolean canSaveTitle(String title, int groupId, int hwId) {
-        //String hqlQuery = "from Hardware h where h.title = :title and h.hardwareId != :id";
         String hqlQuery = "from Hardware h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.title=\'" + title + "\' and h.hardwareId<>"+hwId+" ";
+        List<Hardware> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() == 0);
+    }
+
+    public boolean canSaveNewTitle(String title, int groupId) {
+        String hqlQuery = "from Hardware h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.title=\'" + title + "\'";
         List<Hardware> list = getHibernateTemplate().find(hqlQuery);
         return (list.size() == 0);
     }

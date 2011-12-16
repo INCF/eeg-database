@@ -81,16 +81,17 @@ public class WizardAjaxMultiController extends MultiActionController {
         Weather weather = null;
         weatherTitle = request.getParameter("title");
         weatherDescription = request.getParameter("description");
+        AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
+        ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
         JSONObject jo = new JSONObject();
-        if (!weatherTitle.equals("") && !weatherDescription.equals("") && weatherDao.canSaveNewDescription(weatherDescription)) {
+        if (!weatherTitle.equals("") && !weatherDescription.equals("") && weatherDao.canSaveNewTitle(weatherTitle,researchGroup.getResearchGroupId())) {
             log.debug("Creating new weather object.");
             weather = new Weather();
             weather.setTitle(weatherTitle);
             weather.setDescription(weatherDescription);
             weather.setDefaultNumber(0);
             weatherDao.create(weather);
-            AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
-            ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
+
             weatherDao.createGroupRel(weather, researchGroup);
             log.debug("Saving attribute - success: true");
             jo.put("success", true);
@@ -121,13 +122,14 @@ public class WizardAjaxMultiController extends MultiActionController {
         String hardwareTitle;
         String hardwareType;
         String hardwareDescription;
-
+        AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
+        ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
         hardwareTitle = request.getParameter("title");
         hardwareType = request.getParameter("type");
         hardwareDescription = request.getParameter("description");
 
         JSONObject jo = new JSONObject();
-        if (!hardwareTitle.equals("") && !hardwareType.equals("") && !hardwareDescription.equals("") && hardwareDao.canSaveTitle(hardwareTitle)) {
+        if (!hardwareTitle.equals("") && !hardwareType.equals("") && !hardwareDescription.equals("") && hardwareDao.canSaveNewTitle(hardwareTitle,researchGroup.getResearchGroupId())) {
             // Creating new
             log.debug("Creating new hardware object.");
             hardware = new Hardware();
@@ -136,8 +138,6 @@ public class WizardAjaxMultiController extends MultiActionController {
             hardware.setDescription(hardwareDescription);
             hardware.setDefaultNumber(0);
             hardwareDao.create(hardware);
-            AddExperimentWizardCommand data = (AddExperimentWizardCommand)request.getSession().getAttribute("cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentWizardController.FORM.addExperimentWizard") ;
-            ResearchGroup researchGroup = researchGroupDao.read(data.getResearchGroup());
             hardwareDao.createGroupRel(hardware, researchGroup);
             log.debug("Saving attribute - success: true");
             jo.put("success", true);

@@ -7,6 +7,7 @@ import java.util.List;
 
 public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> implements WeatherDao {
 
+
     public SimpleWeatherDao() {
         super(Weather.class);
     }
@@ -22,13 +23,6 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         String[] names = {"id"};
         Object[] values = {id};
         List<Weather> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
-        return (list.size() == 0);
-    }
-
-    //TODO odstranit s wizardem
-    public boolean canSaveNewDescription(String description) {
-        String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where h.description=\'" + description + "\'";
-        List<Weather> list = getHibernateTemplate().find(hqlQuery);
         return (list.size() == 0);
     }
 
@@ -74,6 +68,13 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         List<Weather> list = getHibernateTemplate().find(hqlQuery);
         return (list.size() == 0);
     }
+
+    public boolean canSaveNewTitle(String title, int groupId) {
+        String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" and h.title=\'" + title + "\'";
+        List<Weather> list = getHibernateTemplate().find(hqlQuery);
+        return (list.size() == 0);
+    }
+
 
      /**
      * Title of weather must be unique in a research group or between default
