@@ -7,6 +7,7 @@ public class AddExperimentCommand {
 
     private int measurationId;
     private int researchGroup;
+    private String researchGroupTitle;
     private String startDate;
     private String startTime;
     private String endDate;
@@ -130,5 +131,13 @@ public class AddExperimentCommand {
 
     public void setWeatherNote(String weatherNote) {
         this.weatherNote = weatherNote;
+    }
+
+    public String getResearchGroupTitle() {
+        return researchGroupTitle;
+    }
+
+    public void setResearchGroupTitle(String researchGroupTitle) {
+        this.researchGroupTitle = researchGroupTitle;
     }
 }

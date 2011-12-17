@@ -44,7 +44,7 @@ public class AddWeatherController{
         AddWeatherCommand data = new AddWeatherCommand();
         if (auth.userIsExperimenter() || auth.isAdmin()) {
             model.addAttribute("userIsExperimenter", true);
-            if (idString2 != null) {
+                if (idString2 != null) {
                 int id = Integer.parseInt(idString2);
                 data.setResearchGroupId(id);
                  if(id!=DEFAULT_ID){

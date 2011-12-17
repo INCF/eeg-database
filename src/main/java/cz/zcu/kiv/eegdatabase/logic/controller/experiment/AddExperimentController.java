@@ -173,6 +173,14 @@ public class AddExperimentController {
         return defaultGroupId;
     }
 
+    @ModelAttribute("researchGroupTitle")
+    private String fillResearchGroupTitleForExperiment(@RequestParam("id") String idString){
+        log.debug("Loading experiment info");
+        int experimentId = Integer.parseInt(idString);
+        Experiment experiment = (Experiment) experimentDao.read(experimentId);
+        return experiment.getResearchGroup().getTitle();
+    }
+
     @RequestMapping(method=RequestMethod.POST)
     protected String onSubmit(@ModelAttribute("addMeasuration") AddExperimentCommand data, BindingResult result, ModelMap model) throws Exception{
         addExperimentValidator.validate(data, result);

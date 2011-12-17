@@ -19,7 +19,10 @@
       <f:errorBox/>
 
       <input type="hidden" name="measurationFormId" value="${measurationDetail.experimentId}" />
-
+      <div class="itemBox">
+        <form:label path="researchGroupTitle" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+        <form:input path="researchGroupTitle" cssClass="textField" value="${researchGroupTitle}" disabled="true" maxlength="50" />
+      </div>
       <div class="itemBox">
         <form:label path="paramId" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.parameterType"/></form:label>
 

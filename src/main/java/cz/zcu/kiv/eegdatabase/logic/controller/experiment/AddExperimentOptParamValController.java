@@ -98,6 +98,14 @@ public class AddExperimentOptParamValController{
         return experiment;
     }
 
+    @ModelAttribute("researchGroupTitle")
+    private String fillResearchGroupTitleForExperiment(@RequestParam("experimentId") String idString){
+        log.debug("Loading experiment info");
+        int experimentId = Integer.parseInt(idString);
+        Experiment experiment = (Experiment) experimentDao.read(experimentId);
+        return experiment.getResearchGroup().getTitle();
+    }
+
     public PersonDao getPersonDao() {
         return personDao;
     }

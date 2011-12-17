@@ -24,24 +24,31 @@
     <fieldset>
 
       <form:hidden path="measurationId" />
+        <c:choose>
+            <c:when test="${addMeasuration.measurationId <= 0}">
+                <!-- It is edit of existing experiment - we don't want to change the research group -->
+                <div class="itemBox">
+                  <form:label path="researchGroup" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
 
-      <c:if test="${addMeasuration.measurationId <= 0}">
-        <!-- It is edit of existing experiment - we don't want to change the research group -->
-        <div class="itemBox">
-          <form:label path="researchGroup" cssClass="selectBoxLabel" cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+                  <form:select path="researchGroup" cssClass="selectBox" disabled="true">
+                    <form:option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></form:option>
+                    <c:forEach items="${researchGroupList}" var="researchGroup">
+                      <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
+                         <c:out value="${researchGroup.title}" />
+                      </option>
+                    </c:forEach>
+                  </form:select>
 
-          <form:select path="researchGroup" cssClass="selectBox">
-            <form:option value="-1"><fmt:message key="select.option.noResearchGroupSelected"/></form:option>
-            <c:forEach items="${researchGroupList}" var="researchGroup">
-              <option value="${researchGroup.researchGroupId}" label="" <c:if test="${researchGroup.researchGroupId == defaultGroupId}"> selected </c:if> >
-                 <c:out value="${researchGroup.title}" />
-              </option>
-            </c:forEach>
-          </form:select>
-
-          <form:errors path="researchGroup" cssClass="errorBox" />
-        </div>
-      </c:if>
+                  <form:errors path="researchGroup" cssClass="errorBox" />
+                </div>
+            </c:when>
+            <c:otherwise>
+              <div class="itemBox">
+                <form:label path="researchGroupTitle" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.researchGroup"/></form:label>
+                <form:input path="researchGroupTitle" cssClass="textField" value="${researchGroupTitle}" disabled="true" maxlength="50" />
+              </div>
+            </c:otherwise>
+        </c:choose>
 
       <div class="itemBox">
         <label class="textFieldLabel"><fmt:message key="label.startDateTime"/></label>

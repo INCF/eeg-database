@@ -10,6 +10,10 @@
 
   <table class="standardValueTable">
     <tr>
+      <th><fmt:message key="label.researchGroup"/></th>
+      <td><c:out value="${researchGroupTitle}" /></td>
+    </tr>
+    <tr>
       <th><fmt:message key="dataTable.heading.fileName"/></th>
       <td><c:out value="${dataDetail.filename}" /></td>
     </tr>

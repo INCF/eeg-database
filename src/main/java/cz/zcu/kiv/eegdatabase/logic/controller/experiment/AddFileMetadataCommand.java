@@ -8,6 +8,7 @@ public class AddFileMetadataCommand {
     private int dataId;
     private int paramId;
     private String paramValue;
+    private String researchGroupTitle;
 
     public int getDataId() {
         return dataId;
@@ -31,5 +32,13 @@ public class AddFileMetadataCommand {
 
     public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
+    }
+
+    public String getResearchGroupTitle() {
+        return researchGroupTitle;
+    }
+
+    public void setResearchGroupTitle(String researchGroupTitle) {
+        this.researchGroupTitle = researchGroupTitle;
     }
 }

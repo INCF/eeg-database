@@ -3,16 +3,15 @@ package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -66,6 +65,7 @@ public class DataFileDetailController
 
         int fileId = Integer.parseInt(request.getParameter("fileId"));
         DataFile data = dataFileDao.read(fileId);
+        map.put("researchGroupTitle",data.getExperiment().getResearchGroup().getTitle());
         map.put("dataDetail", data);
         List<FileMetadataParamDef> list = fileMetadataParamDefDao.getRecordsByGroup(data.getExperiment().getResearchGroup().getResearchGroupId());
         map.put("fileMetadataParams", list);
@@ -120,6 +120,8 @@ public class DataFileDetailController
             errors.rejectValue("paramId", "invalid.paramIdAlreadyInserted");
         }
     }
+
+
 
     public GenericDao<DataFile, Integer> getDataFileDao() {
         return dataFileDao;
