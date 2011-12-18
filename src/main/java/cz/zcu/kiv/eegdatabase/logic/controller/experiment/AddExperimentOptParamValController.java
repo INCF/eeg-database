@@ -74,17 +74,20 @@ public class AddExperimentOptParamValController{
     }
 
     @ModelAttribute("measurationAdditionalParams")
-    protected List<ExperimentOptParamDef> populateOptParamList(){
+    protected List<ExperimentOptParamDef> populateOptParamList(@RequestParam("experimentId") String idString){
        log.debug("Loading parameter list for select box");
         List<ExperimentOptParamDef> list = new ArrayList<ExperimentOptParamDef>();
         Person loggedUser = personDao.getLoggedPerson();
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
            list.addAll(experimentOptParamDefDao.getAllRecords());
         }else{
-            List<ResearchGroup> researchGroups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
-            for(int i =0; i<researchGroups.size();i++){
-                list.addAll(experimentOptParamDefDao.getRecordsByGroup(researchGroups.get(i).getResearchGroupId()));
+            int experimentId = 0;
+            if(idString!=null){
+                experimentId = Integer.parseInt(idString) ;
             }
+            Experiment e = (Experiment)experimentDao.read(experimentId);
+            int groupId = e.getResearchGroup().getResearchGroupId();
+            return experimentOptParamDefDao.getRecordsByGroup(groupId);
         }
 
        return list;

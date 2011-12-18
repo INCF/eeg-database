@@ -87,6 +87,9 @@ public class CreateGroupController {
     @RequestMapping(method= RequestMethod.POST)
     protected String onSubmit(@ModelAttribute("createGroup") CreateGroupCommand data, BindingResult result, ModelMap model) throws Exception {
         createGroupValidator.validate(data, result);
+        if (result.hasErrors()) {
+            return "groups/createGroupForm";
+        }
 
         log.debug("Processing form data with CreateGroupController.");
         ResearchGroup researchGroup;
@@ -109,32 +112,74 @@ public class CreateGroupController {
 
     private void addDefaultLists(ResearchGroup researchGroup){
         List<Hardware> hardwareList = hardwareDao.getDefaultRecords();
+        Hardware hardware;
+        Weather weather;
+        VisualImpairment visualImpairment;
+        HearingImpairment hearingImpairment;
+        PersonOptParamDef personOptParamDef;
+        FileMetadataParamDef fileMetadataParamDef;
+        ExperimentOptParamDef experimentOptParamDef;
+
         for(int i = 0;i< hardwareList.size();i++){
-            hardwareDao.createGroupRel(hardwareList.get(i),researchGroup);
+            hardware = new Hardware();
+            hardware.setDefaultNumber(0);
+            hardware.setDescription(hardwareList.get(i).getDescription());
+            hardware.setTitle(hardwareList.get(i).getTitle());
+            hardware.setType(hardwareList.get(i).getType());
+            hardwareDao.create(hardware);
+            hardwareDao.createGroupRel(hardware,researchGroup);
         }
         List<Weather> weatherList = weatherDao.getDefaultRecords();
         for(int i = 0;i< weatherList.size();i++){
-            weatherDao.createGroupRel(weatherList.get(i),researchGroup);
+            weather = new Weather();
+            weather.setDefaultNumber(0);
+            weather.setDescription(weatherList.get(i).getDescription());
+            weather.setTitle(weatherList.get(i).getTitle());
+            weatherDao.create(weather);
+            weatherDao.createGroupRel(weather,researchGroup);
         }
         List<VisualImpairment> visualList = visualImpairmentDao.getDefaultRecords();
         for(int i = 0;i< visualList.size();i++){
-            visualImpairmentDao.createGroupRel(visualList.get(i),researchGroup);
+            visualImpairment = new VisualImpairment();
+            visualImpairment.setDefaultNumber(0);
+            visualImpairment.setDescription(visualList.get(i).getDescription());
+            visualImpairmentDao.create(visualImpairment);
+            visualImpairmentDao.createGroupRel(visualImpairment,researchGroup);
         }
         List<HearingImpairment> hearingList = hearingImpairmentDao.getDefaultRecords();
         for(int i = 0;i< hearingList.size();i++){
-            hearingImpairmentDao.createGroupRel(hearingList.get(i),researchGroup);
+            hearingImpairment = new HearingImpairment();
+            hearingImpairment.setDefaultNumber(0);
+            hearingImpairment.setDescription(hearingList.get(i).getDescription());
+            hearingImpairmentDao.create(hearingImpairment);
+            hearingImpairmentDao.createGroupRel(hearingImpairment,researchGroup);
         }
         List<PersonOptParamDef> personOptParamDefList = personOptParamDefDao.getDefaultRecords();
         for(int i = 0;i< personOptParamDefList.size();i++){
-            personOptParamDefDao.createGroupRel(personOptParamDefList.get(i),researchGroup);
+            personOptParamDef = new PersonOptParamDef();
+            personOptParamDef.setDefaultNumber(0);
+            personOptParamDef.setParamDataType(personOptParamDefList.get(i).getParamDataType());
+            personOptParamDef.setParamName(personOptParamDefList.get(i).getParamName());
+            personOptParamDefDao.create(personOptParamDef);
+            personOptParamDefDao.createGroupRel(personOptParamDef,researchGroup);
         }
         List<FileMetadataParamDef> fileMetadataParamDefList = fileMetadataParamDefDao.getDefaultRecords();
         for(int i = 0;i< fileMetadataParamDefList.size();i++){
-            fileMetadataParamDefDao.createGroupRel(fileMetadataParamDefList.get(i),researchGroup);
+            fileMetadataParamDef = new FileMetadataParamDef();
+            fileMetadataParamDef.setDefaultNumber(0);
+            fileMetadataParamDef.setParamDataType(fileMetadataParamDefList.get(i).getParamDataType());
+            fileMetadataParamDef.setParamName(fileMetadataParamDefList.get(i).getParamName());
+            fileMetadataParamDefDao.create(fileMetadataParamDef);
+            fileMetadataParamDefDao.createGroupRel(fileMetadataParamDef,researchGroup);
         }
         List<ExperimentOptParamDef> experimentOptParamDefList = experimentOptParamDefDao.getDefaultRecords();
         for(int i = 0;i< experimentOptParamDefList.size();i++){
-            experimentOptParamDefDao.createGroupRel(experimentOptParamDefList.get(i),researchGroup);
+            experimentOptParamDef = new ExperimentOptParamDef();
+            experimentOptParamDef.setDefaultNumber(0);
+            experimentOptParamDef.setParamDataType(experimentOptParamDefList.get(i).getParamDataType());
+            experimentOptParamDef.setParamName(experimentOptParamDefList.get(i).getParamName());
+            experimentOptParamDefDao.create(experimentOptParamDef);
+            experimentOptParamDefDao.createGroupRel(experimentOptParamDef,researchGroup);
         }
     }
 

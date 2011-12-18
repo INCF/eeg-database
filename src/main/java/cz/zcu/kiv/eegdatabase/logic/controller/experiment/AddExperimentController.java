@@ -144,8 +144,8 @@ public class AddExperimentController {
         if(idString!=null){
             experimentId = Integer.parseInt(idString) ;
         }
-        int groupId = experimentDao.read(experimentId).getResearchGroup().getResearchGroupId();
-        List<Hardware> list = hardwareDao.getRecordsByGroup(groupId);
+            int groupId = experimentDao.read(experimentId).getResearchGroup().getResearchGroupId();
+            List<Hardware> list = hardwareDao.getRecordsByGroup(groupId);
         return list;
     }
 
@@ -305,8 +305,8 @@ public class AddExperimentController {
             log.debug("Saving the Measuration object to database using DAO - create()");
             experimentDao.create(experiment);
         }
-
-        return "redirect:/experiments/my-experiments.html";
+        String redirect = "redirect:/experiments/detail.html?experimentId="+experiment.getExperimentId();
+        return redirect;
     }
 
     public boolean supports(Class clazz) {
