@@ -65,12 +65,12 @@ public class FullTextSearchController extends SimpleFormController {
   @Override
   protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException errors) throws Exception {
     logger.debug("Full text search controller");
-    ModelAndView mav = new ModelAndView(getSuccessView());
+    ModelAndView mav = new ModelAndView("search/fulltext");
     ArrayList<String> mistakes = new ArrayList<String>();
     FullTextSearchCommand fullTextSearchCommand = (FullTextSearchCommand) command;
     logger.debug("I have fullTextSearchCommand: " + fullTextSearchCommand);
-    //String fullTextQuery = fullTextSearchCommand.getSearchTI();
-      String fullTextQuery = request.getParameter("searchTI");
+    String fullTextQuery = fullTextSearchCommand.getSearchTI();
+    //  String fullTextQuery = request.getParameter("searchTI");
     if (!fullTextQuery.equals("") && !fullTextQuery.startsWith("*")) {
       Set<FulltextResult> results = new HashSet<FulltextResult>();
       Wrapper w;

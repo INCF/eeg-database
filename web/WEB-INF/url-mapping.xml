@@ -117,7 +117,8 @@
                 <prop key="scenarios/download-xml.html">scenarioXMLDownloadController</prop>
 
                 <!-- Full text search-->
-                <prop key="fulltext.html">fullTextSearchController</prop>
+                <prop key="search/index.html">fullTextSearchController</prop>
+                <prop key="search/fulltext.html">fullTextSearchController</prop>
                 <!-- Advanced search-->
                 <prop key="scenarios/search-results.html">scenarioSearcherController</prop>
                 <prop key="scenarios/search.html">scenarioSearcherController</prop>
