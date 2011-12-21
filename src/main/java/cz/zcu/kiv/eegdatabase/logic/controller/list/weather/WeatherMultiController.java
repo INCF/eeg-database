@@ -41,11 +41,9 @@ public class WeatherMultiController {
     private final int DEFAULT_ID = -1;
 
     @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.GET)
-    public String showSelectForm(WebRequest webRequest,ModelMap model, HttpServletRequest request){
+    public String showSelectForm(WebRequest webRequest,ModelMap model){
         log.debug("Processing weather list controller");
         SelectGroupCommand selectGroupCommand= new SelectGroupCommand();
-        String defaultWeather = messageSource.getMessage("label.defaultWeather", null, RequestContextUtils.getLocale(request));
-        fillAuthResearchGroupList(defaultWeather);
         String idString = webRequest.getParameter("groupid");
         if(auth.isAdmin()){
             if (idString != null) {
@@ -81,22 +79,16 @@ public class WeatherMultiController {
         }
         model.addAttribute("selectGroupCommand",selectGroupCommand);
         model.addAttribute("weatherList", weatherList);
-        model.addAttribute("researchGroupList", researchGroupList);
-
-
         return "lists/weather/list";
     }
 
     @RequestMapping(value="lists/weather-definitions/list.html",method=RequestMethod.POST)
     public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model, HttpServletRequest request){
-        String defaultWeather = messageSource.getMessage("label.defaultWeather", null, RequestContextUtils.getLocale(request));
-        fillAuthResearchGroupList(defaultWeather);
         if(!researchGroupList.isEmpty()){
             fillWeatherList(selectGroupCommand.getResearchGroupId());
         }
         boolean canEdit = auth.isAdmin() || auth.userIsExperimenter();
         model.addAttribute("userIsExperimenter", canEdit);
-        model.addAttribute("researchGroupList", researchGroupList);
         model.addAttribute("weatherList", weatherList);
         return "lists/weather/list";
     }
@@ -136,7 +128,9 @@ public class WeatherMultiController {
         return "lists/itemDeleted";
     }
 
-    private void fillAuthResearchGroupList(String defaultName){
+    @ModelAttribute("researchGroupList")
+    private List<ResearchGroup> fillAuthResearchGroupList(HttpServletRequest request){
+        String defaultName = messageSource.getMessage("label.defaultWeather", null, RequestContextUtils.getLocale(request));
         Person loggedUser = personDao.getLoggedPerson();
         if(loggedUser.getAuthority().equals("ROLE_ADMIN")){
             ResearchGroup defaultGroup = new ResearchGroup(DEFAULT_ID,loggedUser,defaultName,"-");
@@ -145,6 +139,7 @@ public class WeatherMultiController {
         }else{
             researchGroupList = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
         }
+        return researchGroupList;
     }
 
     private void fillWeatherList(int selectedGroupId){
