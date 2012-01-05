@@ -95,6 +95,8 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (jenaBean == null) {
             loadData();
             jenaBean = new JenaBeanExtensionTool(dataList);
+            jenaBean.setBasePackage("cz.zcu.kiv.eegdatabase.data.pojo");
+            jenaBean.setOntology(new OntologyProperties("kiv.zcu.cz/eegdatabase"));
         }
         return (JenaBeanExtensionTool) jenaBean;
     }
