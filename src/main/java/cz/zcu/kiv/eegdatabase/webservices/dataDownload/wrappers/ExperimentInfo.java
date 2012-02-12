@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
 
+import java.util.List;
+
 /**
  * Class for gathering few important information about experiment.
  * Meant to be sent to user.
@@ -20,6 +22,7 @@ public class ExperimentInfo {
     private String weatherNote;
     private int privateFlag;
     private String title;
+    private List<Integer> hwIds;
     private long scn;
 
     /**
@@ -251,5 +254,21 @@ public class ExperimentInfo {
      */
     public void setScn(long scn) {
         this.scn = scn;
+    }
+
+    /**
+     * Getter of used HW identifiers.
+     * @return list of HW identifiers
+     */
+    public List<Integer> getHwIds() {
+        return hwIds;
+    }
+
+    /**
+     * Setter of used HW identifiers.
+     * @param hwIds list of HW identifiers
+     */
+    public void setHwIds(List<Integer> hwIds) {
+        this.hwIds = hwIds;
     }
 }

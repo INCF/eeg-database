@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
 
+import java.util.List;
+
 /**
  * Class for gathering few important information about hardware.
  * Meant to be sent to user.
@@ -13,6 +15,7 @@ public class HardwareInfo {
     private long scn;
     private String title;
     private String type;
+    private List<Integer> experimentIds;
 
     /**
      * Getter of HW description.
@@ -101,5 +104,20 @@ public class HardwareInfo {
      */
     public void setType(String type) {
         this.type = type;
+    }
+
+    /**
+       Getter of Experiment ids in which the HW is used.
+     */
+    public List<Integer> getExperimentIds() {
+        return experimentIds;
+    }
+
+    /**
+       Setter of Experiment ids in which the HW is used.
+     * @param experimentIds list of experiment ids
+     */
+    public void setExperimentIds(List<Integer> experimentIds) {
+        this.experimentIds = experimentIds;
     }
 }

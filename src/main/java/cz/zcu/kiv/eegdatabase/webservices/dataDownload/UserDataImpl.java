@@ -93,7 +93,6 @@ public class UserDataImpl implements UserDataService {
         experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(oracleScn, personDao.getLoggedPerson().getPersonId()));
 
         for (Experiment experiment : experiments) {
-
             ExperimentInfo info = new ExperimentInfo();
             info.setExperimentId(experiment.getExperimentId());
             info.setOwnerId(experiment.getPersonByOwnerId().getPersonId());
@@ -108,6 +107,13 @@ public class UserDataImpl implements UserDataService {
             info.setTemperature(experiment.getTemperature());
             info.setTitle(experiment.getScenario().getTitle());
             info.setScn(experiment.getScn());
+
+            List<Integer> hwIds = new ArrayList<Integer>();
+            for(Hardware hw : experiment.getHardwares()){
+               hwIds.add(hw.getHardwareId());
+            }
+
+            info.setHwIds(hwIds);
 
             exps.add(info);
 
@@ -230,12 +236,18 @@ public class UserDataImpl implements UserDataService {
 
         for(Hardware piece : hardwareDb){
             HardwareInfo info = new HardwareInfo();
+            List<Integer> experimentIds = new ArrayList<Integer>();
 
             info.setDescription(piece.getDescription());
             info.setHardwareId(piece.getHardwareId());
             info.setScn(piece.getScn());
             info.setTitle(piece.getTitle());
             info.setType(piece.getType());
+
+            for(Experiment exp : piece.getExperiments()){
+               experimentIds.add(exp.getExperimentId());
+            }
+            info.setExperimentIds(experimentIds);
 
             hardware.add(info);
         }
