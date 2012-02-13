@@ -1,0 +1,47 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SUBJECTS_XML" id="D41D7A96-D594-F507-C8C5-22DD30DC4C21" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:39 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <logging>YES</logging>
+   <partitionedRowMovement>DISABLE</partitionedRowMovement>
+   <segment>8F8475D0-86B4-6862-7863-08E550C65E95</segment>
+   <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+   <lobStorages>
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="NAMESPACES1753_L" id="C2128DE7-C546-C685-A2C3-3721A35290B2">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <chunk>8192</chunk>
+         <column>&amp;quot;XMLEXTRA&amp;quot;.&amp;quot;NAMESPACES&amp;quot;</column>
+         <logging>YES</logging>
+         <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+      </LobStorage>
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="EXTRADATA1752_L" id="3C9DFB24-6282-6C08-91E3-06F7B72B3901">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <chunk>8192</chunk>
+         <column>&amp;quot;XMLEXTRA&amp;quot;.&amp;quot;EXTRADATA&amp;quot;</column>
+         <logging>YES</logging>
+         <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+      </LobStorage>
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="SYS_XDBPD$1751_L" id="2090BA78-F2A9-5FB2-34D0-0C6FB1144EE2">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <chunk>8192</chunk>
+         <column>&amp;quot;XMLDATA&amp;quot;.&amp;quot;SYS_XDBPD$&amp;quot;</column>
+         <logging>YES</logging>
+         <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+      </LobStorage>
+   </lobStorages>
+</TableProxyOraclev11g>

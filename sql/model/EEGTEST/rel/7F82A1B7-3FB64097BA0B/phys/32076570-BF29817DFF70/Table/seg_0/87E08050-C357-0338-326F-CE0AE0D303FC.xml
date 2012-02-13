@@ -1,0 +1,144 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SCENARIO" id="87E08050-C357-0338-326F-CE0AE0D303FC" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:39 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <logging>YES</logging>
+   <partitionedRowMovement>DISABLE</partitionedRowMovement>
+   <segment>8F8475D0-86B4-6862-7863-08E550C65E95</segment>
+   <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="MIMETYPE" id="0B69D19A-9364-1674-EEA2-58B6974AF4BC">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="DESCRIPTION" id="5E3A3FBB-7146-5E7B-B6D3-49A92D92E70A">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="PRIVATE" id="7B446A96-5A5C-0FE7-62B2-0C2BAE0D5673">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <defaultValue>0 </defaultValue>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="TITLE" id="7E9D0E73-4991-004C-184A-5BECD4491E6D">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="RESEARCH_GROUP_ID" id="92DD7AD6-5927-8D9E-1B4D-B96AA96CC9A7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="SCENARIO_LENGTH" id="B650FCBC-E79A-C44E-B875-CB4EB29FFBE3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="SCENARIO_ID" id="BD40AE56-46A5-E4FF-AAAB-4FF2298404FC">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="OWNER_ID" id="C3A8A6E8-34F8-E891-688A-8541D941F8E7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="SCENARIO_NAME" id="ECC9D1DD-F1AD-42B4-ADA5-897896CB291B">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:42 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:42 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <indexProxies>
+      <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IX_SYS_C0011581" id="4BF81653-A301-A181-2B30-0FBC5C944D00">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:45 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:45 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <segment>68A78C4D-9EA6-9E84-FD14-FA8D39EE76DB</segment>
+         <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+      </IndexProxy>
+      <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IX_SYS_C0011577" id="6BD3EDE4-4CD3-DF4F-2311-C8948F5F4466">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:45 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:45 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <segment>68A78C4D-9EA6-9E84-FD14-FA8D39EE76DB</segment>
+         <tableSpace>310670C7-2717-DB03-126F-D08CEC3CFB24</tableSpace>
+      </IndexProxy>
+   </indexProxies>
+   <foreignKeys>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="INSERTED_IN_GROUP" id="006D610F-C46C-3DBE-7548-AF9946985880">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SCENARIO_SCENARIO_TYPE_PA_FK1" id="B25C5B1A-E04E-82D0-CF12-FA8DC8BD7485">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SCENARIO_OWNER" id="D8A158B6-C23E-9374-4718-62BE252204ED">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+   </foreignKeys>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="SYS_C0011577" id="FA04010D-B945-661C-1043-D8F16CEC5D28">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:51 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:51 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <existingIndex>6BD3EDE4-4CD3-DF4F-2311-C8948F5F4466</existingIndex>
+         <indexSort>NO</indexSort>
+         <usingIndex>BY INDEX NAME</usingIndex>
+      </PrimaryKey>
+   </primaryKeys>
+   <uniqueKeys>
+      <UniqueKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.UniqueOraclev10g" name="SYS_C0011581" id="55C05E3C-DC62-C85C-B591-2A041AD8D02D">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:51 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:51 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <existingIndex>4BF81653-A301-A181-2B30-0FBC5C944D00</existingIndex>
+         <usingIndex>BY INDEX NAME</usingIndex>
+      </UniqueKey>
+   </uniqueKeys>
+</TableProxyOraclev11g>

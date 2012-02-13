@@ -1,0 +1,116 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" id="9667BCD0-BA84-5369-EDB5-A14742FBB228" directorySegmentName="seg_0" name="WEATHER">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:39 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:53 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <schemaObject>8945A203-FCC8-E1C9-12D2-E2F935575BFF</schemaObject>
+   <pkName>SYS_C0011588</pkName>
+   <fonts>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Title</foType>
+         <fontStyle>1</fontStyle>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Column</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Datatype</foType>
+         <colorRGB>-16744448</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>PK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>FK Element</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>UK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Not Null</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Key</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+   </fonts>
+   <columns>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="WEATHER_ID" id="B05FB0B9-7039-3D22-03D9-D012AA916BAA">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:43 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:43 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypeSize>22</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="5D874DAB-5062-1C8E-5C44-717C257E589B">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:43 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:43 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <nullsAllowed>true</nullsAllowed>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>30 BYTE</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="TITLE" id="A2A0971B-D6E8-30D8-44E5-FD54B6C42D57">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:43 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:43 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT024</logicalDatatype>
+         <dataTypeSize>30 BYTE</dataTypeSize>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="IS_DEFAULT" id="AC171C06-C0B1-C5A3-D61C-319F16C1678F">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:43 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:43 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <defaultValue>&amp;apos;1&amp;apos; </defaultValue>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypePrecision>1</dataTypePrecision>
+         <dataTypeSize>22</dataTypeSize>
+      </Column>
+   </columns>
+   <indexes>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="7B205782-D92F-C733-A28C-1AC0968D3707" name="SYS_C0011588">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:53 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:53 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <pk>true</pk>
+         <indexState>Primary Constraint</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="B05FB0B9-7039-3D22-03D9-D012AA916BAA"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="A51B1104-CAC0-478E-3A8D-25EA93785C05" name="IX_SYS_C0011588">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:45 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:53 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <schemaObject>8945A203-FCC8-E1C9-12D2-E2F935575BFF</schemaObject>
+         <indexState>Unique Plain Index</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="B05FB0B9-7039-3D22-03D9-D012AA916BAA"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+   </indexes>
+</Table>

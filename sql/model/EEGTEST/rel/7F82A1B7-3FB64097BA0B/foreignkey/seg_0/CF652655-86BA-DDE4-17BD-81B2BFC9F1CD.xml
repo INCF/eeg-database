@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="CF652655-86BA-DDE4-17BD-81B2BFC9F1CD" directorySegmentName="seg_0" name="MEAS_ADD_PARAMS_VAL_ID_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>02E25D17-381B-86CD-AF9C-FB42AAEA52A6</containerWithKeyObject>
+   <deleteRule>CASCADE</deleteRule>
+   <localFKIndex>DAEE3B26-499A-E572-BB08-2EC57659AAC8</localFKIndex>
+   <keyObject>C639CF45-6EAE-7A95-467F-1ED044EB17DC</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>

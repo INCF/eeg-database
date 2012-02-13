@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="1B263F80-E99A-4987-3DA6-6BDD5AD2DC06" directorySegmentName="seg_0" name="SCENARIO_SCENARIO_TYPE_PA_FK1">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>87E08050-C357-0338-326F-CE0AE0D303FC</containerWithKeyObject>
+   <deleteRule>CASCADE</deleteRule>
+   <localFKIndex>B25C5B1A-E04E-82D0-CF12-FA8DC8BD7485</localFKIndex>
+   <keyObject>06E9E8E4-5A65-6706-9BCD-23B3855C2D70</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>

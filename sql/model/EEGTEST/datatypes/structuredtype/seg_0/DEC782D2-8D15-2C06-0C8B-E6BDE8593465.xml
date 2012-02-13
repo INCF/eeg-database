@@ -1,0 +1,1286 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<StructuredType class="oracle.dbtools.crest.model.design.datatypes.StructuredType" name="XMLTYPE" id="DEC782D2-8D15-2C06-0C8B-E6BDE8593465" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:36 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <predefined>true</predefined>
+   <final>false</final>
+   <instantiable>true</instantiable>
+   <fonts>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Title</foType>
+         <fontStyle>1</fontStyle>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Attribute</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Datatype</foType>
+         <colorRGB>-16777056</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Method</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Not Instantiable</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Mandatory</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+   </fonts>
+   <methods>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="A5CE15E3-92E3-2757-5AE9-C4B2213C9848">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>1</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CREATEXML" id="11CF8959-CF2D-DEE7-540B-D6FBF6DD458C">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="39D8FA0E-CE6C-36C5-5640-995C73D6DBB4">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT028</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="CC5C61CB-D122-75C1-5FE1-F36690899665">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>2</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="6955879E-EAD1-FE3B-A3F6-4663C394C284">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="EXTRACT" id="48FC3EBB-4AA1-D2E0-CFC3-6D0C355E2153">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>3</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="EXTRACT" id="ED7BBA59-B18C-CCBF-D044-887F8774AA83">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="CAD6D8B3-6843-B481-0081-4F5A59C5AF7E">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="EXISTSNODE" id="33F85A37-4437-2DD9-35CD-D15DC8F37516">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>4</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="EXISTSNODE" id="A278064B-DC85-0EEF-2146-CB08EE9105B3">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="C0A73C59-434A-0FB4-7C47-1296E9AC7F69">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="ISFRAGMENT" id="25BC742F-4C46-B356-19E7-556719BAF03C">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>5</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ISFRAGMENT" id="1AF9521E-F302-933F-7472-00ABB712FCD5">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETCLOBVAL" id="14CC2875-50B4-286C-8D7A-7642FB171223">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>6</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETCLOBVAL" id="7B2D658A-46CC-4D64-DEF7-462920D3EDE6">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT028</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETBLOBVAL" id="6FCFEB52-0FD2-57B3-66F2-B2F856687815">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>7</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETBLOBVAL" id="941F7E2D-FD57-2DE3-0A6B-C8F0019A7FD9">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT029</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="B9AFF718-A75E-67FA-1555-F9520D196B7B">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETSTRINGVAL" id="10DB1566-D316-69ED-0B7D-A75A03F05416">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>8</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETSTRINGVAL" id="8CE8B23A-18B3-6F86-1CDB-7D72761E1F76">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT024</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETNUMBERVAL" id="8C36A756-3ACB-905A-1650-C017C717AAF2">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>9</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETNUMBERVAL" id="2ED9EE2E-CBA2-872B-D4FC-B5CB47EE7F0E">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="0E19D2B5-4F2C-6C41-0821-03A5EC695A84">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>10</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="EBCC5890-9B79-C92C-718C-B2A74C1E4411">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT028</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="E79E1EF7-C247-DF14-0B34-E7D292A77D3A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="A9564A77-65ED-C981-FBB3-462667FE11ED">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="B9CA0E56-017E-9618-E7D7-DE1C61E86638">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="1FC2584A-4532-5D6C-6E7F-502481313333">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>11</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="7732B1D2-4400-C74E-A85C-F88C6E5828D7">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT029</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="4E54DC4E-355E-A967-A74D-3BB4571BCEF7">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="24D05068-C7F4-CF44-D01C-3B76CCF661B4">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="90E77343-D4CB-8309-4354-A7AA4D783A05">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="99E81377-AE67-0B19-C134-CF9B7800D5EC">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="7F0EEE1D-698A-FC7C-1A31-65BF8049AEE9">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>12</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="AB038C3C-8422-B217-7B5F-32AEE6155E74">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LogDes-7DD553FD-11E8-61FA-399D-2E531FB621D0@LOGDT10034</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="0634E3F1-8EA1-4A13-C0FD-68D2DEED6031">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="05AAAB0F-0220-8B42-BF52-A6B6BB015440">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="4D2A384C-E954-88EE-E8C5-330BFDCE3E6B">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="A7E6D1C4-0E02-EFCA-2801-01D3529E0BF0">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="200D905F-EBF6-E58E-AA44-96BBE9058631">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>13</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="0D43FDF6-EE27-1E2B-162B-8D5FE0902B1E">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="13F9D1E9-414D-E939-C03A-A9AF54DB47D2">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="17F898FC-B41E-1C5C-2CD4-18CD71CCCA4E">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="3484BAFE-08B6-7B56-132F-B0E66D2BD0C2">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="906C9B2B-EE61-0390-4061-C1EB6437F0A8">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>14</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="4A3EEC83-54D3-221E-55EC-ACFCBC92DC2D">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="17F50E28-1A5F-F241-4126-34BA6B521810">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="6E031B7E-D478-A7A0-8ADE-F70BCEA96F53">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="D8F28949-1033-997F-3EEF-8B04AA8375EE">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="91EF894E-FF40-B5F4-8C54-A092011075A1">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>15</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="B9AFF3B9-E5E0-3D52-B28D-D46F48B5AD18">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="4D01D146-12C1-1E75-BDB2-C17FDA670E00">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="061BD2CC-559F-4587-88D7-E87EA8CA6F40">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="12F65861-71FF-4E3E-1C73-EB65FD4D0383">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXML" id="5D8FA112-ACA5-60CF-F265-9045F2B3D8A7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>16</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="26B1C773-959B-DB23-9864-69DFA5822970">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LogDes-F046B719-7D91-3873-3302-38C441683842@LOGDT10010</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="B387FA79-A8C0-244A-267E-6DDE735380D5">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="67A09243-DAFF-995D-3AFF-1943F3828163">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="2C1B71F9-5380-27DF-E968-A4E3F15E70E5">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="EXTRACT" id="3985C022-DFEC-5D98-5CD7-AA2E0483249C">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>17</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="BBCD44E4-FE16-8828-BCA0-CAD12BD7C701">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="NSMAP" id="734E576E-89AE-A319-2AE5-A2FBB741CB72">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="EXISTSNODE" id="0CA8F943-2F95-B999-5E44-AC01267ED745">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>18</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="65A3E311-EA42-EB89-C8AF-53D9E93CB182">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="NSMAP" id="F281FAEA-4FBA-2720-6383-8724EFF76ED3">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="TRANSFORM" id="7CD245E1-C660-F1AC-D8D7-D2102A6C4603">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>19</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="TRANSFORM" id="C220F80F-3A4E-3507-BF36-8C13325D2FC6">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XSL" id="27C69A0C-937F-AE8A-E5F1-9AE70B7DD800">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT050</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="PARAMMAP" id="37C75BFA-1200-3389-F235-B07A31F0FE9D">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETCLOBVAL" id="05C5FE6E-EAB3-2FF7-D8B4-4844F7B6298A">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>20</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="PFLAG" id="29B29EFD-78A3-85E0-7EB3-42F6F8712818">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="INDENT" id="F1E80DD1-263C-AE29-D54E-B5C8A4877E20">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETBLOBVAL" id="45D3156C-6187-0A83-213C-9A232D25EC34">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>21</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="8C9F0AEE-6E3E-DEC7-05F9-80FF845CE232">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="PFLAG" id="7F417AA6-A37F-EDA1-EEB8-8C3BDB033A49">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="INDENT" id="7B1F1135-6AF5-BD02-A5F9-4F2C291DFA56">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETSTRINGVAL" id="DE6C5D73-CF27-0F60-496C-29545D8A1784">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>22</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="PFLAG" id="15E510F8-1D96-8C7D-84B7-1F243630027C">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="INDENT" id="ED2930AC-0E39-6880-EC93-58AD756E2848">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="TOOBJECT" id="3EBF1D9B-A4B0-0D0B-D828-A46919A9EED0">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>23</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="OBJECT" id="0C78AA56-FA57-020B-0B83-87C920B15F9D">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="81891483-D786-4D6D-26E4-3DC0C81E8E73">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="954E1C6F-7859-C67B-CB6E-6F5AB810366A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="ISSCHEMABASED" id="F733F880-9C97-3C3C-AA12-BE9ABED42FD3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>24</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ISSCHEMABASED" id="9443C443-5DD9-ACCF-1683-CE81DCFCF20D">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETSCHEMAURL" id="768A2C30-72A6-713D-E2D0-AAF4AE2EA96A">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>25</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETSCHEMAURL" id="FF13D43E-9597-0EBC-DB29-01C88F0C48DA">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT024</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETSCHEMAID" id="3E902400-75E0-293A-9B69-56E35F89C06F">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>26</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETSCHEMAID" id="FEF18751-24CC-03C5-8789-EDEEA1DCFCE0">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LogDes-4BABEC65-108B-2A3C-F7C4-84AC47D292B0@LOGDT10040</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETROOTELEMENT" id="F700F49D-3A82-833E-9DAE-3B0F72B4EA83">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>27</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETROOTELEMENT" id="08DBC361-9CCB-90AA-CBB2-BD2CB03048D5">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT024</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATESCHEMABASEDXML" id="5212F255-95D0-373D-5D40-4FC5DDAC0EC7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>28</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CREATESCHEMABASEDXML" id="4F130E5A-1B3B-56E6-6418-DBD89352695E">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="8B0CBFAA-E995-1270-ED08-5277323E95D9">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATENONSCHEMABASEDXML" id="C9C00714-6B2D-A4E4-FD0C-A1E12D3A2BA9">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>29</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CREATENONSCHEMABASEDXML" id="2E3FAB09-034F-BA01-BD79-AFC56C851B77">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="GETNAMESPACE" id="EEA5451B-5C91-1543-4403-95050E4A4DDE">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>30</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="GETNAMESPACE" id="7D123F1B-2A1C-4F56-2F7A-EDFFFBCC1CAE">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT024</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="SCHEMAVALIDATE" id="F59CBC3B-B2C2-0AB9-01E4-58D9C5035B26">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>31</number>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="ISSCHEMAVALIDATED" id="2AC9D38E-B223-7A86-323F-E5A2AA349AA4">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>32</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ISSCHEMAVALIDATED" id="71E6DE50-8708-122E-A0A3-4FB83035E370">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="SETSCHEMAVALIDATED" id="D2208862-44F7-4FEB-1D83-F74814C666FE">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>33</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="FLAG" id="0E4FB958-93E6-F331-433F-782FC0F382DB">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="ISSCHEMAVALID" id="935E845E-0DB2-AA5B-DBCE-91F7432D39B7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>34</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ISSCHEMAVALID" id="A8AB8377-96AC-598C-CA70-9B00A240939E">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT019</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHURL" id="E4601DB2-A319-3A60-F1D4-CF4435059707">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEM" id="E84AA3E5-7033-2FE1-A2A3-BF0C72649AE6">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="INSERTXMLBEFORE" id="7AE10BAF-BEB3-087B-6BD5-6A54063C31D3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>35</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="INSERTXMLBEFORE" id="654E518F-3868-05F5-AF39-15AEC705C38A">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="403F7114-7631-24B7-E686-764445297D2C">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALUE_EXPR" id="EE7902B0-90DB-E9C6-26E0-8AE0B9E8549A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT050</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="NAMESPACE" id="A3D7A08D-D887-0CE8-BE52-6303255018E3">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="APPENDCHILDXML" id="5ABEE70D-3BF5-712A-861C-74C35E21C756">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>36</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="APPENDCHILDXML" id="6A9A3325-1345-7F69-FDA2-96BB6D74516D">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="DF02B7EE-0590-FEFE-D2A5-B63782496179">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALUE_EXPR" id="E7CB95AF-A13C-CC2A-16C3-1DDB85868592">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT050</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="NAMESPACE" id="CD30CC42-A333-D3B0-CEE7-DF1A9AFB45C4">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="DELETEXML" id="CE13EE3E-50A9-04B7-E03E-3765ECD54FAB">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>37</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="DELETEXML" id="A72C043E-F40E-8AFD-F349-960180E532B8">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XPATH" id="CEA9A53C-364C-2526-93E8-34D4B671831B">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="NAMESPACE" id="DDCF38DE-87E8-AA54-40BB-5367C416A416">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="D44E34E9-C2D8-8290-2751-75A844FF0BB0">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>38</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLTYPE" id="7AA09A74-99BF-FE7F-13FD-F608AABABE08">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="ED4F308A-2A4D-234B-B30C-54D68BF61BCD">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT028</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="EE72DBAB-C790-0210-A2EB-5C259D9C61D2">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="5DBF6CFB-65A6-FEBA-32D6-0940FD924F7D">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="CFC82800-319C-8BC0-7723-7E589218BFA8">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="A1EFDDAB-2676-EC0A-253F-2A8173397CF5">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>39</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="2EB86D22-76D0-5E62-1D3A-F87AE0A4513A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT029</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="DC2E71FE-FA3F-F271-5D3A-E56A9E57EBFF">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="17D1E116-982F-52B4-3A8F-F30F757C3D98">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="689F20DD-F209-F023-D254-CCBA84A2FCD0">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="004BC3AC-B3BB-A87B-EB6C-E4C49C645B98">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="38B6B6EA-4451-5098-9692-04DC99C53150">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>40</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="66970654-3918-D520-673E-12FD323C2967">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LogDes-7DD553FD-11E8-61FA-399D-2E531FB621D0@LOGDT10034</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CSID" id="FFBD43A2-09BB-F35E-3E42-2E249A6B1FC0">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="3546F31C-D33D-B90D-9BCA-27CCF7F4CC97">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="D97DB066-D709-0D62-DBFD-06B1B50584C9">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="BB093BC2-5C59-CA4A-4640-45E3C2852043">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="CB412FB7-BA38-CD7E-5030-4C2A716272CB">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>41</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="B557BD53-1A9B-54A0-31FB-C598C5BE327A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="09AFC564-C276-4BF7-C94B-7EF9CE667594">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="D61D47F0-E39A-57B3-5535-FF2C2550EF3A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="WELLFORMED" id="AC819688-88C2-69CA-A733-E18490CBC479">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="10B5DFF6-570E-7B3B-315B-2FBB710E8E8C">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>42</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="32ABA9D4-8174-84BA-BE6A-60B8A5442A29">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="14AA58C8-4012-98B5-7A81-40E326FD6EF4">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="74757C9D-18EC-D956-02AA-FF41DB619FBA">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="E5086966-E570-5F56-9102-4CC49C6601AD">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="13CA159E-F523-8CF5-CD09-6240594E79B8">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:38 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>43</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="DB82AE8D-2349-526C-88A6-1FAEEA3341AD">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LogDes-F046B719-7D91-3873-3302-38C441683842@LOGDT10010</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="99F1F1DB-24A1-0826-799D-E3AA2378DA77">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="5D2E107B-99E7-9210-88C3-ADC6D73B605A">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="68C0A9D3-B60B-733A-694B-C18394A83104">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="XMLTYPE" id="4B7431AF-67BE-9CDA-CFB4-59CAE76A05F2">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:38 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <constructor>true</constructor>
+         <number>44</number>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="4A6974FC-7F09-4F68-E716-9C810F23E23D">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="SCHEMA" id="0898EB38-56AF-27E8-7F77-DE434ECE5E1E">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="ELEMENT" id="3E31230C-3B8F-F023-AACE-E1EFF278222F">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT024</typeID>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="VALIDATED" id="1EE9AF1E-B17A-EBF2-6BA9-ADD04D33D81B">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT019</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.datatypes.Method" name="CREATEXMLFROMBINARY" id="D2FA4A36-B647-D108-A0DC-D07693DDBA14">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-02-13 10:33:38 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <number>45</number>
+         <returnValue class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="CREATEXMLFROMBINARY" id="61F503BC-938A-7F6A-2D8D-4D6E2F5A6077">
+            <precision>0</precision>
+            <reference>false</reference>
+            <scale>0</scale>
+            <size>0</size>
+            <typeID>LOGDT050</typeID>
+         </returnValue>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.datatypes.MethodParam" name="XMLDATA" id="94A66C03-CE35-8787-5665-61C292C433C7">
+               <precision>0</precision>
+               <reference>false</reference>
+               <scale>0</scale>
+               <size>0</size>
+               <typeID>LOGDT029</typeID>
+            </Parameter>
+         </parameters>
+      </Method>
+   </methods>
+</StructuredType>

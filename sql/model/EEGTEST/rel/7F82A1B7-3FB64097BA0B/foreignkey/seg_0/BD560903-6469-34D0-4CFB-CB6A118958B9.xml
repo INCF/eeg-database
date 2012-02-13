@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="BD560903-6469-34D0-4CFB-CB6A118958B9" directorySegmentName="seg_0" name="PERSON_HEARING_DEFECT_ID_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>C2B3542A-AC90-D4D4-6356-495A6FAFB5C2</containerWithKeyObject>
+   <deleteRule>CASCADE</deleteRule>
+   <localFKIndex>826C209E-CF4B-5803-7DF9-8AC6734F115F</localFKIndex>
+   <keyObject>5FE076C5-3275-CB54-90F7-7E371E0EB7F8</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>

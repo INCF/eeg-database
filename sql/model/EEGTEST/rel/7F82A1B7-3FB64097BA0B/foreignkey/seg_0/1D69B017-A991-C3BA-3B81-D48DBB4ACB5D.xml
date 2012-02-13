@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="1D69B017-A991-C3BA-3B81-D48DBB4ACB5D" directorySegmentName="seg_0" name="EYES_DEFECT_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>7DBD7472-D61A-1B58-79D6-2DD0A1E9E138</containerWithKeyObject>
+   <deleteRule>NO ACTION</deleteRule>
+   <localFKIndex>762E73E0-9E9D-21E6-8F04-4CB1558F4B08</localFKIndex>
+   <keyObject>3E3D67FB-2112-F523-81CC-8DAD7FD59FA4</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>

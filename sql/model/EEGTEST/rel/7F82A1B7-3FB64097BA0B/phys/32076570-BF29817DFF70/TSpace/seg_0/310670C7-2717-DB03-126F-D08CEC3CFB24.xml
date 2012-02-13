@@ -1,0 +1,10 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableSpaceOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TableSpaceOraclev10g" name="EEG_USERS" id="310670C7-2717-DB03-126F-D08CEC3CFB24" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:38 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:38 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <emUniformSize>0</emUniformSize>
+   <extentManagement>LOCAL</extentManagement>
+</TableSpaceOraclev10g>

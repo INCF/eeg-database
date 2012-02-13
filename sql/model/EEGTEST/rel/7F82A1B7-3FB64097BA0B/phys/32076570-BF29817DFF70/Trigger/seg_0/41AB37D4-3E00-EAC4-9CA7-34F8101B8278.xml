@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TriggerOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TriggerOraclev10g" name="RESEARCH_GROUP_UPDATE" id="41AB37D4-3E00-EAC4-9CA7-34F8101B8278" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:54 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:54 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <actions>UPDATE</actions>
+   <body>begin&amp;lt;br/&amp;gt;  update sync_changes set last_change = SYSTIMESTAMP where table_name=&amp;apos;research_group&amp;apos;;&amp;lt;br/&amp;gt;end research_group_update;&amp;lt;br/&amp;gt;</body>
+   <triggerTime>AFTER</triggerTime>
+   <owner>EB8EC0BF-18CC-92ED-BBFB-F6A7ABDCB518</owner>
+   <table>F95E9667-829C-A158-A32C-0B3041EB333D</table>
+</TriggerOraclev10g>

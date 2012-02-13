@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TriggerOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TriggerOraclev10g" name="PERSON_DELETE" id="3CFFAF5D-A90F-BD09-E53D-8690B32D03E2" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:54 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:54 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <actions>DELETE</actions>
+   <body>begin&amp;lt;br/&amp;gt;  update sync_changes set last_change = SYSTIMESTAMP where table_name=&amp;apos;person&amp;apos;;&amp;lt;br/&amp;gt;end person_delete;&amp;lt;br/&amp;gt;</body>
+   <triggerTime>AFTER</triggerTime>
+   <owner>EB8EC0BF-18CC-92ED-BBFB-F6A7ABDCB518</owner>
+   <table>E14785B9-0DEA-758D-8FF8-968F4C23BBEF</table>
+</TriggerOraclev10g>

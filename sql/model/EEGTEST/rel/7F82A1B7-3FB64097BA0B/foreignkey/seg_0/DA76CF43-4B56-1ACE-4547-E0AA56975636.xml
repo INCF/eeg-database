@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="DA76CF43-4B56-1ACE-4547-E0AA56975636" directorySegmentName="seg_0" name="REL_WEATHER_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>1F7CDADC-5B32-9811-2386-D2BFFC1DD600</containerWithKeyObject>
+   <deleteRule>NO ACTION</deleteRule>
+   <localFKIndex>2BF9B122-7987-AF96-36C3-DA4B36BB1B7E</localFKIndex>
+   <keyObject>7B205782-D92F-C733-A28C-1AC0968D3707</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>

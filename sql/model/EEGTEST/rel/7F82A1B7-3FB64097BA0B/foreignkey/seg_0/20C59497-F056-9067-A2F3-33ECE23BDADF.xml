@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="20C59497-F056-9067-A2F3-33ECE23BDADF" directorySegmentName="seg_0" name="REL_HEARING_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-02-13 10:33:56 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-02-13 10:33:56 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>F668525B-909E-E513-C85E-BF06FD395FAE</containerWithKeyObject>
+   <deleteRule>NO ACTION</deleteRule>
+   <localFKIndex>FC392995-5F60-B40C-9D2A-B31B7E673A7B</localFKIndex>
+   <keyObject>8E707599-B950-89CE-56ED-C7A3A65BD497</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>
