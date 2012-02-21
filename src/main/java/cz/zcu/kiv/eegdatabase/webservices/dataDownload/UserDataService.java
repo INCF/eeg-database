@@ -5,13 +5,12 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.SyncChanges;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
+import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -76,7 +75,7 @@ public interface UserDataService {
      * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of data files
      */
-    public List<DataFileInfo> getDataFiles(long oracleScn) throws DataDownloadException;
+    public List<DataFileInfo> getDataFiles(long oracleScn) throws UserDataServiceException;
 
     /**
      * Method returning List of information about available hardware.
@@ -91,8 +90,59 @@ public interface UserDataService {
      *
      * @param dataFileId Id of file to download
      * @return Stream of bytes (file)
-     * @throws DataDownloadException exception occurred on side of web service
+     * @throws UserDataServiceException exception occurred on side of web service
      */
     @XmlMimeType("application/octet-stream")
-    public DataHandler downloadDataFile(int dataFileId) throws DataDownloadException;
+    public DataHandler downloadDataFile(int dataFileId) throws UserDataServiceException;
+
+    /**
+     * Method to add or update Data File record.
+     * @param dataFile data file information
+     * @param inputData data file content
+     * @return identifier (primary key)
+     */
+    public int addOrUpdateDataFile(DataFileInfo dataFile, @XmlMimeType("application/octet-stream") DataHandler inputData) throws UserDataServiceException;
+
+    /**
+     * Method to add or update Experiment record.
+     * @param experiment experiment information
+     * @return identifier (primary key)
+     */
+    public int addOrUpdateExperiment(ExperimentInfo experiment);
+
+    /**
+     * Method to add or update Hardware record.
+     * @param hardware hardware type information
+     * @return identifier (primary key)
+     */
+    public int addOrUpdateHardware(HardwareInfo hardware);
+
+    /**
+     * Method to add or update Person record.
+     * @param person person information
+     * @return identifier (primary key)
+     */
+    public int addOrUpdatePerson(PersonInfo person);
+
+    /**
+     * Method to add or update Research Group record.
+     * @param group research group type information
+     * @return identifier (primary key)
+     */
+    public int addOrUpdateResearchGroup(ResearchGroupInfo group);
+
+    /**
+     * Method to add or update Scenario record.
+     * @param scenario scenario type information
+     * @return identifier (primary key)
+     */
+    public int addOrUpdateScenario(ScenarioInfo scenario);
+
+
+    /**
+     * Method to add or update Weather record.
+     * @param weather weather type information
+     * @return identifier (primary key)
+     */
+    public int addOfUpdateWeather(WeatherInfo weather);
 }

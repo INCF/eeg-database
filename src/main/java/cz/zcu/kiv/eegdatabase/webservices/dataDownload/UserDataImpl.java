@@ -3,10 +3,13 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
+import org.hibernate.Hibernate;
+import org.springframework.jdbc.core.support.SqlLobValue;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -14,10 +17,10 @@ import javax.jws.WebService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.LinkedList;
-import java.util.List;
+import java.sql.Timestamp;
+import java.util.*;
 
 /**
  * Web service providing user's data remotely.
@@ -29,13 +32,15 @@ import java.util.List;
 public class UserDataImpl implements UserDataService {
 
     /* necessary Dao objects*/
+    private static final Log log = LogFactory.getLog(UserDataImpl.class);
+
     private PersonDao personDao;
     private ExperimentDao experimentDao;
     private WeatherDao weatherDao;
     private ScenarioDao scenarioDao;
     private ResearchGroupDao researchGroupDao;
-    private Log log = LogFactory.getLog(getClass());
     private HardwareDao hardwareDao;
+    private SimpleGenericDao dataFileDao;
 
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
@@ -109,8 +114,8 @@ public class UserDataImpl implements UserDataService {
             info.setScn(experiment.getScn());
 
             List<Integer> hwIds = new ArrayList<Integer>();
-            for(Hardware hw : experiment.getHardwares()){
-               hwIds.add(hw.getHardwareId());
+            for (Hardware hw : experiment.getHardwares()) {
+                hwIds.add(hw.getHardwareId());
             }
 
             info.setHwIds(hwIds);
@@ -190,7 +195,7 @@ public class UserDataImpl implements UserDataService {
         return rgps;
     }
 
-    public List<DataFileInfo> getDataFiles(long oracleScn) throws DataDownloadException {
+    public List<DataFileInfo> getDataFiles(long oracleScn) throws UserDataServiceException {
         List<Experiment> experiments = experimentDao.getAllRecords();
         List<DataFileInfo> fileInformation = new LinkedList<DataFileInfo>();
         DataFileInfo info;
@@ -221,7 +226,7 @@ public class UserDataImpl implements UserDataService {
 
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of data files.");
         } catch (SQLException e) {
-            DataDownloadException exception = new DataDownloadException(e);
+            UserDataServiceException exception = new UserDataServiceException(e);
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of data files!");
             log.error(e.getMessage(), e);
             throw exception;
@@ -234,7 +239,7 @@ public class UserDataImpl implements UserDataService {
         List<HardwareInfo> hardware = new ArrayList<HardwareInfo>();
         List<Hardware> hardwareDb = hardwareDao.getRecordsNewerThan(oracleScn);
 
-        for(Hardware piece : hardwareDb){
+        for (Hardware piece : hardwareDb) {
             HardwareInfo info = new HardwareInfo();
             List<Integer> experimentIds = new ArrayList<Integer>();
 
@@ -244,8 +249,8 @@ public class UserDataImpl implements UserDataService {
             info.setTitle(piece.getTitle());
             info.setType(piece.getType());
 
-            for(Experiment exp : piece.getExperiments()){
-               experimentIds.add(exp.getExperimentId());
+            for (Experiment exp : piece.getExperiments()) {
+                experimentIds.add(exp.getExperimentId());
             }
             info.setExperimentIds(experimentIds);
 
@@ -255,7 +260,7 @@ public class UserDataImpl implements UserDataService {
         return hardware;
     }
 
-    public DataHandler downloadDataFile(int dataFileId) throws DataDownloadException {
+    public DataHandler downloadDataFile(int dataFileId) throws UserDataServiceException {
 
         List<DataFile> files = experimentDao.getDataFilesWhereId(dataFileId);
         DataFile file = files.get(0);
@@ -282,12 +287,116 @@ public class UserDataImpl implements UserDataService {
             };
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved file " + dataFileId);
         } catch (SQLException e) {
-            DataDownloadException exception = new DataDownloadException(e);
+            UserDataServiceException exception = new UserDataServiceException(e);
             log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
             log.error(e.getMessage(), e);
             throw exception;
         }
 
         return new DataHandler(rawData);
+    }
+
+    @Override
+    public int addOrUpdateDataFile(DataFileInfo dataFile, DataHandler inputData) throws UserDataServiceException {
+        Experiment experiment = (Experiment) experimentDao.read(dataFile.getExperimentId());
+        DataFile file;
+        if (dataFile.isAdded()) {
+            file = new DataFile();
+        } else {
+            file = (DataFile) experimentDao.getDataFilesWhereId(dataFile.getFileId()).get(0);
+        }
+        file.setExperiment(experiment);
+        file.setFilename(dataFile.getFileName());
+        file.setMimetype(dataFile.getMimeType());
+        file.setSamplingRate(dataFile.getSamplingRate());
+
+        try {
+            if (inputData != null) {
+                Blob blob = Hibernate.createBlob(inputData.getInputStream(), (int) dataFile.getFileLength());
+                file.setFileContent(blob);
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            throw new UserDataServiceException(e);
+        }
+
+        if (dataFile.isAdded()) {
+            int fileId = (Integer) dataFileDao.create(file);
+            Set<DataFile> dataFiles = experiment.getDataFiles();
+            dataFiles.add(file);
+            experiment.setDataFiles(dataFiles);
+            experimentDao.update(experiment);
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " created new data file (primary key " + fileId + ").");
+            return fileId;
+        } else {
+            dataFileDao.update(file);
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " edited existing data file (primary key " + file.getDataFileId() + ").");
+            return file.getDataFileId();
+        }
+    }
+
+    @Override
+    public int addOrUpdateExperiment(ExperimentInfo experiment) {
+        Experiment exp;
+        if (!experiment.isAdded()) {
+            exp = (Experiment) experimentDao.read(experiment.getExperimentId());
+        } else {
+            exp = new Experiment();
+            exp.setPersonByOwnerId(personDao.read(experiment.getOwnerId()));
+        }
+
+        exp.setStartTime(new Timestamp(experiment.getStartTimeInMillis()));
+        exp.setEndTime(new Timestamp(experiment.getEndTimeInMillis()));
+        exp.setPersonBySubjectPersonId(personDao.read(experiment.getSubjectPersonId()));
+        exp.setScenario(scenarioDao.read(experiment.getScenarioId()));
+        exp.setResearchGroup(researchGroupDao.read(experiment.getResearchGroupId()));
+        exp.setWeather(weatherDao.read(experiment.getWeatherId()));
+        exp.setWeathernote(experiment.getWeatherNote());
+        exp.setTemperature(experiment.getTemperature());
+        if (experiment.getHwIds() != null) {
+            Set<Hardware> hardwareTypes = new HashSet<Hardware>();
+            for (Integer hwId : experiment.getHwIds()) {
+                hardwareTypes.add(hardwareDao.read(hwId));
+            }
+            exp.setHardwares(hardwareTypes);
+        }
+
+        if (!experiment.isAdded()) {
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " edited existing experiment (primary key " + experiment.getExperimentId() + ").");
+            return exp.getExperimentId();
+        } else {
+            log.debug("User " + personDao.getLoggedPerson().getUsername() + " saved new experiment (primary key " + experiment.getExperimentId() + ").");
+            return (Integer) experimentDao.create(exp);
+        }
+
+    }
+
+    @Override
+    public int addOrUpdateHardware(HardwareInfo hardware) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public int addOrUpdatePerson(PersonInfo person) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public int addOrUpdateResearchGroup(ResearchGroupInfo group) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public int addOrUpdateScenario(ScenarioInfo scenario) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    @Override
+    public int addOfUpdateWeather(WeatherInfo weather) {
+        throw new UnsupportedOperationException("Not implemented yet");
+    }
+
+    public void setDataFileDao(SimpleGenericDao dataFileDao) {
+        this.dataFileDao = dataFileDao;
     }
 }

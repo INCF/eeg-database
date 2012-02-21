@@ -7,14 +7,14 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
  * <p/>
  * This class is for exception purposes within web services.
  */
-public class DataDownloadException extends Exception {
+public class UserDataServiceException extends Exception {
 
     /**
      * Constructor, adds custom message.
      *
      * @param throwable original throwable
      */
-    public DataDownloadException(Throwable throwable) {
+    public UserDataServiceException(Throwable throwable) {
         super("Error occured during working with web service.", throwable);
     }
 }

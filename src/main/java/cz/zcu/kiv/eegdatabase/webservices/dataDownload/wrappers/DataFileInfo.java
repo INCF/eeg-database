@@ -15,6 +15,8 @@ public class DataFileInfo {
     private long fileLength;
     private int experimentId;
     private String mimeType;
+    private boolean added;
+    private boolean changed;
     private long scn;
 
     /**
@@ -123,6 +125,38 @@ public class DataFileInfo {
      */
     public void setMimeType(String mimeType) {
         this.mimeType = mimeType;
+    }
+
+    /**
+     * Object is meant to create new record.
+     * @return new record
+     */
+    public boolean isAdded() {
+        return added;
+    }
+
+    /**
+     * Mark object to create new record.
+     * @param added new record
+     */
+    public void setAdded(boolean added) {
+        this.added = added;
+    }
+
+    /**
+     * Object is meant to update existing record.
+     * @return updated record
+     */
+    public boolean isChanged() {
+        return changed;
+    }
+
+    /**
+     * Mark object to update an existing object.
+     * @param changed updated record
+     */
+    public void setChanged(boolean changed) {
+        this.changed = changed;
     }
 
     /**

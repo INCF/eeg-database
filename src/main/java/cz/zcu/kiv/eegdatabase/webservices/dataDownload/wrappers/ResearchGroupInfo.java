@@ -14,6 +14,8 @@ public class ResearchGroupInfo {
     private String title;
     private String description;
     private long scn;
+    private boolean changed;
+    private boolean added;
 
     /**
      * Getter of research group identifier.
@@ -101,5 +103,37 @@ public class ResearchGroupInfo {
      */
     public void setScn(long scn) {
         this.scn = scn;
+    }
+
+    /**
+     * Object is meant to create new record.
+     * @return new record
+     */
+    public boolean isAdded() {
+        return added;
+    }
+
+    /**
+     * Mark object to create new record.
+     * @param added new record
+     */
+    public void setAdded(boolean added) {
+        this.added = added;
+    }
+
+    /**
+     * Object is meant to update existing record.
+     * @return updated record
+     */
+    public boolean isChanged() {
+        return changed;
+    }
+
+    /**
+     * Mark object to update an existing object.
+     * @param changed updated record
+     */
+    public void setChanged(boolean changed) {
+        this.changed = changed;
     }
 }
