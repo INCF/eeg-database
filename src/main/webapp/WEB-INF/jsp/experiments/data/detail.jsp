@@ -4,9 +4,9 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:dataTemplate pageTitle="pageTitle.addOptionalParameterForMeasuration">
+<ui:dataTemplate pageTitle="heading.addMetadata">
 
-  <h1><fmt:message key="pageTitle.addOptionalParameterForMeasuration"/></h1>
+  <h1><fmt:message key="heading.addMetadata"/></h1>
 
   <table class="standardValueTable">
     <tr>
