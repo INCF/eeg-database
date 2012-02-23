@@ -25,7 +25,7 @@ public class AddExperimentWizardCommand {
     private String temperature;
     private boolean privateNote;
 
-    private String samplingRate;
+    private String fileDescription;
     private MultipartFile dataFile;
 
     private String title;
@@ -167,11 +167,11 @@ public class AddExperimentWizardCommand {
         this.dataFile = dataFile;
     }
 
-    public String getSamplingRate() {
-        return samplingRate;
+    public String getFileDescription() {
+        return fileDescription;
     }
 
-    public void setSamplingRate(String samplingRate) {
-        this.samplingRate = samplingRate;
+    public void setFileDescription(String fileDescription) {
+        this.fileDescription = fileDescription;
     }
 }

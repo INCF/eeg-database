@@ -19,7 +19,7 @@ public class DataFile implements Serializable {
     @DocumentId
     private int dataFileId;
     private Experiment experiment;
-    private double samplingRate;
+    private String desc;
     private Blob fileContent;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
@@ -36,19 +36,19 @@ public class DataFile implements Serializable {
     public DataFile() {
     }
 
-    public DataFile(int dataFileId, Experiment experiment, double samplingRate, Blob fileContent, String mimetype, String filename) {
+    public DataFile(int dataFileId, Experiment experiment, String desc, Blob fileContent, String mimetype, String filename) {
         this.dataFileId = dataFileId;
         this.experiment = experiment;
-        this.samplingRate = samplingRate;
+        this.desc = desc;
         this.fileContent = fileContent;
         this.mimetype = mimetype;
         this.filename = filename;
     }
 
-    public DataFile(int dataFileId, Experiment experiment, double samplingRate, Blob fileContent, String mimetype, String filename, Set<FileMetadataParamVal> fileMetadataParamVals) {
+    public DataFile(int dataFileId, Experiment experiment, String desc, Blob fileContent, String mimetype, String filename, Set<FileMetadataParamVal> fileMetadataParamVals) {
         this.dataFileId = dataFileId;
         this.experiment = experiment;
-        this.samplingRate = samplingRate;
+        this.desc = desc;
         this.fileContent = fileContent;
         this.mimetype = mimetype;
         this.filename = filename;
@@ -71,12 +71,12 @@ public class DataFile implements Serializable {
         this.experiment = experiment;
     }
 
-    public double getSamplingRate() {
-        return this.samplingRate;
+    public String getDesc() {
+        return desc;
     }
 
-    public void setSamplingRate(double samplingRate) {
-        this.samplingRate = samplingRate;
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public Blob getFileContent() {

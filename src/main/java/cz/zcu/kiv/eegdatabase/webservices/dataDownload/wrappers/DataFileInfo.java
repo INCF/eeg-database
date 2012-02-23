@@ -10,7 +10,7 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
 public class DataFileInfo {
 
     private int fileId;
-    private double samplingRate;
+   // private double samplingRate;
     private String fileName;
     private long fileLength;
     private int experimentId;
@@ -60,9 +60,9 @@ public class DataFileInfo {
      *
      * @return file's sampling rate
      */
-    public double getSamplingRate() {
-        return samplingRate;
-    }
+  //  public double getSamplingRate() {
+  //      return samplingRate;
+  //  }
 
     /**
      * Getter of MIME type String.
@@ -114,9 +114,9 @@ public class DataFileInfo {
      *
      * @param samplingRate file's sampling rate
      */
-    public void setSamplingRate(double samplingRate) {
-        this.samplingRate = samplingRate;
-    }
+   // public void setSamplingRate(double samplingRate) {
+   //     this.samplingRate = samplingRate;
+   // }
 
     /**
      * Setter of file's MIME type.

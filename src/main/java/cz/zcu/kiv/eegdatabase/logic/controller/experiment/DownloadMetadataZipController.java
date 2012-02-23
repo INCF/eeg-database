@@ -20,7 +20,10 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.io.OutputStream;
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * @author Petr Jezek
@@ -82,7 +85,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
                         newItem.setFileContent(item.getFileContent());
                         newItem.setFilename(item.getFilename());
                         newItem.setMimetype(item.getMimetype());
-                        newItem.setSamplingRate(item.getSamplingRate());
+                        newItem.setDesc(item.getDesc());
                     }
                 }
                 Set<FileMetadataParamVal> newVals = new HashSet<FileMetadataParamVal>();

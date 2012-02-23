@@ -22,8 +22,8 @@ public class MetadataCommand {
     private boolean phoneNumber;
     private boolean email;
     private boolean note;
-    private boolean eyesDefects;
-    private boolean hearingDefects;
+   // private boolean eyesDefects;
+    //private boolean hearingDefects;
     private boolean personAddParams;
 
     private boolean title;
@@ -74,9 +74,9 @@ public class MetadataCommand {
         return email;
     }
 
-    public boolean isEyesDefects() {
-        return eyesDefects;
-    }
+//    public boolean isEyesDefects() {
+//        return eyesDefects;
+//    }
 
     public boolean isGender() {
         return gender;
@@ -86,9 +86,9 @@ public class MetadataCommand {
         return hardware;
     }
 
-    public boolean isHearingDefects() {
-        return hearingDefects;
-    }
+//    public boolean isHearingDefects() {
+//        return hearingDefects;
+//    }
 
     public boolean isLength() {
         return length;
@@ -182,9 +182,9 @@ public class MetadataCommand {
         this.email = email;
     }
 
-    public void setEyesDefects(boolean eyesDefects) {
-        this.eyesDefects = eyesDefects;
-    }
+//    public void setEyesDefects(boolean eyesDefects) {
+//        this.eyesDefects = eyesDefects;
+//    }
 
     public void setGender(boolean gender) {
         this.gender = gender;
@@ -194,9 +194,9 @@ public class MetadataCommand {
         this.hardware = hardware;
     }
 
-    public void setHearingDefects(boolean hearingDefects) {
-        this.hearingDefects = hearingDefects;
-    }
+//    public void setHearingDefects(boolean hearingDefects) {
+//        this.hearingDefects = hearingDefects;
+//    }
 
     public void setLength(boolean length) {
         this.length = length;

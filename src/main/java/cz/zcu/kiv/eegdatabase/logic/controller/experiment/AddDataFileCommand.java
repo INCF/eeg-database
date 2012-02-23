@@ -8,7 +8,7 @@ import org.springframework.web.multipart.MultipartFile;
 public class AddDataFileCommand {
 
     private int measurationId;
-    private String samplingRate;
+    private String description;
     private MultipartFile dataFile;
 
     public int getMeasurationId() {
@@ -27,11 +27,11 @@ public class AddDataFileCommand {
         this.dataFile = dataFile;
     }
 
-    public String getSamplingRate() {
-        return samplingRate;
+    public String getDescription() {
+        return description;
     }
 
-    public void setSamplingRate(String samplingRate) {
-        this.samplingRate = samplingRate;
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

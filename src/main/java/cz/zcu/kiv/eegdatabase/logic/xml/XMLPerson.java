@@ -5,11 +5,7 @@
 
 package cz.zcu.kiv.eegdatabase.logic.xml;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
-import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.EyesDefectType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.HearingDefectType;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.ObjectFactory;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonAddParam;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonType;
@@ -30,20 +26,20 @@ private PersonType perType;
         perType.setSurName(surname);
     }
 
-    public EyesDefectType writeEyesDefects(VisualImpairment eyesDefect, ObjectFactory of) {
-        EyesDefectType edeft = of.createEyesDefectType();
-        edeft.setDescription(eyesDefect.getDescription());
-        return edeft;
-
-    }
-
-    public HearingDefectType writeHearingDefects(HearingImpairment hearingDefect,
-            ObjectFactory of) {
-        HearingDefectType hdeft = of.createHearingDefectType();
-        hdeft.setDescription(hearingDefect.getDescription());
-        return hdeft;
-
-    }
+//    public EyesDefectType writeEyesDefects(VisualImpairment eyesDefect, ObjectFactory of) {
+//        EyesDefectType edeft = of.createEyesDefectType();
+//        edeft.setDesc(eyesDefect.getDesc());
+//        return edeft;
+//
+//    }
+//
+//    public HearingDefectType writeHearingDefects(HearingImpairment hearingDefect,
+//            ObjectFactory of) {
+//        HearingDefectType hdeft = of.createHearingDefectType();
+//        hdeft.setDesc(hearingDefect.getDesc());
+//        return hdeft;
+//
+//    }
 
     public PersonAddParam writeAdditionalParams(
             PersonOptParamVal personAddParam, ObjectFactory of) {

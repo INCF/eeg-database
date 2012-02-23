@@ -3,18 +3,12 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
 import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.*;
 
-import javax.security.auth.login.Configuration;
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -39,15 +33,15 @@ public class Experiment implements Serializable {
     private long scn;
     @Fields({
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
-            @Field(store = Store.YES), // weathernote value is stored in the index
+            @Field(store = Store.YES), // environmentNote value is stored in the index
             @Field(name = "temperature")})   // use a different field name
     private int temperature;
     @Fields({
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
-            @Field(store = Store.YES), // weathernote value is stored in the index
-            @Field(name = "weathernote")})   // use a different field name
-    //@Boost(2)//Boost weathernote field
-    private String weathernote;
+            @Field(store = Store.YES), // environmentNote value is stored in the index
+            @Field(name = "environmentNote")})   // use a different field name
+    //@Boost(2)//Boost environmentNote field
+    private String environmentNote;
     private Set<Person> persons = new HashSet<Person>(0);
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
     private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
@@ -68,7 +62,7 @@ public class Experiment implements Serializable {
 
     }
 
-    public Experiment(int experimentId, Weather weather, Person personBySubjectPersonId, Scenario scenario, Person personByOwnerId, ResearchGroup researchGroup, Timestamp startTime, Timestamp endTime, int temperature, String weathernote, Set<Person> persons, Set<Hardware> hardwares, Set<DataFile> dataFiles, Set<ExperimentOptParamVal> experimentOptParamVals) {
+    public Experiment(int experimentId, Weather weather, Person personBySubjectPersonId, Scenario scenario, Person personByOwnerId, ResearchGroup researchGroup, Timestamp startTime, Timestamp endTime, int temperature, String environmentNote, Set<Person> persons, Set<Hardware> hardwares, Set<DataFile> dataFiles, Set<ExperimentOptParamVal> experimentOptParamVals) {
         this.experimentId = experimentId;
         this.weather = weather;
         this.personBySubjectPersonId = personBySubjectPersonId;
@@ -78,7 +72,7 @@ public class Experiment implements Serializable {
         this.startTime = startTime;
         this.endTime = endTime;
         this.temperature = temperature;
-        this.weathernote = weathernote;
+        this.environmentNote = environmentNote;
         this.persons = persons;
         this.hardwares = hardwares;
         this.dataFiles = dataFiles;
@@ -158,14 +152,14 @@ public class Experiment implements Serializable {
     }
     // @Field(index=Index.TOKENIZED, store=Store.NO)
 
-    public String getWeathernote() {
-        return this.weathernote;
+    public String getEnvironmentNote() {
+        return this.environmentNote;
     }
-//    @Field(name="weathernote")
+//    @Field(name="environmentNote")
 //    public Reader getIndexedWeathernote();
 
-    public void setWeathernote(String weathernote) {
-        this.weathernote = weathernote;
+    public void setEnvironmentNote(String environmentNote) {
+        this.environmentNote = environmentNote;
     }
 
     public Set<Person> getPersons() {

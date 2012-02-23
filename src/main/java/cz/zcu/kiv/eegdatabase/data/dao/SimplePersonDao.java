@@ -1,17 +1,11 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.Map;
-
 import org.springframework.dao.support.DataAccessUtils;
+
+import java.util.*;
 
 /**
  * This class extends powers class SimpleGenericDao.
@@ -193,8 +187,8 @@ public class SimplePersonDao
             if (request.getSource().startsWith("age")) {
                 hqlQuery += "dateOfBirth" + getCondition(request.getSource()) +
                         "'" + getPersonDateOfBirth(request.getCondition()) + "'";
-            } else if (request.getSource().equals("defect")) {
-                hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
+//            } else if (request.getSource().equals("defect")) {
+//                hqlQuery += "(visualImpairments.size = 0 and hearingImpairments.size = 0)";
             } else if (request.getSource().equals("gender")) {
                 hqlQuery += "gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
             } else {

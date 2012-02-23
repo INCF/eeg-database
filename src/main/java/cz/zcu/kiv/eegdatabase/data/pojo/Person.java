@@ -42,7 +42,6 @@ public class Person implements Serializable, Comparable<Person> {
     private String password;
     private String authority;
     private ResearchGroup defaultGroup;
-    private Set<VisualImpairment> visualImpairments = new HashSet<VisualImpairment>(0);
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(0);
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
@@ -50,7 +49,6 @@ public class Person implements Serializable, Comparable<Person> {
     private Set<Experiment> experimentsForSubjectPersonId = new HashSet<Experiment>(0);
     private Set<PersonOptParamVal> personOptParamVals = new HashSet<PersonOptParamVal>(0);
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
-    private Set<HearingImpairment> hearingImpairments = new HashSet<HearingImpairment>(0);
     private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
     private Set<History> histories = new HashSet<History>(0);
     private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
@@ -68,7 +66,7 @@ public class Person implements Serializable, Comparable<Person> {
         this.gender = gender;
     }
 
-    public Person(int personId, String givenname, String surname, Timestamp dateOfBirth, char gender, String email, String phoneNumber, String note, String username, String password, String authority, Set<VisualImpairment> visualImpairments, Set<Experiment> experiments, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experimentsForOwnerId, Set<Experiment> experimentsForSubjectPersonId, Set<PersonOptParamVal> personOptParamVals, Set<ResearchGroup> researchGroups, Set<HearingImpairment> hearingImpairments) {
+    public Person(int personId, String givenname, String surname, Timestamp dateOfBirth, char gender, String email, String phoneNumber, String note, String username, String password, String authority, Set<Experiment> experiments, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experimentsForOwnerId, Set<Experiment> experimentsForSubjectPersonId, Set<PersonOptParamVal> personOptParamVals, Set<ResearchGroup> researchGroups) {
         this.personId = personId;
         this.givenname = givenname;
         this.surname = surname;
@@ -80,7 +78,6 @@ public class Person implements Serializable, Comparable<Person> {
         this.username = username;
         this.password = password;
         this.authority = authority;
-        this.visualImpairments = visualImpairments;
         this.experiments = experiments;
         this.researchGroupMemberships = researchGroupMemberships;
         this.scenarios = scenarios;
@@ -88,7 +85,6 @@ public class Person implements Serializable, Comparable<Person> {
         this.experimentsForSubjectPersonId = experimentsForSubjectPersonId;
         this.personOptParamVals = personOptParamVals;
         this.researchGroups = researchGroups;
-        this.hearingImpairments = hearingImpairments;
     }
 
     public int getPersonId() {
@@ -183,14 +179,6 @@ public class Person implements Serializable, Comparable<Person> {
         return scn;
     }
 
-    public Set<VisualImpairment> getVisualImpairments() {
-        return this.visualImpairments;
-    }
-
-    public void setVisualImpairments(Set<VisualImpairment> visualImpairments) {
-        this.visualImpairments = visualImpairments;
-    }
-
     public Set<Experiment> getExperiments() {
         return this.experiments;
     }
@@ -247,13 +235,6 @@ public class Person implements Serializable, Comparable<Person> {
         this.researchGroups = researchGroups;
     }
 
-    public Set<HearingImpairment> getHearingImpairments() {
-        return this.hearingImpairments;
-    }
-
-    public void setHearingImpairments(Set<HearingImpairment> hearingImpairments) {
-        this.hearingImpairments = hearingImpairments;
-    }
 
     public ResearchGroup getDefaultGroup() {
         return defaultGroup;

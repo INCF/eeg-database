@@ -11,8 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+
 import java.sql.Timestamp;
-import java.util.*;
+import java.util.Date;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Controller which processes form for adding experiment.
@@ -114,8 +118,8 @@ public class AddExperimentController {
             log.debug("Setting selected weather #" + measuration.getWeather().getWeatherId());
             data.setWeather(measuration.getWeather().getWeatherId());
 
-            log.debug("Setting weather note = " + measuration.getWeathernote());
-            data.setWeatherNote(measuration.getWeathernote());
+            log.debug("Setting weather note = " + measuration.getEnvironmentNote());
+            data.setWeatherNote(measuration.getEnvironmentNote());
 
             log.debug("Setting temperature = " + measuration.getTemperature());
             data.setTemperature("" + measuration.getTemperature());
@@ -269,7 +273,7 @@ public class AddExperimentController {
         experiment.setTemperature(Integer.parseInt(data.getTemperature()));
 
         log.debug("Setting the weather note - " + data.getWeatherNote());
-        experiment.setWeathernote(data.getWeatherNote());
+        experiment.setEnvironmentNote(data.getWeatherNote());
 
         log.debug("Started setting the Hardware objects");
         int[] hardwareArray = data.getHardware();

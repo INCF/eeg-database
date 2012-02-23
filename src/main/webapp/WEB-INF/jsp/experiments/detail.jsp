@@ -32,7 +32,7 @@
     </tr>
     <tr>
       <th><fmt:message key="label.weatherNote"/></th>
-      <td>${experimentDetail.weathernote}</td>
+      <td>${experimentDetail.environmentNote}</td>
     </tr>
     <tr>
       <th><fmt:message key="label.private" /></th>
@@ -112,7 +112,7 @@
     <thead>
       <tr>
         <th style="width: 250px;"><fmt:message key="dataTable.heading.fileName"/></th>
-        <th style="width: 150px;"><fmt:message key="dataTable.heading.samplingRate"/></th>
+        <th style="width: 150px;"><fmt:message key="dataTable.heading.description"/></th>
         <th><!-- column with link for detail --></th>
       </tr>
     </thead>
@@ -120,7 +120,7 @@
       <c:forEach items="${experimentDetail.dataFiles}" var="dataItem">
         <tr>
           <td>${dataItem.filename}</td>
-          <td>${dataItem.samplingRate}</td>
+          <td>${dataItem.description}</td>
           <td><a href="<c:url value='data/detail.html?fileId=${dataItem.dataFileId}' />"><fmt:message key="link.detail"/></a></td>
         </tr>
       </c:forEach>

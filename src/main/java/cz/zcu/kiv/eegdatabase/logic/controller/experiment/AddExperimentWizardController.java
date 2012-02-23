@@ -9,10 +9,12 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractWizardFormController;
+import org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -23,9 +25,6 @@ import java.text.SimpleDateFormat;
 import java.util.*;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
-
-import org.springframework.validation.ValidationUtils;
-import org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver;
 
 /**
  * Wizard for adding experiments
@@ -128,8 +127,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             log.debug("Setting selected weather #" + measuration.getWeather().getWeatherId());
             addExperimentWizardCommand.setWeather(measuration.getWeather().getWeatherId());
 
-            log.debug("Setting weather note = " + measuration.getWeathernote());
-            addExperimentWizardCommand.setWeatherNote(measuration.getWeathernote());
+            log.debug("Setting weather note = " + measuration.getEnvironmentNote());
+            addExperimentWizardCommand.setWeatherNote(measuration.getEnvironmentNote());
 
             log.debug("Setting temperature = " + measuration.getTemperature());
             addExperimentWizardCommand.setTemperature("" + measuration.getTemperature());
@@ -146,7 +145,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         sdf = new SimpleDateFormat("HH:mm");
         addExperimentWizardCommand.setStartTime(sdf.format(startDate));
         addExperimentWizardCommand.setEndTime(sdf.format(endDate));
-        addExperimentWizardCommand.setSamplingRate("1000");
+        addExperimentWizardCommand.setFileDescription("1000");
 
         return addExperimentWizardCommand;
 
@@ -256,7 +255,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         experiment.setTemperature(Integer.parseInt(data.getTemperature()));
 
         log.debug("Setting the weather note - " + data.getWeatherNote());
-        experiment.setWeathernote(data.getWeatherNote());
+        experiment.setEnvironmentNote(data.getWeatherNote());
 
         log.debug("Started setting the Hardware objects");
         int[] hardwareArray = data.getHardware();
@@ -317,7 +316,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
                         dataFile.setExperiment(experiment);
                         String name[] = en.getName().split("/");
                         dataFile.setFilename(name[name.length-1]);
-                        data.setSamplingRate(data.getSamplingRate());
+                        data.setFileDescription(data.getFileDescription());
                         dataFile.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
                         String[] partOfName = en.getName().split("[.]");
                         dataFile.setMimetype(partOfName[partOfName.length-1]);
@@ -335,8 +334,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             dataFile.setMimetype(file.getContentType());
 
             log.debug("Parsing the sapmling rate.");
-            double samplingRate = Double.parseDouble(data.getSamplingRate());
-            dataFile.setSamplingRate(samplingRate);
+            double samplingRate = Double.parseDouble(data.getFileDescription());
+            dataFile.setDesc(data.getFileDescription());
 
             log.debug("Setting the binary data to object.");
             dataFile.setFileContent(Hibernate.createBlob(file.getBytes()));
@@ -428,7 +427,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             case 2: //if page 3 , go validate with validatePage3Form
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "samplingRate", "required.samplingRate");
                 try {
-                    double rate = Double.parseDouble(data.getSamplingRate());
+                    double rate = Double.parseDouble(data.getFileDescription());
                     if (rate <= 0) {
                         errors.rejectValue("samplingRate", "invalid.positiveRate");
                     }

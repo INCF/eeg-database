@@ -38,10 +38,6 @@ public class CreateGroupController {
     @Autowired
     private FileMetadataParamDefDao fileMetadataParamDefDao;
     @Autowired
-    private HearingImpairmentDao hearingImpairmentDao;
-    @Autowired
-    private VisualImpairmentDao visualImpairmentDao;
-    @Autowired
     private PersonOptParamDefDao personOptParamDefDao;
 
     private CreateGroupValidator createGroupValidator;
@@ -114,8 +110,6 @@ public class CreateGroupController {
         List<Hardware> hardwareList = hardwareDao.getDefaultRecords();
         Hardware hardware;
         Weather weather;
-        VisualImpairment visualImpairment;
-        HearingImpairment hearingImpairment;
         PersonOptParamDef personOptParamDef;
         FileMetadataParamDef fileMetadataParamDef;
         ExperimentOptParamDef experimentOptParamDef;
@@ -138,22 +132,7 @@ public class CreateGroupController {
             weatherDao.create(weather);
             weatherDao.createGroupRel(weather,researchGroup);
         }
-        List<VisualImpairment> visualList = visualImpairmentDao.getDefaultRecords();
-        for(int i = 0;i< visualList.size();i++){
-            visualImpairment = new VisualImpairment();
-            visualImpairment.setDefaultNumber(0);
-            visualImpairment.setDescription(visualList.get(i).getDescription());
-            visualImpairmentDao.create(visualImpairment);
-            visualImpairmentDao.createGroupRel(visualImpairment,researchGroup);
-        }
-        List<HearingImpairment> hearingList = hearingImpairmentDao.getDefaultRecords();
-        for(int i = 0;i< hearingList.size();i++){
-            hearingImpairment = new HearingImpairment();
-            hearingImpairment.setDefaultNumber(0);
-            hearingImpairment.setDescription(hearingList.get(i).getDescription());
-            hearingImpairmentDao.create(hearingImpairment);
-            hearingImpairmentDao.createGroupRel(hearingImpairment,researchGroup);
-        }
+
         List<PersonOptParamDef> personOptParamDefList = personOptParamDefDao.getDefaultRecords();
         for(int i = 0;i< personOptParamDefList.size();i++){
             personOptParamDef = new PersonOptParamDef();

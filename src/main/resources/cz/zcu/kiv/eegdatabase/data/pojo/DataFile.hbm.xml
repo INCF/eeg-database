@@ -11,8 +11,8 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" name="experiment">
             <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
-        <property name="samplingRate" type="double">
-            <column name="SAMPLING_RATE" not-null="true" precision="126" scale="0"/>
+        <property name="desc" type="string">
+            <column name="DESC"/>
         </property>
         <property name="fileContent" type="blob">
             <column name="FILE_CONTENT" not-null="true"/>

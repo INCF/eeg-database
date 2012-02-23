@@ -5,32 +5,20 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
-import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.ArticleWrapper;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.ExperimentWrapper;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.PersonWrapper;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.ScenarioWrapper;
-import cz.zcu.kiv.eegdatabase.logic.wrapper.Wrapper;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.wrapper.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Map;
+import java.util.Set;
 
 /**
  *
@@ -45,8 +33,6 @@ public class FullTextSearchController extends SimpleFormController {
   private GenericDao<Scenario, Integer> scenarioDao;
   private GenericDao<Article, Integer> articleDao;
   private GenericDao<Hardware, Integer> hardwareDao;
-  private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
-  private GenericDao<VisualImpairment, Integer> eyesDefectDao;
   private GenericDao<Weather, Integer> weatherDao;
   private GenericDao<ExperimentOptParamDef, Integer> experimentOptParamDef;
   private GenericDao<ArticleComment, Integer> commentDao;
@@ -107,21 +93,21 @@ public class FullTextSearchController extends SimpleFormController {
         }
       }
 
-      Map<VisualImpairment, String> vis = eyesDefectDao.getFulltextResults(fullTextQuery);
-      for (Map.Entry<VisualImpairment, String> entry : vis.entrySet()) {
-        for (Person p : entry.getKey().getPersons()) {
-          w = new PersonWrapper(p);
-          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
-
-      Map<HearingImpairment, String> hear = hearingImpairmentDao.getFulltextResults(fullTextQuery);
-       for (Map.Entry<HearingImpairment, String> entry : hear.entrySet()) {
-        for (Person p : entry.getKey().getPersons()) {
-          w = new PersonWrapper(p);
-          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
-        }
-      }
+//      Map<VisualImpairment, String> vis = eyesDefectDao.getFulltextResults(fullTextQuery);
+//      for (Map.Entry<VisualImpairment, String> entry : vis.entrySet()) {
+//        for (Person p : entry.getKey().getPersons()) {
+//          w = new PersonWrapper(p);
+//          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+//        }
+//      }
+//
+//      Map<HearingImpairment, String> hear = hearingImpairmentDao.getFulltextResults(fullTextQuery);
+//       for (Map.Entry<HearingImpairment, String> entry : hear.entrySet()) {
+//        for (Person p : entry.getKey().getPersons()) {
+//          w = new PersonWrapper(p);
+//          results.add(new FulltextResult(p.getPersonId(), entry.getValue(), w.className(), w.getPath(), w.getTitle()));
+//        }
+//      }
 
       Map<Weather, String> wea = weatherDao.getFulltextResults(fullTextQuery);
       for (Map.Entry<Weather, String> entry : wea.entrySet()) {
@@ -190,21 +176,6 @@ public class FullTextSearchController extends SimpleFormController {
     this.hardwareDao = hardwareDao;
   }
 
-  public GenericDao<HearingImpairment, Integer> getHearingImpairmentDao() {
-    return hearingImpairmentDao;
-  }
-
-  public void setHearingImpairmentDao(GenericDao<HearingImpairment, Integer> hearingImpairmentDao) {
-    this.hearingImpairmentDao = hearingImpairmentDao;
-  }
-
-  public GenericDao<VisualImpairment, Integer> getEyesDefectDao() {
-    return eyesDefectDao;
-  }
-
-  public void setEyesDefectDao(GenericDao<VisualImpairment, Integer> eyesDefectDao) {
-    this.eyesDefectDao = eyesDefectDao;
-  }
 
   public GenericDao<Weather, Integer> getWeatherDao() {
     return weatherDao;

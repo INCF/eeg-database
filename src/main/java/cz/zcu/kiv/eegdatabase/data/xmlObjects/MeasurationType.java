@@ -8,13 +8,13 @@
 
 package cz.zcu.kiv.eegdatabase.data.xmlObjects;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.datatype.XMLGregorianCalendar;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -28,7 +28,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
  *         &lt;element name="weather" type="{}WeatherType" minOccurs="0"/>
- *         &lt;element name="weatherNote" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="environmentNote" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="hardware" type="{}HardwareType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="temperature" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="addParam" type="{}MeasurationAddParam" maxOccurs="unbounded" minOccurs="0"/>
@@ -48,7 +48,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlType(name = "MeasurationType", propOrder = {
     "weather",
-    "weatherNote",
+        "environmentNote",
     "hardware",
     "temperature",
     "addParam",
@@ -59,7 +59,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
 public class MeasurationType {
 
     protected WeatherType weather;
-    protected String weatherNote;
+    protected String environmentNote;
     protected List<HardwareType> hardware;
     protected Integer temperature;
     protected List<MeasurationAddParam> addParam;
@@ -96,27 +96,27 @@ public class MeasurationType {
     }
 
     /**
-     * Gets the value of the weatherNote property.
+     * Gets the value of the environmentNote property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getWeatherNote() {
-        return weatherNote;
+    public String getEnvironmentNote() {
+        return environmentNote;
     }
 
     /**
-     * Sets the value of the weatherNote property.
+     * Sets the value of the environmentNote property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setWeatherNote(String value) {
-        this.weatherNote = value;
+    public void setEnvironmentNote(String value) {
+        this.environmentNote = value;
     }
 
     /**

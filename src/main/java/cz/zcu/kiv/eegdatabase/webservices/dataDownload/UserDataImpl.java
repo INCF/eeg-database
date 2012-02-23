@@ -3,13 +3,10 @@ package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.springframework.jdbc.core.support.SqlLobValue;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -106,7 +103,7 @@ public class UserDataImpl implements UserDataService {
             info.setStartTimeInMillis(experiment.getStartTime().getTime());
             info.setEndTimeInMillis(experiment.getEndTime().getTime());
             info.setWeatherId(experiment.getWeather().getWeatherId());
-            info.setWeatherNote(experiment.getWeathernote());
+            info.setWeatherNote(experiment.getEnvironmentNote());
             info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
             info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
             info.setTemperature(experiment.getTemperature());
@@ -216,7 +213,7 @@ public class UserDataImpl implements UserDataService {
                         info.setFileLength(file.getFileContent().length());
                         info.setFileName(file.getFilename());
                         info.setMimeType(file.getMimetype());
-                        info.setSamplingRate(file.getSamplingRate());
+                      //  info.setSamplingRate(file.getSamplingRate());
                         info.setScn(file.getScn());
 
                         fileInformation.add(info);
@@ -308,7 +305,7 @@ public class UserDataImpl implements UserDataService {
         file.setExperiment(experiment);
         file.setFilename(dataFile.getFileName());
         file.setMimetype(dataFile.getMimeType());
-        file.setSamplingRate(dataFile.getSamplingRate());
+       // file.setSamplingRate(dataFile.getSamplingRate());
 
         try {
             if (inputData != null) {
@@ -351,7 +348,7 @@ public class UserDataImpl implements UserDataService {
         exp.setScenario(scenarioDao.read(experiment.getScenarioId()));
         exp.setResearchGroup(researchGroupDao.read(experiment.getResearchGroupId()));
         exp.setWeather(weatherDao.read(experiment.getWeatherId()));
-        exp.setWeathernote(experiment.getWeatherNote());
+        exp.setEnvironmentNote(experiment.getWeatherNote());
         exp.setTemperature(experiment.getTemperature());
         if (experiment.getHwIds() != null) {
             Set<Hardware> hardwareTypes = new HashSet<Hardware>();

@@ -4,24 +4,22 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.xml;
 
-import java.io.ByteArrayOutputStream;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.*;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.util.List;
-import java.util.Set;
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBElement;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.ScenarioType;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBElement;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Marshaller;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.util.List;
+import java.util.Set;
 
 /**
  *
@@ -94,7 +92,7 @@ public class XMLTransformer implements DataTransformer {
       log.debug("Written weather: " + wType);
     }
     if (mc.isWeatherNote()) {
-    measType.setWeatherNote(meas.getWeathernote());
+    measType.setEnvironmentNote(meas.getEnvironmentNote());
     }
     List<PersonType> perType = measType.getPerson();
     writePerson(perType, meas.getPersonBySubjectPersonId(), measured, mc);
@@ -109,10 +107,10 @@ public class XMLTransformer implements DataTransformer {
         log.debug("creating data into output xml: " + data.getFilename());
         DataType datat = of.createDataType();
         datat.setFileName(data.getFilename());
-        if (data.getSamplingRate() > 0) {
-          datat.setSamplingRate((float) data.getSamplingRate());
+        if (mc.isSamplingRate()) {
+            datat.setDescription(data.getDesc());
         }
-        log.debug("Written sampling rate: " + datat.getSamplingRate());
+        log.debug("Written file description: " + datat.getDescription());
         if (data.getFileMetadataParamVals() != null) {
           List<FileMetadataType> metType = datat.getFileMetadata();
           for (FileMetadataParamVal fileMetadata : data.getFileMetadataParamVals()) {
@@ -162,20 +160,20 @@ public class XMLTransformer implements DataTransformer {
     }
     pert.setPosition(position);
     log.debug("Written person simple attributes: " + pert);
-    if (mc.isEyesDefects()) {
-      List<EyesDefectType> edefType = pert.getEyesDefect();
-      for (VisualImpairment eyesDefect : per.getVisualImpairments()) {
-        edefType.add(p.writeEyesDefects(eyesDefect, of));
-        log.debug("Written eyes defect: " + eyesDefect);
-      }
-    }
-    if (mc.isHearingDefects()) {
-      List<HearingDefectType> hdefType = pert.getHearingDefect();
-      for (HearingImpairment hearingDefect : per.getHearingImpairments()) {
-        hdefType.add(p.writeHearingDefects(hearingDefect, of));
-        log.debug("Written hearing defect: " + hearingDefect);
-      }
-    }
+//    if (mc.isEyesDefects()) {
+//      List<EyesDefectType> edefType = pert.getEyesDefect();
+//      for (VisualImpairment eyesDefect : per.getVisualImpairments()) {
+//        edefType.add(p.writeEyesDefects(eyesDefect, of));
+//        log.debug("Written eyes defect: " + eyesDefect);
+//      }
+//    }
+//    if (mc.isHearingDefects()) {
+//      List<HearingDefectType> hdefType = pert.getHearingDefect();
+//      for (HearingImpairment hearingDefect : per.getHearingImpairments()) {
+//        hdefType.add(p.writeHearingDefects(hearingDefect, of));
+//        log.debug("Written hearing defect: " + hearingDefect);
+//      }
+//    }
     if (mc.isPersonAddParams()) {
       List<PersonAddParam> param = pert.getAddParam();
       for (PersonOptParamVal personAddParam : per.getPersonOptParamVals()) {

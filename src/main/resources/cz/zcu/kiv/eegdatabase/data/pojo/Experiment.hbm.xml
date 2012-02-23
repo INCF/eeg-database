@@ -35,8 +35,8 @@
         <property name="privateExperiment" type="boolean">
             <column name="PRIVATE" precision="1" scale="0"/>
         </property>
-        <property name="weathernote" type="string">
-            <column name="WEATHERNOTE"/>
+        <property name="environmentNote" type="string">
+            <column name="ENVIRONMENT_NOTE"/>
         </property>
         <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>

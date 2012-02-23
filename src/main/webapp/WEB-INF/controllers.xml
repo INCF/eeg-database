@@ -179,14 +179,6 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="hearingImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHearingImpairmentDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
-    <bean name="visualImpairmentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleVisualImpairmentDao">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-
     <bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -606,10 +598,6 @@
     <bean name="addHardwareValidator"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.hardware.AddHardwareValidator"/>
     <bean name="addWeatherValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.weather.AddWeatherValidator"/>
-    <bean name="addHearingImpairmentValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.hearingimpairment.AddHearingImpairmentValidator"/>
-    <bean name="addVisualImpairmentValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.list.visualimpairment.AddVisualImpairmentValidator"/>
     <bean name="addFileMetadataParamDefValidator"
           class="cz.zcu.kiv.eegdatabase.logic.controller.list.filemetadata.AddFileMetadataParamDefValidator"/>
     <bean name="addPersonOptParamDefValidator"
@@ -623,10 +611,6 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
         <property name="personOptParamValDao" ref="personOptParamValDao"/>
     </bean>
-    <bean name="addHearingDefectToPersonValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddHearingDefectToPersonValidator"/>
-    <bean name="addEyesDefectToPersonValidator"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddEyesDefectToPersonValidator"/>
 
     <bean name="downloadMetadataZipController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DownloadMetadataZipController">
@@ -733,8 +717,6 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherController">
         <property name="formView" value="people/search"/>
         <property name="personDao" ref="personDao"/>
-        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
-        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
         <property name="successView" value="people/searchResults"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.PeopleSearcherCommand"/>
     </bean>
@@ -758,8 +740,6 @@
         <property name="experimentDao" ref="experimentDao"/>
         <property name="articleDao" ref="articleDao"/>
         <property name="hardwareDao" ref="hardwareDao"/>
-        <property name="hearingImpairmentDao" ref="hearingImpairmentDao"/>
-        <property name="eyesDefectDao" ref="visualImpairmentDao"/>
         <property name="weatherDao" ref="weatherDao"/>
         <property name="experimentOptParamDef" ref="experimentOptParamDefDao"/>
         <property name="commentDao" ref="articleCommentDao"/>

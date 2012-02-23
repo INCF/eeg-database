@@ -5,11 +5,8 @@
 
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -23,8 +20,6 @@ import java.util.List;
 public class PeopleSearcherController extends AbstractSearchController {
 
     private PersonDao personDao;
-    private GenericDao<VisualImpairment, Integer> eyesDefectDao;
-    private GenericDao<HearingImpairment, Integer> hearingImpairmentDao;
 
     public PeopleSearcherController() {
         setCommandClass(PeopleSearcherCommand.class);
@@ -57,13 +52,7 @@ public class PeopleSearcherController extends AbstractSearchController {
         return mav;
     }
 
-    public GenericDao<HearingImpairment, Integer> getHearingImpairmentDao() {
-        return hearingImpairmentDao;
-    }
 
-    public void setHearingImpairmentDao(GenericDao<HearingImpairment, Integer> hearingImpairmentDao) {
-        this.hearingImpairmentDao = hearingImpairmentDao;
-    }
 
     public PersonDao getPersonDao() {
         return personDao;
@@ -73,13 +62,7 @@ public class PeopleSearcherController extends AbstractSearchController {
         this.personDao = personDao;
     }
 
-    public GenericDao<VisualImpairment, Integer> getEyesDefectDao() {
-        return eyesDefectDao;
-    }
 
-    public void setEyesDefectDao(GenericDao<VisualImpairment, Integer> eyesDefectDao) {
-        this.eyesDefectDao = eyesDefectDao;
-    }
 
 
 }

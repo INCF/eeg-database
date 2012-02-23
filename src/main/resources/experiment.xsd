@@ -52,7 +52,7 @@
                 maxOccurs="unbounded" minOccurs="0"></xs:element>
     	</xs:sequence>
         <xs:attribute name="fileName" type="xs:string"></xs:attribute>
-    	<xs:attribute name="samplingRate" type="xs:float"></xs:attribute>
+    	<xs:attribute name="description" type="xs:float"></xs:attribute>
     </xs:complexType>
 
     <xs:complexType name="PersonType">
@@ -91,7 +91,7 @@
             <xs:element name="weather" type="WeatherType" maxOccurs="1"
     		minOccurs="0">
             </xs:element>
-            <xs:element name="weatherNote" type="xs:string"
+            <xs:element name="environmentNote" type="xs:string"
     		maxOccurs="1" minOccurs="0">
             </xs:element>
             <xs:element name="hardware" type="HardwareType"

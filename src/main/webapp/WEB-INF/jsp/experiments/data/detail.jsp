@@ -18,8 +18,8 @@
       <td><c:out value="${dataDetail.filename}" /></td>
     </tr>
     <tr>
-      <th><fmt:message key="dataTable.heading.samplingRate"/></th>
-      <td><c:out value="${dataDetail.samplingRate}" /></td>
+      <th><fmt:message key="dataTable.heading.description"/></th>
+      <td><c:out value="${dataDetail.description}" /></td>
     </tr>
   </table>
 

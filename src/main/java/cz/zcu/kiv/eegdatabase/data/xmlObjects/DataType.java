@@ -8,12 +8,12 @@
 
 package cz.zcu.kiv.eegdatabase.data.xmlObjects;
 
-import java.util.ArrayList;
-import java.util.List;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlType;
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -44,7 +44,7 @@ public class DataType {
 
     protected List<FileMetadataType> fileMetadata;
     @XmlAttribute
-    protected Float samplingRate;
+    protected String description;
 
     @XmlAttribute
     protected String fileName;
@@ -86,28 +86,11 @@ public class DataType {
         return this.fileMetadata;
     }
 
-    /**
-     * Gets the value of the samplingRate property.
-     * 
-     * @return
-     *     possible object is
-     *     {@link Float }
-     *     
-     */
-    public Float getSamplingRate() {
-        return samplingRate;
+    public String getDescription() {
+        return description;
     }
 
-    /**
-     * Sets the value of the samplingRate property.
-     * 
-     * @param value
-     *     allowed object is
-     *     {@link Float }
-     *     
-     */
-    public void setSamplingRate(Float value) {
-        this.samplingRate = value;
+    public void setDescription(String description) {
+        this.description = description;
     }
-
 }

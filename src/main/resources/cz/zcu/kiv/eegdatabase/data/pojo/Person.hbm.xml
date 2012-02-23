@@ -56,14 +56,7 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="defaultGroup">
             <column name="DEFAULT_GROUP_ID" precision="22" scale="0"/>
         </many-to-one>
-        <set inverse="false" name="visualImpairments" table="VISUAL_IMPAIRMENT_REL">
-            <key>
-                <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
-            </key>
-            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.VisualImpairment">
-                <column name="VISUAL_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
-            </many-to-many>
-        </set>
+
 
         <set inverse="false" name="experiments" table="COEXPERIMENTER_REL">
             <key>
@@ -115,14 +108,7 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup"/>
         </set>
-        <set inverse="false" name="hearingImpairments" table="HEARING_IMPAIRMENT_REL">
-            <key>
-                <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
-            </key>
-            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.HearingImpairment">
-                <column name="HEARING_IMPAIRMENT_ID" not-null="true" precision="22" scale="0"/>
-            </many-to-many>
-        </set>
+
         <set inverse="true" name="requests">
             <key>
                 <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
