@@ -98,7 +98,7 @@ public class AddDataFileController
                         data.setExperiment(experiment);
                         String name[] = en.getName().split("/");
                         data.setFilename(name[name.length-1]);
-                        data.setDesc(addDataCommand.getDescription());
+                        data.setDescription(addDataCommand.getDescription());
                         data.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
                         String[] partOfName = en.getName().split("[.]");
                         data.setMimetype(partOfName[partOfName.length-1]);
@@ -117,7 +117,7 @@ public class AddDataFileController
                 data.setMimetype(file.getContentType());
 
                 log.debug("Parsing the sapmling rate.");
-                data.setDesc(addDataCommand.getDescription());
+                data.setDescription(addDataCommand.getDescription());
 
                 log.debug("Setting the binary data to object.");
                 data.setFileContent(Hibernate.createBlob(file.getBytes()));

@@ -19,7 +19,7 @@ public class DataFile implements Serializable {
     @DocumentId
     private int dataFileId;
     private Experiment experiment;
-    private String desc;
+    private String description;
     private Blob fileContent;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
@@ -36,19 +36,19 @@ public class DataFile implements Serializable {
     public DataFile() {
     }
 
-    public DataFile(int dataFileId, Experiment experiment, String desc, Blob fileContent, String mimetype, String filename) {
+    public DataFile(int dataFileId, Experiment experiment, String description, Blob fileContent, String mimetype, String filename) {
         this.dataFileId = dataFileId;
         this.experiment = experiment;
-        this.desc = desc;
+        this.description = description;
         this.fileContent = fileContent;
         this.mimetype = mimetype;
         this.filename = filename;
     }
 
-    public DataFile(int dataFileId, Experiment experiment, String desc, Blob fileContent, String mimetype, String filename, Set<FileMetadataParamVal> fileMetadataParamVals) {
+    public DataFile(int dataFileId, Experiment experiment, String description, Blob fileContent, String mimetype, String filename, Set<FileMetadataParamVal> fileMetadataParamVals) {
         this.dataFileId = dataFileId;
         this.experiment = experiment;
-        this.desc = desc;
+        this.description = description;
         this.fileContent = fileContent;
         this.mimetype = mimetype;
         this.filename = filename;
@@ -71,12 +71,12 @@ public class DataFile implements Serializable {
         this.experiment = experiment;
     }
 
-    public String getDesc() {
-        return desc;
+    public String getDescription() {
+        return description;
     }
 
-    public void setDesc(String desc) {
-        this.desc = desc;
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public Blob getFileContent() {

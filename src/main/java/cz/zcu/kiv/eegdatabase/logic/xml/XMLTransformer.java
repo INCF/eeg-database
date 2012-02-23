@@ -108,7 +108,7 @@ public class XMLTransformer implements DataTransformer {
         DataType datat = of.createDataType();
         datat.setFileName(data.getFilename());
         if (mc.isSamplingRate()) {
-            datat.setDescription(data.getDesc());
+            datat.setDescription(data.getDescription());
         }
         log.debug("Written file description: " + datat.getDescription());
         if (data.getFileMetadataParamVals() != null) {

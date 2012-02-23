@@ -11,6 +11,7 @@ import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -30,11 +31,11 @@ public class IndexingData<T, PK extends Serializable> extends HibernateDaoSuppor
                       ExperimentOptParamDef.class.getName(), DataFile.class.getName(),
                       ArticleComment.class.getName()};
     for (int i = 0; i < types.length; i++) {
-//      List<T> entities = fts.createCriteria(types[i]).list();
-//
-//      for (T entity : entities) {
-//        fts.index(entity);  //manually index an item instance
-//      }
+      List<T> entities = fts.createCriteria(types[i]).list();
+
+      for (T entity : entities) {
+        fts.index(entity);  //manually index an item instance
+      }
    }
     //System.out.println(type);
     fts.getTransaction().commit(); //index are written at commit time

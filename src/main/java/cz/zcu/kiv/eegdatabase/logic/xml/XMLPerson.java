@@ -28,7 +28,7 @@ private PersonType perType;
 
 //    public EyesDefectType writeEyesDefects(VisualImpairment eyesDefect, ObjectFactory of) {
 //        EyesDefectType edeft = of.createEyesDefectType();
-//        edeft.setDesc(eyesDefect.getDesc());
+//        edeft.setDescription(eyesDefect.getDescription());
 //        return edeft;
 //
 //    }
@@ -36,7 +36,7 @@ private PersonType perType;
 //    public HearingDefectType writeHearingDefects(HearingImpairment hearingDefect,
 //            ObjectFactory of) {
 //        HearingDefectType hdeft = of.createHearingDefectType();
-//        hdeft.setDesc(hearingDefect.getDesc());
+//        hdeft.setDescription(hearingDefect.getDescription());
 //        return hdeft;
 //
 //    }

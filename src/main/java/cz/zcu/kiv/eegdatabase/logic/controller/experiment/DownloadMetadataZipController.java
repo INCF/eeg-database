@@ -85,7 +85,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
                         newItem.setFileContent(item.getFileContent());
                         newItem.setFilename(item.getFilename());
                         newItem.setMimetype(item.getMimetype());
-                        newItem.setDesc(item.getDesc());
+                        newItem.setDescription(item.getDescription());
                     }
                 }
                 Set<FileMetadataParamVal> newVals = new HashSet<FileMetadataParamVal>();

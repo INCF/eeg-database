@@ -335,7 +335,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
             log.debug("Parsing the sapmling rate.");
             double samplingRate = Double.parseDouble(data.getFileDescription());
-            dataFile.setDesc(data.getFileDescription());
+            dataFile.setDescription(data.getFileDescription());
 
             log.debug("Setting the binary data to object.");
             dataFile.setFileContent(Hibernate.createBlob(file.getBytes()));
