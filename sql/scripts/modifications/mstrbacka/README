@@ -1,0 +1,4 @@
+Postup pro aktualizaci databaze
+1) spustime skript prevod/add_keys.sql tim pridame nove klice do stavajicich tabulek
+2) spustime vsechny skripty ze slozke new tables (volitelne i ze slozky group_rels, ktera obsahuje skripty pro vytvoreni skupinovych ciselniku) skript XXXLAST_make_foreign_keys.sql musi byt spusten jako posledni
+3) jako uplne posledni spustime skript prevod/prevod.sql ktery provede prevod stavajicich dat do novych tabulek a nepotrebne tabulky/jejich sloupce odstrani
