@@ -98,6 +98,13 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+        <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Experiment</value>
@@ -774,6 +781,7 @@
         <property name="weatherDao" ref="weatherDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
+        <property name="digitizationDao" ref="digitizationDao"/>
         <property name="auth" ref="authorizationManager"/>
         <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
         <property name="dataFileDao" ref="dataFileDao"/>

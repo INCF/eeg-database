@@ -21,6 +21,7 @@ public class AddExperimentWizardCommand {
     private int scenario;
     private int[] hardware;
     private int weather;
+    private String samplingRate;
     private String weatherNote;
     private String temperature;
     private boolean privateNote;
@@ -173,5 +174,13 @@ public class AddExperimentWizardCommand {
 
     public void setFileDescription(String fileDescription) {
         this.fileDescription = fileDescription;
+    }
+
+    public String getSamplingRate() {
+        return samplingRate;
+    }
+
+    public void setSamplingRate(String samplingRate) {
+        this.samplingRate = samplingRate;
     }
 }

@@ -47,6 +47,7 @@ public class Experiment implements Serializable {
     private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
     private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
     private Set<History> histories = new HashSet<History>(0);
+    private Digitization digitization;
     private boolean privateExperiment;
 
     public Experiment() {
@@ -212,6 +213,14 @@ public class Experiment implements Serializable {
 
     public boolean isSuitable() throws Exception {
         return (SignalProcessingUtils.getHeaders(this).size() > 0);
+    }
+
+    public Digitization getDigitization() {
+        return digitization;
+    }
+
+    public void setDigitization(Digitization digitization) {
+        this.digitization = digitization;
     }
 
     public long getScn() {

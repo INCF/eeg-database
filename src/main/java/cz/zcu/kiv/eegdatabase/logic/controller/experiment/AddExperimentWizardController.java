@@ -43,6 +43,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private WeatherDao weatherDao;
     private ResearchGroupDao researchGroupDao;
     private AuthorizationManager auth;
+    private DigitizationDao digitizationDao;
     private GenericDao<DataFile, Integer> dataFileDao;
     private ParameterMethodNameResolver methodNameResolver;
 
@@ -284,7 +285,17 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
         log.debug("Setting private/public access");
         experiment.setPrivateExperiment(data.isPrivateNote());
+        float samplingRate = Float.parseFloat(data.getSamplingRate());
+        Digitization digitization = digitizationDao.getDigitizationByParams(samplingRate, -1, "NotKnown");
+        if (digitization == null) {
+            digitization = new Digitization();
+            digitization.setFilter("NotKnown");
+            digitization.setGain(-1);
+            digitization.setSamplingRate(samplingRate);
+            digitizationDao.create(digitization);
+        }
 
+        experiment.setDigitization(digitization);
 
         if (data.getMeasurationId() > 0) {  // editing existing measuration
             log.debug("Saving the Measuration object to database using DAO - update()");
@@ -334,7 +345,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             dataFile.setMimetype(file.getContentType());
 
             log.debug("Parsing the sapmling rate.");
-            double samplingRate = Double.parseDouble(data.getFileDescription());
             dataFile.setDescription(data.getFileDescription());
 
             log.debug("Setting the binary data to object.");
@@ -520,5 +530,13 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
         this.scenarioSchemasDao = scenarioSchemasDao;
+    }
+
+    public DigitizationDao getDigitizationDao() {
+        return digitizationDao;
+    }
+
+    public void setDigitizationDao(DigitizationDao digitizationDao) {
+        this.digitizationDao = digitizationDao;
     }
 }

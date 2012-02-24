@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Digitization" schema="EEGTEST" table="DIGITALIZATION">
+        <id name="digitizationId" type="int">
+            <column name="DIGITALIZATION_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+        <property name="gain" type="float">
+            <column name="GAIN" precision="22" scale="0"/>
+        </property>
+        <property name="filter" type="string">
+            <column name="FILTER"/>
+        </property>
+        <property name="samplingRate" type="float">
+            <column name="SAMPLING_RATE" precision="22" scale="0"/>
+        </property>
+
+        <set inverse="true" name="experiments">
+            <key>
+                <column name="DIGITALIZATION_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
+        </set>
+
+    </class>
+</hibernate-mapping>
