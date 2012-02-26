@@ -17,6 +17,7 @@ public class DataFileInfo {
     private String mimeType;
     private boolean added;
     private boolean changed;
+    private String description;
     private long scn;
 
     /**
@@ -174,5 +175,13 @@ public class DataFileInfo {
      */
     public void setScn(long scn) {
         this.scn = scn;
+    }
+
+    public String getDescription() {
+        return description;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 }

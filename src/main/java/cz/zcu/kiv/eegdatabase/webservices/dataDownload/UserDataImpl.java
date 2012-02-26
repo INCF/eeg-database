@@ -39,6 +39,7 @@ public class UserDataImpl implements UserDataService {
     private HardwareDao hardwareDao;
     private GenericDao dataFileDao;
     private DigitizationDao digitizationDao;
+    private SimpleGenericDao subjectGroupDao;
 
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
@@ -309,14 +310,14 @@ public class UserDataImpl implements UserDataService {
 
     @Override
     public int addOrUpdateDataFile(DataFileInfo dataFile, DataHandler inputData) throws UserDataServiceException {
-        Experiment experiment = (Experiment) experimentDao.read(dataFile.getExperimentId());
         DataFile file;
         if (dataFile.isAdded()) {
             file = new DataFile();
         } else {
             file = (DataFile) experimentDao.getDataFilesWhereId(dataFile.getFileId()).get(0);
         }
-        file.setExperiment(experiment);
+        file.setExperiment((Experiment) experimentDao.read(dataFile.getExperimentId()));
+        file.setDescription(dataFile.getDescription());
         file.setFilename(dataFile.getFileName());
         file.setMimetype(dataFile.getMimeType());
 
@@ -333,10 +334,6 @@ public class UserDataImpl implements UserDataService {
 
         if (dataFile.isAdded()) {
             int fileId = (Integer) dataFileDao.create(file);
-            Set<DataFile> dataFiles = experiment.getDataFiles();
-            dataFiles.add(file);
-            experiment.setDataFiles(dataFiles);
-            experimentDao.update(experiment);
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " created new data file (primary key " + fileId + ").");
             return fileId;
         } else {
@@ -357,24 +354,29 @@ public class UserDataImpl implements UserDataService {
             DigitizationInfo digitizationInfo = experiment.getDigitizationInfo();
 
             if (digitizationInfo != null) {
+                if (digitizationInfo.getFilter() == null)
+                    digitizationInfo.setFilter("NotKnown");
                 Digitization digitization = digitizationDao.getDigitizationByParams(digitizationInfo.getSamplingRate(),
                         digitizationInfo.getGain(),
                         digitizationInfo.getFilter());
 
                 if (digitization == null) {
-                    Set<Experiment> exps = new HashSet<Experiment>();
-                    exps.add(exp);
                     digitization = new Digitization();
-                    digitization.setExperiments(exps);
                     digitization.setSamplingRate(digitizationInfo.getSamplingRate());
                     digitization.setFilter(digitizationInfo.getFilter());
                     digitization.setGain(digitizationInfo.getGain());
+                    digitizationDao.create(digitization);
                 }
-
                 exp.setDigitization(digitization);
             }
         }
 
+        SubjectGroup subjectGroup = (SubjectGroup) subjectGroupDao.read(experiment.getSubjectGroupId());
+//        if nothing was read, load default group (ID 1)
+        if (subjectGroup == null)
+            subjectGroup = (SubjectGroup) subjectGroupDao.read(1);
+
+        exp.setSubjectGroup(subjectGroup);
         exp.setStartTime(new Timestamp(experiment.getStartTimeInMillis()));
         exp.setEndTime(new Timestamp(experiment.getEndTimeInMillis()));
         exp.setPersonBySubjectPersonId(personDao.read(experiment.getSubjectPersonId()));
@@ -435,5 +437,9 @@ public class UserDataImpl implements UserDataService {
 
     public void setDigitizationDao(SimpleDigitizationDao digitizationDao) {
         this.digitizationDao = digitizationDao;
+    }
+
+    public void setSubjectGroupDao(SimpleGenericDao subjectGroupDao) {
+        this.subjectGroupDao = subjectGroupDao;
     }
 }

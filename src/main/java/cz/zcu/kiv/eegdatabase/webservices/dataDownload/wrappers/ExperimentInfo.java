@@ -27,6 +27,7 @@ public class ExperimentInfo {
     private boolean added;
     private boolean changed;
 
+    private int subjectGroupId;
     private DigitizationInfo digitizationInfo;
 
     /**
@@ -314,5 +315,13 @@ public class ExperimentInfo {
 
     public void setDigitizationInfo(DigitizationInfo digitizationInfo) {
         this.digitizationInfo = digitizationInfo;
+    }
+
+    public int getSubjectGroupId() {
+        return subjectGroupId;
+    }
+
+    public void setSubjectGroupId(int subjectGroupId) {
+        this.subjectGroupId = subjectGroupId;
     }
 }
