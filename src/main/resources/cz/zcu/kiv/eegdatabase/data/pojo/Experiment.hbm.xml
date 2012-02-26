@@ -26,6 +26,9 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Digitization" fetch="select" name="digitization">
             <column name="DIGITALIZATION_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup" fetch="select" name="subjectGroup">
+            <column name="SUBJECT_GROUP_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
         <property name="startTime" type="java.sql.Timestamp">
             <column length="7" name="START_TIME"/>
         </property>

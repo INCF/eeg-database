@@ -45,6 +45,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private AuthorizationManager auth;
     private DigitizationDao digitizationDao;
     private GenericDao<DataFile, Integer> dataFileDao;
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
     private ParameterMethodNameResolver methodNameResolver;
 
     public ParameterMethodNameResolver getMethodNameResolver() {
@@ -296,6 +297,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         }
 
         experiment.setDigitization(digitization);
+        experiment.setSubjectGroup(subjectGroupDao.read(1)); //default subject group
 
         if (data.getMeasurationId() > 0) {  // editing existing measuration
             log.debug("Saving the Measuration object to database using DAO - update()");
@@ -538,5 +540,13 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setDigitizationDao(DigitizationDao digitizationDao) {
         this.digitizationDao = digitizationDao;
+    }
+
+    public GenericDao<SubjectGroup, Integer> getSubjectGroupDao() {
+        return subjectGroupDao;
+    }
+
+    public void setSubjectGroupDao(GenericDao<SubjectGroup, Integer> subjectGroupDao) {
+        this.subjectGroupDao = subjectGroupDao;
     }
 }

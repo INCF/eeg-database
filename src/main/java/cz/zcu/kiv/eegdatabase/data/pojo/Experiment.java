@@ -48,6 +48,7 @@ public class Experiment implements Serializable {
     private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
     private Set<History> histories = new HashSet<History>(0);
     private Digitization digitization;
+    private SubjectGroup subjectGroup;
     private boolean privateExperiment;
 
     public Experiment() {
@@ -221,6 +222,14 @@ public class Experiment implements Serializable {
 
     public void setDigitization(Digitization digitization) {
         this.digitization = digitization;
+    }
+
+    public SubjectGroup getSubjectGroup() {
+        return subjectGroup;
+    }
+
+    public void setSubjectGroup(SubjectGroup subjectGroup) {
+        this.subjectGroup = subjectGroup;
     }
 
     public long getScn() {

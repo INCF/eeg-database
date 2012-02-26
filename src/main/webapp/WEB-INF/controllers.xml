@@ -175,6 +175,12 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="subjectGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -785,6 +791,7 @@
         <property name="auth" ref="authorizationManager"/>
         <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
         <property name="dataFileDao" ref="dataFileDao"/>
+        <property name="subjectGroupDao" ref="subjectGroupDao"/>
         <!-- <property name="validator" ref="addDataFileController"/>-->
         <property name="pages">
             <list>

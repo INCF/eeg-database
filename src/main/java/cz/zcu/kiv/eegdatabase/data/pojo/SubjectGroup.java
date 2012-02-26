@@ -11,36 +11,36 @@ import java.util.Set;
  * Time: 13:30
  * To change this template use File | Settings | File Templates.
  */
-public class SubjectsGroup implements Serializable {
+public class SubjectGroup implements Serializable {
 
-    private int subjectsGroupId;
-    private String name;
+    private int subjectGroupId;
+    private String title;
     private String description;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
 
-    public SubjectsGroup() {
+    public SubjectGroup() {
     }
 
-    public SubjectsGroup(int subjectsGroupId, String description, String name) {
-        this.subjectsGroupId = subjectsGroupId;
+    public SubjectGroup(int subjectGroupId, String description, String name) {
+        this.subjectGroupId = subjectGroupId;
         this.description = description;
-        this.name = name;
+        this.title = name;
     }
 
-    public int getSubjectsGroupId() {
-        return subjectsGroupId;
+    public int getSubjectGroupId() {
+        return subjectGroupId;
     }
 
-    public void setSubjectsGroupId(int subjectsGroupId) {
-        this.subjectsGroupId = subjectsGroupId;
+    public void setSubjectGroupId(int subjectGroupId) {
+        this.subjectGroupId = subjectGroupId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {
