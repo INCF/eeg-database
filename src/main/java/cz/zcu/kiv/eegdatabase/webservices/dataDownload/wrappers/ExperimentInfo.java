@@ -27,6 +27,8 @@ public class ExperimentInfo {
     private boolean added;
     private boolean changed;
 
+    private DigitizationInfo digitizationInfo;
+
     /**
      * Getter of experiment's identifier.
      *
@@ -304,5 +306,13 @@ public class ExperimentInfo {
      */
     public void setChanged(boolean changed) {
         this.changed = changed;
+    }
+
+    public DigitizationInfo getDigitizationInfo() {
+        return digitizationInfo;
+    }
+
+    public void setDigitizationInfo(DigitizationInfo digitizationInfo) {
+        this.digitizationInfo = digitizationInfo;
     }
 }

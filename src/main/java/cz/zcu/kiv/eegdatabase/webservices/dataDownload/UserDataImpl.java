@@ -37,7 +37,8 @@ public class UserDataImpl implements UserDataService {
     private ScenarioDao scenarioDao;
     private ResearchGroupDao researchGroupDao;
     private HardwareDao hardwareDao;
-    private SimpleGenericDao dataFileDao;
+    private GenericDao dataFileDao;
+    private DigitizationDao digitizationDao;
 
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
@@ -109,6 +110,20 @@ public class UserDataImpl implements UserDataService {
             info.setTemperature(experiment.getTemperature());
             info.setTitle(experiment.getScenario().getTitle());
             info.setScn(experiment.getScn());
+
+            DigitizationInfo digitizationInfo = new DigitizationInfo();
+            try {
+                Digitization digitization = experiment.getDigitization();
+                if (digitization != null) {
+                    digitizationInfo.setFilter(digitization.getFilter());
+                    digitizationInfo.setGain(digitization.getGain());
+                    digitizationInfo.setSamplingRate(digitization.getSamplingRate());
+                }
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+
+            info.setDigitizationInfo(digitizationInfo);
 
             List<Integer> hwIds = new ArrayList<Integer>();
             for (Hardware hw : experiment.getHardwares()) {
@@ -213,7 +228,6 @@ public class UserDataImpl implements UserDataService {
                         info.setFileLength(file.getFileContent().length());
                         info.setFileName(file.getFilename());
                         info.setMimeType(file.getMimetype());
-                      //  info.setSamplingRate(file.getSamplingRate());
                         info.setScn(file.getScn());
 
                         fileInformation.add(info);
@@ -305,7 +319,7 @@ public class UserDataImpl implements UserDataService {
         file.setExperiment(experiment);
         file.setFilename(dataFile.getFileName());
         file.setMimetype(dataFile.getMimeType());
-       // file.setSamplingRate(dataFile.getSamplingRate());
+
 
         try {
             if (inputData != null) {
@@ -340,6 +354,25 @@ public class UserDataImpl implements UserDataService {
         } else {
             exp = new Experiment();
             exp.setPersonByOwnerId(personDao.read(experiment.getOwnerId()));
+            DigitizationInfo digitizationInfo = experiment.getDigitizationInfo();
+
+            if (digitizationInfo != null) {
+                Digitization digitization = digitizationDao.getDigitizationByParams(digitizationInfo.getSamplingRate(),
+                        digitizationInfo.getGain(),
+                        digitizationInfo.getFilter());
+
+                if (digitization == null) {
+                    Set<Experiment> exps = new HashSet<Experiment>();
+                    exps.add(exp);
+                    digitization = new Digitization();
+                    digitization.setExperiments(exps);
+                    digitization.setSamplingRate(digitizationInfo.getSamplingRate());
+                    digitization.setFilter(digitizationInfo.getFilter());
+                    digitization.setGain(digitizationInfo.getGain());
+                }
+
+                exp.setDigitization(digitization);
+            }
         }
 
         exp.setStartTime(new Timestamp(experiment.getStartTimeInMillis()));
@@ -350,6 +383,7 @@ public class UserDataImpl implements UserDataService {
         exp.setWeather(weatherDao.read(experiment.getWeatherId()));
         exp.setEnvironmentNote(experiment.getWeatherNote());
         exp.setTemperature(experiment.getTemperature());
+
         if (experiment.getHwIds() != null) {
             Set<Hardware> hardwareTypes = new HashSet<Hardware>();
             for (Integer hwId : experiment.getHwIds()) {
@@ -359,11 +393,13 @@ public class UserDataImpl implements UserDataService {
         }
 
         if (!experiment.isAdded()) {
+            experimentDao.update(exp);
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " edited existing experiment (primary key " + experiment.getExperimentId() + ").");
             return exp.getExperimentId();
         } else {
+            int expId = (Integer) experimentDao.create(exp);
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " saved new experiment (primary key " + experiment.getExperimentId() + ").");
-            return (Integer) experimentDao.create(exp);
+            return expId;
         }
 
     }
@@ -395,5 +431,9 @@ public class UserDataImpl implements UserDataService {
 
     public void setDataFileDao(SimpleGenericDao dataFileDao) {
         this.dataFileDao = dataFileDao;
+    }
+
+    public void setDigitizationDao(SimpleDigitizationDao digitizationDao) {
+        this.digitizationDao = digitizationDao;
     }
 }
