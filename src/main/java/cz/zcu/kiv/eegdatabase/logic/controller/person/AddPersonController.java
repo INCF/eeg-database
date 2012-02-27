@@ -94,6 +94,7 @@ public class AddPersonController extends SimpleFormController {
 
 
         log.debug("Creating new Person object");
+        person.setLaterality("x".charAt(0));
         personDao.create(person);
 
 

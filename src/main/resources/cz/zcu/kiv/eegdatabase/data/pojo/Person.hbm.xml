@@ -23,6 +23,9 @@
         <property name="gender" type="char">
             <column length="1" name="GENDER" not-null="true"/>
         </property>
+        <property name="laterality" type="char">
+            <column length="1" name="LATERALITY" not-null="true"/>
+        </property>
         <property name="email" type="string">
             <column length="50" name="EMAIL"/>
         </property>

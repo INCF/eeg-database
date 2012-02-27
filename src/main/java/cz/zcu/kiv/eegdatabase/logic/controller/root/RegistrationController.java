@@ -116,6 +116,8 @@ public class RegistrationController extends SimpleFormController {
         log.debug("Setting authentication hash code");
         person.setAuthenticationHash(authHash);
 
+        person.setLaterality("X".charAt(0));
+
         log.debug("Creating new Person object");
         personDao.create(person);
 
