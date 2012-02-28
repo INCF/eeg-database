@@ -44,11 +44,11 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private ResearchGroupDao researchGroupDao;
     private AuthorizationManager auth;
     private DigitizationDao digitizationDao;
-    private GenericDao<DataFile, Integer> dataFileDao;
-    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
     private ParameterMethodNameResolver methodNameResolver;
-    private SimpleGenericDao<Artifact, Integer> artifactDao;
+    private GenericDao<DataFile, Integer> dataFileDao;
+    private GenericDao<Artifact, Integer> artifactDao;
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
 
     public ParameterMethodNameResolver getMethodNameResolver() {
         return methodNameResolver;
@@ -554,11 +554,11 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         this.subjectGroupDao = subjectGroupDao;
     }
 
-    public SimpleGenericDao<Artifact, Integer> getArtifactDao() {
+    public GenericDao<Artifact, Integer> getArtifactDao() {
         return artifactDao;
     }
 
-    public void setArtifactDao(SimpleGenericDao<Artifact, Integer> artifactDao) {
+    public void setArtifactDao(GenericDao<Artifact, Integer> artifactDao) {
         this.artifactDao = artifactDao;
     }
 
