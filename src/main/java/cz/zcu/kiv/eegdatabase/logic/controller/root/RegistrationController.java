@@ -2,7 +2,9 @@ package cz.zcu.kiv.eegdatabase.logic.controller.root;
 
 import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.image.ImageCaptchaService;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
@@ -14,6 +16,7 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -24,11 +27,15 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class RegistrationController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
+    private GenericDao<EducationLevel, Integer> educationLevelDao;
     private JavaMailSenderImpl mailSender;
     private SimpleMailMessage mailMessage;
     private HierarchicalMessageSource messageSource;
@@ -46,6 +53,13 @@ public class RegistrationController extends SimpleFormController {
     protected void onBindAndValidate(HttpServletRequest request, Object command, BindException errors) throws Exception {
         validateCaptcha(request, errors);
     }
+     @Override
+     protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+         Map map = new HashMap<String, Object>();
+         List<EducationLevel> list = educationLevelDao.getAllRecords();
+         map.put("education", list);
+         return map;
+     }
 
 
     //validates captch image text
@@ -116,7 +130,8 @@ public class RegistrationController extends SimpleFormController {
         log.debug("Setting authentication hash code");
         person.setAuthenticationHash(authHash);
 
-        person.setLaterality("X".charAt(0));
+        person.setLaterality(rc.getLaterality().charAt(0));
+        person.setEducationLevel(educationLevelDao.read(rc.getEducationLevel()));
 
         log.debug("Creating new Person object");
         personDao.create(person);
@@ -192,6 +207,14 @@ public class RegistrationController extends SimpleFormController {
         this.personDao = personDao;
     }
 
+    public GenericDao<EducationLevel, Integer> getEducationLevelDao() {
+        return educationLevelDao;
+    }
+
+    public void setEducationLevelDao(GenericDao<EducationLevel, Integer> educationLevelDao) {
+        this.educationLevelDao = educationLevelDao;
+    }
+
     public JavaMailSenderImpl getMailSender() {
         return mailSender;
     }
@@ -237,4 +260,5 @@ public class RegistrationController extends SimpleFormController {
     public void setMailMessage(SimpleMailMessage mailMessage) {
         this.mailMessage = mailMessage;
     }
+
 }

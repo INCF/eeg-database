@@ -13,8 +13,9 @@ public class AddPersonCommand {
     private String email;
     private String phoneNumber;
     private String note;
-    private int[] eyesDefects;
-    private int[] hearingDefects;
+    private String laterality;
+    private int educationLevel;
+
 
     public int getId() {
         return id;
@@ -40,14 +41,6 @@ public class AddPersonCommand {
         this.email = email;
     }
 
-    public int[] getEyesDefects() {
-        return eyesDefects;
-    }
-
-    public void setEyesDefects(int[] eyesDefects) {
-        this.eyesDefects = eyesDefects;
-    }
-
     public String getGender() {
         return gender;
     }
@@ -64,13 +57,6 @@ public class AddPersonCommand {
         this.givenname = givenname;
     }
 
-    public int[] getHearingDefects() {
-        return hearingDefects;
-    }
-
-    public void setHearingDefects(int[] hearingDefects) {
-        this.hearingDefects = hearingDefects;
-    }
 
     public String getNote() {
         return note;
@@ -94,5 +80,21 @@ public class AddPersonCommand {
 
     public void setSurname(String surname) {
         this.surname = surname;
+    }
+
+    public int getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(int educationLevel) {
+        this.educationLevel = educationLevel;
+    }
+
+    public String getLaterality() {
+        return laterality;
+    }
+
+    public void setLaterality(String laterality) {
+        this.laterality = laterality;
     }
 }

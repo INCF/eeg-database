@@ -56,6 +56,7 @@ public class Person implements Serializable, Comparable<Person> {
     private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
     private String facebookId;
     private char laterality;
+    private EducationLevel educationLevel;
     private long scn;
 
     public Person() {
@@ -328,6 +329,14 @@ public class Person implements Serializable, Comparable<Person> {
 
     public void setLaterality(char laterality) {
         this.laterality = laterality;
+    }
+
+    public EducationLevel getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(EducationLevel educationLevel) {
+        this.educationLevel = educationLevel;
     }
 }
 

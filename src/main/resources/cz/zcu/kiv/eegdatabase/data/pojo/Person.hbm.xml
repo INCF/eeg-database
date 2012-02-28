@@ -59,6 +59,9 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="defaultGroup">
             <column name="DEFAULT_GROUP_ID" precision="22" scale="0"/>
         </many-to-one>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel" fetch="select" name="educationLevel">
+            <column name="EDUCATION_LEVEL_ID" precision="22" scale="0"/>
+        </many-to-one>
 
 
         <set inverse="false" name="experiments" table="COEXPERIMENTER_REL">

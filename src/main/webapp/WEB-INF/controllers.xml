@@ -36,6 +36,7 @@
 
         <property name="successView" value="system/confirmReg"/>
         <property name="personDao" ref="personDao"/>
+        <property name="educationLevelDao" ref="educationLevelDao" />
         <property name="domain" value="${app.domain}"/>
         <property name="mailSender" ref="mailSender"/>
         <property name="mailMessage" ref="mailMessage"/>
@@ -122,6 +123,13 @@
     <bean name="groupPermissionRequestDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="educationLevelDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -585,6 +593,7 @@
         <property name="formView" value="people/addPersonForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
         <property name="personDao" ref="personDao"/>
+        <property name="educationLevelDao" ref="educationLevelDao" />
         <property name="messageSource" ref="messageSource"/>
         <property name="domain" value="${app.domain}"/>
         <property name="mailSender" ref="mailSender"/>

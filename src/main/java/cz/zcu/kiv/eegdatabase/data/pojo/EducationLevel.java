@@ -14,15 +14,16 @@ import java.util.Set;
 public class EducationLevel implements Serializable {
 
     private int educationLevelId;
-    private String name;
+    private String title;
+    private int defaultNumber;
     private Set<Person> persons = new HashSet<Person>(0);
 
     public EducationLevel() {
     }
 
-    public EducationLevel(int educationLevelId, String name) {
+    public EducationLevel(int educationLevelId, String title) {
         this.educationLevelId = educationLevelId;
-        this.name = name;
+        this.title = title;
     }
 
     public int getEducationLevelId() {
@@ -33,12 +34,12 @@ public class EducationLevel implements Serializable {
         this.educationLevelId = educationLevelId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public Set<Person> getPersons() {
@@ -47,5 +48,13 @@ public class EducationLevel implements Serializable {
 
     public void setPersons(Set<Person> persons) {
         this.persons = persons;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
     }
 }

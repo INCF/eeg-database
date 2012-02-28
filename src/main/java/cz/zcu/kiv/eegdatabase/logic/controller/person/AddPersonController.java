@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
@@ -10,6 +12,7 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -19,13 +22,13 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.text.Normalizer;
-import java.util.Date;
-import java.util.Random;
+import java.util.*;
 
 public class AddPersonController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
+    private GenericDao<EducationLevel, Integer> educationLevelDao;
     private JavaMailSenderImpl mailSender;
     private HierarchicalMessageSource messageSource;
     private String domain;
@@ -35,6 +38,13 @@ public class AddPersonController extends SimpleFormController {
         setCommandClass(AddPersonCommand.class);
         setCommandName("addPerson");
     }
+    @Override
+    protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+         Map map = new HashMap<String, Object>();
+         List<EducationLevel> list = educationLevelDao.getAllRecords();
+         map.put("education", list);
+         return map;
+     }
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
@@ -94,7 +104,8 @@ public class AddPersonController extends SimpleFormController {
 
 
         log.debug("Creating new Person object");
-        person.setLaterality("x".charAt(0));
+        person.setLaterality(apc.getLaterality().charAt(0));
+        person.setEducationLevel(educationLevelDao.read(apc.getEducationLevel()));
         personDao.create(person);
 
 
@@ -166,6 +177,13 @@ public class AddPersonController extends SimpleFormController {
         this.personDao = personDao;
     }
 
+    public GenericDao<EducationLevel, Integer> getEducationLevelDao() {
+        return educationLevelDao;
+    }
+
+    public void setEducationLevelDao(GenericDao<EducationLevel, Integer> educationLevelDao) {
+        this.educationLevelDao = educationLevelDao;
+    }
 
     public JavaMailSenderImpl getMailSender() {
         return mailSender;

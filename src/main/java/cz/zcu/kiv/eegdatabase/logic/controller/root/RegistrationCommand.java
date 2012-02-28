@@ -14,6 +14,8 @@ public class RegistrationCommand {
     private String password;
     private String password2;
     private String controlText;
+    private int educationLevel;
+    private String laterality;
 
     public String getControlText() {
         return controlText;
@@ -87,4 +89,19 @@ public class RegistrationCommand {
         this.username = username;
     }
 
+    public int getEducationLevel() {
+        return educationLevel;
+    }
+
+    public void setEducationLevel(int educationLevel) {
+        this.educationLevel = educationLevel;
+    }
+
+    public String getLaterality() {
+        return laterality;
+    }
+
+    public void setLaterality(String laterality) {
+        this.laterality = laterality;
+    }
 }
