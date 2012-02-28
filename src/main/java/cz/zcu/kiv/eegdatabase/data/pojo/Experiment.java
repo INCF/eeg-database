@@ -50,6 +50,9 @@ public class Experiment implements Serializable {
     private Digitization digitization;
     private SubjectGroup subjectGroup;
     private boolean privateExperiment;
+    private Artifact artifact;
+    private ElectrodeConf electrodeConf;
+
 
     public Experiment() {
     }
@@ -230,6 +233,22 @@ public class Experiment implements Serializable {
 
     public void setSubjectGroup(SubjectGroup subjectGroup) {
         this.subjectGroup = subjectGroup;
+    }
+
+    public Artifact getArtifact() {
+        return artifact;
+    }
+
+    public void setArtifact(Artifact artifact) {
+        this.artifact = artifact;
+    }
+
+    public ElectrodeConf getElectrodeConf() {
+        return electrodeConf;
+    }
+
+    public void setElectrodeConf(ElectrodeConf electrodeConf) {
+        this.electrodeConf = electrodeConf;
     }
 
     public long getScn() {

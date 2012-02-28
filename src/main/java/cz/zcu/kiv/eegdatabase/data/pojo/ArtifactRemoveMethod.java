@@ -16,16 +16,16 @@ public class ArtifactRemoveMethod implements Serializable {
     private int artifactRemoveMethodId;
     private String name;
     private String description;
-    Set<Artifact> artifacts = new HashSet<Artifact>(0);
+    Set<Experiment> experiments = new HashSet<Experiment>(0);
 
     public ArtifactRemoveMethod() {
     }
 
-    public ArtifactRemoveMethod(int artifactRemoveMethodId, String name, String description, Set<Artifact> artifacts) {
+    public ArtifactRemoveMethod(int artifactRemoveMethodId, String name, String description, Set<Experiment> experiments) {
         this.artifactRemoveMethodId = artifactRemoveMethodId;
         this.name = name;
         this.description = description;
-        this.artifacts = artifacts;
+        this.experiments = experiments;
     }
 
     public int getArtifactRemoveMethodId() {
@@ -52,11 +52,11 @@ public class ArtifactRemoveMethod implements Serializable {
         this.description = description;
     }
 
-    public Set<Artifact> getArtifacts() {
-        return artifacts;
+    public Set<Experiment> getExperiments() {
+        return experiments;
     }
 
-    public void setArtifacts(Set<Artifact> artifacts) {
-        this.artifacts = artifacts;
+    public void setExperiments(Set<Experiment> experiments) {
+        this.experiments = experiments;
     }
 }

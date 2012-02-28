@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Artifact" schema="EEGTEST" table="ARTEFACT">
+        <id name="artifactId" type="int">
+            <column name="ARTEFACT_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="compensation" type="string">
+            <column name="COMPENSATION"/>
+        </property>
+        <property name="rejectCondition" type="string">
+            <column name="REJECT_CONDITION" />
+        </property>
+
+        <set inverse="true" name="experiments">
+            <key>
+                <column name="ARTEFACT_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
+        </set>
+
+    </class>
+</hibernate-mapping>

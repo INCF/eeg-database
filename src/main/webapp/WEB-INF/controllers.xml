@@ -99,12 +99,13 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-        <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
+    <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
 
     <bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
         <constructor-arg>
@@ -130,6 +131,18 @@
     <bean name="educationLevelDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -801,6 +814,8 @@
         <!--  <property name="validator" ref="addExperimentWizardController"/>        -->
         <property name="dataFileDao" ref="dataFileDao"/>
         <property name="subjectGroupDao" ref="subjectGroupDao"/>
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="electrodeConfDao" ref="electrodeConfDao" />
         <!-- <property name="validator" ref="addDataFileController"/>-->
         <property name="pages">
             <list>

@@ -47,6 +47,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private GenericDao<DataFile, Integer> dataFileDao;
     private GenericDao<SubjectGroup, Integer> subjectGroupDao;
     private ParameterMethodNameResolver methodNameResolver;
+    private SimpleGenericDao<Artifact, Integer> artifactDao;
+    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
 
     public ParameterMethodNameResolver getMethodNameResolver() {
         return methodNameResolver;
@@ -297,6 +299,8 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         }
 
         experiment.setDigitization(digitization);
+        experiment.setArtifact(artifactDao.read(1));
+        experiment.setElectrodeConf(electrodeConfDao.read(1));
         experiment.setSubjectGroup(subjectGroupDao.read(1)); //default subject group
 
         if (data.getMeasurationId() > 0) {  // editing existing measuration
@@ -548,5 +552,21 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setSubjectGroupDao(GenericDao<SubjectGroup, Integer> subjectGroupDao) {
         this.subjectGroupDao = subjectGroupDao;
+    }
+
+    public SimpleGenericDao<Artifact, Integer> getArtifactDao() {
+        return artifactDao;
+    }
+
+    public void setArtifactDao(SimpleGenericDao<Artifact, Integer> artifactDao) {
+        this.artifactDao = artifactDao;
+    }
+
+    public GenericDao<ElectrodeConf, Integer> getElectrodeConfDao() {
+        return electrodeConfDao;
+    }
+
+    public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
+        this.electrodeConfDao = electrodeConfDao;
     }
 }
