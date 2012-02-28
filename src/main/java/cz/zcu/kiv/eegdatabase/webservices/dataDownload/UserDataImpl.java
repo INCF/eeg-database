@@ -37,9 +37,11 @@ public class UserDataImpl implements UserDataService {
     private ScenarioDao scenarioDao;
     private ResearchGroupDao researchGroupDao;
     private HardwareDao hardwareDao;
-    private GenericDao dataFileDao;
+    private GenericDao<DataFile, Integer> dataFileDao;
     private DigitizationDao digitizationDao;
-    private SimpleGenericDao subjectGroupDao;
+    private GenericDao<Artifact, Integer> artifactDao;
+    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
 
     public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
@@ -63,6 +65,26 @@ public class UserDataImpl implements UserDataService {
 
     public void setHardwareDao(HardwareDao hardwareDao) {
         this.hardwareDao = hardwareDao;
+    }
+
+    public void setDataFileDao(SimpleGenericDao dataFileDao) {
+        this.dataFileDao = dataFileDao;
+    }
+
+    public void setDigitizationDao(SimpleDigitizationDao digitizationDao) {
+        this.digitizationDao = digitizationDao;
+    }
+
+    public void setSubjectGroupDao(SimpleGenericDao subjectGroupDao) {
+        this.subjectGroupDao = subjectGroupDao;
+    }
+
+    public void setArtifactDao(SimpleGenericDao artifactDao) {
+        this.artifactDao = artifactDao;
+    }
+
+    public void setElectrodeConfDao(SimpleGenericDao electrodeConfDao) {
+        this.electrodeConfDao = electrodeConfDao;
     }
 
     public boolean isServiceAvailable() {
@@ -321,9 +343,9 @@ public class UserDataImpl implements UserDataService {
         file.setFilename(dataFile.getFileName());
         file.setMimetype(dataFile.getMimeType());
 
-
         try {
             if (inputData != null) {
+//                TODO rewrite into not-deprecated form
                 Blob blob = Hibernate.createBlob(inputData.getInputStream(), (int) dataFile.getFileLength());
                 file.setFileContent(blob);
             }
@@ -333,7 +355,7 @@ public class UserDataImpl implements UserDataService {
         }
 
         if (dataFile.isAdded()) {
-            int fileId = (Integer) dataFileDao.create(file);
+            int fileId = dataFileDao.create(file);
             log.debug("User " + personDao.getLoggedPerson().getUsername() + " created new data file (primary key " + fileId + ").");
             return fileId;
         } else {
@@ -371,12 +393,17 @@ public class UserDataImpl implements UserDataService {
             }
         }
 
-        SubjectGroup subjectGroup = (SubjectGroup) subjectGroupDao.read(experiment.getSubjectGroupId());
+        SubjectGroup subjectGroup = subjectGroupDao.read(experiment.getSubjectGroupId());
 //        if nothing was read, load default group (ID 1)
         if (subjectGroup == null)
-            subjectGroup = (SubjectGroup) subjectGroupDao.read(1);
+            subjectGroup = subjectGroupDao.read(1);
 
         exp.setSubjectGroup(subjectGroup);
+
+        //TODO this will have to be handled in future
+        exp.setArtifact(artifactDao.read(1));
+        exp.setElectrodeConf(electrodeConfDao.read(1));
+
         exp.setStartTime(new Timestamp(experiment.getStartTimeInMillis()));
         exp.setEndTime(new Timestamp(experiment.getEndTimeInMillis()));
         exp.setPersonBySubjectPersonId(personDao.read(experiment.getSubjectPersonId()));
@@ -429,17 +456,5 @@ public class UserDataImpl implements UserDataService {
     @Override
     public int addOfUpdateWeather(WeatherInfo weather) {
         throw new UnsupportedOperationException("Not implemented yet");
-    }
-
-    public void setDataFileDao(SimpleGenericDao dataFileDao) {
-        this.dataFileDao = dataFileDao;
-    }
-
-    public void setDigitizationDao(SimpleDigitizationDao digitizationDao) {
-        this.digitizationDao = digitizationDao;
-    }
-
-    public void setSubjectGroupDao(SimpleGenericDao subjectGroupDao) {
-        this.subjectGroupDao = subjectGroupDao;
     }
 }
