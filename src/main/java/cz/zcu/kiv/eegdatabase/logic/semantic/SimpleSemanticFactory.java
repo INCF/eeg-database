@@ -11,8 +11,11 @@ import tools.*;
 
 import java.io.IOException;
 import java.io.InputStream;
+import java.text.DateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Factory for transforming POJO object to resources of semantic web
@@ -55,8 +58,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (syntax == null || syntax.equals("owl"))
             syntax = Syntax.RDF_XML;
         lang = syntax.toUpperCase();
-        /*if (! Syntax.isValidSyntaxName(lang))
-            lang = Syntax.RDF_XML;*/
 
         is = creatingJenaBean().getOntologyDocument(lang);
         return is;
@@ -91,14 +92,19 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Creates JenaBeanExtensionTool for transforming POJO objects into an ontology document.
      * @return jenaBean - Jena bean
      */
-    private JenaBeanExtensionTool creatingJenaBean() {
+    private JenaBeanExtension creatingJenaBean() {
+
+        // uchovavani instance JenaBeanu je prozatimni reseni - casem vhodne pravidelne generovani
         if (jenaBean == null) {
             loadData();
             jenaBean = new JenaBeanExtensionTool(dataList);
             jenaBean.setBasePackage("cz.zcu.kiv.eegdatabase.data.pojo");
-            jenaBean.setOntology(new OntologyProperties("kiv.zcu.cz/eegdatabase"));
+            Ontology ontology = new Ontology("http://kiv.zcu.cz/eegdatabase");
+            ontology.setLabel("Database of EEG/ERP experiments");
+            ontology.setVersionInfo(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(new Date()));
+            jenaBean.setOntology(ontology);
         }
-        return (JenaBeanExtensionTool) jenaBean;
+        return jenaBean;
     }
 
 

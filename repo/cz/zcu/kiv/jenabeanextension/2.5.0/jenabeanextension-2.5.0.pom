@@ -4,6 +4,6 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>cz.zcu.kiv</groupId>
   <artifactId>jenabeanextension</artifactId>
-  <version>2.4.1</version>
+  <version>2.5.0</version>
   <description>POM was created from install:install-file</description>
 </project>
