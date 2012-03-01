@@ -69,6 +69,31 @@
                 <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
+        <set inverse="true" name="pharmaceuticals" table="PHARMACEUTICAL_REL">
+            <key>
+                <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical">
+                <column name="PRAHMACEUTICAL_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="diseases" table="DISEASE_REL">
+            <key>
+                <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Disease">
+                <column name="DISEASE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="projectTypes" table="PROJECT_TYPE_REL">
+            <key>
+                <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ProjectType">
+                <column name="PROJECT_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
         <set inverse="true" name="dataFiles">
             <key>
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>

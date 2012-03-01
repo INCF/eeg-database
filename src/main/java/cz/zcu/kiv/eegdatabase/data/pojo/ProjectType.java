@@ -7,40 +7,42 @@ import java.util.Set;
 /**
  * Created by IntelliJ IDEA.
  * User: stebjan
- * Date: 8.2.12
- * Time: 13:23
+ * Date: 1.3.12
+ * Time: 11:41
  * To change this template use File | Settings | File Templates.
  */
-public class Pharmaceuticals implements Serializable {
+public class ProjectType implements Serializable {
 
-    private int pharmaceuticalsId;
-    private String name;
+    private int projectTypeId;
+    private String title;
     private String description;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
 
-    public Pharmaceuticals() {
+    public ProjectType() {
+
     }
 
-    public Pharmaceuticals(int pharmaceuticalsId, String name, String description) {
-        this.pharmaceuticalsId = pharmaceuticalsId;
-        this.name = name;
+    public ProjectType(int projectTypeId, String title, String description, Set<Experiment> experiments) {
+        this.projectTypeId = projectTypeId;
+        this.title = title;
         this.description = description;
+        this.experiments = experiments;
     }
 
-    public int getPharmaceuticalsId() {
-        return pharmaceuticalsId;
+    public int getProjectTypeId() {
+        return projectTypeId;
     }
 
-    public void setPharmaceuticalsId(int pharmaceuticalsId) {
-        this.pharmaceuticalsId = pharmaceuticalsId;
+    public void setProjectTypeId(int projectTypeId) {
+        this.projectTypeId = projectTypeId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
     public String getDescription() {

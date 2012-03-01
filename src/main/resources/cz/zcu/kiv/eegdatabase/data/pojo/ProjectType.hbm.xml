@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ProjectType" schema="EEGTEST" table="PROJECT_TYPE">
+        <id name="projectTypeId" type="int">
+            <column name="PROJECT_TYPE_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="title" type="string">
+            <column name="TITLE" />
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" />
+        </property>
+        <set inverse="false" name="experiments" table="PROJECT_TYPE_REL">
+            <key>
+                <column name="PROJECT_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
+                <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+
+    </class>
+</hibernate-mapping>

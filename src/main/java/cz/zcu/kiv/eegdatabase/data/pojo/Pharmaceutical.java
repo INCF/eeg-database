@@ -8,31 +8,31 @@ import java.util.Set;
  * Created by IntelliJ IDEA.
  * User: stebjan
  * Date: 8.2.12
- * Time: 13:36
+ * Time: 13:23
  * To change this template use File | Settings | File Templates.
  */
-public class Disease implements Serializable{
+public class Pharmaceutical implements Serializable {
 
-    private int diseaseId;
+    private int pharmaceuticalId;
     private String title;
     private String description;
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
 
-    public Disease() {
+    public Pharmaceutical() {
     }
 
-    public Disease(int diseaseId, String title, String description) {
-        this.diseaseId = diseaseId;
+    public Pharmaceutical(int pharmaceuticalId, String title, String description) {
+        this.pharmaceuticalId = pharmaceuticalId;
         this.title = title;
         this.description = description;
     }
 
-    public int getDiseaseId() {
-        return diseaseId;
+    public int getPharmaceuticalId() {
+        return pharmaceuticalId;
     }
 
-    public void setDiseaseId(int diseaseId) {
-        this.diseaseId = diseaseId;
+    public void setPharmaceuticalId(int pharmaceuticalId) {
+        this.pharmaceuticalId = pharmaceuticalId;
     }
 
     public String getTitle() {

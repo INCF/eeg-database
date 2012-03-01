@@ -47,6 +47,9 @@ public class Experiment implements Serializable {
     private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
     private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
     private Set<History> histories = new HashSet<History>(0);
+    private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
+    private Set<Disease> diseases = new HashSet<Disease>(0);
+    private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
     private Digitization digitization;
     private SubjectGroup subjectGroup;
     private boolean privateExperiment;
@@ -249,6 +252,30 @@ public class Experiment implements Serializable {
 
     public void setElectrodeConf(ElectrodeConf electrodeConf) {
         this.electrodeConf = electrodeConf;
+    }
+
+    public Set<Pharmaceutical> getPharmaceuticals() {
+        return pharmaceuticals;
+    }
+
+    public void setPharmaceuticals(Set<Pharmaceutical> pharmaceuticals) {
+        this.pharmaceuticals = pharmaceuticals;
+    }
+
+    public Set<Disease> getDiseases() {
+        return diseases;
+    }
+
+    public void setDiseases(Set<Disease> diseases) {
+        this.diseases = diseases;
+    }
+
+    public Set<ProjectType> getProjectTypes() {
+        return projectTypes;
+    }
+
+    public void setProjectTypes(Set<ProjectType> projectTypes) {
+        this.projectTypes = projectTypes;
     }
 
     public long getScn() {
