@@ -45,33 +45,7 @@
         </tr>
     </table>
 
-    <h2><fmt:message key="heading.hearingDefects"/></h2>
-    <table class="dataTable" style="width: 250px;">
-        <thead>
-        <tr>
-            <th><!-- just a heading without title --></th>
-        </tr>
-        </thead>
-        <c:forEach items="${personDetail.hearingImpairments}" var="hearingImpairment">
-            <tr>
-                <td>${hearingImpairment.description}</td>
-            </tr>
-        </c:forEach>
-    </table>
 
-    <h2><fmt:message key="heading.eyesDefects"/></h2>
-    <table class="dataTable" style="width: 250px;">
-        <thead>
-        <tr>
-            <th><!-- just a heading without title --></th>
-        </tr>
-        </thead>
-        <c:forEach items="${personDetail.visualImpairments}" var="visualImpairment">
-            <tr>
-                <td>${visualImpairment.description}</td>
-            </tr>
-        </c:forEach>
-    </table>
 
     <h2><fmt:message key="heading.optionalParameters"/></h2>
     <table class="dataTable" style="width: 450px;">
@@ -90,10 +64,6 @@
     </table>
 
     <div class="actionBox">
-        <a href="<c:url value='add-hearing-defect.html?personId=${personDetail.personId}'/>"
-           class="lightButtonLink"><fmt:message key="button.addHearingImpairment"/></a>
-        <a href="<c:url value='add-eyes-defect.html?personId=${personDetail.personId}'/>"
-           class="lightButtonLink"><fmt:message key="button.addVisualImpairment"/></a>
         <a href="<c:url value='add-optional-parameter.html?personId=${personDetail.personId}'/>"
            class="lightButtonLink"><fmt:message key="button.addOptionalParameter"/></a>
         <c:if test="${canEdit}">
