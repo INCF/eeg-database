@@ -1,0 +1,50 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SCENARIO_TYPE_SCHEMA_2" id="3B766B5E-EA4C-6CE4-8ECF-E29FCC94DE62" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-01 15:41:31 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <logging>YES</logging>
+   <partitionedRowMovement>DISABLE</partitionedRowMovement>
+   <segment>D980C957-2D0A-ABF7-AF3E-9232DCF36391</segment>
+   <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
+   <columnProxies>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="SCENARIO_XML" id="6D13E15C-F04E-1E3F-3A11-5978252E3DC5">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:35 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:36 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <storeAs>Object Relational</storeAs>
+         <xmlSchemaElement>scenario</xmlSchemaElement>
+         <xmlSchemaUrl>p300.xsd</xmlSchemaUrl>
+      </ColumnProxy>
+      <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="SCENARIO_ID" id="941E6041-D3CD-CC36-31E1-F68C73726740">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:35 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:35 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ColumnProxy>
+   </columnProxies>
+   <foreignKeys>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SCENARIO_TYPE_2_SCENARIO_FK1" id="BD69418B-A126-648E-09CA-DDBEDEA7E43A">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+   </foreignKeys>
+   <primaryKeys>
+      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="SCENARIO_TYPE_SCHEMA_2_PK" id="826FDE50-6251-A6FC-7CEA-840DE708E082">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:47 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:47 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexSort>NO</indexSort>
+      </PrimaryKey>
+   </primaryKeys>
+</TableProxyOraclev11g>

@@ -1,0 +1,145 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<Table class="oracle.dbtools.crest.model.design.relational.Table" id="E5CF2643-47D8-3C00-B23C-B52EABBB5300" directorySegmentName="seg_0" name="COEXPERIMENTER_REL">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-01 15:41:30 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
+   <pkName>SYS_C0011513</pkName>
+   <fonts>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Title</foType>
+         <fontStyle>1</fontStyle>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Column</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Datatype</foType>
+         <colorRGB>-16744448</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>PK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>FK Element</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>UK Element</foType>
+         <colorRGB>-16776961</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Not Null</foType>
+         <colorRGB>-65536</colorRGB>
+      </FontObject>
+      <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
+         <foType>Key</foType>
+         <colorRGB>-16777216</colorRGB>
+      </FontObject>
+   </fonts>
+   <columns>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PERSON_ID" id="16213E28-FB6A-F890-A09C-F4CDD1D46A29">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypeSize>22</dataTypeSize>
+         <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
+         <associations>
+            <colAssociation fkAssociation="525117B1-3623-0DBF-EACC-8C873E2F782C" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
+         </associations>
+      </Column>
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EXPERIMENT_ID" id="26C05BC4-1190-12EF-3F95-AD943E58B234">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <use>1</use>
+         <logicalDatatype>LOGDT019</logicalDatatype>
+         <dataTypeSize>22</dataTypeSize>
+         <delegate>2BBC5F60-FCCC-0604-B762-6EB6A919F411</delegate>
+         <associations>
+            <colAssociation fkAssociation="DB2FDB87-2D44-C56A-0F71-2C1AC4DDC144" referredColumn="2BBC5F60-FCCC-0604-B762-6EB6A919F411"/>
+         </associations>
+      </Column>
+   </columns>
+   <indexes>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="C6B46D2C-5A22-92AF-C709-0C267C715C83" name="SYS_C0011513">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:40 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <pk>true</pk>
+         <indexState>Primary Constraint</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
+            <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2E59DC94-BB2B-7467-2CD9-A1D10136634D" name="IX_STAFF_MEASURATION_ID_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
+         <indexColumnUsage>
+            <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="09AF46B0-3727-8493-8DC7-389F8C9301BA" name="IX_STAFF_PERSON_ID_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:37 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
+         <indexColumnUsage>
+            <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="7D54FE6E-C69A-97E2-9576-44DC098F8C40" name="IX_SYS_C0011513">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:37 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
+         <indexState>Unique Plain Index</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
+            <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="87762319-4C83-E1CC-8647-19A3FCF6168F" name="STAFF_PERSON_ID_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="13354FCA-80A0-60A9-4975-23AEDB0B6D0E" name="STAFF_MEASURATION_ID_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+   </indexes>
+</Table>

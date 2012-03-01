@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TriggerOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TriggerOraclev10g" name="EXPERIMENT_INSERT" id="41ADDEC5-CBEC-7EBF-3EEB-8B88FBD49DBB" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-01 15:41:49 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-01 15:41:49 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <actions>INSERT</actions>
+   <body>begin&amp;lt;br/&amp;gt;  update sync_changes set last_change = SYSTIMESTAMP where table_name=&amp;apos;experiment&amp;apos;;&amp;lt;br/&amp;gt;end experiment_insert;&amp;lt;br/&amp;gt;</body>
+   <triggerTime>AFTER</triggerTime>
+   <owner>A3391421-0DEC-F216-C4CF-5400269489F6</owner>
+   <table>6318F817-9099-4B10-1F03-73549E5E6B82</table>
+</TriggerOraclev10g>
