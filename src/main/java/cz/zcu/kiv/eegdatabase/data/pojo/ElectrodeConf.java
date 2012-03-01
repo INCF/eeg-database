@@ -16,6 +16,8 @@ public class ElectrodeConf implements Serializable {
 
     private int electrodeConfId;
     private int impedance;
+    private ElectrodeSystem electrodeSystem;
+    private Set<ElectrodeLocation> electrodeLocations = new HashSet<ElectrodeLocation>(0);
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
 
     public ElectrodeConf() {
@@ -43,5 +45,21 @@ public class ElectrodeConf implements Serializable {
 
     public void setExperiments(Set<Experiment> experiments) {
         this.experiments = experiments;
+    }
+
+    public ElectrodeSystem getElectrodeSystem() {
+        return electrodeSystem;
+    }
+
+    public void setElectrodeSystem(ElectrodeSystem electrodeSystem) {
+        this.electrodeSystem = electrodeSystem;
+    }
+
+    public Set<ElectrodeLocation> getElectrodeLocations() {
+        return electrodeLocations;
+    }
+
+    public void setElectrodeLocations(Set<ElectrodeLocation> electrodeLocations) {
+        this.electrodeLocations = electrodeLocations;
     }
 }

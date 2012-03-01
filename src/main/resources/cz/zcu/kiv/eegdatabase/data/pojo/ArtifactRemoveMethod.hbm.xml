@@ -2,9 +2,9 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical" schema="EEGTEST" table="PHARMACEUTICAL">
-        <id name="pharmaceuticalId" type="int">
-            <column name="PHARMACEUTICAL_ID" precision="22" scale="0"/>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod" schema="EEGTEST" table="ARTEFACT_REMOVING_METHOD">
+        <id name="artifactRemoveMethodId" type="int">
+            <column name="ARTEFACT_REMOVING_METHOD_ID" precision="22" scale="0"/>
             <generator class="increment"/>
         </id>
 
@@ -14,9 +14,12 @@
         <property name="description" type="string">
             <column name="DESCRIPTION" />
         </property>
-        <set inverse="false" name="experiments" table="PHARMACEUTICAL_REL">
+        <property name="defaultNumber" type="int">
+            <column name="IS_DEFAULT" precision="1" scale="0"/>
+        </property>
+        <set inverse="false" name="experiments" table="ARTEFACT_REMOVING_METHODS_REL">
             <key>
-                <column name="PHARMACEUTICAL_ID" not-null="true" precision="22" scale="0"/>
+                <column name="ARTEFACT_REMOVING_METHOD_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>

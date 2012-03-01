@@ -14,16 +14,17 @@ import java.util.Set;
 public class ArtifactRemoveMethod implements Serializable {
 
     private int artifactRemoveMethodId;
-    private String name;
+    private String title;
     private String description;
     Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private int defaultNumber;
 
     public ArtifactRemoveMethod() {
     }
 
-    public ArtifactRemoveMethod(int artifactRemoveMethodId, String name, String description, Set<Experiment> experiments) {
+    public ArtifactRemoveMethod(int artifactRemoveMethodId, String title, String description, Set<Experiment> experiments) {
         this.artifactRemoveMethodId = artifactRemoveMethodId;
-        this.name = name;
+        this.title = title;
         this.description = description;
         this.experiments = experiments;
     }
@@ -36,12 +37,20 @@ public class ArtifactRemoveMethod implements Serializable {
         this.artifactRemoveMethodId = artifactRemoveMethodId;
     }
 
-    public String getName() {
-        return name;
+    public String getTitle() {
+        return title;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    public int getDefaultNumber() {
+        return defaultNumber;
+    }
+
+    public void setDefaultNumber(int defaultNumber) {
+        this.defaultNumber = defaultNumber;
     }
 
     public String getDescription() {

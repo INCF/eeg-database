@@ -43,12 +43,6 @@
       <td><input type="checkbox" name="note"/></td>
     </tr>
     <tr>
-      <th><fmt:message key="label.eyesDefect"/></th>
-      <td><input type="checkbox" name="eyesDefects"/></td>
-      <th><fmt:message key="label.hearingDefect"/></th>
-      <td><input type="checkbox" name="hearingDefects"/></td>
-    </tr>
-    <tr>
       <th><fmt:message key="label.addParams"/></th>
       <td><input type="checkbox" name="personAddParams"/></td>
     </tr>

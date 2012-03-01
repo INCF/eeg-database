@@ -50,6 +50,8 @@ public class Experiment implements Serializable {
     private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
     private Set<Disease> diseases = new HashSet<Disease>(0);
     private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
+    private Set<Software> softwares = new HashSet<Software>(0);
+    private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
     private Digitization digitization;
     private SubjectGroup subjectGroup;
     private boolean privateExperiment;
@@ -276,6 +278,22 @@ public class Experiment implements Serializable {
 
     public void setProjectTypes(Set<ProjectType> projectTypes) {
         this.projectTypes = projectTypes;
+    }
+
+    public Set<Software> getSoftwares() {
+        return softwares;
+    }
+
+    public void setSoftwares(Set<Software> softwares) {
+        this.softwares = softwares;
+    }
+
+    public Set<ArtifactRemoveMethod> getArtifactRemoveMethods() {
+        return artifactRemoveMethods;
+    }
+
+    public void setArtifactRemoveMethods(Set<ArtifactRemoveMethod> artifactRemoveMethods) {
+        this.artifactRemoveMethods = artifactRemoveMethods;
     }
 
     public long getScn() {
