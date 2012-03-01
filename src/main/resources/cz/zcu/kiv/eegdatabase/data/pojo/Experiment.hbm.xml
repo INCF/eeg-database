@@ -74,7 +74,7 @@
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical">
-                <column name="PRAHMACEUTICAL_ID" not-null="true" precision="22" scale="0"/>
+                <column name="PHARMACEUTICAL_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
         <set inverse="true" name="diseases" table="DISEASE_REL">
