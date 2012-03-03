@@ -109,6 +109,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             jbe = new JenaBeanExtensionTool();
             //jbe.loadStatements("D:/ontology.owl");
             jbe.loadOOM(dataList, structureOnly);
+            jbe.setBase("http://cz.zcu.kiv.eegdatabase.data.pojo");
             Ontology ontology = new Ontology("http://kiv.zcu.cz/eegdatabase");
             ontology.setLabel("Database of EEG/ERP experiments");
             ontology.setVersionInfo(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(new Date()));
