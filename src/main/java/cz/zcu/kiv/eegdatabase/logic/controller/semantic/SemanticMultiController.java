@@ -100,4 +100,39 @@ public class SemanticMultiController extends MultiActionController {
         return null;
     }
 
+
+    /**
+     * Generates an ontology document from POJO objects.
+     * This method gives the Jena's output.
+     *
+     * @param request
+     * @param response
+     * @return
+     * @throws Exception
+     */
+    public ModelAndView getOntologyStructure(HttpServletRequest request, HttpServletResponse response) throws Exception {
+        log.debug("Controller for transforming POJO object to resources of semantic web");
+        OutputStream out = null;
+        InputStream is = null;
+        int headerBufferSize = 8096;
+        String type = request.getParameter("type");
+
+        response.setHeader("Content-Type", "application/rdf+xml");
+        response.setContentType("application/rdf+xml");
+        response.setHeader("Content-Disposition", "attachment;filename=eegdatabase.owl");
+
+        log.debug("Creating output stream");
+        response.setStatus(HttpServletResponse.SC_OK);
+        response.setBufferSize(headerBufferSize);
+        out = response.getOutputStream();
+        log.debug("Generating RDF");
+
+        is = semanticFactory.generateOntology(type, true);
+
+        copy(is, out);
+        out.flush();
+        out.close();
+        return null;
+    }
+
 }

@@ -29,6 +29,21 @@ public interface SemanticFactory {
 
     /**
      * Generates an ontology document from POJO objects.<br>
+     * This method returns a serialization of the Jena's ontology model
+     * of POJO objects in a specified syntax. If the <code>structureOnly</code> argument
+     * is set true then the output ontology document describes only static structure
+     * of data, but not the data itself.
+     *
+     * @param syntax - required syntax of the ontology document
+     * @param structureOnly - if true generated ontology contains only static structure of data
+     * @return is - ontology document
+     * @throws java.io.IOException - if an I/O error occurs.
+     */
+    public InputStream generateOntology(String syntax, boolean structureOnly) throws IOException;
+
+
+    /**
+     * Generates an ontology document from POJO objects.<br>
      * This method gets a serialization of the Jena's ontology model in a default
      * syntax and transforms it using Owl-Api. The Owl-Api's output syntax
      * is specified by the syntax parameter.

@@ -9,8 +9,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import tools.*;
 
-import java.io.IOException;
-import java.io.InputStream;
+import java.io.*;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,6 +28,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List dataList = new ArrayList();
     private JenaBeanExtension jenaBean;
+    private JenaBeanExtension jenaBeanStructure;
 
     /**
      * Creates list of instances of DAO
@@ -38,7 +38,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         String[] beanNamesForType = context.getBeanNamesForType(GenericDao.class);
         for(String name : beanNamesForType) {
             gDaoList.add((GenericDao) context.getBean(name));
-            break;
+            break; // ???
         }
     }
 
@@ -52,14 +52,22 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * @throws IOException - if an I/O error occurs.
      */
     public InputStream generateOntology(String syntax) throws IOException {
-        InputStream is;
-        String lang = null;
+        return generateOntology(syntax, false);
+    }
 
-        if (syntax == null || syntax.equals("owl"))
+
+    @Override
+    public InputStream generateOntology(String syntax, boolean structureOnly) throws IOException {
+        InputStream is;
+        String lang;
+
+        if (syntax == null || syntax.equalsIgnoreCase("owl"))
             syntax = Syntax.RDF_XML;
         lang = syntax.toUpperCase();
+        if (structureOnly == true && lang.equals(Syntax.RDF_XML))
+            lang = Syntax.RDF_XML_ABBREV;
 
-        is = creatingJenaBean().getOntologyDocument(lang);
+        is = creatingJenaBean(structureOnly).getOntologyDocument(lang);
         return is;
     }
 
@@ -80,7 +88,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         InputStream is;
         OwlApi owlApi;
 
-        is = creatingJenaBean().getOntologyDocument();
+        is = creatingJenaBean(false).getOntologyDocument();
         owlApi = new OwlApiTool(is);
         is = owlApi.convertToSemanticStandard(syntax);
 
@@ -92,19 +100,25 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Creates JenaBeanExtensionTool for transforming POJO objects into an ontology document.
      * @return jenaBean - Jena bean
      */
-    private JenaBeanExtension creatingJenaBean() {
+    private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
+        JenaBeanExtension jbe = structureOnly ? jenaBeanStructure : jenaBean;
 
         // uchovavani instance JenaBeanu je prozatimni reseni - casem vhodne pravidelne generovani
-        if (jenaBean == null) {
+        if (jbe == null) {
             loadData();
-            jenaBean = new JenaBeanExtensionTool(dataList);
-            jenaBean.setBasePackage("cz.zcu.kiv.eegdatabase.data.pojo");
+            jbe = new JenaBeanExtensionTool();
+            //jbe.loadStatements("D:/ontology.owl");
+            jbe.loadOOM(dataList, structureOnly);
             Ontology ontology = new Ontology("http://kiv.zcu.cz/eegdatabase");
             ontology.setLabel("Database of EEG/ERP experiments");
             ontology.setVersionInfo(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(new Date()));
-            jenaBean.setOntology(ontology);
+            jbe.setOntology(ontology);
+            if (structureOnly == true)
+                jenaBeanStructure = jbe;
+            else
+                jenaBean = jbe;
         }
-        return jenaBean;
+        return jbe;
     }
 
 
