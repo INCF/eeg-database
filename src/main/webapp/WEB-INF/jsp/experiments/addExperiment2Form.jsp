@@ -120,7 +120,7 @@
             <fieldset>
                 <label for="weatherTitle"><fmt:message key="label.title"/></label>
                 <input type="text" name="weatherTitle" id="weatherTitle" class="text ui-widget-content ui-corner-all"/>
-                <label for="weatherDescription"><fmt:message key="label.description"/></label>
+                <label for="weatherDescription"><fmt:message key="label.weather.description"/></label>
                 <input type="text" name="weatherDescription" id="weatherDescription"
                        class="text ui-widget-content ui-corner-all"/>
             </fieldset>
