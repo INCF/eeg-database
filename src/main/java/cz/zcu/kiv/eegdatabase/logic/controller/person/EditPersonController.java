@@ -1,7 +1,9 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
@@ -21,6 +23,7 @@ public class EditPersonController extends SimpleFormController {
     private Log log = LogFactory.getLog(getClass());
     @Autowired
     private PersonDao personDao;
+    private GenericDao<EducationLevel, Integer> educationLevelDao;
     @Autowired
     private AuthorizationManager auth;
 
@@ -107,6 +110,8 @@ public class EditPersonController extends SimpleFormController {
 
             log.debug("Setting note = " + data.getNote());
             person.setNote(data.getNote());
+            person.setLaterality(data.getLaterality().charAt(0));
+            person.setEducationLevel(educationLevelDao.read(data.getEducationLevel()));
 
             log.debug("Creating new Person object");
             personDao.update(person);
@@ -116,5 +121,13 @@ public class EditPersonController extends SimpleFormController {
 
         log.debug("Returning MAV");
         return mav;
+    }
+
+    public GenericDao<EducationLevel, Integer> getEducationLevelDao() {
+        return educationLevelDao;
+    }
+
+    public void setEducationLevelDao(GenericDao<EducationLevel, Integer> educationLevelDao) {
+        this.educationLevelDao = educationLevelDao;
     }
 }

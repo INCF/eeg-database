@@ -621,6 +621,7 @@
     <bean name="editPersonController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.EditPersonController">
         <property name="formView" value="people/addPersonForm"/>
         <property name="successView" value="redirect:/people/detail.html?personId="/>
+        <property name="educationLevelDao" ref="educationLevelDao" />
         <property name="validator">
             <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
                 <property name="personDao" ref="personDao"/>

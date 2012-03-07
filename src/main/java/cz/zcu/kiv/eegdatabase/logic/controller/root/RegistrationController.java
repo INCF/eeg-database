@@ -130,7 +130,7 @@ public class RegistrationController extends SimpleFormController {
         log.debug("Setting authentication hash code");
         person.setAuthenticationHash(authHash);
 
-        person.setLaterality(rc.getLaterality().charAt(0));
+        person.setLaterality('X');
         person.setEducationLevel(educationLevelDao.read(rc.getEducationLevel()));
 
         log.debug("Creating new Person object");

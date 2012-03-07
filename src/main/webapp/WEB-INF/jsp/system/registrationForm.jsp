@@ -80,14 +80,6 @@
       </div>
 
       <div class="itemBox">
-          <form:label path="laterality" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.laterality"/></form:label>
-          <form:select path="laterality" id="selectLaterality" cssClass="selectBox">
-              <option value="L"><fmt:message key="label.left"/></option>
-              <option value="R"><fmt:message key="label.right"/></option>
-              <option value="X"><fmt:message key="label.unspecified"/></option>
-          </form:select>
-      </div>
-      <div class="itemBox">
           <form:label path="educationLevel" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.educationLevel"/></form:label>
           <form:select path="educationLevel" id="selectEducationLevel" cssClass="selectBox">
               <c:forEach items="${education}" var="educationLevel">
