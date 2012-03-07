@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
+<hibernate-mapping>
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRel" schema="EEGTEST" table="STIMULUS_REL">
+    <composite-id class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRelId" name="stimulusRelId">
+      <key-property name="scenarioId" type="int">
+        <column name="SCENARIO_ID" precision="22" scale="0"/>
+      </key-property>
+      <key-property name="stimulusId" type="int">
+        <column name="STIMULUS_ID" precision="22" scale="0"/>
+      </key-property>
+    </composite-id>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" fetch="select" insert="false" name="scenario" update="false">
+      <column name="SCENARIO_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Stimulus" fetch="select" insert="false" name="stimulus" update="false">
+      <column name="STIMULUS_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusType" fetch="select" name="stimulusType">
+      <column name="STIMULUS_TYPE_ID" not-null="true" precision="22" scale="0"/>
+    </many-to-one>
+  </class>
+</hibernate-mapping>

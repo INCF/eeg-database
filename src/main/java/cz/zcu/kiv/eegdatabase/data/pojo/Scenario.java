@@ -40,6 +40,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
     private boolean userMemberOfGroup;
     private String scenarioName;
     private String mimetype;
+    private Set<StimulusRel> stimulusRels = new HashSet<StimulusRel>(0);
 
     private IScenarioType scenarioType;
     private long scn;
@@ -173,6 +174,15 @@ public class Scenario implements Serializable, Comparable<Scenario> {
     public void setScenarioType(IScenarioType scenarioDoc) {
         this.scenarioType = scenarioDoc;
     }
+
+    public Set<StimulusRel> getStimulusRels() {
+        return stimulusRels;
+    }
+
+    public void setStimulusRels(Set<StimulusRel> stimulusRels) {
+        this.stimulusRels = stimulusRels;
+    }
+
     public int compareTo(Scenario scen) {
         return this.title.compareTo(scen.getTitle());
     }

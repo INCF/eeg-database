@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Analysis" schema="EEGTEST" table="ANALYSIS">
+        <id name="analysisId" type="int">
+            <column name="ANALYSIS_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+        <property name="epochNumber" type="int">
+            <column name="EPOCHS_NUM" precision="22" scale="0"/>
+        </property>
+        <property name="prestimulusTime" type="int">
+            <column name="PRESTIMULUS_TIME" precision="22" scale="0"/>
+        </property><property name="poststimulusTime" type="int">
+            <column name="POSTSTIMULUS_TIME" precision="22" scale="0"/>
+        </property>
+
+        <property name="description" type="string">
+            <column name="DESCRIPTION" />
+        </property>
+
+
+
+
+    </class>
+</hibernate-mapping>
