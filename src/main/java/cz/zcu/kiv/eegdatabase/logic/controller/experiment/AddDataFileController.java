@@ -10,7 +10,6 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
 import org.springframework.validation.Validator;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -38,6 +37,7 @@ public class AddDataFileController
     private AuthorizationManager auth;
     private Log log = LogFactory.getLog(getClass());
     private GenericDao<DataFile, Integer> dataFileDao;
+    private static final int MAX_MIMETYPE_LENGTH = 40;
 
     public AddDataFileController() {
         setCommandClass(AddDataFileCommand.class);
@@ -62,7 +62,6 @@ public class AddDataFileController
         if (measurationId != null) {
             adc.setMeasurationId(Integer.parseInt(measurationId));
         }
-        adc.setDescription("1000");
         return adc;
     }
 
@@ -97,33 +96,39 @@ public class AddDataFileController
                         DataFile data = new DataFile();
                         data.setExperiment(experiment);
                         String name[] = en.getName().split("/");
-                        data.setFilename(name[name.length-1]);
+                        data.setFilename(name[name.length - 1]);
                         data.setDescription(addDataCommand.getDescription());
                         data.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
                         String[] partOfName = en.getName().split("[.]");
-                        data.setMimetype(partOfName[partOfName.length-1]);
+                        data.setMimetype(partOfName[partOfName.length - 1]);
                         dataFileDao.create(data);
                         en = zis.getNextEntry();
                     }
                 } else {
-                log.debug("Creating new Data object.");
-                DataFile data = new DataFile();
-                data.setExperiment(experiment);
+                    log.debug("Creating new Data object.");
+                    DataFile data = new DataFile();
+                    data.setExperiment(experiment);
 
-                log.debug("Original name of uploaded file: " + file.getOriginalFilename());
-                data.setFilename(file.getOriginalFilename());
+                    log.debug("Original name of uploaded file: " + file.getOriginalFilename());
+                    String filename = file.getOriginalFilename().replace(" ", "_");
+                    data.setFilename(filename);
 
-                log.debug("MIME type of the uploaded file: " + file.getContentType());
-                data.setMimetype(file.getContentType());
+                    log.debug("MIME type of the uploaded file: " + file.getContentType());
+                    if (file.getContentType().length() > MAX_MIMETYPE_LENGTH) {
+                        int index = filename.lastIndexOf(".");
+                        data.setMimetype(filename.substring(index));
+                    } else {
+                        data.setMimetype(file.getContentType());
+                    }
 
-                log.debug("Parsing the sapmling rate.");
-                data.setDescription(addDataCommand.getDescription());
+                    log.debug("Parsing the sapmling rate.");
+                    data.setDescription(addDataCommand.getDescription());
 
-                log.debug("Setting the binary data to object.");
-                data.setFileContent(Hibernate.createBlob(file.getBytes()));
+                    log.debug("Setting the binary data to object.");
+                    data.setFileContent(Hibernate.createBlob(file.getBytes()));
 
-                dataFileDao.create(data);
-                log.debug("Data stored into database.");
+                    dataFileDao.create(data);
+                    log.debug("Data stored into database.");
                 }
             }
         }
@@ -141,7 +146,7 @@ public class AddDataFileController
         AddDataFileCommand data = (AddDataFileCommand) command;
 
         // First check the permission
-        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId()))&&(!auth.isAdmin())) {
+        if ((!auth.userIsOwnerOrCoexperimenter(data.getMeasurationId())) && (!auth.isAdmin())) {
             errors.reject("error.mustBeOwnerOfExperimentOrCoexperimenter");
         } else {
 
@@ -151,14 +156,8 @@ public class AddDataFileController
                 log.debug("Measuration ID is present.");
             }
 
-            ValidationUtils.rejectIfEmptyOrWhitespace(errors, "samplingRate", "required.samplingRate");
+            // ValidationUtils.rejectIfEmptyOrWhitespace(errors, "samplingRate", "required.samplingRate");
 
-            try {
-                Double.parseDouble(data.getDescription());
-            } catch (NumberFormatException ex) {
-                errors.rejectValue("samplingRate", "invalid.samplingRate");
-                log.debug("Sampling rate is not in parseable format!");
-            }
 
             if (data.getDataFile().isEmpty()) {
                 errors.rejectValue("dataFile", "required.dataFile");

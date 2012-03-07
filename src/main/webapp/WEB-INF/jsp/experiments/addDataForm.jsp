@@ -19,25 +19,26 @@
 
                 <form:hidden path="measurationId"/>
 
-                <tr>
+            <%--     <tr>
                     <div class="itemBox">
                         <td>
 
-                            <form:label path="samplingRate" cssClass="textFieldLabel"
+                           <form:label path="description" cssClass="textFieldLabel"
                                         cssErrorClass="textFieldLabel errorLabel">
                                 <fmt:message
-                                        key="label.samplingRate"/>
+                                        key="label.description"/>
                             </form:label>
                         </td>
                         <td>
-                            <form:input path="samplingRate" cssClass="textField dateField"
-                                        cssErrorClass="textField dateField errorField"/> Hz
+                            <form:textarea path="description" cssClass="textareaField"
+                                           cssErrorClass="textareaField errorField"
+                                           rows="5" cols="40"/>
 
-                            <form:errors path="samplingRate" cssClass="errorBox"/>
+                            <form:errors path="description" cssClass="errorBox"/>
 
                         </td>
                     </div>
-                </tr>
+                </tr>       --%>
                 <tr>
                     <div class="itemBox">
                         <td>

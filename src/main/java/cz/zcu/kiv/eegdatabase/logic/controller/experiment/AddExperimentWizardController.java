@@ -49,6 +49,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private GenericDao<Artifact, Integer> artifactDao;
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
     private GenericDao<SubjectGroup, Integer> subjectGroupDao;
+    private static final int MAX_MIMETYPE_LENGTH = 40;
 
     public ParameterMethodNameResolver getMethodNameResolver() {
         return methodNameResolver;
@@ -149,7 +150,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         sdf = new SimpleDateFormat("HH:mm");
         addExperimentWizardCommand.setStartTime(sdf.format(startDate));
         addExperimentWizardCommand.setEndTime(sdf.format(endDate));
-        addExperimentWizardCommand.setFileDescription("1000");
+        addExperimentWizardCommand.setSamplingRate("1000");
 
         return addExperimentWizardCommand;
 
@@ -345,10 +346,17 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             dataFile.setExperiment(experiment);
 
             log.debug("Original name of uploaded file: " + file.getOriginalFilename());
-            dataFile.setFilename(file.getOriginalFilename());
+            String filename = file.getOriginalFilename().replace(" ", "_");
+            dataFile.setFilename(filename);
 
             log.debug("MIME type of the uploaded file: " + file.getContentType());
-            dataFile.setMimetype(file.getContentType());
+            if (file.getContentType().length() > MAX_MIMETYPE_LENGTH) {
+                int index = filename.lastIndexOf(".");
+                dataFile.setMimetype(filename.substring(index));
+            } else {
+               dataFile.setMimetype(file.getContentType());
+            }
+
 
             log.debug("Parsing the sapmling rate.");
             dataFile.setDescription(data.getFileDescription());
@@ -443,7 +451,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             case 2: //if page 3 , go validate with validatePage3Form
                 ValidationUtils.rejectIfEmptyOrWhitespace(errors, "samplingRate", "required.samplingRate");
                 try {
-                    double rate = Double.parseDouble(data.getFileDescription());
+                    double rate = Double.parseDouble(data.getSamplingRate());
                     if (rate <= 0) {
                         errors.rejectValue("samplingRate", "invalid.positiveRate");
                     }
