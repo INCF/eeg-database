@@ -9,8 +9,8 @@
   <fmt:message key='button.submitDisable'/>
 </c:set>
 
-<ui:experimentsTemplate pageTitle="pageTitle.addExperimentOptionalParameter">
-  <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
+<ui:experimentsTemplate pageTitle="pageTitle.dataFileDetail">
+  <h1><fmt:message key="pageTitle.dataFileDetail"/></h1>
 
   <c:url value="add-optional-parameter.html?experimentId=${measurationDetail.experimentId}" var="formUrl"/>
   <form:form action="${formUrl}" method="post" commandName="addMeasurationAdditionalParameter" cssClass="standardInputForm" onsubmit='document.getElementById("saveButton").disabled=true;document.getElementById("saveButton").value="${submitDisable}";'>

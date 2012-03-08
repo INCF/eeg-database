@@ -54,7 +54,7 @@
     <auth:experimenter>
         <div class="actionBox">
             <a href="<c:url value='add.html?groupid=${selectGroupCommand.researchGroupId}'/>" class="lightButtonLink">
-                <fmt:message key="link.addExperimentOptionalParameter"/></a>
+                <fmt:message key="link.dataFileDetail"/></a>
         </div>
     </auth:experimenter>
 

@@ -122,7 +122,7 @@
         </table>
       </c:forEach>
       <div class="actionBox">
-        <input type="submit" value="<fmt:message key="button.downloadMetadataZip"/>" class="lightButtonLink" />
+        <input type="submit" value="<fmt:message key="button.downloadExperiment"/>" class="lightButtonLink" />
       </div>
   </form:form>
 </ui:experimentsTemplate>

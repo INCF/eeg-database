@@ -18,7 +18,7 @@
         </c:when>
         <c:otherwise>
             <!-- creating new -->
-            <h1><fmt:message key="pageTitle.addExperimentOptionalParameter"/></h1>
+            <h1><fmt:message key="pageTitle.dataFileDetail"/></h1>
 
             <c:url value="add.html" var="formUrl"/>
         </c:otherwise>
