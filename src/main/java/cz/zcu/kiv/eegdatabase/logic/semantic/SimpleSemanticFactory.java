@@ -1,20 +1,21 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.core.io.Resource;
 import tools.*;
 
-import java.io.*;
-import java.text.DateFormat;
+import java.io.IOException;
+import java.io.InputStream;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
-import java.util.Locale;
 
 /**
  * Factory for transforming POJO object to resources of semantic web
@@ -24,6 +25,8 @@ import java.util.Locale;
  */
 public class SimpleSemanticFactory implements InitializingBean, ApplicationContextAware, SemanticFactory {
 
+    private Resource ontology;
+    private Log log = LogFactory.getLog(getClass());
     private ApplicationContext context;
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List dataList = new ArrayList();
@@ -64,7 +67,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (syntax == null || syntax.equalsIgnoreCase("owl"))
             syntax = Syntax.RDF_XML;
         lang = syntax.toUpperCase();
-        if (structureOnly == true && lang.equals(Syntax.RDF_XML))
+        if (structureOnly && lang.equals(Syntax.RDF_XML))
             lang = Syntax.RDF_XML_ABBREV;
 
         is = creatingJenaBean(structureOnly).getOntologyDocument(lang);
@@ -98,6 +101,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
     /**
      * Creates JenaBeanExtensionTool for transforming POJO objects into an ontology document.
+     * @param  structureOnly - if true no data are loaded (only their structure)
      * @return jenaBean - Jena bean
      */
     private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
@@ -107,14 +111,14 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (jbe == null) {
             loadData();
             jbe = new JenaBeanExtensionTool();
-            //jbe.loadStatements("D:/ontology.owl");
+            try {
+                jbe.loadStatements(ontology.getInputStream());
+            } catch (IOException e) {
+                log.error("Could not open the input stream associated with the ontology " +
+                        "configuration document: " + ontology.getFilename(), e);
+            }
             jbe.loadOOM(dataList, structureOnly);
-            jbe.setBase("http://cz.zcu.kiv.eegdatabase.data.pojo");
-            Ontology ontology = new Ontology("http://kiv.zcu.cz/eegdatabase");
-            ontology.setLabel("Database of EEG/ERP experiments");
-            ontology.setVersionInfo(DateFormat.getDateInstance(DateFormat.LONG, Locale.UK).format(new Date()));
-            jbe.setOntology(ontology);
-            if (structureOnly == true)
+            if (structureOnly)
                 jenaBeanStructure = jbe;
             else
                 jenaBean = jbe;
@@ -139,6 +143,14 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      */
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         context = ac;
+    }
+
+    /**
+     * Sets resource with static ontology statements.
+     * @param ontology - resource in rdf/xml
+     */
+    public void setOntology(Resource ontology) {
+        this.ontology = ontology;
     }
 }
 

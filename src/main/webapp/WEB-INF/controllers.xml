@@ -778,13 +778,16 @@
         <property name="experimentOptParamDef" ref="experimentOptParamDefDao"/>
         <property name="commentDao" ref="articleCommentDao"/>
 
-
         <!-- <property name="successView" value="redirect:/home"/>-->
         <property name="successView" value="experiments/fulltext"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
     </bean>
+    
     <!-- Transformer POJO to resource of semantic web-->
-    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory"/>
+    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory">
+        <property name="ontology" value="classpath:ontology.owl" />
+    </bean>
+    
     <!-- Creating csv file with our experiments and scenarios for NIF -->
     <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
         <property name="domain" value="${app.domain}"/>
