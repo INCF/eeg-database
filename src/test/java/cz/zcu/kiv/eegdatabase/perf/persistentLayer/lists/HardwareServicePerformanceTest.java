@@ -39,6 +39,7 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
         hardware.setDescription(HARDWARE_DESCRIPTION);
         hardware.setTitle(HARDWARE_TITLE);
         hardware.setType(HARDWARE_TYPE);
+        hardwareDao.create(hardware);
     }
 
 /**
@@ -47,11 +48,9 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
  */
     @Test
     public void testCreateHardwareTest(){
-       //int countRecord = hardwareDao.getCountRecords();
+       int countRecord = hardwareDao.getCountRecords();
        createTestHardware();
-       hardwareDao.create(hardware);
-       //assertEquals(hardwareDao.getCountRecords()-1, countRecord);
-
+       assertEquals(hardwareDao.getCountRecords()-1, countRecord);
     }
 
 /**
@@ -62,11 +61,12 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
     public void testEditHardwareTest(){
         List<Hardware> listRecords;
         createTestHardware();
+
         hardware.setDescription(HARDWARE_DESCRIPTION+"EDITOAVANY");
         hardwareDao.update(hardware);
 
         listRecords=hardwareDao.getAllRecords();
-        assertEquals(listRecords.get(listRecords.size()-1).getDescription(), hardware.getDescription());
+        assertEquals(hardwareDao.read(hardware.getHardwareId()).getDescription(), hardware.getDescription());
         hardwareDao.delete(hardware);
     }
 /**
@@ -75,6 +75,7 @@ public class HardwareServicePerformanceTest extends PerformanceTest {
  */
     @Test
     public void testDeleteHardwareTest(){
+        createTestHardware();
 
         int countRecord = hardwareDao.getCountRecords();
 

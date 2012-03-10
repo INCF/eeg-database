@@ -16,7 +16,7 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
 //setting perf. test
 //@PerfTest(invocations = 10, threads = 1)
 //@RunWith(JUnit4.class)
-public class PerformanceTest extends AbstractTransactionalDataSourceSpringContextTests {
+public abstract class PerformanceTest extends AbstractTransactionalDataSourceSpringContextTests {
 
 
 //    GraphRenderer executionLogger = new GraphRenderer();
@@ -27,10 +27,25 @@ public class PerformanceTest extends AbstractTransactionalDataSourceSpringContex
      public PerformanceTest() {
         setDependencyCheck(false);
         setAutowireMode(AUTOWIRE_BY_NAME);
+        changeParserImplementationToXerces();//Important!
     }
 
     protected String[] getConfigLocations() {
         return new String[] {"test-context.xml"};
+    }
+
+     /**
+     * If not changed, oracle parser would try to parse hibernate configurations
+     * and fail with the following error:
+     * ERROR ErrorLogger - Error parsing XML (31) : http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd<Line 31, Column 2>:
+     * XML-20068: (Fatal Error) content model is not deterministic
+     * org.hibernate.InvalidMappingException: Unable to read XML
+     * Setting SAXParserFactory and DocumentBuilderFactory will change the parser
+     * to xerces, enabling Hibernate-based tests
+     */
+    private void changeParserImplementationToXerces() {
+        System.setProperty("javax.xml.parsers.SAXParserFactory","org.apache.xerces.jaxp.SAXParserFactoryImpl");
+        System.setProperty("javax.xml.parsers.DocumentBuilderFactory","org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
     }
 
     public void setSessionFactory(SessionFactory factory) {

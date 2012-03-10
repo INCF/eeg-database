@@ -22,9 +22,10 @@
 
         <intercept-url pattern="/my-account/*.html" access="IS_AUTHENTICATED_FULLY"/>
 
+        <intercept-url pattern="/articles/settings.html" access="ROLE_ADMIN,ROLE_USER"/>
+
         <intercept-url pattern="/administration/*.html" access="ROLE_ADMIN"/>
         <intercept-url pattern="/lists/*/delete.html" access="IS_AUTHENTICATED_FULLY"/>
-
 
         <intercept-url pattern="/*.html" access="IS_AUTHENTICATED_FULLY"/>
         <intercept-url pattern="/*/*.html" access="IS_AUTHENTICATED_FULLY"/>

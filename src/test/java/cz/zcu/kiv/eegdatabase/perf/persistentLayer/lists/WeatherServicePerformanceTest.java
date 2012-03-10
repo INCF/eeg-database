@@ -41,6 +41,7 @@ public class WeatherServicePerformanceTest extends PerformanceTest {
         weather = new Weather();
         weather.setDescription(WEATHER_DESCRIPTION);
         weather.setTitle(WEATHER_TITLE);
+        weatherDao.create(weather);
     }
 
 
@@ -53,7 +54,6 @@ public class WeatherServicePerformanceTest extends PerformanceTest {
       int countRecord = weatherDao.getCountRecords();
 
        createTestWheather();
-       weatherDao.create(weather);
 
 
        assertEquals(weatherDao.getCountRecords()-1, countRecord);
@@ -66,14 +66,14 @@ public class WeatherServicePerformanceTest extends PerformanceTest {
  */
     @Test
     public void testEditWeatherTest(){
-
+        createTestWheather();
         List<Weather> listRecords;
 
         weather.setDescription(WEATHER_DESCRIPTION+"EDITOAVANY");
         weatherDao.update(weather);
 
         listRecords=weatherDao.getAllRecords();
-        assertEquals(listRecords.get(listRecords.size()-1).getDescription(), weather.getDescription());
+        assertEquals(weatherDao.read(weather.getWeatherId()).getDescription(), weather.getDescription());
 
 
     }
@@ -83,7 +83,7 @@ public class WeatherServicePerformanceTest extends PerformanceTest {
  */
     @Test
     public void testDeleteWeatherTest(){
-
+        createTestWheather();
         int countRecord = weatherDao.getCountRecords();
 
         weatherDao.delete(weather);

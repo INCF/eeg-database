@@ -11,9 +11,10 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  * This test verifies that the test-context.xml is not seriously misconfigured
  * by trying to initialize a test using it.
  * Body of the test method is empty, it will fail if there is an configuration error
- * in test-context.xml or linked files (hibernate config, hibernate mapping, project properties)
+ * in AbstractDataAccessTest, test-context.xml or linked files
+ * (hibernate config, hibernate mapping, project properties)
  */
-public class ConfigurationSetupTest extends AbstractTransactionalDataSourceSpringContextTests {
+public class ConfigurationSetupTest extends AbstractDataAccessTest {
 
 	@Test
 	public void testInitializationFromTestContext(){

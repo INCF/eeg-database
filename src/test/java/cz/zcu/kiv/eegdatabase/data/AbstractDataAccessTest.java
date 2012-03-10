@@ -1,7 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data;
 
 import org.hibernate.SessionFactory;
+import org.junit.runner.RunWith;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 
 /**
@@ -9,14 +12,15 @@ import org.springframework.test.AbstractTransactionalDataSourceSpringContextTest
  * User: Jiri Vlasimsky (vlasimsky.jiri@gmail.com)
  * Date: 6.3.11
  * Time: 16:45
+ * Rewritten to support Spring 3 and JUnit 4 annotations by Jiri Novotny
  */
-public class AbstractDataAccessTest extends AbstractTransactionalDataSourceSpringContextTests{
+@RunWith(SpringJUnit4ClassRunner.class)
+@ContextConfiguration(locations = {"classpath:/test-context.xml"})
+public abstract class AbstractDataAccessTest {
     private SessionFactory sessionFactory;
 
     public AbstractDataAccessTest() {
         changeParserImplementationToXerces();//Important!
-        setDependencyCheck(false);
-        setAutowireMode(AUTOWIRE_BY_NAME);
     }
 
     /**
@@ -33,14 +37,7 @@ public class AbstractDataAccessTest extends AbstractTransactionalDataSourceSprin
         System.setProperty("javax.xml.parsers.DocumentBuilderFactory","org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
     }
 
-    protected String[] getConfigLocations() {
-        return new String[] {"test-context.xml"};
-    }
-
     public void setSessionFactory(SessionFactory factory) {
         this.sessionFactory = factory;
     }
-
-
-
 }

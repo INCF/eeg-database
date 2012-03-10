@@ -1,15 +1,15 @@
 package cz.zcu.kiv.eegdatabase.perf.persistentLayer;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HistoryDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.History;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.w3c.dom.Document;
 
+import java.sql.Blob;
+import java.sql.Timestamp;
+import java.util.Collections;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -34,33 +34,79 @@ public class ExperimentsServicePerformanceTest extends PerformanceTest {
     @Autowired
     HistoryDao historyDao;
 
+    @Autowired
+    WeatherDao weatherDao;
+
+    @Autowired
+    ScenarioDao scenarioDao;
+
+    @Autowired
+    private ScenarioTypeDao scenarioTypeDao;
+
+    @Autowired
+    private ScenarioTypeNonXml scenarioTypeNonXml = null;
 
     private Experiment experiment;
     private Hardware hardware;
     private History history;
+    private Person person;
+    private Weather weather;
+    private Scenario scenario;
 
 
     /**
      * Method test create experiment.
      * Identificator of test /PPT_E_2_AddExp_F/. Contains document Testovaci scenare.docx.
      */
-    //@Test
-    public void createExperimentTest(){
+    @Test
+    public void testCreateExperiment(){
         experiment = new Experiment();
         hardware = new Hardware();
         history = new History();
+        person = personeDao.getPerson("kaby");
 
         hardware.setTitle("hardware");
         hardware.setDescription("testovaci");
         hardware.setType("type");
         hardwareDao.create(hardware);
 
+        ResearchGroup group = new ResearchGroup();
+        group.setResearchGroupId(6);
+
+        ScenarioType<Blob> scenarioType = scenarioTypeNonXml;
+        scenarioTypeDao.create(scenarioType);
+
+        scenario = new Scenario();
+        scenario.setResearchGroup(group);
+        scenario.setDescription("description test");
+        scenario.setMimetype("test");
+        scenario.setPerson(person);
+        scenario.setResearchGroup(group);
+        scenario.setScenarioName("scenario name test");
+        scenario.setScenarioLength(10);
+        scenario.setScenarioType(scenarioType);
+        scenarioDao.create(scenario);
+
         history.setPerson(personeDao.getPerson("kaby"));
+        history.setDateOfDownload(new Timestamp(new Date().getTime()));
         historyDao.create(history);
 
-        experiment.setHardwares((Set<Hardware>) hardware);
-        experiment.setHistories((Set<History>) history);
-        experiment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
+        weather = new Weather();
+        weather.setDescription("test weather");
+        weather.setTitle("test weather title");
+        weatherDao.create(weather);
+
+
+
+        experiment.setPrivateExperiment(true);
+        experiment.setWeather(weather);
+        experiment.setScenario(scenario);
+        experiment.setHardwares(Collections.singleton(hardware));
+        experiment.setHistories(Collections.singleton(history));
+        experiment.setPersons(Collections.singleton(personeDao.getPerson("kaby")));
+        experiment.setPersonBySubjectPersonId(person);
+        experiment.setPersonByOwnerId(person);
+        experiment.setResearchGroup(group);
         experimentDao.create(experiment);
 
     }
@@ -69,22 +115,9 @@ public class ExperimentsServicePerformanceTest extends PerformanceTest {
      * Method test edit experiment.
      * Identificator of test /PPT_E_3_EdiExp_F/. Contains document Testovaci scenare.docx.
      */
-    //@Test
-    public void editExperimetnTest(){
-        hardware = new Hardware();
-        history = new History();
-
-        hardware.setTitle("hardware");
-        hardware.setDescription("testovaci");
-        hardware.setType("type");
-        hardwareDao.create(hardware);
-
-        history.setPerson(personeDao.getPerson("kaby"));
-        historyDao.create(history);
-
-        experiment.setHardwares((Set<Hardware>) hardware);
-        experiment.setHistories((Set<History>) history);
-        experiment.setPersons((Set<Person>) personeDao.getPerson("kaby"));
+    @Test
+    public void testEditExperimetn(){
+        testCreateExperiment();
         experimentDao.update(experiment);
     }
     /**

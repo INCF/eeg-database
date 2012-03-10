@@ -3,8 +3,11 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
+
+import static org.junit.Assert.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -15,6 +18,7 @@ import java.util.List;
  */
 public class SimpleScenarioSchemasDaoTest extends AbstractDataAccessTest {
 
+    @Autowired
     private ScenarioSchemasDao scenarioSchemasDao;
 
     public static final String SCHEMA_NAME = "schema test";

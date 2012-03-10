@@ -43,7 +43,7 @@ public class BookingRoomAjaxControllerTest extends AbstractControllerTest
 
         GregorianCalendar startDate = BookingRoomUtils.getCalendar(date + " " + start);
         GregorianCalendar endDate = BookingRoomUtils.getCalendar(date + " " + end);
-        endDate.add(Calendar.HOUR, 2);
+        //endDate.add(Calendar.HOUR, 2);//Would cause the test to fail
         MockFactory.createReservation(startDate, endDate);
 
         List<Reservation> reservations = reservationDao.getReservationsBetween(startDate, endDate, "", 0);

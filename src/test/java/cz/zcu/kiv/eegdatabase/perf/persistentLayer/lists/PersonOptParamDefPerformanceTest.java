@@ -40,8 +40,7 @@ public class PersonOptParamDefPerformanceTest extends PerformanceTest {
         personOptParamDef = new PersonOptParamDef();
         personOptParamDef.setParamName(PERSON_OPT_PARAM_DEF_NAME);
         personOptParamDef.setParamDataType(PERSON_OPT_PARAM_DEF_DATA_TYPE);
-
-
+        personOptParamDefDao.create(personOptParamDef);
     }
 
 /**
@@ -53,7 +52,6 @@ public class PersonOptParamDefPerformanceTest extends PerformanceTest {
         int countRecord =  personOptParamDefDao.getCountRecords();
 
         createTestPersonOptParamDef();
-        personOptParamDefDao.create(personOptParamDef);
 
          assertEquals(personOptParamDefDao.getCountRecords()-1, countRecord);
     }
@@ -64,13 +62,14 @@ public class PersonOptParamDefPerformanceTest extends PerformanceTest {
  */
     @Test
     public void testEditPersonOptParamTest(){
+        createTestPersonOptParamDef();
         List<PersonOptParamDef> listRecords;
 
         personOptParamDef.setParamName(PERSON_OPT_PARAM_DEF_NAME+"Editovany");
         personOptParamDefDao.update(personOptParamDef);
 
         listRecords=personOptParamDefDao.getAllRecords();
-        assertEquals(listRecords.get(listRecords.size()-1).getParamName(), personOptParamDef.getParamName());
+        assertEquals(personOptParamDefDao.read(personOptParamDef.getPersonOptParamDefId()).getParamName(), personOptParamDef.getParamName());
     }
 /**
  * Method test delete personOptParamDef
@@ -78,10 +77,10 @@ public class PersonOptParamDefPerformanceTest extends PerformanceTest {
  */
     @Test
     public void testDeletePersonOptParamTest(){
+        createTestPersonOptParamDef();
 
         int countRecord =  personOptParamDefDao.getCountRecords();
         personOptParamDefDao.delete(personOptParamDef);
-
 
         assertEquals(personOptParamDefDao.getCountRecords()+1, countRecord);
     }
