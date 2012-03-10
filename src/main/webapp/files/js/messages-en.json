@@ -553,7 +553,7 @@
     "bookingRoom":"Book room for group",
     "changeUserRole":"Change user role",
     "createGroup":"Create group",
-    "editGroupRole":"Edit group role",
+    "requestForGroupRole":"Request for group role",
     "experiments":"Experiments",
     "fileMetadataDefinitions":"File metadata definitions",
     "groups":"Groups",
