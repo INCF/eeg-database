@@ -65,11 +65,11 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         assertNoSuchElement(By.linkText("Book room for group"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/groups/book-room.html");
 
-        driver.get(DRIVER_BASE_ADDR + "/people/list.html");
-        assertNoSuchElement(By.linkText("Add person"));
+        driver.get(DRIVER_BASE_ADDR + "/home.html");
+        assertNoSuchElement(By.linkText("People"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/people/add-person.html");
 
-        driver.get(DRIVER_BASE_ADDR + "/articles/list.html");//TODO go home instead
+        driver.get(DRIVER_BASE_ADDR + "/home.html");
         assertNoSuchElement(By.linkText("History"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/history/daily-history.html");
 
@@ -88,7 +88,8 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         driver.findElement(By.linkText("Book room for group")).click();//click -> book
         assertEquals("Book UU403 for experiment - EEGbase", driver.getTitle());
 
-        driver.get(DRIVER_BASE_ADDR + "/people/list.html");
+        driver.get(DRIVER_BASE_ADDR + "/home.html");
+        driver.findElement(By.linkText("People")).click();
         driver.findElement(By.linkText("Add person")).click();
         assertEquals("Add/edit person - EEGbase", driver.getTitle());
 
@@ -180,7 +181,7 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
 
     private void assertNoSuchElement(By by) {
         try{
-           driver.findElement(By.linkText("Articles Settings"));
+           driver.findElement(by);
            fail("Element " + by.toString() + " should not be available!");
         } catch (NoSuchElementException e){
             //ok, element does not exist

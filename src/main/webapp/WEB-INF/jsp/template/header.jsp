@@ -34,12 +34,16 @@
       <li><a href="<c:url value='/experiments/list.html'/>" title="<fmt:message key='menuItem.experiments'/>"><fmt:message key='menuItem.experiments'/></a></li>
       <li><a href="<c:url value='/scenarios/list.html'/>" title="<fmt:message key='menuItem.scenarios'/>"><fmt:message key='menuItem.scenarios'/></a></li>
       <li><a href="<c:url value='/groups/list.html'/>" title="<fmt:message key='menuItem.groups'/>"><fmt:message key='menuItem.groups'/></a></li>
-      <li><a href="<c:url value='/people/list.html'/>" title="<fmt:message key='menuItem.people'/>"><fmt:message key='menuItem.people'/></a></li>
+      <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+        <li><a href="<c:url value='/people/list.html'/>" title="<fmt:message key='menuItem.people'/>"><fmt:message key='menuItem.people'/></a></li>
+      </security:authorize>
       <li><a href="<c:url value='/lists/index.html'/>" title="<fmt:message key='menuItem.lists'/>"><fmt:message key='menuItem.lists'/></a></li>
       <security:authorize ifAllGranted="ROLE_ADMIN">
         <li><a href="<c:url value='/administration/change-user-role.html'/>" title="<fmt:message key='menuItem.administration'/>"><fmt:message key='menuItem.administration'/></a></li>
       </security:authorize>
-         <li><a href="<c:url value='/history/daily-history.html'/>" title="<fmt:message key='menuItem.history'/>"><fmt:message key='menuItem.history'/></a></li>
+      <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+        <li><a href="<c:url value='/history/daily-history.html'/>" title="<fmt:message key='menuItem.history'/>"><fmt:message key='menuItem.history'/></a></li>
+      </security:authorize>
     </security:authorize>
   </ul>
 
