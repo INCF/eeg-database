@@ -2,9 +2,13 @@ package cz.zcu.kiv.eegdatabase.data;
 
 import org.hibernate.SessionFactory;
 import org.junit.runner.RunWith;
+import org.springframework.orm.hibernate3.HibernateTemplate;
+import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+
+import static org.junit.Assert.assertNotNull;
 
 
 /**
@@ -35,6 +39,17 @@ public abstract class AbstractDataAccessTest {
     private void changeParserImplementationToXerces() {
         System.setProperty("javax.xml.parsers.SAXParserFactory","org.apache.xerces.jaxp.SAXParserFactoryImpl");
         System.setProperty("javax.xml.parsers.DocumentBuilderFactory","org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
+    }
+
+    /**
+     * Can be used as universal DAO for entity manipulation, in case
+     * there is no specialized implementation available
+     */
+    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory){
+        assertNotNull("Session factory must exist",sessionFactory);
+        HibernateDaoSupport daoSupport = new HibernateDaoSupport() {};//empty impl
+        daoSupport.setSessionFactory(sessionFactory);
+        return daoSupport.getHibernateTemplate();
     }
 
     public void setSessionFactory(SessionFactory factory) {

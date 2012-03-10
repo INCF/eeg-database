@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.root;
 
 import com.octo.captcha.service.CaptchaServiceException;
 import com.octo.captcha.service.image.ImageCaptchaService;
+import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
@@ -35,7 +36,7 @@ public class RegistrationController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
-    private GenericDao<EducationLevel, Integer> educationLevelDao;
+    private EducationLevelDao educationLevelDao;
     private JavaMailSenderImpl mailSender;
     private SimpleMailMessage mailMessage;
     private HierarchicalMessageSource messageSource;
@@ -207,11 +208,11 @@ public class RegistrationController extends SimpleFormController {
         this.personDao = personDao;
     }
 
-    public GenericDao<EducationLevel, Integer> getEducationLevelDao() {
+    public EducationLevelDao getEducationLevelDao() {
         return educationLevelDao;
     }
 
-    public void setEducationLevelDao(GenericDao<EducationLevel, Integer> educationLevelDao) {
+    public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
         this.educationLevelDao = educationLevelDao;
     }
 

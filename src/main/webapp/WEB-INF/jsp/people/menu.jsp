@@ -5,6 +5,8 @@
 
 <ul class="commonButtonMenu">
   <li><a href="<c:url value='list.html'/>" title="List of people">List of people</a></li>
-  <li><a href="<c:url value='add-person.html'/>" title="Add person">Add person</a></li>
+  <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+      <li><a href="<c:url value='add-person.html'/>" title="Add person">Add person</a></li>
+  </security:authorize>
   <li><a href="<c:url value='search.html'/>"><fmt:message key="menuItem.searchPeople"/></a></li>
 </ul>

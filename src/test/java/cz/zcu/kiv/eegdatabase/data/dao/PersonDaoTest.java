@@ -22,6 +22,7 @@ import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 import static org.junit.Assert.assertNull;
 
@@ -37,21 +38,13 @@ public class PersonDaoTest extends AbstractDataAccessTest {
     protected PersonDao personDao;
 
     @Autowired
-    protected SessionFactory sessionFactory;
-
-    /**
-     * Used as universal DAO for entity manipulation, in case
-     * there is no specialized implementation available
-     */
-    protected HibernateTemplate hibernateTemplate;
+    protected EducationLevelDao educationLevelDao;
 
     Person person;
     EducationLevel educationLevel;
 
     @Before
     public void init(){
-        hibernateTemplate = createHibernateTemplate(sessionFactory);
-
         educationLevel = new EducationLevel();
         educationLevel.setDefaultNumber(0);
         educationLevel.setTitle("junit-education-level");
@@ -69,19 +62,14 @@ public class PersonDaoTest extends AbstractDataAccessTest {
         person.setEducationLevel(educationLevel);
     }
 
-    public HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory){
-        assertNotNull("Session factory must exist",sessionFactory);
-        HibernateDaoSupport daoSupport = new HibernateDaoSupport() {};//empty impl
-        daoSupport.setSessionFactory(sessionFactory);
-        return daoSupport.getHibernateTemplate();
-    }
-
     @Test
     @Transactional
     public void testCreateEducationLevel(){
         init();
-        Integer id = (Integer) hibernateTemplate.save(educationLevel);
+        int startCount = educationLevelDao.getEducationLevels("junit-education-level").size();
+        Integer id = (Integer) educationLevelDao.create(educationLevel);
         assertNotNull(id);
+        assertEquals(startCount + 1, educationLevelDao.getEducationLevels("junit-education-level").size());
     }
 
     @Test

@@ -23,6 +23,9 @@
         <intercept-url pattern="/my-account/*.html" access="IS_AUTHENTICATED_FULLY"/>
 
         <intercept-url pattern="/articles/settings.html" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/groups/book-room.html" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/people/add-person.html" access="ROLE_ADMIN,ROLE_USER"/>
+        <intercept-url pattern="/history/**.html" access="ROLE_ADMIN,ROLE_USER"/>
 
         <intercept-url pattern="/administration/*.html" access="ROLE_ADMIN"/>
         <intercept-url pattern="/lists/*/delete.html" access="IS_AUTHENTICATED_FULLY"/>

@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
+import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
@@ -28,7 +29,7 @@ public class AddPersonController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
     private PersonDao personDao;
-    private GenericDao<EducationLevel, Integer> educationLevelDao;
+    private EducationLevelDao educationLevelDao;
     private JavaMailSenderImpl mailSender;
     private HierarchicalMessageSource messageSource;
     private String domain;
@@ -177,11 +178,11 @@ public class AddPersonController extends SimpleFormController {
         this.personDao = personDao;
     }
 
-    public GenericDao<EducationLevel, Integer> getEducationLevelDao() {
+    public EducationLevelDao getEducationLevelDao() {
         return educationLevelDao;
     }
 
-    public void setEducationLevelDao(GenericDao<EducationLevel, Integer> educationLevelDao) {
+    public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
         this.educationLevelDao = educationLevelDao;
     }
 

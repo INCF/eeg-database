@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
+import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -16,10 +17,12 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.sql.Driver;
+import java.util.List;
 
 import static org.junit.Assert.*;
 
@@ -36,15 +39,14 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
     protected PersonDao personDao;
 
     @Autowired
-    protected SessionFactory sessionFactory;
-
-    protected HibernateTemplate hibernateTemplate;
+    protected EducationLevelDao educationLevelDao;
 
     protected WebDriver driver = new InternetExplorerDriver();
 
     private static final String DRIVER_BASE_ADDR = "http://localhost:8080/EEGDatabase";
     private static final String USERNAME = "junit-test-user";
     private static final String PASSWORD = ControllerUtils.getRandomPassword();
+    private static final String EDUCATION_LEVEL = "junit-education-level";
 
     Person person;
     EducationLevel educationLevel;
@@ -55,37 +57,60 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
     	login(USERNAME, PASSWORD, driver);
 
         driver.get(DRIVER_BASE_ADDR + "/articles/list.html");
-        assertNoSuchElement(driver,By.linkText("Articles Settings"));
-        driver.get(DRIVER_BASE_ADDR + "/articles/settings.html");
-        assertEquals("Access denied - EEGbase", driver.getTitle());
+        assertNoSuchElement(By.linkText("Articles Settings"));
+        assertAccessDenied(DRIVER_BASE_ADDR + "/articles/settings.html");
 
-        driver.get(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
-        assertEquals("Access denied - EEGbase", driver.getTitle());
+        driver.get(DRIVER_BASE_ADDR + "/groups/list.html");
+        assertNoSuchElement(By.linkText("Book room for group"));
+        assertAccessDenied(DRIVER_BASE_ADDR + "/groups/book-room.html");
+
+        driver.get(DRIVER_BASE_ADDR + "/people/list.html");
+        assertNoSuchElement(By.linkText("Add person"));
+        assertAccessDenied(DRIVER_BASE_ADDR + "/people/add-person.html");
+
+        driver.get(DRIVER_BASE_ADDR + "/articles/list.html");//TODO go home instead
+        assertNoSuchElement(By.linkText("History"));
+        assertAccessDenied(DRIVER_BASE_ADDR + "/history/daily-history.html");
+
+        assertAccessDenied(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
+    }
+
+    private void visitUserVisibleLinks() {
+        driver.get(DRIVER_BASE_ADDR);
+        login(USERNAME, PASSWORD, driver);//goes automatically to the menu
+
+        driver.findElement(By.linkText("Articles")).click();
+        driver.findElement(By.linkText("Articles Settings")).click();
+        assertEquals("Articles Settings - EEGbase", driver.getTitle());
+
+        driver.get(DRIVER_BASE_ADDR + "/groups/list.html");
+        driver.findElement(By.linkText("Book room for group")).click();//click -> book
+        assertEquals("Book UU403 for experiment - EEGbase", driver.getTitle());
+
+        driver.get(DRIVER_BASE_ADDR + "/people/list.html");
+        driver.findElement(By.linkText("Add person")).click();
+        assertEquals("Add/edit person - EEGbase", driver.getTitle());
+
+        driver.get(DRIVER_BASE_ADDR + "/home.html");
+        driver.findElement(By.linkText("History")).click();//TODO Not group admin, so I should not see the link
     }
 
     @Test
     public void testItemVisibilityUser() throws Exception{
         changeRole(Util.ROLE_USER);
-        driver.get(DRIVER_BASE_ADDR);
-    	login(USERNAME, PASSWORD, driver);//goes automatically to the menu
+        visitUserVisibleLinks();
 
-        driver.findElement(By.linkText("Articles")).click();
-        driver.findElement(By.linkText("Articles Settings"));//click -> settings
-        driver.get(DRIVER_BASE_ADDR + "/articles/settings.html");
-        assertEquals("Articles Settings - EEGbase", driver.getTitle());
-
-        driver.get(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
-        assertEquals("Access denied - EEGbase", driver.getTitle());
+        assertAccessDenied(DRIVER_BASE_ADDR + "/history/daily-history.html");
+        assertAccessDenied(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
     }
 
     @Test
     public void testItemVisibilityAdmin() throws Exception {
         changeRole(Util.ROLE_ADMIN);
-        driver.get(DRIVER_BASE_ADDR);
+        visitUserVisibleLinks();
 
-        login(USERNAME, PASSWORD, driver);//goes automatically to the menu
-        driver.get(DRIVER_BASE_ADDR + "/articles/settings.html");
-        assertEquals("Articles Settings - EEGbase", driver.getTitle());
+        driver.get(DRIVER_BASE_ADDR + "/history/daily-history.html");
+        assertEquals("Daily download history - EEGbase", driver.getTitle());
 
         driver.get(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
         assertEquals("Change user role - EEGbase", driver.getTitle());
@@ -93,20 +118,16 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
 
     @Before
     public void init(){
-        Person previous = personDao.getPerson(USERNAME);
-        if(previous != null){//when something goes wrong
-            personDao.delete(previous);
-        }
+        deletePreviousIfFound();
         educationLevel = new EducationLevel();
         educationLevel.setDefaultNumber(0);
-        educationLevel.setTitle("junit-education-level");
+        educationLevel.setTitle(EDUCATION_LEVEL);
         educationLevel.setEducationLevelId(0);
-        hibernateTemplate = createHibernateTemplate(sessionFactory);
-        hibernateTemplate.save(educationLevel);
+        educationLevelDao.create(educationLevel);
         person = createPerson();
         person.setEducationLevel(educationLevel);
-        hibernateTemplate.save(person);
-        hibernateTemplate.flush();
+        personDao.create(person);
+        //hibernateTemplate.flush();//TODO check
         assertNotNull(personDao.read(person.getPersonId()));
     }
 
@@ -124,10 +145,21 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         return p;
     }
 
+    private void deletePreviousIfFound() {
+        Person previous = personDao.getPerson(USERNAME);
+        if(previous != null){//when something goes wrong
+            personDao.delete(previous);
+        }
+        List<EducationLevel> prevLevels = educationLevelDao.getEducationLevels(EDUCATION_LEVEL);
+        for(EducationLevel level : prevLevels){
+            educationLevelDao.delete(level);
+        }
+    }
+
     private void changeRole(String newRole){
         person.setAuthority(newRole);
         personDao.update(person);
-        hibernateTemplate.flush();
+        //hibernateTemplate.flush();
     }
 
     static void login(String user, String pwd, WebDriver driver){
@@ -145,7 +177,7 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         return daoSupport.getHibernateTemplate();
     }
 
-    private void assertNoSuchElement(WebDriver driver, By by) {
+    private void assertNoSuchElement(By by) {
         try{
            driver.findElement(By.linkText("Articles Settings"));
            fail("Element " + by.toString() + " should not be available!");
@@ -154,13 +186,18 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         }
     }
 
+    private void assertAccessDenied(String path){
+        driver.get(path);
+        assertEquals("Access denied - EEGbase", driver.getTitle());
+    }
+
     @After
     public void cleanUp(){
         try{
             driver.close();
         } finally {
             personDao.delete(person);
-            hibernateTemplate.delete(educationLevel);
+            educationLevelDao.delete(educationLevel);
         }
     }
 }
