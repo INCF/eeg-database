@@ -4,6 +4,7 @@
 <ul class="commonButtonMenu">
     <li><a href="<c:url value='overview.html'/>"><fmt:message key='menuItem.myAccount.overview'/></a></li>
     <li><a href="<c:url value='change-password.html'/>"><fmt:message key='menuItem.myAccount.changePassword'/></a></li>
-    <li><a href="<c:url value='apply-for-writing-permission.html'/>"><fmt:message key='menuItem.myAccount.applyForWritingPermission'/></a></li>
-    <li><a href="<c:url value='change-default-group.html'/>"><fmt:message key='menuItem.myAccount.changeDefaultGroup'/></a></li>
+    <c:if test="${userIsInAnyGroup}">
+        <li><a href="<c:url value='change-default-group.html'/>"><fmt:message key='menuItem.myAccount.changeDefaultGroup'/></a></li>
+    </c:if>
 </ul>

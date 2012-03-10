@@ -39,6 +39,8 @@ public class UserRolePageAuthorizationTest extends AbstractDatabaseAwareWebdrive
         assertNoSuchElement(By.linkText("History"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/history/daily-history.html");
 
+        driver.get(DRIVER_BASE_ADDR + "/my-account/overview.html");
+        assertNoSuchElement(By.linkText("Change Default Group"));//no group to change
         assertAccessDenied(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
     }
 
@@ -59,6 +61,9 @@ public class UserRolePageAuthorizationTest extends AbstractDatabaseAwareWebdrive
         driver.findElement(By.linkText("People")).click();
         driver.findElement(By.linkText("Add person")).click();
         assertEquals("Add/edit person - EEGbase", driver.getTitle());
+
+        driver.get(DRIVER_BASE_ADDR + "/my-account/overview.html");
+        assertNoSuchElement(By.linkText("Change Default Group"));//no group to change
 
         driver.get(DRIVER_BASE_ADDR + "/home.html");
         driver.findElement(By.linkText("History")).click();//TODO Not group admin, so I should not see the link

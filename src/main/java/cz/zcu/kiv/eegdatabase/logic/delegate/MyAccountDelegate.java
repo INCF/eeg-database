@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.logic.delegate;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -49,7 +50,19 @@ public class MyAccountDelegate {
         List list = researchGroupDao.getGroupDataForAccountOverview(personDao.getLoggedPerson());
         mav.addObject("membershipList", list);
         mav.addObject("membershipListEmpty", list.isEmpty());
-
+        setUserIsInAnyGroup(mav,personDao.getLoggedPerson());
         return mav;
+    }
+
+    public static void setUserIsInAnyGroup(ModelAndView mav, Person loggedUser) {
+        if(!loggedUser.getResearchGroupMemberships().isEmpty()){
+            mav.addObject("userIsInAnyGroup", true);
+        }
+    }
+
+    public static void setUserIsInAnyGroup(Map map, Person loggedUser) {
+        if(!loggedUser.getResearchGroupMemberships().isEmpty()){
+            map.put("userIsInAnyGroup", true);
+        }
     }
 }

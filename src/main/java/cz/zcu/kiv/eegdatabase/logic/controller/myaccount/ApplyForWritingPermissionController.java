@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.myaccount;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.delegate.MyAccountDelegate;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -46,7 +47,7 @@ public class ApplyForWritingPermissionController extends SimpleFormController {
             log.debug("User has another authority than ROLE_READER - no need of request");
             mav.setViewName(getRequestNotNeededView());
         }
-
+        MyAccountDelegate.setUserIsInAnyGroup(mav, personDao.getLoggedPerson());
         return mav;
     }
 

@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.delegate.MyAccountDelegate;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -53,7 +54,7 @@ public class ChangeDefaultGroupController extends SimpleFormController {
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
         map.put("researchGroupList", researchGroupList);
-
+        MyAccountDelegate.setUserIsInAnyGroup(map,personDao.getLoggedPerson());
         return map;
     }
 

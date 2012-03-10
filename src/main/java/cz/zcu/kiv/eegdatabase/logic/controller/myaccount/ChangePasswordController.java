@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.logic.controller.myaccount;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.delegate.MyAccountDelegate;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -11,6 +13,9 @@ import org.springframework.web.servlet.mvc.SimpleFormController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class ChangePasswordController extends SimpleFormController {
 
@@ -37,6 +42,13 @@ public class ChangePasswordController extends SimpleFormController {
         log.debug("Returning MAV");
         ModelAndView mav = new ModelAndView(getSuccessView());
         return mav;
+    }
+
+    @Override
+    protected Map referenceData(HttpServletRequest request) throws Exception {
+        Map map = new HashMap<String, Object>();
+        MyAccountDelegate.setUserIsInAnyGroup(map, personDao.getLoggedPerson());
+        return map;
     }
 
     public PersonDao getPersonDao() {
