@@ -56,7 +56,8 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         driver.get(DRIVER_BASE_ADDR);
     	login(USERNAME, PASSWORD, driver);
 
-        driver.get(DRIVER_BASE_ADDR + "/articles/list.html");
+        driver.findElement(By.linkText("Articles")).click();//link accessible from home.html when logged in
+        //driver.get(DRIVER_BASE_ADDR + "/articles/list.html");
         assertNoSuchElement(By.linkText("Articles Settings"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/articles/settings.html");
 
@@ -75,11 +76,11 @@ public class UserRolePageAuthorizationTest extends AbstractDataAccessTest {
         assertAccessDenied(DRIVER_BASE_ADDR + "/administration/change-user-role.html");
     }
 
-    private void visitUserVisibleLinks() {
+    private void visitUserVisibleLinks() throws Exception {
         driver.get(DRIVER_BASE_ADDR);
-        login(USERNAME, PASSWORD, driver);//goes automatically to the menu
+        login(USERNAME, PASSWORD, driver);
 
-        driver.findElement(By.linkText("Articles")).click();
+        driver.findElement(By.linkText("Articles")).click();//link accessible from home.html when logged in
         driver.findElement(By.linkText("Articles Settings")).click();
         assertEquals("Articles Settings - EEGbase", driver.getTitle());
 

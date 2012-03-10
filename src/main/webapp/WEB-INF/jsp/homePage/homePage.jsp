@@ -8,7 +8,7 @@
 
 
 <ui:standardTemplate pageTitle="pageTitle.homePage">
-<security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+<security:authorize ifNotGranted="ROLE_ANONYMOUS">
     <h1 class="homepageHeading"><fmt:message key="pageTitle.homePage"/></h1>
 
     <div class="homepageLeftColumn">
@@ -202,7 +202,7 @@
 
 
 </security:authorize>
-<security:authorize ifNotGranted="ROLE_USER,ROLE_ADMIN">
+<security:authorize ifAllGranted="ROLE_ANONYMOUS">
     <div class="notLogged">
         <div class="homepageLeftColumn">
             <h1><fmt:message key="homePage.welcomeHeading"/></h1>
