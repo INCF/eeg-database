@@ -16,14 +16,12 @@ import static org.junit.Assert.assertEquals;
  */
 public class AnonymousPageAuthorizationTest {
 
-    protected WebDriver driver = new InternetExplorerDriver();
-
-    private static final String DRIVER_BASE_ADDR = "http://localhost:8080/EEGDatabase";
+    protected WebDriver driver = AbstractDatabaseAwareWebdriverTest.createWebDriver();
 
     @Test
     public void testItemVisibilityAnonymous() throws Exception {
-        driver.get(DRIVER_BASE_ADDR + "/scenarios/list.html");
-        assertEquals("Log in - EEGbase", driver.getTitle());
+        driver.get(AbstractDatabaseAwareWebdriverTest.DRIVER_BASE_ADDR + "/scenarios/list.html");
+        assertEquals(AbstractDatabaseAwareWebdriverTest.LOGIN_PAGE_TITLE, driver.getTitle());
     }
 
     @After

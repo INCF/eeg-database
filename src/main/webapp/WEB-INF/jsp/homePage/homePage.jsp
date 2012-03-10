@@ -8,6 +8,9 @@
 
 
 <ui:standardTemplate pageTitle="pageTitle.homePage">
+<c:if test="${not empty param.login_error}">
+                <span class="errorMessage"><fmt:message key="system.loginNotSuccessfull"/> <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
+</c:if>
 <security:authorize ifNotGranted="ROLE_ANONYMOUS">
     <h1 class="homepageHeading"><fmt:message key="pageTitle.homePage"/></h1>
 

@@ -38,9 +38,9 @@
         <intercept-url pattern="/webservice/SemanticService" access="IS_AUTHENTICATED_FULLY"/>
 
         <form-login
-        login-page="/login.html"
+        login-page="/home.html"
         default-target-url="/home.html"
-        authentication-failure-url="/login.html?login_error=1"/>
+        authentication-failure-url="/home.html?login_error=1"/>
         <logout logout-url="/logout" logout-success-url="/home.html"/>
 
         <session-management session-fixation-protection="newSession"/>
