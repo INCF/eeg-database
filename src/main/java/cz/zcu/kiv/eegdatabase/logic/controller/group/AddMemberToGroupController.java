@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.service.DataService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class AddMemberToGroupController
     private AuthorizationManager auth;
     @Autowired
     private DataService dataService;
+    @Autowired
+    private PersonDao personDao;
 
     public AddMemberToGroupController() {
         setCommandClass(AddMemberToGroupCommand.class);
@@ -54,6 +57,7 @@ public class AddMemberToGroupController
         }
         mav.addObject("groupId", groupId);
         mav.addObject("groupTitle", dataService.getResearchGroupTitle(groupId));
+        GroupMultiController.setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
 
         return mav;
     }

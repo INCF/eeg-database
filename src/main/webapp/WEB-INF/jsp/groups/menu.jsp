@@ -6,7 +6,9 @@
 <ul class="commonButtonMenu">
   <li><a href="<c:url value='list.html'/>"><fmt:message key="menuItem.listOfGroups"/></a></li>
   <li><a href="<c:url value='my-groups.html'/>"><fmt:message key="menuItem.myGroups"/></a></li>
-  <li><a href="<c:url value='edit-group-role.html'/>"><fmt:message key="menuItem.editGroupRole"/></a></li>
+  <c:if test="${userCanRequestGroupRole}">
+      <li><a href="<c:url value='edit-group-role.html'/>"><fmt:message key="menuItem.editGroupRole"/></a></li>
+  </c:if>
   <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
       <li><a href="<c:url value='book-room.html'/>"><fmt:message key="menuItem.bookingRoom"/></a></li>
   </security:authorize>

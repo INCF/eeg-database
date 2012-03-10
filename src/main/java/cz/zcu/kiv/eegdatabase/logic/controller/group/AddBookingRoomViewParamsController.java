@@ -124,6 +124,7 @@ public class AddBookingRoomViewParamsController extends SimpleFormController
         map.put("startTime", BookingRoomUtils.getHoursAndMinutes(startStr).replaceAll(":", ""));
         map.put("endTime", BookingRoomUtils.getHoursAndMinutes(endStr).replaceAll(":", ""));
         map.put("loggedUser", personDao.getLoggedPerson());
+        GroupMultiController.setPermissionToRequestGroupRole(map, personDao.getLoggedPerson());
 
         return map;
     }

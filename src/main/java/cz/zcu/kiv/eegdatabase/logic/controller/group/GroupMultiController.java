@@ -4,16 +4,19 @@ import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Delegate class for multicontroller which processes groups section.
@@ -29,11 +32,13 @@ public class GroupMultiController extends MultiActionController {
 
     public ModelAndView editGroupRole(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/editGroupRole");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         return mav;
     }
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/list");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         List<ResearchGroup> list = researchGroupDao.getAllRecords();
         mav.addObject("groupList", list);
         return mav;
@@ -41,6 +46,7 @@ public class GroupMultiController extends MultiActionController {
 
     public ModelAndView myGroups(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/myGroupsList");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         List<ResearchGroup> ownedList = researchGroupDao.getResearchGroupsWhereOwner(personDao.getLoggedPerson());
         mav.addObject("ownedList", ownedList);
         List<ResearchGroup> memberList = researchGroupDao.getResearchGroupsWhereMember(personDao.getLoggedPerson());
@@ -50,6 +56,7 @@ public class GroupMultiController extends MultiActionController {
 
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/detail");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         int id = Integer.parseInt(request.getParameter("groupId"));
 
         mav.addObject("userIsExperimenterInGroup", auth.userIsExperimenterInGroup(id));
@@ -62,6 +69,7 @@ public class GroupMultiController extends MultiActionController {
 
     public ModelAndView listOfMembers(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/listOfMembers");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
 
         int groupId = 0;
         try {
@@ -84,6 +92,7 @@ public class GroupMultiController extends MultiActionController {
     public ModelAndView changeRole(HttpServletRequest request, HttpServletResponse response) {
         // If we don't get the group id, redirect to list of groups
         ModelAndView mav = new ModelAndView("redirect:/groups/list.html");
+        setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
 
         int groupId = 0;
         int personId = 0;
@@ -120,6 +129,27 @@ public class GroupMultiController extends MultiActionController {
         }
 
         return mav;
+    }
+
+    /**
+     * @return true if user has ROLE_ADMIN, ROLE_USER, or is part of at least 1 group
+     */
+    private static boolean isAuthorizedToRequestGroupRole(Person loggedUser){
+        return (loggedUser.getAuthority().equals(Util.ROLE_ADMIN)
+                || loggedUser.getAuthority().equals(Util.ROLE_USER)
+                || !loggedUser.getResearchGroupMemberships().isEmpty());
+    }
+
+    public static void setPermissionToRequestGroupRole(Map modelMap, Person loggedUser) {
+        if(isAuthorizedToRequestGroupRole(loggedUser)){
+            modelMap.put("userCanRequestGroupRole", true);
+        }
+    }
+
+    public static void setPermissionToRequestGroupRole(ModelAndView mav, Person loggedUser) {
+        if(isAuthorizedToRequestGroupRole(loggedUser)){
+            mav.addObject("userCanRequestGroupRole", true);
+        }
     }
 
     public ResearchGroupDao getResearchGroupDao() {

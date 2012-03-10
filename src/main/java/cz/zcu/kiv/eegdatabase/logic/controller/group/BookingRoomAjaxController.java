@@ -48,6 +48,7 @@ public class BookingRoomAjaxController
     public Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception
     {
         Map map = new HashMap<String, Object>();
+        GroupMultiController.setPermissionToRequestGroupRole(map, personDao.getLoggedPerson());
 
         if (request.getParameter("type").compareTo("info") == 0)
         {

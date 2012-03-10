@@ -164,6 +164,7 @@ public class BookingRoomController extends SimpleFormController
             comment = null;
         }
 
+        GroupMultiController.setPermissionToRequestGroupRole(map, personDao.getLoggedPerson());
         return map;
     }
 

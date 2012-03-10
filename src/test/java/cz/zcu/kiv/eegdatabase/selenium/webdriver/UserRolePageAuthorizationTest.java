@@ -28,6 +28,7 @@ public class UserRolePageAuthorizationTest extends AbstractDatabaseAwareWebdrive
 
         driver.get(DRIVER_BASE_ADDR + "/groups/list.html");
         assertNoSuchElement(By.linkText("Book room for group"));
+        assertNoSuchElement(By.linkText("Edit group role"));
         assertAccessDenied(DRIVER_BASE_ADDR + "/groups/book-room.html");
 
         driver.get(DRIVER_BASE_ADDR + "/home.html");
@@ -50,6 +51,7 @@ public class UserRolePageAuthorizationTest extends AbstractDatabaseAwareWebdrive
         assertEquals("Articles Settings - EEGbase", driver.getTitle());
 
         driver.get(DRIVER_BASE_ADDR + "/groups/list.html");
+        driver.findElement(By.linkText("Edit group role"));//verify link exists
         driver.findElement(By.linkText("Book room for group")).click();//click -> book
         assertEquals("Book UU403 for experiment - EEGbase", driver.getTitle());
 

@@ -118,6 +118,7 @@ public class EditGroupRoleController extends SimpleFormController {
 
         log.debug("Returning MAV");
         ModelAndView mav = new ModelAndView("groups/requestSent");
+        GroupMultiController.setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         return mav;
     }
 
@@ -130,7 +131,7 @@ public class EditGroupRoleController extends SimpleFormController {
         int defaultGroupId = (defaultGroup != null) ? defaultGroup.getResearchGroupId() : 0;
         map.put("defaultGroupId", defaultGroupId);
         map.put("researchGroupList", researchGroupList);
-
+        GroupMultiController.setPermissionToRequestGroupRole(map, personDao.getLoggedPerson());
         return map;
     }
 

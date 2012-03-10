@@ -30,6 +30,8 @@ public class CreateGroupController {
     private AuthorizationManager auth;
 
     @Autowired
+    private PersonDao personDao;
+    @Autowired
     private HardwareDao hardwareDao;
     @Autowired
     private WeatherDao weatherDao;
@@ -51,7 +53,7 @@ public class CreateGroupController {
     protected String showForm(ModelMap model) {
         CreateGroupCommand data = new CreateGroupCommand();
         model.addAttribute("createGroup",data);
-
+        GroupMultiController.setPermissionToRequestGroupRole(model, personDao.getLoggedPerson());
         return "groups/createGroupForm";
     }
 
@@ -77,6 +79,7 @@ public class CreateGroupController {
             data.setResearchGroupDescription(researchGroup.getDescription());
         }
         model.addAttribute("createGroup",data);
+        GroupMultiController.setPermissionToRequestGroupRole(model, personDao.getLoggedPerson());
         return "groups/createGroupForm";
     }
 
