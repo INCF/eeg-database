@@ -1,9 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
-import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.commons.logging.Log;
@@ -31,6 +28,7 @@ public class ExperimentMultiController extends MultiActionController {
     private PersonDao personDao;
     private ExperimentDao<Experiment, Integer> experimentDao;
     private ServiceResultDao resultDao;
+    private ResearchGroupDao researchGroupDao;
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
@@ -39,9 +37,11 @@ public class ExperimentMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
         List<Experiment> list = experimentDao.getAllExperimentsForUser(loggedUser.getPersonId());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser,1).isEmpty();
+
         mav.addObject("measurationListTitle", "pageTitle.allExperiments");
         mav.addObject("measurationList", list);
-
+        mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
 
@@ -173,5 +173,13 @@ public class ExperimentMultiController extends MultiActionController {
 
     public void setResultDao(ServiceResultDao resultDao) {
         this.resultDao = resultDao;
+    }
+
+    public ResearchGroupDao getResearchGroupDao() {
+        return researchGroupDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
     }
 }

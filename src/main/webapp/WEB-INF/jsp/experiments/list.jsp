@@ -6,6 +6,10 @@
 
   <h1><fmt:message key="${measurationListTitle}"/></h1>
 
+  <c:if test="${userNotMemberOfAnyGroup}">
+    <fmt:message key="text.notMemberOfAnyGroup"/><br/><br/>
+  </c:if>
+
   <table class="dataTable measurationListDataTable">
     <thead>
       <tr>

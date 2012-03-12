@@ -277,6 +277,7 @@
         <property name="personDao" ref="personDao"/>
         <property name="auth" ref="authorizationManager"/>
         <property name="resultDao" ref="serviceResultDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
     </bean>
 
     <bean name="addExperimentValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.AddExperimentValidator"/>
