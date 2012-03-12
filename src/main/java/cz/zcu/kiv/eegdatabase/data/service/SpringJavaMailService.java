@@ -40,10 +40,9 @@ public class SpringJavaMailService implements MailService {
 
     @Override
     public void sendRegistrationConfirmMail(Person user, Locale locale) throws MailException {
-        String login = "<b>" + user.getUsername() + "</b>";
-
         log.debug("Creating email content");
         StringBuilder sb = new StringBuilder();
+        String login = "<b>" + user.getUsername() + "</b>";
 
         sb.append("<html><body>");
         sb.append("<h4>");
@@ -60,26 +59,79 @@ public class SpringJavaMailService implements MailService {
         sb.append("</p>");
         sb.append("</body></html>");
 
-        log.debug("email body: " + sb.toString());
+        String emailSubject = messageSource.getMessage("registration.email.subject", null, locale);
+        sendEmail(user.getEmail(),emailSubject,sb.toString());
+    }
 
+    @Override
+    public void sendRequestForJoiningGroupMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
+        sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, true);
+    }
+
+    @Override
+    public void sendRequestForGroupRoleMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
+        sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, false);
+    }
+
+    public void sendGroupRoleEditMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale, boolean newMember) {
+        log.debug("Creating email content");
+        String userNameElement = "<b>" + userName + "</b>";
+        String researchGroupTitleElement = "<b>" + researchGroupTitle + "</b>";
+
+        //Email body is obtained from resource bunde. Url of domain is obtained from
+        //configuration property file defined in persistence.xml
+        //Locale is from request it ensures that user obtain localized email according to
+        //his/her browser setting
+        StringBuilder sb = new StringBuilder();
+        sb.append("<html><body>");
+        sb.append("<h4>");
+        sb.append(messageSource.getMessage("editgrouprole.email.body.hello", null, locale));
+        sb.append("</h4>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage(newMember ? "editgrouprole.email.body.userWantsToJoinGroup"
+                : "editgrouprole.email.body.userWantsToChangeRole",
+                new String[]{userNameElement, researchGroupTitleElement}, locale));
+        sb.append("</p>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage("editgrouprole.email.body.clickToConfirm", null, locale));
+        sb.append("<br/>");
+        sb.append("<a href=\"http://" + domain + "/groups/accept-role-request.html?id=" + requestId + "\">" +
+                "http://" + domain + "/groups/accept-role-request.html?id=" + requestId + "</a>");
+        sb.append("</p>");
+        sb.append("</body></html>");
+
+        String subject = messageSource.getMessage(newMember ? "editgrouprole.email.subject.joinGroup"
+                 : "editgrouprole.email.subject.changeRole", null, locale);
+        sendEmail(toEmail, subject, sb.toString());
+    }
+
+    @Override
+    public void sendEmail(String to, String subject, String emailBody) throws MailException {
+        sendEmail(mailMessage.getFrom(), to, subject, emailBody);
+    }
+
+    protected void sendEmail(String from, String to, String subject, String emailBody) throws MailException {//make public if needed
+        log.debug("email body: " + emailBody);
         log.debug("Composing e-mail message");
-        MimeMessage mimeMessage = mailSender.createMimeMessage();
-
-        MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-        try {
-            message.setFrom(mailMessage.getFrom());
-            //  message.setContent("text/html");
-            message.setTo(user.getEmail());
-            //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
-            message.setSubject(messageSource.getMessage("registration.email.subject", null, locale));
-            message.setText(sb.toString(), true);
-        } catch (MessagingException e) {//rethrow as MailException to keep only 1 throw cause in method signature
-            throw new MailPreparationException(e.getMessage(),e);
-        }
-
-        log.debug("Sending e-mail" + message);
-        log.debug("mailSender" + mailSender);
+        MimeMessage mimeMessage = createMimeMessage(from, to,subject,emailBody);
+        log.debug("MailSender " + mailSender + " sending email");
         mailSender.send(mimeMessage);
         log.debug("E-mail was sent");
+    }
+
+    protected MimeMessage createMimeMessage(String from, String to, String subject, String emailBody) throws MailException {
+        try {
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setFrom(from);
+            //  message.setContent("text/html");
+            message.setTo(to);
+            message.setSubject(subject);
+            message.setText(emailBody, true);
+            log.debug("Message " + message);
+            return mimeMessage;
+        } catch (MessagingException e) {//rethrow as MailException
+            throw new MailPreparationException(e.getMessage(),e);
+        }
     }
 }

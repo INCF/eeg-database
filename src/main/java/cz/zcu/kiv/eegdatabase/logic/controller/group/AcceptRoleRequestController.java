@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.group;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -22,6 +23,8 @@ import java.util.Set;
 public class AcceptRoleRequestController extends SimpleFormController {
     private GenericDao<GroupPermissionRequest, Integer> gpr;
     private ResearchGroupDao researchGroupDao;
+
+    private PersonDao personDao;
     private int requestId;
 
 
@@ -36,12 +39,14 @@ public class AcceptRoleRequestController extends SimpleFormController {
     protected Map referenceData(HttpServletRequest request) throws Exception {
         Map map = new HashMap<String, Object>();
         requestId = Integer.parseInt(request.getParameter("id"));
-        Person user = gpr.read(requestId).getPerson();
-        String choosenGroup = gpr.read(requestId).getResearchGroup().getTitle();
-        String requestRole = gpr.read(requestId).getRequestedPermission();
+        GroupPermissionRequest pr = gpr.read(requestId);
+        Person user = pr.getPerson();    //TODO fix: when requestId is not found, throws NullPointer
+        String choosenGroup = pr.getResearchGroup().getTitle();
+        String requestRole = pr.getRequestedPermission();
         map.put("person", user);
         map.put("requestRole", requestRole);
         map.put("choosenGroup", choosenGroup);
+        GroupMultiController.setPermissionToRequestGroupRole(map, personDao.getLoggedPerson());
         return map;
     }
 
@@ -81,6 +86,14 @@ public class AcceptRoleRequestController extends SimpleFormController {
 
     public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
         this.researchGroupDao = researchGroupDao;
+    }
+
+    public PersonDao getPersonDao() {
+        return personDao;
+    }
+
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
     }
 
     public GenericDao<GroupPermissionRequest, Integer> getGpr() {

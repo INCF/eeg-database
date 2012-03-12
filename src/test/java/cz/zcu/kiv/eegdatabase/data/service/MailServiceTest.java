@@ -35,7 +35,6 @@ public class MailServiceTest extends AbstractDataAccessTest {
 
     @Autowired
     private MailService mailService;
-
     @Autowired
     private JavaMailSenderImpl mailSender;//should be same object as the one used in mailService
 
@@ -52,6 +51,29 @@ public class MailServiceTest extends AbstractDataAccessTest {
         if(SMTP_SERVER_PORT == 465){
             mailSender.setJavaMailProperties(getPropertiesForSSL());
         }
+    }
+
+    @Test
+    @Ignore(value = "To run this test, provide real login data and comment out the ignore")
+    public void testSendRegistrationEmail(){
+        mailService.sendRegistrationConfirmMail(person,locale);
+        System.out.println("Email was sent successfully");
+    }
+
+    @Test
+    @Ignore(value = "To run this test, provide real login data and comment out the ignore")
+    public void testSendRequestForGroupRoleMail(){
+        mailService.sendRequestForGroupRoleMail(INCOMING_EMAIL_ADDRESS,1234,
+                person.getUsername(),"junit-research-group", locale);
+        System.out.println("Email was sent successfully");
+    }
+
+    @Test
+    @Ignore(value = "To run this test, provide real login data and comment out the ignore")
+    public void testSendRequestForJoiningGroupMail(){
+        mailService.sendRequestForJoiningGroupMail(INCOMING_EMAIL_ADDRESS,1234,
+                person.getUsername(),"junit-research-group", locale);
+        System.out.println("Email was sent successfully");
     }
 
     private Person createPerson() {
@@ -72,12 +94,5 @@ public class MailServiceTest extends AbstractDataAccessTest {
         pr.setProperty("mail.smtps.starttls.enable","true");
         pr.setProperty("mail.smtps.debug","true");
         return pr;
-    }
-
-    @Test
-    //@Ignore(value = "To run this test, provide real login data and comment out the ignore")
-    public void testSendRegistrationEmail(){
-        mailService.sendRegistrationConfirmMail(person,locale);
-        System.out.println("Email was sent successfully");
     }
 }

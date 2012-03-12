@@ -452,10 +452,19 @@
         <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
         <property name="successView" value="groups/requestSent"/>
-        <property name="mailSender" ref="mailSender"/>
-        <property name="mailMessage" ref="mailMessage"/>
+        <property name="mailService" ref="mailService"/>
         <property name="messageSource" ref="messageSource"/>
-        <property name="domain" value="${app.domain}"/>
+    </bean>
+
+    <bean name="membershipRequestController" class="cz.zcu.kiv.eegdatabase.logic.controller.group.MembershipRequestController">
+        <property name="formView" value="groups/membershipRequest"/>
+        <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
+        <property name="personDao" ref="personDao"/>
+        <property name="groupPermissionRequestDao" ref="groupPermissionRequestDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="successView" value="groups/requestSent"/>
+        <property name="mailService" ref="mailService"/>
+        <property name="messageSource" ref="messageSource"/>
     </bean>
 
 
@@ -502,6 +511,7 @@
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.group.EditGroupRoleCommand"/>
         <property name="gpr" ref="groupPermissionRequestDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="personDao" ref="personDao"/>
         <property name="successView" value="myAccount/changesWereMade"/>
     </bean>
 

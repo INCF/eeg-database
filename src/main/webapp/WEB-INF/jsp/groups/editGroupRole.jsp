@@ -3,8 +3,8 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<ui:groupsTemplate pageTitle="pageTitle.groupRoleEdit">
-  <h1><fmt:message key="pageTitle.groupRoleEdit"/></h1>
+<ui:groupsTemplate pageTitle="pageTitle.requestForGroupRole">
+  <h1><fmt:message key="pageTitle.requestForGroupRole"/></h1>
   <c:url value="edit-group-role.html" var="formUrl" />
 
   <form:form action="${formUrl}" method="post" commandName="editGroupRoleCommand" name="editGroupRoleCommand" cssClass="standardInputForm">
@@ -27,9 +27,6 @@
         <form:label path="editedGroup" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key='select.option.roleAdmin'/></form:label>
         <input type="radio" name="role"  value="GROUP_ADMIN" <c:if test="${status.value == true}">checked</c:if>/>
       </div>
-
-    
-    
 
      <div class="itemBox">
        <input type="submit" value="<fmt:message key='button.sendRequest'/>" class="submitButton lightButtonLink" />

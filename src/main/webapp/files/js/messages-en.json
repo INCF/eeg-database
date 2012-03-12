@@ -191,17 +191,18 @@
     "advancedSearch":"Search",
     "applyForWritingPermission":"Request for data uploading permission",
     "backToGroupDetail":"Back to group detail",
-    "backToMeasuration":"Back to measuration",
+    "backToMeasuration":"Back to experiment",
     "changeRole":"Change role",
     "confirm":"Confirm",
     "createAccount":"Create account",
-    "downloadFile":"Download file",
     "downloadExperiment":"Download experiment",
+    "downloadFile":"Download file",
     "edit":"Edit",
     "editExperiment":"Edit experiment",
     "fulltextSearch":"Search",
     "listOfMembers":"List of members",
     "logIn":"Log in",
+    "membershipRequest":"Membership request",
     "reset":"Reset",
     "run":"Run Service",
     "save":"Save",
@@ -209,7 +210,8 @@
     "select":"Select",
     "send":"Send",
     "sendRequest":"Send request",
-    "show":"Show"
+    "show":"Show",
+    "submitDisable":"Submitting, please wait..."
   },
   "dataTable":
   {
@@ -228,10 +230,12 @@
       "entity":"Entity",
       "eyesDefectDescription":"Description",
       "eyesDefectId":"ID",
+      "file":"File",
       "fileMetadataParameterDataType":"Data type",
       "fileMetadataParameterName":"Parameter name",
       "fileMetadataParamsId":"ID",
       "fileName":"File name",
+      "gender":"Gender",
       "groupName":"Group name",
       "groupTitle":"Group title",
       "hardwareDescription":"Description",
@@ -249,6 +253,7 @@
       "measurationOptionalParamValue":"Value",
       "name":"Name",
       "note":"Note",
+      "number":"No.",
       "parameterName":"Parameter name",
       "personAdditionalParamsDataType":"Data type",
       "personAdditionalParamsId":"ID",
@@ -259,7 +264,7 @@
       "resultStatus":"Status",
       "resultTitle":"Title",
       "roleInGroup":"Role in group",
-      "samplingRate":"Sampling rate",
+      "samplingRate":"Sampling Rate",
       "scenarioLength":"Length",
       "scenarioTitle":"Scenario title",
       "searchedString":"Searched string",
@@ -269,7 +274,8 @@
       "type":"Type",
       "username":"Username",
       "usersDefaultGroup":"User's default group",
-      "value":"Value"
+      "value":"Value",
+      "yearOfBirth":"Year of birth"
     }
   },
   "description":
@@ -288,14 +294,16 @@
     {
       "body":
       {
+        "clickToConfirm":"Please, click on the link below to edit or confirm the request.",
         "hello":"Hello!",
-        "text":
-        {
-          "part1":"User: {0} - wants change role in research group: {1}",
-          "part2":"Please, click on the link below to edit or confirm the request."
-        }
+        "userWantsToChangeRole":"User: {0} wants to change role in research group: {1}",
+        "userWantsToJoinGroup":"User: {0} wants to join research group: {1}"
       },
-      "subject":"Change group role request"
+      "subject":
+      {
+        "changeRole":"Change group role request",
+        "joinGroup":"Request to join a group"
+      }
     }
   },
   "emptyTable":
@@ -342,6 +350,7 @@
   {
     "ArticlesSettings":"Articles Settings",
     "ArticlesSubscriptions":"Articles Subscribtions",
+    "addMetadata":"Add metadata to data file",
     "comments":"Comments",
     "dataFiles":"Data files",
     "eyesDefects":"Eyes defects",
@@ -394,7 +403,7 @@
     "ageMin":"Minimum age",
     "atom":"Count of atoms",
     "author":"Author",
-    "beginningOfMeasuration":"Beginning of measuration",
+    "beginningOfMeasuration":"Beginning of experiment",
     "channel":"Channel",
     "chooseAll":"Choose all",
     "chooseFile":"Choose all data files",
@@ -416,14 +425,22 @@
     "dateFrom":"From(dd/mm/yyyy):",
     "dateOfBirth":"Date of birth",
     "dateTo":"To(dd/mm/yyyy):",
+    "defaultExperimentOptParamDef":"Default optional parameters",
+    "defaultFileMetadataParamDef":"Default metadata parameters",
+    "defaultHardware":"Default hardware",
+    "defaultHearingImpairments":"Default hearing impairments",
+    "defaultPersonOptParamDef":"Default optional parameters",
+    "defaultVisualImpairments":"Default visual impairments",
+    "defaultWeather":"Default weather",
     "defect":"Without defect",
     "delete":"Delete",
     "description":"Description",
     "edit":"Edit",
+    "educationLevel":"EducationLevel",
     "email":"E-mail",
     "endDate":"End date",
     "endDateTime":"End date and time",
-    "endOfMeasuration":"End of measuration",
+    "endOfMeasuration":"End of experiment",
     "eyesDefect":"Eyes defect",
     "facebookId":"Facebook ID",
     "fileMetadata":"File metadata",
@@ -436,6 +453,7 @@
     },
     "givenname":"Givenname",
     "globalPermissionLevel":"Global permission level",
+    "group":"Group",
     "hardware":"Hardware",
     "hardwareDescription":"Description",
     "hardwareTitle":"Title",
@@ -443,9 +461,11 @@
     "header":"Select a filename",
     "hearingDefect":"Hearing defect",
     "in":"in",
+    "laterality":"Laterality",
+    "left":"Left",
     "lenght":"Lenght",
-    "measuration":"Measuration",
-    "measurationId":"Measuration ID",
+    "measuration":"Experiment",
+    "measurationId":"Experiment ID",
     "minutes":"minutes",
     "name":"Name",
     "notAvailable":"Not Available",
@@ -464,7 +484,8 @@
     "researchGroup":"Research group",
     "researchGroupDescription":"Group description",
     "researchGroupTitle":"Group title",
-    "samplingRate":"Sampling rate",
+    "right":"Right",
+    "samplingRate":"Sampling Rate",
     "scenario":"Scenario",
     "scenarioDescription":"Description",
     "scenarioFile":"Scenario file",
@@ -486,6 +507,7 @@
     "toDate":"To:",
     "type":"Type",
     "unableToEditArticle":"Unable to add or edit article (low level of permissions)",
+    "unspecified":"Unspecified",
     "unsubscribe":"Unsubscribe",
     "usedHardware":"Used hardware",
     "usedHarware":"Used hardware",
@@ -502,13 +524,12 @@
   },
   "legend":
   {
-    "advancedSearchMeasurations":"Measuration - searcher",
+    "advancedSearchMeasurations":"Experiment - searcher",
     "advancedSearchPerson":"People - searcher",
     "advancedSearchScenario":"Scenario - searcher"
   },
   "link":
   {
-    "dataFileDetail":"Data file detail",
     "addFileMetadataDefinition":"Add file metadata definition",
     "addHardwareDefinition":"Add hardware definition        ",
     "addHearingImpairment":"Add hearing impairment",
@@ -529,6 +550,7 @@
       "sureToRemoveUserFromGroup":"Are you sure you want to remove the user from group?"
     },
     "continuousWavelet":"Continuous Wavelet Transformation",
+    "dataFileDetail":"Data file detail",
     "delete":"Delete",
     "detail":"Detail",
     "discreteWavelet":"Discrete Wavelet Transformation",
@@ -553,7 +575,6 @@
     "bookingRoom":"Book room for group",
     "changeUserRole":"Change user role",
     "createGroup":"Create group",
-    "requestForGroupRole":"Request for group role",
     "experiments":"Experiments",
     "fileMetadataDefinitions":"File metadata definitions",
     "groups":"Groups",
@@ -582,6 +603,7 @@
     "optionalParametersForExperiments":"Optional parameters for experiments",
     "optionalParametersForPeople":"Optional parameters for people",
     "people":"People",
+    "requestForGroupRole":"Request for group role",
     "scenarios":"Scenarios",
     "searchMeasuration":"Search experiment",
     "searchPeople":"Search people",
@@ -625,14 +647,15 @@
   },
   "pageTitle":
   {
+    "acceptRoleRequest":"Accept role request",
     "accessDenied":"Access denied",
     "accountOverview":"Account overview",
     "addArticle":"Add new article",
     "addDataFile":"Add data file",
+    "addEdit;FileMetadataDefinition":"Add/edit file metadata definition",
     "addEditArticle":"Add or edit an article",
     "addEditExperiment":"Add/edit experiment",
     "addEditExperimentOptionalParameterDefinition":"Add/edit experiment optional parameter",
-    "addEditFileMetadataDefinition":"Add/edit file metadata definition",
     "addEditHardwareDefinition":"Add/edit hardware definition",
     "addEditHearingImpairment":"Add/edit hearing impairment",
     "addEditPerson":"Add/edit person",
@@ -642,7 +665,6 @@
     "addEditVisualImpairment":"Add/edit visual impairment",
     "addEditWeatherDefinition":"Add/edit weather definition",
     "addExperiment":"Add experiment",
-    "dataFileDetail":"Data file detail",
     "addEyesDefectToPerson":"Add eyes defect",
     "addFileMetadataDefinition":"Add file metadata definition",
     "addHardwareDefinition":"Add hardware definition",
@@ -674,6 +696,7 @@
     "createEditGroup":"Create/edit group",
     "createGroup":"Create group",
     "dailyDownloadHistory":"Daily download history",
+    "dataFileDetail":"Data file detail",
     "editArticle":"Edit article",
     "editExperiment":"Edit experiment",
     "editExperimentOptionalParameterDefinition":"Edit experiment optional parameter",
@@ -694,7 +717,6 @@
     "forgottenPasswordFailed":"Password was not sent",
     "forgottenPasswordSuccess":"New password was sent",
     "fulltextSearch":"Fulltext Search",
-    "groupRoleEdit":"Group role edit",
     "hardwareList":"List of hardware definitions",
     "hearingImpairmentList":"List of hearing impairments",
     "homePage":"Home page",
@@ -708,7 +730,8 @@
     "listsIndex":"Lists",
     "logIn":"Log in",
     "meAsSubject":"Me as subject",
-    "measurationSearch":"Search measurements",
+    "measurationSearch":"Search experiments",
+    "membershipRequest":"Membership request",
     "monthlyDownloadHistory":"Monthly download history",
     "myAccount":"My account",
     "myExperiments":"My experiments",
@@ -722,6 +745,7 @@
     "registration":"Registration",
     "registrationFalse":"Registration false",
     "registrationSuccessfull":"Registration successfull",
+    "requestForGroupRole":"Request for group role",
     "requestNotNeeded":"Request not needed",
     "requestSent":"Request sent",
     "researchGroupDetail":"Group detail",
@@ -747,16 +771,11 @@
     {
       "body":
       {
-        "hello":"Hello!",
-        "text":
-        {
-          "part1":"Your access credentials to EEGbase are:",
-          "part2":"Username: {0}",
-          "part3":"Password: {0}",
-          "part4":"Please, click on the link below to confirm your registration, thank you."
-        }
+        "clickToRegister":"Click on the link below to confirm your registration. Thank you.",
+        "yourLogin":"Your login to EEGBase is: {0}"
       },
-      "subject":"Your access to EEG-base"
+      "subject":"Your access to EEG-base",
+      "welcome":"Welcome!"
     }
   },
   "resetArticlesFilter":
@@ -839,6 +858,7 @@
       "description":"You don't have the permission for this area."
     },
     "choosenGroup":"Choosen group",
+    "confirmSendingMembershipRequest":"An email will be sent to the group administrator. Confirm by clicking on Send Request.",
     "downloadFiles":"Count of downloaded files:",
     "experimenter":"Experimenter",
     "fileTypeXml":".xml",
