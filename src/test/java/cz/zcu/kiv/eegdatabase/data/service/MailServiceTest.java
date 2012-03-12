@@ -62,6 +62,7 @@ public class MailServiceTest extends AbstractDataAccessTest {
         person.setEmail(INCOMING_EMAIL_ADDRESS);
         person.setSurname("junit-test-surname");
         person.setGivenname("junit-test-name");
+        person.setAuthenticationHash("DEADBEEF");
         return person;
     }
 
@@ -74,8 +75,9 @@ public class MailServiceTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Ignore(value = "To run this test, provide real login data and comment out the ignore")
+    //@Ignore(value = "To run this test, provide real login data and comment out the ignore")
     public void testSendRegistrationEmail(){
         mailService.sendRegistrationConfirmMail(person,locale);
+        System.out.println("Email was sent successfully");
     }
 }

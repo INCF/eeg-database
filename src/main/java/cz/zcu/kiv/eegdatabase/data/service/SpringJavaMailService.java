@@ -40,37 +40,27 @@ public class SpringJavaMailService implements MailService {
 
     @Override
     public void sendRegistrationConfirmMail(Person user, Locale locale) throws MailException {
-        String userName = "<b>" + user.getUsername() + "</b>";
-        String password = "<b>" + user.getPassword() + "</b>";
+        String login = "<b>" + user.getUsername() + "</b>";
 
         log.debug("Creating email content");
-        String emailBody = "<html><body>";
+        StringBuilder sb = new StringBuilder();
 
-        emailBody += "<h4>" + messageSource.getMessage("registration.email.body.hello",
-                null, locale) + "</h4>";
+        sb.append("<html><body>");
+        sb.append("<h4>");
+        sb.append(messageSource.getMessage("registration.email.welcome",null, locale));
+        sb.append("</h4>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage("registration.email.body.yourLogin", new String[]{login}, locale));
+        sb.append("</p>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage("registration.email.body.clickToRegister",null, locale));
+        sb.append("<br/>");
+        sb.append("<a href=\"http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + "\">"
+                + "http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + "</a>");
+        sb.append("</p>");
+        sb.append("</body></html>");
 
-        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part1",
-                null, locale) + "</p>";
-
-        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part2",
-                new String[]{userName}, locale) + "<br/>";
-
-        emailBody += messageSource.getMessage("registration.email.body.text.part3",
-                new String[]{password}, locale) + "</p>";
-
-        emailBody += "<p>" + messageSource.getMessage("registration.email.body.text.part4",
-                null, locale) + "<br/>";
-
-
-        emailBody +=
-                "<a href=\"http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + "\">"
-                        + "http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + ""
-                        + "</a>"
-                        + "</p>";
-
-        emailBody += "</body></html>";
-
-        log.debug("email body: " + emailBody);
+        log.debug("email body: " + sb.toString());
 
         log.debug("Composing e-mail message");
         MimeMessage mimeMessage = mailSender.createMimeMessage();
@@ -82,7 +72,7 @@ public class SpringJavaMailService implements MailService {
             message.setTo(user.getEmail());
             //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
             message.setSubject(messageSource.getMessage("registration.email.subject", null, locale));
-            message.setText(emailBody, true);
+            message.setText(sb.toString(), true);
         } catch (MessagingException e) {//rethrow as MailException to keep only 1 throw cause in method signature
             throw new MailPreparationException(e.getMessage(),e);
         }
