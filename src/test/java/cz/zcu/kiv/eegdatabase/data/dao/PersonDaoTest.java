@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.service.PersonService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.hibernate.SessionFactory;
@@ -39,6 +40,9 @@ public class PersonDaoTest extends AbstractDataAccessTest {
 
     @Autowired
     protected EducationLevelDao educationLevelDao;
+
+    @Autowired
+    protected PersonService personService;
 
     Person person;
     EducationLevel educationLevel;
@@ -77,6 +81,14 @@ public class PersonDaoTest extends AbstractDataAccessTest {
 	public void testCreatePerson(){
            //hibernateTemplate.save(educationLevel);
            personDao.create(person);
+           assertNotNull(personDao.read(person.getPersonId()));
+	}
+
+    @Test
+    @Transactional
+	public void testCreatePersonByService(){
+           person.setEducationLevel(null);//simluate missing education level
+           personService.createPerson(person);
            assertNotNull(personDao.read(person.getPersonId()));
 	}
 }

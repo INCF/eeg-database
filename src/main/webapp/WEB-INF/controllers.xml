@@ -37,9 +37,8 @@
         <property name="successView" value="system/confirmReg"/>
         <property name="personDao" ref="personDao"/>
         <property name="educationLevelDao" ref="educationLevelDao" />
-        <property name="domain" value="${app.domain}"/>
-        <property name="mailSender" ref="mailSender"/>
-        <property name="mailMessage" ref="mailMessage"/>
+        <property name="mailService" ref="mailService" />
+        <property name="personService" ref="personService"/>
         <property name="messageSource" ref="messageSource"/>
         <property name="captchaService">
             <ref bean="captchaService"/>
@@ -237,9 +236,11 @@
     </bean>
 
 
-    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService">
+    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService"/>
 
-    </bean>
+    <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>
+
+    <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService"/>
 
 
     <bean name="confirmController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.ConfirmController">
@@ -606,8 +607,8 @@
         <property name="personDao" ref="personDao"/>
         <property name="educationLevelDao" ref="educationLevelDao" />
         <property name="messageSource" ref="messageSource"/>
-        <property name="domain" value="${app.domain}"/>
-        <property name="mailSender" ref="mailSender"/>
+        <property name="mailService" ref="mailService" />
+        <property name="personService" ref="personService"/>
 
         <property name="validator">
             <bean class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonValidator">
@@ -838,8 +839,6 @@
     <bean id="wizardAjaxMultiController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.WizardAjaxMultiController">
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
-        <property name="domain" value="${app.domain}"/>
-        <property name="mailMessage" ref="mailMessage"/>
     </bean>
 
     <bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer"/>

@@ -273,5 +273,17 @@
           parent="scenarioDoc">
     </bean>
 
+    <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>
+
+    <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService"/>
+
+    <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.smtp}"/>
+    </bean>
+
+    <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${email.from}"/>
+        <property name="subject" value="${email.subject}"/>
+    </bean>
 
 </beans>
