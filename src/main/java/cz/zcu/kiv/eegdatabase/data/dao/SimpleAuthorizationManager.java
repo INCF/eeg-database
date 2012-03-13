@@ -110,6 +110,14 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
         return (list.size() > 0);
     }
 
+    /**
+     * @return true, if the logged user is admin or the edited person
+     */
+    @Override
+    public boolean userCanEditPerson(int personId) {
+        return isAdmin() || personDao.getLoggedPerson().getPersonId() == personId;
+    }
+
     public boolean userIsOwnerOfScenario(int scenarioId) {
         String hqlQuery = "select s.scenarioId "
                 + "from Scenario s "
@@ -154,6 +162,19 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
 
         int experimentId = (Integer) list.get(0);
         return userIsOwnerOrCoexperimenter(experimentId);
+    }
+
+    @Override
+    public boolean userIsMemberInGroup(int groupId){
+        String hqlQuery = "select rg.researchGroupId " +
+                "from ResearchGroup rg " +
+                "left join rg.researchGroupMemberships rgm " +
+                "where rg.researchGroupId = :groupId " +
+                "and rgm.person.personId = :personId ";
+        String[] paramNames = {"groupId", "personId"};
+        Object[] values = {groupId, getLoggedPersonId()};
+        List list = getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);
+        return !list.isEmpty();
     }
 
     public boolean userIsExperimenterInGroup(int groupId) {

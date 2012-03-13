@@ -65,7 +65,7 @@ public class EditPersonController extends SimpleFormController {
         String idString = request.getParameter("id");
         if (idString != null) {
             int id = Integer.parseInt(idString);
-            if (!auth.userCanViewPersonDetails(id)) {
+            if (!auth.userCanEditPerson(id)) {
                 mav.setViewName("redirect:/people/list.html");
             }
         }
@@ -82,7 +82,7 @@ public class EditPersonController extends SimpleFormController {
         String idString = request.getParameter("id");
         if (idString != null) {
             int id = Integer.parseInt(idString);
-            if (!auth.userCanViewPersonDetails(id)) {
+            if (!auth.userCanEditPerson(id)) {
                 mav.setViewName("redirect:/people/list.html");
                 return mav;
             }

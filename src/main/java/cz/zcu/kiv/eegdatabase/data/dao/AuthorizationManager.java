@@ -69,4 +69,8 @@ public interface AuthorizationManager {
     public boolean userIsExperimenterInGroup(int groupId);
 
     public boolean userIsAdminInGroup(int groupId);
+
+    boolean userIsMemberInGroup(int groupId);
+
+    boolean userCanEditPerson(int personId);
 }

@@ -36,7 +36,7 @@ public class PersonDetailController extends AbstractController {
         Person p = personDao.read(id);
 
         mav.addObject("personDetail", p);
-        mav.addObject("canEdit", auth.userCanViewPersonDetails(id));
+        mav.addObject("canEdit", auth.userCanEditPerson(id));
 
         return mav;
     }

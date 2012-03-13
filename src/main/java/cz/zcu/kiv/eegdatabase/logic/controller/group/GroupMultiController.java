@@ -9,7 +9,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -59,6 +58,7 @@ public class GroupMultiController extends MultiActionController {
         setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
         int id = Integer.parseInt(request.getParameter("groupId"));
 
+        mav.addObject("userIsMemberInGroup", auth.userIsMemberInGroup(id));
         mav.addObject("userIsExperimenterInGroup", auth.userIsExperimenterInGroup(id));
         mav.addObject("userIsAdminInGroup", auth.userIsAdminInGroup(id));
 
