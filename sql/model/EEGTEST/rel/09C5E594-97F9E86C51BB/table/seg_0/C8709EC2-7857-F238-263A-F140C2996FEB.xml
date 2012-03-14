@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:14:33 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017522</pkName>
@@ -52,6 +52,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>C486E2CE-E269-915C-DFE8-A389D227422B</delegate>
+         <associations>
+            <colAssociation fkAssociation="D53A3FC8-2367-891C-7F1C-60959956E46D" referredColumn="C486E2CE-E269-915C-DFE8-A389D227422B"/>
+         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EXPERIMENT_ID" id="3731CA77-5A9D-8831-B42B-EBC07DAE2C1D">
          <createdBy>Jindra</createdBy>
@@ -103,6 +107,16 @@
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="3731CA77-5A9D-8831-B42B-EBC07DAE2C1D"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2B322C28-190B-B4A1-159D-951E40F5F096" name="PHARMACEUTICAL_REL_PHARMACEUTICAL_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 15:14:26 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 15:14:26 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="4FD1E1FA-66F4-C43D-703D-96282B02FE72"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>

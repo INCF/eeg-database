@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:06:23 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017529</pkName>
@@ -66,6 +66,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>8B6CECAF-6F02-8D31-ABAF-1F36F8CC760D</delegate>
+         <associations>
+            <colAssociation fkAssociation="68EB9284-3A6E-D89C-A4DA-D73893149C7D" referredColumn="8B6CECAF-6F02-8D31-ABAF-1F36F8CC760D"/>
+         </associations>
       </Column>
    </columns>
    <indexes>
@@ -103,6 +107,16 @@
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="455C5B74-CF7C-0B83-C674-89BC44A34F80"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="CB5DBED7-8760-AC07-CFF5-BAA58E2B66F2" name="PROJECT_TYPE_REL_PROJECT_TYPE_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 15:06:01 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 15:06:01 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="5DAB41FE-6C8D-AC03-E21E-5A8E3D0D4750"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>

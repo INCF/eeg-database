@@ -1,0 +1,14 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="EB79FF92-C036-9CE7-5BDE-98E74538BBB6" directorySegmentName="seg_1" name="ARTEFACT_REMOVING_METHODS_REL_ARTEFACT_REMOVING_METHOD_FK">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-14 15:17:29 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-14 15:17:29 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <containerWithKeyObject>676B716E-3FAF-6946-30A2-39DE9D2090B2</containerWithKeyObject>
+   <deleteRule>RESTRICT</deleteRule>
+   <localFKIndex>9C3EE79E-D54C-85E5-3CDF-6F5662472BC8</localFKIndex>
+   <keyObject>005801DE-9570-C619-13FB-83B11290D141</keyObject>
+   <mandatory>true</mandatory>
+   <transferable>true</transferable>
+</FKIndexAssociation>
