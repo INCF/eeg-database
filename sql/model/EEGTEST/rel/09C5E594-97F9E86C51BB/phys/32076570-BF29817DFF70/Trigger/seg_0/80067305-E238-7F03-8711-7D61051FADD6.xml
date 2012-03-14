@@ -1,0 +1,13 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<TriggerOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.TriggerOraclev10g" name="DATA_FILE_UPDATE" id="80067305-E238-7F03-8711-7D61051FADD6" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-14 14:09:12 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-14 14:09:12 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <actions>UPDATE</actions>
+   <body>begin&amp;lt;br/&amp;gt;  update sync_changes set last_change = SYSTIMESTAMP where table_name=&amp;apos;data_file&amp;apos;;&amp;lt;br/&amp;gt;end data_file_update;&amp;lt;br/&amp;gt;</body>
+   <triggerTime>AFTER</triggerTime>
+   <owner>67D90CE6-9FDC-A689-F37F-D527E6755F96</owner>
+   <table>EC5AB6B6-D232-8F50-93F1-EB46ED53F828</table>
+</TriggerOraclev10g>

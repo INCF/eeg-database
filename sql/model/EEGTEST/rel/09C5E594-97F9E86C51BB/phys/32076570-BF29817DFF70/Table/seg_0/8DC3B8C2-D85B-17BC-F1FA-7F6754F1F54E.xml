@@ -1,47 +1,44 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="SETTINGS_XML" id="8DC3B8C2-D85B-17BC-F1FA-7F6754F1F54E" directorySegmentName="seg_0">
    <createdBy>Jindra</createdBy>
-   <createdTime>2012-03-01 15:41:31 UTC</createdTime>
+   <createdTime>2012-03-14 14:08:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 14:09:15 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <logging>YES</logging>
    <partitionedRowMovement>DISABLE</partitionedRowMovement>
-   <segment>D980C957-2D0A-ABF7-AF3E-9232DCF36391</segment>
-   <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
+   <segment>B62E67E6-7ED9-BC49-0412-32368ADAE0C8</segment>
+   <tableSpace>D00686BB-B0E9-365B-9013-BA79E7DC0225</tableSpace>
    <lobStorages>
-      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="NAMESPACES1847_L" id="C69A16CE-169E-F6C7-2B55-A6DB141D5DD5">
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="NAMESPACES1847_L" id="06CC8EA3-434A-498E-3C67-8E1A4CDF47ED">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <createdTime>2012-03-14 14:09:15 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
+         <changedTime>2012-03-14 14:09:15 UTC</changedTime>
          <chunk>8192</chunk>
          <column>&amp;quot;XMLEXTRA&amp;quot;.&amp;quot;NAMESPACES&amp;quot;</column>
          <logging>YES</logging>
-         <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
+         <tableSpace>D00686BB-B0E9-365B-9013-BA79E7DC0225</tableSpace>
       </LobStorage>
-      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="EXTRADATA1846_L" id="66C071E7-DE88-4A21-C651-E107D4CCB392">
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="EXTRADATA1846_L" id="1631781A-1A71-9A6D-D5D8-86A91B1C97F8">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <createdTime>2012-03-14 14:09:15 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
+         <changedTime>2012-03-14 14:09:15 UTC</changedTime>
          <chunk>8192</chunk>
          <column>&amp;quot;XMLEXTRA&amp;quot;.&amp;quot;EXTRADATA&amp;quot;</column>
          <logging>YES</logging>
-         <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
+         <tableSpace>D00686BB-B0E9-365B-9013-BA79E7DC0225</tableSpace>
       </LobStorage>
-      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="SYS_XDBPD$1845_L" id="975D75A0-4CC5-CFCD-79E7-D1C4673FFAF8">
+      <LobStorage class="oracle.dbtools.crest.model.design.storage.oracle.v10g.LobStorageOraclev10g" name="SYS_XDBPD$1845_L" id="592A79D9-48F8-0768-5D53-9429E249B09E">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <createdTime>2012-03-14 14:09:15 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
+         <changedTime>2012-03-14 14:09:15 UTC</changedTime>
          <chunk>8192</chunk>
          <column>&amp;quot;XMLDATA&amp;quot;.&amp;quot;SYS_XDBPD$&amp;quot;</column>
          <logging>YES</logging>
-         <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
+         <tableSpace>D00686BB-B0E9-365B-9013-BA79E7DC0225</tableSpace>
       </LobStorage>
    </lobStorages>
 </TableProxyOraclev11g>

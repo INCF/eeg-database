@@ -1,0 +1,1056 @@
+<?xml version = '1.0' encoding = 'UTF-8'?>
+<StructuredTypeProxyOraclev10g class="oracle.dbtools.crest.model.design.storage.oracle.v10g.StructuredTypeProxyOraclev10g" name="XMLTYPE" id="DA471C53-6749-D62D-CCA1-F41068D6D88E" directorySegmentName="seg_0">
+   <createdBy>Jindra</createdBy>
+   <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+   <changedBy>Jindra</changedBy>
+   <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+   <ownerDesignName>EEGTEST</ownerDesignName>
+   <owner>AC71F6CF-17B7-614B-7C98-04A7331B5A30</owner>
+   <methods>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETSTRINGVAL" id="00F91175-B38F-30C2-C709-58E976AE6ED7">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="INDENT" id="5826F547-F991-9547-442E-46EE09504238">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="PFLAG" id="B1093B09-360E-7B46-C176-E241E8A97E74">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="0469E602-4E6F-66CB-5A54-25D936E87E7E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="6F62F106-CF75-97BF-0E61-3703DA2A584B">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="7079424E-4892-84E9-4992-0D851DE6873D">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="7F23496E-1D65-C88C-B748-21CC8E778E03">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="E06EC4AD-A8FD-080A-6AFA-F9C39FA6D0B0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="F76FD348-0CE6-71D3-FE32-2997E6494DEC">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="0977BB9F-EEA9-6B3B-7DDC-8B0AEEE593C1">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="48890770-B5CA-5DA3-5E87-FCFA60B52B16">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="8465D304-315F-5400-1AE7-1E3760372988">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="BA61327F-C32D-41E7-07ED-601DCCE743E6">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="C6051A20-CBC6-BCBB-771E-A18812570F40">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="10EBF249-91C3-9E35-8B92-55F887447D80">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="D67BFBC7-09CE-7EE9-8C7C-CC7AB1A9D681">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="EXISTSNODE" id="184E76E7-3048-05A3-B70F-F7B041E36492">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="NSMAP" id="2F569D4A-571E-5F47-9206-F5FB327C6753">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="64BDB99D-C2A1-749D-B9FB-A16F0AB102E9">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="DELETEXML" id="1EEC3347-A6DF-58E0-DA27-BD6AB8767DB6">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="B65170E3-14E3-23B5-2076-5F13F3533365">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="NAMESPACE" id="C55F7165-8FB5-D1DD-F101-43AF6E989984">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETNUMBERVAL" id="20B919C2-65F5-CDC7-B4DE-D6B3FAAC77F9">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="27378761-FC31-4092-31F1-69EBC9FBCC5E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="1A426F3A-7037-BAD4-975D-CEE12D4E090C">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="62EC586C-1F4C-B24C-EB14-8EF550AC428C">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="7343A00A-A81E-2284-45DC-5FFCDECC10D3">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="75630B9A-13C7-1A60-4EB7-90DB26EF99C1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="ISSCHEMAVALIDATED" id="2AE4EBE2-9BEF-997D-68A1-73329347CA3E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="2CC87DE2-6B7E-F9D7-082A-445903D3BB75">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="0F0B4578-B771-12B0-3A3E-9F877E67E1C1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="32D667D8-C642-3571-D377-D76D89CD5AB3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="02E19E5D-3A91-A29A-5FC9-6D2E108BB936">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="17186C5F-374E-81C8-2217-E40E42DD7FE0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="3A499F57-71A5-1187-0799-296BEB313038">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="9377EF48-0580-33DA-8F70-19D7EF52D1A6">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="SCHEMAVALIDATE" id="32FAFD17-BF59-6984-5027-FD663FB83FBB">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETCLOBVAL" id="380D5E44-CFCF-582C-DE2B-844A3B3566A1">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="3B3FC780-DD4A-27E4-DE8B-C48F57D5AE19">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="0A3A2BFD-C54F-406C-D2B4-586EAC2AEF4B">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="25C10783-6EB8-55EA-AAE2-AB7BD19AE8CC">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="2A1C86E8-3C0E-A47C-8960-C49F1A687953">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="3B8E55CC-DEDE-8F73-5EEB-E7065A3C03E0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="SETSCHEMAVALIDATED" id="469FE551-ABA7-D2FB-B353-7CCB597B9BBE">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="FLAG" id="EB52A290-1C84-56D4-3AE9-D88A84B182BF">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="EXTRACT" id="4B2D42B1-F3B0-7ECE-3857-206F76A6DAA3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="0C92B95D-1EA8-D35D-EEC2-4605D5A76BF0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="NSMAP" id="9AE7E887-AA55-3132-9EF2-E438C3EAA257">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETCLOBVAL" id="537F2668-8E5E-6BD7-37C0-5CA9C8CCB678">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="PFLAG" id="1A9FC0DE-ED32-0817-79E4-6CA930AFADF0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="INDENT" id="C4002295-BD52-4DF4-D6C5-8D4DEB3C7398">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="6D36CC51-F561-0F0C-45E4-306105DDC69E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="301C644A-C830-255B-CB6F-613C0DAB30C0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="473C8F88-6C75-086D-0303-265EFD1B0665">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="8F093DDD-547D-9F45-01F7-F4B278C78F50">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="E35D134D-4C64-765B-D4E9-BC2BFDAD43A1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETROOTELEMENT" id="70512BFC-21C5-747F-27A1-5CB1516E61FD">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="EXISTSNODE" id="7551115E-7C81-D949-6C69-311000ED0D73">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="D38609FF-FCFC-2B57-1668-26711E10B96A">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="ISSCHEMAVALID" id="768C813A-9B2F-4D3B-6FFB-23C4ED9CE877">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEM" id="01189625-1CBC-073F-6D48-330DB089B122">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHURL" id="2F6CBB04-BF5F-278C-8E11-F405C707AD27">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="87C7645C-4228-05F5-9268-067B129C5474">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="37AA2886-EBCF-8323-59B8-BBE41020BE1E">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="69F8F4C8-A83F-851C-27E4-FB223175C0CA">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="86475AAB-95D2-FD13-559E-4854DBF2556E">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="D153F1F7-34F6-71E2-3EFA-4927997EB3B7">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="8EA6334D-67EC-7FA2-A9DD-D2CEA37EEBBF">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="4589D45E-07BA-C5A7-86D1-7587D2BB9A52">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="746204D1-2997-7221-88BD-0C493C76AEF0">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="958727A2-D50E-E419-2F24-1DD9928F9C78">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="D84ADD99-B926-5646-C405-65617757D4F1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="9B78BD90-8112-CD07-7455-A7DB3F439F5D">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="1DFAACA5-7D09-EA59-0AFF-DB882544141C">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="8A926CB2-4775-D504-951D-2C8AA48DF532">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="90D6EC74-FEA7-40E4-4028-1D10D3EF7AFB">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="F1A695F6-8670-C78D-392E-7E45AB319998">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="F375CDD9-AA8C-5B73-982B-A0DE88A34D82">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXMLFROMBINARY" id="9E2DF337-1FF2-67F5-0AA1-847BF1FEC897">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="10CDEF2F-86DD-D8B8-FA11-AB35A366321C">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATENONSCHEMABASEDXML" id="9F0769A9-E599-D1AC-282E-A988AD7FE29D">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="TOOBJECT" id="9F5036F0-BBE1-97C0-313F-6626CF17A4C2">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="OBJECT" id="2C631BB4-023F-B648-2EBF-650A51E49436">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="C1294668-12F9-5E4D-9AF0-2C741D22CABF">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="FF766002-DA36-5848-41F3-6B2716BDA549">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="APPENDCHILDXML" id="A52654D1-02B7-4D69-FCC6-1E400C13FEBD">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="NAMESPACE" id="01928017-8246-22C7-1676-471C5D741571">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="05A68C6F-C6F4-1637-0F7B-8C904894C508">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALUE_EXPR" id="1BF0F664-A28D-8FB6-269F-9FC83BCA25B1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETBLOBVAL" id="A87CBBC2-1AD1-C6CF-E640-2306C6DCF30F">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="INDENT" id="55E769CD-C896-9A4E-FEB0-1C0BA5F24D77">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="56ABDCDC-62FF-6249-1F85-30E652CDD058">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="PFLAG" id="A7B67FA2-9964-400A-82EB-CDE316067E7F">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="INSERTXMLBEFORE" id="B352B170-FCDB-00C8-A80C-FA53B577C03E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="CAB4C006-7E5C-6D05-CC3A-78FD41656BB4">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="NAMESPACE" id="CC78D736-84A6-80B1-8ACC-AC1484B102FF">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALUE_EXPR" id="F2215462-5742-6FE7-4C81-29971080C6B6">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETBLOBVAL" id="B52FC670-B067-13AD-7DFF-09D12561D620">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="83449830-BD0D-A02D-1C90-2BD8F4A70621">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="ISSCHEMABASED" id="B69331BD-28DB-7201-F1DC-B2B738701BD6">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="XMLTYPE" id="B69629ED-FD62-CEB7-9B77-94B30F9FB625">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <isFinal>YES</isFinal>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="69FE509D-893A-675C-C6D3-19444EDFCBC1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="6AF70835-54DF-CC5D-C762-10EE7819787B">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="C294E492-9662-E3A3-60ED-8EA0AC4E02DA">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="E7FFE70B-8722-C5D7-27E4-4167557FC6D3">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="BD2F1BB6-270D-FFF7-E10D-F845862459C1">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="0A305178-BCB2-4921-035D-2CAAB5FF1CE6">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="20224D08-D967-ADAB-6BA1-08C533E074C2">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="43AFF8CB-27F2-5FA0-81F6-3E2631026541">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="C7BF1BB3-D6F1-E9B6-6EFD-C7CB9DFED4DA">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="TRANSFORM" id="C01EFAF7-F309-7242-3C20-1A5C714239D5">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="PARAMMAP" id="456187A0-7F5F-6CFC-1CDE-24B6071FCA0A">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XSL" id="DA6A3AC8-F983-D4FA-D819-5346B66A7AE4">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETNAMESPACE" id="C298DC7F-870C-8A6D-72DD-8278151A66B3">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATESCHEMABASEDXML" id="C31D6840-A121-D807-8032-629372E41DCA">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="041F5CBC-735E-F6A2-E4B5-E82A0EA6144F">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETSCHEMAID" id="C8CE7121-9674-B668-84F7-65E497F67A66">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="EXTRACT" id="CE0EE58F-392D-691C-BC67-79524B9FE6B6">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XPATH" id="229A4062-2BF0-1B7C-1CD6-BD75D6902950">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETSCHEMAURL" id="E11AD2B2-0440-3831-5BB1-9EC257C63C6C">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:50 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:50 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="GETSTRINGVAL" id="E3A54950-C1D0-40AA-9C9F-3E82E660B5F1">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="F3BE6F10-4F59-2F2B-7F15-061D6CEB9ABB">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="008926AC-B919-B077-1D04-14FB94B79C3F">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="15AF7E52-2706-41F1-6450-ADAD596000BB">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="954EF3DD-978D-BE32-517D-C2C38E50CF80">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="F9B5A892-DA0D-E4B9-290D-59D620605D49">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="FC837DEB-BCCF-78B3-6735-AD636DE633C1">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="ISFRAGMENT" id="F5CDA97D-EC55-E7FD-92C0-D10C507AC451">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="F7AF2130-3B6F-27B5-5B83-3611C02D280E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="WELLFORMED" id="83CB0389-66D2-E5D4-75AB-7BEF23BBD933">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="9A5DBE7C-B7E0-2091-7FA1-20AEC9887A0D">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="A90940F9-32DD-CFCE-B0E8-D018A57CDE0A">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="CFA01294-22B7-BC86-42F2-01FCA4A031FB">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="CSID" id="F04490DC-5AA3-0006-334A-9ED6253ABB70">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+      <Method class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodProxyOraclev10g" name="CREATEXML" id="FE6CF26F-93CF-F6EB-542D-3D89A8CAFB4E">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+         <bodyChanged>false</bodyChanged>
+         <parameters>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="XMLDATA" id="0786BF35-43F0-0BAC-03BF-AD9348A1D8B6">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="SCHEMA" id="26B17D18-6B09-0258-7C5C-B15284095273">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="ELEMENT" id="2843FAAE-9D31-2BDF-329C-2FC8F508E934">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+            <Parameter class="oracle.dbtools.crest.model.design.storage.oracle.v10g.MethodParamProxyOraclev10g" name="VALIDATED" id="CE89E8E1-B4E0-6586-6C40-635401B2177C">
+               <createdBy>Jindra</createdBy>
+               <createdTime>2012-03-14 14:08:49 UTC</createdTime>
+               <changedBy>Jindra</changedBy>
+               <changedTime>2012-03-14 14:08:49 UTC</changedTime>
+               <directionType>IN</directionType>
+            </Parameter>
+         </parameters>
+      </Method>
+   </methods>
+</StructuredTypeProxyOraclev10g>
