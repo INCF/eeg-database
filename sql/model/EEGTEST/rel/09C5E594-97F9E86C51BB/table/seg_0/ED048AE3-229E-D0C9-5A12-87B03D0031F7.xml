@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>ARTICLES_SUBSCRIBTIONS_PK</pkName>
@@ -87,21 +87,21 @@
             <colUsage columnID="8C5FD15E-94F6-96A7-30EC-C7B857311265"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="CD7D14CE-21B6-467B-DA8A-346AD0DBF22B" name="ARTICLES_SUBSCRIPTIONS_AR_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="CD7D14CE-21B6-467B-DA8A-346AD0DBF22B" name="ARTICLES_SUBSCRIBTIONS_ARTICLES_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="8C5FD15E-94F6-96A7-30EC-C7B857311265"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="E194D1EE-8F8C-ED8B-DEA8-7FBC6731AF08" name="ARTICLES_SUBSCRIPTIONS_PE_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="E194D1EE-8F8C-ED8B-DEA8-7FBC6731AF08" name="ARTICLES_SUBSCRIBTIONS_PERSON_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="AE55D9F8-143D-852F-34F5-E8BE2E07BFDE"/>

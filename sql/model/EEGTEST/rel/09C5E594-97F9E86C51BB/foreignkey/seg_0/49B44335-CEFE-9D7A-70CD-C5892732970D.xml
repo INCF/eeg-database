@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="49B44335-CEFE-9D7A-70CD-C5892732970D" directorySegmentName="seg_0" name="REL_WEATHER_GROUP_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="49B44335-CEFE-9D7A-70CD-C5892732970D" directorySegmentName="seg_0" name="WEATHER_GROUP_REL_RESEARCH_GROUP_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>F0CC61B1-671A-3CDE-E04B-53185232155D</containerWithKeyObject>
    <deleteRule>NO ACTION</deleteRule>

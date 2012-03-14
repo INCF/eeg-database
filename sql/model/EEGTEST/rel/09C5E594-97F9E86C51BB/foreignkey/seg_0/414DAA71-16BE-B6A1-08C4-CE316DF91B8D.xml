@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="414DAA71-16BE-B6A1-08C4-CE316DF91B8D" directorySegmentName="seg_0" name="GROUP_REQUEST">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="414DAA71-16BE-B6A1-08C4-CE316DF91B8D" directorySegmentName="seg_0" name="GROUP_PERMISSION_REQUEST_RESEARCH_GROUP_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>6EB85C62-9699-59EE-D074-D3EFEFDCEE20</containerWithKeyObject>
    <deleteRule>CASCADE</deleteRule>

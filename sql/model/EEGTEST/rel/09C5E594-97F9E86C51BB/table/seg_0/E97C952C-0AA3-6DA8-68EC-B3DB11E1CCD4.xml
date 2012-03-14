@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>REL_HEARING_GROUP_PK</pkName>
@@ -69,11 +69,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="0942A8F5-293F-8ADE-428A-B36DF8A66B90" name="REL_HEARING_GROUP_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="0942A8F5-293F-8ADE-428A-B36DF8A66B90" name="HEARING_IMPAIRMENT_GROUP_REL_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:38 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:44 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -83,11 +83,11 @@
             <colUsage columnID="BB6DE901-A683-827C-C726-B6084D12C3CA"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="6727A35C-C3AB-2292-DEDD-835281CD2472" name="REL_HEARING_GROUP_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="6727A35C-C3AB-2292-DEDD-835281CD2472" name="HEARING_IMPAIRMENT_GROUP_REL_RESEARCH_GROUP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="BB6DE901-A683-827C-C726-B6084D12C3CA"/>

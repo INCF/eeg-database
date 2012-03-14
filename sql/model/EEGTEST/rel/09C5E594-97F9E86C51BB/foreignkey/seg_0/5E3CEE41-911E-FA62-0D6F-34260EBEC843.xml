@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="5E3CEE41-911E-FA62-0D6F-34260EBEC843" directorySegmentName="seg_0" name="REL_HEARING_GROUP_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="5E3CEE41-911E-FA62-0D6F-34260EBEC843" directorySegmentName="seg_0" name="HEARING_IMPAIRMENT_GROUP_REL_RESEARCH_GROUP_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>E97C952C-0AA3-6DA8-68EC-B3DB11E1CCD4</containerWithKeyObject>
    <deleteRule>NO ACTION</deleteRule>

@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SCENARIO_TYPE_SCHEMA_2_PK</pkName>
@@ -84,11 +84,11 @@
             <colUsage columnID="941E6041-D3CD-CC36-31E1-F68C73726740"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="BD69418B-A126-648E-09CA-DDBEDEA7E43A" name="SCENARIO_TYPE_2_SCENARIO_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="BD69418B-A126-648E-09CA-DDBEDEA7E43A" name="SCENARIO_TYPE_SCHEMA_2_SCENARIO_TYPE_PARENT_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="941E6041-D3CD-CC36-31E1-F68C73726740"/>

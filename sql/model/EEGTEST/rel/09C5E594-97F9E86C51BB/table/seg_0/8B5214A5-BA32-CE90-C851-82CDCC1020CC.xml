@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:22:29 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017509</pkName>
@@ -123,11 +123,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8C6B1203-2D67-129F-C026-24B0C59B9F44" name="SYS_C0017509">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8C6B1203-2D67-129F-C026-24B0C59B9F44" name="ELECTRODE_LOCATION_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:42 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:42 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <pk>true</pk>
          <indexState>Primary Constraint</indexState>
@@ -135,11 +135,11 @@
             <colUsage columnID="472F1EB4-B85E-B337-CDD5-3CE78AF7B453"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="36AACB6B-41E1-9029-C5A9-CDC1870927B3" name="IX_SYS_C0017509">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="36AACB6B-41E1-9029-C5A9-CDC1870927B3" name="ELECTRODE_LOCATION_ELECTRODE_LOCATION_ID_IDX">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:42 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexState>Unique Plain Index</indexState>

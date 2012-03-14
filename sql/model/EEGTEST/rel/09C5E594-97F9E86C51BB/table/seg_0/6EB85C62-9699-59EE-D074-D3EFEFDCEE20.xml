@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>PERMISSION_REQUEST_PK</pkName>
@@ -103,11 +103,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8F78CD9F-69A8-BC01-2708-80E8C674B9F8" name="PERMISSION_REQUEST_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8F78CD9F-69A8-BC01-2708-80E8C674B9F8" name="GROUP_PERMISSION_REQUEST_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:38 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:44 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -116,21 +116,21 @@
             <colUsage columnID="92803A45-3112-B018-D0DB-B7364A55BE51"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="AB3CF909-DDD7-7182-971A-12375EEDD45C" name="PERSON_PERMISSION_REQUEST">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="AB3CF909-DDD7-7182-971A-12375EEDD45C" name="GROUP_PERMISSION_REQUEST_PERSON_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="F0E20B02-292D-8AAB-DB12-B67758AEE531"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="4A181A11-1360-00F4-70AA-48DDB6D9EFAC" name="GROUP_REQUEST">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="4A181A11-1360-00F4-70AA-48DDB6D9EFAC" name="GROUP_PERMISSION_REQUEST_RESEARCH_GROUP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="85BDB314-F2CD-6DC4-FA32-76C161C26FD8"/>

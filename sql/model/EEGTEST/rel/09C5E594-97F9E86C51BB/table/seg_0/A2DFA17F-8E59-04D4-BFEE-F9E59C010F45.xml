@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>PK_SCENARIO_TABLE_NONSCHEMA</pkName>
@@ -71,11 +71,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="F708C09A-089D-F25C-EA1F-A0113A54EEC3" name="PK_SCENARIO_TABLE_NONSCHEMA">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="F708C09A-089D-F25C-EA1F-A0113A54EEC3" name="SCENARIO_TYPE_NONSCHEMA_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:38 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:47 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -84,11 +84,11 @@
             <colUsage columnID="BB015AA7-A18D-F2E4-5CA6-3D2AD23866C7"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="B698277C-F9B0-6511-8FA3-80FB8C79B434" name="SCENARIO_TYPE_NONSCHEMA_S_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="B698277C-F9B0-6511-8FA3-80FB8C79B434" name="SCENARIO_TYPE_NONSCHEMA_SCENARIO_TYPE_PARENT_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="BB015AA7-A18D-F2E4-5CA6-3D2AD23866C7"/>
