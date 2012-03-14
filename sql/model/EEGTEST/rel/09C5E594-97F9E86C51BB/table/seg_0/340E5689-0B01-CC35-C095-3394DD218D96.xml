@@ -3,9 +3,10 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+   <changedTime>2012-03-14 14:14:30 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
+   <pkName>DISEASE_PK</pkName>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -73,4 +74,18 @@
          <dataTypeSize>300 BYTE</dataTypeSize>
       </Column>
    </columns>
+   <indexes>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="1425E3DA-0260-C6D4-3F39-23465A64071E" name="DISEASE_PK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-14 14:14:30 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-14 14:14:30 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <pk>true</pk>
+         <indexState>Primary Constraint</indexState>
+         <indexColumnUsage>
+            <colUsage columnID="5D0FC307-04D0-9C8A-04FB-74EE0A219471"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+   </indexes>
 </Table>
