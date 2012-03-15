@@ -31,6 +31,7 @@ $.ajax({
             },
             error: function (xhr, ajaxOptions, thrownError)
             {
+                //alert(xhr.status+"\n"+ajaxOptions+"\n"+thrownError);
                 alert("Error while getting localization file! E" + xhr.status + "\nPlease mail me to jendakolena@gmail.com and report this error.");
             }
         });
