@@ -39,7 +39,7 @@
             <column length="50" name="USERNAME" unique="true"/>
         </property>
         <property name="password" type="string">
-            <column length="50" name="PASSWORD"/>
+            <column length="80" name="PASSWORD"/>
         </property>
         <property name="authority" type="string">
             <column length="50" name="AUTHORITY"/>
