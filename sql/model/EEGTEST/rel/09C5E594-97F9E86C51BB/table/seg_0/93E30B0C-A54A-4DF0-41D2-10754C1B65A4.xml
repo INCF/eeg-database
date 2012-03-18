@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:32:17 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SCENARIO_TYPE_SCHEMA_3_PK</pkName>
@@ -74,11 +74,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="C9FB8EFA-D70E-7F31-4317-977FE0C5788B" name="SCENARIO_TYPE_SCHEMA_3_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="C9FB8EFA-D70E-7F31-4317-977FE0C5788B" name="SCENAR_TS3_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:39 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:47 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -87,11 +87,11 @@
             <colUsage columnID="00CC557B-ED48-ED76-E639-8E16622D4BA4"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="15134D57-F3D8-6580-55F5-B60FD7026390" name="SCENARIO_TYPE_3_SCENARIO_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="15134D57-F3D8-6580-55F5-B60FD7026390" name="SCENAR_TS3_SCENARI_TP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="00CC557B-ED48-ED76-E639-8E16622D4BA4"/>

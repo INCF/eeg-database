@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:12:36 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>REL_EXPERIMENT_OPT_GROUP_PK</pkName>
@@ -76,11 +76,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8AE85A36-571D-1533-1774-C4B8264B5961" name="REL_EXPERIMENT_OPT_GROUP_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8AE85A36-571D-1533-1774-C4B8264B5961" name="EXPER_OPGR_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:43 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -90,21 +90,21 @@
             <colUsage columnID="75C35A83-8CE1-5C1D-B522-C5847B2A0970"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="DE3B0C66-6184-794C-F68E-0D65120C98A9" name="REL_EXPERIMENT_OPT_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="DE3B0C66-6184-794C-F68E-0D65120C98A9" name="EXPER_OPGR_EXPERI_OPD_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="3E49447F-6985-5EC6-CD5C-33CB7DFB2F10"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="ADA41D0C-370B-5B89-7BBF-84509CCA8D5E" name="REL_EXPERIMENT_OPT_GROUP_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="ADA41D0C-370B-5B89-7BBF-84509CCA8D5E" name="EXPER_OPGR_RESEARCH_G_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="75C35A83-8CE1-5C1D-B522-C5847B2A0970"/>

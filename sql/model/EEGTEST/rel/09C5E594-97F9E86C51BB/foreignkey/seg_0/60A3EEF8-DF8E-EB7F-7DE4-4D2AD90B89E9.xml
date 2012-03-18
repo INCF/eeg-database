@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="60A3EEF8-DF8E-EB7F-7DE4-4D2AD90B89E9" directorySegmentName="seg_0" name="SYS_C0017558">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="60A3EEF8-DF8E-EB7F-7DE4-4D2AD90B89E9" directorySegmentName="seg_0" name="PHARMACE_R_EXPERIMENT_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>C8709EC2-7857-F238-263A-F140C2996FEB</containerWithKeyObject>
    <deleteRule>NO ACTION</deleteRule>

@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:33:17 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SCENARIO_TABLE_NONXML_PK</pkName>
@@ -73,11 +73,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="9C56E033-13B3-718D-6E77-B85AC619C2F4" name="SCENARIO_TABLE_NONXML_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="9C56E033-13B3-718D-6E77-B85AC619C2F4" name="SCENAR_TNX_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:38 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:47 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -86,11 +86,11 @@
             <colUsage columnID="D521901B-1964-0B75-2AC0-8CFC3ABA9E8E"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="DAC06A4D-2CD8-3A55-4B7F-ED0203F81B80" name="SCENARIO_TYPE_NONXML_SCEN_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="DAC06A4D-2CD8-3A55-4B7F-ED0203F81B80" name="SCENAR_TNX_SCENARI_TP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="D521901B-1964-0B75-2AC0-8CFC3ABA9E8E"/>

@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:31:44 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SCENARIO_TYPE_SCHEMA_1_PK</pkName>
@@ -74,11 +74,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="42F9B5E6-54C7-9069-D294-1177430E38C4" name="SCENARIO_TYPE_SCHEMA_1_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="42F9B5E6-54C7-9069-D294-1177430E38C4" name="SCENAR_TS1_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:39 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:47 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -87,11 +87,11 @@
             <colUsage columnID="36DF35CC-8775-A6E4-C643-283E11CBC30D"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="908AA2E1-6169-6627-D443-6E7D0526DB0B" name="SCENARIO_TYPE_1_SCENARIO_FK1">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="908AA2E1-6169-6627-D443-6E7D0526DB0B" name="SCENAR_TS1_SCENARI_TP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="36DF35CC-8775-A6E4-C643-283E11CBC30D"/>

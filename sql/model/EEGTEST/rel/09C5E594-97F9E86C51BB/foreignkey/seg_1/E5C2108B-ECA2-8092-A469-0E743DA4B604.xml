@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="E5C2108B-ECA2-8092-A469-0E743DA4B604" directorySegmentName="seg_1" name="USED_HARDWARE_ID_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="E5C2108B-ECA2-8092-A469-0E743DA4B604" directorySegmentName="seg_1" name="HARDWAR_UR_EXPERIMENT_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>63A3A12C-FA5C-A8DE-A678-D7031BBDB95E</containerWithKeyObject>
    <deleteRule>CASCADE</deleteRule>

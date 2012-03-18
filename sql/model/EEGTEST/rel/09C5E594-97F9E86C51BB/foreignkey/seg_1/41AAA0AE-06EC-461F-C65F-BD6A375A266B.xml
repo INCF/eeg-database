@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="41AAA0AE-06EC-461F-C65F-BD6A375A266B" directorySegmentName="seg_1" name="ELECTRODE_LOCATION_ELECTRODE_FIX_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="41AAA0AE-06EC-461F-C65F-BD6A375A266B" directorySegmentName="seg_1" name="ELECTROD_L_ELECTROD_F_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-18 15:07:27 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 15:07:27 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>8B5214A5-BA32-CE90-C851-82CDCC1020CC</containerWithKeyObject>
    <deleteRule>RESTRICT</deleteRule>

@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:11:06 UTC</changedTime>
+   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011513</pkName>
@@ -76,11 +76,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="C6B46D2C-5A22-92AF-C709-0C267C715C83" name="SYS_C0011513">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="C6B46D2C-5A22-92AF-C709-0C267C715C83" name="COEXPERI_R_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:40 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <pk>true</pk>
          <indexState>Primary Constraint</indexState>
@@ -89,33 +89,33 @@
             <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2E59DC94-BB2B-7467-2CD9-A1D10136634D" name="IX_STAFF_MEASURATION_ID_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2E59DC94-BB2B-7467-2CD9-A1D10136634D" name="COEXPERI_R_EI_IDX">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:37 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexColumnUsage>
             <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="09AF46B0-3727-8493-8DC7-389F8C9301BA" name="IX_STAFF_PERSON_ID_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="09AF46B0-3727-8493-8DC7-389F8C9301BA" name="COEXPERI_R_PI_IDX">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:37 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexColumnUsage>
             <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="7D54FE6E-C69A-97E2-9576-44DC098F8C40" name="IX_SYS_C0011513">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="7D54FE6E-C69A-97E2-9576-44DC098F8C40" name="COEXPERI_R_PI_EI_IDX">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexState>Unique Plain Index</indexState>
@@ -124,21 +124,21 @@
             <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="87762319-4C83-E1CC-8647-19A3FCF6168F" name="STAFF_PERSON_ID_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="87762319-4C83-E1CC-8647-19A3FCF6168F" name="COEXPERI_R_PERSON_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="16213E28-FB6A-F890-A09C-F4CDD1D46A29"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="13354FCA-80A0-60A9-4975-23AEDB0B6D0E" name="STAFF_MEASURATION_ID_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="13354FCA-80A0-60A9-4975-23AEDB0B6D0E" name="COEXPERI_R_EXPERIMENT_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 16:36:16 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="26C05BC4-1190-12EF-3F95-AD943E58B234"/>
