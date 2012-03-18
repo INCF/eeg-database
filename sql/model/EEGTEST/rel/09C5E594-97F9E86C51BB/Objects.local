@@ -32,7 +32,6 @@
    <object objectType="Table" objectID="552BD1DD-543F-3997-F3DA-CCCD2BF92F55" name="HARDWARE" seqName="seg_0"/>
    <object objectType="Table" objectID="20798918-65BF-BB93-71DA-1570C74C82A3" name="HARDWARE_GROUP_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="63A3A12C-FA5C-A8DE-A678-D7031BBDB95E" name="HARDWARE_USAGE_REL" seqName="seg_0"/>
-   <object objectType="Table" objectID="E97C952C-0AA3-6DA8-68EC-B3DB11E1CCD4" name="HEARING_IMPAIRMENT_GROUP_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="A6F7504E-E672-BACE-65FE-59439B7EB81F" name="HISTORY" seqName="seg_0"/>
    <object objectType="Table" objectID="AD72D826-6AA6-9E04-E1A3-05B956C83A0C" name="PERSON" seqName="seg_0"/>
    <object objectType="Table" objectID="0265C39C-8F9D-9F7B-B8D2-EFCBB620BC5B" name="PERSON_OPT_PARAM_DEF" seqName="seg_0"/>
@@ -62,7 +61,6 @@
    <object objectType="Table" objectID="208841CA-16B8-05CC-ACD2-54A1CBF04DE9" name="STIMULUS_TYPE" seqName="seg_0"/>
    <object objectType="Table" objectID="6D45F5A7-B947-D7C4-3818-2B3A49881595" name="SUBJECT_GROUP" seqName="seg_0"/>
    <object objectType="Table" objectID="E20F493F-4368-F34C-B4F6-AFCD70BEF16D" name="SYNC_CHANGES" seqName="seg_0"/>
-   <object objectType="Table" objectID="FF92210B-D1BC-254C-AB83-4CD83F142622" name="VISUAL_IMPAIRMENT_GROUP_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="9B476F37-3EBC-B9DC-46CF-B19073CDDD30" name="WEATHER" seqName="seg_0"/>
    <object objectType="Table" objectID="F0CC61B1-671A-3CDE-E04B-53185232155D" name="WEATHER_GROUP_REL" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="D88FED88-9EFA-620B-3CC4-0DBAB93FBC1A" name="ARTEFA_RMR_ARTEFAC_RM_FK" seqName="seg_1"/>
@@ -111,7 +109,6 @@
    <object objectType="FKIndexAssociation" objectID="DE6D5B0B-B8AF-3612-1317-42438FF0FD86" name="HARDWAR_GR_RESEARCH_G_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="E5C2108B-ECA2-8092-A469-0E743DA4B604" name="HARDWAR_UR_EXPERIMENT_FK" seqName="seg_1"/>
    <object objectType="FKIndexAssociation" objectID="87C5E794-AF07-B636-D2DD-045C8A7294BE" name="HARDWAR_UR_HARDWARE_FK" seqName="seg_0"/>
-   <object objectType="FKIndexAssociation" objectID="5E3CEE41-911E-FA62-0D6F-34260EBEC843" name="HEARIN_IGR_RESEARCH_G_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="4F4206BD-9537-044C-45D5-B7354B5F43C3" name="HISTORY_DATA_F_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="1CD500DD-8F30-319B-D9D7-16E74595FD06" name="HISTORY_EXPERIMENT_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="EC72C255-1DB7-BF13-71BD-77EDA36D13C2" name="HISTORY_PERSON_FK" seqName="seg_0"/>
@@ -146,7 +143,6 @@
    <object objectType="FKIndexAssociation" objectID="26A87770-CB75-1FCA-4116-569D45EA2FDE" name="STIMULUS_R_SCENARIO_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="93AA1D12-A79B-E1B2-C1F7-A3C4B336D4CA" name="STIMULUS_R_STIMULUS_FK" seqName="seg_1"/>
    <object objectType="FKIndexAssociation" objectID="12AA8446-FFC9-144D-BD34-5FD4BF102D88" name="STIMULUS_R_STIMULUS_T_FK" seqName="seg_1"/>
-   <object objectType="FKIndexAssociation" objectID="B3BBD152-7CB3-FB05-882C-4617018D9302" name="VISUAL_IGR_RESEARCH_G_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="49B44335-CEFE-9D7A-70CD-C5892732970D" name="WEATHER_GR_RESEARCH_G_FK" seqName="seg_0"/>
    <object objectType="FKIndexAssociation" objectID="BCCFE98A-ABF4-5D0B-48F5-EFC825DCC53C" name="WEATHER_GR_WEATHER_FK" seqName="seg_0"/>
 </oracle.dbtools.crest.model.design.relational.RelationalDesign>
