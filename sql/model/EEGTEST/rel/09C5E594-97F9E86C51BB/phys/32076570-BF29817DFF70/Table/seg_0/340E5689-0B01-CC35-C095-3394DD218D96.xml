@@ -1,42 +1,35 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="DISEASE" id="340E5689-0B01-CC35-C095-3394DD218D96" directorySegmentName="seg_0">
    <createdBy>Jindra</createdBy>
-   <createdTime>2012-03-14 13:38:49 UTC</createdTime>
+   <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 14:14:30 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:32 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <logging>YES</logging>
+   <partitionedRowMovement>DISABLE</partitionedRowMovement>
+   <segment>D980C957-2D0A-ABF7-AF3E-9232DCF36391</segment>
+   <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
    <columnProxies>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="DESCRIPTION" id="29F378A3-88B3-1601-7891-2C7D74160320">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 13:38:49 UTC</createdTime>
+         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 13:38:49 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="TITLE" id="3E7A60A1-B4F2-B0C2-BA1A-0C22C295E25B">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 13:38:49 UTC</createdTime>
+         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 13:38:49 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="DISEASE_ID" id="5D0FC307-04D0-9C8A-04FB-74EE0A219471">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 13:38:49 UTC</createdTime>
+         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 13:38:49 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
    </columnProxies>
-   <primaryKeys>
-      <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="DISEASE_PK" id="1425E3DA-0260-C6D4-3F39-23465A64071E">
-         <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 14:14:30 UTC</createdTime>
-         <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 14:14:30 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
-         <indexSort>NO</indexSort>
-      </PrimaryKey>
-   </primaryKeys>
 </TableProxyOraclev11g>

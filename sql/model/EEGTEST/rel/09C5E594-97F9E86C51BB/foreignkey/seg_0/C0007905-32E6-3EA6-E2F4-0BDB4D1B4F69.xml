@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="C0007905-32E6-3EA6-E2F4-0BDB4D1B4F69" directorySegmentName="seg_0" name="PERSON_OPT_PARAM_VAL_PERSON_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="C0007905-32E6-3EA6-E2F4-0BDB4D1B4F69" directorySegmentName="seg_0" name="PERSON_ID_ADD_PARAMS_VAL_FK">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>0B44DBE7-170C-3F96-FD2F-1168E6F155C3</containerWithKeyObject>
    <deleteRule>CASCADE</deleteRule>

@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:43 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011538</pkName>
@@ -87,11 +87,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="EEF61556-2F44-4E2A-F9DF-E2CBC1B621F2" name="FILE_METADATA_PARAM_DEF_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="EEF61556-2F44-4E2A-F9DF-E2CBC1B621F2" name="SYS_C0011538">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:43 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:43 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <pk>true</pk>
          <indexState>Primary Constraint</indexState>
@@ -99,11 +99,11 @@
             <colUsage columnID="CD740F8E-71FE-D6DD-7CE4-1924ABE9B6E1"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="0B04FE3A-089C-B77A-D061-3D12C69B5C3E" name="FILE_METADATA_PARAM_DEF_FILE_METADATA_PARAM_DEF_ID_IDX">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="0B04FE3A-089C-B77A-D061-3D12C69B5C3E" name="IX_SYS_C0011538">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:43 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexState>Unique Plain Index</indexState>

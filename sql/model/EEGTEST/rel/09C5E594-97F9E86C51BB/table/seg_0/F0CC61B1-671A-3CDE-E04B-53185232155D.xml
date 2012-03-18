@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>REL_WEATHER_GROUP_PK</pkName>
@@ -73,11 +73,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="BCCCDCFF-6B29-C3CA-B200-FC0CE68295C4" name="WEATHER_GROUP_REL_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="BCCCDCFF-6B29-C3CA-B200-FC0CE68295C4" name="REL_WEATHER_GROUP_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:39 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:49 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -87,21 +87,21 @@
             <colUsage columnID="72FA9C0B-1B22-55A5-81ED-205FBA1CEA58"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="5FCB8F3C-E8D1-9D53-7B6F-3344B24543CE" name="WEATHER_GROUP_REL_WEATHER_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="5FCB8F3C-E8D1-9D53-7B6F-3344B24543CE" name="REL_WEATHER_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="CB2E713C-5F33-83A5-76FF-E750E2E7FB3E"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="CF7028E1-787B-D48D-1895-B6A30A99BFC2" name="WEATHER_GROUP_REL_RESEARCH_GROUP_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="CF7028E1-787B-D48D-1895-B6A30A99BFC2" name="REL_WEATHER_GROUP_FK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="72FA9C0B-1B22-55A5-81ED-205FBA1CEA58"/>

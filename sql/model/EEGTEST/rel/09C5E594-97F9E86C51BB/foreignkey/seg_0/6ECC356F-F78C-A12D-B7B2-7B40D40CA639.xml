@@ -1,9 +1,9 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
-<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="6ECC356F-F78C-A12D-B7B2-7B40D40CA639" directorySegmentName="seg_0" name="HISTORY_SCENARIO_FK">
+<FKIndexAssociation class="oracle.dbtools.crest.model.design.relational.FKIndexAssociation" id="6ECC356F-F78C-A12D-B7B2-7B40D40CA639" directorySegmentName="seg_0" name="DOWNLOADED_SCENARIOS">
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:53 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 16:07:05 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <containerWithKeyObject>A6F7504E-E672-BACE-65FE-59439B7EB81F</containerWithKeyObject>
    <deleteRule>NO ACTION</deleteRule>

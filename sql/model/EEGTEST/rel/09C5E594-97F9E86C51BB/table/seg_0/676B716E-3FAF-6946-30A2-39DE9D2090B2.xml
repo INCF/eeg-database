@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017463</pkName>
@@ -66,18 +66,14 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
-         <delegate>0E0C29C7-4479-7B0A-37C2-26C7F876E3D9</delegate>
-         <associations>
-            <colAssociation fkAssociation="EB79FF92-C036-9CE7-5BDE-98E74538BBB6" referredColumn="0E0C29C7-4479-7B0A-37C2-26C7F876E3D9"/>
-         </associations>
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="183FEECE-033B-D68F-976F-A267732D8420" name="ARTEFACT_REMOVING_METHODS_REL_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="183FEECE-033B-D68F-976F-A267732D8420" name="SYS_C0017463">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:40 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <pk>true</pk>
          <indexState>Primary Constraint</indexState>
@@ -86,11 +82,11 @@
             <colUsage columnID="883D34D8-DBC7-51AE-FAD9-31668F201620"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="3508C4F5-A631-A3B8-D8AC-057296D97585" name="ARTEFACT_REMOVING_METHODS_REL_ARTEFACT_REMOVING_METHOD_ID_EXPERIMENT_ID_IDX">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="3508C4F5-A631-A3B8-D8AC-057296D97585" name="IX_SYS_C0017463">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:37 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:40 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexState>Unique Plain Index</indexState>
@@ -99,24 +95,14 @@
             <colUsage columnID="883D34D8-DBC7-51AE-FAD9-31668F201620"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2B33F66C-5F8E-F6D8-0B73-478F240B2B18" name="ARTEFACT_REMOVING_METHODS_REL_EXPERIMENT_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2B33F66C-5F8E-F6D8-0B73-478F240B2B18" name="SYS_C0017562">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="883D34D8-DBC7-51AE-FAD9-31668F201620"/>
-         </indexColumnUsage>
-      </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="9C3EE79E-D54C-85E5-3CDF-6F5662472BC8" name="ARTEFACT_REMOVING_METHODS_REL_ARTEFACT_REMOVING_METHOD_FK">
-         <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 15:17:29 UTC</createdTime>
-         <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:17:29 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
-         <indexColumnUsage>
-            <colUsage columnID="CF614919-5AEB-01FB-9273-C5DB4BB95C1B"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>

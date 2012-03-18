@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>RESERVATION_ID_PK</pkName>
@@ -118,11 +118,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2EB1434C-9AEB-F7B6-07CA-CA5D41FA6614" name="RESERVATION_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2EB1434C-9AEB-F7B6-07CA-CA5D41FA6614" name="RESERVATION_ID_PK">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:38 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:46 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <pk>true</pk>
@@ -131,21 +131,21 @@
             <colUsage columnID="B81980E8-0553-DCA6-F310-A1A80898D35C"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="34552CFB-6D87-0D5B-763A-5C0FA4AB14F1" name="RESERVATION_PERSON_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="34552CFB-6D87-0D5B-763A-5C0FA4AB14F1" name="FK_PERSON_ID">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="8D030272-455B-E71E-631C-A0B687B93637"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="51FE5905-85E0-8038-7788-B0427AC28155" name="RESERVATION_RESEARCH_GROUP_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="51FE5905-85E0-8038-7788-B0427AC28155" name="FK_RESEARCH_GROUP_ID">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="B0177AF8-EADC-154D-A55A-F977BC66A9E2"/>

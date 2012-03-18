@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017536</pkName>
@@ -52,10 +52,6 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
-         <delegate>0CCC762F-19B2-997E-A764-07AC0C417605</delegate>
-         <associations>
-            <colAssociation fkAssociation="2A3CD16D-BBE1-AA54-C544-93D9D6351E40" referredColumn="0CCC762F-19B2-997E-A764-07AC0C417605"/>
-         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EXPERIMENT_ID" id="BD23F260-5DBB-A0A8-EED1-6C7F4A84BF38">
          <createdBy>Jindra</createdBy>
@@ -73,11 +69,11 @@
       </Column>
    </columns>
    <indexes>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2EF436B5-EC39-FD0E-0CD4-ED4BB4487101" name="SOFTWARE_REL_PK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="2EF436B5-EC39-FD0E-0CD4-ED4BB4487101" name="SYS_C0017536">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:48 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:48 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <pk>true</pk>
          <indexState>Primary Constraint</indexState>
@@ -86,11 +82,11 @@
             <colUsage columnID="BD23F260-5DBB-A0A8-EED1-6C7F4A84BF38"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="1C90667D-2CD8-044C-B2DF-473626B6ADB1" name="SOFTWARE_REL_SOFTWARE_ID_EXPERIMENT_ID_IDX">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="1C90667D-2CD8-044C-B2DF-473626B6ADB1" name="IX_SYS_C0017536">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:39 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:48 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
          <indexState>Unique Plain Index</indexState>
@@ -99,24 +95,14 @@
             <colUsage columnID="BD23F260-5DBB-A0A8-EED1-6C7F4A84BF38"/>
          </indexColumnUsage>
       </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="404C6599-526A-7973-80B0-478F391B9542" name="SOFTWARE_REL_EXPERIMENT_FK">
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="404C6599-526A-7973-80B0-478F391B9542" name="SYS_C0017564">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:53 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:32:37 UTC</changedTime>
+         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="BD23F260-5DBB-A0A8-EED1-6C7F4A84BF38"/>
-         </indexColumnUsage>
-      </ind_PK_UK>
-      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="9075E208-4D98-3B0F-91E1-BD8C03DADCC8" name="SOFTWARE_REL_SOFTWARE_FK">
-         <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-14 15:18:01 UTC</createdTime>
-         <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-14 15:18:01 UTC</changedTime>
-         <ownerDesignName>EEGTEST</ownerDesignName>
-         <indexColumnUsage>
-            <colUsage columnID="15A51131-1DC7-111F-ECD5-3A3DAA9D6E2E"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>
