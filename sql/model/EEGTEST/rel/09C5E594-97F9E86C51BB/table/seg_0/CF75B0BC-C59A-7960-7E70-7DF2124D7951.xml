@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 15:08:34 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017545</pkName>
@@ -52,6 +52,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>587BEABC-5C85-6426-FA94-A93F70FA0E5B</delegate>
+         <associations>
+            <colAssociation fkAssociation="93AA1D12-A79B-E1B2-C1F7-A3C4B336D4CA" referredColumn="587BEABC-5C85-6426-FA94-A93F70FA0E5B"/>
+         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="STIMULUS_TYPE_ID" id="300B4962-C9E7-A46E-E5BC-9AD8477CD755">
          <createdBy>Jindra</createdBy>
@@ -62,6 +66,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>73C4475F-007D-70E0-24AE-925FC03533D1</delegate>
+         <associations>
+            <colAssociation fkAssociation="12AA8446-FFC9-144D-BD34-5FD4BF102D88" referredColumn="73C4475F-007D-70E0-24AE-925FC03533D1"/>
+         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SCENARIO_ID" id="4F555E9E-51F8-E68C-9663-2EE154F8AB6E">
          <createdBy>Jindra</createdBy>
@@ -113,6 +121,26 @@
          <ownerDesignName>EEGTEST</ownerDesignName>
          <indexColumnUsage>
             <colUsage columnID="4F555E9E-51F8-E68C-9663-2EE154F8AB6E"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="7F4282F7-B89A-0F6A-53C4-EBEBF3272A69" name="STIMULUS_REL_STIMULUS_TYPE_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:08:03 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:08:03 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="300B4962-C9E7-A46E-E5BC-9AD8477CD755"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="8EF85DC8-BA02-A75C-6387-8C424C8FAD6E" name="STIMULUS_REL_STIMULUS_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:08:34 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:08:34 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="20A8135A-7C9A-0ED5-4BF7-0513A4F66B51"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>

@@ -1,72 +1,81 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="ELECTRODE_CONF" id="0D8E057A-BD29-76EB-CDD9-56A9EDED9249" directorySegmentName="seg_0">
    <createdBy>Jindra</createdBy>
-   <createdTime>2012-03-01 15:41:30 UTC</createdTime>
+   <createdTime>2012-03-18 15:00:44 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:41 UTC</changedTime>
+   <changedTime>2012-03-18 15:06:27 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <logging>YES</logging>
-   <partitionedRowMovement>DISABLE</partitionedRowMovement>
-   <segment>D980C957-2D0A-ABF7-AF3E-9232DCF36391</segment>
-   <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
    <columnProxies>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="ELECTRODE_SYSTEM_ID" id="59DA7C2C-2259-81D1-A676-6BBD9D4A09BB">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="ELECTRODE_LOCATION_ID" id="767CEB9D-CF83-4A87-AA8E-F185F024926B">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="IMPEDANCE" id="AACCCE7D-0F47-052A-C537-95A2CC6CE58E">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="DESC_IMG_ID" id="B1C35492-F802-E0F9-CD08-7046059AD4F6">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="ELECTRODE_CONF_ID" id="E7B4DE2E-923D-EE43-B0CA-46AC4770EBF5">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:32 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:32 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
    </columnProxies>
    <indexProxies>
       <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IX_SYS_C0017493" id="350E29D1-AA2A-A5BF-992D-E4B87CBD403F">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:37 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:37 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
-         <segment>F165281E-335F-A006-676D-726E32527728</segment>
-         <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
       </IndexProxy>
    </indexProxies>
+   <foreignKeys>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="ELECTRODE_CONF_ELECTRODE_LOCATION_FK" id="25E02313-66DA-31E2-D1AC-19D6B21A766A">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:06:27 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:06:27 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="ELECTRODE_CONF_ELECTRODE_SYSTEM_FK" id="E55B74CE-96F6-7413-6221-A0300B2CAE9B">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:06:27 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:06:27 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
+   </foreignKeys>
    <primaryKeys>
       <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="SYS_C0017493" id="69ADA62F-37A9-6BEA-3898-BBA9685534FE">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:41 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:41 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
-         <existingIndex>350E29D1-AA2A-A5BF-992D-E4B87CBD403F</existingIndex>
          <indexSort>NO</indexSort>
-         <usingIndex>BY INDEX NAME</usingIndex>
       </PrimaryKey>
    </primaryKeys>
 </TableProxyOraclev11g>

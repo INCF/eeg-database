@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:41 UTC</changedTime>
+   <changedTime>2012-03-18 15:06:27 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017493</pkName>
@@ -72,6 +72,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>472F1EB4-B85E-B337-CDD5-3CE78AF7B453</delegate>
+         <associations>
+            <colAssociation fkAssociation="29178FA9-1CA2-EE93-87AC-30AF2EA72069" referredColumn="472F1EB4-B85E-B337-CDD5-3CE78AF7B453"/>
+         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ELECTRODE_SYSTEM_ID" id="59DA7C2C-2259-81D1-A676-6BBD9D4A09BB">
          <createdBy>Jindra</createdBy>
@@ -82,6 +86,10 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <delegate>4CD16529-7B9E-9B77-E858-43398320B5C0</delegate>
+         <associations>
+            <colAssociation fkAssociation="BB25E58B-261C-2EC0-AECA-FC8FC467B6CE" referredColumn="4CD16529-7B9E-9B77-E858-43398320B5C0"/>
+         </associations>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESC_IMG_ID" id="B1C35492-F802-E0F9-CD08-7046059AD4F6">
          <createdBy>Jindra</createdBy>
@@ -118,6 +126,26 @@
          <indexState>Unique Plain Index</indexState>
          <indexColumnUsage>
             <colUsage columnID="E7B4DE2E-923D-EE43-B0CA-46AC4770EBF5"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="25E02313-66DA-31E2-D1AC-19D6B21A766A" name="ELECTRODE_CONF_ELECTRODE_LOCATION_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:06:27 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:06:27 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="767CEB9D-CF83-4A87-AA8E-F185F024926B"/>
+         </indexColumnUsage>
+      </ind_PK_UK>
+      <ind_PK_UK class="oracle.dbtools.crest.model.design.relational.Index" id="E55B74CE-96F6-7413-6221-A0300B2CAE9B" name="ELECTRODE_CONF_ELECTRODE_SYSTEM_FK">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:06:27 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:06:27 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+         <indexColumnUsage>
+            <colUsage columnID="59DA7C2C-2259-81D1-A676-6BBD9D4A09BB"/>
          </indexColumnUsage>
       </ind_PK_UK>
    </indexes>

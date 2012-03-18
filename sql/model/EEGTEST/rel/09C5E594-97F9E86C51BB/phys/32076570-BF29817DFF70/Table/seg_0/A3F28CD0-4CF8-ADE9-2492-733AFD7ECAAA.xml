@@ -1,60 +1,60 @@
 <?xml version = '1.0' encoding = 'UTF-8'?>
 <TableProxyOraclev11g class="oracle.dbtools.crest.model.design.storage.oracle.v11g.TableProxyOraclev11g" name="PROJECT_TYPE_REL" id="A3F28CD0-4CF8-ADE9-2492-733AFD7ECAAA" directorySegmentName="seg_0">
    <createdBy>Jindra</createdBy>
-   <createdTime>2012-03-01 15:41:30 UTC</createdTime>
+   <createdTime>2012-03-18 15:00:44 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 15:04:15 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <logging>YES</logging>
-   <partitionedRowMovement>DISABLE</partitionedRowMovement>
-   <segment>6C289FAD-AF55-1852-D7D5-2DDE31A13E61</segment>
-   <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
    <columnProxies>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="EXPERIMENT_ID" id="455C5B74-CF7C-0B83-C674-89BC44A34F80">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:35 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:35 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
       <ColumnProxy class="oracle.dbtools.crest.model.design.storage.oracle.v11g.ColumnProxyOraclev11g" name="PROJECT_TYPE_ID" id="5DAB41FE-6C8D-AC03-E21E-5A8E3D0D4750">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:35 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:35 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ColumnProxy>
    </columnProxies>
    <indexProxies>
       <IndexProxy class="oracle.dbtools.crest.model.design.storage.oracle.v10g.IndexProxyOraclev10g" name="IX_SYS_C0017529" id="562BA3DC-048B-1537-81C4-ACD49C7C1396">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:38 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:38 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
-         <segment>BFDA95B9-F162-2F92-F5D4-B4985B269367</segment>
-         <tableSpace>99D389EE-5731-85B9-8DB7-8B408D00CFB4</tableSpace>
       </IndexProxy>
    </indexProxies>
    <foreignKeys>
+      <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="PROJECT_TYPE_REL_PROJECT_TYPE_FK" id="2820EA3C-CC74-5F01-E1BB-16E825791282">
+         <createdBy>Jindra</createdBy>
+         <createdTime>2012-03-18 15:04:15 UTC</createdTime>
+         <changedBy>Jindra</changedBy>
+         <changedTime>2012-03-18 15:04:15 UTC</changedTime>
+         <ownerDesignName>EEGTEST</ownerDesignName>
+      </ForeignKey>
       <ForeignKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.FKProxyOraclev10g" name="SYS_C0017560" id="30C63025-1403-C148-6E8D-CB771085AFD0">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:53 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
       </ForeignKey>
    </foreignKeys>
    <primaryKeys>
       <PrimaryKey class="oracle.dbtools.crest.model.design.storage.oracle.v10g.PKProxyOraclev10g" name="SYS_C0017529" id="E964F99F-4DAC-C688-6A62-B8D8B9676CA6">
          <createdBy>Jindra</createdBy>
-         <createdTime>2012-03-01 15:41:46 UTC</createdTime>
+         <createdTime>2012-03-18 15:00:44 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:46 UTC</changedTime>
+         <changedTime>2012-03-18 15:00:44 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
-         <existingIndex>562BA3DC-048B-1537-81C4-ACD49C7C1396</existingIndex>
          <indexSort>NO</indexSort>
-         <usingIndex>BY INDEX NAME</usingIndex>
       </PrimaryKey>
    </primaryKeys>
 </TableProxyOraclev11g>
