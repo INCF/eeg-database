@@ -34,7 +34,6 @@
    <object objectType="Table" objectID="63A3A12C-FA5C-A8DE-A678-D7031BBDB95E" name="HARDWARE_USAGE_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="E97C952C-0AA3-6DA8-68EC-B3DB11E1CCD4" name="HEARING_IMPAIRMENT_GROUP_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="A6F7504E-E672-BACE-65FE-59439B7EB81F" name="HISTORY" seqName="seg_0"/>
-   <object objectType="Table" objectID="84521B32-1727-16FA-F758-5B1BF5E4D368" name="IMAGELIST_XML" seqName="seg_0"/>
    <object objectType="Table" objectID="AD72D826-6AA6-9E04-E1A3-05B956C83A0C" name="PERSON" seqName="seg_0"/>
    <object objectType="Table" objectID="0265C39C-8F9D-9F7B-B8D2-EFCBB620BC5B" name="PERSON_OPT_PARAM_DEF" seqName="seg_0"/>
    <object objectType="Table" objectID="4B66E5E9-3C1D-90C1-51FC-76F6B122D0C4" name="PERSON_OPT_PARAM_GROUP_REL" seqName="seg_0"/>
@@ -47,7 +46,6 @@
    <object objectType="Table" objectID="2FEF8CCF-C5C4-872A-154F-7F1F53CDE7CD" name="RESEARCH_GROUP_MEMBERSHIP" seqName="seg_0"/>
    <object objectType="Table" objectID="87B3465F-E91C-D78C-1865-B8E1811443ED" name="RESERVATION" seqName="seg_0"/>
    <object objectType="Table" objectID="2F779152-55B4-886A-67E2-4097C66464ED" name="SCENARIO" seqName="seg_0"/>
-   <object objectType="Table" objectID="ECEB71E9-D5F8-3A46-FC67-15F9EDEFE439" name="SCENARIOS_XML" seqName="seg_0"/>
    <object objectType="Table" objectID="C1B98BCA-6855-0F9F-FE7F-FAE94ED5C6AD" name="SCENARIO_SCHEMA" seqName="seg_0"/>
    <object objectType="Table" objectID="A2DFA17F-8E59-04D4-BFEE-F9E59C010F45" name="SCENARIO_TYPE_NONSCHEMA" seqName="seg_0"/>
    <object objectType="Table" objectID="83B35EF7-7BAA-4563-62C6-1AFAE1DCC4DB" name="SCENARIO_TYPE_NONXML" seqName="seg_0"/>
@@ -56,15 +54,12 @@
    <object objectType="Table" objectID="3B766B5E-EA4C-6CE4-8ECF-E29FCC94DE62" name="SCENARIO_TYPE_SCHEMA_2" seqName="seg_0"/>
    <object objectType="Table" objectID="93E30B0C-A54A-4DF0-41D2-10754C1B65A4" name="SCENARIO_TYPE_SCHEMA_3" seqName="seg_0"/>
    <object objectType="Table" objectID="7314C29D-DF34-7830-A77E-0FCDC4902ACF" name="SCENARIO_TYPE_SCHEMA_4" seqName="seg_0"/>
-   <object objectType="Table" objectID="30C3BD83-397F-C0A8-C1B5-BF7BEDEA19C4" name="SCENARIO_XML" seqName="seg_0"/>
    <object objectType="Table" objectID="9A6A09FB-2ECA-4603-9609-231741E41C62" name="SERVICE_RESULT" seqName="seg_0"/>
-   <object objectType="Table" objectID="8DC3B8C2-D85B-17BC-F1FA-7F6754F1F54E" name="SETTINGS_XML" seqName="seg_0"/>
    <object objectType="Table" objectID="E07D62F4-9780-6B33-BFE5-736545B6CD8E" name="SOFTWARE" seqName="seg_0"/>
    <object objectType="Table" objectID="F7C2F0EE-BFFB-EC72-C31C-59C7FC81D3FA" name="SOFTWARE_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="361980A0-0EB1-930C-1989-028D77994C0F" name="STIMULUS" seqName="seg_0"/>
    <object objectType="Table" objectID="CF75B0BC-C59A-7960-7E70-7DF2124D7951" name="STIMULUS_REL" seqName="seg_0"/>
    <object objectType="Table" objectID="208841CA-16B8-05CC-ACD2-54A1CBF04DE9" name="STIMULUS_TYPE" seqName="seg_0"/>
-   <object objectType="Table" objectID="74F55FC9-DBF5-6A86-77BD-DFACE1B259EA" name="SUBJECTS_XML" seqName="seg_0"/>
    <object objectType="Table" objectID="6D45F5A7-B947-D7C4-3818-2B3A49881595" name="SUBJECT_GROUP" seqName="seg_0"/>
    <object objectType="Table" objectID="E20F493F-4368-F34C-B4F6-AFCD70BEF16D" name="SYNC_CHANGES" seqName="seg_0"/>
    <object objectType="Table" objectID="FF92210B-D1BC-254C-AB83-4CD83F142622" name="VISUAL_IMPAIRMENT_GROUP_REL" seqName="seg_0"/>
