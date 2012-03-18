@@ -170,13 +170,13 @@
 			</domain>
 		</domains>
 		<constraints>
-			<pk value="{table}_PK"/>
-			<fk value="{child}_{parent}_FK"/>
-			<ck value="{table}_CK"/>
-			<un value="{table}_{column}_UN"/>
-			<idx value="{table}_{column}_IDX"/>
-			<colck value="CK_{table}_{column}"/>
-			<column_foreign_key value="{ref table}_{ref column}"/>
+			<pk value="{table abbr}_PK"/>
+			<fk value="{child abbr}_{parent abbr}_FK"/>
+			<ck value="{table abbr}_CK"/>
+			<un value="{table abbr}_{column abbr}_UN"/>
+			<idx value="{table abbr}_{column abbr}_IDX"/>
+			<colck value="CK_{table abbr}_{column abbr}"/>
+			<column_foreign_key value="{ref column}"/>
 			<ui value="{entity} PK"/>
 			<relation_attribute value="{ref entity}_{ref attribute}"/>
 		</constraints>
