@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 15:04:59 UTC</changedTime>
+   <changedTime>2012-03-18 16:04:48 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017480</pkName>
+   <abbreviation>DISEASE_R</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>DI</abbreviation>
          <delegate>5D0FC307-04D0-9C8A-04FB-74EE0A219471</delegate>
          <associations>
             <colAssociation fkAssociation="5ECFF64D-0171-FDC0-A635-3297FD331754" referredColumn="5D0FC307-04D0-9C8A-04FB-74EE0A219471"/>
@@ -66,6 +68,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EI</abbreviation>
          <delegate>2BBC5F60-FCCC-0604-B762-6EB6A919F411</delegate>
          <associations>
             <colAssociation fkAssociation="5B4EABED-68A1-641D-B7D6-8F79354980E7" referredColumn="2BBC5F60-FCCC-0604-B762-6EB6A919F411"/>

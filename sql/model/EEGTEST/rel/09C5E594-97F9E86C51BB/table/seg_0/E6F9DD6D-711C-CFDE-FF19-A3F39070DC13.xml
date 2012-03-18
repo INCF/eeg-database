@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:42 UTC</changedTime>
+   <changedTime>2012-03-18 16:09:21 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017519</pkName>
+   <abbreviation>ELECTROD_T</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ETI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="TITLE" id="BE354793-4A20-6656-2238-E463590F08C8">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>150 BYTE</dataTypeSize>
+         <abbreviation>T</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="85869C63-24C1-46A0-01C2-EEF305BF549F">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>300 BYTE</dataTypeSize>
+         <abbreviation>D</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="IS_DEFAULT" id="49641967-7ADD-35C9-C97D-8900E7A19E03">
          <createdBy>Jindra</createdBy>
@@ -82,6 +86,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ID</abbreviation>
       </Column>
    </columns>
    <indexes>

@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:18:31 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011573</pkName>
+   <abbreviation>RESEARC_GM</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="48D96B70-88CB-A2EC-6B2B-5A2981AA634C" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -66,6 +68,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="75ED482D-0A5B-743E-07FA-84E8FCFD4C71" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -80,6 +83,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>30 BYTE</dataTypeSize>
+         <abbreviation>A</abbreviation>
       </Column>
    </columns>
    <indexes>

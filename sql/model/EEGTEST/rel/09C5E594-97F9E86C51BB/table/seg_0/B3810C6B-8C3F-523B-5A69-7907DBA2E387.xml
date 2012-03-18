@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:29 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:39 UTC</changedTime>
+   <changedTime>2012-03-18 16:05:54 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017472</pkName>
+   <abbreviation>ARTEFACT</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>AI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="COMPENSATION" id="89BDE352-57C8-7D80-F8DA-B90800F4AEA6">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>300 BYTE</dataTypeSize>
+         <abbreviation>C</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="REJECT_CONDITION" id="B362E0B0-9C86-AF2E-B33B-CFFD08925294">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>300 BYTE</dataTypeSize>
+         <abbreviation>RC</abbreviation>
       </Column>
    </columns>
    <indexes>

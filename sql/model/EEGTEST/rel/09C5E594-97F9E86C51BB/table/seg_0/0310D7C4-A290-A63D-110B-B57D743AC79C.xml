@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:43 UTC</changedTime>
+   <changedTime>2012-03-18 16:12:15 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011530</pkName>
+   <abbreviation>EXPERI_OPD</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EOPD</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PARAM_NAME" id="9D068F54-23CC-A7A1-69CE-78B53D7CB01B">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>30 BYTE</dataTypeSize>
+         <abbreviation>PN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PARAM_DATA_TYPE" id="937CF501-0559-762D-D2EB-4832948C8C86">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>20 BYTE</dataTypeSize>
+         <abbreviation>PDT</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="IS_DEFAULT" id="7F3E3C0B-A05B-C65E-EFEF-D62BEAD68F8D">
          <createdBy>Jindra</createdBy>
@@ -83,7 +87,9 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypePrecision>1</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ID</abbreviation>
       </Column>
    </columns>
    <indexes>

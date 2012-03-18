@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:24:05 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011568</pkName>
+   <abbreviation>RESEARCH_G</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="OWNER_ID" id="DACD51FE-09A9-6D34-6717-C1869D906643">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>OI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="AFEE301C-BEB6-2E4E-CF62-B724F9E19AC9" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -76,6 +79,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>100 BYTE</dataTypeSize>
+         <abbreviation>TIT</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="2CE545F1-422C-C0E6-9808-AFC4F64A87FB">
          <createdBy>Jindra</createdBy>
@@ -86,6 +90,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>250 BYTE</dataTypeSize>
+         <abbreviation>DES</abbreviation>
       </Column>
    </columns>
    <indexes>

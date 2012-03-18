@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:29 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:39 UTC</changedTime>
+   <changedTime>2012-03-18 16:27:01 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017460</pkName>
+   <abbreviation>ANALYSIS</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>AI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EPOCHS_NUM" id="87616222-7847-A2C5-9534-5850DC5E9ADB">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PRESTIMULUS_TIME" id="96BB3741-1A7E-AC3A-7730-0A2BD94631EC">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PRET</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="POSTSTIMULUS_TIME" id="FFC4B149-CA9C-7F4F-20B6-7054BE381EDA">
          <createdBy>Jindra</createdBy>
@@ -82,6 +86,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>POST</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="2D33E3F6-DE64-974F-DBD9-E2090797B170">
          <createdBy>Jindra</createdBy>
@@ -92,6 +97,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>250 BYTE</dataTypeSize>
+         <abbreviation>DES</abbreviation>
       </Column>
    </columns>
    <indexes>

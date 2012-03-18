@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:23:33 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SERVICE_RESULT_PK</pkName>
+   <abbreviation>SERVICE_R</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FIGURE" id="31A610A5-D52A-84D0-98D9-EABD4F99E186">
          <createdBy>Jindra</createdBy>
@@ -63,6 +65,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT029</logicalDatatype>
          <dataTypeSize>4000</dataTypeSize>
+         <abbreviation>FIG</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FILENAME" id="B13FCD61-8751-B16C-5D7C-8ABD81567C72">
          <createdBy>Jindra</createdBy>
@@ -74,6 +77,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>80 BYTE</dataTypeSize>
+         <abbreviation>FILN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="STATUS" id="125293CC-C465-E29C-D4D2-37E29229D55D">
          <createdBy>Jindra</createdBy>
@@ -84,6 +88,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>20 BYTE</dataTypeSize>
+         <abbreviation>STA</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PERSON_ID" id="A54645C7-BF05-4C21-960F-7CB72BAA621D">
          <createdBy>Jindra</createdBy>
@@ -94,6 +99,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PERI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="BB7AEA2D-5281-B432-BB2D-4639130F5958" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -108,6 +114,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>80 BYTE</dataTypeSize>
+         <abbreviation>TIT</abbreviation>
       </Column>
    </columns>
    <indexes>

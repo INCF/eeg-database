@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:32:33 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SCENARIO_TYPE_SCHEMA_4_PK</pkName>
+   <abbreviation>SCENAR_TS4</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SI</abbreviation>
          <delegate>26CA1334-71ED-8F34-8EA3-3E137DFA1609</delegate>
          <associations>
             <colAssociation fkAssociation="289CAB16-22CA-9F8D-9701-18024D73E302" referredColumn="26CA1334-71ED-8F34-8EA3-3E137DFA1609"/>
@@ -67,6 +69,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT050</logicalDatatype>
          <dataTypeSize>2000</dataTypeSize>
+         <abbreviation>SX</abbreviation>
          <computed>true</computed>
       </Column>
    </columns>

@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:12:57 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011592</pkName>
+   <abbreviation>HARDWAR_UR</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>HI</abbreviation>
          <delegate>7FF04097-7B7B-74C7-D38F-70A104A78793</delegate>
          <associations>
             <colAssociation fkAssociation="87C5E794-AF07-B636-D2DD-045C8A7294BE" referredColumn="7FF04097-7B7B-74C7-D38F-70A104A78793"/>
@@ -66,6 +68,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EI</abbreviation>
          <delegate>2BBC5F60-FCCC-0604-B762-6EB6A919F411</delegate>
          <associations>
             <colAssociation fkAssociation="E5C2108B-ECA2-8092-A469-0E743DA4B604" referredColumn="2BBC5F60-FCCC-0604-B762-6EB6A919F411"/>

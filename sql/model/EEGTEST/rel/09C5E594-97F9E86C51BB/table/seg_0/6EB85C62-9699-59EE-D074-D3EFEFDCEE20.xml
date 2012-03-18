@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:17:58 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>PERMISSION_REQUEST_PK</pkName>
+   <abbreviation>GROUP_PR</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PERSON_ID" id="F0E20B02-292D-8AAB-DB12-B67758AEE531">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="61BB4958-362C-3F4E-7DC0-6EFD8B6460F3" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -76,6 +79,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="414DAA71-16BE-B6A1-08C4-CE316DF91B8D" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -90,6 +94,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>20 BYTE</dataTypeSize>
+         <abbreviation>RP</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="GRANTED" id="19BF433D-86E0-0964-F978-7E7A2FDFEFA1">
          <createdBy>Jindra</createdBy>
@@ -100,6 +105,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>G</abbreviation>
       </Column>
    </columns>
    <indexes>

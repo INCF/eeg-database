@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 15:07:27 UTC</changedTime>
+   <changedTime>2012-03-18 16:08:09 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017509</pkName>
+   <abbreviation>ELECTROD_L</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ELI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="TITLE" id="E4BEDA00-809D-D799-5DA4-A3B8250B0E8D">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>150 BYTE</dataTypeSize>
+         <abbreviation>T</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SHORTCUT" id="3ED91726-A248-B187-0590-E16EDDC26A86">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>30 BYTE</dataTypeSize>
+         <abbreviation>S</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="BE47ED30-599E-FA85-A61E-93256B17D4F4">
          <createdBy>Jindra</createdBy>
@@ -82,6 +86,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>300 BYTE</dataTypeSize>
+         <abbreviation>D</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ELECTRODE_FIX_ID" id="304C5A1F-1B07-68EC-B245-7D7B8CE1A741">
          <createdBy>Jindra</createdBy>
@@ -92,6 +97,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EFI</abbreviation>
          <delegate>3CE00FC1-2452-AB45-4586-889F60FB2DE8</delegate>
          <associations>
             <colAssociation fkAssociation="41AAA0AE-06EC-461F-C65F-BD6A375A266B" referredColumn="3CE00FC1-2452-AB45-4586-889F60FB2DE8"/>
@@ -106,6 +112,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ETI</abbreviation>
          <delegate>9F26DD51-5637-C369-F1A9-5C9E09252435</delegate>
          <associations>
             <colAssociation fkAssociation="F6AFD7D9-96F4-F002-4E48-BDC58232672F" referredColumn="9F26DD51-5637-C369-F1A9-5C9E09252435"/>
@@ -120,6 +127,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ID</abbreviation>
       </Column>
    </columns>
    <indexes>

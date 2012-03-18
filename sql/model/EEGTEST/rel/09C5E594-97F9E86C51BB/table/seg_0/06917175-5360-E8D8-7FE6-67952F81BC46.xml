@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:11:52 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011534</pkName>
+   <abbreviation>EXPERI_OPV</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>30 BYTE</dataTypeSize>
+         <abbreviation>PV</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EXPERIMENT_ID" id="81C8BBC7-473E-5BC4-888F-A54F8BD23F30">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EI</abbreviation>
          <delegate>2BBC5F60-FCCC-0604-B762-6EB6A919F411</delegate>
          <associations>
             <colAssociation fkAssociation="4302894B-E462-FF43-4910-7C6B34A42DEE" referredColumn="2BBC5F60-FCCC-0604-B762-6EB6A919F411"/>
@@ -76,6 +79,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EOPV</abbreviation>
          <delegate>B77D0F18-8892-0D46-21A8-4D782226220B</delegate>
          <associations>
             <colAssociation fkAssociation="60736347-3889-35E7-5661-7036CFF8E6DA" referredColumn="B77D0F18-8892-0D46-21A8-4D782226220B"/>

@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:31 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 15:08:34 UTC</changedTime>
+   <changedTime>2012-03-18 16:30:28 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017545</pkName>
+   <abbreviation>STIMULUS_R</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>STI</abbreviation>
          <delegate>587BEABC-5C85-6426-FA94-A93F70FA0E5B</delegate>
          <associations>
             <colAssociation fkAssociation="93AA1D12-A79B-E1B2-C1F7-A3C4B336D4CA" referredColumn="587BEABC-5C85-6426-FA94-A93F70FA0E5B"/>
@@ -66,6 +68,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>STTI</abbreviation>
          <delegate>73C4475F-007D-70E0-24AE-925FC03533D1</delegate>
          <associations>
             <colAssociation fkAssociation="12AA8446-FFC9-144D-BD34-5FD4BF102D88" referredColumn="73C4475F-007D-70E0-24AE-925FC03533D1"/>
@@ -80,6 +83,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SCI</abbreviation>
          <delegate>0A38355D-8EC7-3581-6FE5-85228B747230</delegate>
          <associations>
             <colAssociation fkAssociation="26A87770-CB75-1FCA-4116-569D45EA2FDE" referredColumn="0A38355D-8EC7-3581-6FE5-85228B747230"/>

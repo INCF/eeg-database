@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:10:29 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011523</pkName>
+   <abbreviation>EXPERIMENT</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SCENARIO_ID" id="C5ECD966-4ABA-563B-5B28-B3C3B59D51A6">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SI</abbreviation>
          <delegate>0A38355D-8EC7-3581-6FE5-85228B747230</delegate>
          <associations>
             <colAssociation fkAssociation="D804A2D2-D5B3-CE24-47E7-AC539E9EB6FF" referredColumn="0A38355D-8EC7-3581-6FE5-85228B747230"/>
@@ -77,6 +80,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>ST</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="END_TIME" id="EE36FFC7-362C-412A-A2AB-1CBC0BB0D70B">
          <createdBy>Jindra</createdBy>
@@ -88,6 +92,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>ET</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="TEMPERATURE" id="EA54DF94-BF28-2849-0464-9069C95E6A6D">
          <createdBy>Jindra</createdBy>
@@ -99,6 +104,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>T</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ENVIRONMENT_NOTE" id="6BB5CCDC-30BE-F0FA-9813-A58E1C21C52B">
          <createdBy>Jindra</createdBy>
@@ -110,6 +116,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>255 BYTE</dataTypeSize>
+         <abbreviation>EN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SUBJECT_PERSON_ID" id="670EAF8C-D0D8-6A47-65AD-8E5A7DDE046D">
          <createdBy>Jindra</createdBy>
@@ -120,6 +127,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SPI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="F1043C2B-B4A1-91D7-F23F-4D44ED9C814B" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -134,6 +142,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>WI</abbreviation>
          <delegate>A85BD7B7-4116-B92E-B5EE-00E9F36D33DD</delegate>
          <associations>
             <colAssociation fkAssociation="8103C81F-EC70-CFBE-3E17-F1AB3E157942" referredColumn="A85BD7B7-4116-B92E-B5EE-00E9F36D33DD"/>
@@ -148,6 +157,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>OI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="0B36CC9E-1E1D-6235-7B9E-D8141A19C9EF" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -162,6 +172,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="AA2C17DF-8B3E-20AD-A0B4-7ACC7D802E58" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -177,7 +188,9 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypePrecision>1</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>P</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ARTEFACT_ID" id="E77C7049-3C51-B092-9399-5613FD96EAFE">
          <createdBy>Jindra</createdBy>
@@ -188,6 +201,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>AI</abbreviation>
          <delegate>9EC14594-A713-471E-94A3-6B64645F1903</delegate>
          <associations>
             <colAssociation fkAssociation="57DA1904-EA6E-3EE4-D87D-3EB52920D0B2" referredColumn="9EC14594-A713-471E-94A3-6B64645F1903"/>
@@ -202,6 +216,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SGI</abbreviation>
          <delegate>CF73BD43-0658-80EB-FA5C-09426DA4CAAC</delegate>
          <associations>
             <colAssociation fkAssociation="380469A3-86F0-9446-E51A-2995A530FCA6" referredColumn="CF73BD43-0658-80EB-FA5C-09426DA4CAAC"/>
@@ -216,6 +231,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ECI</abbreviation>
          <delegate>E7B4DE2E-923D-EE43-B0CA-46AC4770EBF5</delegate>
          <associations>
             <colAssociation fkAssociation="79D6436E-94A2-649A-423A-7925E85A9B56" referredColumn="E7B4DE2E-923D-EE43-B0CA-46AC4770EBF5"/>
@@ -230,6 +246,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>DI</abbreviation>
          <delegate>05BE7F7E-441F-B994-4AB3-04E034C09AC5</delegate>
          <associations>
             <colAssociation fkAssociation="5677E810-C669-1CD5-4B59-C895A10F0A97" referredColumn="05BE7F7E-441F-B994-4AB3-04E034C09AC5"/>

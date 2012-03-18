@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:16:52 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>ARTICLES_COMMENTS_PK</pkName>
+   <abbreviation>ARTICLES_C</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>CI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ARTICLE_ID" id="1E6CC7AF-F504-0007-53BD-550F5337D390">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>AI</abbreviation>
          <delegate>09AC9C6C-CCBF-DD19-F61E-A33F2D1A82A1</delegate>
          <associations>
             <colAssociation fkAssociation="C48A7C72-AAD9-79E2-25A3-C73D6B6AD55D" referredColumn="09AC9C6C-CCBF-DD19-F61E-A33F2D1A82A1"/>
@@ -77,6 +80,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PARI</abbreviation>
          <delegate>22E801A7-7CA8-96FF-61F5-9FADA3BD50D1</delegate>
          <associations>
             <colAssociation fkAssociation="1B77B22D-FC60-A17E-E5F6-F3A739BCC7DF" referredColumn="22E801A7-7CA8-96FF-61F5-9FADA3BD50D1"/>
@@ -91,6 +95,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>TI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PERSON_ID" id="A9835FCE-BEC0-B96B-8CB3-927CEA1D2162">
          <createdBy>Jindra</createdBy>
@@ -102,6 +107,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PERI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="B0E917AC-13B7-5A96-CEB3-C9EAC1294544" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -117,6 +123,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT028</logicalDatatype>
          <dataTypeSize>4000</dataTypeSize>
+         <abbreviation>TE</abbreviation>
       </Column>
    </columns>
    <indexes>

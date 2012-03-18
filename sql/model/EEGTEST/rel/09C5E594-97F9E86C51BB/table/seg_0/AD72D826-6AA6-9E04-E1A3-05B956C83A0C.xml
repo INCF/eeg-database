@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:22:32 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011554</pkName>
+   <abbreviation>PERSON</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="GIVENNAME" id="423AB20E-3E1B-A389-3430-E83D039EE26A">
          <createdBy>Jindra</createdBy>
@@ -63,6 +65,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>GIV</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SURNAME" id="B0D96268-30F2-772F-5369-B3ED14BF7A7D">
          <createdBy>Jindra</createdBy>
@@ -73,6 +76,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>S</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DATE_OF_BIRTH" id="C0A584F5-E263-D220-02B8-B55C30BE02E0">
          <createdBy>Jindra</createdBy>
@@ -84,6 +88,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>DOB</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="GENDER" id="75019037-998F-24D0-C295-3E6BDAD51602">
          <createdBy>Jindra</createdBy>
@@ -99,6 +104,7 @@
          <checkConstraint>
             <implementationDef dbType="Oracle Database 11g" definition="GENDER = 'M' OR GENDER='F' "/>
          </checkConstraint>
+         <abbreviation>GEN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EMAIL" id="EAD32AB3-BA25-D01D-686D-0A3020728755">
          <createdBy>Jindra</createdBy>
@@ -110,6 +116,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>E</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PHONE_NUMBER" id="5F9E7F5D-2060-13A0-7A78-89D7EA2DBA6C">
          <createdBy>Jindra</createdBy>
@@ -121,6 +128,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>20 BYTE</dataTypeSize>
+         <abbreviation>PN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="NOTE" id="1FB0ED42-55AE-6338-8D6C-0A0CAFF63FF2">
          <createdBy>Jindra</createdBy>
@@ -132,6 +140,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>255 BYTE</dataTypeSize>
+         <abbreviation>N</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="USERNAME" id="531DB824-00A6-3606-B289-BAE12808B4C1">
          <createdBy>Jindra</createdBy>
@@ -143,6 +152,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>U</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PASSWORD" id="AD669725-AF74-5F97-413C-0475DE0A4D9F">
          <createdBy>Jindra</createdBy>
@@ -154,6 +164,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>PASS</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="AUTHORITY" id="769DD077-2276-050D-DEF5-88391B0704C6">
          <createdBy>Jindra</createdBy>
@@ -165,6 +176,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>AUTR</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DEFAULT_GROUP_ID" id="89CE8E0F-9CC6-6CEA-32FF-2C6BD8D887E1">
          <createdBy>Jindra</createdBy>
@@ -176,6 +188,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>DGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="01AA9568-B9DC-B677-1E7A-3896245D3E6D" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -191,6 +204,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>RD</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="CONFIRMED" id="56E2481E-E127-F32D-B688-C3CC103D860D">
          <createdBy>Jindra</createdBy>
@@ -203,6 +217,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>CON</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="AUTHENTICATION" id="DBCD4DFC-CD8D-BFBA-8A8C-914297554EE4">
          <createdBy>Jindra</createdBy>
@@ -214,6 +229,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>50 BYTE</dataTypeSize>
+         <abbreviation>AUTH</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FB_UID" id="6B68659A-CD8B-30A4-D68F-2FAEE8413C0F">
          <createdBy>Jindra</createdBy>
@@ -225,6 +241,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>FBU</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="LATERALITY" id="8EBA640C-3240-F30C-8E5E-9464B01F27C0">
          <createdBy>Jindra</createdBy>
@@ -240,6 +257,7 @@
          <checkConstraint>
             <implementationDef dbType="Oracle Database 11g" definition="LATERALITY = 'L' OR LATERALITY='R' OR LATERALITY='X'"/>
          </checkConstraint>
+         <abbreviation>LAT</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EDUCATION_LEVEL_ID" id="8F54E5AE-8098-2811-64AC-BF773251D020">
          <createdBy>Jindra</createdBy>
@@ -250,6 +268,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>ELI</abbreviation>
          <delegate>BBB0F98E-21F3-93B1-CEBF-F36DDC953F82</delegate>
          <associations>
             <colAssociation fkAssociation="F3CC0926-497A-5ABD-990C-6A30D6D77E3D" referredColumn="BBB0F98E-21F3-93B1-CEBF-F36DDC953F82"/>

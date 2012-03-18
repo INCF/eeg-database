@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:27:43 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011516</pkName>
+   <abbreviation>DATA_F</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>DFI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FILE_CONTENT" id="F80DF6D4-A094-4726-E4B8-50BCD1AF597C">
          <createdBy>Jindra</createdBy>
@@ -62,6 +64,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT029</logicalDatatype>
          <dataTypeSize>4000</dataTypeSize>
+         <abbreviation>FC</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="EXPERIMENT_ID" id="B1348544-95EB-9DFC-85E3-055C72D6BF15">
          <createdBy>Jindra</createdBy>
@@ -72,6 +75,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>EI</abbreviation>
          <delegate>2BBC5F60-FCCC-0604-B762-6EB6A919F411</delegate>
          <associations>
             <colAssociation fkAssociation="D7882290-5443-D085-0FAC-292DDEDAF4E9" referredColumn="2BBC5F60-FCCC-0604-B762-6EB6A919F411"/>
@@ -86,6 +90,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>40 BYTE</dataTypeSize>
+         <abbreviation>M</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FILENAME" id="1BF93E64-92EE-6BBF-0B9F-6B68FBDBE26B">
          <createdBy>Jindra</createdBy>
@@ -96,6 +101,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>80 BYTE</dataTypeSize>
+         <abbreviation>FILN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="A9BB498A-E092-C801-50CB-C7C21F884DDF">
          <createdBy>Jindra</createdBy>
@@ -107,6 +113,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>250 BYTE</dataTypeSize>
+         <abbreviation>DES</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="ANALYSIS_ID" id="A37719C3-832D-66F3-BC3D-7A9B08BBA805">
          <createdBy>Jindra</createdBy>
@@ -118,6 +125,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>AI</abbreviation>
          <delegate>A21510B9-1E7F-5212-3C5A-BB6C7E264966</delegate>
          <associations>
             <colAssociation fkAssociation="350F802E-6F18-C7DD-63B8-05132C213611" referredColumn="A21510B9-1E7F-5212-3C5A-BB6C7E264966"/>

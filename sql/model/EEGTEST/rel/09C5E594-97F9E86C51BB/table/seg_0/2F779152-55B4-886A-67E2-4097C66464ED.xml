@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:29:52 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011577</pkName>
+   <abbreviation>SCENARIO</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SI</abbreviation>
          <delegate>26CA1334-71ED-8F34-8EA3-3E137DFA1609</delegate>
          <associations>
             <colAssociation fkAssociation="38A5D537-E62B-A317-F229-1D000FB405CE" referredColumn="26CA1334-71ED-8F34-8EA3-3E137DFA1609"/>
@@ -67,6 +69,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>40 BYTE</dataTypeSize>
+         <abbreviation>TIT</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SCENARIO_LENGTH" id="F33F02B6-AA69-50A0-23F5-C4CEF518A1E3">
          <createdBy>Jindra</createdBy>
@@ -78,6 +81,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SLEN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DESCRIPTION" id="2619E95D-3EE0-7EB2-0D81-29C157EA3ECD">
          <createdBy>Jindra</createdBy>
@@ -89,6 +93,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>255 BYTE</dataTypeSize>
+         <abbreviation>DES</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="OWNER_ID" id="5E0B2BD8-593D-7FDF-E8C1-EA234ED6A247">
          <createdBy>Jindra</createdBy>
@@ -99,6 +104,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>OI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="09EC38CA-F77C-2FE7-1412-8DA02DE9D1DF" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -113,6 +119,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="E430AC47-9260-FD81-70A5-0F2D917DEEA9" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -128,7 +135,9 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypePrecision>1</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PRIV</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SCENARIO_NAME" id="93A6BE8B-0BBB-213E-99F2-F3245BDAF108">
          <createdBy>Jindra</createdBy>
@@ -140,6 +149,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>100 BYTE</dataTypeSize>
+         <abbreviation>SN</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="MIMETYPE" id="A28CA3DA-9263-2F45-A1ED-5C32B895449B">
          <createdBy>Jindra</createdBy>
@@ -151,6 +161,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>30 BYTE</dataTypeSize>
+         <abbreviation>MIM</abbreviation>
       </Column>
    </columns>
    <indexes>

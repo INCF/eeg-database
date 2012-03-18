@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:41 UTC</changedTime>
+   <changedTime>2012-03-18 16:06:04 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0017477</pkName>
+   <abbreviation>DIGITIZATI</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>DI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="GAIN" id="9D874D65-8FC1-EB13-BB5B-054AF70B7FA7">
          <createdBy>Jindra</createdBy>
@@ -62,7 +64,9 @@
          <use>1</use>
          <logicalDatatype>LOGDT021</logicalDatatype>
          <dataTypePrecision>126</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>G</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="FILTER" id="7979EFB4-3E32-92B7-442F-035583B19957">
          <createdBy>Jindra</createdBy>
@@ -73,6 +77,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT024</logicalDatatype>
          <dataTypeSize>300 BYTE</dataTypeSize>
+         <abbreviation>F</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="SAMPLING_RATE" id="BCC37B06-89F1-39FD-8427-8BBDDA317195">
          <createdBy>Jindra</createdBy>
@@ -83,7 +88,9 @@
          <use>1</use>
          <logicalDatatype>LOGDT021</logicalDatatype>
          <dataTypePrecision>126</dataTypePrecision>
+         <dataTypeScale>0</dataTypeScale>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>SR</abbreviation>
       </Column>
    </columns>
    <indexes>

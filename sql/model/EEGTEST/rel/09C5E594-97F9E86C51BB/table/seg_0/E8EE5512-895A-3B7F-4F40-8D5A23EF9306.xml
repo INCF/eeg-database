@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:29:03 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>REL_FILE_METADATA_GROUP_PK</pkName>
+   <abbreviation>FILE_MPGR</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>FMPDI</abbreviation>
          <delegate>CD740F8E-71FE-D6DD-7CE4-1924ABE9B6E1</delegate>
          <associations>
             <colAssociation fkAssociation="0F1E19EF-7A21-688F-B8D5-92161D52D091" referredColumn="CD740F8E-71FE-D6DD-7CE4-1924ABE9B6E1"/>
@@ -66,6 +68,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="66E7C537-E788-B9F2-AAF1-F240B6BA7451" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>

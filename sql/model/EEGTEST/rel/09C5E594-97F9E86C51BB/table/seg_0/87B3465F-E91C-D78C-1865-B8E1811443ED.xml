@@ -3,10 +3,11 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-01 15:41:53 UTC</changedTime>
+   <changedTime>2012-03-18 16:19:07 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>RESERVATION_ID_PK</pkName>
+   <abbreviation>RESERVATIO</abbreviation>
    <fonts>
       <FontObject class="oracle.dbtools.crest.model.design.FontObjectWr">
          <foType>Title</foType>
@@ -52,6 +53,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RI</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="PERSON_ID" id="8D030272-455B-E71E-631C-A0B687B93637">
          <createdBy>Jindra</createdBy>
@@ -63,6 +65,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>PI</abbreviation>
          <delegate>E7ADAFD7-1525-D037-38A2-53523E68F811</delegate>
          <associations>
             <colAssociation fkAssociation="995711EC-5DB5-242B-C408-93001F2F31F9" referredColumn="E7ADAFD7-1525-D037-38A2-53523E68F811"/>
@@ -78,6 +81,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>CT</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="RESEARCH_GROUP_ID" id="B0177AF8-EADC-154D-A55A-F977BC66A9E2">
          <createdBy>Jindra</createdBy>
@@ -89,6 +93,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
          <dataTypeSize>22</dataTypeSize>
+         <abbreviation>RGI</abbreviation>
          <delegate>9242292D-FEB1-35DB-625A-AC01A4C6E2F2</delegate>
          <associations>
             <colAssociation fkAssociation="92EC291A-0FC0-2A49-4DA5-75C2FE31228C" referredColumn="9242292D-FEB1-35DB-625A-AC01A4C6E2F2"/>
@@ -104,6 +109,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>ST</abbreviation>
       </Column>
       <Column class="oracle.dbtools.crest.model.design.relational.Column" name="END_TIME" id="7C3F1AAE-A138-0679-9120-1D5F97C779C6">
          <createdBy>Jindra</createdBy>
@@ -115,6 +121,7 @@
          <use>1</use>
          <logicalDatatype>LOGDT007</logicalDatatype>
          <dataTypeSize>7</dataTypeSize>
+         <abbreviation>ET</abbreviation>
       </Column>
    </columns>
    <indexes>
