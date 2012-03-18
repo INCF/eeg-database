@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:55 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-14 13:40:05 UTC</changedTime>
+   <changedTime>2012-03-18 14:56:00 UTC</changedTime>
    <autoRoute>false</autoRoute>
    <boxInbox>true</boxInbox>
    <showLegend>false</showLegend>
@@ -47,7 +47,7 @@
          <bounds x="1801" y="5588" width="222" height="25"/>
       </OView>
       <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="340E5689-0B01-CC35-C095-3394DD218D96" otype="Table" vid="F2F50C1D-3833-E321-7DB2-380F121AA573">
-         <bounds x="4234" y="54" width="234" height="70"/>
+         <bounds x="4234" y="54" width="234" height="87"/>
       </OView>
       <OView class="oracle.dbtools.crest.swingui.relational.TVTable" oid="35D81F57-12AD-4E72-C9D0-5885C592AB6A" otype="Table" vid="08B11701-230E-61DA-0BE9-AB9BD13A8495">
          <bounds x="7742" y="3421" width="279" height="104"/>
