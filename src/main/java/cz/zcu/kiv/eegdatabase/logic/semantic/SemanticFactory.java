@@ -51,9 +51,9 @@ public interface SemanticFactory {
      * @param syntax - param from user (rdf, owl, ttl)
      * @return is - generated ontology document (rdf, owl, ttl)
      * @throws java.io.IOException - if an I/O error occurs.
-     * @throws org.semanticweb.owlapi.model.OWLOntologyCreationException
+     * @throws OWLOntologyCreationException
      *                             - if an error occurs in Owl-Api while loading the ontology.
-     * @throws org.semanticweb.owlapi.model.OWLOntologyStorageException
+     * @throws OWLOntologyStorageException
      *                             - if an error occurs in Owl-Api while creating the output.
      */
     public InputStream generateOntologyOwlApi(String syntax) throws IOException,

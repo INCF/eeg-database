@@ -796,7 +796,7 @@
     </bean>
     
     <!-- Transformer POJO to resource of semantic web-->
-    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory">
+    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory" init-method="init">
         <property name="ontology" value="classpath:ontology.owl" />
     </bean>
     
