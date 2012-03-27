@@ -100,6 +100,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
+    <property name="transactionManager" ref="txManager"/>
+</bean>
+
     <bean id="captchaEngine"
           class="com.octo.captcha.engine.image.gimpy.SimpleListImageCaptchaEngine"/>
     <bean id="captchaService"

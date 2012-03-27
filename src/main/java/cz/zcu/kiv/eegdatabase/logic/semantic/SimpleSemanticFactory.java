@@ -7,9 +7,13 @@ import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
+import org.springframework.transaction.TransactionStatus;
+import org.springframework.transaction.support.TransactionCallback;
+import org.springframework.transaction.support.TransactionTemplate;
 import tools.*;
 
 import java.io.*;
@@ -39,6 +43,9 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private File ontStructureFile;  // temporary ontology structure document
     private Resource ontology;      // owl document with static ontology statements
 
+    @Autowired
+    private TransactionTemplate transactionTemplate;
+
 
     /**
      * Runs the transformation when initializing this bean.
@@ -48,8 +55,14 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         // zde je treba vytvorit session ??
 
         log.debug("Starting OOP to OWL transformation process.");
-        // volani transformace pada na LazyInitializationException - no session or session was closed
-        // transformModel();
+            transactionTemplate.execute(new TransactionCallback() {
+                @Override
+                public Object doInTransaction(TransactionStatus status) {
+                   // transformModel();
+                    return null;
+                }
+            });
+
         log.debug("OOP to OWL transformation process ended.");
 
 
