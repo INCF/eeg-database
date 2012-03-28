@@ -35,10 +35,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List<Object> dataList = new ArrayList<Object>();
 
-    private JenaBeanExtension jenaBean;
-    private JenaBeanExtension jenaBeanStructure;
-
-    private Timer timer;
     private File ontologyFile;      // temporary ontology document
     private File ontStructureFile;  // temporary ontology structure document
     private Resource ontology;      // owl document with static ontology statements
@@ -48,26 +44,21 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
 
     /**
-     * Runs the transformation when initializing this bean.
+     * Creates temporary files for ontology document storing and
+     * sets the timer to run the transformation process regularly.
      */
     public void init() {
+        try {
+            ontologyFile = File.createTempFile("ontology_", ".rdf.tmp");
+            ontologyFile.deleteOnExit();
+            ontStructureFile = File.createTempFile("ontologyStructure_", ".rdf.tmp");
+            ontStructureFile.deleteOnExit();
+        } catch (IOException e) {
+            log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
+        }
 
-        // zde je treba vytvorit session ??
-
-        log.debug("Starting OOP to OWL transformation process.");
-            transactionTemplate.execute(new TransactionCallback() {
-                @Override
-                public Object doInTransaction(TransactionStatus status) {
-                   // transformModel();
-                    return null;
-                }
-            });
-
-        log.debug("OOP to OWL transformation process ended.");
-
-
-        //timer = new Timer();
-        //timer.scheduleAtFixedRate(new TransformTask(), 120 * 1000, 500 * 1000);
+        Timer timer = new Timer();
+        timer.scheduleAtFixedRate(new TransformTask(), 60 * 1000, 24 * 3600 * 1000);  // TODO upravit interval
     }
 
 
@@ -101,10 +92,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (structureOnly && lang.equals(Syntax.RDF_XML))
             lang = Syntax.RDF_XML_ABBREV;
 
-        is = creatingJenaBean(structureOnly).getOntologyDocument(lang);
-
-        // z temporary file
-        /*if (structureOnly) {
+        if (structureOnly) {
             is = new FileInputStream(ontStructureFile);
         } else {
             is = new FileInputStream(ontologyFile);
@@ -113,7 +101,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                 jbe.loadStatements(is);
                 is = jbe.getOntologyDocument(lang);
             }
-        }*/
+        }
 
         return is;
     }
@@ -125,39 +113,11 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         InputStream is;
         OwlApi owlApi;
 
-        is = creatingJenaBean(false).getOntologyDocument();
+        is = new FileInputStream(ontologyFile);
         owlApi = new OwlApiTool(is);
         is = owlApi.convertToSemanticStandard(syntax);
 
         return is;
-    }
-
-
-    /**
-     * Creates JenaBeanExtensionTool for transforming POJO objects into an ontology document.
-     * @param  structureOnly - if true no data are loaded (only their structure)
-     * @return jenaBean - Jena bean
-     */
-    private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
-        JenaBeanExtension jbe = structureOnly ? jenaBeanStructure : jenaBean;
-
-        // uchovavani instance JenaBeanu je prozatimni reseni - casem vhodne pravidelne generovani
-        if (jbe == null) {
-            loadData();
-            jbe = new JenaBeanExtensionTool();
-            try {
-                jbe.loadStatements(ontology.getInputStream());
-            } catch (IOException e) {
-                log.error("Could not open the input stream associated with the ontology " +
-                        "configuration document: " + ontology.getFilename(), e);
-            }
-            jbe.loadOOM(dataList, structureOnly);
-            if (structureOnly)
-                jenaBeanStructure = jbe;
-            else
-                jenaBean = jbe;
-        }
-        return jbe;
     }
 
 
@@ -170,6 +130,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
          }
     }
 
+
     /**
      * Sets application context.
      * @param ac - application context
@@ -178,6 +139,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     public void setApplicationContext(ApplicationContext ac) throws BeansException {
         context = ac;
     }
+
 
     /**
      * Sets resource with static ontology statements.
@@ -194,86 +156,65 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      */
     public void transformModel() {
         loadData();
-        createTempFiles();
         JenaBeanExtension jbe;
-        jbe = createOntModel(false); // TODO nahradit metodou creatingJenabean()
+        jbe = creatingJenaBean(false);
         try {
             OutputStream out = new FileOutputStream(ontologyFile);
             jbe.writeOntologyDocument(out);
             out.close();
-            System.out.println("Model zapsan do souboru: " + ontologyFile.getAbsolutePath());
         } catch (IOException e) {
             log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
-            ontologyFile = null;
         }
-        jbe = createOntModel(true); // TODO nahradit metodou creatingJenabean()
+        jbe = creatingJenaBean(true);
         try {
             OutputStream out = new FileOutputStream(ontStructureFile);
             jbe.writeOntologyDocument(out, Syntax.RDF_XML_ABBREV);
             out.close();
-            System.out.println("Struktura modelu zapsana do souboru: " + ontStructureFile.getAbsolutePath());
         } catch (IOException e) {
             log.error("Could not create the temporary rdf/xml file to store the ontology structure!", e);
-            ontStructureFile = null;
         }
     }
 
 
-    // prozatim misto creatingJenabean()
-    private JenaBeanExtension createOntModel(boolean structureOnly) {
-        JenaBeanExtension jbe = new JenaBeanExtensionTool();
-        loadStaticOntologyStatements(jbe);
-        jbe.loadOOM(dataList, structureOnly);
-        return jbe;
-    }
-
-
     /**
-     * Loads static ontology statements into the model.
-     * @param jbe - instance of JenaBeanExtension in which to load the statements
-     * @return JenaBeanExtension instance
+     * Creates an instance of JenaBeanExtension with loaded model.
+     * @param structureOnly - if true only structure of data is loaded (classes and properties), no data itself
+     * @return instance of JenaBeanExtension
      */
-    private JenaBeanExtension loadStaticOntologyStatements(JenaBeanExtension jbe) {
+    private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
+        JenaBeanExtension jbe = new JenaBeanExtensionTool();
         try {
             jbe.loadStatements(ontology.getInputStream());
         } catch (IOException e) {
             log.error("Could not open the input stream associated with the ontology " +
                     "configuration document: " + ontology.getFilename(), e);
         }
-        System.out.println("Statements loaded.");
+        jbe.loadOOM(dataList, structureOnly);
         return jbe;
     }
 
+    
+
 
     /**
-     * Creates temporary files for storing the ontology serialization.
+     * Represents the transformation task for a timer.
+     * This task should be run regularly to keep the ontology up-to-date.
      */
-    private void createTempFiles() {
-        try {
-            if (ontologyFile == null) {
-                ontologyFile = File.createTempFile("ontology_", ".rdf.tmp");
-                ontologyFile.deleteOnExit();
-            }
-            if (ontStructureFile == null) {
-                ontStructureFile = File.createTempFile("ontologyStructure_", ".rdf.tmp");
-                ontStructureFile.deleteOnExit();
-            }
-        } catch (IOException e) {
-            log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
-        }
-    }
-
-
-
-
     private class TransformTask extends TimerTask {
 
         @Override
         public void run() {
-            System.out.println("Spoustim transformaci...");
-            transformModel();
-            System.out.println("Hotovo.");
+            log.debug("Starting OOP to OWL transformation process.");
+            transactionTemplate.execute(new TransactionCallback() {
+                @Override
+                public Object doInTransaction(TransactionStatus status) {
+                    transformModel();
+                    return null;
+                }
+            });
+            log.debug("OOP to OWL transformation process finished.");
         }
+
     }
 
 
