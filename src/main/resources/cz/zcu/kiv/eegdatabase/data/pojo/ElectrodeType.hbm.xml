@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<hibernate-mapping>
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeType" schema="EEGTEST" table="ELECTRODE_TYPE">
+        <id name="electrodeTypeId" type="int">
+            <column name="ELECTRODE_TYPE_ID" precision="22" scale="0"/>
+            <generator class="increment"/>
+        </id>
+
+        <property name="title" type="string">
+            <column name="TITLE" precision="22" scale="0"/>
+        </property>
+        <property name="description" type="string">
+            <column name="DESCRIPTION" precision="22" scale="0"/>
+        </property>
+        <property name="defaultNumber" type="int">
+            <column name="IS_DEFAULT" precision="1" scale="0"/>
+        </property>
+        <set inverse="true" name="electrodeLocations">
+            <key>
+                <column name="ELECTRODE_FIX_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeLocation"/>
+        </set>
+    </class>
+</hibernate-mapping>

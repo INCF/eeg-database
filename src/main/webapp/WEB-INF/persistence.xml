@@ -65,6 +65,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml" />
+     <!--   <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo" />-->
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>

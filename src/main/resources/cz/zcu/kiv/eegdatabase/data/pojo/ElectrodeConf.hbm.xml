@@ -11,7 +11,20 @@
         <property name="impedance" type="int">
             <column name="IMPEDANCE" precision="22" scale="0"/>
         </property>
-
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem" fetch="select" name="electrodeSystem">
+            <column name="ARTICLE_ID" precision="22" scale="0"/>
+        </many-to-one>
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" fetch="select" name="descImg">
+            <column name="DATA_FILE_ID" precision="22" scale="0"/>
+        </many-to-one>
+        <set inverse="false" name="electrodeLocations" table="ELECTRODE_LOCATION_REL">
+            <key>
+                <column name="ELECTRODE_CONF_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeLocation">
+                <column name="ELECTRODE_LOCATION_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
         <set inverse="true" name="experiments">
             <key>
                 <column name="ELECTRODE_CONF_ID" not-null="true" precision="22" scale="0"/>
