@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,13 +12,21 @@ import java.io.Serializable;
  * Time: 14:04
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="ELECTRODE_TYPE_ID")
 public class ElectrodeType implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ELECTRODE_TYPE_ID")
     private int electrodeTypeId;
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "DESCRIPTION")
     private String description;
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
-    //vazba
+    @OneToMany(mappedBy = "electrodeType")
+    private Set<ElectrodeLocation> electrodeLocations = new HashSet<ElectrodeLocation>(0);
 
     public ElectrodeType() {
     }
@@ -50,5 +61,13 @@ public class ElectrodeType implements Serializable {
 
     public void setDefaultNumber(int defaultNumber) {
         this.defaultNumber = defaultNumber;
+    }
+
+    public Set<ElectrodeLocation> getElectrodeLocations() {
+        return electrodeLocations;
+    }
+
+    public void setElectrodeLocations(Set<ElectrodeLocation> electrodeLocations) {
+        this.electrodeLocations = electrodeLocations;
     }
 }

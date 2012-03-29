@@ -2,9 +2,9 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -16,47 +16,83 @@ import java.util.Set;
 @Entity
 @Indexed
 @Analyzer(impl = StandardAnalyzer.class)
+@javax.persistence.Table(name = "PERSON")
 public class Person implements Serializable, Comparable<Person> {
 
     @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "PERSON_ID")
     private int personId;
+    @Column(name = "GIVENNAME")
     private String givenname;
+    @Column(name = "SURNAME")
     private String surname;
+    @Column(name = "DATE_OF_BIRTH")
     private Timestamp dateOfBirth;
+    @Column(name = "GENDER")
     private char gender;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "email"),
             @Field(store = Store.YES)}) //use a different field name
+            @Column(name = "EMAIL")
     private String email;
+    @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
+    @Column(name = "REGISTRATION_DATE")
     private Timestamp registrationDate;
+    @Column(name = "AUTHENTICATION")
     private String authenticationHash;
+    @Column(name = "CONFIRMED")
     private boolean confirmed;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "note"),
             @Field(store = Store.YES)}) //use a different field name
+    @Column(name = "NOTE")
     private String note;
+    @Column(name = "USERNAME")
     private String username;
+    @Column(name = "PASSWORD")
     private String password;
+    @Column(name = "AUTHORITY")
     private String authority;
+    @ManyToOne
+    @JoinColumn(name = "DEFAULT_GROUP_ID")
     private ResearchGroup defaultGroup;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    @OneToMany(mappedBy = "person")
     private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(0);
+    @OneToMany(mappedBy = "person")
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
+    @OneToMany(mappedBy = "personByOwnerId")
     private Set<Experiment> experimentsForOwnerId = new HashSet<Experiment>(0);
+    @OneToMany(mappedBy = "personBySubjectPersonId")
     private Set<Experiment> experimentsForSubjectPersonId = new HashSet<Experiment>(0);
+    @OneToMany(mappedBy = "person")
     private Set<PersonOptParamVal> personOptParamVals = new HashSet<PersonOptParamVal>(0);
+    @OneToMany(mappedBy = "person")
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    @OneToMany(mappedBy = "person")
     private Set<GroupPermissionRequest> requests = new HashSet<GroupPermissionRequest>(0);
+    @OneToMany(mappedBy = "person")
     private Set<History> histories = new HashSet<History>(0);
+    @ManyToMany(mappedBy = "subscribers")
     private Set<Article> articlesSubscribtions = new HashSet<Article>(0);
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ResearchGroup> articlesGroupSubscribtions = new HashSet<ResearchGroup>(0);
+    @OneToMany(mappedBy = "owner")
     private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
+    @Column(name = "FB_UID")
     private String facebookId;
+    @Column(name = "LATERALITY")
     private char laterality;
+    @ManyToOne
+    @JoinColumn(name = "EDUCATION_LEVEL_ID")
     private EducationLevel educationLevel;
+    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
     public Person() {

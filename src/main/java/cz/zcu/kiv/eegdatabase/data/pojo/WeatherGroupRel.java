@@ -1,11 +1,23 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
 /**
  * @author František Liška
  */
+@Entity
+@javax.persistence.Table(name="WEATHER_GROUP_REL")
 public class WeatherGroupRel implements java.io.Serializable {
+    @EmbeddedId
   private WeatherGroupRelId id;
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
   private ResearchGroup researchGroup;
+    @ManyToOne
+    @JoinColumn(name = "WEATHER_ID")
   private Weather weather;
 
   public WeatherGroupRel() {

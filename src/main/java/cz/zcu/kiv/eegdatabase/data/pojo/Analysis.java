@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,13 +12,23 @@ import java.io.Serializable;
  * Time: 13:46
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="ANALYSIS")
 public class Analysis implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ANALYSIS_ID")
     private int analysisId;
+    @Column(name = "EPOCH_NUM")
     private int epochNumber;
+    @Column(name = "PRESTIMULUS_TIME")
     private int prestimulusTime;
+    @Column(name = "POSTSTIMULUS_TIME")
     private int poststimulusTime;
+    @Column(name = "DESCRIPTION")
     private String description;
+    @OneToMany(mappedBy = "analysis")
+    private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
 
     public Analysis() {
     }
@@ -66,6 +79,14 @@ public class Analysis implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public Set<DataFile> getDataFiles() {
+        return dataFiles;
+    }
+
+    public void setDataFiles(Set<DataFile> dataFiles) {
+        this.dataFiles = dataFiles;
     }
 }
 

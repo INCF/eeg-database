@@ -1,10 +1,12 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.Embeddable;
+
 /**
  * @author František Liška
  */
+@Embeddable
 public class ExperimentOptParamDefGroupRelId implements java.io.Serializable {
-
      private int experimentOptParamDefId;
      private int researchGroupId;
 

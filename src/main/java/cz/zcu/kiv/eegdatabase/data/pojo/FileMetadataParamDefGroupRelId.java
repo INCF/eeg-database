@@ -1,8 +1,11 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.Embeddable;
+
 /**
  * @author František Liška
  */
+@Embeddable
 public class FileMetadataParamDefGroupRelId implements java.io.Serializable {
 
      private int fileMetadataParamDefId;

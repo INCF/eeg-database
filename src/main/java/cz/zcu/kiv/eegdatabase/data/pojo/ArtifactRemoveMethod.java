@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,12 +12,21 @@ import java.util.Set;
  * Time: 14:41
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="ARTEFACT_REMOVING_METHOD")
 public class ArtifactRemoveMethod implements Serializable {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ARTEFACT_REMOVING_METHOD_ID")
     private int artifactRemoveMethodId;
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "DESCRIPTION")
     private String description;
-    Set<Experiment> experiments = new HashSet<Experiment>(0);
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
+    private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
 
     public ArtifactRemoveMethod() {

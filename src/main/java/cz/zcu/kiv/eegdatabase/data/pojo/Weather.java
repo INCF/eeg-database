@@ -1,9 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
-import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,21 +13,32 @@ import java.util.Set;
  */
 @Indexed
 @Entity
+@javax.persistence.Table(name="WEATHER")
 public class Weather implements Serializable {
     @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "WEATHER_ID")
     private int weatherId;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "description")}) //use a different field name
+    @Column(name = "DESCRIPTION")
     private String description;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "title")}) //use a different field name
+    @Column(name = "TITLE")
     private String title;
+    @OneToMany(mappedBy = "weather")
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    @OneToMany(mappedBy = "weather")
     private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
+    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
 
     public Weather() {

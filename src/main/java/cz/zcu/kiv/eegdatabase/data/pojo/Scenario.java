@@ -2,9 +2,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.annotations.Entity;
+import org.hibernate.annotations.Type;
 import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -14,35 +15,55 @@ import java.util.Set;
  */
 @Entity
 @Indexed
+@javax.persistence.Table(name = "SCENARIO")
 @Analyzer(impl = StandardAnalyzer.class)
 public class Scenario implements Serializable, Comparable<Scenario> {
 
     @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "SCENARIO_ID")
     private int scenarioId;
+     @ManyToOne
+    @JoinColumn(name = "OWNER_ID")
     private Person person;
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
     @Fields({
             @Field(name = "title"),
             @Field(store = Store.YES)}) //use a different field name
+    @Column(name = "TITLE")
     private String title;
     @Fields({
             @Field(name = "scenarioLength"),
             @Field(store = Store.YES)})
+    @Column(name = "SCENARIO_LENGTH")
     private int scenarioLength;
     //private Blob scenarioXml;
     @Fields({
             @Field(name = "description"),
             @Field(store = Store.YES)}) //use a different field name
+    @Column(name = "DESCRIPTION")
     private String description;
+    @OneToMany(mappedBy = "scenario")
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    @OneToMany(mappedBy = "scenario")
     private Set<History> histories = new HashSet<History>(0);
+    @Column(name = "PRIVATE")
     private boolean privateScenario;
     private boolean userMemberOfGroup;
+    @Column(name = "SCENARIO_NAME")
     private String scenarioName;
+    @Column(name = "MIMETYPE")
     private String mimetype;
+    @OneToMany(mappedBy = "scenario")
     private Set<StimulusRel> stimulusRels = new HashSet<StimulusRel>(0);
-
+    @ManyToOne
+    @JoinColumn(name = "SCENARIO_ID")
+    @Type(type = "cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType")
     private IScenarioType scenarioType;
+    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
     public Scenario() {

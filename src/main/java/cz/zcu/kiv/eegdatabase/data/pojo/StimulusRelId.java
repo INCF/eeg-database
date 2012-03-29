@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.Embeddable;
 import java.io.Serializable;
 
 /**
@@ -9,6 +10,7 @@ import java.io.Serializable;
  * Time: 14:05
  * To change this template use File | Settings | File Templates.
  */
+@Embeddable
 public class StimulusRelId implements Serializable {
 
     private int scenarioId;

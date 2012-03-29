@@ -1,8 +1,11 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.Embeddable;
+
 /**
  * @author František Liška
  */
+@Embeddable
 public class PersonOptParamDefGroupRelId implements java.io.Serializable {
 
      private int personOptParamDefId;

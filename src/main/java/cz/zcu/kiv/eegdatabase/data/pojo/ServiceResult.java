@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
 
@@ -10,13 +12,23 @@ import java.sql.Blob;
  * Time: 12:20
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="SERVICE_RESULT")
 public class ServiceResult implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "RESULT_ID")
     private int serviceResultId;
+    @Column(name = "FIGURE")
     private Blob figure;
+    @Column(name = "FILENAME")
     private String filename;
+    @Column(name = "STATUS")
     private String status;
+    @Column(name = "TITLE")
     private String title;
+    @ManyToOne
+    @JoinColumn(name = "PERSON_ID")
     private Person owner;
 
     public int getServiceResultId() {

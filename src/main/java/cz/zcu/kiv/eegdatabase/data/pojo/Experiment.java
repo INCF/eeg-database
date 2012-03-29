@@ -3,9 +3,9 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -17,45 +17,83 @@ import java.util.Set;
 @Entity
 @Indexed//Mark for indexing
 @Analyzer(impl = StandardAnalyzer.class)
+@javax.persistence.Table(name="EXPERIMENT")
 public class Experiment implements Serializable {
 
-    @DocumentId                    //Mark id property shared by Core and Search
+    @DocumentId//Mark id property shared by Core and Search
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "EXPERIMENT_ID")
     private int experimentId;
+    @ManyToOne
+    @JoinColumn(name = "WEATHER_ID")
     private Weather weather;
+    @ManyToOne
+    @JoinColumn(name = "SUBJECT_PERSON_ID")
     private Person personBySubjectPersonId;
+    @ManyToOne
+    @JoinColumn(name = "SCNEARIO_ID")
     private Scenario scenario;
+    @ManyToOne
+    @JoinColumn(name = "OWNER_ID")
     private Person personByOwnerId;
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
     @DateBridge(resolution = Resolution.DAY)//Precision stored in the index: day
+    @Column(name = "START_TIME")
     private Timestamp startTime;
     @DateBridge(resolution = Resolution.DAY)//Precision stored in the index: day
+    @Column(name = "END_TIME_ID")
     private Timestamp endTime;
+    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
     @Fields({
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES), // environmentNote value is stored in the index
             @Field(name = "temperature")})   // use a different field name
+    @Column(name = "TEMPERATURE")
     private int temperature;
     @Fields({
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES), // environmentNote value is stored in the index
             @Field(name = "environmentNote")})   // use a different field name
     //@Boost(2)//Boost environmentNote field
+    @Column(name = "ENVIRONMENT_NOTE")
     private String environmentNote;
+    @ManyToMany(mappedBy = "experiments")
     private Set<Person> persons = new HashSet<Person>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<Hardware> hardwares = new HashSet<Hardware>(0);
+    @OneToMany(mappedBy = "experiment")
     private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
+    @OneToMany(mappedBy = "experiment")
     private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
+    @OneToMany(mappedBy = "experiment")
     private Set<History> histories = new HashSet<History>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<Disease> diseases = new HashSet<Disease>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<Software> softwares = new HashSet<Software>(0);
+    @ManyToMany(mappedBy = "experiments")
     private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
+    @ManyToOne
+    @JoinColumn(name = "DIGITIZATION_ID")
     private Digitization digitization;
+    @ManyToOne
+    @JoinColumn(name = "SUBJECT_GROUP_ID")
     private SubjectGroup subjectGroup;
+    @Column(name = "PRIVATE")
     private boolean privateExperiment;
+    @ManyToOne
+    @JoinColumn(name = "ARTEFACT_ID")
     private Artifact artifact;
+    @ManyToOne
+    @JoinColumn(name = "ELECTRODE_CONF_ID")
     private ElectrodeConf electrodeConf;
 
 

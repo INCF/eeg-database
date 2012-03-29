@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,12 +12,20 @@ import java.util.Set;
  * Time: 14:36
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="SOFTWARE")
 public class Software implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "SOFTWARE_ID")
     private int softwareId;
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "DESCRIPTION")
     private String description;
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
+    @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
 
     public Software() {

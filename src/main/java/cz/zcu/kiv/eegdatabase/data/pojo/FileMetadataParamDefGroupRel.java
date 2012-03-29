@@ -1,45 +1,61 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+
+
 /**
  * @author František Liška
  */
+@Entity
+@javax.persistence.Table(name = "FILE_METADATA_PARAM_GROUP_REL")
 public class FileMetadataParamDefGroupRel implements java.io.Serializable {
-  private FileMetadataParamDefGroupRelId id;
-  private ResearchGroup researchGroup;
-  private FileMetadataParamDef fileMetadataParamDef;
 
-  public FileMetadataParamDefGroupRel() {
-  }
+    @EmbeddedId
+    private FileMetadataParamDefGroupRelId id;
 
-  public FileMetadataParamDefGroupRel(FileMetadataParamDefGroupRelId id, ResearchGroup researchGroup, FileMetadataParamDef fileMetadataParamDef) {
-    this.id = id;
-    this.researchGroup = researchGroup;
-    this.fileMetadataParamDef = fileMetadataParamDef;
-  }
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
+    private ResearchGroup researchGroup;
+    @ManyToOne
+    @JoinColumn(name = "FILE_METADATA_PARAM_DEF_ID")
+    private FileMetadataParamDef fileMetadataParamDef;
 
-  public FileMetadataParamDefGroupRelId getId() {
-    return this.id;
-  }
+    public FileMetadataParamDefGroupRel() {
+    }
 
-  public void setId(FileMetadataParamDefGroupRelId id) {
-    this.id = id;
-  }
+    public FileMetadataParamDefGroupRel(FileMetadataParamDefGroupRelId id, ResearchGroup researchGroup, FileMetadataParamDef fileMetadataParamDef) {
+        this.id = id;
+        this.researchGroup = researchGroup;
+        this.fileMetadataParamDef = fileMetadataParamDef;
+    }
 
-  public ResearchGroup getResearchGroup() {
-    return this.researchGroup;
-  }
+    public FileMetadataParamDefGroupRelId getId() {
+        return this.id;
+    }
 
-  public void setResearchGroup(ResearchGroup researchGroup) {
-    this.researchGroup = researchGroup;
-  }
+    public void setId(FileMetadataParamDefGroupRelId id) {
+        this.id = id;
+    }
 
-  public FileMetadataParamDef getFileMetadataParamDef() {
-    return this.fileMetadataParamDef;
-  }
+    public ResearchGroup getResearchGroup() {
+        return this.researchGroup;
+    }
 
-  public void setFileMetadataParamDef(FileMetadataParamDef fileMetadataParamDef) {
-    this.fileMetadataParamDef = fileMetadataParamDef;
-  }
+    public void setResearchGroup(ResearchGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
+
+    public FileMetadataParamDef getFileMetadataParamDef() {
+        return this.fileMetadataParamDef;
+    }
+
+    public void setFileMetadataParamDef(FileMetadataParamDef fileMetadataParamDef) {
+        this.fileMetadataParamDef = fileMetadataParamDef;
+    }
 
 }
 

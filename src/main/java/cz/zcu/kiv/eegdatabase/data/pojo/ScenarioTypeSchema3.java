@@ -1,6 +1,11 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import org.hibernate.annotations.Type;
 import org.w3c.dom.Document;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,8 +14,12 @@ import org.w3c.dom.Document;
  * Time: 21:35
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="SCENARIO_TYPE_SCHEMA3")
+@PrimaryKeyJoinColumn(name = "SCENARIO_ID", referencedColumnName = "SCENARIO_ID")
 public class ScenarioTypeSchema3   extends ScenarioType<Document> {
-
+    @Column(name = "SCENARIO_XML")
+    @Type(type = "cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType")
     private Document scenarioXml;
 
     public ScenarioTypeSchema3() {

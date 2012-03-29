@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import java.io.Serializable;
+import javax.persistence.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -9,9 +9,16 @@ import java.io.Serializable;
  * Time: 19:46
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="SCENARIO_TYPE_PARENT")
 public abstract class ScenarioType<T> implements IScenarioType<T>, java.io.Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "SCENARIO_ID")
     private int scenarioId;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name="SCENARIO_ID")
+    @PrimaryKeyJoinColumn
     private Scenario scenario;
 
     public int getScenarioId() {

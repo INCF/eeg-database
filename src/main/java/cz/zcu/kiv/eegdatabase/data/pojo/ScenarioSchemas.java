@@ -1,32 +1,35 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import com.sun.xml.xsom.XSSchema;
-import com.sun.xml.xsom.impl.parser.SchemaDocumentImpl;
-import com.sun.xml.xsom.parser.SchemaDocument;
-import com.sun.xml.xsom.parser.XSOMParser;
-import com.sun.xml.xsom.XSSchemaSet;
-import org.apache.xerces.impl.xs.XSElementDecl;
-import org.xml.sax.SAXException;
-
+import javax.persistence.*;
 import java.sql.Clob;
-import java.sql.SQLException;
-import java.util.Iterator;
-import java.util.Map;
-import java.util.Set;
 
 /**
  *
  * @author Jan Koren
  */
+@Entity
+@javax.persistence.Table(name="SCENARIO_SCHEMA")
 public class ScenarioSchemas implements java.io.Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "SCHEMA_ID")
   private int schemaId;
+    @Column(name = "SCHEMA_NAME")
   private String schemaName;
+    @Column(name = "SQL")
+    @Lob
   private Clob sql;
+    @Lob
+    @Column(name = "HBM_XML")
   private Clob hbmXml;
+    @Lob
+    @Column(name = "POJO")
   private Clob pojo;
+    @Column(name = "BEAN")
   private String bean;
+    @Column(name = "DESCRIPTION")
   private String description;
+    @Column(name = "APPROVED")
   private char approved;
 
   public ScenarioSchemas() {

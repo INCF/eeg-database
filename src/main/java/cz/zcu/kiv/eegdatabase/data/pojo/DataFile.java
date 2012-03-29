@@ -1,9 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
-import org.hibernate.annotations.Entity;
 import org.hibernate.search.annotations.*;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
 import java.util.HashSet;
@@ -14,23 +14,42 @@ import java.util.Set;
  */
 @Entity
 @Indexed
+@javax.persistence.Table(name="DATA_FILE")
 public class DataFile implements Serializable {
 
     @DocumentId
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "DATA_FILE_ID")
     private int dataFileId;
+    @ManyToOne
+    @JoinColumn(name = "EXPERIMENT_ID")
     private Experiment experiment;
+    @Column(name = "DESCRIPTION")
     private String description;
+    @Column(name = "FILE_CONTENT")
+    @Lob
     private Blob fileContent;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "mimetype")}) //use a different field name
+    @Column(name = "MIMETYPE")
     private String mimetype;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "filename")}) //use a different field name
+    @Column(name = "FILENAME")
     private String filename;
+    @OneToMany(mappedBy = "dataFile")
     private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(0);
+    @OneToMany(mappedBy = "dataFile")
     private Set<History> histories = new HashSet<History>(0);
+    @OneToMany(mappedBy = "descImg")
+    private Set<ElectrodeConf> electrodeConfs = new HashSet<ElectrodeConf>(0);
+    @ManyToOne
+    @JoinColumn(name = "ANALYSIS_ID")
+    private Analysis analysis;
+    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
     public DataFile() {
@@ -121,6 +140,22 @@ public class DataFile implements Serializable {
 
     public void setHistories(Set<History> histories) {
         this.histories = histories;
+    }
+
+    public Analysis getAnalysis() {
+        return analysis;
+    }
+
+    public void setAnalysis(Analysis analysis) {
+        this.analysis = analysis;
+    }
+
+    public Set<ElectrodeConf> getElectrodeConfs() {
+        return electrodeConfs;
+    }
+
+    public void setElectrodeConfs(Set<ElectrodeConf> electrodeConfs) {
+        this.electrodeConfs = electrodeConfs;
     }
 }
 

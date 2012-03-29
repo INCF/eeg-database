@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import java.io.Serializable;
 
 /**
@@ -9,11 +13,19 @@ import java.io.Serializable;
  * Time: 14:14
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="STIMULUS_REL")
 public class StimulusRel implements Serializable {
-
+    @EmbeddedId
     private StimulusRelId stimulusRelId;
+    @ManyToOne
+    @JoinColumn(name = "SCENARIO_ID")
     private Scenario scenario;
+    @ManyToOne
+    @JoinColumn(name = "STIMULUS_ID")
     private Stimulus stimulus;
+    @ManyToOne
+    @JoinColumn(name = "STIMULUS_TYPE_ID")
     private StimulusType stimulusType;
 
     public StimulusRel() {

@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -12,15 +13,28 @@ import java.util.Set;
  * Time: 14:37
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="ELECTRODE_LOCATION")
 public class ElectrodeLocation implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "ELECTRODE_LOCATION_ID")
     private int electrodeLocationId;
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "DESCRIPTION")
     private String description;
+    @Column(name = "SHORTCUT")
     private String shortcut;
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
+    @ManyToOne
+    @JoinColumn(name = "ELECTRODE_TYPE_ID")
     private ElectrodeType electrodeType;
+    @ManyToOne
+    @JoinColumn(name = "ELECTRODE_FIX_ID")
     private ElectrodeFix electrodeFix;
+    @ManyToMany(mappedBy = "electrodeLocations")
     private Set<ElectrodeConf> electrodeConfs = new HashSet<ElectrodeConf>(0);
 
     public ElectrodeLocation() {

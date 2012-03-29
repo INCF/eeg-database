@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,11 +12,18 @@ import java.util.Set;
  * Time: 13:14
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="EDUCATION_LEVEL")
 public class EducationLevel implements Serializable {
-
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "EDUCATION_LEVEL_ID")
     private int educationLevelId;
+    @Column(name = "TITLE")
     private String title;
+    @Column(name = "IS_DEFAULT")
     private int defaultNumber;
+    @OneToMany(mappedBy = "educationLevel")
     private Set<Person> persons = new HashSet<Person>(0);
 
     public EducationLevel() {

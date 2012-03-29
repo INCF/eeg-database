@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 
@@ -11,7 +11,12 @@ import java.sql.Timestamp;
  * Time: 9:04
  * To change this template use File | Settings | File Templates.
  */
+@Entity
+@javax.persistence.Table(name="SYNC_CHANGES")
 public class SyncChanges implements Serializable{
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    @Column(name = "TABLE_NAME")
     private String tableName;
 
 
@@ -22,7 +27,7 @@ public class SyncChanges implements Serializable{
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }
-
+    @Column(name = "LAST_CHANGE")
     private Timestamp lastChange;
 
 
