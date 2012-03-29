@@ -9,7 +9,7 @@
 
     <table class="standardValueTable">
         <tr>
-            <th><fmt:message key="label.userName"/></th>
+            <th><fmt:message key="label.emailLogin"/></th>
             <td>${userInfo.username}</td>
         </tr>
         <tr>

@@ -14,6 +14,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.velocity.exception.ParseErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -36,6 +37,7 @@ public class HibernatePersonService implements PersonService {
 
     //TODO remove when obsolete (education level enforced or nullable)
     private String DEFAULT_EDUCATION_LEVEL = "NotKnown";
+    private final static char DEFAULT_LATERALITY = 'X';
 
     @Autowired
     private PersonDao personDao;
@@ -51,9 +53,8 @@ public class HibernatePersonService implements PersonService {
         person.setSurname(rc.getSurname());
         person.setDateOfBirth(parseDate(rc.getDateOfBirth()));
         person.setGender(rc.getGender().charAt(0));
-        person.setEmail(rc.getEmail());
-        person.setUsername(rc.getUsername());
-        person.setLaterality('X');
+        person.setUsername(rc.getEmail());
+        person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelDao.read(rc.getEducationLevel()));
         person.setPassword(encodePassword(rc.getPassword()));
 
@@ -72,14 +73,13 @@ public class HibernatePersonService implements PersonService {
         person.setSurname(apc.getSurname());
         person.setDateOfBirth(parseDate(apc.getDateOfBirth()));
         person.setGender(apc.getGender().charAt(0));
-        person.setEmail(apc.getEmail());
         person.setPhoneNumber(apc.getPhoneNumber());
         person.setNote(apc.getNote());
         person.setLaterality(apc.getLaterality().charAt(0));
         person.setEducationLevel(educationLevelDao.read(apc.getEducationLevel()));
 
         //Code specific for this object type
-        person.setUsername(createUniqueUsername(apc.getGivenname(), apc.getSurname()));
+        person.setUsername(apc.getEmail());
         person.setPassword(encodeRandomPassword());
         log.debug("Setting authority to ROLE_READER");
         person.setAuthority(Util.ROLE_READER);
@@ -91,15 +91,15 @@ public class HibernatePersonService implements PersonService {
     public Person createPerson(User userFb, Integer educationLevelId) {
         //copying the data to Person entity
         Person person = new Person();
+        person.setUsername(userFb.getEmail());
         person.setGivenname(userFb.getFirstName());
         person.setSurname(userFb.getLastName());
         person.setGender(userFb.getGender().toUpperCase().charAt(0));
-        person.setEmail(userFb.getEmail());
         person.setDateOfBirth(new Timestamp(userFb.getBirthdayAsDate().getTime()));
+        person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
 
         //Code specific for this object type
-        person.setUsername(createUniqueUsername(userFb.getFirstName(), userFb.getLastName()));
         person.setPassword(encodeRandomPassword());
         log.debug("Setting authority to ROLE_USER");
         person.setAuthority("ROLE_USER");
@@ -112,18 +112,18 @@ public class HibernatePersonService implements PersonService {
     @Override
     public Person createPerson(String givenName, String surname, String dateOfBirth, String email,
                                String gender, String phoneNumber, String note, Integer educationLevelId,
-                               String userName, String plainTextPwd, String authority) throws ParseException {
+                               String plainTextPwd, String authority) throws ParseException {
         Person person = new Person();
         person.setGivenname(givenName);
         person.setSurname(surname);
         person.setDateOfBirth(parseDate(dateOfBirth));
         person.setGender(gender.charAt(0));
-        person.setEmail(email);
         person.setPhoneNumber(phoneNumber);
         person.setNote(note);
-        person.setUsername(userName);
+        person.setUsername(email);
         person.setPassword(encodePassword(plainTextPwd));
         person.setAuthority(authority);
+        person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
 
         return createPerson(person);
@@ -134,13 +134,12 @@ public class HibernatePersonService implements PersonService {
                                String gender, String phoneNumber, String note, Integer educationLevelId)
             throws ParseException {
 
-        String userName = createUniqueUsername(givenName, surname);
         String plainTextPwd = ControllerUtils.getRandomPassword();
         log.debug("Setting authority to ROLE_READER");
         String authority = Util.ROLE_READER;
 
         return createPerson(givenName, surname, dateOfBirth,email,gender,phoneNumber,note,educationLevelId,
-                userName,plainTextPwd,authority);
+                plainTextPwd,authority);
     }
 
     @Override
@@ -168,6 +167,7 @@ public class HibernatePersonService implements PersonService {
         log.debug("Phone number = " + person.getPhoneNumber());
         log.debug("Note = " + person.getNote());
         log.debug("Authority = " + person.getAuthority());
+        log.debug("Laterality = " + person.getLaterality());
 
         personDao.create(person);
         return person;
@@ -201,7 +201,7 @@ public class HibernatePersonService implements PersonService {
      * @return password encoded by whatever mechanism is currently used to store passwords
      */
     private String encodePassword(String plaintextPassword){
-        String result = ControllerUtils.getMD5String(plaintextPassword);
+        String result = new BCryptPasswordEncoder().encode(plaintextPassword);
         //log.debug("Encoded password = " + result);//uncomment if needed
         return result;
     }

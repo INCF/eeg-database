@@ -78,10 +78,9 @@ public class MailServiceTest extends AbstractDataAccessTest {
 
     private Person createPerson() {
         Person person = new Person();
-        person.setUsername("junit-test-reader");
+        person.setUsername(INCOMING_EMAIL_ADDRESS);
         person.setAuthority(Util.ROLE_READER);
         person.setPassword(ControllerUtils.getMD5String(ControllerUtils.getRandomPassword()));
-        person.setEmail(INCOMING_EMAIL_ADDRESS);
         person.setSurname("junit-test-surname");
         person.setGivenname("junit-test-name");
         person.setAuthenticationHash("DEADBEEF");

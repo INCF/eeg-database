@@ -85,23 +85,6 @@ public class SimplePersonDao
         return (!list.isEmpty());
     }
 
-     /**
-     * This method compares desired email with
-     * content of database. If the list is empty, then
-     * email wasn´t found in the database.
-     *
-     * @param email - searched email
-     * @return true if email exists (was founded},
-     *         else return false
-     */
-    public boolean emailExists(String email) {
-        String HQLselect = "from Person person " + "where person.email = :email";
-        List<Person> list = getHibernateTemplate().
-                findByNamedParam(HQLselect, "email", email);
-        return (!list.isEmpty());
-    }
-
-
     /**
      * This method compares desired email with
      * content of database. If the list is empty, then

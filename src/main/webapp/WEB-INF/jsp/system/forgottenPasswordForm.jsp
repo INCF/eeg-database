@@ -12,7 +12,7 @@
         <fieldset>
 
             <div class="itemBox">
-                <form:label path="username" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key='page.forgottenPassword.username'/></form:label>
+                <form:label path="username" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key='label.email'/></form:label>
 
                 <form:input path="username" cssClass="textField dateField" cssErrorClass="textField dateField errorField" />
 

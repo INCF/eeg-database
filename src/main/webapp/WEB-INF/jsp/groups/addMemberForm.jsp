@@ -14,7 +14,7 @@
 
       <input type="hidden" name="groupFormId" value="${groupId}"/>
 
-      <af:textField path="userName" labelKey="label.userName"/>
+      <af:textField path="userName" labelKey="label.email"/>
 
 
       <div class="selectBox">

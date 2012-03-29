@@ -46,7 +46,7 @@ public class ControllerUtils {
     public static String getLoggedUserName() {
         Object o = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
         if (o != null) {
-            Collection<GrantedAuthority> authorities =
+            Collection<? extends GrantedAuthority> authorities =
                     SecurityContextHolder.getContext().getAuthentication().getAuthorities();
         }
 

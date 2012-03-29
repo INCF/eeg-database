@@ -8,6 +8,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailSender;
 import org.springframework.mail.SimpleMailMessage;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -58,7 +59,7 @@ public class ForgottenPasswordController extends SimpleFormController {
             log.debug("E-mail message sent successfully");
 
             log.debug("Updating new password into database");
-            user.setPassword(ControllerUtils.getMD5String(password));
+            user.setPassword(new BCryptPasswordEncoder().encode(password));
             personDao.update(user);
             log.debug("Password updated");
         } catch (MailException e) {

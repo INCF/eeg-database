@@ -32,7 +32,6 @@ public class RegistrationValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "dateOfBirth", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "gender", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "email", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "username", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "password", "required.field");
 
         try {
@@ -52,15 +51,9 @@ public class RegistrationValidator implements Validator {
             errors.rejectValue("email", "invalid.email");
         }
 
-        if (!Pattern.matches("^[a-z][a-z0-9.-]+$", registrationCommand.getUsername())) {
-            errors.rejectValue("username", "invalid.username");
+        if (personDao.usernameExists(registrationCommand.getEmail())) {
+            errors.rejectValue("email", "inUse.email");
         }
-
-        if (personDao.usernameExists(registrationCommand.getUsername())) {
-            errors.rejectValue("username", "inUse.username");
-        }
-
-
     }
 
     public PersonDao getPersonDao() {

@@ -89,7 +89,7 @@ public class UserDataImpl implements UserDataService {
 
     public boolean isServiceAvailable() {
 
-        log.debug("User " + personDao.getLoggedPerson().getUsername() +
+        log.debug("User " + personDao.getLoggedPerson().getEmail() +
                 " verified connection with dataDownload web service.");
         return true;
     }
@@ -159,7 +159,7 @@ public class UserDataImpl implements UserDataService {
 
         }
 
-        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved experiment list.");
+        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved experiment list.");
 
         return exps;
     }
@@ -208,7 +208,7 @@ public class UserDataImpl implements UserDataService {
             people.add(person);
         }
 
-        log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of people.");
+        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of people.");
         return people;
     }
 
@@ -258,10 +258,10 @@ public class UserDataImpl implements UserDataService {
                 }
             }
 
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved list of data files.");
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of data files.");
         } catch (SQLException e) {
             UserDataServiceException exception = new UserDataServiceException(e);
-            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve list of data files!");
+            log.error("User " + personDao.getLoggedPerson().getEmail() + " did NOT retrieve list of data files!");
             log.error(e.getMessage(), e);
             throw exception;
         }
@@ -319,10 +319,10 @@ public class UserDataImpl implements UserDataService {
                     return null;
                 }
             };
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " retrieved file " + dataFileId);
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved file " + dataFileId);
         } catch (SQLException e) {
             UserDataServiceException exception = new UserDataServiceException(e);
-            log.error("User " + personDao.getLoggedPerson().getUsername() + " did NOT retrieve file " + dataFileId);
+            log.error("User " + personDao.getLoggedPerson().getEmail() + " did NOT retrieve file " + dataFileId);
             log.error(e.getMessage(), e);
             throw exception;
         }
@@ -356,11 +356,11 @@ public class UserDataImpl implements UserDataService {
 
         if (dataFile.isAdded()) {
             int fileId = dataFileDao.create(file);
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " created new data file (primary key " + fileId + ").");
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " created new data file (primary key " + fileId + ").");
             return fileId;
         } else {
             dataFileDao.update(file);
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " edited existing data file (primary key " + file.getDataFileId() + ").");
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " edited existing data file (primary key " + file.getDataFileId() + ").");
             return file.getDataFileId();
         }
     }
@@ -423,11 +423,11 @@ public class UserDataImpl implements UserDataService {
 
         if (!experiment.isAdded()) {
             experimentDao.update(exp);
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " edited existing experiment (primary key " + experiment.getExperimentId() + ").");
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " edited existing experiment (primary key " + experiment.getExperimentId() + ").");
             return exp.getExperimentId();
         } else {
             int expId = (Integer) experimentDao.create(exp);
-            log.debug("User " + personDao.getLoggedPerson().getUsername() + " saved new experiment (primary key " + experiment.getExperimentId() + ").");
+            log.debug("User " + personDao.getLoggedPerson().getEmail() + " saved new experiment (primary key " + experiment.getExperimentId() + ").");
             return expId;
         }
 

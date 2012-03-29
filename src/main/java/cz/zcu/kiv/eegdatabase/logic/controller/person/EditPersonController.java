@@ -50,7 +50,7 @@ public class EditPersonController extends SimpleFormController {
             data.setSurname(person.getSurname());
             data.setDateOfBirth(ControllerUtils.getDateFormat().format(person.getDateOfBirth()));
             data.setGender(new Character(person.getGender()).toString());
-            data.setEmail(person.getEmail());
+            data.setEmail(person.getUsername());
             data.setPhoneNumber(person.getPhoneNumber());
             data.setNote(person.getNote());
         }
@@ -103,8 +103,8 @@ public class EditPersonController extends SimpleFormController {
             log.debug("Setting gender = " + data.getGender());
             person.setGender(data.getGender().charAt(0));
 
-            log.debug("Setting email = " + data.getEmail());
-            person.setEmail(data.getEmail());
+            log.debug("Setting username/email = " + data.getEmail());
+            person.setUsername(data.getEmail());
 
             log.debug("Setting phone number = " + data.getPhoneNumber());
             person.setPhoneNumber(data.getPhoneNumber());

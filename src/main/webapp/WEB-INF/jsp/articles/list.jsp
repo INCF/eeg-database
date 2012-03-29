@@ -33,7 +33,8 @@
           </span>
           |
           <span class="author">
-            <c:out value="${article.person.username}" />
+            <c:out value="${article.person.givenname}" />
+            <c:out value="${article.person.surname}" />
           </span>
           |
           <span class="commentsCount">

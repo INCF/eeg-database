@@ -15,7 +15,7 @@
       <tr>
         <th><fmt:message key="dataTable.heading.name"/></th>
         <th><fmt:message key="dataTable.heading.surname"/></th>
-        <th><fmt:message key="dataTable.heading.username"/></th>
+        <th><fmt:message key="dataTable.heading.email"/></th>
         <th><fmt:message key="dataTable.heading.roleInGroup"/></th>
         <c:if test="${userIsAdminInGroup}">
           <th style="width: 250px;"><fmt:message key="dataTable.heading.changeRoleTo"/></th>

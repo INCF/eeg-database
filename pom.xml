@@ -13,7 +13,7 @@
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<build.timestamp>${maven.build.timestamp}</build.timestamp>
 		<spring.version>3.0.5.RELEASE</spring.version>
-		<spring.security.version>3.0.7.RELEASE</spring.security.version>
+		<spring.security.version>3.1.0.RELEASE</spring.security.version>
 		<spring.webmvc.struts.version>2.5.6.SEC02</spring.webmvc.struts.version>
 		<slf4j-version>1.6.1</slf4j-version>
 

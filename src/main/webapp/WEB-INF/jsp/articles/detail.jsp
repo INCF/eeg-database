@@ -33,7 +33,8 @@
               </span>
               |
               <span class="author">
-                <c:out value="${article.person.username}" />
+                <c:out value="${article.person.givenname}" />
+                <c:out value="${article.person.surname}" />
               </span>
               <c:if test="${userCanEdit}">
                 | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
@@ -72,8 +73,10 @@
                 <li class="comment">
                   <span class="subheading">
                     <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
-                    <span class="author"><c:out value="${comment.person.username}" /></span>
-                  </span>
+                    <span class="author">
+                        <c:out value="${comment.person.givenname}" />
+                        <c:out value="${comment.person.surname}" />
+                    </span>
 
                   <span class="comment">
                     <a href="<c:url value="add-article-comment.html?articleId=${article.articleId}&amp;parentId=${comment.commentId}" />"><fmt:message key="label.comment" /></a>

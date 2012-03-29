@@ -26,9 +26,6 @@
         <property name="laterality" type="char">
             <column length="1" name="LATERALITY" not-null="true"/>
         </property>
-        <property name="email" type="string">
-            <column length="50" name="EMAIL"/>
-        </property>
         <property name="phoneNumber" type="string">
             <column length="20" name="PHONE_NUMBER"/>
         </property>

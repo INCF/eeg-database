@@ -8,7 +8,6 @@ public class RegistrationCommand {
     private String givenname;
     private String surname;
     private String email;
-    private String username;
     private String gender;
     private String dateOfBirth;
     private String password;
@@ -78,14 +77,6 @@ public class RegistrationCommand {
 
     public void setSurname(String surname) {
         this.surname = surname;
-    }
-
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public int getEducationLevel() {

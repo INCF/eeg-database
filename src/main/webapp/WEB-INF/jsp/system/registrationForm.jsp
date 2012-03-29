@@ -55,16 +55,6 @@
       </div>
 
       <div class="itemBox">
-        <form:label path="username" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.username"/></form:label>
-
-        <form:input path="username" cssClass="textField" cssErrorClass="textField errorField" />
-
-        <span class="note"><fmt:message key="form.note.usernameFormatNote"/></span>
-
-        <form:errors path="username" cssClass="errorBox" />
-      </div>
-
-      <div class="itemBox">
         <form:label path="password" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.password"/></form:label>
 
         <form:password path="password" cssClass="textField" cssErrorClass="textField errorField" />

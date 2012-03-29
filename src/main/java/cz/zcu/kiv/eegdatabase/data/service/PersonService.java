@@ -20,12 +20,12 @@ public interface PersonService {
 
     Person createPerson(User userFb, Integer educationLevelId);
 
-    Person createPerson(String givenName, String surname, String dateOfBirth, String email,
-                        String gender, String phoneNumber, String note, Integer educationLevelId
-                        , String userName, String plainTextPwd, String authority) throws ParseException;
+    public Person createPerson(String givenName, String surname, String dateOfBirth, String email,
+                           String gender, String phoneNumber, String note, Integer educationLevelId,
+                           String plainTextPwd, String authority) throws ParseException;
 
     /**
-     * Creates person with username generated from givenName & userName, random password and minimal authority
+     * Creates person with random password and minimal authority
      */
     Person createPerson(String givenName, String surname, String dateOfBirth, String email,
                         String gender, String phoneNumber, String note, Integer educationLevelId) throws ParseException;

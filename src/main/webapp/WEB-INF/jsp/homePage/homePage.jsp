@@ -259,7 +259,7 @@
                                 value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
                     </c:if>
                     <div>
-                        <label for="j_username" class="fieldLabel"><fmt:message key="label.username"/></label>
+                        <label for="j_username" class="fieldLabel"><fmt:message key="label.email"/></label>
                         <input type="text" name="j_username" id="j_username"/>
                     </div>
                     <div>

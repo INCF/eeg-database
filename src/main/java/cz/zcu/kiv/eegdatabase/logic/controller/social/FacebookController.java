@@ -81,7 +81,7 @@ public class FacebookController extends MultiActionController {
             /* Is already stored in application? */
             if (personDao.fbUidExists(userFb.getId())) {
                 person = personDao.getPersonByFbUid(userFb.getId());
-            } else if (personDao.emailExists(userFb.getEmail())) {
+            } else if (personDao.usernameExists(userFb.getEmail())) {
                 mav = new ModelAndView("infoPage");
                 mav.addObject("message", "infoPage.FacebookEmailExists");
                 return mav;

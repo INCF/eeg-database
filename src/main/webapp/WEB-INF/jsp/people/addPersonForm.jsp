@@ -66,7 +66,7 @@
 
             <div class="itemBox">
                 <form:label path="email" cssClass="textFieldLabel"
-                            cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.email"/></form:label>
+                            cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.emailLogin"/></form:label>
 
                 <form:input path="email" cssClass="textField" cssErrorClass="textField errorField"/>
 

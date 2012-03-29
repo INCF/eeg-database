@@ -23,7 +23,7 @@
           <select name="source_1">
             <option value="givenname"><fmt:message key="label.givenname"/></option>
             <option value="surname"><fmt:message key="label.surname"/></option>
-            <option value="email"><fmt:message key="label.email"/></option>
+            <option value="username"><fmt:message key="label.email"/></option>
             <option value="gender"><fmt:message key="label.gender"/></option>
             <option value="ageMin"><fmt:message key="label.ageMin"/></option>
             <option value="ageMax"><fmt:message key="label.ageMax"/></option>

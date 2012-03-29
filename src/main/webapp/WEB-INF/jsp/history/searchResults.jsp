@@ -28,7 +28,7 @@
             <th style="height: 20px;"><fmt:message key="dataTable.heading.id"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.fileName"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-            <th style="height: 20px;"><fmt:message key="dataTable.heading.username"/></th>
+            <th style="height: 20px;"><fmt:message key="dataTable.heading.user"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.usersDefaultGroup"/></th>
             <th style="height: 20px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
           </tr>
@@ -49,7 +49,7 @@
                 <td><c:out value="${historyResults.dataFile.filename}" /></td>
                 <td><c:out value="${historyResults.dataFile.experiment.scenario.title}" /></td>
               </c:if>
-                <td><c:out value="${historyResults.person.username}" /></td>
+                <td><c:out value="${historyResults.person.givenname}" /> <c:out value="${historyResults.person.surname}" /></td>
                  <c:if test="${historyResults.person.defaultGroup != null}">
                 <td><c:out value="${historyResults.person.defaultGroup.title}" /></td>
                  </c:if>

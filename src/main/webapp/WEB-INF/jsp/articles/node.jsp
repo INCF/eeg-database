@@ -8,7 +8,10 @@
     <li>
       <span class="subheading">
         <span class="date"><fmt:formatDate value="${comment.time}" type="both" dateStyle="default" timeStyle="default" /></span> |
-        <span class="author"><c:out value="${comment.person.username}" /></span>
+        <span class="author">
+          <c:out value="${comment.person.givenname}" />
+          <c:out value="${comment.person.surname}" />
+        </span>
       </span>
 
       <span class="comment">

@@ -7,6 +7,7 @@ import cz.zcu.kiv.eegdatabase.logic.delegate.MyAccountDelegate;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
@@ -33,7 +34,7 @@ public class ChangePasswordController extends SimpleFormController {
 
         log.debug("Saving new password for actual user");
         String newPassword = changePasswordCommand.getNewPassword();
-        String passwordHash = ControllerUtils.getMD5String(newPassword);
+        String passwordHash = new BCryptPasswordEncoder().encode(newPassword);
         Person user = personDao.getPerson(ControllerUtils.getLoggedUserName());
         user.setPassword(passwordHash);
         log.debug("Setting password hash [" + passwordHash + "] for user [" + user.getUsername() + "]");

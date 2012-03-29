@@ -25,8 +25,6 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 
     public boolean fbUidExists(String id);
 
-    public boolean emailExists(String email);
-
     public List<Person> getSupervisors();
 
     public Person getLoggedPerson();

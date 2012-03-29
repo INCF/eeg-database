@@ -60,11 +60,6 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
         return (realPersonDao == null) ? null : realPersonDao.fbUidExists(id);
     }
 
-    public boolean emailExists(String email)
-    {
-        return (realPersonDao == null) ? null : realPersonDao.emailExists(email);
-    }
-
     public List<Person> getSupervisors()
     {
         return (realPersonDao == null) ? null : realPersonDao.getSupervisors();

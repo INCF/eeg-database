@@ -10,7 +10,7 @@
   <form:form action="${formUrl}" method="post" commandName="changeUserRole" cssClass="standardForm">
     <fieldset>
 
-      <af:textField path="userName" labelKey="label.userName"/>
+      <af:textField path="userName" labelKey="label.emailLogin"/>
 
 
       <div class="selectBox">

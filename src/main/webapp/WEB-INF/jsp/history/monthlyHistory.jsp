@@ -84,7 +84,7 @@
         <th style="width: 60px;"><fmt:message key="dataTable.heading.id"/></th>
         <th><fmt:message key="dataTable.heading.fileName"/></th>
         <th><fmt:message key="dataTable.heading.scenarioTitle"/></th>
-        <th><fmt:message key="dataTable.heading.username"/></th>
+        <th><fmt:message key="dataTable.heading.user"/></th>
 
         <th style="width: 80px;"><fmt:message key="dataTable.heading.detailOfUser"/></th>
       </tr>
@@ -107,7 +107,7 @@
         </c:if>
 
 
-        <td ><c:out value="${historyList.person.username}" /></td>
+        <td ><c:out value="${historyList.person.givenname}" /> <c:out value="${historyList.person.surname}" /></td>
         <td ><a href="<c:url value='/people/detail.html?personId=${historyList.person.personId}'/>"><fmt:message key="link.detail"/></a></td>
       </tr>
     </c:forEach>

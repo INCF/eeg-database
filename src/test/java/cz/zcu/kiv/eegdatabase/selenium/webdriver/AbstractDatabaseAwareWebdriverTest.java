@@ -13,6 +13,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.ie.InternetExplorerDriver;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 import java.util.List;
 
@@ -35,7 +37,7 @@ public abstract class AbstractDatabaseAwareWebdriverTest extends AbstractDataAcc
     public static final String DRIVER_BASE_ADDR = "http://localhost:8080/EEGDatabase";
     public static final String LOGIN_PAGE_TITLE = "Home page - EEGbase";//homepage used as login page
 
-    protected static final String TEST_USER_NAME = "junit-test-user";
+    protected static final String TEST_USER_NAME = "junit@test.user";
     protected static final String TEST_USER_PASSWORD = ControllerUtils.getRandomPassword();
     private static final String TEST_EDUCATION_LEVEL = "junit-education-level";
 
@@ -94,13 +96,13 @@ public abstract class AbstractDatabaseAwareWebdriverTest extends AbstractDataAcc
         Person p = new Person();
         p.setUsername(TEST_USER_NAME);
         p.setAuthority(role);
-        p.setPassword(ControllerUtils.getMD5String(TEST_USER_PASSWORD));
-        p.setEmail("junit@test.reader");
         p.setSurname("junit-test-surname");
         p.setGivenname("junit-test-name");
         p.setConfirmed(true);
         p.setGender('M');
         p.setLaterality('X');
+        p.setNote("note");
+        p.setPassword(new BCryptPasswordEncoder().encode(TEST_USER_PASSWORD));
         return p;
     }
 

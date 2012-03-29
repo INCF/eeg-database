@@ -36,10 +36,6 @@
             <td>${personDetail.phoneNumber}</td>
         </tr>
         <tr>
-            <th><fmt:message key="label.username"/></th>
-            <td>${personDetail.username}</td>
-        </tr>
-        <tr>
             <th><fmt:message key="label.userNote"/></th>
             <td>${personDetail.note}</td>
         </tr>

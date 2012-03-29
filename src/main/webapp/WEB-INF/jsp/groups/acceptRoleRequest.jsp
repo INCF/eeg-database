@@ -12,7 +12,7 @@
   <form:form action="${formUrl}" method="post" commandName="editGroupRoleCommand" name="editGroupRoleCommand" cssClass="standardInputForm">
     <fieldset>
        <div class="itemBox">
-      <form:label path="user" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key='label.userName'/></form:label>
+      <form:label path="user" cssClass="textFieldLabel" cssErrorClass="textFieldLabel errorLabel"><fmt:message key='label.email'/></form:label>
       <c:out value="${person.username}" />
       </div>
 

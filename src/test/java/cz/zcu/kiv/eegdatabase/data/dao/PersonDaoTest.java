@@ -18,14 +18,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.security.crypto.bcrypt.BCrypt;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -44,8 +44,11 @@ public class PersonDaoTest extends AbstractDataAccessTest {
     @Autowired
     protected PersonService personService;
 
+    BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     Person person;
     EducationLevel educationLevel;
+    String password;
+
 
     @Before
     public void init(){
@@ -54,11 +57,11 @@ public class PersonDaoTest extends AbstractDataAccessTest {
         educationLevel.setTitle("junit-education-level");
         educationLevel.setEducationLevelId(0);
 
+        password = ControllerUtils.getRandomPassword();
         person = new Person();
-        person.setUsername("junit-test-reader");
+        person.setUsername("junit@test.reader");
         person.setAuthority(Util.ROLE_READER);
-        person.setPassword(ControllerUtils.getMD5String(ControllerUtils.getRandomPassword()));
-        person.setEmail("junit@test.reader");
+        person.setPassword(encoder.encode(password));
         person.setSurname("junit-test-surname");
         person.setGivenname("junit-test-name");
         person.setGender('M');
@@ -69,11 +72,15 @@ public class PersonDaoTest extends AbstractDataAccessTest {
     @Test
     @Transactional
     public void testCreateEducationLevel(){
-        init();
         int startCount = educationLevelDao.getEducationLevels("junit-education-level").size();
         Integer id = (Integer) educationLevelDao.create(educationLevel);
         assertNotNull(id);
         assertEquals(startCount + 1, educationLevelDao.getEducationLevels("junit-education-level").size());
+    }
+
+    @Test
+    public void testVerifyPassword(){
+        assertTrue(encoder.matches(password, person.getPassword()));
     }
 
     @Test

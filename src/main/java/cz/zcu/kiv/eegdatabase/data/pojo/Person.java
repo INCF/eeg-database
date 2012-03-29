@@ -32,12 +32,6 @@ public class Person implements Serializable, Comparable<Person> {
     private Timestamp dateOfBirth;
     @Column(name = "GENDER")
     private char gender;
-    @Fields({
-            @Field(index = Index.TOKENIZED), //same property indexed multiple times
-            @Field(name = "email"),
-            @Field(store = Store.YES)}) //use a different field name
-            @Column(name = "EMAIL")
-    private String email;
     @Column(name = "PHONE_NUMBER")
     private String phoneNumber;
     @Column(name = "REGISTRATION_DATE")
@@ -104,13 +98,12 @@ public class Person implements Serializable, Comparable<Person> {
         this.gender = gender;
     }
 
-    public Person(int personId, String givenname, String surname, Timestamp dateOfBirth, char gender, String email, String phoneNumber, String note, String username, String password, String authority, Set<Experiment> experiments, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experimentsForOwnerId, Set<Experiment> experimentsForSubjectPersonId, Set<PersonOptParamVal> personOptParamVals, Set<ResearchGroup> researchGroups) {
+    public Person(int personId, String givenname, String surname, Timestamp dateOfBirth, char gender, String phoneNumber, String note, String username, String password, String authority, Set<Experiment> experiments, Set<ResearchGroupMembership> researchGroupMemberships, Set<Scenario> scenarios, Set<Experiment> experimentsForOwnerId, Set<Experiment> experimentsForSubjectPersonId, Set<PersonOptParamVal> personOptParamVals, Set<ResearchGroup> researchGroups) {
         this.personId = personId;
         this.givenname = givenname;
         this.surname = surname;
         this.dateOfBirth = dateOfBirth;
         this.gender = gender;
-        this.email = email;
         this.phoneNumber = phoneNumber;
         this.note = note;
         this.username = username;
@@ -166,11 +159,7 @@ public class Person implements Serializable, Comparable<Person> {
     }
 
     public String getEmail() {
-        return this.email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
+        return this.username;//currently username IS the email
     }
 
     public String getPhoneNumber() {

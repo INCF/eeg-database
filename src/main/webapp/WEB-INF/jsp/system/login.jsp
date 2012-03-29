@@ -1,6 +1,4 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
-<%@ page import="org.springframework.security.web.authentication.AuthenticationProcessingFilter" %>
-<%@ page import="org.springframework.security.web.authentication.AbstractProcessingFilter" %>
 <%@ page import="org.springframework.security.core.AuthenticationException" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
@@ -12,7 +10,7 @@
                 <span class="errorMessage"><fmt:message key="system.loginNotSuccessfull"/> <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
             </c:if>
             <div>
-                <label for="j_username" class="fieldLabel"><fmt:message key="label.username"/></label>
+                <label for="j_username" class="fieldLabel"><fmt:message key="label.email"/></label>
                 <input type="text" name="j_username" id="j_username"/>
             </div>
             <div>
