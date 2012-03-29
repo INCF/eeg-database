@@ -9,18 +9,20 @@
     <table class="dataTable">
         <thead>
             <tr>
-                <th style="width: 60px;"><fmt:message key="dataTable.heading.number"/></th>
+                <th style="width: 30px;"><fmt:message key="dataTable.heading.number"/></th>
                 <th style="width: 300px;"><fmt:message key="dataTable.heading.title"/></th>
                 <th><fmt:message key="dataTable.heading.scenarioLength"/></th>
-                <th style="width: 150px;"><fmt:message key="dataTable.heading.file"/></th>
+                <th style="width: 80px;"><fmt:message key="dataTable.heading.detail"/></th>
+                <th style="width: 80px;"><fmt:message key="dataTable.heading.file"/></th>
             </tr>
         </thead>
-        <c:forEach items="${scenarioList}" var="scenario">
+        <c:forEach items="${scenarioList}" var="scenario" varStatus="status">
           <c:if test="${scenario.userMemberOfGroup || !scenario.privateScenario}" >
             <tr>
-                <td><a href="<c:url value='detail.html?scenarioId=${scenario.scenarioId}' />"><c:out value="${scenario.scenarioId}" /></a></td>
+                <td><c:out value="${status.index}" /></td>
                 <td><c:out value="${scenario.title}" /></td>
                 <td><c:out value="${scenario.scenarioLength}" /></td>
+                <td><a href="<c:url value='detail.html?scenarioId=${scenario.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
                 <td>
                     <c:choose>
                         <c:when test="${not empty scenario.scenarioType.scenarioXml}">

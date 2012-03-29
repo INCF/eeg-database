@@ -19,16 +19,14 @@
         <th style="width: 60px;"><fmt:message key="dataTable.heading.gender" /></th>
         <th style="width: 80px;"><fmt:message key="dataTable.heading.yearOfBirth" /></th>
         <th style="width: 80px;"><fmt:message key="dataTable.heading.services" /></th>
+        <th style="width: 60px;"><fmt:message key="dataTable.heading.detail" /></th>
         <th style="width: 60px;"><fmt:message key="dataTable.heading.download" /></th>
       </tr>
     </thead>
     <c:forEach items="${measurationList}" var="measuration" varStatus="status">
       <tr>
         <td>
-            <a href="<c:url value='detail.html?experimentId=${measuration.experimentId}'/>">
-                <c:out value="${measuration.experimentId}" />
-                (${measuration.researchGroup.researchGroupId})
-            </a>
+            <c:out value="${status.index}" />
         </td>
         <td>
             <a href="<c:url value='/scenarios/detail.html?scenarioId=${measuration.scenario.scenarioId}' />">
@@ -40,16 +38,19 @@
         <td><fmt:formatDate value="${measuration.personBySubjectPersonId.dateOfBirth}" pattern="yyyy" /></td>
         <td>
           <c:choose>
-              <c:when test="${measuration.suitable}">
-                  <a href="<c:url value='../services/index.html?experimentId=${measuration.experimentId}'/>">
-                      <fmt:message key='menuItem.services'/>
-                  </a>
-              </c:when>
-              <c:otherwise><fmt:message key="label.notAvailable"/></c:otherwise>
+            <c:when test="${measuration.suitable}">
+              <a href="<c:url value='../services/index.html?experimentId=${measuration.experimentId}'/>">
+                <fmt:message key='menuItem.services'/>
+              </a>
+            </c:when>
+            <c:otherwise><fmt:message key="label.notAvailable"/></c:otherwise>
           </c:choose>
         </td>
         <td>
-            <a href="<c:url value='choose-metadata.html?id=${measuration.experimentId}' />"><fmt:message key="link.download"/></a>
+          <a href="<c:url value='detail.html?experimentId=${measuration.experimentId}'/>"><fmt:message key="link.detail"/></a>
+        </td>
+        <td>
+          <a href="<c:url value='choose-metadata.html?id=${measuration.experimentId}' />"><fmt:message key="link.download"/></a>
         </td>
       </tr>
     </c:forEach>
