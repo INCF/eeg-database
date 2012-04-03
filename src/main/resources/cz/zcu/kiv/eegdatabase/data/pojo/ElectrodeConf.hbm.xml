@@ -12,10 +12,10 @@
             <column name="IMPEDANCE" precision="22" scale="0"/>
         </property>
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem" fetch="select" name="electrodeSystem">
-            <column name="ARTICLE_ID" precision="22" scale="0"/>
+            <column name="ELECTRODE_SYSTEM_ID" precision="22" scale="0"/>
         </many-to-one>
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" fetch="select" name="descImg">
-            <column name="DATA_FILE_ID" precision="22" scale="0"/>
+            <column name="DESC_IMG_ID" precision="22" scale="0"/>
         </many-to-one>
         <set inverse="false" name="electrodeLocations" table="ELECTRODE_LOCATION_REL">
             <key>
