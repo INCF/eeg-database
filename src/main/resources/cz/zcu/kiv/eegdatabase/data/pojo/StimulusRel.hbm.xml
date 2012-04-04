@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRel" schema="EEGTEST" table="STIMULUS_REL">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRel" schema="JPERGLER" table="STIMULUS_REL">
     <composite-id class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRelId" name="stimulusRelId">
       <key-property name="scenarioId" type="int">
         <column name="SCENARIO_ID" precision="22" scale="0"/>

@@ -11,7 +11,7 @@
 <hibernate-mapping>
 
   <!-- binary storage for all XML documents with no available XML schemas -->
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="EEGTEST" table="SCENARIO_TYPE_PARENT">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" schema="JPERGLER" table="SCENARIO_TYPE_PARENT">
     <id name="scenarioId" type="int">
       <column name="SCENARIO_ID" precision="22" scale="0"/>
         <generator class="increment" />

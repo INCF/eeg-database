@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeFix" schema="EEGTEST" table="ELECTRODE_FIX">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeFix" schema="JPERGLER" table="ELECTRODE_FIX">
         <id name="electrodeFixId" type="int">
             <column name="ELECTRODE_FIX_ID" precision="22" scale="0"/>
             <generator class="increment"/>
