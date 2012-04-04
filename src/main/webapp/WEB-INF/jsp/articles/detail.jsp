@@ -56,7 +56,8 @@
 
 
             <h2><fmt:message key="label.addComment" /></h2>
-            <form:form action="/EEGDatabase/articles/edit-article-comment.html" method="post" commandName="command" cssClass="standardInputForm" name="addArticleComment">
+              <c:url value="edit-article-comment.html" var="formUrl"/>
+            <form:form action="${formUrl}" method="post" commandName="command" cssClass="standardInputForm" name="addArticleComment">
               <form:hidden path="articleId" />
 
               <div class="itemBox">
