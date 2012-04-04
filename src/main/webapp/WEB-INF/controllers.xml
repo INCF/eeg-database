@@ -548,7 +548,7 @@
     <bean name="addScenarioController" class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioController">
         <property name="auth" ref="authorizationManager"/>
         <property name="formView" value="scenario/addScenarioForm"/>
-        <property name="successView" value="redirect:/scenarios/list.html"/>
+        <property name="successView" value="redirect:/scenarios/my-scenarios.html"/>
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
