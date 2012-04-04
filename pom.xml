@@ -56,7 +56,7 @@
 		<dependency>
 			<groupId>cz.zcu.kiv</groupId>
 			<artifactId>jenabeanextension</artifactId>
-			<version>3.0.1</version>
+			<version>3.0.4</version>
 		</dependency>
 		<dependency>
 			<groupId>cz.zcu.kiv</groupId>
