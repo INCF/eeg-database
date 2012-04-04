@@ -5,6 +5,7 @@
        xmlns:aop="http://www.springframework.org/schema/aop"
        xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:hprof="http://www.nhprof.com/schema/hprof"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
@@ -12,7 +13,9 @@
        http://www.springframework.org/schema/tx
        http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
        http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.nhprof.com/schema/hprof
+       http://www.nhprof.com/schema/hprof/hprof.xsd">
 
     <!-- It is not sure whether this file will be used or not. -->
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
@@ -29,11 +32,11 @@
         <property name="targetObject">
             <!-- System.getProperties() -->
             <bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
-                <property name="targetClass" value="java.lang.System" />
-                <property name="targetMethod" value="getProperties" />
+                <property name="targetClass" value="java.lang.System"/>
+                <property name="targetMethod" value="getProperties"/>
             </bean>
         </property>
-        <property name="targetMethod" value="putAll" />
+        <property name="targetMethod" value="putAll"/>
         <property name="arguments">
             <!-- The new Properties -->
             <util:properties>
@@ -64,8 +67,8 @@
 
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
-        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml" />
-     <!--   <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo" />-->
+        <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml"/>
+        <!--   <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo" />-->
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
@@ -80,9 +83,8 @@
 
                 <prop key="hibernate.cfgfile">/hibernate.cfg.xml</prop>
             </props>
-       </property>
-
-
+        </property>
+        <hprof:profiler/>
     </bean>
 
     <bean name="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
@@ -102,8 +104,8 @@
     </bean>
 
     <bean id="transactionTemplate" class="org.springframework.transaction.support.TransactionTemplate">
-    <property name="transactionManager" ref="txManager"/>
-</bean>
+        <property name="transactionManager" ref="txManager"/>
+    </bean>
 
     <bean id="captchaEngine"
           class="com.octo.captcha.engine.image.gimpy.SimpleListImageCaptchaEngine"/>

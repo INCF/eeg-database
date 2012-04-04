@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+<web-app version="2.5" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
 
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
@@ -7,6 +8,10 @@
     <!-- Webservice Listener-->
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>hibernatingrhinos.hibernate.profiler.web.HibernateProfilerListener</listener-class>
     </listener>
 
 
@@ -79,12 +84,12 @@
         <servlet-name>UserDataImpl</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        </servlet>
+    </servlet>
     <servlet>
         <servlet-name>SemanticServiceImpl</servlet-name>
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
-        </servlet>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.html</url-pattern>
@@ -146,17 +151,17 @@
         <error-code>404</error-code>
         <location>/error404.jsp</location>
     </error-page>
-    
-      <context-param>
-    <param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
-    <param-value>JSESSIONID</param-value>
-  </context-param>
-  <context-param>
-    <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
-    <param-value>none</param-value>
-  </context-param>
-  <context-param>
-    <param-name>org.mortbay.jetty.servlet.SessionPath</param-name>
-    <param-value>/</param-value>
-  </context-param>
+
+    <context-param>
+        <param-name>org.mortbay.jetty.servlet.SessionCookie</param-name>
+        <param-value>JSESSIONID</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.mortbay.jetty.servlet.SessionURL</param-name>
+        <param-value>none</param-value>
+    </context-param>
+    <context-param>
+        <param-name>org.mortbay.jetty.servlet.SessionPath</param-name>
+        <param-value>/</param-value>
+    </context-param>
 </web-app>
