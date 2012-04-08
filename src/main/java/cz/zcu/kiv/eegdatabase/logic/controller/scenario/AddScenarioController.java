@@ -5,7 +5,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
-import org.springframework.context.ApplicationContext;
 import org.springframework.validation.BindException;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,7 +15,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
-import java.io.*;
+import java.io.InputStream;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,6 +36,7 @@ public class AddScenarioController
     private ResearchGroupDao researchGroupDao;
     private ScenarioSchemasDao scenarioSchemasDao;
     private ScenarioTypeDao scenarioTypeDao;
+    private static final int MAX_MIMETYPE_LENGTH = 30;
 
     public AddScenarioController() {
         setCommandClass(AddScenarioCommand.class);
@@ -128,7 +128,6 @@ public class AddScenarioController
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
         ModelAndView mav = new ModelAndView(getSuccessView());
-
         log.debug("Processing form data");
         AddScenarioCommand data = (AddScenarioCommand) command;
 
@@ -184,21 +183,24 @@ public class AddScenarioController
 
         log.debug("Setting scenario length: " + data.getLength());
         scenario.setScenarioLength(Integer.parseInt(data.getLength()));
-
         //loading non-XML
         if ((file != null) && (!file.isEmpty())) {
             // File uploaded
             log.debug("Setting the data file");
-            scenario.setScenarioName(file.getOriginalFilename());
-
-            scenario.setMimetype(file.getContentType());
+            String filename = file.getOriginalFilename().replace(" ", "_");
+            scenario.setScenarioName(filename);
+            if (file.getContentType().length() > MAX_MIMETYPE_LENGTH) {
+                        int index = filename.lastIndexOf(".");
+                        scenario.setMimetype(filename.substring(index));
+                    } else {
+                        scenario.setMimetype(file.getContentType());
+                    }
             if (id > 0) {
             // scenarioType = (ScenarioType) context.getBean("scenarioTypeNonXml");
             scenarioType = scenario.getScenarioType();
             } else {
                 scenarioType = new ScenarioTypeNonXml();
             }
-
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
@@ -206,7 +208,8 @@ public class AddScenarioController
         if ((xmlFile != null) && (!xmlFile.isEmpty())) {
             //load the XML file to a table with the XMLType column
             log.debug("Setting the XML data file");
-            scenario.setScenarioName(xmlFile.getOriginalFilename());
+            String filename = xmlFile.getOriginalFilename().replace(" ", "_");
+            scenario.setScenarioName(filename);
 
             scenario.setMimetype(xmlFile.getContentType());
 
@@ -251,7 +254,6 @@ public class AddScenarioController
            scenarioDao.update(scenario);
         } else {
             // Creating new
-
 
             scenarioDao.create(scenario);
         }

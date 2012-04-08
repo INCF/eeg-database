@@ -4,7 +4,7 @@
 <hibernate-mapping>
     <class name="cz.zcu.kiv.eegdatabase.data.pojo.Digitization" schema="JPERGLER" table="DIGITIZATION">
         <id name="digitizationId" type="int">
-            <column name="DIGITALIZATION_ID" precision="22" scale="0"/>
+            <column name="DIGITIZATION_ID" precision="22" scale="0"/>
             <generator class="increment"/>
         </id>
         <property name="gain" type="float">

@@ -56,18 +56,22 @@ public class AddScenarioValidator implements Validator {
             errors.rejectValue("title", "error.valueAlreadyInDatabase");
         }
 
-        if ((!(data.getId() > 0)) && (data.isDataFileAvailable() == true)
-                && (data.getDataFile().isEmpty())) {
+        if ((!(data.getId() > 0)) && (data.isDataFileAvailable())
+                && ((!data.isXmlFileCheckBox()))) {
+            if (data.getDataFile().isEmpty()) {
             // Creating new scenario and no file was uploaded
             errors.rejectValue("dataFile", "required.dataFile");
             log.debug("No data file was inserted!");
+            }
         }
 
-        if ((!(data.getId() > 0)) && (data.isDataFileAvailable() == true)
-                && (data.getDataFileXml().isEmpty())) {
+        if ((!(data.getId() > 0)) && (data.isDataFileAvailable())
+                && (data.isXmlFileCheckBox())) {
+            if (data.getDataFileXml().isEmpty()) {
             // Creating new scenario and no file was uploaded
             errors.rejectValue("dataFileXml", "required.dataFileXml");
             log.debug("No XML data file was inserted!");
+            }
         }
 
         if (data.isXmlFileCheckBox()) {

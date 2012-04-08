@@ -25,6 +25,7 @@
                 <td><a href="<c:url value='detail.html?scenarioId=${scenario.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
                 <td>
                     <c:choose>
+                       <%-- <c:when test="" />--%>
                         <c:when test="${not empty scenario.scenarioType.scenarioXml}">
                             <a href="<c:url value='download-xml.html?scenarioId=${scenario.scenarioId}' />">
                                <fmt:message key="link.download"/>

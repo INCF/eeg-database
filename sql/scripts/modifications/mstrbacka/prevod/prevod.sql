@@ -145,7 +145,9 @@ END;
 /
 
 drop table visual_impairment_rel;
+drop table visual_impairment_group_rel;
 drop table hearing_impairment_rel;
+drop table hearing_impairment_group_rel;
 drop table visual_impairment cascade constraints;
 drop table hearing_impairment cascade constraints;
 drop table visual_impairment_group_rel cascade constraints;

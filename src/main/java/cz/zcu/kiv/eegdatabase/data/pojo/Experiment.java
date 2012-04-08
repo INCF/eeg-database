@@ -32,7 +32,7 @@ public class Experiment implements Serializable {
     @JoinColumn(name = "SUBJECT_PERSON_ID")
     private Person personBySubjectPersonId;
     @ManyToOne
-    @JoinColumn(name = "SCNEARIO_ID")
+    @JoinColumn(name = "SCENARIO_ID")
     private Scenario scenario;
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")

@@ -17,10 +17,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import tools.*;
 
 import java.io.*;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 /**
  * Factory for transforming POJO object to resources of semantic web
@@ -36,7 +33,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private List<Object> dataList = new ArrayList<Object>();
 
     private File ontologyFile;      // temporary ontology document
-    private File ontStructureFile;  // temporary ontology structure document
+    //private File ontStructureFile;  // temporary ontology structure document
     private Resource ontology;      // owl document with static ontology statements
 
     @Autowired
@@ -51,8 +48,8 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         try {
             ontologyFile = File.createTempFile("ontology_", ".rdf.tmp");
             ontologyFile.deleteOnExit();
-            ontStructureFile = File.createTempFile("ontologyStructure_", ".rdf.tmp");
-            ontStructureFile.deleteOnExit();
+            /*ontStructureFile = File.createTempFile("ontologyStructure_", ".rdf.tmp");
+            ontStructureFile.deleteOnExit();*/
         } catch (IOException e) {
             log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
         }
@@ -86,21 +83,31 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         InputStream is;
         String lang;
 
+        // check the validity of user request on serialization syntax
         if (syntax == null || syntax.equalsIgnoreCase("owl"))
             syntax = Syntax.RDF_XML;
         lang = syntax.toUpperCase();
         if (structureOnly && lang.equals(Syntax.RDF_XML))
             lang = Syntax.RDF_XML_ABBREV;
 
+        // check if the temporary file contains error log instead of ontology
+        Scanner sc = new Scanner(is = new FileInputStream(ontologyFile));
+        if (sc.next().equalsIgnoreCase("error")) {
+            is.close();
+            return new FileInputStream(ontologyFile);
+        }
+        is.close();
+
+        is = new FileInputStream(ontologyFile);
+        // transform the output according to user request (another syntax or schema only)
         if (structureOnly) {
-            is = new FileInputStream(ontStructureFile);
-        } else {
-            is = new FileInputStream(ontologyFile);
-            if (! lang.equals(Syntax.RDF_XML)) {
-                JenaBeanExtension jbe = new JenaBeanExtensionTool();
-                jbe.loadStatements(is);
-                is = jbe.getOntologyDocument(lang);
-            }
+            JenaBeanExtension jbe = new JenaBeanExtensionTool();
+            jbe.loadStatements(is);
+            is = jbe.getOntologySchema(lang);
+        } else if (! lang.equals(Syntax.RDF_XML)) {
+            JenaBeanExtension jbe = new JenaBeanExtensionTool();
+            jbe.loadStatements(is);
+            is = jbe.getOntologyDocument(lang);
         }
 
         return is;
@@ -157,22 +164,32 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     public void transformModel() {
         loadData();
         JenaBeanExtension jbe;
-        jbe = creatingJenaBean(false);
+
         try {
+            jbe = creatingJenaBean(false);
             OutputStream out = new FileOutputStream(ontologyFile);
-            jbe.writeOntologyDocument(out);
-            out.close();
-        } catch (IOException e) {
-            log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
-        }
-        jbe = creatingJenaBean(true);
-        try {
-            OutputStream out = new FileOutputStream(ontStructureFile);
             jbe.writeOntologyDocument(out, Syntax.RDF_XML_ABBREV);
             out.close();
+        } catch (FileNotFoundException e) {
+            log.error("Could not find the temporary rdf/xml file to store the ontology!", e);
         } catch (IOException e) {
-            log.error("Could not create the temporary rdf/xml file to store the ontology structure!", e);
+            log.error("Could not close the temporary rdf/xml file!", e);
+        } catch (Exception e) {
+            log.error("Could not create the ontology!", e);
+            try {
+                java.io.StringWriter sw = new java.io.StringWriter(1024);
+                java.io.PrintWriter pw = new java.io.PrintWriter(sw);
+                e.printStackTrace(pw);
+                pw.close();
+                String error = "ERROR Could not create the ontology!\n\n" + sw.toString();
+                OutputStream out = new FileOutputStream(ontologyFile);
+                out.write(error.getBytes());
+                out.close();
+            } catch (Exception e2) {
+                log.error("Could not write the error message to the temporary rdf/xml file!");
+            }
         }
+
     }
 
 
@@ -190,6 +207,20 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                     "configuration document: " + ontology.getFilename(), e);
         }
         jbe.loadOOM(dataList, structureOnly);
+
+        try {
+
+        } catch (Exception e) {
+            try {
+                OutputStream out = new FileOutputStream(ontologyFile);
+            } catch (FileNotFoundException e2) {
+                log.error("Could not write to the temporary ontology file " + ontologyFile.getAbsolutePath() + "!");
+            } finally {
+                return null;
+            }
+
+        }
+
         return jbe;
     }
 
