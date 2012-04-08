@@ -3,7 +3,7 @@
    <createdBy>Jindra</createdBy>
    <createdTime>2012-03-01 15:41:30 UTC</createdTime>
    <changedBy>Jindra</changedBy>
-   <changedTime>2012-03-18 16:36:16 UTC</changedTime>
+   <changedTime>2012-04-08 11:53:23 UTC</changedTime>
    <ownerDesignName>EEGTEST</ownerDesignName>
    <schemaObject>7EC7B178-1CDE-B579-D0E9-13BF78423EF0</schemaObject>
    <pkName>SYS_C0011523</pkName>
@@ -237,11 +237,11 @@
             <colAssociation fkAssociation="79D6436E-94A2-649A-423A-7925E85A9B56" referredColumn="E7B4DE2E-923D-EE43-B0CA-46AC4770EBF5"/>
          </associations>
       </Column>
-      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DIGITALIZATION_ID" id="4D5EBD59-479B-4961-E398-07AD3109B5F8">
+      <Column class="oracle.dbtools.crest.model.design.relational.Column" name="DIGITIZATION_ID" id="4D5EBD59-479B-4961-E398-07AD3109B5F8">
          <createdBy>Jindra</createdBy>
          <createdTime>2012-03-01 15:41:33 UTC</createdTime>
          <changedBy>Jindra</changedBy>
-         <changedTime>2012-03-01 15:41:33 UTC</changedTime>
+         <changedTime>2012-04-08 11:53:23 UTC</changedTime>
          <ownerDesignName>EEGTEST</ownerDesignName>
          <use>1</use>
          <logicalDatatype>LOGDT019</logicalDatatype>
