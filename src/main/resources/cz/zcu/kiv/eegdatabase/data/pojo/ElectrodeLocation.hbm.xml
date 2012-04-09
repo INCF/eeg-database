@@ -31,6 +31,14 @@
                 <column name="ELECTRODE_CONF_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
+        <set inverse="false" name="researchGroups" table="ELECTRODE_LOCATION_GROUP_REL">
+            <key>
+                <column name="ELECTRODE_LOCATION_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
 
     </class>
 </hibernate-mapping>

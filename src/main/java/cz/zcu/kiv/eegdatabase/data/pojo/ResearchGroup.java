@@ -55,6 +55,20 @@ public class ResearchGroup implements Serializable {
     private Set<ExperimentOptParamDef> experimentOptParamDefs = new HashSet<ExperimentOptParamDef>(0);
     @OneToMany(mappedBy = "researchGroup")
     private Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels = new HashSet<ExperimentOptParamDefGroupRel>(0);
+    private Set<Analysis> analysises = new HashSet<Analysis>(0);
+    private Set<Artifact> artifacts = new HashSet<Artifact>(0);
+    private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
+    private Set<Digitization> digitizations = new HashSet<Digitization>(0);
+    private Set<Disease> diseases = new HashSet<Disease>(0);
+    private Set<EducationLevel> educationLevels = new HashSet<EducationLevel>(0);
+    private Set<ElectrodeFix> electrodeFixes = new HashSet<ElectrodeFix>(0);
+    private Set<ElectrodeLocation> electrodeLocations = new HashSet<ElectrodeLocation>(0);
+    private Set<ElectrodeSystem> electrodeSystems = new HashSet<ElectrodeSystem>(0);
+    private Set<ElectrodeType> electrodeTypes = new HashSet<ElectrodeType>(0);
+    private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
+    private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
+    private Set<Software> softwares = new HashSet<Software>(0);
+    private Set<StimulusType> stimulusTypes = new HashSet<StimulusType>(0);
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
@@ -242,6 +256,118 @@ public class ResearchGroup implements Serializable {
 
     public void setExperimentOptParamDefGroupRels(Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels) {
         this.experimentOptParamDefGroupRels = experimentOptParamDefGroupRels;
+    }
+
+    public Set<Analysis> getAnalysises() {
+        return analysises;
+    }
+
+    public void setAnalysises(Set<Analysis> analysises) {
+        this.analysises = analysises;
+    }
+
+    public Set<Artifact> getArtifacts() {
+        return artifacts;
+    }
+
+    public void setArtifacts(Set<Artifact> artifacts) {
+        this.artifacts = artifacts;
+    }
+
+    public Set<ArtifactRemoveMethod> getArtifactRemoveMethods() {
+        return artifactRemoveMethods;
+    }
+
+    public void setArtifactRemoveMethods(Set<ArtifactRemoveMethod> artifactRemoveMethods) {
+        this.artifactRemoveMethods = artifactRemoveMethods;
+    }
+
+    public Set<Digitization> getDigitizations() {
+        return digitizations;
+    }
+
+    public void setDigitizations(Set<Digitization> digitizations) {
+        this.digitizations = digitizations;
+    }
+
+    public Set<Disease> getDiseases() {
+        return diseases;
+    }
+
+    public void setDiseases(Set<Disease> diseases) {
+        this.diseases = diseases;
+    }
+
+    public Set<EducationLevel> getEducationLevels() {
+        return educationLevels;
+    }
+
+    public void setEducationLevels(Set<EducationLevel> educationLevels) {
+        this.educationLevels = educationLevels;
+    }
+
+    public Set<ElectrodeFix> getElectrodeFixes() {
+        return electrodeFixes;
+    }
+
+    public void setElectrodeFixes(Set<ElectrodeFix> electrodeFixes) {
+        this.electrodeFixes = electrodeFixes;
+    }
+
+    public Set<ElectrodeLocation> getElectrodeLocations() {
+        return electrodeLocations;
+    }
+
+    public void setElectrodeLocations(Set<ElectrodeLocation> electrodeLocations) {
+        this.electrodeLocations = electrodeLocations;
+    }
+
+    public Set<ElectrodeSystem> getElectrodeSystems() {
+        return electrodeSystems;
+    }
+
+    public void setElectrodeSystems(Set<ElectrodeSystem> electrodeSystems) {
+        this.electrodeSystems = electrodeSystems;
+    }
+
+    public Set<ElectrodeType> getElectrodeTypes() {
+        return electrodeTypes;
+    }
+
+    public void setElectrodeTypes(Set<ElectrodeType> electrodeTypes) {
+        this.electrodeTypes = electrodeTypes;
+    }
+
+    public Set<Pharmaceutical> getPharmaceuticals() {
+        return pharmaceuticals;
+    }
+
+    public void setPharmaceuticals(Set<Pharmaceutical> pharmaceuticals) {
+        this.pharmaceuticals = pharmaceuticals;
+    }
+
+    public Set<ProjectType> getProjectTypes() {
+        return projectTypes;
+    }
+
+    public void setProjectTypes(Set<ProjectType> projectTypes) {
+        this.projectTypes = projectTypes;
+    }
+
+    public Set<Software> getSoftwares() {
+        return softwares;
+    }
+
+    public void setSoftwares(Set<Software> softwares) {
+        this.softwares = softwares;
+    }
+
+    public Set<StimulusType> getStimulusTypes() {
+        return stimulusTypes;
+    }
+
+    public void setStimulusTypes(Set<StimulusType> stimulusTypes) {
+        this.stimulusTypes = stimulusTypes;
     }
 }
 

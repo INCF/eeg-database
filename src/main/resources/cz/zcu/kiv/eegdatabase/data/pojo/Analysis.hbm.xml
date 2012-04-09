@@ -12,15 +12,23 @@
         </property>
         <property name="prestimulusTime" type="int">
             <column name="PRESTIMULUS_TIME" precision="22" scale="0"/>
-        </property><property name="poststimulusTime" type="int">
+        </property>
+        <property name="poststimulusTime" type="int">
             <column name="POSTSTIMULUS_TIME" precision="22" scale="0"/>
         </property>
 
         <property name="description" type="string">
-            <column name="DESCRIPTION" />
+            <column name="DESCRIPTION"/>
         </property>
 
-
+        <set inverse="false" name="researchGroups" table="ANALYSIS_GROUP_REL">
+            <key>
+                <column name="ANALYSIS_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
 
 
     </class>

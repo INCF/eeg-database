@@ -19,9 +19,17 @@
         </property>
         <set inverse="true" name="electrodeLocations">
             <key>
-                <column name="ELECTRODE_FIX_ID" not-null="true" precision="22" scale="0"/>
+                <column name="ELECTRODE_TYPE_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeLocation"/>
+        </set>
+        <set inverse="false" name="researchGroups" table="ELECTRODE_TYPE_GROUP_REL">
+            <key>
+                <column name="ELECTRODE_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
         </set>
     </class>
 </hibernate-mapping>

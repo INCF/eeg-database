@@ -25,6 +25,7 @@ public class StimulusType implements Serializable {
     private int defaultNumber;
     @OneToMany(mappedBy = "stimulusType")
     private Set<StimulusRel> stimulusRels = new HashSet<StimulusRel>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
 
     public StimulusType() {
@@ -65,5 +66,13 @@ public class StimulusType implements Serializable {
 
     public void setStimulusRels(Set<StimulusRel> stimulusRels) {
         this.stimulusRels = stimulusRels;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }

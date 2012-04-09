@@ -27,6 +27,7 @@ public class ElectrodeSystem implements Serializable {
     private int defaultNumber;
     @OneToMany(mappedBy = "electrodeSystem")
     private Set<ElectrodeConf> electrodeConfs = new HashSet<ElectrodeConf>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public ElectrodeSystem() {
     }
@@ -77,5 +78,13 @@ public class ElectrodeSystem implements Serializable {
 
     public void setElectrodeConfs(Set<ElectrodeConf> electrodeConfs) {
         this.electrodeConfs = electrodeConfs;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }

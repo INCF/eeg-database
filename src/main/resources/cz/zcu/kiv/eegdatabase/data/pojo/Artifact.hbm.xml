@@ -12,7 +12,7 @@
             <column name="COMPENSATION"/>
         </property>
         <property name="rejectCondition" type="string">
-            <column name="REJECT_CONDITION" />
+            <column name="REJECT_CONDITION"/>
         </property>
 
         <set inverse="true" name="experiments">
@@ -22,5 +22,13 @@
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
         </set>
 
+        <set inverse="false" name="researchGroups" table="ARTEFACT_GROUP_REL">
+            <key>
+                <column name="ARTEFACT_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

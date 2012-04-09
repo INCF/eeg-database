@@ -36,6 +36,7 @@ public class ElectrodeLocation implements Serializable {
     private ElectrodeFix electrodeFix;
     @ManyToMany(mappedBy = "electrodeLocations")
     private Set<ElectrodeConf> electrodeConfs = new HashSet<ElectrodeConf>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public ElectrodeLocation() {
     }
@@ -114,5 +115,13 @@ public class ElectrodeLocation implements Serializable {
 
     public void setElectrodeConfs(Set<ElectrodeConf> electrodeConfs) {
         this.electrodeConfs = electrodeConfs;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }

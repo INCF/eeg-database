@@ -64,7 +64,7 @@
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest"/>
         </set>
 
-         <set inverse="true" name="hardwares" table="HARDWARE_GROUP_REL">
+        <set inverse="true" name="hardwares" table="HARDWARE_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
             </key>
@@ -135,6 +135,118 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Person">
                 <column name="PERSON_ID" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="analysises" table="ANALYSIS_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Analysis">
+                <column name="ANALYSIS_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="artifacts" table="ARTEFACT_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Artifact">
+                <column name="ARTEFACT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="artifactRemoveMethods" table="ARTEFACT_RMVNG_MTHD_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod">
+                <column name="ARTEFACT_REMOVING_METHOD_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="digitizations" table="DIGITIZATION_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Digitization">
+                <column name="DIGITIZATION_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="diseases" table="DISEASE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Disease">
+                <column name="DISEASE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="educationLevels" table="EDUCATION_LEVEL_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel">
+                <column name="EDUCATION_LEVEL_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="electrodeFixes" table="ELECTRODE_FIX_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeFix">
+                <column name="ELECTRODE_FIX_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="electrodeLocations" table="ELECTRODE_LOCATION_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeLocation">
+                <column name="ELECTRODE_LOCATION_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="electrodeSystems" table="ELECTRODE_SYSTEM_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem">
+                <column name="ELECTRODE_SYSTEM_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="electrodeTypes" table="ELECTRODE_TYPE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeType">
+                <column name="ELECTRODE_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="pharmaceuticals" table="PHARMACEUTICAL_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical">
+                <column name="PHARMACEUTICAL_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="projectTypes" table="PROJECT_TYPE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ProjectType">
+                <column name="PROJECT_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="softwares" table="SOFTWARE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Software">
+                <column name="SOFTWARE_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="true" name="stimulusTypes" table="STIMULUS_TYPE_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusType">
+                <column name="STIMULUS_TYPE_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
     </class>
