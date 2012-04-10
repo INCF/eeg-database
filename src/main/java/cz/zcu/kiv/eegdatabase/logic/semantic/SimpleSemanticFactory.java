@@ -174,25 +174,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             log.error("Could not find the temporary rdf/xml file to store the ontology!", e);
         } catch (IOException e) {
             log.error("Could not close the temporary rdf/xml file!", e);
-        } catch (CannotEncodeCharacterException e) {
-            try {
-                out.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
-            char bad = e.getBadChar();
-            System.out.println("\nCannot encode character with decimal value: " + (int) bad);
-            try {
-                InputStream is;
-                is = jbe.getOntologyDocument(Syntax.TURTLE);
-                jbe = new JenaBeanExtensionTool(checkChars(is), Syntax.TURTLE);
-
-                out = new FileOutputStream(ontologyFile);
-                jbe.writeOntologyDocument(out, Syntax.RDF_XML);
-                out.close();
-            } catch (IOException e1) {
-                e1.printStackTrace();
-            }
         } catch (Exception e) {
             log.error("Could not create the ontology!", e);
             try {
@@ -209,26 +190,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             }
         }
 
-    }
-
-
-    // prozatimni nouzove reseni problemoveho znaku
-    private InputStream checkChars(InputStream is) {
-    	ByteArrayOutputStream out = new ByteArrayOutputStream();
-    	int pom, count = 0;
-    	try {
-			while ((pom = is.read()) != -1) {
-				if (pom == 0x0) {
-                    count++;
-                }
-				else
-					out.write(pom);
-			}
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-        System.out.println("Found: " + count + "x");
-    	return new ByteArrayInputStream(out.toByteArray());
     }
 
 

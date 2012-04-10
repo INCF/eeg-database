@@ -6,6 +6,7 @@ import org.hibernate.search.annotations.*;
 import thewebsemantic.annotations.Comment;
 import thewebsemantic.annotations.Ignore;
 import thewebsemantic.annotations.Label;
+import thewebsemantic.annotations.SeeAlso;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -22,6 +23,7 @@ import java.util.Set;
 @javax.persistence.Table(name = "PERSON")
 @Label(value="Osoba", lang="cs")
 @Comment(value="Class of persons registered in the Portal.", lang="en")
+@SeeAlso("http://eegdatabase.kiv.zcu.cz")
 public class Person implements Serializable, Comparable<Person> {
 
     @DocumentId
