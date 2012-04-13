@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusType" schema="JPERGLER" table="STMULUS_TYPE">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.StimulusType" schema="EEGTEST" table="STIMULUS_TYPE">
         <id name="stimulusTypeId" type="int">
             <column name="STIMULUS_TYPE_ID" precision="22" scale="0"/>
             <generator class="increment"/>
@@ -18,6 +18,14 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRel"/>
         </set>
+            <set inverse="false" name="researchGroups" table="STIMULUS_TYPE_GROUP_REL">
+      <key>
+          <column name="STIMULUS_TYPE_ID" not-null="true" precision="22" scale="0"/>
+      </key>
+      <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+          <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+      </many-to-many>
+    </set>
 
     </class>
 </hibernate-mapping>

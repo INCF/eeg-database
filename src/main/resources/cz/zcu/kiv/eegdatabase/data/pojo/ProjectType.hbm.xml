@@ -9,10 +9,10 @@
         </id>
 
         <property name="title" type="string">
-            <column name="TITLE" />
+            <column name="TITLE"/>
         </property>
         <property name="description" type="string">
-            <column name="DESCRIPTION" />
+            <column name="DESCRIPTION"/>
         </property>
         <set inverse="false" name="experiments" table="PROJECT_TYPE_REL">
             <key>
@@ -22,6 +22,13 @@
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
-
+        <set inverse="false" name="researchGroups" table="PROJECT_TYPE_GROUP_REL">
+            <key>
+                <column name="PROJECT_TYPE_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
     </class>
 </hibernate-mapping>

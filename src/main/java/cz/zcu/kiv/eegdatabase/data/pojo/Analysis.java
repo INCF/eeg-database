@@ -29,6 +29,7 @@ public class Analysis implements Serializable {
     private String description;
     @OneToMany(mappedBy = "analysis")
     private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public Analysis() {
     }
@@ -87,6 +88,14 @@ public class Analysis implements Serializable {
 
     public void setDataFiles(Set<DataFile> dataFiles) {
         this.dataFiles = dataFiles;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }
 

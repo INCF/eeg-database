@@ -25,6 +25,7 @@ public class EducationLevel implements Serializable {
     private int defaultNumber;
     @OneToMany(mappedBy = "educationLevel")
     private Set<Person> persons = new HashSet<Person>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public EducationLevel() {
     }
@@ -64,5 +65,13 @@ public class EducationLevel implements Serializable {
 
     public void setDefaultNumber(int defaultNumber) {
         this.defaultNumber = defaultNumber;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }

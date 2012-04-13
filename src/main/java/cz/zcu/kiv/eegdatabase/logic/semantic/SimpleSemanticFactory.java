@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
+import com.hp.hpl.jena.shared.CannotEncodeCharacterException;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -17,6 +18,7 @@ import org.springframework.transaction.support.TransactionTemplate;
 import tools.*;
 
 import java.io.*;
+import java.lang.reflect.Array;
 import java.util.*;
 
 /**
@@ -33,7 +35,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private List<Object> dataList = new ArrayList<Object>();
 
     private File ontologyFile;      // temporary ontology document
-    //private File ontStructureFile;  // temporary ontology structure document
     private Resource ontology;      // owl document with static ontology statements
 
     @Autowired
@@ -48,14 +49,12 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         try {
             ontologyFile = File.createTempFile("ontology_", ".rdf.tmp");
             ontologyFile.deleteOnExit();
-            /*ontStructureFile = File.createTempFile("ontologyStructure_", ".rdf.tmp");
-            ontStructureFile.deleteOnExit();*/
         } catch (IOException e) {
             log.error("Could not create the temporary rdf/xml file to store the ontology!", e);
         }
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TransformTask(), 60 * 1000, 24 * 3600 * 1000);  // TODO upravit interval
+        timer.scheduleAtFixedRate(new TransformTask(), 100 * 1000, 24 * 3600 * 1000);  // TODO upravit interval
     }
 
 
@@ -102,11 +101,11 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         // transform the output according to user request (another syntax or schema only)
         if (structureOnly) {
             JenaBeanExtension jbe = new JenaBeanExtensionTool();
-            jbe.loadStatements(is);
+            jbe.loadStatements(is, Syntax.RDF_XML);
             is = jbe.getOntologySchema(lang);
         } else if (! lang.equals(Syntax.RDF_XML)) {
             JenaBeanExtension jbe = new JenaBeanExtensionTool();
-            jbe.loadStatements(is);
+            jbe.loadStatements(is, Syntax.RDF_XML);
             is = jbe.getOntologyDocument(lang);
         }
 
@@ -163,12 +162,13 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      */
     public void transformModel() {
         loadData();
-        JenaBeanExtension jbe;
+        JenaBeanExtension jbe = null;
+        OutputStream out = null;
 
         try {
             jbe = creatingJenaBean(false);
-            OutputStream out = new FileOutputStream(ontologyFile);
-            jbe.writeOntologyDocument(out, Syntax.RDF_XML_ABBREV);
+            out = new FileOutputStream(ontologyFile);
+            jbe.writeOntologyDocument(out, Syntax.RDF_XML);
             out.close();
         } catch (FileNotFoundException e) {
             log.error("Could not find the temporary rdf/xml file to store the ontology!", e);
@@ -182,7 +182,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                 e.printStackTrace(pw);
                 pw.close();
                 String error = "ERROR Could not create the ontology!\n\n" + sw.toString();
-                OutputStream out = new FileOutputStream(ontologyFile);
+                out = new FileOutputStream(ontologyFile);
                 out.write(error.getBytes());
                 out.close();
             } catch (Exception e2) {
@@ -201,26 +201,13 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
         JenaBeanExtension jbe = new JenaBeanExtensionTool();
         try {
-            jbe.loadStatements(ontology.getInputStream());
+            jbe.loadStatements(ontology.getInputStream(), Syntax.RDF_XML_ABBREV);
         } catch (IOException e) {
             log.error("Could not open the input stream associated with the ontology " +
                     "configuration document: " + ontology.getFilename(), e);
         }
         jbe.loadOOM(dataList, structureOnly);
-
-        try {
-
-        } catch (Exception e) {
-            try {
-                OutputStream out = new FileOutputStream(ontologyFile);
-            } catch (FileNotFoundException e2) {
-                log.error("Could not write to the temporary ontology file " + ontologyFile.getAbsolutePath() + "!");
-            } finally {
-                return null;
-            }
-
-        }
-
+        jbe.declareAllClassesDisjoint();
         return jbe;
     }
 
@@ -236,6 +223,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         @Override
         public void run() {
             log.debug("Starting OOP to OWL transformation process.");
+            System.out.println("\nStarting transformation to OWL.");
             transactionTemplate.execute(new TransactionCallback() {
                 @Override
                 public Object doInTransaction(TransactionStatus status) {
@@ -244,6 +232,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                 }
             });
             log.debug("OOP to OWL transformation process finished.");
+            System.out.println("Transformation finished.");
         }
 
     }

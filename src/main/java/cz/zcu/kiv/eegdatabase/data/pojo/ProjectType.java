@@ -25,6 +25,7 @@ public class ProjectType implements Serializable {
     private String description;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public ProjectType() {
 
@@ -67,5 +68,13 @@ public class ProjectType implements Serializable {
 
     public void setExperiments(Set<Experiment> experiments) {
         this.experiments = experiments;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }

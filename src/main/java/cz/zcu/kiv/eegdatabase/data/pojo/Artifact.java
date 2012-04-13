@@ -25,6 +25,7 @@ public class Artifact implements Serializable {
     private String rejectCondition;
     @OneToMany(mappedBy = "artifact")
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public Artifact() {
     }
@@ -66,6 +67,14 @@ public class Artifact implements Serializable {
 
     public void setExperiments(Set<Experiment> experiments) {
         this.experiments = experiments;
+    }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
     }
 }
 

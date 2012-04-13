@@ -27,6 +27,7 @@ public class Software implements Serializable {
     private int defaultNumber;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
+    private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
 
     public Software() {
     }
@@ -77,4 +78,13 @@ public class Software implements Serializable {
     public void setDefaultNumber(int defaultNumber) {
         this.defaultNumber = defaultNumber;
     }
+
+    public Set<ResearchGroup> getResearchGroups() {
+        return researchGroups;
+    }
+
+    public void setResearchGroups(Set<ResearchGroup> researchGroups) {
+        this.researchGroups = researchGroups;
+    }
 }
+

@@ -3,6 +3,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.search.annotations.*;
+import thewebsemantic.annotations.Comment;
+import thewebsemantic.annotations.Ignore;
+import thewebsemantic.annotations.Label;
+import thewebsemantic.annotations.SeeAlso;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -17,6 +21,9 @@ import java.util.Set;
 @Indexed
 @Analyzer(impl = StandardAnalyzer.class)
 @javax.persistence.Table(name = "PERSON")
+@Label(value="Osoba", lang="cs")
+@Comment(value="Class of persons registered in the Portal.", lang="en")
+@SeeAlso("http://eegdatabase.kiv.zcu.cz")
 public class Person implements Serializable, Comparable<Person> {
 
     @DocumentId
@@ -49,6 +56,7 @@ public class Person implements Serializable, Comparable<Person> {
     @Column(name = "USERNAME")
     private String username;
     @Column(name = "PASSWORD")
+    @Ignore
     private String password;
     @Column(name = "AUTHORITY")
     private String authority;

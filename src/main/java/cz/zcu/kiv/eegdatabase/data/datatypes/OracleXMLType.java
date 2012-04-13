@@ -5,8 +5,13 @@
 
 package cz.zcu.kiv.eegdatabase.data.datatypes;
 
-import java.io.*;
-import java.sql.*;
+import oracle.jdbc.OracleResultSet;
+import oracle.sql.OPAQUE;
+import oracle.xdb.XMLType;
+import org.hibernate.HibernateException;
+import org.hibernate.usertype.UserType;
+import org.w3c.dom.Document;
+import org.xml.sax.SAXException;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -17,16 +22,13 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import oracle.jdbc.OracleResultSet;
-
-import oracle.sql.OPAQUE;
-import oracle.xdb.XMLType;
-
-import org.hibernate.HibernateException;
-import org.hibernate.usertype.UserType;
-import org.w3c.dom.Document;
-import org.xml.sax.SAXException;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.Serializable;
+import java.io.StringWriter;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 
 /**
  * @author Jan Koren
@@ -95,7 +97,7 @@ public class OracleXMLType implements UserType, Serializable {
             }
             op = ors.getOPAQUE(names[0]);
             if (op != null) {
-                xmlType = XMLType.createXML(op);
+               //xmlType = XMLType.createXML(op);
             }
             if(xmlType != null) {
             doc = xmlType.getDocument();

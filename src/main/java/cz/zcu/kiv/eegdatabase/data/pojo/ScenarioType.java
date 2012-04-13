@@ -11,7 +11,7 @@ import javax.persistence.*;
  */
 @Entity
 @javax.persistence.Table(name="SCENARIO_TYPE_PARENT")
-public abstract class ScenarioType<T> implements IScenarioType<T>, java.io.Serializable {
+public class ScenarioType<T> implements IScenarioType<T>, java.io.Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "SCENARIO_ID")
@@ -37,7 +37,7 @@ public abstract class ScenarioType<T> implements IScenarioType<T>, java.io.Seria
         this.scenario = scenario;
     }
 
-    public abstract T getScenarioXml();
+    public T getScenarioXml(){ return null; }
 
-    public abstract void setScenarioXml(T scenarioXml);
+    public void setScenarioXml(T scenarioXml) {}
 }

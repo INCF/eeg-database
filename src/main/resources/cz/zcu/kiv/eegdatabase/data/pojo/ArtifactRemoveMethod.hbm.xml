@@ -2,17 +2,18 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod" schema="JPERGLER" table="ARTEFACT_REMOVING_METHOD">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod" schema="EEGTEST"
+           table="ARTEFACT_REMOVING_METHOD">
         <id name="artifactRemoveMethodId" type="int">
             <column name="ARTEFACT_REMOVING_METHOD_ID" precision="22" scale="0"/>
             <generator class="increment"/>
         </id>
 
         <property name="title" type="string">
-            <column name="TITLE" />
+            <column name="TITLE"/>
         </property>
         <property name="description" type="string">
-            <column name="DESCRIPTION" />
+            <column name="DESCRIPTION"/>
         </property>
         <property name="defaultNumber" type="int">
             <column name="IS_DEFAULT" precision="1" scale="0"/>
@@ -23,6 +24,14 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Experiment">
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set inverse="false" name="researchGroups" table="ARTEFACT_RMVNG_MTHD_GROUP_REL">
+            <key>
+                <column name="ARTEFACT_REMOVING_METHOD_ID" not-null="true" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup">
+                <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
             </many-to-many>
         </set>
 
