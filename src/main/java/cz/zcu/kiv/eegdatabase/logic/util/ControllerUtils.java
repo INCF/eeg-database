@@ -20,6 +20,7 @@ import java.util.Collection;
  */
 public class ControllerUtils {
 
+    public static final String ANONYMOUS_USER = "anonymousUser";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_FORMAT_WITH_TIME = "dd/MM/yyyy HH:mm";
@@ -59,6 +60,10 @@ public class ControllerUtils {
         }
 
         return userName;
+    }
+
+    public static boolean isUserLogged() {
+        return !getLoggedUserName().equals(ANONYMOUS_USER);
     }
 
     /**

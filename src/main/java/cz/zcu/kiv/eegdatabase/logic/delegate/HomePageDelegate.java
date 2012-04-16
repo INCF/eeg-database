@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
@@ -31,76 +32,13 @@ public class HomePageDelegate {
      */
     private int ARTICLES_COUNT = 10;
 
-    public ExperimentDao getExperimentDao() {
-        return experimentDao;
-    }
-
-    public void setExperimentDao(ExperimentDao experimentDao) {
-        this.experimentDao = experimentDao;
-    }
-
-    public ScenarioDao getScenarioDao() {
-        return scenarioDao;
-    }
-
-    public void setScenarioDao(ScenarioDao scenarioDao) {
-        this.scenarioDao = scenarioDao;
-    }
-
-    public ResearchGroupDao getResearchGroupDao() {
-        return researchGroupDao;
-    }
-
-    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
-        this.researchGroupDao = researchGroupDao;
-    }
-
-    public PersonDao getPersonDao() {
-        return personDao;
-    }
-
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
-
-    public ArticleDao getArticleDao() {
-        return articleDao;
-    }
-
-    public void setArticleDao(ArticleDao articleDao) {
-        this.articleDao = articleDao;
-    }
-
-    public AuthorizationManager getAuth() {
-        return auth;
-    }
-
-    public void setAuth(AuthorizationManager auth) {
-        this.auth = auth;
-    }
 
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("homePage/homePage");
 
-        Person person = personDao.getLoggedPerson();
-        if (person != null) {
-//      List<Experiment> myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
-//      myExperiments.clear();
-//      int defaultGroupId = 0;
-//      if (person.getDefaultGroup() != null) {
-////        myExperiments = experimentDao.getExperimentsWhereMember(person.getDefaultGroup().getResearchGroupId(), LIMIT);
-//        defaultGroupId = person.getDefaultGroup().getResearchGroupId();
-//      }
-//      Set<ResearchGroupMembership> rgm = person.getResearchGroupMemberships();
-//      int groupId;
-//      List<Experiment> groupExp;
-//      for (ResearchGroupMembership groupMember : rgm) {
-//        groupId = groupMember.getResearchGroup().getResearchGroupId();
-//        if (groupId != defaultGroupId) {
-//          groupExp = experimentDao.getExperimentsWhereMember(groupId);
-//          myExperiments.addAll(groupExp);
-//        }
-//      }
+        if (ControllerUtils.isUserLogged()) {
+            Person person = personDao.getLoggedPerson();
+
             List myExperiments = experimentDao.getExperimentsWhereOwner(person.getPersonId(), LIMIT);
             mav.addObject("myExperiments", myExperiments);
             mav.addObject("myExperimentsEmpty", myExperiments.isEmpty());
@@ -174,5 +112,53 @@ public class HomePageDelegate {
                 return;
             }
         }
+    }
+
+    public ExperimentDao getExperimentDao() {
+        return experimentDao;
+    }
+
+    public void setExperimentDao(ExperimentDao experimentDao) {
+        this.experimentDao = experimentDao;
+    }
+
+    public ScenarioDao getScenarioDao() {
+        return scenarioDao;
+    }
+
+    public void setScenarioDao(ScenarioDao scenarioDao) {
+        this.scenarioDao = scenarioDao;
+    }
+
+    public ResearchGroupDao getResearchGroupDao() {
+        return researchGroupDao;
+    }
+
+    public void setResearchGroupDao(ResearchGroupDao researchGroupDao) {
+        this.researchGroupDao = researchGroupDao;
+    }
+
+    public PersonDao getPersonDao() {
+        return personDao;
+    }
+
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+
+    public ArticleDao getArticleDao() {
+        return articleDao;
+    }
+
+    public void setArticleDao(ArticleDao articleDao) {
+        this.articleDao = articleDao;
+    }
+
+    public AuthorizationManager getAuth() {
+        return auth;
+    }
+
+    public void setAuth(AuthorizationManager auth) {
+        this.auth = auth;
     }
 }
