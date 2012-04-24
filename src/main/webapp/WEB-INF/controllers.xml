@@ -99,9 +99,9 @@
     </bean>
 
     <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
-        <constructor-arg>
+     <!--   <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
-        </constructor-arg>
+        </constructor-arg>       -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -130,12 +130,6 @@
     <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
-        </constructor-arg>
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -196,6 +190,18 @@
     <bean name="subjectGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Stimulus</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
