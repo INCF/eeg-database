@@ -9,7 +9,8 @@
 
 <ui:standardTemplate pageTitle="pageTitle.homePage">
 <c:if test="${not empty param.login_error}">
-                <span class="errorMessage"><fmt:message key="system.loginNotSuccessfull"/> <c:out value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
+    <span class="errorMessage"><fmt:message key="system.loginNotSuccessfull"/> <c:out
+            value="${SPRING_SECURITY_LAST_EXCEPTION.message}"/>.</span>
 </c:if>
 <security:authorize ifNotGranted="ROLE_ANONYMOUS">
     <h1 class="homepageHeading"><fmt:message key="pageTitle.homePage"/></h1>
@@ -19,8 +20,6 @@
         <h2>
             <fmt:message key="heading.myArticles"/>
             <a href="<c:url value='/articles/list.html'/>"><fmt:message key="seeAll"/></a>
-            <a class="resetArticlesFilter"><fmt:message key="resetArticlesFilter"/></a>
-
         </h2>
         <table class="dataTable">
             <thead>
@@ -35,25 +34,25 @@
             <tbody id="homepageMyArticlesList">
 
             <c:forEach items="${articleList}" var="article" varStatus="status">
-                <c:if test="${article.userMemberOfGroup}">
-                    <tr class="${article.researchGroup.title}">
-                        <td><fmt:formatDate value="${article.time}"/></td>
-                        <td class="tableArticleTitle"><a
-                                href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />"><c:out
-                                value="${article.title}"/></a></td>
-                        <td>
-                            <c:if test="${article.researchGroup != null}">
-                                <c:out value="${article.researchGroup.title}"/>
-                            </c:if>
-                            <c:if test="${article.researchGroup == null}">
+                <tr>
+                    <td><fmt:formatDate value="${article.time}"/></td>
+                    <td><a
+                            href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />"><c:out
+                            value="${article.title}"/></a></td>
+                    <td>
+                        <c:choose>
+                            <c:when test="${article.researchGroupId != null}">
+                                <c:out value="${article.researchGroupTitle}"/>
+                            </c:when>
+                            <c:otherwise>
                                 Public article
-                            </c:if>
-                        </td>
-                        <td>
-                            <c:out value="${fn:length(article.articleComments)}"/>
-                        </td>
-                    </tr>
-                </c:if>
+                            </c:otherwise>
+                        </c:choose>
+                    </td>
+                    <td>
+                        <c:out value="${article.commentCount}"/>
+                    </td>
+                </tr>
             </c:forEach>
             </tbody>
 
@@ -285,16 +284,18 @@
             <h2>Partners</h2>
             <ul class="partners">
                 <li>
-                <a href="http://www.neuinfo.org/" target="_blank">
-                    <img src="http://neuinfo.org/images/registered_with_nif_button.jpg" alt="Registered with NIF" title = "Registered with NIF"
-                         style="border:none;"/>
-                </a>
+                    <a href="http://www.neuinfo.org/" target="_blank">
+                        <img src="http://neuinfo.org/images/registered_with_nif_button.jpg" alt="Registered with NIF"
+                             title="Registered with NIF"
+                             style="border:none;"/>
+                    </a>
                 </li>
                 <li>
                     <a href="http://www.incf.org/" target="_blank">
-                    <img src="files/incf-logo.jpg" alt="INCF National node of Czech Republic"  title = INCF National node of Czech Republic;
-                         style="border:none;"/>
-                </a>
+                        <img src="files/incf-logo.jpg" alt="INCF National node of Czech Republic" title=INCF National
+                             node of Czech Republic;
+                        style="border:none;"/>
+                    </a>
                 </li>
             </ul>
         </div>

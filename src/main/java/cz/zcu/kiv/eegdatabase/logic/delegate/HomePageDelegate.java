@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.delegate;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
@@ -27,11 +26,6 @@ public class HomePageDelegate {
     private PersonDao personDao;
     private ArticleDao articleDao;
     private AuthorizationManager auth;
-    /**
-     * Visible articles count constant
-     */
-    private int ARTICLES_COUNT = 10;
-
 
     public ModelAndView home(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("homePage/homePage");
@@ -51,45 +45,14 @@ public class HomePageDelegate {
             mav.addObject("myScenarios", myScenarios);
             mav.addObject("myScenariosEmpty", myScenarios.isEmpty());
 
-            List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(
-                    personDao.getLoggedPerson(), LIMIT);
+            List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(person, LIMIT);
             mav.addObject("groupList", list);
             mav.addObject("groupListEmpty", list.isEmpty());
 
-            /* articles */
-
-            Person loggedUser = personDao.getLoggedPerson();
-            List<Article> articleList = articleDao.getAllArticles();
-
-            for (Article article : articleList) {
-                article.setUserMemberOfGroup(canView(loggedUser, article));
-                if (--ARTICLES_COUNT == 0) {
-                    break;
-                }
-            }
-            mav.addObject("articleList", articleList);
+            List articles = articleDao.getArticlesForHomepage(person, LIMIT);
+            mav.addObject("articleList", articles);
         }
         return mav;
-    }
-
-    /**
-     * Determines if the logged user can view the supposed article
-     *
-     * @param loggedUser Person object (Usually logged user)
-     * @param article    Article object
-     * @return true if admin or member of group
-     */
-    public boolean canView(Person loggedUser, Article article) {
-        if (loggedUser.getAuthority().equals("ROLE_ADMIN") || article.getResearchGroup() == null) {
-            return true;
-        }
-        Set<ResearchGroupMembership> researchGroupMemberships = article.getResearchGroup().getResearchGroupMemberships();
-        for (ResearchGroupMembership member : researchGroupMemberships) {
-            if (member.getPerson().getPersonId() == loggedUser.getPersonId()) {
-                return true;
-            }
-        }
-        return false;
     }
 
     /**
