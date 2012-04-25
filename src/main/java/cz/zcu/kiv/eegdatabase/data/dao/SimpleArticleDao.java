@@ -27,11 +27,9 @@ public class SimpleArticleDao<T, PK extends Serializable>
     }
 
     @Override
-    public List getArticlesForHomepage(Person person, int limit) {
+    public List getArticlesForUser(Person person) {
         String query;
         List articles = null;
-
-        getHibernateTemplate().setMaxResults(limit);
 
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
@@ -55,6 +53,13 @@ public class SimpleArticleDao<T, PK extends Serializable>
             articles = getHibernateTemplate().findByNamedParam(query, "personId", person.getPersonId());
         }
 
+        return articles;
+    }
+
+    @Override
+    public List getArticlesForUser(Person person, int limit) {
+        getHibernateTemplate().setMaxResults(limit);
+        List articles = getArticlesForUser(person);
         getHibernateTemplate().setMaxResults(0);
         return articles;
     }

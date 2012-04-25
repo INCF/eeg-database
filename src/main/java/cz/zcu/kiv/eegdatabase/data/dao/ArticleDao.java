@@ -17,5 +17,7 @@ import java.util.List;
 public interface ArticleDao<T, PK extends Serializable> extends GenericDao<T, PK> {
     public List<Article> getAllArticles();
 
-    List getArticlesForHomepage(Person person, int limit);
+    List getArticlesForUser(Person person);
+
+    List getArticlesForUser(Person person, int limit);
 }

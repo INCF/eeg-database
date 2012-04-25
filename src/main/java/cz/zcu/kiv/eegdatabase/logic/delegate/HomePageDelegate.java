@@ -49,7 +49,7 @@ public class HomePageDelegate {
             mav.addObject("groupList", list);
             mav.addObject("groupListEmpty", list.isEmpty());
 
-            List articles = articleDao.getArticlesForHomepage(person, LIMIT);
+            List articles = articleDao.getArticlesForUser(person, LIMIT);
             mav.addObject("articleList", articles);
         }
         return mav;
