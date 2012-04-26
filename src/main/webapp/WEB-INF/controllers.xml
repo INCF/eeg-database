@@ -134,6 +134,50 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="analysisDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAnalysisDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="artifactRemovingMethodDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactRemovingDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="diseaseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeFixDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeFixDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeLocationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeLocationDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeSystemDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeSystemDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="pharmaceuticalDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="projectTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="stimulusTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
