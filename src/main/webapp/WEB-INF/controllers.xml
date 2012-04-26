@@ -127,10 +127,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
+    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao">
+      <!--  <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
-        </constructor-arg>
+        </constructor-arg>                             -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

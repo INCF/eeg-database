@@ -46,7 +46,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private DigitizationDao digitizationDao;
     private ParameterMethodNameResolver methodNameResolver;
     private GenericDao<DataFile, Integer> dataFileDao;
-    private GenericDao<Artifact, Integer> artifactDao;
+    private GenericListDao<Artifact> artifactDao;
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
     private GenericDao<SubjectGroup, Integer> subjectGroupDao;
     private static final int MAX_MIMETYPE_LENGTH = 40;
@@ -562,13 +562,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         this.subjectGroupDao = subjectGroupDao;
     }
 
-    public GenericDao<Artifact, Integer> getArtifactDao() {
-        return artifactDao;
-    }
-
-    public void setArtifactDao(GenericDao<Artifact, Integer> artifactDao) {
-        this.artifactDao = artifactDao;
-    }
 
     public GenericDao<ElectrodeConf, Integer> getElectrodeConfDao() {
         return electrodeConfDao;
@@ -576,5 +569,13 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
         this.electrodeConfDao = electrodeConfDao;
+    }
+
+    public GenericListDao<Artifact> getArtifactDao() {
+        return artifactDao;
+    }
+
+    public void setArtifactDao(GenericListDao<Artifact> artifactDao) {
+        this.artifactDao = artifactDao;
     }
 }
