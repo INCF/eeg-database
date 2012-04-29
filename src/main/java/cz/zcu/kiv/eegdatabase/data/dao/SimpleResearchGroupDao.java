@@ -28,16 +28,14 @@ public class SimpleResearchGroupDao
      */
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person) {
         String hqlQuery = "from ResearchGroup researchGroup "
-                + "left join fetch researchGroup.researchGroupMemberships as membership "
-                + "where membership.person.personId = :personId "
+                + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
         return getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
     }
 
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
         String hqlQuery = "from ResearchGroup researchGroup "
-                + "left join fetch researchGroup.researchGroupMemberships as membership "
-                + "where membership.person.personId = :personId "
+                + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
 
         getHibernateTemplate().setMaxResults(limit);
