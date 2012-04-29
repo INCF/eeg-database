@@ -4,52 +4,62 @@
     Author     : Jiri Vlasimsky
 --%>
 
-<%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page contentType="text/html" pageEncoding="UTF-8" %>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
 
 <ui:articlesTemplate pageTitle="${articleListTitle}">
-  <h1><fmt:message key="${articleListTitle}"/></h1>
-  <c:forEach items="${articleList}" var="article" varStatus="status">
-    <c:if test="${article.userMemberOfGroup}">
-      <div class="article">
-        <div class="heading">
-          <h2><a href="<c:url value="detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></h2>
-        </div>
-        <div class="subheading">
-          <span class="researchGroup">
-            <c:if test="${article.researchGroup != null}">
-              <c:out value="${article.researchGroup.title}" />
-            </c:if> 
-            <c:if test="${article.researchGroup == null}">
-              Public article
-            </c:if>
-          </span>
-          |
-          <span class="date">
-            <fmt:formatDate value="${article.time}" />
-          </span>
-          |
-          <span class="author">
-            <c:out value="${article.person.givenname}" />
-            <c:out value="${article.person.surname}" />
-          </span>
-          |
-          <span class="commentsCount">
-            <c:out value="${fn:length(article.articleComments)}" /> <fmt:message key="heading.comments" />
-          </span>
-          <c:if test="${article.userIsOwnerOrAdmin}">
-            | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-            | <a href="<c:url value="delete.html?articleId=${article.articleId}" />" class="confirm"><fmt:message key="label.delete" /> </a>
-          </c:if>
-        </div>
+    <h1><fmt:message key="${articleListTitle}"/></h1>
 
-        <div class="content">
-          <c:out value="${fn:substring(article.text,0,500)}"  />
+    ${paginator}
+
+    <c:forEach items="${articleList}" var="article" varStatus="status">
+        <div class="article">
+            <div class="heading">
+                <h2><a href="<c:url value="detail.html?articleId=${article.articleId}" />"><c:out
+                        value="${article.title}"/></a></h2>
+            </div>
+
+
+            <div class="content">
+                <c:out value="${article.textPreview}"/><c:if test="${fn:length(article.textPreview) == 500}">&hellip;</c:if>
+                <a href="<c:url value="detail.html?articleId=${article.articleId}" />"><fmt:message key="readMore" /></a>
+            </div>
+
+            <div class="articleInfo">
+                <span class="date">
+                               <fmt:formatDate value="${article.time}"/>
+                           </span>
+                &bull;
+                <span class="researchGroup">
+                    <c:choose>
+                        <c:when test="${article.researchGroupId != null}">
+                            <span class="label"><fmt:message key="researchGroup" />:</span>  <c:out value="${article.researchGroupTitle}"/>
+                        </c:when>
+                        <c:otherwise>
+                            Public article
+                        </c:otherwise>
+                    </c:choose>
+                </span>
+                &bull;
+                <span class="author">
+                    <span class="label"><fmt:message key="author" />:</span> <c:out value="${article.authorName}"/>
+                           </span>
+                &bull;
+                <span class="commentsCount">
+                               <c:out value="${article.commentCount}"/> <fmt:message key="heading.comments"/>
+                           </span>
+                <c:if test="${userIsGlobalAdmin || article.ownerId == loggedUserId}">
+                    &bull; <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message
+                        key="label.edit"/> </a>
+                    &bull; <a href="<c:url value="delete.html?articleId=${article.articleId}" />"
+                               class="confirm"><fmt:message key="label.delete"/> </a>
+                </c:if>
+            </div>
         </div>
-      </div>
-    </c:if>
-  </c:forEach>
+    </c:forEach>
+
+    ${paginator}
 </ui:articlesTemplate>

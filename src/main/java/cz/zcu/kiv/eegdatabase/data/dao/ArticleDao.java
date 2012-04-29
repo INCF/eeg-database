@@ -20,4 +20,8 @@ public interface ArticleDao<T, PK extends Serializable> extends GenericDao<T, PK
     List getArticlesForUser(Person person);
 
     List getArticlesForUser(Person person, int limit);
+
+    List getArticlesForList(Person person, int min, int count);
+
+    public int getArticleCountForPerson(Person person);
 }

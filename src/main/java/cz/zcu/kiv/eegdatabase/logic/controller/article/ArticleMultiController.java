@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -35,6 +36,7 @@ public class ArticleMultiController extends MultiActionController {
     private ArticleCommentDao articleCommentDao;
     private ResearchGroupDao researchGroupDao;
     private String domain;
+    private static final int ARTICLES_PER_PAGE = 10;
 
     public ArticleMultiController() {
 
@@ -61,7 +63,7 @@ public class ArticleMultiController extends MultiActionController {
         for (Article article : articleList) {
             FeedMessage feed = new FeedMessage();
             feed.setTitle(article.getTitle());
-            feed.setDescription(article.getText().substring(0,(article.getText().length() > 200) ? 200 : article.getText().length()-1));
+            feed.setDescription(article.getText().substring(0, (article.getText().length() > 200) ? 200 : article.getText().length() - 1));
             feed.setAuthor(article.getPerson().getUsername());
             feed.setGuid("");
             feed.setLink(domain + "/articles/detail.html?articleId=" + article.getArticleId());
@@ -90,14 +92,24 @@ public class ArticleMultiController extends MultiActionController {
         setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user from database is: " + loggedUser.getPersonId());
-        List<Article> articleList = articleDao.getAllArticles();
-        int groupId;
-        for (Article item : articleList) {
-            item.setUserMemberOfGroup(canView(loggedUser, item));
-            item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
+//        int groupId;
+//        for (Article item : articleList) {
+//            item.setUserMemberOfGroup(canView(loggedUser, item));
+//            item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
+//        }
+        Paginator paginator = new Paginator(articleDao.getArticleCountForPerson(loggedUser), ARTICLES_PER_PAGE, "list.html?page=%1$d");
+        String pageString = request.getParameter("page");
+        int page = 1;
+        if (pageString != null) {
+            page = Integer.parseInt(pageString);
         }
+        paginator.setActualPage(page);
+        mav.addObject("paginator", paginator.getLinks());
+        List articleList = articleDao.getArticlesForList(loggedUser, paginator.getFirstItemIndex(), ARTICLES_PER_PAGE);
         mav.addObject("articleList", articleList);
         mav.addObject("articleListTitle", "pageTitle.allArticles");
+        mav.addObject("userIsGlobalAdmin", loggedUser.getAuthority().equals("ROLE_ADMIN"));
+        mav.addObject("loggedUserId", loggedUser.getPersonId());
         return mav;
     }
 

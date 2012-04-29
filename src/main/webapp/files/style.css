@@ -177,6 +177,33 @@ while still visible in code, so it can be accessible without styles **/
 
 }
 
+
+.paginator {
+    margin: 5px 0;
+    padding: 5px;
+    text-align: center;
+}
+.paginator a {
+    background: #666;
+    color: #fff;
+    text-decoration: none;
+}
+.paginator .disabled {
+    background: #ddd;
+    color: #999;
+}
+.paginator a,
+.paginator .disabled {
+    font-size: 1.3em;
+    padding: 3px 10px;
+}
+.paginator a:hover {
+    background-color: #000;
+}
+.paginator .description {
+    margin: 0 5px;
+}
+
 .homepageLoginLink,
 .homepageRegistrationLink {
     font-size: 1.5em;
@@ -417,7 +444,39 @@ div.articleDetail .content {
 
 }
 
-.article .subheading, .articleDetail .subheading {
+.article {
+    border: solid 1px #ddd;
+}
+.article:hover {
+    border-color: #bbb;
+    background-color: #f3f3f3;
+}
+.article h2 {
+    margin: 10px;
+    padding: 0px;
+}
+.article .content {
+    color: #333;
+    margin: 10px;
+    font-size: 1.1em;
+}
+.article:hover .content {
+    color: #000;
+}
+.article .articleInfo {
+    padding: 3px 10px;
+    color: #333;
+    background: #eee;
+}
+.article .articleInfo .label {
+    color: #999;
+}
+.article:hover .articleInfo {
+    color: #000;
+    background-color: #ddd;
+}
+
+.articleDetail .subheading {
     margin-top: 5px;
     margin-bottom: 5px;
     color: gray;
