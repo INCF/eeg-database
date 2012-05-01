@@ -18,44 +18,43 @@ public interface SemanticFactory {
 
     /**
      * Generates an ontology document from POJO objects.<br>
-     * This method returns a serialization of the Jena's ontology model
-     * of POJO objects in a specified syntax.
+     * This method returns the serialization from Jena in a specified syntax.
      *
      * @param syntax - required syntax of the ontology document
      * @return is - ontology document
      * @throws java.io.IOException - if an I/O error occurs.
      */
-    public InputStream generateOntology(String syntax) throws IOException;
+    public InputStream getOntology(String syntax) throws IOException;
+
 
     /**
-     * Generates an ontology document from POJO objects.<br>
-     * This method returns a serialization of the Jena's ontology model
-     * of POJO objects in a specified syntax. If the <code>structureOnly</code> argument
-     * is set true then the output ontology document describes only static structure
-     * of data, but not the data itself.
+     * Generates an ontology schema document from POJO objects.<br>
+     * This method returns the serialization from Jena in a specified syntax.
+     * The output document describes schema of the ontology (i.e. defined
+     * classes and properties), but contains no data itself.
      *
-     * @param syntax - required syntax of the ontology document
-     * @param structureOnly - if true generated ontology contains only static structure of data
-     * @return is - ontology document
+     * @param syntax - required syntax of the ontology schema document
+     * @return is - ontology schema document
      * @throws java.io.IOException - if an I/O error occurs.
      */
-    public InputStream generateOntology(String syntax, boolean structureOnly) throws IOException;
+    public InputStream getOntologySchema(String syntax) throws IOException;
 
 
     /**
      * Generates an ontology document from POJO objects.<br>
-     * This method gets a serialization of the Jena's ontology model in a default
-     * syntax and transforms it using Owl-Api. The Owl-Api's output syntax
-     * is specified by the syntax parameter.
+     * This method transforms the serialization from Jena using the Owl-Api.
+     * The Owl-Api's output syntax is specified by the <code>syntax</code> parameter.
      *
-     * @param syntax - param from user (rdf, owl, ttl)
-     * @return is - generated ontology document (rdf, owl, ttl)
+     * @param syntax - param from user (owl/xml, rdf/xml, turtle, owl-functional)
+     * @return is - generated ontology document
      * @throws java.io.IOException - if an I/O error occurs.
      * @throws OWLOntologyCreationException
      *                             - if an error occurs in Owl-Api while loading the ontology.
      * @throws OWLOntologyStorageException
      *                             - if an error occurs in Owl-Api while creating the output.
      */
-    public InputStream generateOntologyOwlApi(String syntax) throws IOException,
+    public InputStream getOntologyOwlApi(String syntax) throws IOException,
             OWLOntologyCreationException, OWLOntologyStorageException;
+
+
 }

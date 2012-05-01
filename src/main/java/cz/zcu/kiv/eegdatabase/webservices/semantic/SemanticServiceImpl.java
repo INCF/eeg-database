@@ -48,7 +48,7 @@ public class SemanticServiceImpl implements SemanticService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = simpleSemanticFactory.generateOntology(null);
+            is = simpleSemanticFactory.getOntology(null);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }
@@ -78,7 +78,7 @@ public class SemanticServiceImpl implements SemanticService {
         ByteArrayOutputStream os = new ByteArrayOutputStream();
         try {
             int i;
-            is = simpleSemanticFactory.generateOntologyOwlApi(syntaxType);
+            is = simpleSemanticFactory.getOntologyOwlApi(syntaxType);
             while ((i = is.read()) > -1) {
                 os.write(i);
             }

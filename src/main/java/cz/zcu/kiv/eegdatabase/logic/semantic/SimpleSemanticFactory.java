@@ -72,41 +72,26 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
     
     @Override
-    public InputStream generateOntology(String syntax) throws IOException {
-        return generateOntology(syntax, false);
-    }
-
-
-    @Override
-    public InputStream generateOntology(String syntax, boolean structureOnly) throws IOException {
+    public InputStream getOntology(String syntax) throws IOException {
         InputStream is;
-        String lang;
+        JenaBeanExtension jbe;
 
         // check the validity of user request on serialization syntax
-        if (syntax == null || syntax.equalsIgnoreCase("owl"))
+        if (syntax == null || syntax.equalsIgnoreCase("owl")
+                    || syntax.equalsIgnoreCase(Syntax.RDF_XML_ABBREV))
             syntax = Syntax.RDF_XML;
-        lang = syntax.toUpperCase();
-        if (structureOnly && lang.equals(Syntax.RDF_XML))
-            lang = Syntax.RDF_XML_ABBREV;
+        syntax = syntax.toUpperCase();
 
         // check if the temporary file contains error log instead of ontology
-        Scanner sc = new Scanner(is = new FileInputStream(ontologyFile));
-        if (sc.next().equalsIgnoreCase("error")) {
-            is.close();
+        if (errorLog() == true)
             return new FileInputStream(ontologyFile);
-        }
-        is.close();
 
+        // get the ontology document in required syntax
         is = new FileInputStream(ontologyFile);
-        // transform the output according to user request (another syntax or schema only)
-        if (structureOnly) {
-            JenaBeanExtension jbe = new JenaBeanExtensionTool();
+        if ( !syntax.equals(Syntax.RDF_XML)) {
+            jbe = new JenaBeanExtensionTool();
             jbe.loadStatements(is, Syntax.RDF_XML);
-            is = jbe.getOntologySchema(lang);
-        } else if (! lang.equals(Syntax.RDF_XML)) {
-            JenaBeanExtension jbe = new JenaBeanExtensionTool();
-            jbe.loadStatements(is, Syntax.RDF_XML);
-            is = jbe.getOntologyDocument(lang);
+            is = jbe.getOntologyDocument(syntax);
         }
 
         return is;
@@ -114,14 +99,41 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
 
     @Override
-    public InputStream generateOntologyOwlApi(String syntax) throws IOException,
+    public InputStream getOntologySchema(String syntax) throws IOException {
+        InputStream is;
+        JenaBeanExtension jbe;
+
+        // check if the temporary file contains error log instead of ontology
+        if (errorLog() == true)
+            return new FileInputStream(ontologyFile);
+
+        // create the ontology schema
+        is = new FileInputStream(ontologyFile);
+        jbe = new JenaBeanExtensionTool();
+        jbe.loadStatements(is, Syntax.RDF_XML);
+        is = jbe.getOntologySchema(Syntax.RDF_XML_ABBREV);
+
+        return is;
+    }
+
+
+    @Override
+    public InputStream getOntologyOwlApi(String syntax) throws IOException,
                                     OWLOntologyCreationException, OWLOntologyStorageException {
         InputStream is;
         OwlApi owlApi;
 
+        if (syntax == null)
+            syntax = Syntax.OWL_XML;
+
+        // check if the temporary file contains error log instead of ontology
+        if (errorLog() == true)
+            return new FileInputStream(ontologyFile);
+
+        // get the serialization from the OWL API
         is = new FileInputStream(ontologyFile);
         owlApi = new OwlApiTool(is);
-        is = owlApi.convertToSemanticStandard(syntax);
+        is = owlApi.getOntologyDocument(syntax);
 
         return is;
     }
@@ -166,7 +178,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         OutputStream out = null;
 
         try {
-            jbe = creatingJenaBean(false);
+            jbe = creatingJenaBean();
             out = new FileOutputStream(ontologyFile);
             jbe.writeOntologyDocument(out, Syntax.RDF_XML);
             out.close();
@@ -195,10 +207,9 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
     /**
      * Creates an instance of JenaBeanExtension with loaded model.
-     * @param structureOnly - if true only structure of data is loaded (classes and properties), no data itself
      * @return instance of JenaBeanExtension
      */
-    private JenaBeanExtension creatingJenaBean(boolean structureOnly) {
+    private JenaBeanExtension creatingJenaBean() {
         JenaBeanExtension jbe = new JenaBeanExtensionTool();
         try {
             jbe.loadStatements(ontology.getInputStream(), Syntax.RDF_XML_ABBREV);
@@ -206,9 +217,24 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             log.error("Could not open the input stream associated with the ontology " +
                     "configuration document: " + ontology.getFilename(), e);
         }
-        jbe.loadOOM(dataList, structureOnly);
+        jbe.loadOOM(dataList);
         jbe.declareAllClassesDisjoint();
         return jbe;
+    }
+
+
+    /**
+     * Determines whether the temporary ontology file contains an error log instead
+     * of the ontology.
+     * @return true if the ontology file contains error log, otherwise false
+     * @throws IOException
+     */
+    private boolean errorLog() throws IOException {
+        InputStream is = new FileInputStream(ontologyFile);
+        Scanner sc = new Scanner(is);
+        boolean error = sc.next().equalsIgnoreCase("error");
+        is.close();
+        return error;
     }
 
     
