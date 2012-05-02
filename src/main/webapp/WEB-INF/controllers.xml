@@ -50,8 +50,24 @@
         </property>
     </bean>
 
-    <bean name="facebookController" class="cz.zcu.kiv.eegdatabase.logic.controller.social.FacebookController">
-
+    <bean name="oAuthCallbackController" class="cz.zcu.kiv.eegdatabase.logic.controller.social.OAuthCallbackController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+    </bean>
+    
+    
+    <bean id="providerSignInController" class="org.springframework.social.connect.web.ProviderSignInController">
+        <constructor-arg ref="connectionFactoryLocator" />
+        <constructor-arg ref="usersConnectionRepository" />    
+        <constructor-arg ref="SignInAdapter" />
+        <property name="signUpUrl" value="/oauthcallback.html"/>
+        <property name="postSignInUrl" value="/home.html"/>
+    </bean>
+    
+    <bean id="connectController" class="org.springframework.social.connect.web.ConnectController">
+        <constructor-arg ref="connectionFactoryLocator"/>
+        <constructor-arg ref="connectionRepository"/>
+      
+       
     </bean>
 
     <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">

@@ -22,6 +22,9 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.support.RequestContextUtils;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
@@ -44,8 +47,10 @@ public class AddArticleController extends SimpleFormController {
     private JavaMailSenderImpl mailSender;
     private SimpleMailMessage mailMessage;
     private HierarchicalMessageSource messageSource;
+    @Autowired
+    private LinkedInManager linkedin;
 
-
+    
     public AddArticleController() {
         setCommandClass(ArticleCommand.class);
         setCommandName("addArticle");
@@ -154,6 +159,13 @@ public class AddArticleController extends SimpleFormController {
                 }
             }
         }
+        
+        //Publish article on LinkedIn
+        if ((request.getParameter("publishOnLinkedIn") != null) && (request.getParameter("publishOnLinkedIn").equals("publish"))){
+            log.debug("Publishing an article on LinkedIn");
+            linkedin.publish(data.getTitle(), data.getText()); 
+        }
+        
         return mav;
     }
 

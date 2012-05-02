@@ -1,11 +1,14 @@
 package cz.zcu.kiv.eegdatabase.data.service;
 
-import com.restfb.types.User;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationCommand;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 
 import java.text.ParseException;
+import org.springframework.stereotype.Service;
+
 
 /**
  * Created by IntelliJ IDEA.
@@ -13,12 +16,13 @@ import java.text.ParseException;
  * Date: 12.3.12
  * Time: 2:39
  */
+
 public interface PersonService {
     Person createPerson(RegistrationCommand rc) throws ParseException;
 
     Person createPerson(AddPersonCommand apc) throws ParseException;
 
-    Person createPerson(User userFb, Integer educationLevelId);
+    Person createPerson(SocialUser userFb, Integer educationLevelId);
 
     public Person createPerson(String givenName, String surname, String dateOfBirth, String email,
                            String gender, String phoneNumber, String note, Integer educationLevelId,

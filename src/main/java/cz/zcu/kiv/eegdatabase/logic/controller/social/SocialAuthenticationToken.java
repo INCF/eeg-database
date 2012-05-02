@@ -12,18 +12,20 @@ import java.util.Collection;
  * Date: 12.4.11
  * Time: 19:00
  */
-public class FacebookAuthenticationToken extends AbstractAuthenticationToken {
+public class SocialAuthenticationToken extends AbstractAuthenticationToken {
     private Person person;
 
-    public FacebookAuthenticationToken(Collection<GrantedAuthority> authorities, Person person) {
+    public SocialAuthenticationToken(Collection<GrantedAuthority> authorities, Person person) {
         super(authorities);
         this.person = person;
     }
 
+    @Override
     public Object getCredentials() {
         return person;
     }
 
+    @Override
     public Object getPrincipal() {
         return this.person;
     }

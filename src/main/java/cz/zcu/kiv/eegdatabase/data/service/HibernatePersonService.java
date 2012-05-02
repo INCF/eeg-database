@@ -17,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 
 import java.sql.Timestamp;
 import java.text.Normalizer;
@@ -88,14 +89,14 @@ public class HibernatePersonService implements PersonService {
     }
 
     @Override
-    public Person createPerson(User userFb, Integer educationLevelId) {
+    public Person createPerson(SocialUser userFb, Integer educationLevelId){
         //copying the data to Person entity
         Person person = new Person();
         person.setUsername(userFb.getEmail());
         person.setGivenname(userFb.getFirstName());
         person.setSurname(userFb.getLastName());
-        person.setGender(userFb.getGender().toUpperCase().charAt(0));
-        person.setDateOfBirth(new Timestamp(userFb.getBirthdayAsDate().getTime()));
+        person.setGender('M');
+       
         person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
 
@@ -105,7 +106,6 @@ public class HibernatePersonService implements PersonService {
         person.setAuthority("ROLE_USER");
         log.debug("Setting confirmed");
         person.setConfirmed(true);
-        person.setFacebookId(userFb.getId());
         return createPerson(person);
     }
 

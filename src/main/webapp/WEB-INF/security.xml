@@ -18,10 +18,18 @@
         <intercept-url pattern="/nif/getScenariosCSVFile.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/nif/getExperimentsCSVFile.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
-        <intercept-url pattern="/social/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        
+        <intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />
+        <intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />
+        <intercept-url pattern="/status.html" access="IS_AUTHENTICATED_FULLY" />
+        <intercept-url pattern="/oauthcallback.html" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        
         <intercept-url pattern="/articles/rss.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-        <intercept-url pattern="/social/*.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-
+        
         <intercept-url pattern="/my-account/*.html" access="IS_AUTHENTICATED_FULLY"/>
 
         <intercept-url pattern="/articles/settings.html" access="ROLE_ADMIN,ROLE_USER"/>

@@ -22,10 +22,14 @@
                 <prop key="/forgotten-password.html">forgottenPasswordController</prop>
                 <prop key="/registration-confirmation.html">confirmController</prop>
 
-                <prop key="social/login.html">facebookController</prop>
-                <prop key="social/user.html">facebookController</prop>
-                <prop key="social/*">facebookController</prop>
-
+                <prop key="/connect">connectController</prop>
+                <prop key="/connect/*">connectController</prop>               
+                <prop key="/connect/status.html">connectController</prop>                  
+                
+                <prop key="/signin">providerSignInController</prop>
+                <prop key="/signin/*">providerSignInController</prop>             
+              
+                <prop key="/oauthcallback.html">oAuthCallbackController</prop>
 
                 <prop key="my-account/change-password.html">changePasswordController</prop>
                 <prop key="my-account/change-default-group.html">changeDefaultGroupController</prop>

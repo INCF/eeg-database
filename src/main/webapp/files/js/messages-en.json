@@ -227,6 +227,7 @@
       "detailOfUser":"Detail of user",
       "download":"Download",
       "downloads":"Downloads",
+      "email":"Email",
       "entity":"Entity",
       "eyesDefectDescription":"Description",
       "eyesDefectId":"ID",
@@ -272,6 +273,7 @@
       "surname":"Surname",
       "title":"Title",
       "type":"Type",
+      "user":"User",
       "username":"Username",
       "usersDefaultGroup":"User's default group",
       "value":"Value",
@@ -326,14 +328,18 @@
     "notSuitable":"This experiment is not suitable for EEG processing services because this experiment does not contain .vhdr and .eeg or .avg file type.",
     "outOfMemory":"The binary data size is too high for used method."
   },
+  "facebook":
+  {
+    "displayName":"Facebook",
+    "icon":"files/images/f_logo.jpg"
+  },
   "form":
   {
     "note":
     {
       "dateFormatDDMMYYYY":"Date format DD/MM/YYYY.",
       "dateFormatDDMMYYYYHHMM":"Date format for field Start time and End time is DD/MM/YYYY HH:mm or DD/MM/YYYY.",
-      "timeFormatHHMM":"Time format HH:MM.",
-      "usernameFormatNote":"Allowed chars are small letters [a-z], numbers [0-9], dot [.] and dash [-]. Username musts begin with small letter. Minimal length is up to 2 characters."
+      "timeFormatHHMM":"Time format HH:MM."
     },
     "option":
     {
@@ -438,6 +444,7 @@
     "edit":"Edit",
     "educationLevel":"EducationLevel",
     "email":"E-mail",
+    "emailLogin":"E-mail (Login)",
     "endDate":"End date",
     "endDateTime":"End date and time",
     "endOfMeasuration":"End of experiment",
@@ -464,6 +471,7 @@
     "laterality":"Laterality",
     "left":"Left",
     "lenght":"Lenght",
+    "linkedin":"Publish article on LinkedIn",
     "measuration":"Experiment",
     "measurationId":"Experiment ID",
     "minutes":"minutes",
@@ -563,6 +571,11 @@
     "viewDetailOfPerson":"View detail of person",
     "viewDetailOfScenario":"View detail of scenario"
   },
+  "linkedin":
+  {
+    "displayName":"LinkedIn",
+    "icon":"files/images/ln_logo.jpg"
+  },
   "menuItem":
   {
     "addScenario":"Add scenario",
@@ -596,7 +609,8 @@
       "applyForWritingPermission":"Request for data uploading permission",
       "changeDefaultGroup":"Change Default Group",
       "changePassword":"Change password",
-      "overview":"Account overview"
+      "overview":"Account overview",
+      "social":"Social networks"
     },
     "myGroups":"My groups",
     "myScenarios":"My scenarios",
@@ -622,10 +636,6 @@
   },
   "page":
   {
-    "forgottenPassword":
-    {
-      "username":"User name"
-    },
     "myAccount":
     {
       "changePasswordButton":"Change password",
@@ -754,6 +764,7 @@
     "searchResult":"List of download history",
     "services":"EEG Signal Processing Services",
     "servicesResult":"Services Results",
+    "socialOverview":"Social networks",
     "userNotExperimenter":"Experimenter role needed",
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
@@ -865,7 +876,7 @@
     "fileTypeZip":".zip",
     "forgottenPassword":
     {
-      "passwordWillBeSent":"New password will be sent to e-mail registered with the user name."
+      "passwordWillBeSent":"A new password will be sent to the email, if a matching user is found."
     },
     "itemInUse":"Item is used and therefore cannot be deleted. You need first remove all the usage before deleting.",
     "itemWasDeletedFromDatabase":"Item was deleted from database.",
@@ -876,6 +887,7 @@
       "requestNotNeeded":"You already have a writing permission.",
       "writingPermissionReason":"Describe shortly which type of experiments you will add into system"
     },
+    "notMemberOfAnyGroup":"You are currently not a part of any group. To join groups, go to the Groups tab, choose one and send a membership request, or create a new group.",
     "operation":"This operation reads data from database. It can take several minutes.",
     "registration":
     {

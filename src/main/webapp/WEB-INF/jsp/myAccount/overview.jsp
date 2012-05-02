@@ -20,52 +20,38 @@
             <th><fmt:message key="label.globalPermissionLevel"/></th>
             <td><f:globalAuthority code="${userInfo.authority}"/></td>
         </tr>
-        <tr>
-            <th><fmt:message key="label.facebookId"/></th>
-            <td>
-                <c:choose>
-                    <c:when test="${facebookConnected}">
-                        <c:out value="${userFacebookId}" />
-                    </c:when>
-                    <c:otherwise>
-                    <a href="<c:url value="/social/login.html" />">
-                        <fmt:message key="page.myAccount.connectWithFacebook"/>
-                    </a>
-                    </c:otherwise>
-                </c:choose>
+        
+</table>
 
-        </tr>
-    </table>
-
-    <h2><fmt:message key="heading.membershipInGroups"/></h2>
-    <c:choose>
-        <c:when test="${membershipListEmpty}">
-            <div class="emptyDataTable">
-                <fmt:message key="emptyTable.notMemberOfAnyGroup"/>
-            </div>
-        </c:when>
-        <c:otherwise>
-            <table class="dataTable accountOverviewGroupMembershipDataTable">
-                <thead>
+<h2><fmt:message key="heading.membershipInGroups"/></h2>
+<c:choose>
+    <c:when test="${membershipListEmpty}">
+        <div class="emptyDataTable">
+            <fmt:message key="emptyTable.notMemberOfAnyGroup"/>
+        </div>
+    </c:when>
+    <c:otherwise>
+        <table class="dataTable accountOverviewGroupMembershipDataTable">
+            <thead>
                 <tr>
                     <th class="columnGroupName"><fmt:message key="dataTable.heading.groupName"/></th>
                     <th class="columnRole"><fmt:message key="dataTable.heading.roleInGroup"/></th>
                     <th></th>
                 </tr>
-                </thead>
-                <tbody>
+            </thead>
+            <tbody>
                 <c:forEach items="${membershipList}" var="info">
                     <tr>
                         <td><c:out value="${info.groupTitle}"/></td>
                         <td><f:groupAuthority code="${info.authority}"/></td>
                         <td><a href="<c:url value='/groups/detail.html?groupId=${info.groupId}'/>"><fmt:message
-                                key="link.detail"/></a></td>
+                                    key="link.detail"/></a></td>
                     </tr>
                 </c:forEach>
-                </tbody>
+            </tbody>
 
-            </table>
-        </c:otherwise>
-    </c:choose>
+        </table>
+    </c:otherwise>
+</c:choose>
 
 </ui:myAccountTemplate>

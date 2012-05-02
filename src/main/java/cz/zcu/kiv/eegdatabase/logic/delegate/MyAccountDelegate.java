@@ -54,6 +54,13 @@ public class MyAccountDelegate {
         return mav;
     }
 
+    public ModelAndView status(HttpServletRequest request, HttpServletResponse response) {
+        ModelAndView mav = new ModelAndView("redirect:/connect.html");
+
+       
+        return mav;
+    }
+    
     public static void setUserIsInAnyGroup(ModelAndView mav, Person loggedUser) {
         if(!loggedUser.getResearchGroupMemberships().isEmpty()){
             mav.addObject("userIsInAnyGroup", true);

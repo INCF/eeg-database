@@ -50,6 +50,9 @@
         <form:errors path="title" cssClass="errorBox" />
       </div>
       <div class="itemBox">
+           <input type="checkbox" name="publishOnLinkedIn" value="publish" /><fmt:message key="label.linkedin"/>
+      </div>
+      <div class="itemBox">
         <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
       </div>
     </form:form>
