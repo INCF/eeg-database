@@ -40,7 +40,7 @@ public class NIFMultiController extends MultiActionController {
 
         response.setHeader("Content-Type", "text/csv");
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_scenarios_example_2011.csv");
+        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_scenarios.csv");
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);
@@ -67,7 +67,7 @@ public class NIFMultiController extends MultiActionController {
 
         response.setHeader("Content-Type", "text/csv");
         response.setContentType("text/csv");
-        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_experiments_example_2011.csv");
+        response.setHeader("Content-Disposition", "attachment;filename=EEGbase_experiments.csv");
 
         log.debug("Creating output stream");
         response.setStatus(HttpServletResponse.SC_OK);

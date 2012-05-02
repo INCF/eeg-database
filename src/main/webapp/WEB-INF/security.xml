@@ -15,6 +15,8 @@
         <intercept-url pattern="/access-denied.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/forgotten-password.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/registration-confirmation.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/nif/getScenariosCSVFile.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/nif/getExperimentsCSVFile.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 
         <intercept-url pattern="/social/login.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <intercept-url pattern="/articles/rss.html" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
