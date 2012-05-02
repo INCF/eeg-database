@@ -4,11 +4,13 @@ import com.hp.hpl.jena.shared.CannotEncodeCharacterException;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.opensaml.saml2.metadata.Organization;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.core.io.Resource;
@@ -37,6 +39,12 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private File ontologyFile;      // temporary ontology document
     private Resource ontology;      // owl document with static ontology statements
 
+    @Value("${semantic.transformation.regularInterval}")
+    private int interval;
+
+    @Value("${semantic.transformation.delayFirstTransform}")
+    private int delay;
+
     @Autowired
     private TransactionTemplate transactionTemplate;
 
@@ -54,7 +62,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         }
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TransformTask(), 100 * 1000, 24 * 3600 * 1000);  // TODO upravit interval
+        timer.scheduleAtFixedRate(new TransformTask(), delay, interval);
     }
 
 
