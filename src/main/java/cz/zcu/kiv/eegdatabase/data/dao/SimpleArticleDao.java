@@ -66,21 +66,14 @@ public class SimpleArticleDao<T, PK extends Serializable>
 
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
-            query = "select new map(a.articleId as articleId, a.title as title, a.time as time, " +
-                    "r.researchGroupId as researchGroupId, r.title as researchGroupTitle, " +
-                    "a.articleComments.size as commentCount, p.givenname||' '||p.surname as authorName, " +
-                    "p.personId as ownerId, substring(a.text, 1, 500) as textPreview) " +
-                    "from Article a left join a.researchGroup r left join a.person p " +
+            query = "from Article a left join fetch a.researchGroup r join fetch a.person p " +
                     "order by a.time desc";
             articles = getSession().createQuery(query).setFirstResult(min).setMaxResults(count).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
-            query = "select new map(a.articleId as articleId, a.title as title, a.time as time, " +
-                    "r.researchGroupId as researchGroupId, r.title as researchGroupTitle, " +
-                    "a.articleComments.size as commentCount, p.givenname||' '||p.surname as authorName, " +
-                    "p.personId as ownerId, substring(a.text, 1, 500) as textPreview) " +
-                    "from Article a left join a.researchGroup r left join a.person p where " +
+            query = "from Article a left join fetch a.researchGroup r join fetch a.person p " +
+                    "where " +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +

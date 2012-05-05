@@ -24,7 +24,7 @@
 
 
             <div class="content">
-                <c:out value="${article.textPreview}"/><c:if test="${fn:length(article.textPreview) == 500}">&hellip;</c:if>
+                <c:out value="${fn:substring(article.text, 1, 500)}"/><c:if test="${fn:length(article.text) > 500}">&hellip;</c:if>
                 <a href="<c:url value="detail.html?articleId=${article.articleId}" />"><fmt:message key="readMore" /></a>
             </div>
 
@@ -35,8 +35,8 @@
                 &bull;
                 <span class="researchGroup">
                     <c:choose>
-                        <c:when test="${article.researchGroupId != null}">
-                            <span class="label"><fmt:message key="researchGroup" />:</span>  <c:out value="${article.researchGroupTitle}"/>
+                        <c:when test="${article.researchGroup != null}">
+                            <span class="label"><fmt:message key="researchGroup" />:</span>  <c:out value="${article.researchGroup.title}"/>
                         </c:when>
                         <c:otherwise>
                             Public article
@@ -45,13 +45,13 @@
                 </span>
                 &bull;
                 <span class="author">
-                    <span class="label"><fmt:message key="author" />:</span> <c:out value="${article.authorName}"/>
+                    <span class="label"><fmt:message key="author" />:</span> <c:out value="${article.person.givenname}"/> <c:out value="${article.person.surname}"/>
                            </span>
                 &bull;
                 <span class="commentsCount">
-                               <c:out value="${article.commentCount}"/> <fmt:message key="heading.comments"/>
+                               <c:out value="${fn:length(article.articleComments)}"/> <fmt:message key="heading.comments"/>
                            </span>
-                <c:if test="${userIsGlobalAdmin || article.ownerId == loggedUserId}">
+                <c:if test="${userIsGlobalAdmin || article.person.personId == loggedUserId}">
                     &bull; <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message
                         key="label.edit"/> </a>
                     &bull; <a href="<c:url value="delete.html?articleId=${article.articleId}" />"
