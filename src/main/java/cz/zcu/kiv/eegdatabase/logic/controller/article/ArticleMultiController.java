@@ -1,7 +1,10 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -89,19 +92,13 @@ public class ArticleMultiController extends MultiActionController {
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/list");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
-        log.debug("Logged user from database is: " + loggedUser.getPersonId());
-//        int groupId;
-//        for (Article item : articleList) {
-//            item.setUserMemberOfGroup(canView(loggedUser, item));
-//            item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
-//        }
+
         Paginator paginator = new Paginator(articleDao.getArticleCountForPerson(loggedUser), ARTICLES_PER_PAGE, "list.html?page=%1$d");
-        String pageString = request.getParameter("page");
         int page = 1;
-        if (pageString != null) {
-            page = Integer.parseInt(pageString);
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
         }
         paginator.setActualPage(page);
         mav.addObject("paginator", paginator.getLinks());
@@ -123,7 +120,6 @@ public class ArticleMultiController extends MultiActionController {
         ArticleCommentCommand command = new ArticleCommentCommand();
 
         ModelAndView mav = new ModelAndView("articles/detail");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         int id = 0;
         try {
@@ -133,7 +129,6 @@ public class ArticleMultiController extends MultiActionController {
         }
         Article article = (Article) articleDao.read(id);
 
-        mav.addObject("userCanView", canView(loggedUser, article));
         command.setArticleId(id);
         mav.addObject("command", command);
         mav.addObject("userCanEdit", canEdit(loggedUser, article));
@@ -149,7 +144,6 @@ public class ArticleMultiController extends MultiActionController {
 
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/articleDeleted");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         int id = 0;
         try {
@@ -167,7 +161,6 @@ public class ArticleMultiController extends MultiActionController {
 
     public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/articleSettings");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();
         List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
@@ -179,7 +172,6 @@ public class ArticleMultiController extends MultiActionController {
 
     public ModelAndView subscribe(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/subscribe");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         int id = 0;
         try {
@@ -204,7 +196,6 @@ public class ArticleMultiController extends MultiActionController {
 
     public ModelAndView subscribeGroupArticles(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/subscribeGroupArticles");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         int id = 0;
         try {
@@ -230,26 +221,6 @@ public class ArticleMultiController extends MultiActionController {
     }
 
     /**
-     * Determines if the logged user can view the supposed article
-     *
-     * @param loggedUser Person object (Usually logged user)
-     * @param article    Article object
-     * @return true if admin or member of group
-     */
-    public boolean canView(Person loggedUser, Article article) {
-        if (loggedUser.getAuthority().equals("ROLE_ADMIN") || article.getResearchGroup() == null) {
-            return true;
-        }
-        Set<ResearchGroupMembership> researchGroupMemberships = article.getResearchGroup().getResearchGroupMemberships();
-        for (ResearchGroupMembership member : researchGroupMemberships) {
-            if (member.getPerson().getPersonId() == loggedUser.getPersonId()) {
-                return true;
-            }
-        }
-        return false;
-    }
-
-    /**
      * Determines if the logged user can edit the supposed article
      *
      * @param loggedUser Person object (Usually logged user)
@@ -260,28 +231,6 @@ public class ArticleMultiController extends MultiActionController {
         boolean isAdmin = loggedUser.getAuthority().equals("ROLE_ADMIN");
         boolean isOwner = article.getPerson().getPersonId() == loggedUser.getPersonId();
         return (isOwner || isAdmin);
-    }
-
-    /**
-     * Checks if user is admin in any group
-     *
-     * @param mav ModelAndView for display
-     */
-    public void setPermissionsToView(ModelAndView mav) {
-        // isAdmin
-        Person loggedUser = personDao.getLoggedPerson();
-        if (loggedUser.getAuthority().equals("ROLE_ADMIN")) {
-            mav.addObject("userIsAdminInAnyGroup", true);
-            return;
-        }
-        // check all groups for admin role
-        Set<ResearchGroupMembership> researchGroupMemberShips = loggedUser.getResearchGroupMemberships();
-        for (ResearchGroupMembership member : researchGroupMemberShips) {
-            if (auth.userIsAdminInGroup(member.getResearchGroup().getResearchGroupId())) {
-                mav.addObject("userIsAdminInAnyGroup", true);
-                return;
-            }
-        }
     }
 
     private void createNode(XMLEventWriter eventWriter, String name, String value) {

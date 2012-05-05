@@ -36,7 +36,13 @@ public class Paginator {
     }
 
     public void setActualPage(int actualPage) {
-        this.actualPage = actualPage;
+        if (actualPage < 1) {
+            this.actualPage = 1;
+        } else if (actualPage > pageCount) {
+            this.actualPage = pageCount;
+        } else {
+            this.actualPage = actualPage;
+        }
     }
 
     public String getLinks() {
