@@ -41,8 +41,8 @@
                             value="${article.title}"/></a></td>
                     <td>
                         <c:choose>
-                            <c:when test="${article.researchGroupId != null}">
-                                <c:out value="${article.researchGroupTitle}"/>
+                            <c:when test="${article.researchGroup != null}">
+                                <c:out value="${article.researchGroup.title}"/>
                             </c:when>
                             <c:otherwise>
                                 Public article
@@ -50,7 +50,7 @@
                         </c:choose>
                     </td>
                     <td>
-                        <c:out value="${article.commentCount}"/>
+                        <c:out value="${fn:length(article.articleComments)}"/>
                     </td>
                 </tr>
             </c:forEach>

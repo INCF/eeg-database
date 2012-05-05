@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.delegate;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
