@@ -1,10 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.semantic;
 
-import com.hp.hpl.jena.shared.CannotEncodeCharacterException;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.opensaml.saml2.metadata.Organization;
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
 import org.springframework.beans.BeansException;
@@ -20,8 +18,10 @@ import org.springframework.transaction.support.TransactionTemplate;
 import tools.*;
 
 import java.io.*;
-import java.lang.reflect.Array;
 import java.util.*;
+import java.util.concurrent.locks.ReentrantReadWriteLock;
+
+import static org.apache.commons.io.IOUtils.toByteArray;
 
 /**
  * Factory for transforming POJO object to resources of semantic web
@@ -35,10 +35,11 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private ApplicationContext context;
     private List<GenericDao> gDaoList = new ArrayList<GenericDao>();
     private List<Object> dataList = new ArrayList<Object>();
+    private ReentrantReadWriteLock lock = new ReentrantReadWriteLock(true);
 
-    private File ontologyFile;      // temporary ontology document
-    private Resource ontology;      // owl document with static ontology statements
-
+    private File ontologyFile;         // temporary ontology document
+    private Resource ontologyHeader;   // owl document with ontology header statements
+    
     @Value("${semantic.transformation.regularInterval}")
     private int interval;
 
@@ -90,16 +91,19 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             syntax = Syntax.RDF_XML;
         syntax = syntax.toUpperCase();
 
-        // check if the temporary file contains error log instead of ontology
-        if (errorLog() == true)
-            return new FileInputStream(ontologyFile);
-
         // get the ontology document in required syntax
-        is = new FileInputStream(ontologyFile);
+        lock.readLock().lock();
+        InputStream fileIn = new FileInputStream(ontologyFile);
         if ( !syntax.equals(Syntax.RDF_XML)) {
             jbe = new JenaBeanExtensionTool();
-            jbe.loadStatements(is, Syntax.RDF_XML);
+            jbe.loadStatements(fileIn, Syntax.RDF_XML);
+            fileIn.close();
+            lock.readLock().unlock();
             is = jbe.getOntologyDocument(syntax);
+        } else {
+            is = new ByteArrayInputStream(toByteArray(fileIn));
+            fileIn.close();
+            lock.readLock().unlock();
         }
 
         return is;
@@ -111,14 +115,13 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         InputStream is;
         JenaBeanExtension jbe;
 
-        // check if the temporary file contains error log instead of ontology
-        if (errorLog() == true)
-            return new FileInputStream(ontologyFile);
-
         // create the ontology schema
-        is = new FileInputStream(ontologyFile);
+        lock.readLock().lock();
+        InputStream fileIn = new FileInputStream(ontologyFile);
         jbe = new JenaBeanExtensionTool();
-        jbe.loadStatements(is, Syntax.RDF_XML);
+        jbe.loadStatements(fileIn, Syntax.RDF_XML);
+        fileIn.close();
+        lock.readLock().unlock();
         is = jbe.getOntologySchema(Syntax.RDF_XML_ABBREV);
 
         return is;
@@ -134,13 +137,12 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         if (syntax == null)
             syntax = Syntax.OWL_XML;
 
-        // check if the temporary file contains error log instead of ontology
-        if (errorLog() == true)
-            return new FileInputStream(ontologyFile);
-
         // get the serialization from the OWL API
-        is = new FileInputStream(ontologyFile);
-        owlApi = new OwlApiTool(is);
+        lock.readLock().lock();
+        InputStream fileIn = new FileInputStream(ontologyFile);
+        owlApi = new OwlApiTool(fileIn);
+        fileIn.close();
+        lock.readLock().unlock();
         is = owlApi.getOntologyDocument(syntax);
 
         return is;
@@ -168,11 +170,11 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
 
 
     /**
-     * Sets resource with static ontology statements.
-     * @param ontology - resource in rdf/xml
+     * Sets resource with static ontology header statements.
+     * @param ontologyHeader - resource in rdf/xml
      */
-    public void setOntology(Resource ontology) {
-        this.ontology = ontology;
+    public void setOntologyHeader(Resource ontologyHeader) {
+        this.ontologyHeader = ontologyHeader;
     }
 
 
@@ -181,12 +183,14 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
      * Serialization of this ontology is stored in a temporary file.
      */
     public void transformModel() {
+        JenaBeanExtension jbe;
+        OutputStream out;
+
         loadData();
-        JenaBeanExtension jbe = null;
-        OutputStream out = null;
 
         try {
             jbe = creatingJenaBean();
+            lock.writeLock().lock();
             out = new FileOutputStream(ontologyFile);
             jbe.writeOntologyDocument(out, Syntax.RDF_XML);
             out.close();
@@ -196,18 +200,8 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
             log.error("Could not close the temporary rdf/xml file!", e);
         } catch (Exception e) {
             log.error("Could not create the ontology!", e);
-            try {
-                java.io.StringWriter sw = new java.io.StringWriter(1024);
-                java.io.PrintWriter pw = new java.io.PrintWriter(sw);
-                e.printStackTrace(pw);
-                pw.close();
-                String error = "ERROR Could not create the ontology!\n\n" + sw.toString();
-                out = new FileOutputStream(ontologyFile);
-                out.write(error.getBytes());
-                out.close();
-            } catch (Exception e2) {
-                log.error("Could not write the error message to the temporary rdf/xml file!");
-            }
+        } finally {
+            lock.writeLock().unlock();
         }
 
     }
@@ -220,31 +214,15 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     private JenaBeanExtension creatingJenaBean() {
         JenaBeanExtension jbe = new JenaBeanExtensionTool();
         try {
-            jbe.loadStatements(ontology.getInputStream(), Syntax.RDF_XML_ABBREV);
+            jbe.loadStatements(ontologyHeader.getInputStream(), Syntax.RDF_XML_ABBREV);
         } catch (IOException e) {
-            log.error("Could not open the input stream associated with the ontology " +
-                    "configuration document: " + ontology.getFilename(), e);
+            log.error("Could not open the input stream associated with the ontology header " +
+                    "configuration document: " + ontologyHeader.getFilename(), e);
         }
         jbe.loadOOM(dataList);
         jbe.declareAllClassesDisjoint();
         return jbe;
     }
-
-
-    /**
-     * Determines whether the temporary ontology file contains an error log instead
-     * of the ontology.
-     * @return true if the ontology file contains error log, otherwise false
-     * @throws IOException
-     */
-    private boolean errorLog() throws IOException {
-        InputStream is = new FileInputStream(ontologyFile);
-        Scanner sc = new Scanner(is);
-        boolean error = sc.next().equalsIgnoreCase("error");
-        is.close();
-        return error;
-    }
-
     
 
 
