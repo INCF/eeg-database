@@ -17,6 +17,11 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
     <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
+    <jaxws:endpoint
+   	  id="clientService"
+   	  implementor="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl"
+   	  address="/ClientService" />
+
     <jaxws:endpoint id="userDataService"
                     implementor="#userData"
                     address="/UserDataService">

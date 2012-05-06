@@ -46,6 +46,7 @@
 
         <intercept-url pattern="/webservice/UserDataService" access="IS_AUTHENTICATED_FULLY"/>
         <intercept-url pattern="/webservice/SemanticService" access="IS_AUTHENTICATED_FULLY"/>
+        <intercept-url pattern="/webservice/ClientService" access="IS_AUTHENTICATED_FULLY"/>
 
         <form-login
         login-page="/home.html"

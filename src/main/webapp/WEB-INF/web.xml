@@ -83,6 +83,11 @@
         <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
         <load-on-startup>1</load-on-startup>
     </servlet>
+    <servlet>
+        <servlet-name>ClientServiceImpl</servlet-name>
+        <servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
     <servlet-mapping>
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.html</url-pattern>
@@ -133,6 +138,10 @@
     <servlet-mapping>
         <servlet-name>SemanticServiceImplService</servlet-name>
         <url-pattern>/SemanticServiceImplService</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>ClientServiceImpl</servlet-name>
+        <url-pattern>/ClientServiceImpl</url-pattern>
     </servlet-mapping>
     <session-config>
         <session-timeout>
