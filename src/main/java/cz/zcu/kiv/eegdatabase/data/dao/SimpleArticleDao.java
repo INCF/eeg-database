@@ -96,6 +96,32 @@ public class SimpleArticleDao<T, PK extends Serializable>
         return ((Long) getSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
     }
 
+    /**
+     * Gets article detail information for article detail page. Check the correct permission of the user to view
+     * requested article.
+     *
+     * @param id           Id of the requested article
+     * @param loggedPerson User whose permission is checked - should be logged user
+     * @return If the user is permitted to view the article specified by id the Article object is returned. Otherwise, null is returned.
+     */
+    @Override
+    public Article getArticleDetail(int id, Person loggedPerson) {
+
+        if (loggedPerson.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "from Article a join fetch a.person left join fetch a.researchGroup " +
+                    "where " +
+                    "a.articleId = :id";
+            return (Article) getSession().createQuery(query).setParameter("id", id).uniqueResult();
+        } else {
+            String query = "from Article a join fetch a.person left join fetch a.researchGroup " +
+                    "where " +
+                    "a.articleId = :id and (" +
+                    "a.researchGroup.researchGroupId is null or " +
+                    "a.researchGroup.researchGroupId in " +
+                    "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId))";
+            return (Article) getSession().createQuery(query).setParameter("id", id).setParameter("personId", loggedPerson.getPersonId()).uniqueResult();
+        }
+    }
 
     public List<Article> getAllUserArticles() {
         String HQLSelect = "from Article order by time desc";

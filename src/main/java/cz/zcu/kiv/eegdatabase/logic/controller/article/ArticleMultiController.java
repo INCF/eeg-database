@@ -20,6 +20,7 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Set;
@@ -121,24 +122,35 @@ public class ArticleMultiController extends MultiActionController {
 
         ModelAndView mav = new ModelAndView("articles/detail");
         Person loggedUser = personDao.getLoggedPerson();
-        int id = 0;
+        int id = -1;
         try {
             id = Integer.parseInt(request.getParameter("articleId"));
         } catch (Exception e) {
             log.debug("Unable to determine article id");
         }
-        Article article = (Article) articleDao.read(id);
+        Article article = (Article) articleDao.getArticleDetail(id, loggedUser);
+        // If the user is not permitted to view the article, null is returned. We will redirect to article list instead of displaying the article page.
+        if (article == null) {
+            return new ModelAndView("redirect:list.html");
+        }
 
         command.setArticleId(id);
         mav.addObject("command", command);
         mav.addObject("userCanEdit", canEdit(loggedUser, article));
         mav.addObject("article", article);
 
-        List<ArticleComment> articleComments = articleCommentDao.getAllWithNoParent(article);
-        mav.addObject("commentsList", articleComments);
+        // First we load all article comments for the article, so the most of them are already loaded and don't need to be lazily loaded
+        List<ArticleComment> articleComments = articleCommentDao.getCommentsForArticle(id);
+        List<ArticleComment> noParents = new ArrayList<ArticleComment>();
+        // Then we filter out the comments with no parent
+        for (ArticleComment comment : articleComments) {
+            if (comment.getParent() == null) {
+                noParents.add(comment);
+            }
+        }
+        mav.addObject("commentsList", noParents);
 
-        Set<Person> subscribers = article.getSubscribers();
-        mav.addObject("subscribed", subscribers.contains(loggedUser));
+        mav.addObject("subscribed", article.getSubscribers().contains(loggedUser));
         return mav;
     }
 
