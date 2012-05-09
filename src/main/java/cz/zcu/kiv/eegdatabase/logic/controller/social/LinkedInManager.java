@@ -14,16 +14,26 @@ import org.springframework.social.linkedin.api.impl.LinkedInTemplate;
  * @author Jan Froněk
  */
 public class LinkedInManager {
- private final String CONSUMER_KEY = "uolsasj3786o";
- private final String CONSUMER_SECRET = "QNUNAwWRwlw1FQ4j";
+ /** Applications LinkedIn Consumer Key. */
+ private String consumerKey;
+ /** Applications LinkedIn Consumer Secret. */
+ private String consumerSercet;
  /** Acces token code for EEG/ERP portals profile on LinkedIn. */
- private final String ACCESS_TOKEN = "6ef21209-86f3-4cfe-93f5-3674e532bda2";
+ private String accessToken;
  /** Acces token secret code for EEG/ERP portals profile on LinkedIn. */
- private final String ACCESS_TOKEN_SECRET = "9233947f-3216-4b0a-b382-8fd27ef64b86";
+ private String accessTokenSecret;
  /** ID of EEG/ERP portal group on LinkedIn. */
- private final int GROUP_ID = 4394884;
+ private int groupId;
  
  private Log log = LogFactory.getLog(getClass());
+ 
+ public LinkedInManager(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret, int groupId){
+     this.consumerKey = consumerKey;
+     this.consumerSercet = consumerSecret;
+     this.accessToken = accessToken;
+     this.accessTokenSecret = accessTokenSecret;
+     this.groupId = groupId;
+ }
  
  /** Keeps connection to LinkedIn API. */
  private LinkedIn linkedin;
@@ -35,7 +45,7 @@ public class LinkedInManager {
  private void connect(){
      if(linkedin == null){
          try {
-         linkedin = new LinkedInTemplate(CONSUMER_KEY, CONSUMER_SECRET, ACCESS_TOKEN, ACCESS_TOKEN_SECRET); 
+         linkedin = new LinkedInTemplate(consumerKey, consumerSercet, accessToken, accessTokenSecret); 
          } catch (Exception e) {
          //In case of Exception, no action will be taken.
          }
@@ -50,7 +60,7 @@ public class LinkedInManager {
  public synchronized void publish(String title, String text){
      try {
          this.connect();
-         linkedin.groupOperations().createPost(GROUP_ID, title, text);
+         linkedin.groupOperations().createPost(groupId, title, text);
      } catch (Exception e) {
          log.debug("Exception occured when publishing article: " + title + " on LinkedIn.");
      }     

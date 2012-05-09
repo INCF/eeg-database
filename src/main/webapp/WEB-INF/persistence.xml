@@ -75,7 +75,13 @@
     
     <bean id="SignInAdapter" class="cz.zcu.kiv.eegdatabase.logic.controller.social.SpringSecuritySignInAdapter"/>
     
-    <bean name="linkedin" class="cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager" />
+    <bean id="linkedin" class="cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager" >
+        <constructor-arg value="${linkedin.consumerKey}" />
+        <constructor-arg value="${linkedin.consumerSecret}" />	
+        <constructor-arg value="${linkedin.accessToken}" />
+        <constructor-arg value="${linkedin.accessTokenSecret}" />	
+        <constructor-arg value="${linkedin.groupId}" />	
+    </bean>
 
     <bean id="indexingBean" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingData" init-method="init">
         <property name="sessionFactory" ref="sessionFactory"/>

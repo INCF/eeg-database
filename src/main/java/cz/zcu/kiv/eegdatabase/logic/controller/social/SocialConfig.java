@@ -79,7 +79,7 @@ public class SocialConfig {
     /**
      * Proxy for primary facebook connection.
      *
-     * @throws NotConnectedException when no usert signed in
+     * @throws NotConnectedException when no user signed in
      */
     @Bean
     @Scope(value = "request", proxyMode = ScopedProxyMode.INTERFACES)
