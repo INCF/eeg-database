@@ -30,6 +30,7 @@
 
                                              -->
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic"/>
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
 
     <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
         <property name="formView" value="system/registrationForm"/>

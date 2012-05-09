@@ -7,4 +7,7 @@ import javax.jws.WebService;
 @WebService
 public interface ClientService {
     String sayHi(String text);
+
+    boolean isServiceAvailable();
+
 }

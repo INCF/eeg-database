@@ -19,7 +19,7 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
     <jaxws:endpoint
    	  id="clientService"
-   	  implementor="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl"
+   	  implementor="#clientDataService"
    	  address="/ClientService" />
 
     <jaxws:endpoint id="userDataService"
@@ -54,6 +54,10 @@ http://cxf.apache.org/core http://cxf.apache.org/schemas/core.xsd">
 
     <bean id="semanticDataService" class="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl">
         <property name="simpleSemanticFactory" ref="semanticFactory"/>
+    </bean>
+
+    <bean id="clientDataService" class="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl" autowire="byType">
+        <property name="personDao" ref="personDao"/>
     </bean>
 
 </beans>
