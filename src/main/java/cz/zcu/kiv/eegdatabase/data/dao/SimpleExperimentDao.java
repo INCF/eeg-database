@@ -2,14 +2,12 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.hibernate.Query;
 import org.hibernate.Session;
 
 import java.io.Serializable;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -60,6 +58,18 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         List<Experiment> list = getExperimentsWhereSubject(personId);
         getHibernateTemplate().setMaxResults(0);
         return list;
+    }
+
+    @Override
+    public int getCountForAllExperimentsForUser(int personId) {
+        String HQLselect = "SELECT count(ex) FROM Experiment ex LEFT JOIN ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId)";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(HQLselect).setParameter("personId", personId).uniqueResult()).intValue();
+    }
+
+    @Override
+    public List<Experiment> getAllExperimentsForUser(int personId, int start, int count) {
+        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) ORDER BY ex.startTime DESC";
+        return getSessionFactory().getCurrentSession().createQuery(HQLselect).setParameter("personId", personId).setFirstResult(start).setMaxResults(count).list();
     }
 
     public List<Experiment> getAllExperimentsForUser(int personId) {
