@@ -11,7 +11,7 @@
             <!-- editation -->
             <h1><fmt:message key="pageTitle.editScenario"/></h1>
 
-            <c:url value="scenarios/edit.html?id=${addScenario.id}" var="formUrl"/>
+            <c:url value="edit.html?id=${addScenario.id}" var="formUrl"/>
         </c:when>
         <c:otherwise>
             <!-- creating new -->
@@ -79,8 +79,8 @@
                 <form:label path="dataFileAvailable" cssClass="fileFieldLabel"
                             cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="description.fileType.dataFileAvailable"/></form:label>
 
-                <form:checkbox path="dataFileAvailable" cssClass="checkBox" id="dataFileAvailableCheckbox"/>
-
+                <%-- <form:checkbox path="dataFileAvailable" cssClass="checkBox" id="dataFileAvailableCheckbox""/> --%>
+                <input type="checkbox" name="dataFileAvailable" class="checkBox" checked="true" id="dataFileAvailableCheckbox"/>
                 <form:errors path="dataFileAvailable" cssClass="errorBox"/>
             </div>
 
