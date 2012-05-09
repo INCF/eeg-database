@@ -32,18 +32,17 @@ public class ExperimentMultiController extends MultiActionController {
 
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
-        setPermissionsToView(mav);
 
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
-        Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser.getPersonId()), ITEMS_PER_PAGE, "list.html?page=%1$d");
+        Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser), ITEMS_PER_PAGE, "list.html?page=%1$d");
         int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
         } catch (NumberFormatException e) {
         }
         paginator.setActualPage(page);
-        List experimentList = experimentDao.getAllExperimentsForUser(loggedUser.getPersonId(), paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        List experimentList = experimentDao.getAllExperimentsForUser(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
         mav.addObject("paginator", paginator.getLinks());
         boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
@@ -56,14 +55,12 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView myExperiments(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
 
-        setPermissionsToView(mav);
-
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
 
         List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
-        mav.addObject("measurationListTitle", "pageTitle.myExperiments");
-        mav.addObject("measurationList", list);
+        mav.addObject("experimentListTitle", "pageTitle.myExperiments");
+        mav.addObject("experimentList", list);
 
         return mav;
     }
@@ -71,14 +68,12 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView meAsSubject(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
 
-        setPermissionsToView(mav);
-
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
 
         List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
-        mav.addObject("measurationListTitle", "pageTitle.meAsSubject");
-        mav.addObject("measurationList", list);
+        mav.addObject("experimentListTitle", "pageTitle.meAsSubject");
+        mav.addObject("experimentList", list);
 
         return mav;
     }

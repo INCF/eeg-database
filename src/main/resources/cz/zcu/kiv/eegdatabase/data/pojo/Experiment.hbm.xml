@@ -110,7 +110,7 @@
             </many-to-many>
         </set>
 
-        <set inverse="true" name="dataFiles">
+        <set inverse="true" name="dataFiles" batch-size="20">
             <key>
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
             </key>
