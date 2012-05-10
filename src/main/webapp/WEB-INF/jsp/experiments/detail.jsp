@@ -11,11 +11,12 @@
     <div id="popupContact">
         <a id="popupContactClose">x</a>
         <h1><fmt:message key="pageTitle.unsupportedBrowser"/></h1>
-        <p id="contactArea">
-            <fmt:message key="text.unsupportedBrowser.intro"/>
-            <br/><br/>
-            <fmt:message key="text.unsupportedBrowser.description"/>
-            <br/><br/>
+        <div id="contactArea">
+            <p>
+                <fmt:message key="text.unsupportedBrowser.intro"/>
+                <br/><br/>
+                <fmt:message key="text.unsupportedBrowser.description"/>
+            </p>
             <div class="center">
                 <a href="http://www.opera.com" title="Opera"><img class="browserIco" src="<c:url value="/files/images/ico_opera.png"/>" alt="Opera"/></a>
                 <a href="http://www.google.com/chrome" title="Chrome"><img class="browserIco" src="<c:url value="/files/images/ico_chrome.png"/>" alt="Chrome"/></a>
@@ -23,8 +24,9 @@
                 <a href="http://www.apple.com/safari/" title="Safari"><img class="browserIco" src="<c:url value="/files/images/ico_safari.png"/>" alt="Safari"/></a>
                 <a href="http://www.microsoft.com/windows/products/winfamily/ie/default.mspx" title="Internet Explorer"><img class="browserIco" src="<c:url value="/files/images/ico_ie.png"/>" alt="Internet Explorer"/></a>
             </div>
-        </p>
+        </div>
     </div>
+    <div id="backgroundPopup"></div>
 
   <h1><fmt:message key="pageTitle.experimentDetail"/></h1>
 
@@ -125,10 +127,10 @@
       </tr>
     </c:forEach>
   </table>
-
+<div id="visualization">
   <h2><fmt:message key="heading.visualization"/></h2>
     <canvas id="canvas" width="728" height="400"></canvas>
-
+</div>
   <h2><fmt:message key="heading.dataFiles"/></h2>
   <table class="dataTable" style="width: 500px;">
     <thead>

@@ -1,0 +1,51 @@
+/*
+    Document   : visualization.css
+    Created on : 10.5.2012, 06:52:29
+    Author     : Lucie Koloušková
+    Description: Styles for visualization module on experiments/detail page.*/
+/* green button - start */
+.green {
+    color: white;
+    background-color: #41A128;
+    border-width: 1px;
+}
+
+/* blue button - stop */
+.blue {
+    color: white;
+    background-color: #6A93D4;
+    border-width: 1px;
+}
+
+/* grey button - clear */
+.grey {
+    color: white;
+    background-color: #888;
+    border-width: 1px;
+}
+
+/* progress container */
+#canvas {
+    border: 1px solid #6A93D4;
+    background-color: #eee;
+    /* round corners */
+    border-radius: 15px; /* Opera, Chrome */
+    -moz-border-radius: 15px; /* FF */
+}
+
+/* slider label */
+#slider_label {
+    margin-left: 10px;
+}
+
+/* pause value displayed after slider */
+#pause_value {
+    display: inline-block;
+    width: 20px;
+    margin-left: 5px;
+}
+
+#export img {
+    border: 1px solid #eee;
+    box-shadow: 0px 0px 50px #eee;
+}
