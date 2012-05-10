@@ -2,8 +2,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
 
-import java.io.Serializable;
-
 /**
  * Created by IntelliJ IDEA.
  * User: Honza
@@ -11,7 +9,7 @@ import java.io.Serializable;
  * Time: 14:30
  * To change this template use File | Settings | File Templates.
  */
-public interface DigitizationDao <T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface DigitizationDao extends GenericListDao<Digitization> {
 
     public Digitization getDigitizationByParams(float samplingRate, float gain, String filter);
 }

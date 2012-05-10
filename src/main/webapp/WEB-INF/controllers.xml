@@ -1,20 +1,15 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/op
-       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+
+
+
+
        http://www.springframework.org/schema/context
-       http://www.springframework.org/schema/context/spring-context-3.0.xsd
-       http://www.springframework.org/schema/security
-       http://www.springframework.org/schema/security/spring-security-3.0.3.xsd">
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
 
     <context:annotation-config/>
@@ -30,6 +25,7 @@
 
                                              -->
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic"/>
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
 
     <bean name="registrationController" class="cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationController">
         <property name="formView" value="system/registrationForm"/>
@@ -50,8 +46,24 @@
         </property>
     </bean>
 
-    <bean name="facebookController" class="cz.zcu.kiv.eegdatabase.logic.controller.social.FacebookController">
-
+    <bean name="oAuthCallbackController" class="cz.zcu.kiv.eegdatabase.logic.controller.social.OAuthCallbackController">
+        <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
+    </bean>
+    
+    
+    <bean id="providerSignInController" class="org.springframework.social.connect.web.ProviderSignInController">
+        <constructor-arg ref="connectionFactoryLocator" />
+        <constructor-arg ref="usersConnectionRepository" />    
+        <constructor-arg ref="SignInAdapter" />
+        <property name="signUpUrl" value="/oauthcallback.html"/>
+        <property name="postSignInUrl" value="/home.html"/>
+    </bean>
+    
+    <bean id="connectController" class="org.springframework.social.connect.web.ConnectController">
+        <constructor-arg ref="connectionFactoryLocator"/>
+        <constructor-arg ref="connectionRepository"/>
+      
+       
     </bean>
 
     <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
@@ -99,9 +111,9 @@
     </bean>
 
     <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
-        <constructor-arg>
+     <!--   <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
-        </constructor-arg>
+        </constructor-arg>       -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -127,16 +139,54 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
+    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao">
+      <!--  <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
-        </constructor-arg>
+        </constructor-arg>                             -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
-    <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
-        </constructor-arg>
+
+    <bean name="analysisDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAnalysisDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="artifactRemovingMethodDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactRemovingDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="diseaseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeFixDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeFixDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeLocationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeLocationDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeSystemDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeSystemDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="pharmaceuticalDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="projectTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="stimulusTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -196,6 +246,18 @@
     <bean name="subjectGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+    <bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>cz.zcu.kiv.eegdatabase.data.pojo.Stimulus</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -797,7 +859,7 @@
     
     <!-- Transformer POJO to resource of semantic web-->
     <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory" init-method="init">
-        <property name="ontology" value="classpath:ontology.owl" />
+        <property name="ontologyHeader" value="classpath:ontologyHeader.owl" />
     </bean>
     
     <!-- Creating csv file with our experiments and scenarios for NIF -->

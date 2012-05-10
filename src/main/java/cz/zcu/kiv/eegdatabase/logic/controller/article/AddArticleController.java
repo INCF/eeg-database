@@ -9,8 +9,10 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.SimpleMailMessage;
@@ -44,8 +46,10 @@ public class AddArticleController extends SimpleFormController {
     private JavaMailSenderImpl mailSender;
     private SimpleMailMessage mailMessage;
     private HierarchicalMessageSource messageSource;
+    @Autowired
+    private LinkedInManager linkedin;
 
-
+    
     public AddArticleController() {
         setCommandClass(ArticleCommand.class);
         setCommandName("addArticle");
@@ -154,6 +158,13 @@ public class AddArticleController extends SimpleFormController {
                 }
             }
         }
+        
+        //Publish article on LinkedIn
+        if ((request.getParameter("publishOnLinkedIn") != null) && (request.getParameter("publishOnLinkedIn").equals("publish"))){
+            log.debug("Publishing an article on LinkedIn");
+            linkedin.publish(data.getTitle(), data.getText()); 
+        }
+        
         return mav;
     }
 

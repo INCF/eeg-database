@@ -39,7 +39,7 @@ public class UserDataImpl implements UserDataService {
     private HardwareDao hardwareDao;
     private GenericDao<DataFile, Integer> dataFileDao;
     private DigitizationDao digitizationDao;
-    private GenericDao<Artifact, Integer> artifactDao;
+    private GenericListDao<Artifact> artifactDao;
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
     private GenericDao<SubjectGroup, Integer> subjectGroupDao;
 
@@ -67,24 +67,25 @@ public class UserDataImpl implements UserDataService {
         this.hardwareDao = hardwareDao;
     }
 
-    public void setDataFileDao(SimpleGenericDao dataFileDao) {
+    public void setDataFileDao(GenericDao<DataFile, Integer> dataFileDao) {
         this.dataFileDao = dataFileDao;
     }
 
-    public void setDigitizationDao(SimpleDigitizationDao digitizationDao) {
+    public void setDigitizationDao(DigitizationDao digitizationDao) {
         this.digitizationDao = digitizationDao;
     }
 
-    public void setSubjectGroupDao(SimpleGenericDao subjectGroupDao) {
+    public void setSubjectGroupDao(GenericDao<SubjectGroup, Integer> subjectGroupDao) {
         this.subjectGroupDao = subjectGroupDao;
     }
 
-    public void setArtifactDao(SimpleGenericDao artifactDao) {
-        this.artifactDao = artifactDao;
+
+    public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
+        this.electrodeConfDao = electrodeConfDao;
     }
 
-    public void setElectrodeConfDao(SimpleGenericDao electrodeConfDao) {
-        this.electrodeConfDao = electrodeConfDao;
+    public void setArtifactDao(GenericListDao<Artifact> artifactDao) {
+        this.artifactDao = artifactDao;
     }
 
     public boolean isServiceAvailable() {

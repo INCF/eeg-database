@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
-import java.io.Serializable;
 import java.util.List;
 
 /**
@@ -12,11 +12,11 @@ import java.util.List;
  * Time: 14:33
  * To change this template use File | Settings | File Templates.
  */
-public class SimpleDigitizationDao <T, PK extends Serializable>
-        extends SimpleGenericDao<T, PK> implements DigitizationDao<T, PK> {
+public class SimpleDigitizationDao
+        extends SimpleGenericDao<Digitization, Integer> implements DigitizationDao{
 
-    public SimpleDigitizationDao(Class<T> type) {
-        super(type);
+    public SimpleDigitizationDao() {
+        super(Digitization.class);
     }
 
     @Override
@@ -29,5 +29,47 @@ public class SimpleDigitizationDao <T, PK extends Serializable>
             return list.get(0);
         }
         return null;
+    }
+    @Override
+    public void createGroupRel(Digitization persistent, ResearchGroup researchGroup) {
+        persistent.getResearchGroups().add(researchGroup);
+        researchGroup.getDigitizations().add(persistent);
+    }
+
+    @Override
+    public List<Digitization> getItemsForList() {
+        String hqlQuery = "from Digitization dig order by dig.samplingRate";
+        return getHibernateTemplate().find(hqlQuery);
+    }
+
+    @Override
+    public List<Digitization> getRecordsByGroup(int groupId) {
+        String hqlQuery = "from Digitization dig inner join fetch dig.researchGroups as rg where rg.researchGroupId="+groupId+" ";
+        return getHibernateTemplate().find(hqlQuery);
+
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+       String hqlQuery = "select dig.experiments from Digitization dig where dig.digitizationId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        String hqlQuery = "from Digitization dig where dig.d = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return list.get(0).getResearchGroups().size() > 0;
+    }
+
+    @Override
+    public void deleteGroupRel(Digitization persistent, ResearchGroup researchGroup) {
+        persistent.getResearchGroups().remove(researchGroup);
+        researchGroup.getDigitizations().remove(persistent);
     }
 }

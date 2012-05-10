@@ -79,7 +79,8 @@
                 <form:label path="dataFileAvailable" cssClass="fileFieldLabel"
                             cssErrorClass="fileFieldLabel errorLabel"><fmt:message key="description.fileType.dataFileAvailable"/></form:label>
 
-                <form:checkbox path="dataFileAvailable" cssClass="checkBox" id="dataFileAvailableCheckbox"/>
+                <%-- <form:checkbox path="dataFileAvailable" cssClass="checkBox" id="dataFileAvailableCheckbox""/> --%>
+                <input type="checkbox" name="dataFileAvailable" class="checkBox" checked="true" id="dataFileAvailableCheckbox"/>
 
                 <form:errors path="dataFileAvailable" cssClass="errorBox"/>
             </div>

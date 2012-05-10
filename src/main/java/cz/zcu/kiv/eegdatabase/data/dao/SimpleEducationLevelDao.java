@@ -1,12 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import org.hibernate.tool.ant.QueryExporterTask;
-import org.springframework.dao.support.DataAccessUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
-import java.util.*;
+import java.util.List;
 
 /**
  * This class extends powers class SimpleGenericDao.
@@ -28,7 +25,72 @@ public class SimpleEducationLevelDao
      */
     public List<EducationLevel> getEducationLevels(String title) {
        String HQLselect = "from EducationLevel level " + "where level.title = :title";
-       List<EducationLevel> results = getHibernateTemplate().findByNamedParam(HQLselect, "title", title);
-       return results;
+       return getHibernateTemplate().findByNamedParam(HQLselect, "title", title);
+    }
+
+    @Override
+    public void createGroupRel(EducationLevel persistent, ResearchGroup researchGroup) {
+        persistent.getResearchGroups().add(researchGroup);
+        researchGroup.getEducationLevels().add(persistent);
+    }
+
+    @Override
+    public List<EducationLevel> getItemsForList() {
+        String hqlQuery = "from EducationLevel ed order by ed.title";
+        return getHibernateTemplate().find(hqlQuery);
+    }
+
+    @Override
+    public List<EducationLevel> getRecordsByGroup(int groupId) {
+        String hqlQuery = "from EducationLevel ed inner join fetch ed.researchGroups as rg where rg.researchGroupId="+groupId+" ";
+        return getHibernateTemplate().find(hqlQuery);
+
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+       String hqlQuery = "select ed.persons from EducationLevel ed where ed.educationLevelId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<EducationLevel> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return (list.size() == 0);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        String hqlQuery = "from EducationLevel ed where ed.educationLevelId = :id";
+        String[] names = {"id"};
+        Object[] values = {id};
+        List<EducationLevel> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        return list.get(0).getResearchGroups().size() > 0;
+    }
+
+    @Override
+    public void deleteGroupRel(EducationLevel persistent, ResearchGroup researchGroup) {
+        persistent.getResearchGroups().remove(researchGroup);
+        researchGroup.getEducationLevels().remove(persistent);
+    }
+
+    @Override
+    public void createDefaultRecord(EducationLevel educationLevel) {
+        educationLevel.setDefaultNumber(1);
+        create(educationLevel);
+    }
+
+    @Override
+    public List<EducationLevel> getDefaultRecords() {
+        String hqlQuery = "from EducationLevel ed where ed.defaultNumber=1";
+        return getHibernateTemplate().find(hqlQuery);
+    }
+
+    @Override
+    public boolean isDefault(int id) {
+       String hqlQuery = "select ed.defaultNumber from EducationLevel ed where ed.educationLevelId="+id+" ";
+        List<Integer> list = getHibernateTemplate().find(hqlQuery);
+        if(list.isEmpty()){
+            return false;
+        }
+        return (list.get(0)==1);
+
     }
 }

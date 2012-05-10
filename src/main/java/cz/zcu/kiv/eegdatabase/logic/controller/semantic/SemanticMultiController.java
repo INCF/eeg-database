@@ -1,17 +1,16 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.semantic;
 
 import cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory;
-import cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.apache.commons.logging.Log;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import static org.apache.commons.io.IOUtils.copy;
 
@@ -45,7 +44,7 @@ public class SemanticMultiController extends MultiActionController {
         OutputStream out = null;
         InputStream is = null;
         int headerBufferSize = 8096;
-        String type = request.getParameter("type");
+        String syntax = request.getParameter("type");
 
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
@@ -57,7 +56,7 @@ public class SemanticMultiController extends MultiActionController {
         out = response.getOutputStream();
         log.debug("Generating RDF");
 
-        is = semanticFactory.generateOntology(type);
+        is = semanticFactory.getOntology(syntax);
 
         copy(is, out);
         out.flush();
@@ -76,12 +75,12 @@ public class SemanticMultiController extends MultiActionController {
      */
     public ModelAndView getOntologyOwlApi(HttpServletRequest request, HttpServletResponse response) throws Exception {
         log.debug("Controller for transforming POJO object to resources of semantic web");
-        String typeTransform;
+        String syntax;
         OutputStream out = null;
         InputStream is = null;
         int headerBufferSize = 8096;
 
-        typeTransform = request.getParameter("type");
+        syntax = request.getParameter("type");
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
         response.setHeader("Content-Disposition", "attachment;filename=eegdatabase.owl");
@@ -91,7 +90,7 @@ public class SemanticMultiController extends MultiActionController {
         response.setBufferSize(headerBufferSize);
         out = response.getOutputStream();
         log.debug("Generating OWL");
-        is = semanticFactory.generateOntologyOwlApi(typeTransform);
+        is = semanticFactory.getOntologyOwlApi(syntax);
 
         copy(is, out);
 
@@ -115,7 +114,7 @@ public class SemanticMultiController extends MultiActionController {
         OutputStream out = null;
         InputStream is = null;
         int headerBufferSize = 8096;
-        String type = request.getParameter("type");
+        String syntax = request.getParameter("type");
 
         response.setHeader("Content-Type", "application/rdf+xml");
         response.setContentType("application/rdf+xml");
@@ -127,7 +126,7 @@ public class SemanticMultiController extends MultiActionController {
         out = response.getOutputStream();
         log.debug("Generating RDF");
 
-        is = semanticFactory.generateOntology(type, true);
+        is = semanticFactory.getOntologySchema(syntax);
 
         copy(is, out);
         out.flush();

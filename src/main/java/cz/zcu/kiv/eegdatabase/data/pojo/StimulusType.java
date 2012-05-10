@@ -18,7 +18,7 @@ public class StimulusType implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "STIMULUS_TYPE_ID")
-    private int StimulusTypeId;
+    private int stimulusTypeId;
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "IS_DEFAULT")
@@ -32,16 +32,16 @@ public class StimulusType implements Serializable {
     }
 
     public StimulusType(int stimulusTypeId, String description) {
-        StimulusTypeId = stimulusTypeId;
+        stimulusTypeId = stimulusTypeId;
         this.description = description;
     }
 
     public int getStimulusTypeId() {
-        return StimulusTypeId;
+        return stimulusTypeId;
     }
 
     public void setStimulusTypeId(int stimulusTypeId) {
-        StimulusTypeId = stimulusTypeId;
+        stimulusTypeId = stimulusTypeId;
     }
 
     public String getDescription() {
