@@ -485,6 +485,12 @@
             <version>2.6.4</version>
         </dependency>
 
+        <dependency>
+            <groupId>cz.zcu.kiv</groupId>
+            <artifactId>XMLtoRDF</artifactId>
+            <version>1.O</version>
+        </dependency>
+        
         <!--======================================= Other libraries ============================================= -->
 		<dependency>
 			<groupId>com.itextpdf</groupId>
