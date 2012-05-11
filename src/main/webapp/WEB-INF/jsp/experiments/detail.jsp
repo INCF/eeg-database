@@ -1,6 +1,7 @@
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@taglib prefix="fn"  uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
 <%@taglib prefix="auth" tagdir="/WEB-INF/tags/auth/" %>
@@ -127,10 +128,12 @@
       </tr>
     </c:forEach>
   </table>
-<div id="visualization">
-  <h2><fmt:message key="heading.visualization"/></h2>
-    <canvas id="canvas" width="728" height="400"></canvas>
-</div>
+  <c:if test="${fn:length(experimentDetail.dataFiles) > 0}">
+    <div id="visualization">
+      <h2><fmt:message key="heading.visualization"/></h2>
+      <canvas id="canvas" width="728" height="400"></canvas>
+    </div>
+  </c:if>
   <h2><fmt:message key="heading.dataFiles"/></h2>
   <table class="dataTable" style="width: 500px;">
     <thead>
