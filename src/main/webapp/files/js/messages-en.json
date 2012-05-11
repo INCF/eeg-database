@@ -376,7 +376,8 @@
     "searchFor":"Search for",
     "searchResult":"Search Results",
     "subjectPerson":"Subject person",
-    "usedHardware":"Used hardware"
+    "usedHardware":"Used hardware",
+    "visualization":"Visualization"
   },
   "homePage":
   {
@@ -764,7 +765,7 @@
     "searchResult":"List of download history",
     "services":"EEG Signal Processing Services",
     "servicesResult":"Services Results",
-    "socialOverview":"Social networks",
+    "unsupportedBrowser":"Unsupported browser",
     "userNotExperimenter":"Experimenter role needed",
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
@@ -913,6 +914,11 @@
         "part1":"Permission for the user",
         "part2":"was granted."
       }
+    },
+    "unsupportedBrowser":
+    {
+      "description":"Please, choose one of the following browsers and download the newest version if you would like to try the EEG signal. Otherwise close this window and continue.",
+      "intro":"We are sorry, but your browser does not support our visualization tool."
     },
     "youNeedExperimenterRole":"You need experimenter role in a group to add data.",
     "youNeedToBeOwnerOrCoexperimenterToEditExperiment":"You need to be owner or co-experimenter to edit experiment."
