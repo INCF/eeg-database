@@ -3,7 +3,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 
 import java.util.List;
 
@@ -25,63 +24,63 @@ public class SimpleExperimentOptParamDefDao extends SimpleGenericDao<ExperimentO
         List<ExperimentOptParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
-      
-    public List<ExperimentOptParamDef> getRecordsByGroup(int groupId){
-        String hqlQuery = "from ExperimentOptParamDef h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        List<ExperimentOptParamDef> list = getHibernateTemplate().find(hqlQuery);
+
+    public List<ExperimentOptParamDef> getRecordsByGroup(int groupId) {
+        String hqlQuery = "from ExperimentOptParamDef h inner join fetch h.researchGroups as rg where rg.researchGroupId = :groupId";
+        List<ExperimentOptParamDef> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
         return list;
     }
-    
-    public void createDefaultRecord(ExperimentOptParamDef experimentOptParamDef){
+
+    public void createDefaultRecord(ExperimentOptParamDef experimentOptParamDef) {
         experimentOptParamDef.setDefaultNumber(1);
         create(experimentOptParamDef);
     }
 
-    public List<ExperimentOptParamDef> getDefaultRecords(){
-        String hqlQuery = "from ExperimentOptParamDef h where h.defaultNumber=1";
+    public List<ExperimentOptParamDef> getDefaultRecords() {
+        String hqlQuery = "from ExperimentOptParamDef h where h.defaultNumber = 1";
         List<ExperimentOptParamDef> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
 
-    public boolean hasGroupRel(int id){
-        String hqlQuery = "from ExperimentOptParamDefGroupRel r where r.id.experimentOptParamDefId =" +id+ " ";
-        List<ExperimentOptParamDefGroupRel> list = getHibernateTemplate().find(hqlQuery);
+    public boolean hasGroupRel(int id) {
+        String hqlQuery = "from ExperimentOptParamDefGroupRel r where r.id.experimentOptParamDefId = :id";
+        List<ExperimentOptParamDefGroupRel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() > 0);
     }
 
-    public void deleteGroupRel(ExperimentOptParamDefGroupRel
-        experimentOptParamDefGroupRel){
+    public void deleteGroupRel(ExperimentOptParamDefGroupRel experimentOptParamDefGroupRel) {
         getHibernateTemplate().delete(experimentOptParamDefGroupRel);
     }
 
-    public ExperimentOptParamDefGroupRel getGroupRel(int experimentOptParamDefId, int researchGroupId){
-        String hqlQuery = "from ExperimentOptParamDefGroupRel r where r.id.experimentOptParamDefId="+experimentOptParamDefId+" and r.id.researchGroupId="+researchGroupId+" ";
-        List<ExperimentOptParamDefGroupRel> list = getHibernateTemplate().find(hqlQuery);
+    public ExperimentOptParamDefGroupRel getGroupRel(int experimentOptParamDefId, int researchGroupId) {
+        String hqlQuery = "from ExperimentOptParamDefGroupRel r where r.id.experimentOptParamDefId = :experimentOptParamDefId and r.id.researchGroupId = :researchGroupId";
+        List<ExperimentOptParamDefGroupRel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("experimentOptParamDefId", experimentOptParamDefId)
+                .setParameter("researchGroupId", researchGroupId)
+                .list();
         return list.get(0);
     }
 
-    public void createGroupRel(ExperimentOptParamDefGroupRel
-        experimentOptParamDefGroupRel){
+    public void createGroupRel(ExperimentOptParamDefGroupRel experimentOptParamDefGroupRel) {
         experimentOptParamDefGroupRel.getExperimentOptParamDef().setDefaultNumber(0);
         getHibernateTemplate().save(experimentOptParamDefGroupRel);
     }
 
-    public void createGroupRel(ExperimentOptParamDef experimentOptParamDef, ResearchGroup researchGroup){
+    public void createGroupRel(ExperimentOptParamDef experimentOptParamDef, ResearchGroup researchGroup) {
         experimentOptParamDef.getResearchGroups().add(researchGroup);
         researchGroup.getExperimentOptParamDefs().add(experimentOptParamDef);
-    }    
+    }
 
-    public boolean isDefault(int id){
-        String hqlQuery = "select h.defaultNumber from ExperimentOptParamDef h where h.experimentOptParamDefId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+    public boolean isDefault(int id) {
+        String hqlQuery = "select h.defaultNumber from ExperimentOptParamDef h where h.experimentOptParamDefId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        if(list.get(0)==1){
+        if (list.get(0) == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
 }

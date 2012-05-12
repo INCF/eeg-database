@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Integer>
-        implements GenericListDaoWithDefault<ElectrodeFix>{
+        implements GenericListDaoWithDefault<ElectrodeFix> {
 
     public SimpleElectrodeFixDao() {
         super(ElectrodeFix.class);
@@ -28,19 +28,18 @@ public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Intege
     @Override
     public List<ElectrodeFix> getItemsForList() {
         String hqlQuery = "from ElectrodeFix el order by el.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<ElectrodeFix> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from ElectrodeFix el inner join fetch el.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from ElectrodeFix el inner join fetch el.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select el.electrodeLocations from ElectrodeFix el where el.electrodeFixId = :id";
+        String hqlQuery = "select el.electrodeLocations from ElectrodeFix el where el.electrodeFixId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<ElectrodeFix> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
@@ -70,18 +69,17 @@ public class SimpleElectrodeFixDao extends SimpleGenericDao<ElectrodeFix, Intege
 
     @Override
     public List<ElectrodeFix> getDefaultRecords() {
-        String hqlQuery = "from ElectrodeFix el where el.defaultNumber=1";
+        String hqlQuery = "from ElectrodeFix el where el.defaultNumber = 1";
         return getHibernateTemplate().find(hqlQuery);
     }
 
     @Override
     public boolean isDefault(int id) {
-       String hqlQuery = "select el.defaultNumber from ElectrodeFix el where el.electrodeFixId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+        String hqlQuery = "select el.defaultNumber from ElectrodeFix el where el.electrodeFixId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        return (list.get(0)==1);
-
+        return (list.get(0) == 1);
     }
 }

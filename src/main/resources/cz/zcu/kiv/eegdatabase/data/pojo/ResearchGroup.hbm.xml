@@ -137,7 +137,7 @@
                 <column name="PERSON_ID" precision="22" scale="0"/>
             </many-to-many>
         </set>
-        <set inverse="true" name="analysises" table="ANALYSIS_GROUP_REL">
+        <set inverse="true" name="analyses" table="ANALYSIS_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
             </key>

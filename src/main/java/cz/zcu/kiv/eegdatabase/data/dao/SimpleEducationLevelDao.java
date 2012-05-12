@@ -20,12 +20,13 @@ public class SimpleEducationLevelDao
 
     /**
      * Finds all education levels with the specified title
+     *
      * @param title - title property value
      * @return List of EducationLevel entities with searched title
      */
     public List<EducationLevel> getEducationLevels(String title) {
-       String HQLselect = "from EducationLevel level " + "where level.title = :title";
-       return getHibernateTemplate().findByNamedParam(HQLselect, "title", title);
+        String HQLselect = "from EducationLevel level where level.title = :title";
+        return getHibernateTemplate().findByNamedParam(HQLselect, "title", title);
     }
 
     @Override
@@ -37,19 +38,18 @@ public class SimpleEducationLevelDao
     @Override
     public List<EducationLevel> getItemsForList() {
         String hqlQuery = "from EducationLevel ed order by ed.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<EducationLevel> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from EducationLevel ed inner join fetch ed.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from EducationLevel ed inner join fetch ed.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select ed.persons from EducationLevel ed where ed.educationLevelId = :id";
+        String hqlQuery = "select ed.persons from EducationLevel ed where ed.educationLevelId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<EducationLevel> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
@@ -79,18 +79,17 @@ public class SimpleEducationLevelDao
 
     @Override
     public List<EducationLevel> getDefaultRecords() {
-        String hqlQuery = "from EducationLevel ed where ed.defaultNumber=1";
+        String hqlQuery = "from EducationLevel ed where ed.defaultNumber = 1";
         return getHibernateTemplate().find(hqlQuery);
     }
 
     @Override
     public boolean isDefault(int id) {
-       String hqlQuery = "select ed.defaultNumber from EducationLevel ed where ed.educationLevelId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+        String hqlQuery = "select ed.defaultNumber from EducationLevel ed where ed.educationLevelId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        return (list.get(0)==1);
-
+        return (list.get(0) == 1);
     }
 }

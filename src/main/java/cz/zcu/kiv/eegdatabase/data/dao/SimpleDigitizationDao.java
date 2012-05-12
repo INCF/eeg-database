@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleDigitizationDao
-        extends SimpleGenericDao<Digitization, Integer> implements DigitizationDao{
+        extends SimpleGenericDao<Digitization, Integer> implements DigitizationDao {
 
     public SimpleDigitizationDao() {
         super(Digitization.class);
@@ -30,6 +30,7 @@ public class SimpleDigitizationDao
         }
         return null;
     }
+
     @Override
     public void createGroupRel(Digitization persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
@@ -39,19 +40,19 @@ public class SimpleDigitizationDao
     @Override
     public List<Digitization> getItemsForList() {
         String hqlQuery = "from Digitization dig order by dig.samplingRate";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<Digitization> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Digitization dig inner join fetch dig.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
+        String hqlQuery = "from Digitization dig inner join fetch dig.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
 
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select dig.experiments from Digitization dig where dig.digitizationId = :id";
+        String hqlQuery = "select dig.experiments from Digitization dig where dig.digitizationId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);

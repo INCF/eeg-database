@@ -29,12 +29,12 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     }
 
     public List<DataFile> getDataFilesWhereExpId(int experimentId) {
-        String HQLselect = "from DataFile file " + "where file.experiment.experimentId = :experimentId";
+        String HQLselect = "from DataFile file where file.experiment.experimentId = :experimentId";
         return getHibernateTemplate().findByNamedParam(HQLselect, "experimentId", experimentId);
     }
 
     public List<DataFile> getDataFilesWhereId(int dataFileId) {
-        String HQLselect = "from DataFile file " + "where file.dataFileId = :dataFileId";
+        String HQLselect = "from DataFile file where file.dataFileId = :dataFileId";
         return getHibernateTemplate().findByNamedParam(HQLselect, "dataFileId", dataFileId);
     }
 
@@ -51,7 +51,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     }
 
     public List<Experiment> getExperimentsWhereSubject(int personId) {
-        String HQLselect = "SELECT experiment, scenario FROM Experiment experiment LEFT JOIN FETCH experiment.scenario scenario " + "WHERE experiment.personBySubjectPersonId.personId = :personId";
+        String HQLselect = "SELECT experiment, scenario FROM Experiment experiment LEFT JOIN FETCH experiment.scenario scenario WHERE experiment.personBySubjectPersonId.personId = :personId";
         return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
     }
 

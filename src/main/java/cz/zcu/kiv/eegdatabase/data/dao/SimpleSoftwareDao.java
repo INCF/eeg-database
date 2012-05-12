@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
-        implements GenericListDaoWithDefault<Software>{
+        implements GenericListDaoWithDefault<Software> {
 
     public SimpleSoftwareDao() {
         super(Software.class);
@@ -28,19 +28,18 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
     @Override
     public List<Software> getItemsForList() {
         String hqlQuery = "from Software st order by st.description";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<Software> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Software st inner join fetch st.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from Software st inner join fetch st.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select st.experiments from Software st where st.softwareId = :id";
+        String hqlQuery = "select st.experiments from Software st where st.softwareId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<Software> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
@@ -70,18 +69,17 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
 
     @Override
     public List<Software> getDefaultRecords() {
-        String hqlQuery = "from Software st where st.defaultNumber=1";
+        String hqlQuery = "from Software st where st.defaultNumber = 1";
         return getHibernateTemplate().find(hqlQuery);
     }
 
     @Override
     public boolean isDefault(int id) {
-       String hqlQuery = "select st.defaultNumber from Software st where st.softwareId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+        String hqlQuery = "select st.defaultNumber from Software st where st.softwareId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        return (list.get(0)==1);
-
+        return (list.get(0) == 1);
     }
 }

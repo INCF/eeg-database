@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Integer>
-        implements GenericListDaoWithDefault<StimulusType>{
+        implements GenericListDaoWithDefault<StimulusType> {
 
     public SimpleStimulusTypeDao() {
         super(StimulusType.class);
@@ -28,19 +28,18 @@ public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Intege
     @Override
     public List<StimulusType> getItemsForList() {
         String hqlQuery = "from StimulusType st order by st.description";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<StimulusType> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from StimulusType st inner join fetch st.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from StimulusType st inner join fetch st.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select st.stimulusRels from StimulusType st where st.stimulusTypeId = :id";
+        String hqlQuery = "select st.stimulusRels from StimulusType st where st.stimulusTypeId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<StimulusType> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
@@ -76,12 +75,11 @@ public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Intege
 
     @Override
     public boolean isDefault(int id) {
-       String hqlQuery = "select st.defaultNumber from StimulusType st where st.stimulusTypeId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+        String hqlQuery = "select st.defaultNumber from StimulusType st where st.stimulusTypeId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        return (list.get(0)==1);
-
+        return (list.get(0) == 1);
     }
 }

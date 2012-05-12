@@ -3,7 +3,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRel;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 
 import java.util.List;
 
@@ -25,63 +24,63 @@ public class SimplePersonOptParamDefDao extends SimpleGenericDao<PersonOptParamD
         List<PersonOptParamDef> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
-    
-    public List<PersonOptParamDef> getRecordsByGroup(int groupId){
-        String hqlQuery = "from PersonOptParamDef h inner join fetch h.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        List<PersonOptParamDef> list = getHibernateTemplate().find(hqlQuery);
+
+    public List<PersonOptParamDef> getRecordsByGroup(int groupId) {
+        String hqlQuery = "from PersonOptParamDef h inner join fetch h.researchGroups as rg where rg.researchGroupId = :groupId";
+        List<PersonOptParamDef> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
         return list;
     }
-    
-    public void createDefaultRecord(PersonOptParamDef personOptParamDef){
+
+    public void createDefaultRecord(PersonOptParamDef personOptParamDef) {
         personOptParamDef.setDefaultNumber(1);
         create(personOptParamDef);
     }
 
-    public List<PersonOptParamDef> getDefaultRecords(){
-        String hqlQuery = "from PersonOptParamDef h where h.defaultNumber=1";
+    public List<PersonOptParamDef> getDefaultRecords() {
+        String hqlQuery = "from PersonOptParamDef h where h.defaultNumber = 1";
         List<PersonOptParamDef> list = getHibernateTemplate().find(hqlQuery);
         return list;
     }
 
-    public boolean hasGroupRel(int id){
-        String hqlQuery = "from PersonOptParamDefGroupRel r where r.id.personOptParamDefId =" +id+ " ";
-        List<PersonOptParamDefGroupRel> list = getHibernateTemplate().find(hqlQuery);
+    public boolean hasGroupRel(int id) {
+        String hqlQuery = "from PersonOptParamDefGroupRel r where r.id.personOptParamDefId = :id";
+        List<PersonOptParamDefGroupRel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() > 0);
     }
 
-    public void deleteGroupRel(PersonOptParamDefGroupRel
-        personOptParamDefGroupRel){
+    public void deleteGroupRel(PersonOptParamDefGroupRel personOptParamDefGroupRel) {
         getHibernateTemplate().delete(personOptParamDefGroupRel);
     }
 
-    public PersonOptParamDefGroupRel getGroupRel(int personOptParamDefId, int researchGroupId){
-        String hqlQuery = "from PersonOptParamDefGroupRel r where r.id.personOptParamDefId="+personOptParamDefId+" and r.id.researchGroupId="+researchGroupId+" ";
-        List<PersonOptParamDefGroupRel> list = getHibernateTemplate().find(hqlQuery);
+    public PersonOptParamDefGroupRel getGroupRel(int personOptParamDefId, int researchGroupId) {
+        String hqlQuery = "from PersonOptParamDefGroupRel r where r.id.personOptParamDefId = :personOptParamDefId and r.id.researchGroupId = :researchGroupId";
+        List<PersonOptParamDefGroupRel> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("personOptParamDefId", personOptParamDefId)
+                .setParameter("researchGroupId", researchGroupId)
+                .list();
         return list.get(0);
     }
 
-    public void createGroupRel(PersonOptParamDefGroupRel
-        personOptParamDefGroupRel){
+    public void createGroupRel(PersonOptParamDefGroupRel personOptParamDefGroupRel) {
         personOptParamDefGroupRel.getPersonOptParamDef().setDefaultNumber(0);
         getHibernateTemplate().save(personOptParamDefGroupRel);
     }
-    
-    public void createGroupRel(PersonOptParamDef personOptParamDef, ResearchGroup researchGroup){
+
+    public void createGroupRel(PersonOptParamDef personOptParamDef, ResearchGroup researchGroup) {
         personOptParamDef.getResearchGroups().add(researchGroup);
         researchGroup.getPersonOptParamDefs().add(personOptParamDef);
     }
-    
-    public boolean isDefault(int id){
-        String hqlQuery = "select h.defaultNumber from PersonOptParamDef h where h.personOptParamDefId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+
+    public boolean isDefault(int id) {
+        String hqlQuery = "select h.defaultNumber from PersonOptParamDef h where h.personOptParamDefId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        if(list.get(0)==1){
+        if (list.get(0) == 1) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
-    
 }
