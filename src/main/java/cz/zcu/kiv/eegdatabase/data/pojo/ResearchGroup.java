@@ -55,7 +55,7 @@ public class ResearchGroup implements Serializable {
     private Set<ExperimentOptParamDef> experimentOptParamDefs = new HashSet<ExperimentOptParamDef>(0);
     @OneToMany(mappedBy = "researchGroup")
     private Set<ExperimentOptParamDefGroupRel> experimentOptParamDefGroupRels = new HashSet<ExperimentOptParamDefGroupRel>(0);
-    private Set<Analysis> analysises = new HashSet<Analysis>(0);
+    private Set<Analysis> analyses = new HashSet<Analysis>(0);
     private Set<Artifact> artifacts = new HashSet<Artifact>(0);
     private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
     private Set<Digitization> digitizations = new HashSet<Digitization>(0);
@@ -258,12 +258,12 @@ public class ResearchGroup implements Serializable {
         this.experimentOptParamDefGroupRels = experimentOptParamDefGroupRels;
     }
 
-    public Set<Analysis> getAnalysises() {
-        return analysises;
+    public Set<Analysis> getAnalyses() {
+        return analyses;
     }
 
-    public void setAnalysises(Set<Analysis> analysises) {
-        this.analysises = analysises;
+    public void setAnalyses(Set<Analysis> analyses) {
+        this.analyses = analyses;
     }
 
     public Set<Artifact> getArtifacts() {

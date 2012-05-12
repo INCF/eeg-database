@@ -21,7 +21,7 @@ public class SimpleAnalysisDao extends SimpleGenericDao<Analysis, Integer>
     @Override
     public void createGroupRel(Analysis persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
-        researchGroup.getAnalysises().add(persistent);
+        researchGroup.getAnalyses().add(persistent);
     }
 
     @Override
@@ -58,7 +58,7 @@ public class SimpleAnalysisDao extends SimpleGenericDao<Analysis, Integer>
     @Override
     public void deleteGroupRel(Analysis persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().remove(researchGroup);
-        researchGroup.getAnalysises().remove(persistent);
+        researchGroup.getAnalyses().remove(persistent);
     }
 
 }
