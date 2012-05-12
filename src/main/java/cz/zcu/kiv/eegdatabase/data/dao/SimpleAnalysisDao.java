@@ -18,6 +18,7 @@ public class SimpleAnalysisDao extends SimpleGenericDao<Analysis, Integer>
     public SimpleAnalysisDao() {
         super(Analysis.class);
     }
+
     @Override
     public void createGroupRel(Analysis persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
@@ -27,31 +28,26 @@ public class SimpleAnalysisDao extends SimpleGenericDao<Analysis, Integer>
     @Override
     public List<Analysis> getItemsForList() {
         String hqlQuery = "from Analysis an order by an.description";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<Analysis> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Analysis an inner join fetch an.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from Analysis an inner join fetch an.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select an.dataFiles from Analysis an where an.analysisId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Analysis> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        String hqlQuery = "select an.dataFiles from Analysis an where an.analysisId = :id";
+        List<Analysis> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from EducationLevel ed where ed.educationLevelId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<Analysis> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<Analysis> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -60,5 +56,4 @@ public class SimpleAnalysisDao extends SimpleGenericDao<Analysis, Integer>
         persistent.getResearchGroups().remove(researchGroup);
         researchGroup.getAnalyses().remove(persistent);
     }
-
 }

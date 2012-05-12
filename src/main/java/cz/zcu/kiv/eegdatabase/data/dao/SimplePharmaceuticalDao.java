@@ -13,11 +13,12 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, Integer>
-        implements GenericListDao<Pharmaceutical>{
+        implements GenericListDao<Pharmaceutical> {
 
     public SimplePharmaceuticalDao() {
         super(Pharmaceutical.class);
     }
+
     @Override
     public void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
@@ -32,14 +33,13 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
 
     @Override
     public List<Pharmaceutical> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Pharmaceutical ph inner join fetch ph.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from Pharmaceutical ph inner join fetch ph.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select ph.experiments from Pharmaceutical ph where ph.pharmaceuticalId = :id";
+        String hqlQuery = "select ph.experiments from Pharmaceutical ph where ph.pharmaceuticalId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<Pharmaceutical> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
@@ -60,5 +60,4 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
         persistent.getResearchGroups().remove(researchGroup);
         researchGroup.getPharmaceuticals().remove(persistent);
     }
-
 }

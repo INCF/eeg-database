@@ -13,11 +13,12 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleDiseaseDao extends SimpleGenericDao<Disease, Integer>
-        implements GenericListDao<Disease>{
+        implements GenericListDao<Disease> {
 
     public SimpleDiseaseDao() {
         super(Disease.class);
     }
+
     @Override
     public void createGroupRel(Disease persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
@@ -27,19 +28,19 @@ public class SimpleDiseaseDao extends SimpleGenericDao<Disease, Integer>
     @Override
     public List<Disease> getItemsForList() {
         String hqlQuery = "from Disease dis order by dis.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<Disease> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Disease dis inner join fetch dis.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
+        String hqlQuery = "from Disease dis inner join fetch dis.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
 
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select dis.experiments from Disease dis where dis.diseaseId = :id";
+        String hqlQuery = "select dis.experiments from Disease dis where dis.diseaseId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<Disease> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);

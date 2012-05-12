@@ -112,12 +112,12 @@ public class SimpleResearchGroupDao
         return list;
     }
 
-    public String getResearchGroupTitle(int groupId){
-        String hqlQuery = "select title from ResearchGroup r where r.researchGroupId="+groupId+" ";
-        List<String> list = getHibernateTemplate().find(hqlQuery);
-        if(!list.isEmpty()){
+    public String getResearchGroupTitle(int groupId) {
+        String hqlQuery = "select title from ResearchGroup r where r.researchGroupId = :groupId";
+        List<String> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
+        if (!list.isEmpty()) {
             return list.get(0);
-        }else{
+        } else {
             return "";
         }
     }

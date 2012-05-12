@@ -29,11 +29,10 @@ public class SimplePersonDao
      * @return Person with searched userName
      */
     public Person getPerson(String userName) {
-        String HQLselect = "from Person person " + "where person.username = :userName";
+        String HQLselect = "from Person person where person.username = :userName";
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "userName", userName));
         return foundUser;
     }
-
 
 
     /**
@@ -45,14 +44,14 @@ public class SimplePersonDao
      * @return Person with searched hashCode
      */
     public Person getPersonByHash(String hashCode) {
-        String HQLselect = "from Person person " + "where person.authenticationHash = :hashCode";
+        String HQLselect = "from Person person where person.authenticationHash = :hashCode";
 
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "hashCode", hashCode));
         return foundUser;
     }
 
     public Person getPersonByFbUid(String facebookId) {
-        String HQLselect = "from Person person " + "where person.facebookId = :facebookId";
+        String HQLselect = "from Person person where person.facebookId = :facebookId";
 
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "facebookId", facebookId));
 
@@ -65,7 +64,7 @@ public class SimplePersonDao
      * @return
      */
     public List<Person> getPersonsWherePendingRequirement() {
-        String HQLselect = "from Person person " + "where person.requiresWriting = 'T' " + "and person.authority = 'ROLE_READER'";
+        String HQLselect = "from Person person where person.requiresWriting = 'T' and person.authority = 'ROLE_READER'";
         return getHibernateTemplate().find(HQLselect);
     }
 
@@ -79,7 +78,7 @@ public class SimplePersonDao
      *         else return false
      */
     public boolean usernameExists(String userName) {
-        String HQLselect = "from Person person " + "where person.username = :userName";
+        String HQLselect = "from Person person where person.username = :userName";
         List<Person> list = getHibernateTemplate().
                 findByNamedParam(HQLselect, "userName", userName);
         return (!list.isEmpty());
@@ -95,7 +94,7 @@ public class SimplePersonDao
      *         else return false
      */
     public boolean fbUidExists(String facebookId) {
-        String HQLselect = "from Person person " + "where person.facebookId = :facebookId";
+        String HQLselect = "from Person person where person.facebookId = :facebookId";
         List<Person> list = getHibernateTemplate().
                 findByNamedParam(HQLselect, "facebookId", facebookId);
         return (!list.isEmpty());
@@ -108,7 +107,7 @@ public class SimplePersonDao
      * @return list of Person with supervisor's authority.
      */
     public List<Person> getSupervisors() {
-        String HQLselect = "from Person person " + "where person.authority = 'ROLE_SUPERVISOR'";
+        String HQLselect = "from Person person where person.authority = 'ROLE_SUPERVISOR'";
         return getHibernateTemplate().find(HQLselect);
     }
 
@@ -124,7 +123,7 @@ public class SimplePersonDao
     }
 
     public Map getInfoForAccountOverview(Person loggedPerson) {
-        String hqlSelect = "select new map(" + "p.username as username, " + "p.givenname as givenname, " + "p.surname as surname, " + "p.authority as authority" + ") from Person p where p.personId = :personId";
+        String hqlSelect = "select new map(p.username as username, p.givenname as givenname, p.surname as surname, p.authority as authority) from Person p where p.personId = :personId";
         Map info;
         List list = getHibernateTemplate().
                 findByNamedParam(hqlSelect, "personId", loggedPerson.getPersonId());
@@ -138,14 +137,13 @@ public class SimplePersonDao
 
     @Override
     public List<Person> getRecordsNewerThan(long oracleScn) {
-         String hqlQuery = "from Person p where p.scn > :oracleScn";
+        String hqlQuery = "from Person p where p.scn > :oracleScn";
         List<Person> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
         return list;
     }
 
     public boolean userNameInGroup(String userName, int groupId) {
-        String hqlQuery = "select p.personId " + "from Person p " + "left join p.researchGroupMemberships rgm " + "where p.username = :userName " + "and rgm.researchGroup.researchGroupId = :groupId";
-
+        String hqlQuery = "select p.personId from Person p left join p.researchGroupMemberships rgm where p.username = :userName and rgm.researchGroup.researchGroupId = :groupId";
         String[] paramNames = {"userName", "groupId"};
         Object[] values = {userName, groupId};
         List list = getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);

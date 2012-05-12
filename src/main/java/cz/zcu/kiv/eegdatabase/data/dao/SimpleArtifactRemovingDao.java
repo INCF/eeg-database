@@ -13,7 +13,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleArtifactRemovingDao extends SimpleGenericDao<ArtifactRemoveMethod, Integer>
-        implements GenericListDaoWithDefault<ArtifactRemoveMethod>{
+        implements GenericListDaoWithDefault<ArtifactRemoveMethod> {
 
     public SimpleArtifactRemovingDao() {
         super(ArtifactRemoveMethod.class);
@@ -28,31 +28,26 @@ public class SimpleArtifactRemovingDao extends SimpleGenericDao<ArtifactRemoveMe
     @Override
     public List<ArtifactRemoveMethod> getItemsForList() {
         String hqlQuery = "from ArtifactRemoveMethod ar order by ar.title";
-        return getHibernateTemplate().find(hqlQuery);
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).list();
     }
 
     @Override
     public List<ArtifactRemoveMethod> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from ArtifactRemoveMethod ar inner join fetch ar.researchGroups as rg where rg.researchGroupId="+groupId+" ";
-        return getHibernateTemplate().find(hqlQuery);
-
+        String hqlQuery = "from ArtifactRemoveMethod ar inner join fetch ar.researchGroups as rg where rg.researchGroupId = :groupId";
+        return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 
     @Override
     public boolean canDelete(int id) {
-       String hqlQuery = "select ar.experiments from ArtifactRemoveMethod ar where ar.artifactRemoveMethodId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ArtifactRemoveMethod> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        String hqlQuery = "select ar.experiments from ArtifactRemoveMethod ar where ar.artifactRemoveMethodId = :id";
+        List<ArtifactRemoveMethod> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return (list.size() == 0);
     }
 
     @Override
     public boolean hasGroupRel(int id) {
         String hqlQuery = "from ArtifactRemoveMethod ar where ar.artifactRemoveMethodId = :id";
-        String[] names = {"id"};
-        Object[] values = {id};
-        List<ArtifactRemoveMethod> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
+        List<ArtifactRemoveMethod> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
         return list.get(0).getResearchGroups().size() > 0;
     }
 
@@ -70,19 +65,17 @@ public class SimpleArtifactRemovingDao extends SimpleGenericDao<ArtifactRemoveMe
 
     @Override
     public List<ArtifactRemoveMethod> getDefaultRecords() {
-        String hqlQuery = "from ArtifactRemoveMethod ar where ar.defaultNumber=1";
+        String hqlQuery = "from ArtifactRemoveMethod ar where ar.defaultNumber = 1";
         return getHibernateTemplate().find(hqlQuery);
     }
 
     @Override
     public boolean isDefault(int id) {
-       String hqlQuery = "select ar.defaultNumber from ArtifactRemoveMethod ar where ar.educationLevelId="+id+" ";
-        List<Integer> list = getHibernateTemplate().find(hqlQuery);
-        if(list.isEmpty()){
+        String hqlQuery = "select ar.defaultNumber from ArtifactRemoveMethod ar where ar.educationLevelId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
             return false;
         }
-        return (list.get(0)==1);
-
+        return (list.get(0) == 1);
     }
-
 }
