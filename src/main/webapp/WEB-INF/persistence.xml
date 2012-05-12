@@ -85,9 +85,9 @@
         <constructor-arg value="${linkedin.groupId}" />	
     </bean>
 
-    <!--<bean id="indexingBean" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingData" init-method="init">
+    <bean id="indexingBean" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingData" init-method="init">
         <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>-->
+    </bean>
 
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

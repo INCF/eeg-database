@@ -66,7 +66,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         }
 
         Timer timer = new Timer();
-        //timer.scheduleAtFixedRate(new TransformTask(), delay, interval);
+        timer.scheduleAtFixedRate(new TransformTask(), delay, interval);
     }
 
 
