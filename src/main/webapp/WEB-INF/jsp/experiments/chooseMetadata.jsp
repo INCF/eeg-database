@@ -97,7 +97,7 @@
       <c:forEach var="fileItem" items="${measurationDetail.dataFiles}" varStatus="fileCounter">
         <table id="measurationTable${fileCounter.count}" class="standardValueTable">
           <tr>
-            <th colspan="3">${fileItem.filename}</th>
+              <th colspan="3"><c:out value="${fileItem.filename}"/></th>
             <td><input id="measuration${fileCounter.count}Id" type="checkbox" name="dataFile" value="${fileItem.dataFileId}" onclick="checkedAll('measurationTable${fileCounter.count}', document.getElementById('measuration${fileCounter.count}Id').checked);"/></td>
           </tr>
           <tr>
@@ -112,9 +112,9 @@
           </tr>
           <c:forEach var="fileParamItem" items="${fileItem.fileMetadataParamVals}" varStatus="fileMetadataCounter">
             <tr>
-              <td>${fileParamItem.metadataValue}</td>
-              <td>${fileParamItem.fileMetadataParamDef.paramName}</td>
-              <td>${fileParamItem.fileMetadataParamDef.paramDataType}</td>
+              <td><c:out value="{fileParamItem.metadataValue}"/></td>
+              <td><c:out value="{fileParamItem.fileMetadataParamDef.paramName}"/></td>
+              <td><c:out value="{fileParamItem.fileMetadataParamDef.paramDataType}"/></td>
               <td><input type="checkbox" name="fileParam"  value="${fileItem.dataFileId}#${fileParamItem.id.fileMetadataParamDefId}"/></td>
             </tr>
           </c:forEach>

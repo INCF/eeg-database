@@ -96,13 +96,13 @@
 
             <select id="startH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="${startHour}" end="${endHour}" step="1">
-                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==startSelection}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
+                    <option value="<c:if test="${hour<10}">0</c:if>${hour}" <c:if test="${hour==startSelection}">selected</c:if>><c:if test="${hour<10}">0</c:if><c:out value="${hour}"/></option>
                 </c:forEach>
             </select>
             &nbsp;
             <select id="startM" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="min" begin="00" end="45" step="15">
-                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if>${min}</option>
+                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if><c:out value="${min}"/></option>
                 </c:forEach>
             </select>
             <br/>
@@ -112,13 +112,13 @@
             <select id="endH" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="hour" begin="${startHour}" end="${endHour}" step="1">
                     <option value="<c:if test="${hour<10}">0</c:if>${hour}"
-                            <c:if test="${hour==endSelection}">selected</c:if>><c:if test="${hour<10}">0</c:if>${hour}</option>
+                            <c:if test="${hour==endSelection}">selected</c:if>><c:if test="${hour<10}">0</c:if><c:out value="${hour}"/></option>
                 </c:forEach>
             </select>
             &nbsp;
             <select id="endM" size="1" class="timeSelect" onchange="newTime()">
                 <c:forEach var="min" begin="00" end="45" step="15">
-                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if>${min}</option>
+                    <option value="<c:if test="${min==0}">0</c:if>${min}"><c:if test="${min==0}">0</c:if><c:out value="${min}"/></option>
                 </c:forEach>
             </select>
 

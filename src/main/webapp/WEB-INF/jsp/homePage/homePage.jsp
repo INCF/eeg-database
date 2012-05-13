@@ -36,7 +36,7 @@
 
             <c:forEach items="${articleList}" var="article" varStatus="status">
                 <c:if test="${article.userMemberOfGroup}">
-                    <tr class="${article.researchGroup.title}">
+                    <tr>
                         <td><fmt:formatDate value="${article.time}"/></td>
                         <td class="tableArticleTitle"><a
                                 href="<c:url value="/articles/detail.html?articleId=${article.articleId}" />"><c:out
@@ -81,8 +81,8 @@
                     <c:forEach items="${myExperiments}" var="experiment">
                         <tr>
                             <td><f:dateTime value="${experiment.startTime}"/></td>
-                            <td>${experiment.experimentId}</td>
-                            <td>${experiment.scenario.title}</td>
+                            <td><c:out value="${experiment.experimentId}"/></td>
+                            <td><c:out value="${experiment.scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                         key="link.detail"/></a></td>
@@ -117,8 +117,8 @@
                     <c:forEach items="${meAsSubjectList}" var="experiment">
                         <tr>
                             <td><f:dateTime value="${experiment.startTime}"/></td>
-                            <td>${experiment.experimentId}</td>
-                            <td>${experiment.scenario.title}</td>
+                            <td><c:out value="${experiment.experimentId}"/></td>
+                            <td><c:out value="${experiment.scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                         key="link.detail"/></a></td>
@@ -154,7 +154,7 @@
                     <tbody>
                     <c:forEach items="${myScenarios}" var="scenario">
                         <tr>
-                            <td>${scenario.title}</td>
+                            <td><c:out value="${scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/scenarios/detail.html?scenarioId=${scenario.scenarioId}'/>"><fmt:message
                                         key="link.detail"/></a></td>

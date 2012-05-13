@@ -18,7 +18,7 @@
                             cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.channel"/></form:label>
                 <form:select path="channel" cssClass="selectBox">
                     <c:forEach items="${channels}" var="chan">
-                        <option value="${chan.number}">${chan.name}</option>
+                        <form:option value="${chan.number}" label="${chan.name}"/>
                     </c:forEach>
                 </form:select>
 

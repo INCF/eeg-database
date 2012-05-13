@@ -10,11 +10,11 @@
     <table class="standardValueTable">
         <tr>
             <th><fmt:message key="label.emailLogin"/></th>
-            <td>${userInfo.username}</td>
+            <td><c:out value="${userInfo.username}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.fullName"/></th>
-            <td>${userInfo.givenname} ${userInfo.surname}</td>
+            <td><c:out value="${userInfo.givenname}"/> <c:out value="${userInfo.surname}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.globalPermissionLevel"/></th>

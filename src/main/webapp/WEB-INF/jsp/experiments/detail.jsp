@@ -34,7 +34,7 @@
   <table class="standardValueTable">
     <tr>
       <th><fmt:message key="label.measurationId"/></th>
-      <td>${experimentDetail.experimentId}</td>
+      <td><c:out value="${experimentDetail.experimentId}"/></td>
     </tr>
     <tr>
       <th><fmt:message key="label.beginningOfMeasuration"/></th>
@@ -46,19 +46,19 @@
     </tr>
     <tr>
       <th><fmt:message key="label.temperature"/></th>
-      <td>${experimentDetail.temperature}</td>
+      <td><c:out value="${experimentDetail.temperature}"/></td>
     </tr>
     <tr>
       <th><fmt:message key="label.weather"/></th>
-      <td>${experimentDetail.weather.title}</td>
+      <td><c:out value="${experimentDetail.weather.title}"/></td>
     </tr>
     <tr>
       <th><fmt:message key="label.weatherNote"/></th>
-      <td>${experimentDetail.environmentNote}</td>
+      <td><c:out value="${experimentDetail.environmentNote}"/></td>
     </tr>
     <tr>
       <th><fmt:message key="label.private" /></th>
-      <td>${experimentDetail.privateExperiment}</td>
+      <td><c:out value="${experimentDetail.privateExperiment}"/></td>
     </tr>
   </table>
 
@@ -90,7 +90,7 @@
   <table class="standardValueTable">
     <tr>
       <th><fmt:message key="label.scenarioTitle"/></th>
-      <td>${experimentDetail.scenario.title}</td>
+      <td><c:out value="${experimentDetail.scenario.title}"/></td>
     </tr>
     <tr>
       <td colspan="2"><a href="<c:url value='/scenarios/detail.html?scenarioId=${experimentDetail.scenario.scenarioId}' />"><fmt:message key="link.viewDetailOfScenario"/></a></td>
@@ -107,8 +107,8 @@
     </thead>
     <c:forEach items="${experimentDetail.hardwares}" var="usedHardware">
       <tr>
-        <td>${usedHardware.title}</td>
-        <td>${usedHardware.type}</td>
+        <td><c:out value="${usedHardware.title}"/></td>
+        <td><c:out value="${usedHardware.type}"/></td>
       </tr>
     </c:forEach>
   </table>
@@ -123,8 +123,8 @@
     </thead>
     <c:forEach items="${experimentDetail.experimentOptParamVals}" var="additionalParameter">
       <tr>
-        <td>${additionalParameter.experimentOptParamDef.paramName}</td>
-        <td>${additionalParameter.paramValue}</td>
+        <td><c:out value="${additionalParameter.experimentOptParamDef.paramName}"/></td>
+        <td><c:out value="${additionalParameter.paramValue}"/></td>
       </tr>
     </c:forEach>
   </table>
@@ -146,8 +146,8 @@
     <tbody>
       <c:forEach items="${experimentDetail.dataFiles}" var="dataItem">
         <tr>
-          <td>${dataItem.filename}</td>
-          <td>${dataItem.description}</td>
+          <td><c:out value="${dataItem.filename}"/></td>
+          <td><c:out value="${dataItem.description}"/></td>
           <td><a href="<c:url value='data/detail.html?fileId=${dataItem.dataFileId}' />"><fmt:message key="link.detail"/></a></td>
         </tr>
       </c:forEach>

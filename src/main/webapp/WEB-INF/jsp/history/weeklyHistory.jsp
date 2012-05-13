@@ -32,7 +32,7 @@
 
   <h2><fmt:message key="title.weeklyStatistic"/></h2>
 
-  <h3><fmt:message key="text.downloadFiles"/><b>${countOfDownloadedFiles}</b></h3>
+  <h3><fmt:message key="text.downloadFiles"/><b><c:out value="${countOfDownloadedFiles}"/></b></h3>
 
   <h2><fmt:message key="title.topDownloads"/></h2>
   <table class="dataTable">
@@ -44,8 +44,8 @@
     </thead>
     <c:forEach items="${topDownloadedFilesList}" var="topDownloadedFilesList">
       <tr>
-        <td>${topDownloadedFilesList.fileName}</td>
-        <td>${topDownloadedFilesList.count}</td>
+        <td><c:out value="${topDownloadedFilesList.fileName}"/></td>
+        <td><c:out value="${topDownloadedFilesList.count}"/></td>
       </tr>
     </c:forEach>
   </table>

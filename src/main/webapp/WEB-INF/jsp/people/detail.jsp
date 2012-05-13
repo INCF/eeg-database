@@ -10,7 +10,7 @@
     <table class="standardValueTable">
         <tr>
             <th><fmt:message key="label.name"/></th>
-            <td>${personDetail.givenname} ${personDetail.surname}</td>
+            <td><c:out value="${personDetail.givenname}"/> <c:out value="${personDetail.surname}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.gender"/></th>
@@ -29,15 +29,15 @@
         </tr>
         <tr>
             <th><fmt:message key="label.email"/></th>
-            <td>${personDetail.email}</td>
+            <td><c:out value="${personDetail.email}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.phoneNumber"/></th>
-            <td>${personDetail.phoneNumber}</td>
+            <td><c:out value="${personDetail.phoneNumber}"/></td>
         </tr>
         <tr>
             <th><fmt:message key="label.userNote"/></th>
-            <td>${personDetail.note}</td>
+            <td><c:out value="${personDetail.note}"/></td>
         </tr>
     </table>
 
@@ -53,8 +53,8 @@
         </thead>
         <c:forEach items="${personDetail.personOptParamVals}" var="additionalParameter">
             <tr>
-                <td>${additionalParameter.personOptParamDef.paramName}</td>
-                <td>${additionalParameter.paramValue}</td>
+                <td><c:out value="${additionalParameter.personOptParamDef.paramName}"/></td>
+                <td><c:out value="${additionalParameter.paramValue}"/></td>
             </tr>
         </c:forEach>
     </table>
