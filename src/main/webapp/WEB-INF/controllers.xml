@@ -107,6 +107,10 @@
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    
+    <bean name="simpleKeywordsDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleKeywordsDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
     <bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
         <constructor-arg>
@@ -351,10 +355,12 @@
 
     <!-- Articles -->
     <bean name="articleMultiController" class="cz.zcu.kiv.eegdatabase.logic.controller.article.ArticleMultiController">
+        <constructor-arg ref="linkedin"/>
         <property name="articleDao" ref="articleDao"/>
         <property name="articleCommentDao" ref="articleCommentDao"/>
         <property name="personDao" ref="personDao"/>
         <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="simpleKeywordsDao" ref="simpleKeywordsDao" />
         <property name="auth" ref="authorizationManager"/>
         <property name="methodNameResolver" ref="multiControllerMethodResolver"/>
         <property name="domain" value="${app.domain}"/>

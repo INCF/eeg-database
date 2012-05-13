@@ -2,6 +2,10 @@ package cz.zcu.kiv.eegdatabase.logic.controller.article;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -16,15 +20,17 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
-
+import java.util.*;
+import org.springframework.social.linkedin.api.Group;
+import org.springframework.social.linkedin.api.Post;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * Controller for adding and editing an article
  *
- * @author Jiri Vlasimsky
+ * @author Jiri Vlasimsky, Ladislav Janák
  */
 public class ArticleMultiController extends MultiActionController {
 
@@ -34,12 +40,52 @@ public class ArticleMultiController extends MultiActionController {
     private ArticleDao articleDao;
     private ArticleCommentDao articleCommentDao;
     private ResearchGroupDao researchGroupDao;
+    private SimpleKeywordsDao simpleKeywordsDao;
     private String domain;
+    /**
+     * Posts from EEG/ERP portal LinkedIn group
+     */
+    List<Post> linkedInArticles = null;
+    /**
+     * Filtered posts from EEG/ERP portal LinkedIn group
+     */
+    List<Post> linkedInArticlesFiltered = null;
+    /**
+     * Text with keywords
+     */
+    List<String> keywordsSettings = new ArrayList<String>();
+    /**
+     * Groip details from EEG/ERP portal LinkedIn group
+     */
+    Group groupDetails = null;
+    /**
+     * Reference to LinkedInManager bean
+     */
+    private final LinkedInManager linkedInManager;
+    /**
+     * Whether has to be internal articles showed
+     */
+    boolean showInternal = true;
+    /**
+     * Whether has to be linkedIn articles showed
+     */
+    boolean showLinkedIn = false;
 
-    public ArticleMultiController() {
 
+    /**
+     * Constructor
+     * @param linkedInManager Reference to linkedInManager bean
+     */
+    public ArticleMultiController(LinkedInManager linkedInManager) throws IOException {
+        this.linkedInManager = linkedInManager;
     }
 
+    /*
+     * public void init() { keyWordsList = new ArrayList<String>(); for
+     * (Enumeration en = this.propertiesHolder.keys(); en.hasMoreElements(); ) {
+     * String key = (String) en.nextElement();
+     * this.keyWordsList.add(this.propertiesHolder.getProperty(key)); } }
+     */
     public ModelAndView rss(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/rss");
         SimpleDateFormat formatter = new SimpleDateFormat("dd MMM yyyy HH:mm:ss Z");
@@ -61,7 +107,7 @@ public class ArticleMultiController extends MultiActionController {
         for (Article article : articleList) {
             FeedMessage feed = new FeedMessage();
             feed.setTitle(article.getTitle());
-            feed.setDescription(article.getText().substring(0,(article.getText().length() > 200) ? 200 : article.getText().length()-1));
+            feed.setDescription(article.getText().substring(0, (article.getText().length() > 200) ? 200 : article.getText().length() - 1));
             feed.setAuthor(article.getPerson().getUsername());
             feed.setGuid("");
             feed.setLink(domain + "/articles/detail.html?articleId=" + article.getArticleId());
@@ -80,25 +126,110 @@ public class ArticleMultiController extends MultiActionController {
 
         mav.addObject("rssFeedBuffer", rssFeedBuffer);
         mav.addObject("articleList", articleList);
-        mav.addObject("articleListTitle", "pageTitle.allArticles");
+        mav.addObject("articleListTitle", "pageTitle.internalArticles");
         mav = new ModelAndView("redirect:/files/articles.rss");
         return mav;
     }
 
-    public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
+   
+    /**
+     * Get method for list.jsp form, it shows internal and linkedIn articles
+     * @return model and view object which shows internal and linkedIn articles
+     * @throws Exception 
+     */
+    @RequestMapping(value = "articles/list", method = RequestMethod.GET)
+    public ModelAndView list() throws Exception {
         ModelAndView mav = new ModelAndView("articles/list");
         setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
         log.debug("Logged user from database is: " + loggedUser.getPersonId());
-        List<Article> articleList = articleDao.getAllArticles();
-        int groupId;
-        for (Article item : articleList) {
-            item.setUserMemberOfGroup(canView(loggedUser, item));
-            item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
+
+        List<Article> articleList = null;
+
+        //shows internal articles
+        if (showInternal) {
+            articleList = articleDao.getAllArticles();
+            for (Article item : articleList) {
+                item.setUserMemberOfGroup(canView(loggedUser, item));
+                item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
+            }
         }
+        if (showLinkedIn) {
+            mav.addObject("articleListTitle", "pageTitle.linkedInArticles");
+        }
+        if (showInternal) {
+            mav.addObject("articleListTitle", "pageTitle.internalArticles");
+        }
+        if (showInternal && showLinkedIn) {
+            mav.addObject("articleListTitle", "pageTitle.allArticles");
+        }
+        if (!showInternal && !showLinkedIn) {
+            mav.addObject("articleListTitle", "pageTitle.noArticles");
+        }
+        mav.addObject("showLinkedIn", showLinkedIn);
+        mav.addObject("showInternal", showInternal);
         mav.addObject("articleList", articleList);
-        mav.addObject("articleListTitle", "pageTitle.allArticles");
+        mav.addObject("groupDetails", groupDetails);
+        mav.addObject("linkedInArticles", linkedInArticlesFiltered);
+
         return mav;
+    }
+
+    /**
+     * Post method for list.jsp form, it controls two checkboxes, which deside which articles will be showed
+     * From LinkedIn EEG/ERP group returns filtered articles by keywords filter, this filter is not enabled yet and is commented.
+     * After new release of linkedIn API can be filter uncomment
+     * @param request HTTP request
+     * @param response HTTP response
+     * @return new model and view
+     */
+    @RequestMapping(value = "articles/list", method = RequestMethod.POST)
+    public ModelAndView submitShowArticles(HttpServletRequest request, HttpServletResponse response) {
+
+        //shows linkedIn aricles
+        if (request.getParameter("showOnLinkedInArticles") != null && (request.getParameter("showOnLinkedInArticles").equals("1"))) {
+
+            List<String> keywords = new ArrayList<String>();
+            Person loggedUser = personDao.getLoggedPerson();
+
+            linkedInArticlesFiltered = new ArrayList<Post>();
+            List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+            for (ResearchGroup item : groups) {
+                //gets keywords from DB
+                keywords.add(simpleKeywordsDao.getKeywords(item.getResearchGroupId()));
+            }
+            String keywordsText = keywords.get(0);
+
+            //keywords are splitted by ","
+            String parseKeywords[] = keywordsText.split(",");
+
+            //downloads posts from EEG/ERP group on linkedIn
+            linkedInArticles = linkedInManager.getPosts(linkedInManager.groupId);
+
+            //***************FILTER for correct function delete this comment**************/
+            /*
+             * for (Post item : linkedInArticles) { for (int i = 0; i <
+             * parseKeywords.length; i++ ){ if
+             * (item.getSummary().contains(parseKeywords[i].trim())){
+             * linkedInArticlesPom.add(item); break; } }     
+           }
+           //***************FILTER for correct function delete this comment**************/
+            
+            groupDetails = linkedInManager.getGroupDetails();
+            showLinkedIn = true;
+        } else {
+            showLinkedIn = false;
+            groupDetails = null;
+            linkedInArticles = null;
+        }
+        //shows internal articles
+        if (request.getParameter("showInternalArticles") != null && (request.getParameter("showInternalArticles").equals("1"))) {
+            showInternal = true;
+        } else {
+            showInternal = false;
+        }
+
+        return new ModelAndView("redirect:list.html");
     }
 
     @Override
@@ -153,15 +284,76 @@ public class ArticleMultiController extends MultiActionController {
         return mav;
     }
 
-    public ModelAndView settings(HttpServletRequest request, HttpServletResponse response) {
+    /**
+     * Post method for articleSettings.jsp form, it allows store new keywords to the database.
+     * It allows set up new keywords for users research groups
+     * If all users research group IDs already exist in Keywords are these records updated, otherwise new research group Id is stored into Keywords table 
+     * @param request HTTP request
+     * @param response HTTP request
+     * @return new model and view
+     */
+    @RequestMapping(value = "articles/settings", method = RequestMethod.POST)
+    public ModelAndView submitArticleFilterSettings(HttpServletRequest request, HttpServletResponse response) {
+        String keywords = request.getParameter("keywords");
+        Keywords keywordsRecord;
+        ResearchGroup researchGroup;
+        int keywordID;
+        Person loggedUser = personDao.getLoggedPerson();
+        List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+        
+        for (ResearchGroup item : groups) {
+            keywordID = simpleKeywordsDao.getID(item.getResearchGroupId());
+            //research group id not exist in Keywords
+            if (keywordID == -1) {
+                keywordsRecord = new Keywords();
+                researchGroup = new ResearchGroup();
+                researchGroup.setResearchGroupId(item.getResearchGroupId());
+                keywordsRecord.setKeywordsText(keywords);
+                keywordsRecord.setResearchGroup(researchGroup);
+                simpleKeywordsDao.create(keywordsRecord);
+            //research group already exist in keywords
+            } else {
+                researchGroup = new ResearchGroup();
+                researchGroup.setResearchGroupId(item.getResearchGroupId());
+                keywordsRecord = simpleKeywordsDao.read(simpleKeywordsDao.getID(item.getResearchGroupId()));
+                keywordsRecord.setKeywordsText(keywords);
+                keywordsRecord.setResearchGroup(researchGroup);
+                simpleKeywordsDao.update(keywordsRecord);
+            }
+        }
+        return new ModelAndView("redirect:settings.html");
+    }
+
+    /**
+     * Get method for articleSetting.jsp form, it showes keywords of users research groups in textarea
+     * @param request HTTP request
+     * @param response HTTP response
+     * @param model model for view 
+     * @return new model and view 
+     * @throws Exception 
+     */
+    @RequestMapping(value = "articles/settings", method = RequestMethod.GET)
+    public ModelAndView settings(HttpServletRequest request, HttpServletResponse response, ModelMap model) throws Exception {
+        keywordsSettings.clear();
         ModelAndView mav = new ModelAndView("articles/articleSettings");
         setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
+
+        List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+
+        for (ResearchGroup item : groups) {
+            //gets keywords from DB
+            String keyword = simpleKeywordsDao.getKeywords(item.getResearchGroupId());
+            //no keywords were found
+            if (!keyword.equals("nofilter")) {
+                keywordsSettings.add(keyword);
+            }      
+        }
         Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();
         List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
         mav.addObject("researchGroupList", list);
         mav.addObject("articlesGroupSubscribtions", articlesGroupSubscriptions);
-
+        model.addAttribute("keywords", keywordsSettings.get(0));
         return mav;
     }
 
@@ -221,7 +413,7 @@ public class ArticleMultiController extends MultiActionController {
      * Determines if the logged user can view the supposed article
      *
      * @param loggedUser Person object (Usually logged user)
-     * @param article    Article object
+     * @param article Article object
      * @return true if admin or member of group
      */
     public boolean canView(Person loggedUser, Article article) {
@@ -241,7 +433,7 @@ public class ArticleMultiController extends MultiActionController {
      * Determines if the logged user can edit the supposed article
      *
      * @param loggedUser Person object (Usually logged user)
-     * @param article    Article object
+     * @param article Article object
      * @return true if admin or member of group
      */
     public boolean canEdit(Person loggedUser, Article article) {
@@ -289,7 +481,6 @@ public class ArticleMultiController extends MultiActionController {
             eventWriter.add(eElement);
             eventWriter.add(end);
         } catch (Exception e) {
-
         }
     }
 
@@ -339,5 +530,13 @@ public class ArticleMultiController extends MultiActionController {
 
     public void setDomain(String domain) {
         this.domain = domain;
+    }
+
+    public SimpleKeywordsDao getSimpleKeywordsDao() {
+        return simpleKeywordsDao;
+    }
+
+    public void setSimpleKeywordsDao(SimpleKeywordsDao simpleKeywordsDao) {
+        this.simpleKeywordsDao = simpleKeywordsDao;
     }
 }
