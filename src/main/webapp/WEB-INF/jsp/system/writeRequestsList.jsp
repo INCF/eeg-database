@@ -13,8 +13,8 @@
         </thead>
         <c:forEach items="${personList}" var="person">
             <tr>
-                <td>${person.username}</td>
-                <td>${person.requirementReason}</td>
+                <td><c:out value="${person.username}"/></td>
+                <td><c:out value="${person.requirementReason}"/></td>
                 <td>
                     <a href="<c:url value='write-requests.html?grant=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.grant'/>"><fmt:message key='page.writeRequestsList.grant'/></a>
                     <a href="<c:url value='write-requests.html?reject=${person.personId}'/>" title="<fmt:message key='page.writeRequestsList.reject'/>"><fmt:message key='page.writeRequestsList.reject'/></a>

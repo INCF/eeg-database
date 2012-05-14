@@ -107,7 +107,7 @@
                         key="label.educationLevel"/></form:label>
                 <form:select path="educationLevel" id="selectEducationLevel" cssClass="selectBox">
                     <c:forEach items="${education}" var="educationLevel">
-                        <option value="${educationLevel.educationLevelId}">${educationLevel.title}</option>
+                        <form:option value="${educationLevel.educationLevelId}" label="${educationLevel.title}"/>
                     </c:forEach>
                 </form:select>
             </div>

@@ -80,8 +80,8 @@
                     <c:forEach items="${myExperiments}" var="experiment">
                         <tr>
                             <td><f:dateTime value="${experiment.startTime}"/></td>
-                            <td>${experiment.experimentId}</td>
-                            <td>${experiment.scenario.title}</td>
+                            <td><c:out value="${experiment.experimentId}"/></td>
+                            <td><c:out value="${experiment.scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                         key="link.detail"/></a></td>
@@ -116,8 +116,8 @@
                     <c:forEach items="${meAsSubjectList}" var="experiment">
                         <tr>
                             <td><f:dateTime value="${experiment.startTime}"/></td>
-                            <td>${experiment.experimentId}</td>
-                            <td>${experiment.scenario.title}</td>
+                            <td><c:out value="${experiment.experimentId}"/></td>
+                            <td><c:out value="${experiment.scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/experiments/detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
                                         key="link.detail"/></a></td>
@@ -153,7 +153,7 @@
                     <tbody>
                     <c:forEach items="${myScenarios}" var="scenario">
                         <tr>
-                            <td>${scenario.title}</td>
+                            <td><c:out value="${scenario.title}"/></td>
                             <td>
                                 <a href="<c:url value='/scenarios/detail.html?scenarioId=${scenario.scenarioId}'/>"><fmt:message
                                         key="link.detail"/></a></td>

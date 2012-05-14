@@ -25,6 +25,10 @@ public class ResearchGroup implements Serializable {
     private String description;
     @OneToMany(mappedBy = "researchGroup")
     private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(0);
+    
+    @OneToMany(mappedBy = "researchGroup")
+    private Set<Keywords> keywords = new HashSet<Keywords>(0);
+    
     @OneToMany(mappedBy = "researchGroup")
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
     @OneToMany(mappedBy = "researchGroup")
@@ -92,7 +96,15 @@ public class ResearchGroup implements Serializable {
         this.experiments = experiments;
         this.hardwares = hardwares;
     }
+    
+    public Set<Keywords> getKeywords() {
+        return keywords;
+    }
 
+    public void setKeywords(Set<Keywords> keywords) {
+        this.keywords = keywords;
+    }
+    
     public int getResearchGroupId() {
         return this.researchGroupId;
     }

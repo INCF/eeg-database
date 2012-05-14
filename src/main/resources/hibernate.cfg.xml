@@ -28,5 +28,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/SyncChanges.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>
   </session-factory>
 </hibernate-configuration>

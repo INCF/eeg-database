@@ -30,4 +30,5 @@
 @create_table_VISUAL_IMPAIRMENT_REL.sql
 @create_table_WEATHER.sql
 @create_table_GROUP_PERMISSION_REQUEST.sql
+@create_table_KEYWORDS.sql
 @create_references.sql

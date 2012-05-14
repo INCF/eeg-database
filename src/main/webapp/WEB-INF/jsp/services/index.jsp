@@ -18,7 +18,7 @@
                             cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.header"/></form:label>
                 <form:select path="headerName" cssClass="selectBox">
                     <c:forEach items="${headers}" var="chan">
-                        <option value="${chan}">${chan}</option>
+                        <form:option value="${chan}" label="${chan}"/>
                     </c:forEach>
                 </form:select>
                <form:errors path="headerName" cssClass="errorBox"/>
@@ -28,7 +28,7 @@
                 <label class="selectBoxLabel"><fmt:message key="label.wavelets"/></label>
                 <form:select path="service" cssClass="selectBox">
                     <c:forEach items="${services}" var="srv">
-                        <option value="${srv.name}">${srv.name}</option>
+                        <form:option value="${srv.name}" label="${srv.name}"/>
                     </c:forEach>
                 </form:select>
                 </div>

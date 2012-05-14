@@ -40,7 +40,7 @@
                     <tr>
 
                         <td><fmt:formatDate value="${experiment.startTime}" pattern="dd.MM.yyyy, HH:mm"/></td>
-                        <td><c:out value="${experiment.experimentId}"/>(${experiment.researchGroup.researchGroupId})
+                        <td><c:out value="${experiment.experimentId}"/>(<c:out value="${experiment.researchGroup.researchGroupId}"/>)
                         </td>
                         <td><c:out value="${experiment.scenario.title}"/></td>
                         <td><a href="<c:url value='detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message
@@ -56,7 +56,7 @@
                     <tr>
 
                         <td><fmt:formatDate value="${experiment.startTime}" pattern="dd.MM.yyyy, HH:mm"/></td>
-                        <td><c:out value="${experiment.experimentId}"/>(${experiment.researchGroup.researchGroupId})
+                        <td><c:out value="${experiment.experimentId}"/>(<c:out value="${experiment.researchGroup.researchGroupId}"/>)
                         </td>
                         <td><c:out value="${experiment.scenario.title}"/></td>
                         <td><a href="<c:url value='detail.html?experimentId=${experiment.experimentId}'/>"><fmt:message

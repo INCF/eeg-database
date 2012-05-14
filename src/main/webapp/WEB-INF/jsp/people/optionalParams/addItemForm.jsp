@@ -23,7 +23,7 @@
                 <form:select path="paramId" cssClass="selectBox">
                     <form:option value="-1"><fmt:message key='select.option.noParameterTypeSelected'/></form:option>
                     <c:forEach items="${personAdditionalParams}" var="parameter">
-                        <form:option value="${parameter.personOptParamDefId}">${parameter.paramName}</form:option>
+                        <form:option value="${parameter.personOptParamDefId}" label="${parameter.paramName}"/>
                     </c:forEach>
                 </form:select>
 

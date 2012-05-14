@@ -14,7 +14,7 @@
 
 <ui:articlesTemplate pageTitle="pageTitle.experimentDetail">
     <div class="articleDetail">
-        <h1>${article.title}</h1>
+        <h1><c:out value="${article.title}"/></h1>
 
         <div class="subheading">
               <span class="researchGroup">

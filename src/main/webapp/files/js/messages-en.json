@@ -192,6 +192,7 @@
     "applyForWritingPermission":"Request for data uploading permission",
     "backToGroupDetail":"Back to group detail",
     "backToMeasuration":"Back to experiment",
+    "changeFilter":"Set filter",
     "changeRole":"Change role",
     "confirm":"Confirm",
     "createAccount":"Create account",
@@ -200,6 +201,8 @@
     "edit":"Edit",
     "editExperiment":"Edit experiment",
     "fulltextSearch":"Search",
+    "internalArticles":"Internal articles",
+    "linkedInArticles":"LinkedIn articles",
     "listOfMembers":"List of members",
     "logIn":"Log in",
     "membershipRequest":"Membership request",
@@ -211,6 +214,7 @@
     "send":"Send",
     "sendRequest":"Send request",
     "show":"Show",
+    "showArticles":"Show articles",
     "submitDisable":"Submitting, please wait..."
   },
   "dataTable":
@@ -356,6 +360,7 @@
   {
     "ArticlesSettings":"Articles Settings",
     "ArticlesSubscriptions":"Articles Subscribtions",
+    "KeyWordFilter":"LinkedIn keywords filter settings",
     "addMetadata":"Add metadata to data file",
     "comments":"Comments",
     "dataFiles":"Data files",
@@ -376,8 +381,7 @@
     "searchFor":"Search for",
     "searchResult":"Search Results",
     "subjectPerson":"Subject person",
-    "usedHardware":"Used hardware",
-    "visualization":"Visualization"
+    "usedHardware":"Used hardware"
   },
   "homePage":
   {
@@ -453,6 +457,8 @@
     "facebookId":"Facebook ID",
     "fileMetadata":"File metadata",
     "fileName":"File name",
+    "filterHelp1":"- if you want to set filter use this syntax: keyword1, keyword2, ..., keywordN",
+    "filterHelp2":"- filter will be used for all your groups",
     "fromDate":"From:",
     "fullName":"Full name",
     "gender":
@@ -731,8 +737,10 @@
     "hardwareList":"List of hardware definitions",
     "hearingImpairmentList":"List of hearing impairments",
     "homePage":"Home page",
+    "internalArticles":"Group internal articles",
     "itemDeleted":"Item deleted",
     "itemInUse":"Item in use",
+    "linkedInArticles":"LinkedIn articles",
     "listOfGroupMembers":"List of group members",
     "listOfGroups":"List of groups",
     "listOfPeople":"List of people",
@@ -748,6 +756,7 @@
     "myExperiments":"My experiments",
     "myGroups":"My groups",
     "myScenarios":"My scenarios",
+    "noArticles":"No articles selected",
     "pendingRequest":"Pending request",
     "permissionGranted":"Permission granted",
     "permissionRejected":"Permission rejected",
@@ -765,7 +774,7 @@
     "searchResult":"List of download history",
     "services":"EEG Signal Processing Services",
     "servicesResult":"Services Results",
-    "unsupportedBrowser":"Unsupported browser",
+    "socialOverview":"Social networks",
     "userNotExperimenter":"Experimenter role needed",
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
@@ -914,11 +923,6 @@
         "part1":"Permission for the user",
         "part2":"was granted."
       }
-    },
-    "unsupportedBrowser":
-    {
-      "description":"Please, choose one of the following browsers and download the newest version if you would like to try the EEG signal. Otherwise close this window and continue.",
-      "intro":"We are sorry, but your browser does not support our visualization tool."
     },
     "youNeedExperimenterRole":"You need experimenter role in a group to add data.",
     "youNeedToBeOwnerOrCoexperimenterToEditExperiment":"You need to be owner or co-experimenter to edit experiment."

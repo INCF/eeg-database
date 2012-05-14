@@ -39,8 +39,8 @@
         </thead>
         <c:forEach items="${dataDetail.fileMetadataParamVals}" var="metadata">
           <tr>
-            <td>${metadata.fileMetadataParamDef.paramName}</td>
-            <td>${metadata.metadataValue}</td>
+            <td><c:out value="${metadata.fileMetadataParamDef.paramName}"/></td>
+            <td><c:out value="${metadata.metadataValue}" /></td>
           </tr>
         </c:forEach>
 

@@ -14,7 +14,7 @@
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioLength"/></th>
-            <td>${scenarioDetail.scenarioLength} <fmt:message key="valueTable.scenarioLength.minutes"/></td>
+            <td><c:out value="${scenarioDetail.scenarioLength}"/> <fmt:message key="valueTable.scenarioLength.minutes"/></td>
         </tr>
         <tr>
             <th><fmt:message key="valueTable.scenarioDescription"/></th>
@@ -22,7 +22,7 @@
         </tr>
         <tr>
             <th><fmt:message key="label.private"/></th>
-            <td>${scenarioDetail.privateScenario}</td>
+            <td><c:out value="${scenarioDetail.privateScenario}"/></td>
         </tr>
     </table>
 

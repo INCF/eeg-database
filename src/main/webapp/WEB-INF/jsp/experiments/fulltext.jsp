@@ -13,7 +13,7 @@
       <c:choose>
         <c:when test="${errors != null}">
           <c:forEach var="error" items="${errors}">
-            <p><strong>${error}</strong></p>
+            <p><strong><c:out value="${error}"/></strong></p>
           </c:forEach>
         </c:when>
         <c:when test="${resultsEmpty}">

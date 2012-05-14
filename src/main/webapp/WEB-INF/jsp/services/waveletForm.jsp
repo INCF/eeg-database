@@ -25,7 +25,7 @@
                             cssErrorClass="selectBoxLabel errorLabel"><fmt:message key="label.channel"/></form:label>
                 <form:select path="channel" cssClass="selectBox">
                     <c:forEach items="${channels}" var="chan">
-                        <option value="${chan.number}">${chan.name}</option>
+                        <form:option value="${chan.number}" label="${chan.name}"/>
                     </c:forEach>
                 </form:select>
 
@@ -34,7 +34,7 @@
                 <label class="selectBoxLabel"><fmt:message key="label.wavelets"/></label>
                 <form:select path="wavelet" cssClass="selectBox">
                     <c:forEach items="${wavelets}" var="wav">
-                        <option value="${wav}">${wav}</option>
+                        <form:option value="${wav}" label="${wav}"/>
                     </c:forEach>
                 </form:select>
                 </div>

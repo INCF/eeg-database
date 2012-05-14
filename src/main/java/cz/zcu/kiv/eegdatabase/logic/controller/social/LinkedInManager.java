@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.social.linkedin.api.Group;
 import org.springframework.social.linkedin.api.LinkedIn;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.social.linkedin.api.impl.LinkedInTemplate;
@@ -24,7 +25,7 @@ public class LinkedInManager {
  /** Acces token secret code for EEG/ERP portals profile on LinkedIn. */
  private String accessTokenSecret;
  /** ID of EEG/ERP portal group on LinkedIn. */
- private int groupId;
+ public int groupId;
  
  private Log log = LogFactory.getLog(getClass());
  
@@ -69,12 +70,33 @@ public class LinkedInManager {
  }
  
  //place for read methods
+ 
+ /**
+  * Downloading posts from Linkedin
+  * @param groupId ID of EEG/ERP portal group on LinkedIn
+  * @return list of post from EEG/ERP portal group on LinkedIn
+  */
  public synchronized List<Post> getPosts(int groupId){
      try {
          this.connect();
          return linkedin.groupOperations().getPosts(groupId).getPosts();
      } catch (Exception e) {
          log.debug("Exception occured when reading posts from group: " + groupId);
+     }
+     return null;
+ }
+ 
+ /**
+  * Downloading group details from Linkedin
+  * @return group details from EEG/ERP portal group on LinkedIn
+  */
+ public synchronized Group getGroupDetails(){
+      try {
+         this.connect();
+         Group group = linkedin.groupOperations().getGroupDetails(groupId);   
+         return group;
+      } catch (Exception e) {
+         log.debug("Exception occured when reading group details from group: " + groupId);
      }
      return null;
  }

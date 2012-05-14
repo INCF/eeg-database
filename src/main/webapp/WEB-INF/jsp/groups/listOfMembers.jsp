@@ -8,7 +8,7 @@
   <h1><fmt:message key="pageTitle.listOfGroupMembers"/></h1>
     <c:url value="list-of-members.html" var="formUrl" />
 
-  <h2>${groupTitle}</h2>
+  <h2><c:out value="${groupTitle}"/></h2>
 
   <table class="dataTable listOfPersonsDataTable">
     <thead>

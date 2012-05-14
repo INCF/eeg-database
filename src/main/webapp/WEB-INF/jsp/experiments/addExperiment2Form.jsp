@@ -29,7 +29,7 @@
                         <fmt:message key="select.option.noScenarioSelected"/>
                     </option>
                     <c:forEach items="${scenarioList}" var="scenario">
-                        <option value="${scenario.scenarioId}">${scenario.title}</option>
+                        <form:option value="${scenario.scenarioId}" label="${scenario.title}"/>
                     </c:forEach>
                 </form:select>
                  <input type="button" name="new_scenario" id="create-scenario"
@@ -44,7 +44,7 @@
 
                     <form:select path="hardware" multiple="multiple" id="selectHardware" cssClass="multipleSelectBox">
                         <c:forEach items="${hardwareList}" var="hardware">
-                            <option value="${hardware.hardwareId}">${hardware.title}</option>
+                            <form:option value="${hardware.hardwareId}" label="${hardware.title}"/>
                         </c:forEach>
                     </form:select>
                     <input type="button" name="new_hardware" id="create-hardware"
@@ -60,7 +60,7 @@
                     <form:select path="weather" id="selectWeather" multiple="false" cssClass="selectBox">
                         <option value="-1"><fmt:message key="select.option.noWeatherSelected"/></option>
                         <c:forEach items="${weatherList}" var="weather">
-                            <option value="${weather.weatherId}">${weather.title}</option>
+                            <form:option value="${weather.weatherId}" label="${weather.title}"/>
                         </c:forEach>
                     </form:select>
                     <input type="button" name="new_weather" id="create-weather"
