@@ -344,10 +344,8 @@ public class ArticleMultiController extends MultiActionController {
         for (ResearchGroup item : groups) {
             //gets keywords from DB
             String keyword = simpleKeywordsDao.getKeywords(item.getResearchGroupId());
-            System.err.println("sadsdsadsadkey"+ keyword);
             
             keywordsSettings.add(keyword);
-
         }
         Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();
         List<ResearchGroup> list = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
