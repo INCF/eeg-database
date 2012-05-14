@@ -28,12 +28,12 @@ public class SimpleKeywordsDao extends SimpleGenericDao<Keywords, Integer> {
      * @return keywords for researchgroup
      */
     public String getKeywords(int groupId){
-        String hqlQuery = "select k.keywordsText " +"from Keywords k " + "left join k.researchGroup rg " + "where rg.researchGroupId = :groupId" ;     
+        String hqlQuery = "select k.keywordsText " +"from Keywords k " + "left join k.researchGroup rg " + "where rg.researchGroupId = :groupId and k.keywordsText is not null" ;     
         List<String> list = getHibernateTemplate().findByNamedParam(hqlQuery, "groupId", groupId);
         if(!list.isEmpty()){
             return list.get(0);
         }else{
-            return "nofilter";
+            return "No keywords defined!";
         }
     }
     
