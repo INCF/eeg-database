@@ -7,12 +7,12 @@ import java.util.List;
  * @author František Liška
  */
 public class ResearchGroupInfo {
-
     private int researchGroupId;
     private String ownerUsername;
     private String title;
     private String description;
     private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
+    private List<WeatherInfo> weathers = new LinkedList<WeatherInfo>();
 
     public int getResearchGroupId() {
         return researchGroupId;
@@ -52,5 +52,13 @@ public class ResearchGroupInfo {
 
     public void setHardwares(List<HardwareInfo> hardwares) {
         this.hardwares = hardwares;
+    }
+
+    public List<WeatherInfo> getWeathers() {
+        return weathers;
+    }
+
+    public void setWeathers(List<WeatherInfo> weathers) {
+        this.weathers = weathers;
     }
 }

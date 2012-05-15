@@ -7,9 +7,11 @@ import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.HardwareInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.PersonInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ResearchGroupInfo;
+import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.WeatherInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -40,7 +42,6 @@ public class ClientServiceImpl implements ClientService{
         List<Person> peopleDb = personDao.getAllRecords();
         for (Person p : peopleDb) {
             PersonInfo i = new PersonInfo();
-
             i.setPersonId(p.getPersonId());
             i.setGivenname(p.getGivenname());
             i.setSurname(p.getSurname());
@@ -54,7 +55,7 @@ public class ClientServiceImpl implements ClientService{
             }
             i.setNote(p.getNote());
             i.setUsername(p.getUsername());
-
+            i.setLaterality(p.getLaterality());
             people.add(i);
         }
         log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of people.");
@@ -85,6 +86,18 @@ public class ClientServiceImpl implements ClientService{
                 hi.setDefaultNumber(h.getDefaultNumber());
                 i.getHardwares().add(hi);
             }
+
+            // adding weather
+            List<Weather> weatherDb = weatherDao.getRecordsByGroup(r.getResearchGroupId());
+            for(Weather w : weatherDb) {
+                WeatherInfo wi = new WeatherInfo();
+                wi.setWeatherId(w.getWeatherId());
+                wi.setTitle(w.getTitle());
+                wi.setDescription(w.getDescription());
+                wi.setDefaultNumber(w.getDefaultNumber());
+                i.getWeathers().add(wi);
+            }
+
             groups.add(i);
         }
         log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of filled research groups.");
