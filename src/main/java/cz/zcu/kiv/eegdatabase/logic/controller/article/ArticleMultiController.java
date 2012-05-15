@@ -295,6 +295,10 @@ public class ArticleMultiController extends MultiActionController {
     @RequestMapping(value = "articles/settings", method = RequestMethod.POST)
     public ModelAndView submitArticleFilterSettings(HttpServletRequest request, HttpServletResponse response) {
         String keywords = request.getParameter("keywords");
+        
+        if (keywords.equals("No keywords defined!"))
+        return new ModelAndView("redirect:settings.html");
+    
         Keywords keywordsRecord;
         ResearchGroup researchGroup;
         int keywordID;
@@ -344,7 +348,6 @@ public class ArticleMultiController extends MultiActionController {
         for (ResearchGroup item : groups) {
             //gets keywords from DB
             String keyword = simpleKeywordsDao.getKeywords(item.getResearchGroupId());
-            
             keywordsSettings.add(keyword);
         }
         Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();
