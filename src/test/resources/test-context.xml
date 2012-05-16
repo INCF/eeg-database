@@ -102,9 +102,9 @@
     </bean>
 
     <bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
-        <constructor-arg>
+     <!--   <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
-        </constructor-arg>
+        </constructor-arg>       -->
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
