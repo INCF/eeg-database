@@ -198,6 +198,10 @@ public class ArticleMultiController extends MultiActionController {
                 //gets keywords from DB
                 keywords.add(simpleKeywordsDao.getKeywords(item.getResearchGroupId()));
             }
+            
+            if (keywords.isEmpty())
+                return new ModelAndView("redirect:list.html"); 
+            
             String keywordsText = keywords.get(0);
 
             //keywords are splitted by ","
@@ -344,6 +348,9 @@ public class ArticleMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
 
         List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+        
+        if (groups.isEmpty())
+            return new ModelAndView("redirect:list.html"); 
 
         for (ResearchGroup item : groups) {
             //gets keywords from DB
