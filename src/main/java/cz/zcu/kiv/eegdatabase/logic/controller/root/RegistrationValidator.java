@@ -54,6 +54,10 @@ public class RegistrationValidator implements Validator {
         if (personDao.usernameExists(registrationCommand.getEmail())) {
             errors.rejectValue("email", "inUse.email");
         }
+
+        if (registrationCommand.getPassword().length() < ControllerUtils.MINIMUM_PASSWORD_LENGTH) {
+            errors.rejectValue("password", "invalid.minimumPasswordLength6");
+        }
     }
 
     public PersonDao getPersonDao() {
