@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioTypeDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -23,26 +24,21 @@ public class ScenarioMultiController extends MultiActionController {
     private ScenarioTypeDao scenarioTypeDao;
     private PersonDao personDao;
 
+    private static final int ITEMS_PER_PAGE = 20;
+
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("scenario/list");
-        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
-        List<Scenario> list = scenarioDao.getAllRecords();
         Person loggedUser = personDao.getLoggedPerson();
 
-        int groupId;
-        for (Scenario item : list) {
-            groupId = (int) item.getResearchGroup().getResearchGroupId();
-            Set<ResearchGroupMembership> researchGroupMemberships = item.getResearchGroup().getResearchGroupMemberships();
-            boolean userIsMember = false;
-            for (ResearchGroupMembership member : researchGroupMemberships) {
-                if (member.getPerson().getPersonId() == loggedUser.getPersonId()) {
-                    userIsMember = true;
-                    break;
-                }
-            }
-            item.setUserMemberOfGroup(userIsMember);
+        Paginator paginator = new Paginator(scenarioDao.getScenarioCountForList(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception e) {
         }
-
+        paginator.setActualPage(page);
+        mav.addObject("paginator", paginator.getLinks());
+        List<Scenario> list = scenarioDao.getScenariosForList(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
         mav.addObject("scenarioList", list);
         return mav;
     }

@@ -83,6 +83,36 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         return (list.size() == 0);
     }
 
+    @Override
+    public List<Scenario> getScenariosForList(Person person, int start, int count) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(count).list();
+        } else {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "where " +
+                    "s.privateScenario = false " +
+                    "or s.researchGroup.researchGroupId in " +
+                    "(select m.researchGroup.researchGroupId from ResearchGroupMembership m where m.person.personId = :personId) " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(count).list();
+        }
+    }
+
+    @Override
+    public int getScenarioCountForList(Person person) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "select count(s) from Scenario s ";
+            return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
+        } else {
+            String query = " select count(s) from Scenario s " +
+                    "where s.researchGroup.researchGroupId in " +
+                    "(select m.researchGroup.researchGroupId from ResearchGroupMembership m where m.person.personId = :personId)";
+            return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
+        }
+    }
+
     private String getCondition(String choice) {
         if (choice.equals("minScenarioLength")) {
             return ">=";
