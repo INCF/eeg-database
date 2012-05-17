@@ -23,6 +23,8 @@ public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T,
 
     public List<Experiment> getExperimentsWhereOwner(int personId);
 
+    public Experiment getExperimentForDetail(int experimentId);
+
     public List getExperimentsWhereOwner(int personId, int i);
 
     public List getExperimentsWhereSubject(int personId, int i);

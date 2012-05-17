@@ -14,7 +14,7 @@
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" insert="false" name="experiment" update="false">
       <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef" fetch="select" insert="false" name="experimentOptParamDef" update="false">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef" fetch="join" insert="false" name="experimentOptParamDef" update="false" lazy="false">
       <column name="EXPERIMENT_OPT_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <property name="paramValue" type="string">

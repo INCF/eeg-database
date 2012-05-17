@@ -62,6 +62,12 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         return list;
     }
 
+    public Experiment getExperimentForDetail(int experimentId) {
+        String query = "from Experiment e left join fetch e.dataFiles " +
+                "where e.experimentId = :experimentId";
+        return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
+    }
+
     public int getCountForAllExperimentsForUser(Person person) {
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             String query = "select count(distinct e) from Experiment e " +

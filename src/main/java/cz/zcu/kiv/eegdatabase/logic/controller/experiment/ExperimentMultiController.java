@@ -81,14 +81,12 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/detail");
 
-        setPermissionsToView(mav);
-
         int id = 0;
         try {
             id = Integer.parseInt(request.getParameter("experimentId"));
         } catch (Exception e) {
         }
-        Experiment m = experimentDao.read(id);
+        Experiment m = experimentDao.getExperimentForDetail(id);
 
         mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id)) || (auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
