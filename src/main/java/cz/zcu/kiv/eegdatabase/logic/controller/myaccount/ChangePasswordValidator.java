@@ -48,6 +48,10 @@ public class ChangePasswordValidator implements Validator {
             log.debug("New passwords don't match");
             errors.rejectValue("newPassword2", "invalid.passwordMatch");
         }
+
+        if (changePasswordCommand.getNewPassword().length()< ControllerUtils.MINIMUM_PASSWORD_LENGTH) {
+            errors.rejectValue("newPassword", "invalid.minimumPasswordLength6");
+        }
     }
 
     public PersonDao getPersonDao() {

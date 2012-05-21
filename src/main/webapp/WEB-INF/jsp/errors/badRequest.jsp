@@ -3,7 +3,7 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
   <head>
-    <title><fmt:message key="error.databaseError.title"/> &ndash; EEGbase</title>
+    <title><fmt:message key="error.badRequest.title"/> &ndash; EEGbase</title>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     <link rel="stylesheet" href="<c:url value='/files/style.css'/>" type="text/css" />
   </head>
@@ -20,9 +20,7 @@
 
       <div class="mainContent">
 
-        <h1><fmt:message key="error.databaseError.title"/></h1>
-
-        <p><fmt:message key="error.databaseError.message"/></p>
+        <h1><fmt:message key="error.badRequest.title"/></h1>
 
         <ul>
           <li><a href="<c:url value='/'/>" title="<fmt:message key='gotoHomepage'/>"><fmt:message key="gotoHomepage"/></a></li>

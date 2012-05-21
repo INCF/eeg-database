@@ -53,6 +53,9 @@
 
     <bean id="clientDataService" class="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl" autowire="byType">
         <property name="personDao" ref="personDao"/>
+        <property name="researchGroupDao" ref="researchGroupDao"/>
+        <property name="hardwareDao" ref="hardwareDao"/>
+        <property name="weatherDao" ref="weatherDao"/>
     </bean>
 
 </beans>

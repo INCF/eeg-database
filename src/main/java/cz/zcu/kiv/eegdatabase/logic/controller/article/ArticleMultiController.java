@@ -211,6 +211,10 @@ public class ArticleMultiController extends MultiActionController {
                 //gets keywords from DB
                 keywords.add(simpleKeywordsDao.getKeywords(item.getResearchGroupId()));
             }
+            
+            if (keywords.isEmpty())
+                return new ModelAndView("redirect:list.html"); 
+            
             String keywordsText = keywords.get(0);
 
             //keywords are splitted by ","
@@ -319,6 +323,10 @@ public class ArticleMultiController extends MultiActionController {
     @RequestMapping(value = "articles/settings", method = RequestMethod.POST)
     public ModelAndView submitArticleFilterSettings(HttpServletRequest request, HttpServletResponse response) {
         String keywords = request.getParameter("keywords");
+        
+        if (keywords.equals("No keywords defined!"))
+        return new ModelAndView("redirect:settings.html");
+    
         Keywords keywordsRecord;
         ResearchGroup researchGroup;
         int keywordID;
@@ -364,11 +372,13 @@ public class ArticleMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
 
         List<ResearchGroup> groups = researchGroupDao.getResearchGroupsWhereMember(loggedUser);
+        
+        if (groups.isEmpty())
+            return new ModelAndView("redirect:list.html"); 
 
         for (ResearchGroup item : groups) {
             //gets keywords from DB
             String keyword = simpleKeywordsDao.getKeywords(item.getResearchGroupId());
-            
             keywordsSettings.add(keyword);
         }
         Set<ResearchGroup> articlesGroupSubscriptions = loggedUser.getArticlesGroupSubscribtions();

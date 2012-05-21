@@ -13,8 +13,8 @@
 
 
     <context:annotation-config/>
-    <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky
-    <bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
+    <!-- bean pro zpracovani nezachycenych vyjimek a zobrazeni JSP stranky -->
+    <bean class="cz.zcu.kiv.eegdatabase.logic.controller.system.ExceptionResolver">
         <property name="exceptionMappings">
             <map>
                 <entry key="DataAccessException" value="errors/databaseError"/>
@@ -23,7 +23,6 @@
         <property name="defaultErrorView" value="errors/generalError"/>
     </bean>
 
-                                             -->
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic"/>
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
 
