@@ -34,11 +34,11 @@ public class HomePageDelegate {
         if (ControllerUtils.isUserLogged()) {
             Person person = personDao.getLoggedPerson();
 
-            List myExperiments = experimentDao.getExperimentsWhereOwner(person.getPersonId(), LIMIT);
+            List myExperiments = experimentDao.getExperimentsWhereOwner(person, LIMIT);
             mav.addObject("myExperiments", myExperiments);
             mav.addObject("myExperimentsEmpty", myExperiments.isEmpty());
 
-            List meAsSubjectList = experimentDao.getExperimentsWhereSubject(person.getPersonId(), LIMIT);
+            List meAsSubjectList = experimentDao.getExperimentsWhereSubject(person, LIMIT);
             mav.addObject("meAsSubjectList", meAsSubjectList);
             mav.addObject("meAsSubjectListEmpty", meAsSubjectList.isEmpty());
 

@@ -36,7 +36,7 @@ public class ExperimentMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
         setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
-        Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser), ITEMS_PER_PAGE, "list.html?page=%1$d");
+        Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser), ITEMS_PER_PAGE);
         int page = 1;
         try {
             page = Integer.parseInt(request.getParameter("page"));
@@ -59,11 +59,20 @@ public class ExperimentMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
         setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
+        Paginator paginator = new Paginator(experimentDao.getCountForExperimentsWhereOwner(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+        paginator.setActualPage(page);
+        List experimentList = experimentDao.getExperimentsWhereOwner(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        mav.addObject("paginator", paginator.getLinks());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
-        List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
         mav.addObject("experimentListTitle", "pageTitle.myExperiments");
-        mav.addObject("experimentList", list);
-
+        mav.addObject("experimentList", experimentList);
+        mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
 
@@ -73,11 +82,20 @@ public class ExperimentMultiController extends MultiActionController {
         Person loggedUser = personDao.getLoggedPerson();
         setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
+        Paginator paginator = new Paginator(experimentDao.getCountForExperimentsWhereSubject(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+        paginator.setActualPage(page);
+        List experimentList = experimentDao.getExperimentsWhereSubject(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        mav.addObject("paginator", paginator.getLinks());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
-        List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
-        mav.addObject("experimentListTitle", "pageTitle.meAsSubject");
-        mav.addObject("experimentList", list);
-
+        mav.addObject("experimentListTitle", "pageTitle.myExperiments");
+        mav.addObject("experimentList", experimentList);
+        mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
 
