@@ -34,6 +34,7 @@ public class ExperimentMultiController extends MultiActionController {
         ModelAndView mav = new ModelAndView("experiments/list");
 
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
         Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser), ITEMS_PER_PAGE, "list.html?page=%1$d");
         int page = 1;
@@ -56,6 +57,7 @@ public class ExperimentMultiController extends MultiActionController {
         ModelAndView mav = new ModelAndView("experiments/list");
 
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
 
         List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
@@ -69,6 +71,7 @@ public class ExperimentMultiController extends MultiActionController {
         ModelAndView mav = new ModelAndView("experiments/list");
 
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
 
         List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
@@ -81,6 +84,7 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/detail");
 
+        setPermissionsToView(mav);
         int id = 0;
         try {
             id = Integer.parseInt(request.getParameter("experimentId"));

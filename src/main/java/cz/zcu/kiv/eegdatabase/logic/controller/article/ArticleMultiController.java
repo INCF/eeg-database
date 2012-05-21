@@ -149,6 +149,7 @@ public class ArticleMultiController extends MultiActionController {
 
         ModelAndView mav = new ModelAndView("articles/list");
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         Paginator paginator = new Paginator(articleDao.getArticleCountForPerson(loggedUser), ARTICLES_PER_PAGE, "list.html?page=%1$d");
         if (page == null) {
             page = 1;
@@ -256,6 +257,7 @@ public class ArticleMultiController extends MultiActionController {
 
         ModelAndView mav = new ModelAndView("articles/detail");
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         int id = -1;
         try {
             id = Integer.parseInt(request.getParameter("articleId"));

@@ -29,6 +29,7 @@ public class ScenarioMultiController extends MultiActionController {
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("scenario/list");
         Person loggedUser = personDao.getLoggedPerson();
+        mav.addObject("userIsExperimenter", auth.userIsExperimenter());
 
         Paginator paginator = new Paginator(scenarioDao.getScenarioCountForList(loggedUser), ITEMS_PER_PAGE);
         int page = 1;
