@@ -134,4 +134,16 @@ public class SimpleResearchGroupDao
         List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
     }
+
+    @Override
+    public int getCountForList() {
+        String query = "select count(g) from ResearchGroup g";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
+    }
+
+    @Override
+    public List getGroupsForList(int start, int limit) {
+        String query = "from ResearchGroup g order by g.title asc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(limit).list();
+    }
 }

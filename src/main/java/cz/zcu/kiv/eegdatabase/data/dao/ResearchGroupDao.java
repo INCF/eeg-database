@@ -32,4 +32,8 @@ public interface ResearchGroupDao extends GenericDao<ResearchGroup, Integer> {
     public List<ResearchGroup> getRecordsNewerThan(long oracleScn);
 
     public boolean canSaveTitle(String title, int id);
+
+    public int getCountForList();
+
+    List getGroupsForList(int start, int limit);
 }

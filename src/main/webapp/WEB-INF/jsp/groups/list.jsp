@@ -6,6 +6,8 @@
 <ui:groupsTemplate pageTitle="pageTitle.listOfGroups">
     <h1><fmt:message key="pageTitle.listOfGroups"/></h1>
 
+    ${paginator}
+
       <table class="dataTable listOfResearchGroupsDataTable">
         <thead>
             <tr>
@@ -22,4 +24,6 @@
             </tr>
         </c:forEach>
     </table>
+
+    ${paginator}
 </ui:groupsTemplate>
