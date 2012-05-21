@@ -187,6 +187,18 @@ public class SimplePersonDao
         return results;
     }
 
+    @Override
+    public int getCountForList() {
+        String query = "select count(p) from Person p";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
+    }
+
+    @Override
+    public List getDataForList(int start, int limit) {
+        String query = "from Person p order by p.surname asc, p.givenname asc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(limit).list();
+    }
+
     private String getCondition(String choice) {
         if (choice.equals("ageMax")) {
             return ">=";

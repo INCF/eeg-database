@@ -91,6 +91,16 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
         return (realPersonDao == null) ? null : realPersonDao.getPersonSearchResults(requests);
     }
 
+    @Override
+    public int getCountForList() {
+        return 0;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List getDataForList(int start, int limit) {
+        return null;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
     public Integer create(Person newInstance)
     {
         return (realPersonDao == null) ? null : realPersonDao.create(newInstance);

@@ -37,5 +37,7 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 
     public List<Person> getPersonSearchResults(List<SearchRequest> requests);
 
+    public int getCountForList();
 
+    List getDataForList(int start, int limit);
 }
