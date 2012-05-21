@@ -1,20 +1,18 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.security.Provider;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Delegate class for multicontroller for experiments.
@@ -30,17 +28,27 @@ public class ExperimentMultiController extends MultiActionController {
     private ServiceResultDao resultDao;
     private ResearchGroupDao researchGroupDao;
 
+    private static final int ITEMS_PER_PAGE = 20;
+
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
-        setPermissionsToView(mav);
 
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
-        List<Experiment> list = experimentDao.getAllExperimentsForUser(loggedUser.getPersonId());
-        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser,1).isEmpty();
+        Paginator paginator = new Paginator(experimentDao.getCountForAllExperimentsForUser(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+        paginator.setActualPage(page);
+        List experimentList = experimentDao.getAllExperimentsForUser(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        mav.addObject("paginator", paginator.getLinks());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
-        mav.addObject("measurationListTitle", "pageTitle.allExperiments");
-        mav.addObject("measurationList", list);
+        mav.addObject("experimentListTitle", "pageTitle.allExperiments");
+        mav.addObject("experimentList", experimentList);
         mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
@@ -48,30 +56,46 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView myExperiments(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
 
-        setPermissionsToView(mav);
-
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
+        Paginator paginator = new Paginator(experimentDao.getCountForExperimentsWhereOwner(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+        paginator.setActualPage(page);
+        List experimentList = experimentDao.getExperimentsWhereOwner(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        mav.addObject("paginator", paginator.getLinks());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
-        List<Experiment> list = experimentDao.getExperimentsWhereOwner(loggedUser.getPersonId());
-        mav.addObject("measurationListTitle", "pageTitle.myExperiments");
-        mav.addObject("measurationList", list);
-
+        mav.addObject("experimentListTitle", "pageTitle.myExperiments");
+        mav.addObject("experimentList", experimentList);
+        mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
 
     public ModelAndView meAsSubject(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/list");
 
-        setPermissionsToView(mav);
-
         Person loggedUser = personDao.getLoggedPerson();
+        setPermissionsToView(mav);
         log.debug("Logged user ID from database is: " + loggedUser.getPersonId());
+        Paginator paginator = new Paginator(experimentDao.getCountForExperimentsWhereSubject(loggedUser), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (NumberFormatException e) {
+        }
+        paginator.setActualPage(page);
+        List experimentList = experimentDao.getExperimentsWhereSubject(loggedUser, paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
+        mav.addObject("paginator", paginator.getLinks());
+        boolean userNotMemberOfAnyGroup = researchGroupDao.getResearchGroupsWhereMember(loggedUser, 1).isEmpty();
 
-        List<Experiment> list = experimentDao.getExperimentsWhereSubject(loggedUser.getPersonId());
-        mav.addObject("measurationListTitle", "pageTitle.meAsSubject");
-        mav.addObject("measurationList", list);
-
+        mav.addObject("experimentListTitle", "pageTitle.myExperiments");
+        mav.addObject("experimentList", experimentList);
+        mav.addObject("userNotMemberOfAnyGroup", userNotMemberOfAnyGroup);
         return mav;
     }
 
@@ -79,13 +103,12 @@ public class ExperimentMultiController extends MultiActionController {
         ModelAndView mav = new ModelAndView("experiments/detail");
 
         setPermissionsToView(mav);
-
         int id = 0;
         try {
             id = Integer.parseInt(request.getParameter("experimentId"));
         } catch (Exception e) {
         }
-        Experiment m = experimentDao.read(id);
+        Experiment m = experimentDao.getExperimentForDetail(id);
 
         mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id)) || (auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
@@ -120,11 +143,10 @@ public class ExperimentMultiController extends MultiActionController {
         ServiceResult service = resultDao.read(id);
         if (service.getFilename().endsWith(".txt")) {
             response.setHeader("Content-Type", "plain/text");
-        }
-        else {
+        } else {
             response.setHeader("Content-Type", "application/png");
         }
-        response.setHeader("Content-Disposition", "attachment;filename="+service.getFilename());
+        response.setHeader("Content-Disposition", "attachment;filename=" + service.getFilename());
         response.getOutputStream().write(service.getFigure().getBytes(1, (int) service.getFigure().length()));
         //return new ModelAndView("redirect:services-result.html");
         return null;

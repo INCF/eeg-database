@@ -1,12 +1,13 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
-import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.social.linkedin.api.Group;
 import org.springframework.social.linkedin.api.LinkedIn;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.social.linkedin.api.impl.LinkedInTemplate;
+
+import java.util.List;
 
 /**
  * Bean for accessing a spring-social-linkedin API

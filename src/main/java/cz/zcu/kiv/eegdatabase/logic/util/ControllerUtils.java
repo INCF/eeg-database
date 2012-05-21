@@ -16,16 +16,15 @@ import java.text.SimpleDateFormat;
 import java.util.Collection;
 
 /**
- *
  * @author Jindra
  */
 public class ControllerUtils {
 
+    public static final String ANONYMOUS_USER = "anonymousUser";
     public static final String TIME_FORMAT = "HH:mm";
     public static final String DATE_FORMAT = "dd/MM/yyyy";
     public static final String DATE_FORMAT_WITH_TIME = "dd/MM/yyyy HH:mm";
     public static final int MINIMUM_PASSWORD_LENGTH = 6;
-
 
 
     public static SimpleDateFormat getTimeFormat() {
@@ -42,6 +41,7 @@ public class ControllerUtils {
 
     /**
      * Helper static function for getting the actual logged user name
+     *
      * @return Actual logged user name
      */
     public static String getLoggedUserName() {
@@ -63,12 +63,17 @@ public class ControllerUtils {
         return userName;
     }
 
+    public static boolean isUserLogged() {
+        return !getLoggedUserName().equals(ANONYMOUS_USER);
+    }
+
     /**
      * Helper function for getting MD5 as a string
      *
      * @param sourceString String to count hash from
      * @return MD5 as a string
      * @throws java.security.NoSuchAlgorithmException
+     *
      */
   public static String getMD5String(String sourceString) {
     StringBuffer hexString = new StringBuffer();

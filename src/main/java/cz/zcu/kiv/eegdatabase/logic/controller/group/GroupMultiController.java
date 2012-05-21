@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -28,6 +29,7 @@ public class GroupMultiController extends MultiActionController {
     private ResearchGroupDao researchGroupDao;
     private PersonDao personDao;
     private GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> membershipDao;
+    private static final int ITEMS_PER_PAGE = 20;
 
     public ModelAndView editGroupRole(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/editGroupRole");
@@ -38,8 +40,18 @@ public class GroupMultiController extends MultiActionController {
     public ModelAndView list(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("groups/list");
         setPermissionToRequestGroupRole(mav, personDao.getLoggedPerson());
-        List<ResearchGroup> list = researchGroupDao.getAllRecords();
+
+        Paginator paginator = new Paginator(researchGroupDao.getCountForList(), ITEMS_PER_PAGE);
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception e) {
+        }
+        paginator.setActualPage(page);
+
+        List<ResearchGroup> list = researchGroupDao.getGroupsForList(paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
         mav.addObject("groupList", list);
+        mav.addObject("paginator", paginator.getLinks());
         return mav;
     }
 
@@ -134,20 +146,20 @@ public class GroupMultiController extends MultiActionController {
     /**
      * @return true if user has ROLE_ADMIN, ROLE_USER, or is part of at least 1 group
      */
-    private static boolean isAuthorizedToRequestGroupRole(Person loggedUser){
+    private static boolean isAuthorizedToRequestGroupRole(Person loggedUser) {
         return (loggedUser.getAuthority().equals(Util.ROLE_ADMIN)
                 || loggedUser.getAuthority().equals(Util.ROLE_USER)
                 || !loggedUser.getResearchGroupMemberships().isEmpty());
     }
 
     public static void setPermissionToRequestGroupRole(Map modelMap, Person loggedUser) {
-        if(isAuthorizedToRequestGroupRole(loggedUser)){
+        if (isAuthorizedToRequestGroupRole(loggedUser)) {
             modelMap.put("userCanRequestGroupRole", true);
         }
     }
 
     public static void setPermissionToRequestGroupRole(ModelAndView mav, Person loggedUser) {
-        if(isAuthorizedToRequestGroupRole(loggedUser)){
+        if (isAuthorizedToRequestGroupRole(loggedUser)) {
             mav.addObject("userCanRequestGroupRole", true);
         }
     }

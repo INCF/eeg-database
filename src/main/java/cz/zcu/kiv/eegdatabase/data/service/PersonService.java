@@ -7,7 +7,6 @@ import cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 
 import java.text.ParseException;
-import org.springframework.stereotype.Service;
 
 
 /**

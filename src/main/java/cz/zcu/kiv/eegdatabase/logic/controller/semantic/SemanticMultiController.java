@@ -1,16 +1,16 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.semantic;
 
 import cz.zcu.kiv.eegdatabase.logic.semantic.SemanticFactory;
+import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.InputStream;
 import java.io.OutputStream;
-import org.apache.commons.logging.Log;
-import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import static org.apache.commons.io.IOUtils.copy;
 

@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.hibernate.Query;
@@ -37,33 +38,82 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         return getHibernateTemplate().findByNamedParam(HQLselect, "dataFileId", dataFileId);
     }
 
-    public List<Experiment> getExperimentsWhereOwner(int personId) {
-        String HQLselect = "SELECT e, s FROM Experiment e LEFT JOIN FETCH e.scenario s WHERE e.personByOwnerId.personId = :personId ORDER BY e.startTime DESC";
-        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+
+
+    @Override
+    public int getCountForExperimentsWhereOwner(Person person) {
+        String query = "select count(e) from Experiment e where e.personByOwnerId.personId = :personId";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
     }
 
-    public List<Experiment> getExperimentsWhereOwner(int personId, int limit) {
-        getHibernateTemplate().setMaxResults(limit);
-        List<Experiment> list = this.getExperimentsWhereOwner(personId);
-        getHibernateTemplate().setMaxResults(0);
-        return list;
+    @Override
+    public List<Experiment> getExperimentsWhereOwner(Person person, int limit) {
+        return getExperimentsWhereOwner(person, 1, limit);
     }
 
-    public List<Experiment> getExperimentsWhereSubject(int personId) {
-        String HQLselect = "SELECT experiment, scenario FROM Experiment experiment LEFT JOIN FETCH experiment.scenario scenario WHERE experiment.personBySubjectPersonId.personId = :personId";
-        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+    @Override
+    public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit) {
+        String query = "from Experiment e left join fetch e.scenario where e.personByOwnerId.personId = :personId order by e.startTime desc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(limit).list();
     }
 
-    public List<Experiment> getExperimentsWhereSubject(int personId, int limit) {
-        getHibernateTemplate().setMaxResults(limit);
-        List<Experiment> list = getExperimentsWhereSubject(personId);
-        getHibernateTemplate().setMaxResults(0);
-        return list;
+
+
+    @Override
+    public int getCountForExperimentsWhereSubject(Person person) {
+        String query = "select count(e) from Experiment e where e.personBySubjectPersonId.personId = :personId";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
     }
 
-    public List<Experiment> getAllExperimentsForUser(int personId) {
-        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) ORDER BY ex.startTime DESC";
-        return getHibernateTemplate().findByNamedParam(HQLselect, "personId", personId);
+    @Override
+    public List<Experiment> getExperimentsWhereSubject(Person person, int limit) {
+        return getExperimentsWhereSubject(person, 1, limit);
+    }
+
+    @Override
+    public List<Experiment> getExperimentsWhereSubject(Person person, int start, int limit) {
+        String query = "from Experiment e left join fetch e.scenario where e.personBySubjectPersonId.personId = :personId order by e.startTime desc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(limit).list();
+    }
+
+
+
+    public Experiment getExperimentForDetail(int experimentId) {
+        String query = "from Experiment e left join fetch e.dataFiles " +
+                "where e.experimentId = :experimentId";
+        return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
+    }
+
+    public int getCountForAllExperimentsForUser(Person person) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "select count(distinct e) from Experiment e " +
+                    "left join e.researchGroup.researchGroupMemberships m ";
+            return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
+        } else {
+            String query = "select count(distinct e) from Experiment e " +
+                    "left join e.researchGroup.researchGroupMemberships m " +
+                    "where " +
+                    "e.privateExperiment = false " +
+                    "or m.person.personId = :personId";
+            return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
+        }
+    }
+
+    @Override
+    public List<Experiment> getAllExperimentsForUser(Person person, int start, int count) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p " +
+                    "left join e.researchGroup.researchGroupMemberships m ";
+            return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(count).list();
+        } else {
+            String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p " +
+                    "left join e.researchGroup.researchGroupMemberships m " +
+                    "where " +
+                    "e.privateExperiment = false " +
+                    "or m.person.personId = :personId " +
+                    "order by e.startTime desc";
+            return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(count).list();
+        }
     }
 
     public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {

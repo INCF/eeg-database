@@ -10,7 +10,7 @@
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Article" fetch="select" name="article">
       <column name="ARTICLE_ID" precision="22" scale="0"/>
     </many-to-one>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment" fetch="select" name="parent">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment" fetch="select" name="parent" lazy="proxy">
       <column name="PARENT_ID" precision="22" scale="0"/>
     </many-to-one>
     <set inverse="true" name="children">
@@ -20,7 +20,7 @@
     <property name="time" type="java.sql.Timestamp">
       <column length="7" name="TIME"/>
     </property>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" name="person">
       <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <property name="text" type="string">

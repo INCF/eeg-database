@@ -19,15 +19,19 @@ public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T,
 
     public List<DataFile> getDataFilesWhereId(int dataFileId);
 
-    public List<Experiment> getExperimentsWhereSubject(int personId);
+    public Experiment getExperimentForDetail(int experimentId);
 
-    public List<Experiment> getExperimentsWhereOwner(int personId);
+    public List<Experiment> getExperimentsWhereOwner(Person person, int limit);
+    public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
+    int getCountForExperimentsWhereOwner(Person loggedUser);
 
-    public List getExperimentsWhereOwner(int personId, int i);
+    public List<Experiment> getExperimentsWhereSubject(Person person, int limit);
+    public List<Experiment> getExperimentsWhereSubject(Person person, int start, int limit);
+    public int getCountForExperimentsWhereSubject(Person person);
 
-    public List getExperimentsWhereSubject(int personId, int i);
+    public int getCountForAllExperimentsForUser(Person person);
 
-    public List<Experiment> getAllExperimentsForUser(int personId);
+    public List<Experiment> getAllExperimentsForUser(Person person, int start, int count);
 
     public List<Experiment> getRecordsNewerThan(long oracleScn, int personId);
 

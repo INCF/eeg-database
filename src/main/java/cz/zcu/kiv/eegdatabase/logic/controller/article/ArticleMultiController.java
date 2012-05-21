@@ -6,8 +6,11 @@ import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
@@ -42,6 +45,9 @@ public class ArticleMultiController extends MultiActionController {
     private ResearchGroupDao researchGroupDao;
     private SimpleKeywordsDao simpleKeywordsDao;
     private String domain;
+
+    private static final int ARTICLES_PER_PAGE = 10;
+
     /**
      * Posts from EEG/ERP portal LinkedIn group
      */
@@ -138,22 +144,25 @@ public class ArticleMultiController extends MultiActionController {
      * @throws Exception 
      */
     @RequestMapping(value = "articles/list", method = RequestMethod.GET)
-    public ModelAndView list() throws Exception {
+    public ModelAndView list(@RequestParam(value = "page", required = false) Integer page) throws Exception {
+
+
         ModelAndView mav = new ModelAndView("articles/list");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
-        log.debug("Logged user from database is: " + loggedUser.getPersonId());
-
-        List<Article> articleList = null;
-
-        //shows internal articles
-        if (showInternal) {
-            articleList = articleDao.getAllArticles();
-            for (Article item : articleList) {
-                item.setUserMemberOfGroup(canView(loggedUser, item));
-                item.setUserIsOwnerOrAdmin(canEdit(loggedUser, item));
-            }
+        setPermissionsToView(mav);
+        Paginator paginator = new Paginator(articleDao.getArticleCountForPerson(loggedUser), ARTICLES_PER_PAGE, "list.html?page=%1$d");
+        if (page == null) {
+            page = 1;
         }
+        paginator.setActualPage(page);
+        mav.addObject("paginator", paginator.getLinks());
+        List articleList = new ArrayList();
+
+
+        if (showInternal) {
+            articleList = articleDao.getArticlesForList(loggedUser, paginator.getFirstItemIndex(), ARTICLES_PER_PAGE);
+            }
+
         if (showLinkedIn) {
             mav.addObject("articleListTitle", "pageTitle.linkedInArticles");
         }
@@ -166,12 +175,16 @@ public class ArticleMultiController extends MultiActionController {
         if (!showInternal && !showLinkedIn) {
             mav.addObject("articleListTitle", "pageTitle.noArticles");
         }
+
         mav.addObject("showLinkedIn", showLinkedIn);
         mav.addObject("showInternal", showInternal);
-        mav.addObject("articleList", articleList);
         mav.addObject("groupDetails", groupDetails);
         mav.addObject("linkedInArticles", linkedInArticlesFiltered);
 
+        mav.addObject("articleList", articleList);
+        mav.addObject("articleListTitle", "pageTitle.allArticles");
+        mav.addObject("userIsGlobalAdmin", loggedUser.getAuthority().equals("ROLE_ADMIN"));
+        mav.addObject("loggedUserId", loggedUser.getPersonId());
         return mav;
     }
 
@@ -242,31 +255,42 @@ public class ArticleMultiController extends MultiActionController {
         return new ArticleCommentCommand();
     }
 
+    @RequestMapping("articles/detail")
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ArticleCommentCommand command = new ArticleCommentCommand();
 
         ModelAndView mav = new ModelAndView("articles/detail");
-        setPermissionsToView(mav);
         Person loggedUser = personDao.getLoggedPerson();
-        int id = 0;
+        setPermissionsToView(mav);
+        int id = -1;
         try {
             id = Integer.parseInt(request.getParameter("articleId"));
         } catch (Exception e) {
             log.debug("Unable to determine article id");
         }
-        Article article = (Article) articleDao.read(id);
+        Article article = (Article) articleDao.getArticleDetail(id, loggedUser);
+        // If the user is not permitted to view the article, null is returned. We will redirect to article list instead of displaying the article page.
+        if (article == null) {
+            return new ModelAndView("redirect:list.html");
+        }
 
-        mav.addObject("userCanView", canView(loggedUser, article));
         command.setArticleId(id);
         mav.addObject("command", command);
         mav.addObject("userCanEdit", canEdit(loggedUser, article));
         mav.addObject("article", article);
 
-        List<ArticleComment> articleComments = articleCommentDao.getAllWithNoParent(article);
-        mav.addObject("commentsList", articleComments);
+        // First we load all article comments for the article, so the most of them are already loaded and don't need to be lazily loaded
+        List<ArticleComment> articleComments = articleCommentDao.getCommentsForArticle(id);
+        List<ArticleComment> noParents = new ArrayList<ArticleComment>();
+        // Then we filter out the comments with no parent
+        for (ArticleComment comment : articleComments) {
+            if (comment.getParent() == null) {
+                noParents.add(comment);
+            }
+        }
+        mav.addObject("commentsList", noParents);
 
-        Set<Person> subscribers = article.getSubscribers();
-        mav.addObject("subscribed", subscribers.contains(loggedUser));
+        mav.addObject("subscribed", article.getSubscribers().contains(loggedUser));
         return mav;
     }
 

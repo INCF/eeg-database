@@ -67,6 +67,11 @@
 			<artifactId>eegdsp</artifactId>
 			<version>1.0</version>
 		</dependency>
+        <dependency>
+            <groupId>hibernatingrhinos</groupId>
+            <artifactId>hibernate-profiler</artifactId>
+            <version>1.0</version>
+        </dependency>
 		<!--=================================== Test scoped libraries ================================== -->
 		<dependency>
 			<groupId>junit</groupId>

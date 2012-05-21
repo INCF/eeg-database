@@ -15,7 +15,6 @@ import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.WeatherInfo;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
-
 import javax.jws.WebService;
 import java.util.LinkedList;
 import java.util.List;

@@ -40,10 +40,6 @@ public class ExperimentsSearcherController extends AbstractSearchController {
     @Override
     protected Map referenceData(HttpServletRequest request) throws Exception {
         Map map = new HashMap<String, Object>();
-        List<Scenario> scenarioList = scenarioDao.getAllRecords();
-        List<Hardware> hardwareList = hardwareDao.getAllRecords();
-        map.put("scenarioList", scenarioList);
-        map.put("hardwareList", hardwareList);
         return map;
     }
 

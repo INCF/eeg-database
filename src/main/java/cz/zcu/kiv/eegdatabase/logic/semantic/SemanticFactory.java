@@ -2,7 +2,6 @@ package cz.zcu.kiv.eegdatabase.logic.semantic;
 
 import org.semanticweb.owlapi.model.OWLOntologyCreationException;
 import org.semanticweb.owlapi.model.OWLOntologyStorageException;
-import org.springframework.context.ApplicationContext;
 
 import java.io.IOException;
 import java.io.InputStream;

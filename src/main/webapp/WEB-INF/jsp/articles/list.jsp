@@ -14,7 +14,7 @@
 
 <ui:articlesTemplate pageTitle="${articleListTitle}">
 
-    <form:form method="post" cssClass="standardInputForm"> 
+    <form:form method="post" cssClass="standardInputForm">
         <c:if test="${showInternal == true}">
             <input type="checkbox" name="showInternalArticles" style="margin-top: 10px" onclick="if(this.checked){this.value = 1; this.form.submit();}else {this.value = 0; this.form.submit();}" checked="true" value="1"/><fmt:message key="button.internalArticles"/>
         </c:if>
@@ -25,7 +25,7 @@
             <input type="checkbox" name="showOnLinkedInArticles" style="margin-top: 10px" onclick="if(this.checked){this.value = 1; this.form.submit();}else {this.value = 0; this.form.submit();}" checked="true" value="1"/><fmt:message key="button.linkedInArticles"/>
         </c:if>
         <c:if test="${showLinkedIn == false}">
-            <input type="checkbox" name="showOnLinkedInArticles" style="margin-top: 10px" onclick="if(this.checked){this.value = 1; this.form.submit();}else {this.value = 0; this.form.submit();}"/><fmt:message key="button.linkedInArticles"/>   
+            <input type="checkbox" name="showOnLinkedInArticles" style="margin-top: 10px" onclick="if(this.checked){this.value = 1; this.form.submit();}else {this.value = 0; this.form.submit();}"/><fmt:message key="button.linkedInArticles"/>
         </c:if>
 
         <h1><fmt:message key="${articleListTitle}"/></h1>
@@ -46,46 +46,64 @@
                 </div>
             </div>
         </c:if>
-        <%--</c:forEach>--%>   
+        <%--</c:forEach>--%>
+
+
+        ${paginator}
+
         <c:forEach items="${articleList}" var="article" varStatus="status">
-            <c:if test="${article.userMemberOfGroup}">
                 <div class="article">
                     <div class="heading">
-                        <h2><a href="<c:url value="detail.html?articleId=${article.articleId}" />" ><c:out value="${article.title}" /></a></h2>
-                    </div>
-                    <div class="subheading">
-                        <span class="researchGroup">
-                            <c:if test="${article.researchGroup != null}">
-                                <c:out value="${article.researchGroup.title}" />
-                            </c:if> 
-                            <c:if test="${article.researchGroup == null}">
-                                Public article
-                            </c:if>
-                        </span>
-                        |
-                        <span class="date">
-                            <fmt:formatDate value="${article.time}" />
-                        </span>
-                        |
-                        <span class="author">
-                            <c:out value="${article.person.givenname}" />
-                            <c:out value="${article.person.surname}" />
-                        </span>
-                        |
-                        <span class="commentsCount">
-                            <c:out value="${fn:length(article.articleComments)}" /> <fmt:message key="heading.comments" />
-                        </span>
-                        <c:if test="${article.userIsOwnerOrAdmin}">
-                            | <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message key="label.edit" /> </a>
-                            | <a href="<c:url value="delete.html?articleId=${article.articleId}" />" class="confirm"><fmt:message key="label.delete" /> </a>
-                        </c:if>
+                    <h2><a href="<c:url value="detail.html?articleId=${article.articleId}" />"><c:out
+                            value="${article.title}"/></a></h2>
                     </div>
 
-                    <div class="content">
-                        <c:out value="${fn:substring(article.text,0,500)}"  />
-                    </div>
+
+                <div class="content">
+                        <c:out value="${fn:substring(article.text, 1, 500)}"/>
+                        <c:if test="${fn:length(article.text) > 500}">&hellip;</c:if>
+                    <a href="<c:url value="detail.html?articleId=${article.articleId}" />"><fmt:message
+                            key="readMore"/></a>
                 </div>
-            </c:if>
+
+                <div class="articleInfo">
+                <span class="date">
+                               <fmt:formatDate value="${article.time}"/>
+                           </span>
+                    &bull;
+                        <span class="researchGroup">
+                    <c:choose>
+                        <c:when test="${article.researchGroup != null}">
+                            <span class="label"><fmt:message key="researchGroup"/>:</span> <c:out
+                                value="${article.researchGroup.title}"/>
+                        </c:when>
+                        <c:otherwise>
+                                Public article
+                        </c:otherwise>
+                    </c:choose>
+                        </span>
+                    &bull;
+                        <span class="author">
+                    <span class="label"><fmt:message key="author"/>:</span> <c:out value="${article.person.givenname}"/> <c:out
+                            value="${article.person.surname}"/>
+                        </span>
+                    &bull;
+                        <span class="commentsCount">
+                               <c:out value="${fn:length(article.articleComments)}"/> <fmt:message
+                            key="heading.comments"/>
+                        </span>
+                    <c:if test="${userIsGlobalAdmin || article.person.personId == loggedUserId}">
+                        &bull; <a href="<c:url value="edit.html?articleId=${article.articleId}" />"><fmt:message
+                            key="label.edit"/> </a>
+                        &bull; <a href="<c:url value="delete.html?articleId=${article.articleId}" />"
+                                  class="confirm"><fmt:message key="label.delete"/> </a>
+                        </c:if>
+                    </div>
+                    </div>
         </c:forEach>
+
+        ${paginator}
+
+
     </form:form>
 </ui:articlesTemplate>

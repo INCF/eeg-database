@@ -7,6 +7,12 @@
     <listener>
         <listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
     </listener>
+
+    <listener>
+        <listener-class>hibernatingrhinos.hibernate.profiler.web.HibernateProfilerListener</listener-class>
+    </listener>
+
+
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>

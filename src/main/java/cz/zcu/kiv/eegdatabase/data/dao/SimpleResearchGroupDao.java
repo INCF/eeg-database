@@ -28,16 +28,14 @@ public class SimpleResearchGroupDao
      */
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person) {
         String hqlQuery = "from ResearchGroup researchGroup "
-                + "left join fetch researchGroup.researchGroupMemberships as membership "
-                + "where membership.person.personId = :personId "
+                + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
         return getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
     }
 
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
         String hqlQuery = "from ResearchGroup researchGroup "
-                + "left join fetch researchGroup.researchGroupMemberships as membership "
-                + "where membership.person.personId = :personId "
+                + "where researchGroupId in (select rgm.id.researchGroupId from ResearchGroupMembership rgm where id.personId = :personId) "
                 + "order by researchGroup.title";
 
         getHibernateTemplate().setMaxResults(limit);
@@ -135,5 +133,17 @@ public class SimpleResearchGroupDao
         Object[] values = {title, id};
         List<ResearchGroup> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);
         return (list.size() == 0);
+    }
+
+    @Override
+    public int getCountForList() {
+        String query = "select count(g) from ResearchGroup g";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
+    }
+
+    @Override
+    public List getGroupsForList(int start, int limit) {
+        String query = "from ResearchGroup g order by g.title asc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(limit).list();
     }
 }

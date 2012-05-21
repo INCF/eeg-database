@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.AbstractController;
 
@@ -16,28 +17,24 @@ public class PersonListController extends AbstractController {
 
     private PersonDao personDao;
 
+    private static final int ITEMS_PER_PAGE = 20;
+
     @Override
     protected ModelAndView handleRequestInternal(HttpServletRequest request, HttpServletResponse response) throws Exception {
         ModelAndView mav = new ModelAndView("people/list");
 
-        List<Person> list = personDao.getAllRecords();
+        Paginator paginator = new Paginator(personDao.getCountForList(), ITEMS_PER_PAGE);
 
-//        Session session = HibernateUtil.getSessionFactory().openSession();
-//        Transaction transaction = session.beginTransaction();
-//        try {
-//            List<Person> list = session.createQuery("FROM pojo.Person AS person ORDER BY person.surname, person.givenname").list();
-//
-//            mav.addObject("personList", list);
-//
-//            session.flush();
-//            transaction.commit();
-//        } catch (Exception e) {
-//            transaction.rollback();
-//        } finally {
-//            session.close();
-//        }
+        int page = 1;
+        try {
+            page = Integer.parseInt(request.getParameter("page"));
+        } catch (Exception e) {
+        }
+        paginator.setActualPage(page);
+        List<Person> list = personDao.getDataForList(paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
 
         mav.addObject("personList", list);
+        mav.addObject("paginator", paginator.getLinks());
         return mav;
     }
 

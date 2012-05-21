@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.data.service;
 
-import com.restfb.types.User;
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
@@ -8,16 +7,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.root.RegistrationCommand;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import net.sf.json.JSONObject;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.velocity.exception.ParseErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
-import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 
 import java.sql.Timestamp;
 import java.text.Normalizer;

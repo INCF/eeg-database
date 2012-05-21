@@ -11,7 +11,9 @@ import javax.jws.WebService;
 import javax.mail.util.ByteArrayDataSource;
 import javax.xml.soap.SOAPException;
 import javax.xml.ws.WebServiceException;
-import java.io.*;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 
 /**
  * Webservice for transforming POJO object to resources of semantic web

@@ -22,13 +22,13 @@
     <property name="title" type="string">
       <column name="TITLE"/>
     </property>
-    <set inverse="true" name="articleComments">
+    <set inverse="true" name="articleComments" lazy="extra">
       <key>
         <column name="ARTICLE_ID" not-null="true" precision="22" scale="0"/>
       </key>
       <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment"/>
     </set>
-    <set name="subscribers" table="ARTICLES_SUBSCRIBTIONS">
+    <set name="subscribers" table="ARTICLES_SUBSCRIBTIONS" lazy="extra">
       <key>
         <column name="ARTICLE_ID" precision="22" scale="0" />
       </key>

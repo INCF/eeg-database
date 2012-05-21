@@ -6,10 +6,12 @@
 <ui:scenariosTemplate pageTitle="pageTitle.listOfScenarios">
     <h1><fmt:message key="pageTitle.listOfScenarios"/></h1>
 
+    ${paginator}
+
     <table class="dataTable">
         <thead>
             <tr>
-                <th style="width: 30px;"><fmt:message key="dataTable.heading.number"/></th>
+                <th style="width: 30px;"><fmt:message key="dataTable.heading.id"/></th>
                 <th style="width: 300px;"><fmt:message key="dataTable.heading.title"/></th>
                 <th><fmt:message key="dataTable.heading.scenarioLength"/></th>
                 <th style="width: 80px;"><fmt:message key="dataTable.heading.detail"/></th>
@@ -17,9 +19,8 @@
             </tr>
         </thead>
         <c:forEach items="${scenarioList}" var="scenario" varStatus="status">
-          <c:if test="${scenario.userMemberOfGroup || !scenario.privateScenario}" >
             <tr>
-                <td><c:out value="${status.index}" /></td>
+                <td><c:out value="${scenario.scenarioId}" /></td>
                 <td><c:out value="${scenario.title}" /></td>
                 <td><c:out value="${scenario.scenarioLength}" /></td>
                 <td><a href="<c:url value='detail.html?scenarioId=${scenario.scenarioId}' />"><fmt:message key="link.detail"/></a></td>
@@ -37,7 +38,9 @@
                     </c:choose>
                 </td>
             </tr>
-          </c:if>
         </c:forEach>
     </table>
+
+    ${paginator}
+
 </ui:scenariosTemplate>

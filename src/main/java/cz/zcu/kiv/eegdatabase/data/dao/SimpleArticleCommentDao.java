@@ -4,7 +4,6 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 
 import java.io.Serializable;
@@ -20,9 +19,12 @@ public class SimpleArticleCommentDao<T, PK extends Serializable>
         super(type);
     }
 
-    public List<ArticleComment> getAllWithNoParent(Article article) {
-        String query = "from ArticleComment as comment where comment.article.id = :id and comment.parent is null order by time desc";
-        List<ArticleComment> comments = getSessionFactory().getCurrentSession().createQuery(query).setParameter("id", article.getArticleId()).list();
-        return comments;
+    @Override
+    public List<ArticleComment> getCommentsForArticle(int articleId) {
+        String query = "select distinct c from ArticleComment c left join fetch c.children join fetch c.person " +
+                "where " +
+                "c.article.id = :id " +
+                "order by c.time desc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setParameter("id", articleId).list();
     }
 }
