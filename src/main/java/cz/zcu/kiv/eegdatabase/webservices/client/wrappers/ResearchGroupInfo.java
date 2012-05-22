@@ -13,6 +13,7 @@ public class ResearchGroupInfo {
     private String description;
     private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
     private List<WeatherInfo> weathers = new LinkedList<WeatherInfo>();
+    private List<PersonOptParamDefInfo> personOptParamDefInfos = new LinkedList<PersonOptParamDefInfo>();
 
     public int getResearchGroupId() {
         return researchGroupId;
@@ -60,5 +61,13 @@ public class ResearchGroupInfo {
 
     public void setWeathers(List<WeatherInfo> weathers) {
         this.weathers = weathers;
+    }
+
+    public List<PersonOptParamDefInfo> getPersonOptParamDefInfos() {
+        return personOptParamDefInfos;
+    }
+
+    public void setPersonOptParamDefInfos(List<PersonOptParamDefInfo> personOptParamDefInfos) {
+        this.personOptParamDefInfos = personOptParamDefInfos;
     }
 }

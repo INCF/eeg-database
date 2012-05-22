@@ -1,17 +1,8 @@
 package cz.zcu.kiv.eegdatabase.webservices.client;
 
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.HardwareInfo;
-import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.PersonInfo;
-import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ResearchGroupInfo;
-import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.WeatherInfo;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 
@@ -28,6 +19,11 @@ public class ClientServiceImpl implements ClientService{
     private ResearchGroupDao researchGroupDao;
     private HardwareDao hardwareDao;
     private WeatherDao weatherDao;
+    private EducationLevelDao educationLevelDao;
+    private ScenarioSchemasDao scenarioSchemasDao;
+    private PersonOptParamDefDao personOptParamDefDao;
+    private SimpleGenericDao<PersonOptParamVal,PersonOptParamValId> personOptParamValDao;
+    private ScenarioDao scenarioDao;
     private static final Log log = LogFactory.getLog(ClientServiceImpl.class);
 
     public boolean isServiceAvailable() {
@@ -36,7 +32,7 @@ public class ClientServiceImpl implements ClientService{
         return true;
     }
 
-    public List<PersonInfo> getAllPeople() {
+    public List<PersonInfo> getPersonList() {
         List<PersonInfo> people = new LinkedList<PersonInfo>();
         List<Person> peopleDb = personDao.getAllRecords();
         for (Person p : peopleDb) {
@@ -54,6 +50,7 @@ public class ClientServiceImpl implements ClientService{
             }
             i.setNote(p.getNote());
             i.setUsername(p.getUsername());
+            i.setEducationLevelTitle(p.getEducationLevel().getTitle());
             i.setLaterality(p.getLaterality());
             people.add(i);
         }
@@ -61,9 +58,61 @@ public class ClientServiceImpl implements ClientService{
         return people;
     }
 
+    @Override
+    public List<ScenarioInfo> getScenarioList() {
+        List<Scenario> scenarios = scenarioDao.getAllRecords();
+        List<ScenarioInfo> scens = new LinkedList<ScenarioInfo>();
+
+        for (Scenario scenario : scenarios) {
+            ScenarioInfo info = new ScenarioInfo();
+
+            info.setDescription(scenario.getDescription());
+            info.setMimeType(scenario.getMimetype());
+            info.setOwnerUsername(scenario.getPerson().getUsername());
+            info.setResearchGroupTitle(scenario.getResearchGroup().getTitle());
+            info.setScenarioId(scenario.getScenarioId());
+            info.setScenarioLength(scenario.getScenarioLength());
+            info.setScenarioName(scenario.getScenarioName());
+            info.setPrivateScenario(scenario.isPrivateScenario());
+            info.setTitle(scenario.getTitle());
+
+            scens.add(info);
+        }
+        return scens;
+    }
 
     @Override
-    public List<ResearchGroupInfo> getMyResearchGroups() {
+    public List<EducationLevelInfo> getEducationLevelList() {
+        List<EducationLevelInfo> levels = new LinkedList<EducationLevelInfo>();
+        List<EducationLevel> levelsDb = educationLevelDao.getAllRecords();
+        for (EducationLevel o : levelsDb) {
+            EducationLevelInfo i = new EducationLevelInfo();
+            i.setEducationLevelId(o.getEducationLevelId());
+            i.setTitle(o.getTitle());
+            i.setDefaultNumber(o.getDefaultNumber());
+            levels.add(i);
+        }
+        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of education levels.");
+        return levels;
+    }
+
+    public List<PersonOptParamValInfo> getPersonOptParamValList(){
+        List<PersonOptParamValInfo> infos = new LinkedList<PersonOptParamValInfo>();
+        List<PersonOptParamVal> valuesDb = personOptParamValDao.getAllRecords();
+        for(PersonOptParamVal o : valuesDb){
+            PersonOptParamValInfo i = new PersonOptParamValInfo();
+            i.setId(o.getId());
+            i.setPersonId(o.getPerson().getPersonId());
+            i.setParamValue(o.getParamValue());
+            i.setPersonOptParamDefId(o.getPersonOptParamDef().getPersonOptParamDefId());
+            infos.add(i);
+        }
+        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of person optional parameters.");
+        return infos;
+    }
+
+    @Override
+    public List<ResearchGroupInfo> getResearchGroupList() {
         List<ResearchGroupInfo> groups = new LinkedList<ResearchGroupInfo>();
         List<ResearchGroup> groupsDb = researchGroupDao.getResearchGroupsWhereMember(personDao.getLoggedPerson());
         for(ResearchGroup r : groupsDb) {
@@ -97,10 +146,39 @@ public class ClientServiceImpl implements ClientService{
                 i.getWeathers().add(wi);
             }
 
+            // adding optional parameter for people
+            List<PersonOptParamDef> personParamDb = personOptParamDefDao.getRecordsByGroup(r.getResearchGroupId());
+            for(PersonOptParamDef pp : personParamDb) {
+                PersonOptParamDefInfo pi = new PersonOptParamDefInfo();
+                pi.setParamName(pp.getParamName());
+                pi.setPersonOptParamDefId(pp.getPersonOptParamDefId());
+                pi.setDefaultNumber(pp.getDefaultNumber());
+                pi.setParamDataType(pi.getParamDataType());
+                i.getPersonOptParamDefInfos().add(pi);
+            }
+
             groups.add(i);
         }
         log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of filled research groups.");
         return groups;  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<ScenarioSchemasInfo> getScenarioSchemasList() {
+        List<ScenarioSchemasInfo> infos = new LinkedList<ScenarioSchemasInfo>();
+        List<ScenarioSchemas> levelsDb = scenarioSchemasDao.getAllRecords();
+        for (ScenarioSchemas o : levelsDb) {
+            if(o.getApproved()=='y'){
+                ScenarioSchemasInfo i = new ScenarioSchemasInfo();
+                i.setApproved(o.getApproved());
+                i.setDescription(o.getDescription());
+                i.setSchemaId(o.getSchemaId());
+                i.setSchemaName(o.getSchemaName());
+                infos.add(i);
+            }
+        }
+        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of scenario schemas.");
+        return infos;
     }
 
     public PersonDao getPersonDao() {
@@ -133,5 +211,33 @@ public class ClientServiceImpl implements ClientService{
 
     public void setWeatherDao(WeatherDao weatherDao) {
         this.weatherDao = weatherDao;
+    }
+
+    public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
+        this.educationLevelDao = educationLevelDao;
+    }
+
+    public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
+        this.scenarioSchemasDao = scenarioSchemasDao;
+    }
+
+    public void setScenarioDao(ScenarioDao scenarioDao) {
+        this.scenarioDao = scenarioDao;
+    }
+
+    public PersonOptParamDefDao getPersonOptParamDefDao() {
+        return personOptParamDefDao;
+    }
+
+    public void setPersonOptParamDefDao(PersonOptParamDefDao personOptParamDefDao) {
+        this.personOptParamDefDao = personOptParamDefDao;
+    }
+
+    public SimpleGenericDao<PersonOptParamVal, PersonOptParamValId> getPersonOptParamValDao() {
+        return personOptParamValDao;
+    }
+
+    public void setPersonOptParamValDao(SimpleGenericDao<PersonOptParamVal, PersonOptParamValId> personOptParamValDao) {
+        this.personOptParamValDao = personOptParamValDao;
     }
 }

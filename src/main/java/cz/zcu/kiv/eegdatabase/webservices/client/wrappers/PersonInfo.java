@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
+
 /**
  * @author František Liška
  */
@@ -14,7 +16,7 @@ public class PersonInfo {
     private String note;
     private String username;
     private char laterality;
-
+    private String educationLevelTitle;
 
     public PersonInfo() {
     }
@@ -115,6 +117,14 @@ public class PersonInfo {
 
     public void setLaterality(char laterality) {
         this.laterality = laterality;
+    }
+
+    public String getEducationLevelTitle() {
+        return educationLevelTitle;
+    }
+
+    public void setEducationLevelTitle(String  educationLevelTitle) {
+        this.educationLevelTitle = educationLevelTitle;
     }
 }
 
