@@ -6,19 +6,19 @@ import java.util.List;
 /**
  * @author František Liška
  */
-public class PersonOptParamDefInfo {
-    private int personOptParamDefId;
+public class FileMetadataParamDefInfo {
+    private int fileMetadataParamDefId;
     private String paramName;
     private String paramDataType;
     private int defaultNumber;
     private List<Integer> researchGroupIdList = new LinkedList<Integer>();
 
-    public int getPersonOptParamDefId() {
-        return personOptParamDefId;
+    public int getFileMetadataParamDefId() {
+        return fileMetadataParamDefId;
     }
 
-    public void setPersonOptParamDefId(int personOptParamDefId) {
-        this.personOptParamDefId = personOptParamDefId;
+    public void setFileMetadataParamDefId(int fileMetadataParamDefId) {
+        this.fileMetadataParamDefId = fileMetadataParamDefId;
     }
 
     public String getParamName() {

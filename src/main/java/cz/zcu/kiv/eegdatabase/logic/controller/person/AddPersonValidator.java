@@ -17,7 +17,7 @@ import java.util.regex.Pattern;
  */
 public class AddPersonValidator implements Validator {
 
-    private Log log = LogFactory.getLog(getClass());
+    private Log log = LogFactory.getLog(this.getClass());
     private PersonDao personDao;
 
     public boolean supports(Class clazz) {

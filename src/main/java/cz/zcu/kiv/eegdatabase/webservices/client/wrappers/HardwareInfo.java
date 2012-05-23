@@ -1,5 +1,8 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author František Liška
  */
@@ -9,6 +12,7 @@ public class HardwareInfo {
     private String type;
     private String description;
     private int defaultNumber;
+    private List<Integer> researchGroupIdList = new LinkedList<Integer>();
 
     public int getHardwareId() {
         return hardwareId;
@@ -48,5 +52,13 @@ public class HardwareInfo {
 
     public void setDefaultNumber(int defaultNumber) {
         this.defaultNumber = defaultNumber;
+    }
+
+    public List<Integer> getResearchGroupIdList() {
+        return researchGroupIdList;
+    }
+
+    public void setResearchGroupIdList(List<Integer> researchGroupIdList) {
+        this.researchGroupIdList = researchGroupIdList;
     }
 }

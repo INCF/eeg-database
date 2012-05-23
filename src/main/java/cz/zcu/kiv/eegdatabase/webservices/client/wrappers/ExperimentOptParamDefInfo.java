@@ -6,19 +6,19 @@ import java.util.List;
 /**
  * @author František Liška
  */
-public class PersonOptParamDefInfo {
-    private int personOptParamDefId;
+public class ExperimentOptParamDefInfo {
+    private int experimentOptParamDefId;
     private String paramName;
     private String paramDataType;
     private int defaultNumber;
     private List<Integer> researchGroupIdList = new LinkedList<Integer>();
 
-    public int getPersonOptParamDefId() {
-        return personOptParamDefId;
+    public int getExperimentOptParamDefId() {
+        return experimentOptParamDefId;
     }
 
-    public void setPersonOptParamDefId(int personOptParamDefId) {
-        this.personOptParamDefId = personOptParamDefId;
+    public void setExperimentOptParamDefId(int experimentOptParamDefId) {
+        this.experimentOptParamDefId = experimentOptParamDefId;
     }
 
     public String getParamName() {

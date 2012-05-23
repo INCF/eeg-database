@@ -23,6 +23,8 @@ public class ClientServiceImpl implements ClientService{
     private ScenarioSchemasDao scenarioSchemasDao;
     private PersonOptParamDefDao personOptParamDefDao;
     private SimpleGenericDao<PersonOptParamVal,PersonOptParamValId> personOptParamValDao;
+    private ExperimentOptParamDefDao experimentOptParamDefDao;
+    private FileMetadataParamDefDao fileMetadataParamDefDao;
     private ScenarioDao scenarioDao;
     private static final Log log = LogFactory.getLog(ClientServiceImpl.class);
 
@@ -30,6 +32,75 @@ public class ClientServiceImpl implements ClientService{
             log.debug("User " + personDao.getLoggedPerson().getEmail() +
                         " verified connection with client web service.");
         return true;
+    }
+
+    public int createHardware(HardwareInfo info){
+        Hardware h = new Hardware();
+        h.setDefaultNumber(info.getDefaultNumber());
+        h.setDescription(info.getDescription());
+        h.setTitle(info.getTitle());
+        h.setType(info.getType());
+        int newId = hardwareDao.create(h);
+        for(int groupId : info.getResearchGroupIdList()){
+            ResearchGroup r = researchGroupDao.read(groupId);
+            hardwareDao.createGroupRel(h,r);
+        }
+        return newId;
+    }
+
+    public int createWeather(WeatherInfo info) {
+        Weather w = new Weather();
+        w.setDefaultNumber(info.getDefaultNumber());
+        w.setDescription(info.getDescription());
+        w.setTitle(info.getTitle());
+        int newId = weatherDao.create(w);
+        for(int groupId : info.getResearchGroupIdList()){
+            ResearchGroup r = researchGroupDao.read(groupId);
+            weatherDao.createGroupRel(w,r);
+        }
+        return newId;
+    }
+
+    @Override
+    public int createPersonOptParamDef(PersonOptParamDefInfo info) {
+        PersonOptParamDef p = new PersonOptParamDef();
+        p.setDefaultNumber(info.getDefaultNumber());
+        p.setParamName(info.getParamName());
+        p.setParamDataType(info.getParamDataType());
+        int newId = personOptParamDefDao.create(p);
+        for(int groupId : info.getResearchGroupIdList()){
+            ResearchGroup r = researchGroupDao.read(groupId);
+            personOptParamDefDao.createGroupRel(p,r);
+        }
+        return newId;
+    }
+
+    @Override
+    public int createExperimentOptParamDef(ExperimentOptParamDefInfo info) {
+        ExperimentOptParamDef e = new ExperimentOptParamDef();
+        e.setDefaultNumber(info.getDefaultNumber());
+        e.setParamName(info.getParamName());
+        e.setParamDataType(info.getParamDataType());
+        int newId = experimentOptParamDefDao.create(e);
+        for(int groupId : info.getResearchGroupIdList()){
+            ResearchGroup r = researchGroupDao.read(groupId);
+            experimentOptParamDefDao.createGroupRel(e,r);
+        }
+        return newId;
+    }
+
+    @Override
+    public int createFileMetadataParamDef(FileMetadataParamDefInfo info) {
+        FileMetadataParamDef f = new FileMetadataParamDef();
+        f.setDefaultNumber(info.getDefaultNumber());
+        f.setParamName(info.getParamName());
+        f.setParamDataType(info.getParamDataType());
+        int newId = fileMetadataParamDefDao.create(f);
+        for(int groupId : info.getResearchGroupIdList()){
+            ResearchGroup r = researchGroupDao.read(groupId);
+            fileMetadataParamDefDao.createGroupRel(f,r);
+        }
+        return newId;
     }
 
     public List<PersonInfo> getPersonList() {
@@ -157,6 +228,27 @@ public class ClientServiceImpl implements ClientService{
                 i.getPersonOptParamDefInfos().add(pi);
             }
 
+            // adding optional parameter for experiments
+            List<ExperimentOptParamDef> expParamDb = experimentOptParamDefDao.getRecordsByGroup(r.getResearchGroupId());
+            for(ExperimentOptParamDef ed : expParamDb) {
+                ExperimentOptParamDefInfo ei = new ExperimentOptParamDefInfo();
+                ei.setParamName(ed.getParamName());
+                ei.setExperimentOptParamDefId(ed.getExperimentOptParamDefId());
+                ei.setDefaultNumber(ed.getDefaultNumber());
+                ei.setParamDataType(ed.getParamDataType());
+                i.getExperimentOptParamDefInfos().add(ei);
+            }
+
+            // adding file metadata
+            List<FileMetadataParamDef> fileMetadataDb = fileMetadataParamDefDao.getRecordsByGroup(r.getResearchGroupId());
+            for(FileMetadataParamDef fd : fileMetadataDb) {
+                FileMetadataParamDefInfo fi = new FileMetadataParamDefInfo();
+                fi.setParamName(fd.getParamName());
+                fi.setFileMetadataParamDefId(fd.getFileMetadataParamDefId());
+                fi.setDefaultNumber(fd.getDefaultNumber());
+                fi.setParamDataType(fd.getParamDataType());
+                i.getFileMetadataParamDefInfos().add(fi);
+            }
             groups.add(i);
         }
         log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of filled research groups.");
@@ -239,5 +331,13 @@ public class ClientServiceImpl implements ClientService{
 
     public void setPersonOptParamValDao(SimpleGenericDao<PersonOptParamVal, PersonOptParamValId> personOptParamValDao) {
         this.personOptParamValDao = personOptParamValDao;
+    }
+
+    public void setExperimentOptParamDefDao(ExperimentOptParamDefDao experimentOptParamDefDao) {
+        this.experimentOptParamDefDao = experimentOptParamDefDao;
+    }
+
+    public void setFileMetadataParamDefDao(FileMetadataParamDefDao fileMetadataParamDefDao) {
+        this.fileMetadataParamDefDao = fileMetadataParamDefDao;
     }
 }

@@ -1,5 +1,8 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
+import java.util.LinkedList;
+import java.util.List;
+
 /**
  * @author František Liška
  */
@@ -8,6 +11,7 @@ public class WeatherInfo {
     private String description;
     private String title;
     private int defaultNumber;
+    private List<Integer> researchGroupIdList = new LinkedList<Integer>();
 
     public int getWeatherId() {
         return weatherId;
@@ -39,6 +43,14 @@ public class WeatherInfo {
 
     public void setDefaultNumber(int defaultNumber) {
         this.defaultNumber = defaultNumber;
+    }
+
+    public List<Integer> getResearchGroupIdList() {
+        return researchGroupIdList;
+    }
+
+    public void setResearchGroupIdList(List<Integer> researchGroupIdList) {
+        this.researchGroupIdList = researchGroupIdList;
     }
 }
 

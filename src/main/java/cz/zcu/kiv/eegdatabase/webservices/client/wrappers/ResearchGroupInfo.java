@@ -14,6 +14,8 @@ public class ResearchGroupInfo {
     private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
     private List<WeatherInfo> weathers = new LinkedList<WeatherInfo>();
     private List<PersonOptParamDefInfo> personOptParamDefInfos = new LinkedList<PersonOptParamDefInfo>();
+    private List<ExperimentOptParamDefInfo> experimentOptParamDefInfos = new LinkedList<ExperimentOptParamDefInfo>();
+    private List<FileMetadataParamDefInfo> fileMetadataParamDefInfos = new LinkedList<FileMetadataParamDefInfo>();
 
     public int getResearchGroupId() {
         return researchGroupId;
@@ -69,5 +71,21 @@ public class ResearchGroupInfo {
 
     public void setPersonOptParamDefInfos(List<PersonOptParamDefInfo> personOptParamDefInfos) {
         this.personOptParamDefInfos = personOptParamDefInfos;
+    }
+
+    public List<ExperimentOptParamDefInfo> getExperimentOptParamDefInfos() {
+        return experimentOptParamDefInfos;
+    }
+
+    public void setExperimentOptParamDefInfos(List<ExperimentOptParamDefInfo> experimentOptParamDefInfos) {
+        this.experimentOptParamDefInfos = experimentOptParamDefInfos;
+    }
+
+    public List<FileMetadataParamDefInfo> getFileMetadataParamDefInfos() {
+        return fileMetadataParamDefInfos;
+    }
+
+    public void setFileMetadataParamDefInfos(List<FileMetadataParamDefInfo> fileMetadataParamDefInfos) {
+        this.fileMetadataParamDefInfos = fileMetadataParamDefInfos;
     }
 }

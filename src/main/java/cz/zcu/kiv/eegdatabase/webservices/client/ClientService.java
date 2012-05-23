@@ -18,4 +18,9 @@ public interface ClientService {
     public List<ScenarioInfo> getScenarioList();
     public List<PersonOptParamValInfo> getPersonOptParamValList();
 
+    public int createHardware(HardwareInfo info);
+    public int createWeather(WeatherInfo info);
+    public int createPersonOptParamDef(PersonOptParamDefInfo info);
+    public int createExperimentOptParamDef(ExperimentOptParamDefInfo info);
+    public int createFileMetadataParamDef(FileMetadataParamDefInfo info);
 }
