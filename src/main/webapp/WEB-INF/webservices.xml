@@ -60,7 +60,7 @@
         <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="personOptParamDefDao" ref="personOptParamDefDao"/>
-        <property name="personOptParamValDao" ref="personOptParamDefDao"/>
+        <property name="personOptParamValDao" ref="personOptParamValDao"/>
         <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
     </bean>
