@@ -128,12 +128,6 @@
       </tr>
     </c:forEach>
   </table>
-  <c:if test="${fn:length(experimentDetail.dataFiles) > 0}">
-    <div id="visualization">
-      <h2><fmt:message key="heading.visualization"/></h2>
-      <canvas id="canvas" width="728" height="400"></canvas>
-    </div>
-  </c:if>
   <h2><fmt:message key="heading.dataFiles"/></h2>
   <table class="dataTable" style="width: 500px;">
     <thead>
@@ -162,5 +156,10 @@
     </c:if>
     <a href="<c:url value='choose-metadata.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.downloadExperiment"/></a>
   </div>
-
+    <c:if test="${fn:length(experimentDetail.dataFiles) > 0}">
+        <div id="visualization">
+            <h2><fmt:message key="heading.visualization"/></h2>
+            <canvas id="canvas" width="728" height="400"></canvas>
+        </div>
+    </c:if>
 </ui:experimentsTemplate>

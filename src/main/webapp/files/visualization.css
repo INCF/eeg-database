@@ -26,11 +26,8 @@
 
 /* progress container */
 #canvas {
-    border: 1px solid #6A93D4;
-    background-color: #eee;
-    /* round corners */
-    border-radius: 15px; /* Opera, Chrome */
-    -moz-border-radius: 15px; /* FF */
+    border: 1px solid #888888;
+    background-color: #f5f5f5;
 }
 
 /* slider label */
