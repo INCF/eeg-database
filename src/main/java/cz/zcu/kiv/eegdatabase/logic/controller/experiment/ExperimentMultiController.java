@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
@@ -12,6 +13,8 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -112,6 +115,30 @@ public class ExperimentMultiController extends MultiActionController {
 
         mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id)) || (auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
+        Boolean filesIn = new Boolean(false);
+        for(DataFile file: m.getDataFiles()) {
+            if(file.getFilename().endsWith(".vhdr")) {
+                Blob b = file.getFileContent();
+                try {
+                    byte[] br = b.getBytes(1, (int) b.length());
+                } catch (SQLException e) {
+                    log.debug("Exception by SQL query.");
+                }
+                for(DataFile file2: m.getDataFiles()) {
+                    if((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
+                        filesIn = true;
+                        Blob b2 = file.getFileContent();
+                        try {
+                            byte[] br = b.getBytes(1, (int) b.length());
+                        } catch (SQLException e) {
+                            log.debug("Exception by SQL query.");
+                        }
+                    }
+                }
+            }
+        }
+
+        mav.addObject("filesAvailable", filesIn);
         mav.addObject("userCanViewPersonDetails", auth.userCanViewPersonDetails(subjectPersonId));
 
         mav.addObject("experimentDetail", m);

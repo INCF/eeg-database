@@ -4,6 +4,7 @@
     Author     : Lucie Koloušková
     Description: Styles for visualization module on experiments/detail page.*/
 /* green button - start */
+@import "dhtmlxtree.css";
 .green {
     color: white;
     background-color: #41A128;
@@ -25,7 +26,7 @@
 }
 
 /* progress container */
-#canvas {
+canvas#canvas {
     border: 1px solid #888888;
     background-color: #f5f5f5;
 }
@@ -45,4 +46,19 @@
 #export img {
     border: 1px solid #eee;
     box-shadow: 0px 0px 50px #eee;
+}
+
+span#show {
+    width: 100%;
+    cursor: pointer;
+    display: table;
+    height: 11px;
+    background-image: url(images/arrow_right.png);
+    background-repeat: no-repeat;
+}
+
+span#show hr {
+    text-align: left;
+    vertical-align: middle;
+    width: 100%;
 }

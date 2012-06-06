@@ -8,6 +8,9 @@
 
 <ui:experimentsTemplate pageTitle="pageTitle.experimentDetail">
   <script src="<c:url value="/files/js/visualization/browserControl.js"/>" type="text/javascript"></script>
+  <script src="<c:url value="/files/js/visualization/visualization.js"/>" type="text/javascript"></script>
+  <script src="<c:url value="/files/js/visualization/dhtmlxcommon.js"/>" type="text/javascript"></script>
+  <script src="<c:url value="/files/js/visualization/dhtmlxtree.js"/>" type="text/javascript"></script>
 
     <div id="popupContact">
         <a id="popupContactClose">x</a>
@@ -156,10 +159,23 @@
     </c:if>
     <a href="<c:url value='choose-metadata.html?id=${experimentDetail.experimentId}' />" class="lightButtonLink"><fmt:message key="button.downloadExperiment"/></a>
   </div>
-    <c:if test="${fn:length(experimentDetail.dataFiles) > 0}">
-        <div id="visualization">
-            <h2><fmt:message key="heading.visualization"/></h2>
-            <canvas id="canvas" width="728" height="400"></canvas>
+    <c:if test="${filesAvailable}">
+
+        <span id="show" title="<fmt:message key="text.visualization.toggle"/>" onclick="toggleDiv('visualization')"><hr/></span>
+        <div id="visualization" style="display:none; width: 730px;">
+            <div id="treeboxbox_tree" style="width: 110px; background-color: #f5f5f5; border: 1px solid Silver; float: right;"></div>
+            <div id="encaps" style="width: 600px; height: 430px; overflow: auto;">
+                <canvas id="canvas" width="1000" height="400"></canvas>
+            </div>
+            <p>
+                <input type="button" value="Play" onclick="javascript:animationStart()" class="grey" />
+                <input type="button" value="Pause" onclick="javascript:animationPause()" class="grey" />
+                <input type="button" value="Stop" onclick="javascript:animationStop()" class="grey" />
+                <input type="button" value="Clear" onclick="javascript:canvasClear()" class="grey" />
+                <label id="slider_label" for="slider">Speed: </label>
+                <input id="slider" type="range" min="1" max="10" value="5" onchange="javascript:setSpeed()"/><span id="pause_value"></span>
+                <input type="button" value="Export as PNG" onclick="javascript:exportAs()" class="grey" />
+            </p>
         </div>
     </c:if>
 </ui:experimentsTemplate>
