@@ -85,7 +85,7 @@
                 <form:errors path="dataFileAvailable" cssClass="errorBox"/>
             </div>
 
-            <div class="itemBox" id="scenarioXml">
+       <%--     <div class="itemBox" id="scenarioXml">
 
                 <form:label path="xmlFileCheckBox" cssClass="textFieldLabel"
                             cssErrorClass="textFieldLabel errorLabel"><fmt:message key="label.dataFileIsXml"/></form:label>
@@ -93,7 +93,7 @@
                 <form:checkbox path="xmlFileCheckBox" cssClass="checkBox" id="isScenarioXml"/>
 
                 <form:errors path="xmlFileCheckBox" cssClass="errorBox"/>
-            </div>
+            </div>             --%>
 
             <div class="itemBox" id="dataFile">
                 <form:label path="dataFile" cssClass="fileFieldLabel"

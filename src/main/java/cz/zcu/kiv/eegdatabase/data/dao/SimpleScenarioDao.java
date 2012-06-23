@@ -107,7 +107,7 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
             return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
         } else {
             String query = " select count(s) from Scenario s " +
-                    "where s.researchGroup.researchGroupId in " +
+                    "where s.privateScenario = false or s.researchGroup.researchGroupId in " +
                     "(select m.researchGroup.researchGroupId from ResearchGroupMembership m where m.person.personId = :personId)";
             return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
         }
