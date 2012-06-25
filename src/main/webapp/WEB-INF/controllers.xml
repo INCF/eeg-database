@@ -724,7 +724,7 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonAdditionalParamValueValidator">
         <property name="personOptParamValDao" ref="personOptParamValDao"/>
     </bean>
-
+    <bean name="addArtifactValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.list.artifact.AddArtifactValidator" />
     <bean name="downloadMetadataZipController"
           class="cz.zcu.kiv.eegdatabase.logic.controller.experiment.DownloadMetadataZipController">
         <property name="zipGenerator" ref="zipGenerator"/>

@@ -8,4 +8,5 @@
     <li><a href="<c:url value='/lists/experiment-optional-parameters/list.html'/>"><fmt:message key='menuItem.optionalParametersForExperiments'/></a></li>
     <li><a href="<c:url value='/lists/file-metadata-definitions/list.html'/>"><fmt:message key='menuItem.fileMetadataDefinitions'/></a></li>
     <li><a href="<c:url value='/lists/weather-definitions/list.html'/>"><fmt:message key='menuItem.weatherDefinitions'/></a></li>
+    <li><a href="<c:url value='/lists/artifact-definitions/list.html'/>"><fmt:message key='menuItem.artifactDefinitions'/></a></li>
 </ul>

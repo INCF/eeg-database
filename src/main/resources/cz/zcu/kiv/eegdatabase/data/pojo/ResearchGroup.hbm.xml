@@ -26,7 +26,7 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership"/>
         </set>
-             
+
         <!--*************************-->
         <set inverse="true" name="keywords">
             <key>
@@ -34,7 +34,7 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Keywords"/>
         </set>
-       
+
         <set inverse="true" name="hardwareGroupRels">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
@@ -73,7 +73,7 @@
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest"/>
         </set>
 
-         <set inverse="true" name="hardwares" table="HARDWARE_GROUP_REL">
+        <set inverse="true" name="hardwares" table="HARDWARE_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
             </key>
@@ -143,6 +143,14 @@
             </key>
             <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Person">
                 <column name="PERSON_ID" precision="22" scale="0"/>
+            </many-to-many>
+        </set>
+        <set name="artifacts" table="ARTEFACT_GROUP_REL">
+            <key>
+                <column name="RESEARCH_GROUP_ID" precision="22" scale="0"/>
+            </key>
+            <many-to-many entity-name="cz.zcu.kiv.eegdatabase.data.pojo.Artifact">
+                <column name="ARTEFACT_ID" precision="22" scale="0"/>
             </many-to-many>
         </set>
     </class>
