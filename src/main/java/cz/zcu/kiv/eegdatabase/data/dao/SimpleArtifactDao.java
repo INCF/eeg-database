@@ -33,7 +33,7 @@ public class SimpleArtifactDao extends SimpleGenericDao<Artifact, Integer>
 
     @Override
     public List<Artifact> getRecordsByGroup(int groupId) {
-        String hqlQuery = "from Artifact ar inner join fetch ar.researchGroups as rg where rg.researchGroupId = :groupId";
+        String hqlQuery = "from Artifact ar left join fetch ar.researchGroups rg where rg.researchGroupId = :groupId";
         return getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();
     }
 

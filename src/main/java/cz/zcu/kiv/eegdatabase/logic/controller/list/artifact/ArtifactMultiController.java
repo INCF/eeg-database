@@ -105,7 +105,7 @@ public class ArtifactMultiController {
 
     private List<Artifact> fillArtifactList(int id) {
         if (!researchGroupList.isEmpty()) {
-            artifactDao.getRecordsByGroup(id);
+           return artifactDao.getRecordsByGroup(id);
         }
         return null;
     }
