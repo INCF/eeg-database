@@ -13,10 +13,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.SessionAttributes;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.context.request.WebRequest;
 
 import javax.servlet.http.HttpServletRequest;
@@ -94,6 +91,27 @@ public class ArtifactMultiController {
         return "lists/artifact/list";
     }
 
+    @RequestMapping(value = "lists/artifact-definitions/delete.html")
+    public String delete(@RequestParam("id") String idString, @RequestParam("groupid") String idString2) {
+        log.debug("Deleting hardware.");
+        if (idString != null) {
+            int id = Integer.parseInt(idString);
+
+            if (artifactDao.canDelete(id)) {
+                if (idString2 != null) {
+                    int groupId = Integer.parseInt(idString2);
+                    artifactDao.deleteGroupRel(artifactDao.read(id), researchGroupDao.read(groupId));
+
+                }
+            } else {
+                System.out.println("cannotDelete");
+                return "lists/itemUsed";
+            }
+        }
+
+        return "lists/itemDeleted";
+    }
+
     private List<ResearchGroup> fillAuthResearchGroupList() {
         Person loggedUser = personDao.getLoggedPerson();
         if (loggedUser.getAuthority().equals("ROLE_ADMIN")) {
@@ -105,7 +123,7 @@ public class ArtifactMultiController {
 
     private List<Artifact> fillArtifactList(int id) {
         if (!researchGroupList.isEmpty()) {
-           return artifactDao.getRecordsByGroup(id);
+            return artifactDao.getRecordsByGroup(id);
         }
         return null;
     }
