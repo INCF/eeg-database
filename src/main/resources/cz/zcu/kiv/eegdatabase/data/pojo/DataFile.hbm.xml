@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" schema="EEGTEST" table="DATA_FILE">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" schema="EEGPRODUCTION" table="DATA_FILE">
         <id name="dataFileId" type="int">
             <column name="DATA_FILE_ID" precision="22" scale="0"/>
             <generator class="increment"/>

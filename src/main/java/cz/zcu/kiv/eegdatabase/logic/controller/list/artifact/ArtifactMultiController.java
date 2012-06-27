@@ -49,9 +49,16 @@ public class ArtifactMultiController {
         researchGroupList = fillAuthResearchGroupList();
         String idString = webRequest.getParameter("groupid");
         if (auth.isAdmin()) {
-            int id = Integer.parseInt(idString);
-            artifactList = fillArtifactList(id);
-            selectGroupCommand.setResearchGroupId(id);
+            if (idString != null) {
+                int id = Integer.parseInt(idString);
+                artifactList = fillArtifactList(id);
+                selectGroupCommand.setResearchGroupId(id);
+                model.addAttribute("userIsExperimenter", true);
+            } else {
+                int myGroup = researchGroupList.get(0).getResearchGroupId();
+                artifactList = fillArtifactList(myGroup);
+                selectGroupCommand.setResearchGroupId(myGroup);
+            }
             model.addAttribute("userIsExperimenter", true);
         } else {
             if (!researchGroupList.isEmpty()) {
@@ -79,7 +86,6 @@ public class ArtifactMultiController {
 
     @RequestMapping(value = "lists/artifact-definitions/list.html", method = RequestMethod.POST)
     public String onSubmit(@ModelAttribute("selectGroupCommand") SelectGroupCommand selectGroupCommand, ModelMap model, HttpServletRequest request) {
-        // String defaultHardware = messageSource.getMessage("label.defaultHardware", null, RequestContextUtils.getLocale(request));
         researchGroupList = fillAuthResearchGroupList();
         if (!researchGroupList.isEmpty()) {
             artifactList = fillArtifactList(selectGroupCommand.getResearchGroupId());
