@@ -858,7 +858,7 @@
         <property name="commentDao" ref="articleCommentDao"/>
 
         <!-- <property name="successView" value="redirect:/home"/>-->
-        <property name="successView" value="experiments/fulltext"/>
+        <property name="successView" value="search/fulltext"/>
         <property name="commandClass" value="cz.zcu.kiv.eegdatabase.logic.controller.search.FullTextSearchCommand"/>
     </bean>
     
