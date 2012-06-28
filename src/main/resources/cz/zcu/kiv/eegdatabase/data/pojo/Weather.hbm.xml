@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Weather" schema="EEGPRODUCTION" table="WEATHER">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Weather" schema="EEGTEST" table="WEATHER">
         <id name="weatherId" type="int">
             <column name="WEATHER_ID" precision="22" scale="0"/>
             <generator class="increment"/>

@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup" schema="EEGPRODUCTION" table="SUBJECT_GROUP">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup" schema="EEGTEST" table="SUBJECT_GROUP">
         <id name="subjectGroupId" type="int">
             <column name="SUBJECT_GROUP_ID" precision="22" scale="0"/>
             <generator class="increment"/>

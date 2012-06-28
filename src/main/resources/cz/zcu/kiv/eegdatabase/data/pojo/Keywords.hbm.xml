@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>    
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Keywords" schema="EEGPRODUCTION" table="KEYWORDS">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Keywords" schema="EEGTEST" table="KEYWORDS">
      <id name="keywordsId" type="int">
       <column name="KEYWORDS_ID" precision="22" scale="0"/>
       <generator class="increment"/>

@@ -277,7 +277,7 @@
             </form>
                     <div>OR</div>
                     <div>
-                        <form id="fb_signin" action="<c:url value="/signin/facebook.html"/>" method="POST">
+                        <form id="fb_signin" action="<c:url value="signin/facebook.html"/>" method="POST">
                         <input type="hidden" name="scope" value="email,user_birthday" />
                         <button type="submit" style="border:0; background-color: transparent">
                             <img src="<c:url value="files/images/facebook-login-button.png"/>" />
@@ -285,7 +285,7 @@
                     </form>
                 </div>
                 <div>
-                     <form id="li_signin" action="<c:url value="/signin/linkedin.html"/>" method="POST">
+                     <form id="li_signin" action="<c:url value="signin/linkedin.html"/>" method="POST">
                         <input type="hidden" name="scope" value="publish_stream,offline_access,email,user_birthday" />
                         <button type="submit" style="border:0; background-color: transparent">
                             <img src="<c:url value="files/images/linkedin_login.png"/>" />
