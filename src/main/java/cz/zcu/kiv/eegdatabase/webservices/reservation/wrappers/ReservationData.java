@@ -16,24 +16,24 @@ import java.util.Date;
 @XmlRootElement(name="reservation")
 public class ReservationData implements Serializable {
 
-	private String username;
+	private String researchGroup;
 	private Date fromTime;
 	private Date toTime;
 
     public ReservationData(){}
 
-	public ReservationData(String username, Date fromTime, Date toTime) {
-		this.username = username;
+	public ReservationData(String researchGroup, Date fromTime, Date toTime) {
+		this.researchGroup = researchGroup;
 		this.fromTime = fromTime;
 		this.toTime = toTime;
 	}
 
-	public String getUsername() {
-		return username;
+	public String getResearchGroup() {
+		return researchGroup;
 	}
 
-	public void setUsername(String username) {
-		this.username = username;
+	public void setResearchGroup(String researchGroup) {
+		this.researchGroup = researchGroup;
 	}
 
     @XmlJavaTypeAdapter(DateAdapter.class)

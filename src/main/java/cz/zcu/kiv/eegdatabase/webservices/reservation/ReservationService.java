@@ -14,7 +14,6 @@ import java.util.List;
  *
  * @author Petr Miko
  */
-@Path("reservation")
 @WebService
 @Produces("application/xml")
 @Secured("IS_AUTHENTICATED_FULLY")
