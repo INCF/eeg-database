@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import java.util.GregorianCalendar;
 import java.util.List;
@@ -21,6 +22,24 @@ public class SimpleReservationDao
     public SimpleReservationDao()
     {
         super(Reservation.class);
+    }
+
+    @SuppressWarnings("unchecked")
+    public int createChecked(Reservation newInstance) throws DaoException {
+
+        if(newInstance.getStartTime().getTime() <= newInstance.getEndTime().getTime()){
+            throw new DaoException("Time of start cannot be lower than or equal to time of end!");
+        }
+
+        List<Reservation> reservationsInRange = getSession().createCriteria(Reservation.class)
+                .add(Restrictions.ge("startTime", newInstance.getStartTime()))
+                .add(Restrictions.le("endTime", newInstance.getEndTime())).list();
+
+        if(reservationsInRange.size() > 0){
+            throw new DaoException("Reservation could not be created due to existing records within the time range.");
+        }
+
+        return super.create(newInstance);
     }
 
     public List<Reservation> getReservationsBetween(GregorianCalendar start, GregorianCalendar end)

@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.webservices.reservation;
 
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
 import org.apache.commons.logging.Log;
@@ -9,7 +12,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.jws.WebService;
+import javax.ws.rs.core.Response;
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
@@ -27,14 +35,89 @@ public class ReservationServiceImpl implements ReservationService {
     @Qualifier("reservationDao")
     private ReservationDao reservationDao;
 
-    @Override
-    public List<ReservationData> getAll() {
-        List<ReservationData> data = new ArrayList<ReservationData>();
+    @Autowired
+    @Qualifier("researchGroupDao")
+    private ResearchGroupDao researchGroupDao;
 
-        for (Reservation r : reservationDao.getAllRecords()) {
-            ReservationData rd = new ReservationData(r.getResearchGroup().getTitle(), r.getStartTime(), r.getEndTime());
-            data.add(rd);
+    @Autowired
+    @Qualifier("personDao")
+    private PersonDao personDao;
+
+    private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+
+    @Override
+    public List<ReservationData> getToDate(String date) throws ReservationException {
+        GregorianCalendar calendarFrom = new GregorianCalendar();
+        GregorianCalendar calendarTo = new GregorianCalendar();
+        try {
+            log.debug(sf.parse(date));
+            calendarFrom.setTime(sf.parse(date));
+            calendarTo.setTime(sf.parse(date));
+            calendarTo.add(Calendar.DAY_OF_MONTH, 1);
+            List<Reservation> reservations = reservationDao.getReservationsBetween(calendarFrom, calendarTo);
+            List<ReservationData> data = new ArrayList<ReservationData>(reservations.size());
+
+            for (Reservation r : reservations) {
+                data.add(new ReservationData(r.getReservationId(), r.getResearchGroup().getTitle(), r.getResearchGroup().getResearchGroupId(), r.getStartTime(), r.getEndTime()));
+            }
+
+            return data;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new ReservationException(e);
         }
-        return data;
+    }
+
+    @Override
+    public List<ReservationData> getFromToDate(String fromDate, String toDate) throws ReservationException {
+        GregorianCalendar fromCalendar = new GregorianCalendar();
+        GregorianCalendar toCalendar = new GregorianCalendar();
+        try {
+            fromCalendar.setTime(sf.parse(fromDate));
+            toCalendar.setTime(sf.parse(toDate));
+            List<Reservation> reservations = reservationDao.getReservationsBetween(fromCalendar, toCalendar);
+            List<ReservationData> data = new ArrayList<ReservationData>(reservations.size());
+
+            for (Reservation r : reservations) {
+                data.add(new ReservationData(r.getReservationId(), r.getResearchGroup().getTitle(), r.getResearchGroup().getResearchGroupId(), r.getStartTime(), r.getEndTime()));
+            }
+
+            return data;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new ReservationException(e);
+        }
+    }
+
+    @Override
+    public Response create(int groupId, String date, String fromHour, String toHour) throws ReservationException {
+        try {
+            ResearchGroup group = researchGroupDao.read(groupId);
+            Reservation reservation = new Reservation();
+
+            reservation.setResearchGroup(group);
+            reservation.setPerson(personDao.getLoggedPerson());
+            reservation.setStartTime(new Timestamp(sf.parse(fromHour).getTime()));
+            reservation.setEndTime(new Timestamp(sf.parse(toHour).getTime()));
+            reservation.setCreationTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
+
+            reservationDao.createChecked(reservation);
+
+            return Response.ok().build();
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            throw new ReservationException(e);
+        }
+    }
+
+    @Override
+    public Response delete(int reservationId) throws ReservationException {
+        try {
+            reservationDao.delete(reservationDao.read(reservationId));
+            return Response.ok(reservationId).build();
+        } catch (Exception e) {
+            log.error(e);
+            throw new ReservationException(e);
+        }
     }
 }

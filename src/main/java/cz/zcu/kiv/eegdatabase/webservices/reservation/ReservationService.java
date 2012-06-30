@@ -4,9 +4,8 @@ import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
 import org.springframework.security.access.annotation.Secured;
 
 import javax.jws.WebService;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
+import javax.ws.rs.core.Response;
 import java.util.List;
 
 /**
@@ -20,6 +19,18 @@ import java.util.List;
 public interface ReservationService {
 
     @GET
-    @Path("/all")
-    public List<ReservationData> getAll();
+    @Path("/{date}")
+    public List<ReservationData> getToDate(@PathParam("date") String date) throws ReservationException;
+
+    @GET
+    @Path("/{fromDate}/{toDate}")
+    public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws ReservationException;
+
+    @PUT
+    @Path("/{groupId}/{date}/{fromHour}/{toHour}")
+    public Response create(@PathParam("groupId")int groupId, @PathParam("date") String date, @PathParam("fromHour") String fromHour, @PathParam("toHour") String toHour) throws ReservationException;
+
+    @DELETE
+    @Path("/{groupId}")
+    public Response delete(@PathParam("groupId")int reservationId) throws ReservationException;
 }
