@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.reservation;
 
+import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
 import org.springframework.security.access.annotation.Secured;
 
@@ -25,6 +26,10 @@ public interface ReservationService {
     @GET
     @Path("/{fromDate}/{toDate}")
     public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws ReservationException;
+
+    @GET
+    @Path("/groups")
+    public List<ResearchGroupData> getMyGroups() throws ReservationException;
 
     @PUT
     @Path("/{groupId}/{date}/{fromHour}/{toHour}")

@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
+import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,10 +16,7 @@ import javax.jws.WebService;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
+import java.util.*;
 
 /**
  * Controller for mapping REST requests upon reservation system.
@@ -85,6 +83,24 @@ public class ReservationServiceImpl implements ReservationService {
             return data;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
+            throw new ReservationException(e);
+        }
+    }
+
+    @Override
+    public List<ResearchGroupData> getMyGroups() throws ReservationException {
+
+        try {
+            Set<ResearchGroup> groups = personDao.getLoggedPerson().getResearchGroups();
+            List<ResearchGroupData> data = new ArrayList<ResearchGroupData>(groups.size());
+
+            for(ResearchGroup g : groups){
+                ResearchGroupData d = new ResearchGroupData(g.getResearchGroupId(), g.getTitle());
+                data.add(d);
+            }
+
+            return data;
+        } catch (Exception e) {
             throw new ReservationException(e);
         }
     }
