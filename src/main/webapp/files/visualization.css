@@ -49,16 +49,13 @@ canvas#canvas {
 }
 
 span#show {
-    width: 100%;
+    width: 98%;
     cursor: pointer;
     display: table;
     height: 11px;
     background-image: url(images/arrow_right.png);
     background-repeat: no-repeat;
-}
-
-span#show hr {
-    text-align: left;
-    vertical-align: middle;
-    width: 100%;
+    border-bottom: 1px solid #000000;
+    padding-left: 2%;
+    margin-bottom: 5px;
 }

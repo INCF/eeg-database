@@ -161,7 +161,7 @@
   </div>
     <c:if test="${filesAvailable}">
 
-        <span id="show" title="<fmt:message key="text.visualization.toggle"/>" onclick="toggleDiv('visualization')"><hr/></span>
+        <span id="show" title="<fmt:message key="text.visualization.toggle"/>" onclick="toggleDiv('visualization')"><fmt:message key="link.toggleVisualization"/></span>
         <div id="visualization" style="display:none; width: 730px;">
             <div id="treeboxbox_tree" style="width: 110px; background-color: #f5f5f5; border: 1px solid Silver; float: right;"></div>
             <div id="encaps" style="width: 600px; height: 430px; overflow: auto;">
