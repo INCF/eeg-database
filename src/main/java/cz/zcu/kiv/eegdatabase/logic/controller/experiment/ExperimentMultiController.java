@@ -5,6 +5,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
+import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
+import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -104,6 +106,7 @@ public class ExperimentMultiController extends MultiActionController {
 
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/detail");
+        VhdrReader vhdr = new VhdrReader();
 
         setPermissionsToView(mav);
         int id = 0;
@@ -116,11 +119,19 @@ public class ExperimentMultiController extends MultiActionController {
         mav.addObject("userIsOwnerOrCoexperimenter", (auth.userIsOwnerOrCoexperimenter(id)) || (auth.isAdmin()));
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
         Boolean filesIn = new Boolean(false);
+        byte[] bytes = null;
         for(DataFile file: m.getDataFiles()) {
             if(file.getFilename().endsWith(".vhdr")) {
                 Blob b = file.getFileContent();
                 try {
-                    byte[] br = b.getBytes(1, (int) b.length());
+                    bytes = file.getFileContent().getBytes(1, (int) file.getFileContent().length());
+                    int index = file.getFilename().lastIndexOf(".");
+                    String fileName = file.getFilename().substring(0, index);
+                    //break;
+                    vhdr.readVhdr(bytes);
+                    List<ChannelInfo> channels = vhdr.getChannels();
+                    mav.addObject("channels", channels);
+
                 } catch (SQLException e) {
                     log.debug("Exception by SQL query.");
                 }

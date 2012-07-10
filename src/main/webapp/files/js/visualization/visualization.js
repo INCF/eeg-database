@@ -175,7 +175,7 @@ function toggleDiv(div, show)
     else {
         $('#' + div).toggle(500);
         if(emptyTree == 1) {
-            fillTree();
+            //fillTree();
             emptyTree = 0;
         }
     }

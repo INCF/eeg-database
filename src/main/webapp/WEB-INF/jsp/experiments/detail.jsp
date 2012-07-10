@@ -167,6 +167,17 @@
             <div id="encaps" style="width: 600px; height: 430px; overflow: auto;">
                 <canvas id="canvas" width="1000" height="400"></canvas>
             </div>
+            <script type="text/javascript">
+                tree = new dhtmlXTreeObject("treeboxbox_tree", "100%", "100%", 0);
+                tree.setSkin('dhx_skyblue');
+                tree.setImagePath("/EEGDatabase/files/images/imgs/");
+                tree.enableDragAndDrop(false);
+                tree.deleteChildItems(0);
+                tree.insertNewChild(0, 1, "Channels");
+                <c:forEach items="${channels}" var="channel" varStatus="counter">
+                    tree.insertNewChild(1,10 + <c:out value="${counter.count}"/>,"<c:out value="${channel.name}"/>");
+                </c:forEach>
+            </script>
             <p>
                 <input type="button" value="Play" onclick="javascript:animationStart()" class="grey" />
                 <input type="button" value="Pause" onclick="javascript:animationPause()" class="grey" />
