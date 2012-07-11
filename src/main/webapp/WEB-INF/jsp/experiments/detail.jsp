@@ -185,7 +185,11 @@
                 <input type="button" value="Clear" onclick="javascript:canvasClear()" class="grey" />
                 <label id="slider_label" for="slider">Speed: </label>
                 <input id="slider" type="range" min="1" max="10" value="5" onchange="javascript:setSpeed()"/><span id="pause_value"></span>
-                <input type="button" value="Export as PNG" onclick="javascript:exportAs()" class="grey" />
+                <select name="export" onchange="exportAs(this.value)">
+                    <option value="0" selected="selected">Export as...</option>
+                    <option value="1">PNG</option>
+                    <option value="2">JPEG</option>
+                </select>
             </p>
         </div>
     </c:if>

@@ -139,11 +139,20 @@ canvasZoom = function (value) {
 };
 
 //export the canvas context as a PNG image
-exportAs = function() {
-    var canvas = document.getElementById('canvas');
-    var img = canvas.toDataURL("image/png");
-    window.open(document.getElementById('canvas').toDataURL("image/png"));
-    //document.getElementById('export').innerHTML = '<h2>Exported image</h2><img src="' + img + '" />';
+exportAs = function(value) {
+    var format = "";
+    if (value > 0)
+    {
+        switch (value) {
+            case '1':format = "image/png";
+                break;
+            case '2':format = "image/jpeg";
+                break;
+        }
+        var canvas = document.getElementById('canvas');
+        var img = canvas.toDataURL(format);
+        window.open(document.getElementById('canvas').toDataURL(format));
+    }
 };
 
 // set speed
@@ -175,7 +184,6 @@ function toggleDiv(div, show)
     else {
         $('#' + div).toggle(500);
         if(emptyTree == 1) {
-            //fillTree();
             emptyTree = 0;
         }
     }
@@ -196,35 +204,4 @@ function getImageUrl(dir)
             }
         }
     }
-}
-
-function fillTree() {
-    tree = new dhtmlXTreeObject("treeboxbox_tree", "100%", "100%", 0);
-    tree.setSkin('dhx_skyblue');
-    tree.setImagePath("/EEGDatabase/files/images/imgs/");
-    tree.enableDragAndDrop(false);
-    //tree.setOnRightClickHandler(_rclick);
-    tree.deleteChildItems(0);
-    tree.insertNewChild(0, 1, "Channels");
-    tree.insertNewChild(1, 11, "Fp1");
-    tree.insertNewChild(1, 12, "Fp2");
-    tree.insertNewChild(1, 13, "F3");
-    tree.insertNewChild(1, 14, "F4");
-    tree.insertNewChild(1, 15, "C3");
-    tree.insertNewChild(1, 16, "C4");
-    tree.insertNewChild(1, 17, "P3");
-    tree.insertNewChild(1, 18, "P4");
-    tree.insertNewChild(1, 19, "01");
-    tree.insertNewChild(1, 20, "02");
-    tree.insertNewChild(1, 21, "F7");
-    tree.insertNewChild(1, 21, "F8");
-    tree.insertNewChild(1, 22, "T7");
-    tree.insertNewChild(1, 23, "T8");
-    tree.insertNewChild(1, 24, "P7");
-    tree.insertNewChild(1, 25, "P8");
-    tree.insertNewChild(1, 26, "Fz");
-    tree.insertNewChild(1, 27, "Pz");
-    tree.insertNewChild(1, 28, "Cz");
-    tree.insertNewChild(1, 29, "M1");
-    tree.insertNewChild(1, 30, "M2");
 }
