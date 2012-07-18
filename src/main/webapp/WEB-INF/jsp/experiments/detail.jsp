@@ -183,7 +183,6 @@
                 <input type="button" value="Play" onclick="javascript:animationStart()" class="grey" />
                 <input type="button" value="Pause" onclick="javascript:animationPause()" class="grey" />
                 <input type="button" value="Stop" onclick="javascript:animationStop()" class="grey" />
-                <input type="button" value="Clear" onclick="javascript:canvasClear()" class="grey" />
                 <label id="slider_label" for="slider">Speed: </label>
                 <input id="slider" type="range" min="1" max="10" value="5" onchange="javascript:setSpeed()"/><span id="pause_value"></span>
                 <select name="export" onchange="exportAs(this.value)">
