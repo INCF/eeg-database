@@ -165,7 +165,7 @@
         <div id="visualization" style="display:none; width: 730px;">
             <div id="treeboxbox_tree" style="width: 110px; background-color: #f5f5f5; border: 1px solid Silver; float: right;"></div>
             <div id="encaps" style="width: 600px; height: 430px; overflow: auto;">
-                <canvas id="canvas" width="1020" height="400"></canvas>
+                <canvas id="canvas" width="1040" height="400"></canvas>
             </div>
             <script type="text/javascript">
                 tree = new dhtmlXTreeObject("treeboxbox_tree", "100%", "100%", 0);
