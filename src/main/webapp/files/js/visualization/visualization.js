@@ -44,15 +44,30 @@ getHeight = function () {
     return canvas.height;
 };
 
+function tonclick(id) {
+    //alert("Item " + tree.getItemText(id) + " was selected + ID " + id);
+};
+
 init = function () {
-    ctx.lineWidth = 0.1;
+    ctx.lineWidth = 1;
     ctx.moveTo(5,200);
-    ctx.lineTo(730,200);
+    ctx.lineTo(getWidth(),200);
     ctx.strokeStyle = '#303030';
     ctx.stroke();
     ctx.moveTo(15,5);
     ctx.lineTo(15,395);
     ctx.stroke();
+    ctx.font = '12px sans-serif';
+    ctx.fillText('0', 5, 212);
+    ctx.fillText('\u03BCV', 0, 15);
+    ctx.fillText('s', getWidth() - 12, 212);
+    var start = 5;
+    for (i = 1; i < 11; i++) {
+        ctx.moveTo(start + i * 100, 196);
+        ctx.lineTo(start + i * 100, 204);
+        ctx.stroke();
+        ctx.fillText(i, start + i * 100, 215);
+    }
 };
 
 // initialization
