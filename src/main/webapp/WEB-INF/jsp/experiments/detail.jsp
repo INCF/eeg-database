@@ -179,10 +179,20 @@
                     tree.insertNewChild(1,10 + <c:out value="${counter.count}"/>,"<c:out value="${channel.name}"/>");
                 </c:forEach>
             </script>
+            <script type="text/javascript">
+            <c:forEach items="${signalData}" varStatus="index">
+                createArray(<c:out value="${index.count}" />);
+                <c:forEach items="${signalData[index.count]}" varStatus="index2">
+                    <c:if test="${not empty signalData[index.count][index2.count]}">
+                        addToArray(<c:out value="${index.count}"/>, <c:out value="${index2.count}"/>, <c:out value="${signalData[index.count][index2.count]}" />);
+                    </c:if>
+                </c:forEach>
+            </c:forEach>
+            </script>
             <p>
-                <input type="button" value="Play" onclick="javascript:animationStart()" class="grey" />
-                <input type="button" value="Pause" onclick="javascript:animationPause()" class="grey" />
-                <input type="button" value="Stop" onclick="javascript:animationStop()" class="grey" />
+                <input id="playbtn" type="button" value="Play" onclick="javascript:animationStart()" class="grey" />
+                <input id="pausebtn" type="button" value="Pause" onclick="javascript:animationPause()" class="grey" />
+                <input id="stopbtn" type="button" value="Stop" onclick="javascript:animationStop()" class="grey" />
                 <label id="slider_label" for="slider">Speed: </label>
                 <input id="slider" type="range" min="1" max="10" value="5" onchange="javascript:setSpeed()"/><span id="pause_value"></span>
                 <select name="export" onchange="exportAs(this.value)">

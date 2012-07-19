@@ -1,9 +1,4 @@
 /*jslint white: true, browser: true, undef: true, nomen: true, eqeqeq: true, plusplus: false, bitwise: true, regexp: true, strict: true, newcap: true, immed: true, maxerr: 14 */
-/*global window: false */
-
-/* enable strict mode */
-//"use strict";
-
 
 var ctx,
 // set intial values for x, y and r
@@ -33,6 +28,7 @@ var ctx,
     rndColor;
 var canvas = document.getElementById("canvas");
 var emptyTree;
+var signalData = new Array();
 
 getWidth = function () {
     var canvas = document.getElementById('canvas');
@@ -44,30 +40,56 @@ getHeight = function () {
     return canvas.height;
 };
 
+createArray = function (index) {
+    signalData[index] = new Array();
+    console.log(index);
+};
+
+addToArray = function (index, index2, data) {
+    if (data != null) {
+        signalData[index][index2] = data;
+    }
+    console.log(signalData[index].toString());
+};
+
 function tonclick(id) {
-    //alert("Item " + tree.getItemText(id) + " was selected + ID " + id);
+    document.getElementById("playbtn").setAttribute("disabled", true);
+    canvasClear();
+    init();
+    run = true;
+    draw();
 };
 
 init = function () {
+    canvasClear();
     ctx.lineWidth = 1;
-    ctx.moveTo(5,200);
-    ctx.lineTo(getWidth(),200);
+    ctx.moveTo(5,getHeight()-30);
+    ctx.lineTo(getWidth(),getHeight()-30);
     ctx.strokeStyle = '#303030';
     ctx.stroke();
     ctx.moveTo(15,5);
     ctx.lineTo(15,395);
     ctx.stroke();
     ctx.font = '12px sans-serif';
-    ctx.fillText('0', 5, 212);
+    ctx.fillText('0', 5, getHeight()-15);
     ctx.fillText('\u03BCV', 0, 15);
-    ctx.fillText('s', getWidth() - 12, 212);
+    ctx.fillText('s', getWidth() - 12, getHeight()-15);
     var start = 5;
     for (i = 1; i < 11; i++) {
-        ctx.moveTo(start + i * 100, 196);
-        ctx.lineTo(start + i * 100, 204);
+        ctx.moveTo(start + i * 100, getHeight()-35);
+        ctx.lineTo(start + i * 100, getHeight()-25);
         ctx.stroke();
-        ctx.fillText(i, start + i * 100, 215);
+        ctx.fillText(i, start + i * 100, getHeight()-15);
     }
+    initPosition();
+};
+
+initPosition = function () {
+    ctx.moveTo(15, originy + 100);
+    ctx.beginPath();
+    ctx.lineWidth = 0.1;
+    ctx.lineJoin = 'round';
+    x = 15;
 };
 
 // initialization
@@ -82,49 +104,22 @@ window.onload = function () {
     // set 2D rendering context
     ctx = canvas.getContext('2d');
     init();
-    ctx.moveTo(15, originy + 100);
-    ctx.beginPath();
-    ctx.lineWidth = 0.1;
-    ctx.lineJoin = 'round';
-    x = 15;
 };
 
 
 // draw circles
 draw = function () {
-    /*ctx.fillStyle = rndColor();
-     // start drawing
-     ctx.beginPath();
-     // draw arc: arc(x, y, radius, startAngle, endAngle, anticlockwise)
-     ctx.arc(x, y, r, 0, Math.PI * 2, true);
-     // fill circle
-     ctx.fill();
-     // set X direction
-     if (x + dx > width || x + dx < 0) {
-     dx = -dx;
-     }
-     // set Y direction
-     if (y + dy > height || y + dy < 0) {
-     dy = -dy;
-     }
-     // set radius size
-     if (r + dr > radius * 2 || r + dr < radius) {
-     dr = -dr;
-     }
-     // calculate new x, y and r values
-     x += dx;
-     y += dy;
-     r += dr;
-     */
     rndCoord();
     y = 200 + rndCoord();
     ctx.lineTo(x, y);
     ctx.strokeStyle = '#12112e';
     ctx.stroke();
-    console.log('[' + x + ',' + y + ']');
-    x += 5;
-    if (x >= 728) {
+    x += 10;
+    if (x >= (getWidth()-30)) {
         run = false;
+        document.getElementById("playbtn").setAttribute("disabled", true);
+        document.getElementById("pausebtn").setAttribute("disabled", true);
+        document.getElementById("stopbtn").setAttribute("disabled", true);
     }
 
     // if "run" variable is true, then set timeout and call draw() again
@@ -133,19 +128,17 @@ draw = function () {
     }
 };
 
-
-// button actions (start / stop)  
+// button actions (start / stop)
 animationStart = function () {
     run = true;
     draw();
 };
 animationPause = function () {
     run = false;
+    document.getElementById("playbtn").removeAttribute("disabled");
 };
 // clear canvas
 canvasClear = function () {
-    /*var canvas = document.getElementById('canvas');
-     canvas.width = canvas.width;*/
     ctx.clearRect(0, 0, getWidth(), getHeight());
 };
 // zoom canvas

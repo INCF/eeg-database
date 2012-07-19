@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
+import cz.zcu.kiv.eegdatabase.logic.signal.EegReader;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Blob;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -107,6 +109,7 @@ public class ExperimentMultiController extends MultiActionController {
     public ModelAndView detail(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("experiments/detail");
         VhdrReader vhdr = new VhdrReader();
+        List<ChannelInfo> channels = null;
 
         setPermissionsToView(mav);
         int id = 0;
@@ -120,6 +123,8 @@ public class ExperimentMultiController extends MultiActionController {
         int subjectPersonId = m.getPersonBySubjectPersonId().getPersonId();
         Boolean filesIn = new Boolean(false);
         byte[] bytes = null;
+        byte[] data = null;
+        ArrayList<double[]> signalData = new ArrayList<double[]>();
         for(DataFile file: m.getDataFiles()) {
             if(file.getFilename().endsWith(".vhdr")) {
                 Blob b = file.getFileContent();
@@ -129,9 +134,8 @@ public class ExperimentMultiController extends MultiActionController {
                     String fileName = file.getFilename().substring(0, index);
                     //break;
                     vhdr.readVhdr(bytes);
-                    List<ChannelInfo> channels = vhdr.getChannels();
+                    channels = vhdr.getChannels();
                     mav.addObject("channels", channels);
-
                 } catch (SQLException e) {
                     log.debug("Exception by SQL query.");
                 }
@@ -139,6 +143,16 @@ public class ExperimentMultiController extends MultiActionController {
                     if((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
                         filesIn = true;
                         Blob b2 = file.getFileContent();
+                        try {
+                            data = b2.getBytes(1, (int) b2.length());
+                            EegReader eeg = new EegReader(vhdr);
+                            for (ChannelInfo ch: channels) {
+                                signalData.add(eeg.readFile(data, ch.getNumber()));
+                            }
+                            mav.addObject("signalData", signalData);
+                        } catch (SQLException e) {
+                            log.debug("Exception by SQL query.");
+                        }
                         try {
                             byte[] br = b.getBytes(1, (int) b.length());
                         } catch (SQLException e) {
