@@ -106,20 +106,19 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Response create(int groupId, String date, String fromHour, String toHour) throws ReservationException {
+    public Response create(ReservationData reservationData) throws ReservationException {
         try {
-            ResearchGroup group = researchGroupDao.read(groupId);
+            ResearchGroup group = researchGroupDao.read(reservationData.getResearchGroupId());
             Reservation reservation = new Reservation();
 
             reservation.setResearchGroup(group);
             reservation.setPerson(personDao.getLoggedPerson());
-            reservation.setStartTime(new Timestamp(sf.parse(fromHour).getTime()));
-            reservation.setEndTime(new Timestamp(sf.parse(toHour).getTime()));
+            reservation.setStartTime(new Timestamp(reservationData.getFromTime().getTime()));
+            reservation.setEndTime(new Timestamp(reservationData.getToTime().getTime()));
             reservation.setCreationTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 
-            reservationDao.createChecked(reservation);
-
-            return Response.ok().build();
+            int id = reservationDao.createChecked(reservation);
+            return Response.ok(reservationData).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new ReservationException(e);
@@ -127,10 +126,14 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Response delete(int reservationId) throws ReservationException {
+    public Response delete(ReservationData data) throws ReservationException {
         try {
-            reservationDao.delete(reservationDao.read(reservationId));
-            return Response.ok(reservationId).build();
+            if(personDao.getLoggedPerson().getResearchGroups().contains(researchGroupDao.read(data.getResearchGroupId()))){
+                reservationDao.delete(reservationDao.read(data.getReservationId()));
+                return Response.ok().build();
+            }
+            else
+                throw new Exception("You are not administrator of the group!");
         } catch (Exception e) {
             log.error(e);
             throw new ReservationException(e);
