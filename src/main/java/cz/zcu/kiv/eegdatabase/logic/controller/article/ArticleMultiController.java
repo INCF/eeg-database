@@ -3,13 +3,14 @@ package cz.zcu.kiv.eegdatabase.logic.controller.article;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.springframework.social.linkedin.api.Group;
+import org.springframework.social.linkedin.api.Post;
+import org.springframework.ui.ModelMap;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
@@ -22,13 +23,12 @@ import javax.xml.stream.events.Characters;
 import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.*;
-import org.springframework.social.linkedin.api.Group;
-import org.springframework.social.linkedin.api.Post;
-import org.springframework.ui.ModelMap;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Controller for adding and editing an article
@@ -293,7 +293,7 @@ public class ArticleMultiController extends MultiActionController {
         mav.addObject("subscribed", article.getSubscribers().contains(loggedUser));
         return mav;
     }
-
+    @RequestMapping(value = "articles/delete", method = RequestMethod.GET)
     public ModelAndView delete(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/articleDeleted");
         setPermissionsToView(mav);
@@ -389,6 +389,7 @@ public class ArticleMultiController extends MultiActionController {
         return mav;
     }
 
+    @RequestMapping(value = "articles/subscribe", method = RequestMethod.GET)
     public ModelAndView subscribe(HttpServletRequest request, HttpServletResponse response) {
         ModelAndView mav = new ModelAndView("articles/subscribe");
         setPermissionsToView(mav);
