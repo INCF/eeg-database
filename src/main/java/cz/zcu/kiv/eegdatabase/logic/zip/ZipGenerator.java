@@ -9,31 +9,31 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
  * @author Jan Štěbeták
  */
 
-import java.io.*;
-import java.sql.Blob;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipOutputStream;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.IScenarioType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.w3c.dom.Document;
 
-import java.sql.SQLException;
 import javax.xml.transform.Result;
 import javax.xml.transform.Source;
 import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-
-import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
-import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipOutputStream;
 
 public class ZipGenerator implements Generator {
 
@@ -42,6 +42,7 @@ public class ZipGenerator implements Generator {
     protected String dir;
     protected String dataZip;
     private Log log = LogFactory.getLog(getClass());
+    private int fileCounter = 0;
 
     public OutputStream generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles) throws Exception, SQLException, IOException {
         ZipOutputStream zos = null;
@@ -91,7 +92,21 @@ public class ZipGenerator implements Generator {
                 if (blob != null) {
                     byte[] pole = blob.getBytes(1, (int) blob.length());
                     log.debug("saving data file to zip file");
-                    zos.putNextEntry(e);
+                    try {
+                        zos.putNextEntry(e);
+                    } catch (ZipException ex) {
+                        String[] partOfName = d.getFilename().split("[.]");
+                        String filename;
+                        if (partOfName.length < 2) {
+                            filename = partOfName[0] + "" + fileCounter;
+                        } else {
+                            filename = partOfName[0] + "" + fileCounter + "." + partOfName[1];
+                        }
+                        e = new ZipEntry(getDataZip() + "/" + filename);
+                        zos.putNextEntry(e);
+                        fileCounter++;
+                    }
+
                     zos.write(pole);
                     zos.closeEntry();
                 }
@@ -101,6 +116,7 @@ public class ZipGenerator implements Generator {
         } finally {
             zos.flush();
             zos.close();
+            fileCounter = 0;
 
         }
         return baos;
