@@ -46,6 +46,10 @@
   {
     "error":"Authentication error"
   },
+  "author":
+  {
+    "author":"Author"
+  },
   "bookRoom":
   {
     "ajax":
@@ -223,6 +227,7 @@
     {
       "articleTitle":"Article title",
       "changeRoleTo":"Change role to",
+      "compensation":"Compensation",
       "count":"Count",
       "date":"Date",
       "delete":"Delete",
@@ -265,6 +270,7 @@
       "personAdditionalParamsName":"Parameter name",
       "personOptionalParamName":"Parameter name",
       "personOptionalParamValue":"Value",
+      "rejectCondition":"Reject Condition",
       "requirementReason":"Requirement reason",
       "resultStatus":"Status",
       "resultTitle":"Title",
@@ -319,6 +325,10 @@
   },
   "error":
   {
+    "badRequest":
+    {
+      "title":"Bad request"
+    },
     "databaseError":
     {
       "message":"A database error occured.",
@@ -381,7 +391,8 @@
     "searchFor":"Search for",
     "searchResult":"Search Results",
     "subjectPerson":"Subject person",
-    "usedHardware":"Used hardware"
+    "usedHardware":"Used hardware",
+    "visualization":"Visualization"
   },
   "homePage":
   {
@@ -421,6 +432,7 @@
     "chooseGroup":"Choose group",
     "coExperimenters":"Co-experimenters",
     "comment":"Comment",
+    "compensation":"Compensation",
     "controlText":"Control text",
     "data":"Data files",
     "dataFile":"Data file(s)",
@@ -494,6 +506,7 @@
     "phoneNumber":"Phone number",
     "private":"Private",
     "publicArticle":"Public article",
+    "rejectCondition":"Reject condition",
     "rememberMe":"Remember me on this computer.",
     "repeatPassword":"Repeat password",
     "researchGroup":"Research group",
@@ -508,6 +521,7 @@
     "scenarioSchema":"Scenario schema",
     "scenarioSchemaDescription":"Schema description",
     "scenarioTitle":"Scenario title",
+    "searchText":"Searched text",
     "selectResearchGroup":"Select research group",
     "service":"Select a service",
     "startDate":"Start date",
@@ -545,8 +559,10 @@
   },
   "link":
   {
+    "addArtifactDefinition":"Add artifact definition",
+    "addExperimentParameters":"Add experiment parameters",
     "addFileMetadataDefinition":"Add file metadata definition",
-    "addHardwareDefinition":"Add hardware definition        ",
+    "addHardwareDefinition":"Add hardware definition",
     "addHearingImpairment":"Add hearing impairment",
     "addPersonOptionalParameter":"Add optional parameter for people     ",
     "addVisualImpairment":"Add visual impairment",
@@ -575,6 +591,7 @@
     "fastFourier":"Fast Fourier Transformation",
     "matchingPursuit":"Matching Pursuit",
     "services":"Services",
+    "toggleVisualization":"Toggle visualization",
     "viewDetailOfPerson":"View detail of person",
     "viewDetailOfScenario":"View detail of scenario"
   },
@@ -592,11 +609,13 @@
     {
       "settings":"Articles Settings"
     },
+    "artifactDefinitions":"Artifact definitions",
     "bookingRoom":"Book room for group",
     "changeUserRole":"Change user role",
     "createGroup":"Create group",
     "experiments":"Experiments",
     "fileMetadataDefinitions":"File metadata definitions",
+    "fulltext":"Fulltext Search",
     "groups":"Groups",
     "hardwareDefinitions":"Hardware definitions",
     "hearingImpairments":"Hearing impairments",
@@ -626,6 +645,7 @@
     "people":"People",
     "requestForGroupRole":"Request for group role",
     "scenarios":"Scenarios",
+    "search":"Search",
     "searchMeasuration":"Search experiment",
     "searchPeople":"Search people",
     "searchScenario":"Search scenario",
@@ -668,9 +688,11 @@
     "accessDenied":"Access denied",
     "accountOverview":"Account overview",
     "addArticle":"Add new article",
+    "addArtifactDefinition":"Add artifact definition",
     "addDataFile":"Add data file",
     "addEdit;FileMetadataDefinition":"Add/edit file metadata definition",
     "addEditArticle":"Add or edit an article",
+    "addEditArtifactDefinition":"Add/edit artifact definition",
     "addEditExperiment":"Add/edit experiment",
     "addEditExperimentOptionalParameterDefinition":"Add/edit experiment optional parameter",
     "addEditHardwareDefinition":"Add/edit hardware definition",
@@ -682,6 +704,7 @@
     "addEditVisualImpairment":"Add/edit visual impairment",
     "addEditWeatherDefinition":"Add/edit weather definition",
     "addExperiment":"Add experiment",
+    "addExperimentParameters":"Add parameters for experiment",
     "addEyesDefectToPerson":"Add eyes defect",
     "addFileMetadataDefinition":"Add file metadata definition",
     "addHardwareDefinition":"Add hardware definition",
@@ -702,6 +725,7 @@
     "applyForWritingPermission":"Request for data uploading permission",
     "articleDeleted":"Article succesfully deleted",
     "articlesSettings":"Articles Settings",
+    "artifactList":"List of artifact definitions",
     "bookingRoom":"Book UU403 for experiment",
     "changeDefaultGroup":"Change default group",
     "changePassword":"Change password",
@@ -771,10 +795,12 @@
     "researchGroupDetail":"Group detail",
     "roleChanged":"Role changed",
     "scenarioDetail":"Scenario detail",
+    "search":"Fulltext search",
     "searchResult":"List of download history",
     "services":"EEG Signal Processing Services",
     "servicesResult":"Services Results",
     "socialOverview":"Social networks",
+    "unsupportedBrowser":"Unsupported browser",
     "userNotExperimenter":"Experimenter role needed",
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
@@ -785,6 +811,10 @@
   {
     "fromSchemaList":"Select from available schemas",
     "noSchema":"No scenario schema"
+  },
+  "readMore":
+  {
+    "readMore":"Read more"
   },
   "registration":
   {
@@ -798,6 +828,10 @@
       "subject":"Your access to EEG-base",
       "welcome":"Welcome!"
     }
+  },
+  "researchGroup":
+  {
+    "researchGroup":"Research group"
   },
   "resetArticlesFilter":
   {
@@ -923,6 +957,15 @@
         "part1":"Permission for the user",
         "part2":"was granted."
       }
+    },
+    "unsupportedBrowser":
+    {
+      "description":"Please, choose one of the following browsers and download the newest version if you would like to try the EEG signal. Otherwise close this window and continue.",
+      "intro":"We are sorry, but your browser does not support our visualization tool."
+    },
+    "visualization":
+    {
+      "toggle":"Click for toggle visualization"
     },
     "youNeedExperimenterRole":"You need experimenter role in a group to add data.",
     "youNeedToBeOwnerOrCoexperimenterToEditExperiment":"You need to be owner or co-experimenter to edit experiment."

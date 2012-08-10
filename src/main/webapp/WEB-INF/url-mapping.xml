@@ -82,7 +82,7 @@
                 <prop key="administration/change-user-role.html">changeUserRoleController</prop>
 
                 <!-- the url is without extension so the file can be downloaded with whatever file extension (known issue when using e.g. Opera browser -->
-                <prop key="experiments/data/download">measurationDataOutputController</prop>
+                <prop key="experiments/data/download.html">measurationDataOutputController</prop>
                 <prop key="scenarios/download-xml.html">scenarioXMLDownloadController</prop>
 
                 <!-- Full text search-->

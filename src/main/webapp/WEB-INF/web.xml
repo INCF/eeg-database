@@ -98,14 +98,7 @@
         <servlet-name>dispatcher</servlet-name>
         <url-pattern>*.html</url-pattern>
     </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/experiments/data/download</url-pattern>
-    </servlet-mapping>
-    <servlet-mapping>
-        <servlet-name>dispatcher</servlet-name>
-        <url-pattern>/scenarios/download-xml</url-pattern>
-    </servlet-mapping>
+
     <!-- WEBSERVICES -->
     <servlet>
         <servlet-name>CXFServlet</servlet-name>

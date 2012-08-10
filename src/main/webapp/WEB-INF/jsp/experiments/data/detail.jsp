@@ -72,7 +72,7 @@
   </form:form>
 
   <div class="actionBox">
-    <a href="<c:url value='download?fileId=${dataDetail.dataFileId}' />" class="lightButtonLink"><fmt:message key="button.downloadFile"/></a>
+    <a href="<c:url value='download.html?fileId=${dataDetail.dataFileId}' />" class="lightButtonLink"><fmt:message key="button.downloadFile"/></a>
     <a href="<c:url value='../detail.html?experimentId=${dataDetail.experiment.experimentId}' />" class="lightButtonLink"><fmt:message key="button.backToMeasuration"/></a>
   </div>
 </ui:dataTemplate>
