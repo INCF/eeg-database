@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Configure class="org.mortbay.jetty.webapp.WebAppContext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
-    <!-- Remove this line for the production server-->
+    <!-- Set context path to / in production server-->
   <Set name="contextPath">/EEGDatabase</Set>
   <Get name="sessionHandler">
         <Get name="sessionManager">
