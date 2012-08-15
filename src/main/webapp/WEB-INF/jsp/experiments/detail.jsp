@@ -170,7 +170,7 @@
             <script type="text/javascript">
                 tree = new dhtmlXTreeObject("treeboxbox_tree", "100%", "100%", 0);
                 tree.setSkin('dhx_skyblue');
-                tree.setImagePath("/EEGDatabase/files/images/imgs/");
+                tree.setImagePath("<c:url value='/files/images/imgs/'/>");
                 tree.enableDragAndDrop(false);
                 tree.setOnClickHandler(tonclick);
                 tree.deleteChildItems(0);
