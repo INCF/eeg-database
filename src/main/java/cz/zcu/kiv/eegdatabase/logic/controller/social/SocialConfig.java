@@ -66,7 +66,7 @@ public class SocialConfig {
 
     /**
      * Proxy for primary linkedin connection.
-     *
+     *                                                            ;
      * @throws NotConnectedException when no user signed in
      */
     @Bean
