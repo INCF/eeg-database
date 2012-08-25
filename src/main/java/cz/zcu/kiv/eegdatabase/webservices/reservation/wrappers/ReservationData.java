@@ -20,16 +20,34 @@ public class ReservationData implements Serializable {
     private int researchGroupId;
     private Date fromTime;
     private Date toTime;
+    private String creatorName;
+    private String creatorMailUsername;
+    private String creatorMailDomain;
 
     public ReservationData() {
     }
 
-    public ReservationData(int reservationId, String researchGroup, int researchGroupId, Date fromTime, Date toTime) {
+    public ReservationData(int reservationId, String researchGroup, int researchGroupId, Date fromTime, Date toTime, String creatorName, String creatorMail) {
         this.reservationId = reservationId;
         this.researchGroup = researchGroup;
         this.researchGroupId = researchGroupId;
         this.fromTime = fromTime;
         this.toTime = toTime;
+        this.creatorName = creatorName;
+
+        parseMail(creatorMail);
+    }
+
+    private void parseMail(String creatorMail) {
+        char mailSeparator = '@';
+
+        if (creatorMail != null && creatorMail.contains(""+mailSeparator)) {
+            String[] mail = creatorMail.split(""+mailSeparator);
+            if (mail.length == 2) {
+                creatorMailUsername = mail[0];
+                creatorMailDomain = mail[1];
+            }
+        }
     }
 
     public int getReservationId() {
@@ -72,5 +90,29 @@ public class ReservationData implements Serializable {
 
     public void setToTime(Date toTime) {
         this.toTime = toTime;
+    }
+
+    public String getCreatorName() {
+        return creatorName;
+    }
+
+    public void setCreatorName(String creatorName) {
+        this.creatorName = creatorName;
+    }
+
+    public String getCreatorMailUsername() {
+        return creatorMailUsername;
+    }
+
+    public void setCreatorMailUsername(String creatorMailUsername) {
+        this.creatorMailUsername = creatorMailUsername;
+    }
+
+    public String getCreatorMailDomain() {
+        return creatorMailDomain;
+    }
+
+    public void setCreatorMailDomain(String creatorMailDomain) {
+        this.creatorMailDomain = creatorMailDomain;
     }
 }

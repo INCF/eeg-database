@@ -56,7 +56,13 @@ public class ReservationServiceImpl implements ReservationService {
             List<ReservationData> data = new ArrayList<ReservationData>(reservations.size());
 
             for (Reservation r : reservations) {
-                data.add(new ReservationData(r.getReservationId(), r.getResearchGroup().getTitle(), r.getResearchGroup().getResearchGroupId(), r.getStartTime(), r.getEndTime()));
+                data.add(new ReservationData(r.getReservationId(),
+                                        r.getResearchGroup().getTitle(),
+                                        r.getResearchGroup().getResearchGroupId(),
+                                        r.getStartTime(),
+                                        r.getEndTime(),
+                                        r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
+                                        r.getPerson().getEmail()));
             }
 
             return data;
@@ -77,12 +83,18 @@ public class ReservationServiceImpl implements ReservationService {
             List<ReservationData> data = new ArrayList<ReservationData>(reservations.size());
 
             for (Reservation r : reservations) {
-                data.add(new ReservationData(r.getReservationId(), r.getResearchGroup().getTitle(), r.getResearchGroup().getResearchGroupId(), r.getStartTime(), r.getEndTime()));
+                data.add(new ReservationData(r.getReservationId(),
+                        r.getResearchGroup().getTitle(),
+                        r.getResearchGroup().getResearchGroupId(),
+                        r.getStartTime(),
+                        r.getEndTime(),
+                        r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
+                        r.getPerson().getEmail()));
             }
 
             return data;
         } catch (Exception e) {
-            log.error(e.getMessage(), e);
+            log.error(String.format("From date: %s | To date: %s | Error: %s", fromDate, toDate, e.getMessage()), e);
             throw new ReservationException(e);
         }
     }
