@@ -12,6 +12,13 @@
       <a href="<c:url value='/logout'/>" title="<fmt:message key='system.logOut'/>"><fmt:message key='system.logOut'/></a>
     </div>
   </security:authorize>
+    <security:authorize ifAnyGranted="ROLE_USER,ROLE_ADMIN">
+     <c:url value="/experiments/fulltext.html" var="formUrl"/>
+     <form:form action="${formUrl}" method="post" commandName="fullTextSearchCommand" cssClass="globalSearch">
+          <input type="text" name="searchTI" value="" size="20" class="textfield" />
+          <input type="submit" value="<fmt:message key='button.fulltextSearch'/>" name="searchBT" class="button" />
+      </form:form>
+      </security:authorize>
   <security:authorize ifAnyGranted="ROLE_ANONYMOUS">
     <div class="loggedUserBox">
       <fmt:message key='system.noUserLogged'/>
@@ -24,7 +31,6 @@
 
     <security:authorize ifNotGranted="ROLE_ANONYMOUS">
       <li><a href="<c:url value='/articles/list.html'/>" title="<fmt:message key='menuItem.articles'/>"><fmt:message key='menuItem.articles'/></a></li>
-       <li><a href="<c:url value='/search/index.html'/>" title="<fmt:message key='menuItem.search'/>"><fmt:message key='menuItem.search'/></a></li>
       <li><a href="<c:url value='/experiments/list.html'/>" title="<fmt:message key='menuItem.experiments'/>"><fmt:message key='menuItem.experiments'/></a></li>
       <li><a href="<c:url value='/scenarios/list.html'/>" title="<fmt:message key='menuItem.scenarios'/>"><fmt:message key='menuItem.scenarios'/></a></li>
       <li><a href="<c:url value='/groups/list.html'/>" title="<fmt:message key='menuItem.groups'/>"><fmt:message key='menuItem.groups'/></a></li>

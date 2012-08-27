@@ -3,7 +3,7 @@
 <%@taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:searchTemplate pageTitle="pageTitle.fulltextSearch">
+<ui:experimentsTemplate pageTitle="pageTitle.fulltextSearch">
   <fieldset class="resultf">
     <h1><fmt:message key="heading.searchResult"/></h1>
 
@@ -32,4 +32,4 @@
       </c:choose>
     </table>
   </fieldset>
-</ui:searchTemplate>
+</ui:experimentsTemplate>
