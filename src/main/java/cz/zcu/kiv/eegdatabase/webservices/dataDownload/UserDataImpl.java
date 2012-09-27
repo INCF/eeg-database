@@ -7,6 +7,8 @@ import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -25,7 +27,6 @@ import java.util.*;
  * @author Petr Miko
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataService")
-@SuppressWarnings("unchecked")
 public class UserDataImpl implements UserDataService {
 
     /* necessary Dao objects*/
@@ -37,7 +38,7 @@ public class UserDataImpl implements UserDataService {
     private ScenarioDao scenarioDao;
     private ResearchGroupDao researchGroupDao;
     private HardwareDao hardwareDao;
-    private GenericDao<DataFile, Integer> dataFileDao;
+    private DataFileDao dataFileDao;
     private DigitizationDao digitizationDao;
     private GenericListDao<Artifact> artifactDao;
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
@@ -67,7 +68,7 @@ public class UserDataImpl implements UserDataService {
         this.hardwareDao = hardwareDao;
     }
 
-    public void setDataFileDao(GenericDao<DataFile, Integer> dataFileDao) {
+    public void setDataFileDao(DataFileDao dataFileDao) {
         this.dataFileDao = dataFileDao;
     }
 
@@ -346,8 +347,7 @@ public class UserDataImpl implements UserDataService {
 
         try {
             if (inputData != null) {
-//                TODO rewrite into not-deprecated form
-                Blob blob = Hibernate.createBlob(inputData.getInputStream(), (int) dataFile.getFileLength());
+                Blob blob = dataFileDao.createBlob(inputData.getInputStream(), (int) dataFile.getFileLength());
                 file.setFileContent(blob);
             }
         } catch (IOException e) {

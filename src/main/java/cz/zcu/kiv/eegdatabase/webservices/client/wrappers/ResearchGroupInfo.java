@@ -8,7 +8,7 @@ import java.util.List;
  */
 public class ResearchGroupInfo {
     private int researchGroupId;
-    private String ownerUsername;
+    private int personOwner;
     private String title;
     private String description;
     private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
@@ -25,13 +25,7 @@ public class ResearchGroupInfo {
         this.researchGroupId = researchGroupId;
     }
 
-    public String getOwnerUsername() {
-        return ownerUsername;
-    }
 
-    public void setOwnerUsername(String ownerUsername) {
-        this.ownerUsername = ownerUsername;
-    }
 
     public String getTitle() {
         return title;
@@ -87,5 +81,13 @@ public class ResearchGroupInfo {
 
     public void setFileMetadataParamDefInfos(List<FileMetadataParamDefInfo> fileMetadataParamDefInfos) {
         this.fileMetadataParamDefInfos = fileMetadataParamDefInfos;
+    }
+
+    public int getPersonOwner() {
+        return personOwner;
+    }
+
+    public void setPersonOwner(int personOwner) {
+        this.personOwner = personOwner;
     }
 }

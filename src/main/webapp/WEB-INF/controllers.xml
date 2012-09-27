@@ -239,10 +239,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.DataFile</value>
-        </constructor-arg>
+    <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDataFileDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 

@@ -1,21 +1,13 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamValId;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId;
 
 /**
  * @author František Liška
  */
-public class PersonOptParamValInfo {
-    private PersonOptParamValId id;
+public class ExperimentOptParamValInfo {
+    private ExperimentOptParamValId id;
     private String paramValue;
-
-    public PersonOptParamValId getId() {
-        return id;
-    }
-
-    public void setId(PersonOptParamValId id) {
-        this.id = id;
-    }
 
     public String getParamValue() {
         return paramValue;
@@ -23,5 +15,13 @@ public class PersonOptParamValInfo {
 
     public void setParamValue(String paramValue) {
         this.paramValue = paramValue;
+    }
+
+    public ExperimentOptParamValId getId() {
+        return id;
+    }
+
+    public void setId(ExperimentOptParamValId id) {
+        this.id = id;
     }
 }

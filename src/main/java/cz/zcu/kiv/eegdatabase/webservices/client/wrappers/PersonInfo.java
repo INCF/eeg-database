@@ -16,7 +16,7 @@ public class PersonInfo {
     private String note;
     private String username;
     private char laterality;
-    private String educationLevelTitle;
+    private int educationLevelId;
 
     public PersonInfo() {
     }
@@ -119,12 +119,13 @@ public class PersonInfo {
         this.laterality = laterality;
     }
 
-    public String getEducationLevelTitle() {
-        return educationLevelTitle;
+
+    public int getEducationLevelId() {
+        return educationLevelId;
     }
 
-    public void setEducationLevelTitle(String  educationLevelTitle) {
-        this.educationLevelTitle = educationLevelTitle;
+    public void setEducationLevelId(int educationLevelId) {
+        this.educationLevelId = educationLevelId;
     }
 }
 

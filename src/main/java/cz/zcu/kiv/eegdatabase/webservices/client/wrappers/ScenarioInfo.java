@@ -6,7 +6,7 @@ package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 public class ScenarioInfo {
 
     private int scenarioId;
-    private String ownerUsername;
+    private int personOwner;
     private String title;
     private int scenarioLength;
     private boolean privateScenario;
@@ -123,14 +123,6 @@ public class ScenarioInfo {
         this.mimeType = mimeType;
     }
 
-    public String getOwnerUsername() {
-        return ownerUsername;
-    }
-
-    public void setOwnerUsername(String ownerUsername) {
-        this.ownerUsername = ownerUsername;
-    }
-
     public boolean isPrivateScenario() {
         return privateScenario;
     }
@@ -145,5 +137,13 @@ public class ScenarioInfo {
 
     public void setResearchGroupTitle(String researchGroupTitle) {
         this.researchGroupTitle = researchGroupTitle;
+    }
+
+    public int getPersonOwner() {
+        return personOwner;
+    }
+
+    public void setPersonOwner(int personOwner) {
+        this.personOwner = personOwner;
     }
 }
