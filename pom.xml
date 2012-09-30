@@ -20,6 +20,7 @@
         <org.springframework.social.facebook-version>1.0.1.RELEASE</org.springframework.social.facebook-version>
         <org.springframework.social.linkedin-version>1.0.0.RC1</org.springframework.social.linkedin-version>
 
+		<wicket.version>6.0.0</wicket.version>
         <spring.webmvc.struts.version>2.5.6.SEC02</spring.webmvc.struts.version>
         <slf4j-version>1.6.1</slf4j-version>
 
@@ -328,6 +329,43 @@
             <artifactId>spring-social-linkedin</artifactId>
             <version>${org.springframework.social.linkedin-version}</version>
         </dependency>
+        
+        <!--======================================= Wicket ============================================= -->
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-core</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-extensions</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-spring</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-ioc</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-auth-roles</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
+
+		<dependency>
+			<groupId>org.apache.wicket</groupId>
+			<artifactId>wicket-util</artifactId>
+			<version>${wicket.version}</version>
+		</dependency>
 
         <!--======================================= Hibernate ============================================= -->
 
@@ -660,6 +698,30 @@
             <name>java.net Repository for Maven</name>
             <url>http://download.java.net/maven/2/</url>
         </repository>
+
+		<!-- Wicket base repository -->
+		<repository>
+			<id>Apache Nexus</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
+
+		<!-- Wicket base repository -->
+		<repository>
+			<id>Apache Nexus</id>
+			<url>https://repository.apache.org/content/repositories/snapshots/</url>
+			<releases>
+				<enabled>false</enabled>
+			</releases>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</repository>
 
     </repositories>
 
