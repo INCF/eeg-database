@@ -22,6 +22,7 @@ public interface ClientService {
     public int addHardware(HardwareInfo info);
     public int addWeather(WeatherInfo info);
     public int addResearchGroup(ResearchGroupInfo info);
+    public void addResearchGroupMembership(ResearchGroupMembershipInfo info);
     public int addPerson(PersonInfo info);
     //public int createScenario(ScenarioInfo info);
     public int addDataFile(DataFileInfo info, @XmlMimeType("application/octet-stream") DataHandler inputData) throws ClientServiceException;

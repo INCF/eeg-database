@@ -77,6 +77,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <property name="fileMetadataParamValDao" ref="fileMetadataDao"/>
         <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
+        <property name="researchGroupMembershipDao" ref="researchGroupMembershipDao"/>
     </bean>
 
 

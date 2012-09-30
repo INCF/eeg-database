@@ -12,6 +12,7 @@ import javax.jws.WebService;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,7 +20,6 @@ import java.util.List;
  * @author František Liška
  */
 @WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.client.ClientService")
-@SuppressWarnings("unchecked")
 public class ClientServiceImpl implements ClientService{
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
@@ -30,9 +30,10 @@ public class ClientServiceImpl implements ClientService{
     private PersonOptParamDefDao personOptParamDefDao;
     private DataFileDao dataFileDao;
     private ExperimentDao experimentDao;
-    private SimpleGenericDao<PersonOptParamVal,PersonOptParamValId> personOptParamValDao;
-    private SimpleGenericDao<ExperimentOptParamVal,ExperimentOptParamValId> experimentOptParamValDao;
-    private SimpleGenericDao<FileMetadataParamVal,FileMetadataParamValId> fileMetadataParamValDao;
+    private GenericDao<PersonOptParamVal,PersonOptParamValId> personOptParamValDao;
+    private GenericDao<ExperimentOptParamVal,ExperimentOptParamValId> experimentOptParamValDao;
+    private GenericDao<FileMetadataParamVal,FileMetadataParamValId> fileMetadataParamValDao;
+    private GenericDao<ResearchGroupMembership,ResearchGroupMembershipId> researchGroupMembershipDao;
     private ExperimentOptParamDefDao experimentOptParamDefDao;
     private FileMetadataParamDefDao fileMetadataParamDefDao;
     private ScenarioDao scenarioDao;
@@ -83,6 +84,29 @@ public class ClientServiceImpl implements ClientService{
         p.getResearchGroups().add(r);
         personDao.update(p);
         return newId;
+    }
+
+    @Override
+    public void addResearchGroupMembership(ResearchGroupMembershipInfo info) {
+        try{
+        ResearchGroupMembershipId id = new ResearchGroupMembershipId();
+        ResearchGroupMembership membership = new ResearchGroupMembership();
+        Person p = personDao.read(info.getId().getPersonId());
+        ResearchGroup r = researchGroupDao.read(info.getId().getResearchGroupId());
+        id.setPersonId(p.getPersonId());
+        id.setResearchGroupId(r.getResearchGroupId());
+        membership.setId(id);
+        membership.setAuthority(info.getAuthority());
+        membership.setPerson(p);
+        membership.setResearchGroup(r);
+        researchGroupMembershipDao.create(membership);
+        p.getResearchGroupMemberships().add(membership);
+        r.getResearchGroupMemberships().add(membership);
+        personDao.update(p);
+        researchGroupDao.update(r);
+        }catch(Exception e ){
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -296,6 +320,18 @@ public class ClientServiceImpl implements ClientService{
             if(r.getPerson()!=null){
                 i.setPersonOwner(r.getPerson().getPersonId());
             }
+            // adding research group memberships
+            List<ResearchGroupMembership> memberships = researchGroupMembershipDao.readByParameter("researchGroup.researchGroupId",r.getResearchGroupId());
+            for(ResearchGroupMembership rm : memberships){
+                ResearchGroupMembershipInfo ri = new ResearchGroupMembershipInfo();
+                ResearchGroupMembershipId id = new ResearchGroupMembershipId();
+                id.setPersonId(rm.getId().getPersonId());
+                id.setResearchGroupId(rm.getId().getResearchGroupId());
+                ri.setAuthority(rm.getAuthority());
+                ri.setId(id);
+                i.getResearchGroupMembershipInfos().add(ri);
+            }
+
             // adding hardware
             List<Hardware> hardwareDb = hardwareDao.getRecordsByGroup(r.getResearchGroupId());
             for(Hardware h : hardwareDb) {
@@ -442,5 +478,13 @@ public class ClientServiceImpl implements ClientService{
 
     public void setFileMetadataParamValDao(SimpleGenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao) {
         this.fileMetadataParamValDao = fileMetadataParamValDao;
+    }
+
+    public GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> getResearchGroupMembershipDao() {
+        return researchGroupMembershipDao;
+    }
+
+    public void setResearchGroupMembershipDao(GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> researchGroupMembershipDao) {
+        this.researchGroupMembershipDao = researchGroupMembershipDao;
     }
 }

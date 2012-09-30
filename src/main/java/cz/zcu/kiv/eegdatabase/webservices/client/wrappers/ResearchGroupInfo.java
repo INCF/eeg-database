@@ -16,6 +16,7 @@ public class ResearchGroupInfo {
     private List<PersonOptParamDefInfo> personOptParamDefInfos = new LinkedList<PersonOptParamDefInfo>();
     private List<ExperimentOptParamDefInfo> experimentOptParamDefInfos = new LinkedList<ExperimentOptParamDefInfo>();
     private List<FileMetadataParamDefInfo> fileMetadataParamDefInfos = new LinkedList<FileMetadataParamDefInfo>();
+    private List<ResearchGroupMembershipInfo> researchGroupMembershipInfos = new LinkedList<ResearchGroupMembershipInfo>();
 
     public int getResearchGroupId() {
         return researchGroupId;
@@ -89,5 +90,13 @@ public class ResearchGroupInfo {
 
     public void setPersonOwner(int personOwner) {
         this.personOwner = personOwner;
+    }
+
+    public List<ResearchGroupMembershipInfo> getResearchGroupMembershipInfos() {
+        return researchGroupMembershipInfos;
+    }
+
+    public void setResearchGroupMembershipInfos(List<ResearchGroupMembershipInfo> researchGroupMembershipInfos) {
+        this.researchGroupMembershipInfos = researchGroupMembershipInfos;
     }
 }

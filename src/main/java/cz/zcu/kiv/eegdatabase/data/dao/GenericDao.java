@@ -4,6 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
 import org.apache.lucene.queryParser.ParseException;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Restrictions;
 
 /**
  * Interface for connecting logic and data layer.
@@ -28,6 +30,22 @@ public interface GenericDao <T, PK extends Serializable>{
      * agreement with PK
      */
     T read(PK id);
+
+    /**
+     * Method read record (row) in database based on column and it's value.
+     * @param parameterName - hibernate name of the parameter (column)
+     * @param parameterValue - value of the parameter
+     * @return object that was selected in database
+     */
+    List<T> readByParameter(String parameterName, int parameterValue);
+
+    /**
+     * Method read record (row) in database based on column and it's value.
+     * @param parameterName - hibernate name of the parameter (column)
+     * @param parameterValue - value of the parameter
+     * @return object that was selected in database
+     */
+    List <T> readByParameter(String parameterName, String parameterValue);
 
     /**
      * Method update data in database.

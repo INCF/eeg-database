@@ -22,9 +22,11 @@ import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.search.highlight.Formatter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
 
+import org.hibernate.criterion.Restrictions;
 import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Fields;
@@ -72,6 +74,30 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public T read(PK id) {
         return (T) getHibernateTemplate().get(type, id);
+    }
+
+    /**
+     * Method read record (row) in database based on column and it's value.
+     * @param parameterName - hibernate name of the parameter (column)
+     * @param parameterValue - value of the parameter
+     * @return object that was selected in database
+     */
+    public List<T> readByParameter(String parameterName, int parameterValue) {
+        Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
+        criteria.add(Restrictions.eq(parameterName, parameterValue));
+        return criteria.list();
+    }
+
+    /**
+     * Method read record (row) in database based on column and it's value.
+     * @param parameterName - hibernate name of the parameter (column)
+     * @param parameterValue - value of the parameter
+     * @return object that was selected in database
+     */
+    public List<T> readByParameter(String parameterName, String parameterValue) {
+        Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
+        criteria.add(Restrictions.eq(parameterName, parameterValue));
+        return criteria.list();
     }
 
     /**
