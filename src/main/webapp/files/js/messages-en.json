@@ -704,6 +704,7 @@
     "addEditVisualImpairment":"Add/edit visual impairment",
     "addEditWeatherDefinition":"Add/edit weather definition",
     "addExperiment":"Add experiment",
+    "addExperimentOptionalParameter":"Add optional parameter for experiment",
     "addExperimentParameters":"Add parameters for experiment",
     "addEyesDefectToPerson":"Add eyes defect",
     "addFileMetadataDefinition":"Add file metadata definition",

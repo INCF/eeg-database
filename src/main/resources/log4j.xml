@@ -28,7 +28,7 @@
     </appender>
 
     <root>
-        <priority value="error"/>
+        <priority value="trace"/>
         <appender-ref ref="logFile"/>
         <appender-ref ref="console"/>
     </root>
