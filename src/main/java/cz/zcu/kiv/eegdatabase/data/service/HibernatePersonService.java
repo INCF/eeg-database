@@ -86,7 +86,12 @@ public class HibernatePersonService implements PersonService {
     @Override
     public Person createPerson(SocialUser userFb, Integer educationLevelId){
         //copying the data to Person entity
-        Person person = new Person();
+
+        Person person = personDao.getPerson(userFb.getEmail());
+        if (person != null) {
+            return person;
+        }
+        person = new Person();
         person.setUsername(userFb.getEmail());
         person.setGivenname(userFb.getFirstName());
         person.setSurname(userFb.getLastName());
