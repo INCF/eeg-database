@@ -22,10 +22,14 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
     <security:global-method-security secured-annotations="enabled" />
 
-    <jaxws:endpoint
-   	  id="clientService"
-   	  implementor="#clientDataService"
-   	  address="/ClientService" />
+    <jaxws:endpoint id="clientService"
+                       implementor="#clientDataService"
+                       address="/ClientService">
+           <jaxws:properties>
+               <entry key="mtom-enabled" value="true"/>
+           </jaxws:properties>
+       </jaxws:endpoint>
+
 
     <jaxws:endpoint id="userDataService"
                     implementor="#userData"

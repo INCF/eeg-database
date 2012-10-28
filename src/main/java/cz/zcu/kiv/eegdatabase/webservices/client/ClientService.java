@@ -4,11 +4,13 @@ import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.*;
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
+import javax.xml.ws.soap.MTOM;
 import java.util.List;
 
 /**
  * @author František Liška
  */
+@MTOM
 @WebService
 public interface ClientService {
     boolean isServiceAvailable();
