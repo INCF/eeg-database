@@ -32,5 +32,10 @@
         <appender-ref ref="logFile"/>
         <appender-ref ref="console"/>
     </root>
+    
+    <log4j:logger name="log4j.logger.org.apache.wicket"><log4j:level value="info"/></log4j:logger>
+    <log4j:logger name="log4j.logger.org.apache.wicket.protocol.http.HttpSessionStore"><log4j:level value="info"/></log4j:logger>
+    <log4j:logger name="log4j.logger.org.apache.wicket.version"><log4j:level value="info"/></log4j:logger>
+    <log4j:logger name="log4j.logger.org.apache.wicket.RequestCycle"><log4j:level value="info"/></log4j:logger>
 
 </log4j:configuration>

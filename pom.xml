@@ -1,12 +1,12 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
-    <modelVersion>4.0.0</modelVersion>
-    <groupId>cz.zcu.kiv.eegdatabase</groupId>
-    <artifactId>eegdatabase</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
-    <name>eegdatabase</name>
-    <description>EEG/ERP portal enables community researchers to store, update and download data and metadata from
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>cz.zcu.kiv.eegdatabase</groupId>
+	<artifactId>eegdatabase</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<packaging>war</packaging>
+	<name>eegdatabase</name>
+	<description>EEG/ERP portal enables community researchers to store, update and download data and metadata from
         EEG/ERP experiments.
     </description>
 

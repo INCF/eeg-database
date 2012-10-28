@@ -1,0 +1,33 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<wicket:head>
+  <title><wicket:message key="title.page.home">[HomePage]</wicket:message></title>
+</wicket:head>
+<body>
+  <wicket:extend>
+    <div class="notlogged">
+      <div class="homepageLeftColumn"></div>
+      <div class="homepageRightColumn">
+        <form wicket:id="login" class="loginForm">
+          <fieldset>
+            <div>
+              <label for="userName" class="fieldLabel"><wicket:message key="general.email">[email]</wicket:message></label>
+              <input type="text" wicket:id="userName" />
+            </div>
+            <div>
+              <label for="password" class="fieldLabel"><wicket:message key="general.password">[password]</wicket:message></label>
+              <input type="password" wicket:id="password" />
+            </div>
+            <div class="rememberMeBox"></div>
+            <div>
+              <input type="submit" wicket:id="submit" />
+            </div>
+          </fieldset>
+        </form>
+      </div>
+    </div>
+  </wicket:extend>
+</body>
+</html>

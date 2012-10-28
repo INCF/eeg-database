@@ -19,6 +19,7 @@ import com.octo.captcha.service.image.ImageCaptchaService;
 * @author 	 anil_verma
 *
 */
+@SuppressWarnings("restriction")
 public class CaptchaImageGenerator implements Controller, InitializingBean{
 	private ImageCaptchaService captchaService;
         public static final String CAPTCHA_ID_RESPONSE_PARAMETER = "captchaId";

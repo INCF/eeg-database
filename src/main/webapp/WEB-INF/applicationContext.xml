@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+		http://www.springframework.org/schema/context
+		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+		http://www.springframework.org/schema/security
+		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
+
+	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
+
+	<bean id="securityFacade "
+		class="cz.zcu.kiv.eegdatabase.wui.core.facade.security.SecurityFacadeImpl"
+		autowire="byType" />
+
+
+	<!-- <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
+		<property name="ignoreUnresolvablePlaceholders" value="false" /> <property 
+		name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> 
+		<property name="ignoreResourceNotFound" value="false" /> <property name="locations"> 
+		<list> <value>classpath*:/jdbc.properties</value> </list> </property> </bean> -->
+
+	<security:http create-session="never" auto-config="true">
+		<security:remember-me />
+		<security:intercept-url pattern="/**" />
+	</security:http>
+	
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:jdbc-user-service
+				data-source-ref="dataSource"
+				users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and username=?"
+				authorities-by-username-query="select username, authority from person where username=?" />
+			<security:password-encoder ref="encoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
+
+	<bean id="encoder"
+		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+</beans>
