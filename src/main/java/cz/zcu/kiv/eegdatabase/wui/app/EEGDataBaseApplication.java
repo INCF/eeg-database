@@ -6,7 +6,6 @@ import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSessio
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
@@ -15,6 +14,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupsPage;
@@ -42,8 +42,14 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         getMarkupSettings().setCompressWhitespace(true);
         getMarkupSettings().setStripComments(true);
 
+        // set the security strategy is spring and its this bean
         getSecuritySettings().setAuthorizationStrategy(new AnnotationsRoleAuthorizationStrategy(this));
         getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
+        
+        // set access denied page inserted in menu content. 
+        getApplicationSettings().setAccessDeniedPage(AccessDeniedPage.class);
+        // set true for upload progress.
+        getApplicationSettings().setUploadProgressUpdatesEnabled(true);
         
         // add spring component injector listener
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
@@ -54,7 +60,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     }
 
     private void mountPages() {
-
+        
+        mountPage("access-denied", AccessDeniedPage.class);
+        
         mountPage("articles-page", ArticlesPage.class);
         mountPage("experiments-page", ExperimentsPage.class);
         mountPage("groups-page", GroupsPage.class);

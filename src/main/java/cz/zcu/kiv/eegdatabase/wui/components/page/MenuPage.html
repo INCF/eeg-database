@@ -7,18 +7,22 @@
     <div class="page">
       <div class="header">
 
-        <div class="pageTitle"><wicket:message key="title.app">[EEGbase]</wicket:message></div>
+        <div class="pageTitle">
+          <wicket:message key="title.app">[EEGbase]</wicket:message>
+        </div>
 
         <div class="loggedUserBox">
-          No user logged <span>Register</span>
+          <span wicket:id="userLogStatusLabel"></span> <span class="borderDecoration"><a
+            href="#" wicket:id="userHeaderLink"><span wicket:id="linkLabel"></span></a> <a href="#"
+            wicket:id="logout"><wicket:message key="action.logout">[logout]</wicket:message></a></span>
         </div>
         <ul wicket:id="mainMenu" class="mainMenu"></ul>
         <div class="cleaner"></div>
 
       </div>
-      
+
       <div wicket:id="base_feedback"></div>
-      
+
       <div class="mainContent">
         <wicket:child />
       </div>

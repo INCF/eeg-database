@@ -24,6 +24,8 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     @SpringBean(name="authenticationManager")
     private AuthenticationManager authenticationManager;
     
+    private String userName;
+    
     public static EEGDataBaseSession get()
     {
         return (EEGDataBaseSession)Session.get();
@@ -52,6 +54,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             authenticated = authentication.isAuthenticated();
+            this.userName = username;
             
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
@@ -82,5 +85,9 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     public boolean hasAnyRole(Roles roles) {
         
         return getRoles().hasAnyRole(roles);
+    }
+    
+    public String getUserName() {
+        return userName;
     }
 }

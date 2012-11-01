@@ -22,9 +22,9 @@
 		<property name="ignoreResourceNotFound" value="false" /> <property name="locations"> 
 		<list> <value>classpath*:/jdbc.properties</value> </list> </property> </bean> -->
 
-	<security:http create-session="never" auto-config="true">
+	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
 		<security:remember-me />
-		<security:intercept-url pattern="/**" />
+		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
 	</security:http>
 	
 	<security:authentication-manager alias="authenticationManager">
@@ -36,6 +36,17 @@
 			<security:password-encoder ref="encoder" />
 		</security:authentication-provider>
 	</security:authentication-manager>
+	
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter">
+                    <property name="rolePrefix" value="ROLE_"/>
+                </bean>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
 
 	<bean id="encoder"
 		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />

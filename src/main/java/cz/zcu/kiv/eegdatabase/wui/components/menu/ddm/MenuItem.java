@@ -13,10 +13,10 @@ public class MenuItem {
     public MenuItem(MenuDefinition definition) {
 
         this.definition = definition;
-        
-        if(definition.hasSubmenu()) {
-            
-            for(MenuDefinition tmp : definition.getSubmenu())
+
+        if (definition.hasSubmenu()) {
+
+            for (MenuDefinition tmp : definition.getSubmenu())
                 submenu.add(new MenuItem(tmp));
         }
     }
@@ -34,17 +34,16 @@ public class MenuItem {
     public boolean hasSubmenu() {
         return definition.hasSubmenu();
     }
-    
+
     public String getString() {
         return definition.getTitle();
     }
-    
+
     public List<MenuItem> getSubmenu() {
         return submenu;
     }
-    
+
     public Class getClassForUrl() {
         return definition.getPage();
     }
-
 }

@@ -20,7 +20,7 @@ public class PageParametersUtils {
     }
 
     public static PageParameters addParameters(PageParameters parameters,
-                    String key, Object object) {
+            String key, Object object) {
 
         parameters.add(key, object);
         return parameters;

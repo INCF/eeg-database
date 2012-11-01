@@ -13,10 +13,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
  * GenericMainMenu - add menu page like value of enum.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public enum GenericMainMenu implements MenuDefinition {
-    
+
     HomePage(HomePage.class, "title.page.home.menu"),
     ArticlesPage(ArticlesPage.class, "title.page.articles.menu"),
     SearchPage(SearchPage.class, "title.page.search.menu"),
@@ -26,12 +26,12 @@ public enum GenericMainMenu implements MenuDefinition {
     PeoplePage(ExperimentsPage.class, "title.page.people.menu"),
     ListsPage(ListsPage.class, "title.page.lists.menu"),
     HistoryPage(HistoryPage.class, "title.page.history.menu"),
-    
-    Main(new GenericMainMenu[]{HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage, 
-            PeoplePage, ListsPage, HistoryPage}, ""),
+
+    Main(new GenericMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage,
+    PeoplePage, ListsPage, HistoryPage }, ""),
 
     ;
-    
+
     private GenericMainMenu[] submenu = null;
     private Class<?> page;
     private final String title;
@@ -40,8 +40,8 @@ public enum GenericMainMenu implements MenuDefinition {
         this.page = page;
         this.title = title;
     }
-    
-    private GenericMainMenu(GenericMainMenu[] submenu, String title){
+
+    private GenericMainMenu(GenericMainMenu[] submenu, String title) {
         this.submenu = submenu;
         this.title = title;
     }
@@ -54,7 +54,7 @@ public enum GenericMainMenu implements MenuDefinition {
     public String getTitle() {
         return title;
     }
-    
+
     public GenericMainMenu[] getSubmenu() {
         return submenu;
     }

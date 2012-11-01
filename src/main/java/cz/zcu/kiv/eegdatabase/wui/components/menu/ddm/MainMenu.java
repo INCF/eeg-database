@@ -20,7 +20,6 @@ public class MainMenu extends WebMarkupContainer {
     private static final String LI_START_TAG = "<li";
     private static final String LI_END_TAG = "</li>";
     private static final String A_START_TAG_LINK = "><a href=\'";
-    private static final String A_START_TAG_DESC = "><a href=\'#";
     private static final String A_START_TAG_FOOTER = "\' title=\'";
     private static final String A_START_TAG_FOOTER2 = "\'>";
     private static final String A_END_TAG = "</a>";
@@ -39,13 +38,14 @@ public class MainMenu extends WebMarkupContainer {
         getResponse().write(buf);
     }
 
+    @SuppressWarnings("unchecked")
     private void processMenu(final MenuItem menu, final StringBuilder buf, final RequestCycle requestCycle, final Localizer localizer) {
-        
+
         if (menu.isLinkable() && hasRoleForThisPage(menu)) {
 
             String title = ResourceUtils.getString(menu.getString());
             buf.append(A_START_TAG_LINK).append(RequestCycle.get().urlFor(menu.getClassForUrl(), null)).append(A_START_TAG_FOOTER).append(title).append(A_START_TAG_FOOTER2).append(title)
-                    .append(A_END_TAG);
+            .append(A_END_TAG);
         }
 
         if (menu.hasSubmenu()) {
@@ -59,19 +59,20 @@ public class MainMenu extends WebMarkupContainer {
 
         }
     }
-    
-    private boolean hasRoleForThisPage(MenuItem menu){
-        
-        AuthorizeInstantiation annotation = (AuthorizeInstantiation) menu.getClassForUrl().getAnnotation(AuthorizeInstantiation.class);
-        
-        if(annotation != null){
+
+    @SuppressWarnings("unchecked")
+    private boolean hasRoleForThisPage(MenuItem menu) {
+
+        AuthorizeInstantiation annotation = ((AuthorizeInstantiation) menu.getClassForUrl().getAnnotation(AuthorizeInstantiation.class));
+
+        if (annotation != null) {
             Roles roles = new Roles(annotation.value());
-            
+
             return EEGDataBaseSession.get().hasAnyRole(roles);
         }
-        
-        return false;
-        
+
+        return true;
+
     }
 
 }

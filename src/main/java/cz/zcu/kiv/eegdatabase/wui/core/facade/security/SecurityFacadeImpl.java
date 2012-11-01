@@ -8,5 +8,5 @@ public class SecurityFacadeImpl implements SecurityFacade {
     public boolean authorization(String userName, String password) {
         return EEGDataBaseSession.get().signIn(userName, password);
     }
-    
+
 }

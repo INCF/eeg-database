@@ -1,0 +1,26 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<head>
+<wicket:head>
+  <title><wicket:message key="title.page.access.denied">[Access Denied Page]</wicket:message></title>
+</wicket:head>
+</head>
+
+<body>
+  <wicket:extend>
+    <h1>
+      <wicket:message key="general.page.access.denied.title">[access denied]</wicket:message>
+    </h1>
+
+    <p>
+      <wicket:message key="general.page.access.denied.message">access denied message</wicket:message>
+    </p>
+
+    <a href="#" wicket:id="goToHomeLink" wicket:message="value:general.page.access.denied.link">
+      <wicket:message key="general.page.access.denied.link">link</wicket:message>
+    </a>
+  </wicket:extend>
+</body>
+</html>

@@ -17,20 +17,20 @@ public class ResourceUtils {
 
         return new ResourceModel(propertyExpression);
     }
-    
+
     public static String getString(String propertyExpression, IModel<?> model) {
-        
-        return new StringResourceModel(propertyExpression, model, new Object[]{}).getString();
+
+        return new StringResourceModel(propertyExpression, model, new Object[] {}).getString();
     }
-    
+
     public static IModel<String> getModel(String propertyExpression, IModel<?> model) {
-        
-        return new StringResourceModel(propertyExpression, model, new Object[]{});
+
+        return new StringResourceModel(propertyExpression, model, new Object[] {});
     }
-    
+
     public static Image getImage(String id, String imageFileName) {
-        
-        return new Image(id, new ContextRelativeResource("/images/"+imageFileName));
+
+        return new Image(id, new ContextRelativeResource("/images/" + imageFileName));
     }
-    
+
 }
