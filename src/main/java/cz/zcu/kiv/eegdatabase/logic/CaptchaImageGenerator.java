@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.logic;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 
+import javax.imageio.ImageIO;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,8 +13,6 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.Controller;
 
 import com.octo.captcha.service.image.ImageCaptchaService;
-import com.sun.image.codec.jpeg.JPEGCodec;
-import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 /**
 *
@@ -32,9 +31,10 @@ public class CaptchaImageGenerator implements Controller, InitializingBean{
     	BufferedImage challenge =
                 captchaService.getImageChallengeForID(captchaId,request.getLocale());
 
-        JPEGImageEncoder jpegEncoder =
-                JPEGCodec.createJPEGEncoder(jpegOutputStream);
-        jpegEncoder.encode(challenge);
+        ImageIO.write(challenge, "jpeg", jpegOutputStream);
+//        JPEGImageEncoder jpegEncoder =
+//                JPEGCodec.createJPEGEncoder(jpegOutputStream);
+//        jpegEncoder.encode(challenge);
         captchaChallengeAsJpeg = jpegOutputStream.toByteArray();
         response.setHeader("Cache-Control", "no-store");
         response.setHeader("Pragma", "no-cache");
