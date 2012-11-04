@@ -38,9 +38,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     public void init() {
         super.init();
         
-        getMarkupSettings().setStripWicketTags(true);
-        getMarkupSettings().setCompressWhitespace(true);
-        getMarkupSettings().setStripComments(true);
+        //getMarkupSettings().setStripWicketTags(true);
+        //getMarkupSettings().setCompressWhitespace(true);
+        //getMarkupSettings().setStripComments(true);
 
         // set the security strategy is spring and its this bean
         getSecuritySettings().setAuthorizationStrategy(new AnnotationsRoleAuthorizationStrategy(this));

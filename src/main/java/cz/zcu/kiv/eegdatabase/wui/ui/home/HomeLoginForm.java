@@ -9,11 +9,11 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.UserDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.dto.LoginUserDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.facade.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 
-public class HomeLoginForm extends Form<UserDTO> {
+public class HomeLoginForm extends Form<LoginUserDTO> {
 
     private static final long serialVersionUID = -5196364867691352802L;
 
@@ -21,7 +21,7 @@ public class HomeLoginForm extends Form<UserDTO> {
     SecurityFacade secFacade;
 
     public HomeLoginForm(String id) {
-        super(id, new CompoundPropertyModel<UserDTO>(new UserDTO()));
+        super(id, new CompoundPropertyModel<LoginUserDTO>(new LoginUserDTO()));
 
         TextField<String> userName = new TextField<String>("userName");
         userName.add(new StringValidator(5, 25));
@@ -41,7 +41,7 @@ public class HomeLoginForm extends Form<UserDTO> {
 
             @Override
             public void onSubmit() {
-                UserDTO object = HomeLoginForm.this.getModelObject();
+                LoginUserDTO object = HomeLoginForm.this.getModelObject();
                 if (secFacade.authorization(object.getUserName(), object.getPassword())) {
                     continueToOriginalDestination();
                     setResponsePage(ArticlesPage.class);

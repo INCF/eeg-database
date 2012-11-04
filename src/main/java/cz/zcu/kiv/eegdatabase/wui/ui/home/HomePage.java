@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.home;
 
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
 public class HomePage extends MenuPage {
 
@@ -9,6 +10,7 @@ public class HomePage extends MenuPage {
     public HomePage() {
 
         add(new HomeLoginForm("login"));
+        setPageTitle(ResourceUtils.getModel("title.page.home"));
     }
 
 }

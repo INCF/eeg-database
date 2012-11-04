@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
 import java.io.Serializable;
 
-public class UserDTO implements Serializable {
+public class LoginUserDTO implements Serializable {
 
     private static final long serialVersionUID = -1533766468013302891L;
     
