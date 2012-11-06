@@ -4,14 +4,13 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.IModel;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 
 public class MenuPage extends BasePage {
 
@@ -38,8 +37,7 @@ public class MenuPage extends BasePage {
         } else {
             labelMessage = ResourceUtils.getString("general.header.notlogged");
             labelLink = ResourceUtils.getString("action.register");
-            // FIXME add register page
-            pageClass = HomePage.class;
+            pageClass = RegistrationPage.class;
         }
 
         BookmarkablePageLink headerLink = new BookmarkablePageLink("userHeaderLink", pageClass);

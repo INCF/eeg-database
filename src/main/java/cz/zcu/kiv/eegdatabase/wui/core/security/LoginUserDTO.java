@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.core.dto;
+package cz.zcu.kiv.eegdatabase.wui.core.security;
 
 import java.io.Serializable;
 

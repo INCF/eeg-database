@@ -1,54 +1,80 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:security="http://www.springframework.org/schema/security"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans
+<beans
+    xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xmlns:security="http://www.springframework.org/schema/security"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 		http://www.springframework.org/schema/context
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
-	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
+    <bean
+        id="wicketApplication "
+        class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
 
-	<bean id="securityFacade "
-		class="cz.zcu.kiv.eegdatabase.wui.core.facade.security.SecurityFacadeImpl"
-		autowire="byType" />
+    <bean
+        id="securityFacade "
+        class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl"
+        autowire="byType" />
+    <bean
+        id="securityService "
+        class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl"
+        autowire="byType" />
 
 
-	<!-- <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> 
-		<property name="ignoreUnresolvablePlaceholders" value="false" /> <property 
-		name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> 
-		<property name="ignoreResourceNotFound" value="false" /> <property name="locations"> 
-		<list> <value>classpath*:/jdbc.properties</value> </list> </property> </bean> -->
+    <!-- <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> <property name="ignoreUnresolvablePlaceholders" value="false" 
+        /> <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> <property name="ignoreResourceNotFound" value="false" /> <property name="locations"> <list> <value>classpath*:/jdbc.properties</value> 
+        </list> </property> </bean> -->
 
-	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
-		<security:remember-me />
-		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
-	</security:http>
-	
-	<security:authentication-manager alias="authenticationManager">
-		<security:authentication-provider>
-			<security:jdbc-user-service
-				data-source-ref="dataSource"
-				users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and username=?"
-				authorities-by-username-query="select username, authority from person where username=?" />
-			<security:password-encoder ref="encoder" />
-		</security:authentication-provider>
-	</security:authentication-manager>
-	
-	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    <security:http
+        create-session="never"
+        auto-config="true"
+        access-decision-manager-ref="accessDecisionManager">
+        <security:remember-me />
+        <security:intercept-url
+            pattern="/**"
+            access="IS_AUTHENTICATED_ANONYMOUSLY" />
+    </security:http>
+
+    <security:authentication-manager alias="authenticationManager">
+        <security:authentication-provider>
+            <security:jdbc-user-service
+                data-source-ref="dataSource"
+                users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and username=?"
+                authorities-by-username-query="select username, authority from person where username=?" />
+            <security:password-encoder ref="encoder" />
+        </security:authentication-provider>
+    </security:authentication-manager>
+
+    <bean
+        id="accessDecisionManager"
+        class="org.springframework.security.access.vote.AffirmativeBased">
         <property name="decisionVoters">
             <list>
                 <bean class="org.springframework.security.access.vote.RoleVoter">
-                    <property name="rolePrefix" value="ROLE_"/>
+                    <property
+                        name="rolePrefix"
+                        value="ROLE_" />
                 </bean>
-                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
             </list>
         </property>
     </bean>
 
-	<bean id="encoder"
-		class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    <bean
+        id="encoder"
+        class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+
+    <bean
+        name="educationLevelService"
+        class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl"
+        autowire="byType" />
+    <bean
+        name="educationLevelFacade"
+        class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl"
+        autowire="byType" />
 
 </beans>

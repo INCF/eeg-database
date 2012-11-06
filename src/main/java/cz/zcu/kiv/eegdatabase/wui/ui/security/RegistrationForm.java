@@ -1,0 +1,169 @@
+package cz.zcu.kiv.eegdatabase.wui.ui.security;
+
+import java.util.Arrays;
+
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.EmailTextField;
+import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponentLabel;
+import org.apache.wicket.markup.html.form.PasswordTextField;
+import org.apache.wicket.markup.html.form.RadioChoice;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
+import org.odlabs.wiquery.ui.datepicker.DatePicker;
+import org.odlabs.wiquery.ui.dialog.Dialog;
+
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.dto.FullUserDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+
+public class RegistrationForm extends Form<FullUserDTO> {
+
+    private static final long serialVersionUID = 4973918066620014022L;
+
+    @SpringBean
+    EducationLevelFacade educationLevelFacade;
+
+    @SpringBean
+    SecurityFacade securityFacade;
+
+    public RegistrationForm(String id, final FeedbackPanel feedback) {
+        super(id, new CompoundPropertyModel<FullUserDTO>(new FullUserDTO()));
+
+        TextField<String> name = new TextField<String>("name");
+        name.setLabel(ResourceUtils.getModel("general.name"));
+        name.setRequired(true);
+        FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
+        add(name, nameLabel);
+
+        TextField<String> surname = new TextField<String>("surname");
+        surname.setLabel(ResourceUtils.getModel("general.surname"));
+        surname.setRequired(true);
+        FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
+        add(surname, surnameLabel);
+
+        DatePicker<String> date = new DatePicker<String>("dateOfBirth");
+        date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
+        date.setRequired(true);
+        date.setChangeMonth(true);
+        date.setChangeYear(true);
+        FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
+        add(date, dateLabel);
+
+        EmailTextField email = new EmailTextField("email");
+        email.setLabel(ResourceUtils.getModel("general.email"));
+        email.setRequired(true);
+        FormComponentLabel emailLabel = new FormComponentLabel("emailLb", email);
+        add(email, emailLabel);
+
+        PasswordTextField password = new PasswordTextField("password");
+        password.setLabel(ResourceUtils.getModel("general.password"));
+        password.setRequired(true);
+        password.add(StringValidator.minimumLength(6));
+        FormComponentLabel passLabel = new FormComponentLabel("passLb", password);
+        add(password, passLabel);
+
+        PasswordTextField passwordVerify = new PasswordTextField("passwordVerify");
+        passwordVerify.setLabel(ResourceUtils.getModel("general.password.verify"));
+        passwordVerify.setRequired(true);
+        passwordVerify.add(StringValidator.minimumLength(6));
+        FormComponentLabel pass2Label = new FormComponentLabel("passVerLb", passwordVerify);
+        add(passwordVerify, pass2Label);
+
+        String captcha = StringUtils.getCaptchaString();
+        getModelObject().setCaptcha(captcha);
+
+        CaptchaImageResource imageResource = new CaptchaImageResource(captcha);
+        Image captchaImage = new Image("captchaImage", imageResource);
+        add(captchaImage);
+
+        TextField<String> controlText = new TextField<String>("controlText");
+        surname.setLabel(ResourceUtils.getModel("general.controlText"));
+        surname.setRequired(true);
+        FormComponentLabel controlTextLabel = new FormComponentLabel("controlTextLb", surname);
+        add(controlText, controlTextLabel);
+
+        RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
+        gender.setSuffix("\n");
+        FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
+        add(gender, genderLabel);
+
+        DropDownChoice<EducationLevelDTO> educationLevel = new DropDownChoice<EducationLevelDTO>("educationLevel", educationLevelFacade.getAllRecords(),
+                new ChoiceRenderer<EducationLevelDTO>("title", "educationLevelId") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(EducationLevelDTO object) {
+                        return object.getEducationLevelId() + " " + super.getDisplayValue(object);
+                    }
+
+                });
+
+        educationLevel.setRequired(true);
+        educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
+        FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
+        add(educationLevel, educationLevelLabel);
+
+        // dialog section - TODO maybe refactor this in one component like MessageDialog 
+        final Dialog dialog = new Dialog("dialog");
+        AjaxButton ok = new AjaxButton("ok", new Model<String>("ok"), this) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                dialog.close(target);
+                setResponsePage(HomePage.class);
+            }
+        };
+        dialog.setCloseOnEscape(false);
+        dialog.setModal(true);
+        dialog.setTitle(ResourceUtils.getModel("general.info"));
+        dialog.add(ok);
+
+        Label dialogContent = new Label("content", ResourceUtils.getModel("general.info.registration"));
+        add(dialog.add(dialogContent));
+        //
+
+        AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("action.create.account"), this) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(feedback);
+            }
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                FullUserDTO user = RegistrationForm.this.getModelObject();
+                if (user.isPasswordValid()) {
+                    securityFacade.createUser(user);
+                    dialog.open(target);
+
+                } else
+                    error(ResourceUtils.getString("general.error.registration"));
+
+                target.add(feedback);
+            }
+        };
+        add(submit);
+    }
+
+}

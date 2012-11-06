@@ -9,9 +9,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.LoginUserDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.facade.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.security.LoginUserDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 public class HomeLoginForm extends Form<LoginUserDTO> {
 
@@ -24,13 +25,12 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
         super(id, new CompoundPropertyModel<LoginUserDTO>(new LoginUserDTO()));
 
         TextField<String> userName = new TextField<String>("userName");
-        userName.add(new StringValidator(5, 25));
         userName.setRequired(true);
 
         add(userName);
 
         PasswordTextField password = new PasswordTextField("password");
-        userName.add(new StringValidator(5, 25));
+        userName.add(new StringValidator(6, 25));
         userName.setRequired(true);
 
         add(password);
@@ -44,7 +44,7 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
                 LoginUserDTO object = HomeLoginForm.this.getModelObject();
                 if (secFacade.authorization(object.getUserName(), object.getPassword())) {
                     continueToOriginalDestination();
-                    setResponsePage(ArticlesPage.class);
+                    setResponsePage(WelcomePage.class);
 
                 } else {
                     error("fail");
