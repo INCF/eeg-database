@@ -5,14 +5,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import java.io.IOException;
 import java.sql.Blob;
 import java.sql.Timestamp;
-import java.util.Iterator;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -26,7 +24,6 @@ public class ClientServiceImpl implements ClientService{
     private HardwareDao hardwareDao;
     private WeatherDao weatherDao;
     private EducationLevelDao educationLevelDao;
-    private ScenarioSchemasDao scenarioSchemasDao;
     private PersonOptParamDefDao personOptParamDefDao;
     private DataFileDao dataFileDao;
     private ExperimentDao experimentDao;
@@ -126,6 +123,11 @@ public class ClientServiceImpl implements ClientService{
         e.getPersons().add(p);
         educationLevelDao.update(e);
         return newId;
+    }
+
+    @Override
+    public int addScenario(ScenarioInfo info) {
+        return 0;  //TODO To change body of implemented methods use File | Settings | File Templates.
     }
 
     @Override
@@ -393,24 +395,6 @@ public class ClientServiceImpl implements ClientService{
         return groups;  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    public List<ScenarioSchemasInfo> getScenarioSchemasList() {
-        List<ScenarioSchemasInfo> infos = new LinkedList<ScenarioSchemasInfo>();
-        List<ScenarioSchemas> levelsDb = scenarioSchemasDao.getAllRecords();
-        for (ScenarioSchemas o : levelsDb) {
-            if(o.getApproved()=='y'){
-                ScenarioSchemasInfo i = new ScenarioSchemasInfo();
-                i.setApproved(o.getApproved());
-                i.setDescription(o.getDescription());
-                i.setSchemaId(o.getSchemaId());
-                i.setSchemaName(o.getSchemaName());
-                infos.add(i);
-            }
-        }
-        log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of scenario schemas.");
-        return infos;
-    }
-
     public PersonDao getPersonDao() {
         return personDao;
     }
@@ -437,10 +421,6 @@ public class ClientServiceImpl implements ClientService{
 
     public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
         this.educationLevelDao = educationLevelDao;
-    }
-
-    public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
-        this.scenarioSchemasDao = scenarioSchemasDao;
     }
 
     public void setScenarioDao(ScenarioDao scenarioDao) {
@@ -478,10 +458,6 @@ public class ClientServiceImpl implements ClientService{
 
     public void setFileMetadataParamValDao(SimpleGenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao) {
         this.fileMetadataParamValDao = fileMetadataParamValDao;
-    }
-
-    public GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> getResearchGroupMembershipDao() {
-        return researchGroupMembershipDao;
     }
 
     public void setResearchGroupMembershipDao(GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> researchGroupMembershipDao) {

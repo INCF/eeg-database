@@ -17,7 +17,6 @@ public interface ClientService {
     public List<PersonInfo> getPersonList();
     public List<EducationLevelInfo> getEducationLevelList();
     public List<ResearchGroupInfo> getResearchGroupList();
-    public List<ScenarioSchemasInfo> getScenarioSchemasList();
     public List<ScenarioInfo> getScenarioList();
     public List<PersonOptParamValInfo> getPersonOptParamValList();
 
@@ -26,7 +25,7 @@ public interface ClientService {
     public int addResearchGroup(ResearchGroupInfo info);
     public void addResearchGroupMembership(ResearchGroupMembershipInfo info);
     public int addPerson(PersonInfo info);
-    //public int createScenario(ScenarioInfo info);
+    public int addScenario(ScenarioInfo info);
     public int addDataFile(DataFileInfo info, @XmlMimeType("application/octet-stream") DataHandler inputData) throws ClientServiceException;
     public int addPersonOptParamDef(PersonOptParamDefInfo info);
     public void addPersonOptParamVal(PersonOptParamValInfo info);

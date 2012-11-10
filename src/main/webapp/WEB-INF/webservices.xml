@@ -71,7 +71,6 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <property name="hardwareDao" ref="hardwareDao"/>
         <property name="weatherDao" ref="weatherDao"/>
         <property name="educationLevelDao" ref="educationLevelDao"/>
-        <property name="scenarioSchemasDao" ref="scenarioSchemasDao"/>
         <property name="scenarioDao" ref="scenarioDao"/>
         <property name="dataFileDao" ref="dataFileDao"/>
         <property name="experimentDao" ref="experimentDao"/>
