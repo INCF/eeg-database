@@ -38,7 +38,7 @@ public class ReservationData implements Serializable {
         parseMail(creatorMail);
     }
 
-    private void parseMail(String creatorMail) {
+    public void parseMail(String creatorMail) {
         char mailSeparator = '@';
 
         if (creatorMail != null && creatorMail.contains(""+mailSeparator)) {

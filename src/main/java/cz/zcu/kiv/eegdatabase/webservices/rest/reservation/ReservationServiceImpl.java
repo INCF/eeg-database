@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
@@ -58,12 +59,12 @@ public class ReservationServiceImpl implements ReservationService {
 
             for (Reservation r : reservations) {
                 data.add(new ReservationData(r.getReservationId(),
-                                        r.getResearchGroup().getTitle(),
-                                        r.getResearchGroup().getResearchGroupId(),
-                                        r.getStartTime(),
-                                        r.getEndTime(),
-                                        r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
-                                        r.getPerson().getEmail()));
+                        r.getResearchGroup().getTitle(),
+                        r.getResearchGroup().getResearchGroupId(),
+                        r.getStartTime(),
+                        r.getEndTime(),
+                        r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
+                        r.getPerson().getEmail()));
             }
 
             return data;
@@ -107,7 +108,7 @@ public class ReservationServiceImpl implements ReservationService {
             Set<ResearchGroup> groups = personDao.getLoggedPerson().getResearchGroups();
             List<ResearchGroupData> data = new ArrayList<ResearchGroupData>(groups.size());
 
-            for(ResearchGroup g : groups){
+            for (ResearchGroup g : groups) {
                 ResearchGroupData d = new ResearchGroupData(g.getResearchGroupId(), g.getTitle());
                 data.add(d);
             }
@@ -122,15 +123,32 @@ public class ReservationServiceImpl implements ReservationService {
     public Response create(ReservationData reservationData) throws RestServiceException {
         try {
             ResearchGroup group = researchGroupDao.read(reservationData.getResearchGroupId());
+            Person user = personDao.getLoggedPerson();
+
+            if(group == null)
+                throw new RestServiceException("Existing group Id must be specified");
+            if(reservationData.getFromTime() == null)
+                throw new RestServiceException("Start time must be specified");
+            if(reservationData.getToTime() == null)
+                throw new RestServiceException("End time must be specified");
+            if (!user.getResearchGroups().contains(group))
+                throw new RestServiceException("You are not a member of " + group.getTitle() + " group!");
+
             Reservation reservation = new Reservation();
 
             reservation.setResearchGroup(group);
-            reservation.setPerson(personDao.getLoggedPerson());
+            reservation.setPerson(user);
             reservation.setStartTime(new Timestamp(reservationData.getFromTime().getTime()));
             reservation.setEndTime(new Timestamp(reservationData.getToTime().getTime()));
             reservation.setCreationTime(new Timestamp(Calendar.getInstance().getTimeInMillis()));
 
             int id = reservationDao.createChecked(reservation);
+
+            reservationData.setReservationId(id);
+            reservationData.setResearchGroupId(group.getResearchGroupId());
+            reservationData.setResearchGroup(group.getTitle());
+            reservationData.setCreatorName(user.getGivenname() + " " + user.getSurname());
+            reservationData.parseMail(user.getEmail());
             return Response.ok(reservationData).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -141,12 +159,18 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Response delete(ReservationData data) throws RestServiceException {
         try {
-            if(personDao.getLoggedPerson().getResearchGroups().contains(researchGroupDao.read(data.getResearchGroupId()))){
-                reservationDao.delete(reservationDao.read(data.getReservationId()));
-                return Response.ok().build();
+            Reservation reservation = reservationDao.read(data.getReservationId());
+            Person user = personDao.getLoggedPerson();
+
+            if (reservation == null) {
+                throw new RestServiceException("No reservation with id " + data.getReservationId());
+            } else {
+                if (user.getResearchGroups().contains(reservation.getResearchGroup()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority())) {
+                    reservationDao.delete(reservation);
+                    return Response.ok().build();
+                } else
+                    throw new RestServiceException("You are not administrator or member of the group!");
             }
-            else
-                throw new Exception("You are not administrator of the group!");
         } catch (Exception e) {
             log.error(e);
             throw new RestServiceException(e);
