@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.springframework.security.access.annotation.Secured;
@@ -23,25 +24,25 @@ public interface ReservationService {
     @GET
     @Produces({MediaType.APPLICATION_XML})
     @Path("/{date}")
-    public List<ReservationData> getToDate(@PathParam("date") String date) throws ReservationException;
+    public List<ReservationData> getToDate(@PathParam("date") String date) throws RestServiceException;
 
     @GET
     @Produces({MediaType.APPLICATION_XML})
     @Path("/{fromDate}/{toDate}")
-    public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws ReservationException;
+    public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws RestServiceException;
 
     @GET
     @Produces({MediaType.APPLICATION_XML})
     @Path("/groups")
-    public List<ResearchGroupData> getMyGroups() throws ReservationException;
+    public List<ResearchGroupData> getMyGroups() throws RestServiceException;
 
     @POST
     @Produces({MediaType.APPLICATION_XML})
     @Path("/")
-    public Response create(ReservationData reservationData) throws ReservationException;
+    public Response create(ReservationData reservationData) throws RestServiceException;
 
     @DELETE
     @Consumes({MediaType.APPLICATION_XML})
     @Path("/")
-    public Response delete(ReservationData data) throws ReservationException;
+    public Response delete(ReservationData data) throws RestServiceException;
 }

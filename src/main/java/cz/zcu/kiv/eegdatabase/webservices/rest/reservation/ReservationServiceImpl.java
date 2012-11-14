@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.apache.commons.logging.Log;
@@ -44,7 +45,7 @@ public class ReservationServiceImpl implements ReservationService {
     private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
-    public List<ReservationData> getToDate(String date) throws ReservationException {
+    public List<ReservationData> getToDate(String date) throws RestServiceException {
         GregorianCalendar calendarFrom = new GregorianCalendar();
         GregorianCalendar calendarTo = new GregorianCalendar();
         try {
@@ -68,12 +69,12 @@ public class ReservationServiceImpl implements ReservationService {
             return data;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new ReservationException(e);
+            throw new RestServiceException(e);
         }
     }
 
     @Override
-    public List<ReservationData> getFromToDate(String fromDate, String toDate) throws ReservationException {
+    public List<ReservationData> getFromToDate(String fromDate, String toDate) throws RestServiceException {
         GregorianCalendar fromCalendar = new GregorianCalendar();
         GregorianCalendar toCalendar = new GregorianCalendar();
         try {
@@ -95,12 +96,12 @@ public class ReservationServiceImpl implements ReservationService {
             return data;
         } catch (Exception e) {
             log.error(String.format("From date: %s | To date: %s | Error: %s", fromDate, toDate, e.getMessage()), e);
-            throw new ReservationException(e);
+            throw new RestServiceException(e);
         }
     }
 
     @Override
-    public List<ResearchGroupData> getMyGroups() throws ReservationException {
+    public List<ResearchGroupData> getMyGroups() throws RestServiceException {
 
         try {
             Set<ResearchGroup> groups = personDao.getLoggedPerson().getResearchGroups();
@@ -113,12 +114,12 @@ public class ReservationServiceImpl implements ReservationService {
 
             return data;
         } catch (Exception e) {
-            throw new ReservationException(e);
+            throw new RestServiceException(e);
         }
     }
 
     @Override
-    public Response create(ReservationData reservationData) throws ReservationException {
+    public Response create(ReservationData reservationData) throws RestServiceException {
         try {
             ResearchGroup group = researchGroupDao.read(reservationData.getResearchGroupId());
             Reservation reservation = new Reservation();
@@ -133,12 +134,12 @@ public class ReservationServiceImpl implements ReservationService {
             return Response.ok(reservationData).build();
         } catch (Exception e) {
             log.error(e.getMessage(), e);
-            throw new ReservationException(e);
+            throw new RestServiceException(e);
         }
     }
 
     @Override
-    public Response delete(ReservationData data) throws ReservationException {
+    public Response delete(ReservationData data) throws RestServiceException {
         try {
             if(personDao.getLoggedPerson().getResearchGroups().contains(researchGroupDao.read(data.getResearchGroupId()))){
                 reservationDao.delete(reservationDao.read(data.getReservationId()));
@@ -148,7 +149,7 @@ public class ReservationServiceImpl implements ReservationService {
                 throw new Exception("You are not administrator of the group!");
         } catch (Exception e) {
             log.error(e);
-            throw new ReservationException(e);
+            throw new RestServiceException(e);
         }
     }
 }

@@ -86,8 +86,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <jaxrs:server id="restContainer" address="/rest">
         <jaxrs:providers>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils.SecurityExceptionMapper"/>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils.ReservationExceptionMapper"/>
+            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.SecurityExceptionMapper"/>
+            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.RestServiceExceptionMapper"/>
         </jaxrs:providers>
         <jaxrs:serviceBeans>
             <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.reservation.ReservationServiceImpl"/>
