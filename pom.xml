@@ -194,6 +194,19 @@
             <version>20070405</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-jaxrs</artifactId>
+            <version>1.9.9</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-xc</artifactId>
+            <version>1.9.9</version>
+        </dependency>
+
+
         <!--======================================= Spring ============================================= -->
         <dependency>
             <groupId>org.springframework</groupId>

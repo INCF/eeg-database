@@ -22,27 +22,27 @@ import java.util.List;
 public interface ReservationService {
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{date}")
     public List<ReservationData> getToDate(@PathParam("date") String date) throws RestServiceException;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{fromDate}/{toDate}")
     public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws RestServiceException;
 
     @GET
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/groups")
     public List<ResearchGroupData> getMyGroups() throws RestServiceException;
 
     @POST
-    @Produces({MediaType.APPLICATION_XML})
+    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/")
     public Response create(ReservationData reservationData) throws RestServiceException;
 
     @DELETE
-    @Consumes({MediaType.APPLICATION_XML})
+    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/")
     public Response delete(ReservationData data) throws RestServiceException;
 }
