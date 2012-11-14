@@ -1,6 +1,6 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers;
 
-import cz.zcu.kiv.eegdatabase.webservices.reservation.utils.DateAdapter;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils.DateAdapter;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;

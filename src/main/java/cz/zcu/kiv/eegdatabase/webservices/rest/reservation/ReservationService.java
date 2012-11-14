@@ -1,7 +1,7 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 
-import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ResearchGroupData;
-import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.springframework.security.access.annotation.Secured;
 
 import javax.jws.WebService;
@@ -17,6 +17,7 @@ import java.util.List;
  */
 @WebService
 @Secured("IS_AUTHENTICATED_FULLY")
+@Path("/reservation")
 public interface ReservationService {
 
     @GET

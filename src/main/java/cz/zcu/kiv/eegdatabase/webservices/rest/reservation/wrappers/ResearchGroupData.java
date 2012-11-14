@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers;
 
 import javax.xml.bind.annotation.XmlRootElement;
 

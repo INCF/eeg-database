@@ -1,6 +1,6 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation.utils;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils;
 
-import cz.zcu.kiv.eegdatabase.webservices.reservation.ReservationException;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.ReservationException;
 
 import javax.ws.rs.core.Response;
 import javax.ws.rs.ext.ExceptionMapper;

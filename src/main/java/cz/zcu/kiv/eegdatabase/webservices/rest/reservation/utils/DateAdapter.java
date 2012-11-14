@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation.utils;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils;
 
 import javax.xml.bind.annotation.adapters.XmlAdapter;
 import java.text.SimpleDateFormat;

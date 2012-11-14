@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 
 /**
  * Exception for notifying something went wrong during reservation process.

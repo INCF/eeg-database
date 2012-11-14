@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation.utils;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.utils;
 
 /**
  * Licensed to the Apache Software Foundation (ASF) under one

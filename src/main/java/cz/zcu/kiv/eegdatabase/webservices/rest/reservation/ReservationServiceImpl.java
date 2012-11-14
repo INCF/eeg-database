@@ -1,12 +1,12 @@
-package cz.zcu.kiv.eegdatabase.webservices.reservation;
+package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
-import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ResearchGroupData;
-import cz.zcu.kiv.eegdatabase.webservices.reservation.wrappers.ReservationData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,7 +23,7 @@ import java.util.*;
  *
  * @author Petr Miko
  */
-@WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.reservation.ReservationService")
+@WebService(endpointInterface = "ReservationService")
 @SuppressWarnings("unchecked")
 public class ReservationServiceImpl implements ReservationService {
 
