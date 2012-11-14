@@ -95,6 +95,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
             <entry key="json" value="application/json" />
         </jaxrs:extensionMappings>
         <jaxrs:serviceBeans>
+            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.user.UserServiceImpl"/>
             <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.reservation.ReservationServiceImpl"/>
         </jaxrs:serviceBeans>
       </jaxrs:server>
