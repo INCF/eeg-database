@@ -169,7 +169,7 @@ public class ReservationServiceImpl implements ReservationService {
                     reservationDao.delete(reservation);
                     return Response.ok().build();
                 } else
-                    throw new RestServiceException("You are not administrator or member of the group!");
+                    throw new RestServiceException("You are not administrator nor member of the group!");
             }
         } catch (Exception e) {
             log.error(e);
