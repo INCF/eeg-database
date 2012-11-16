@@ -64,7 +64,8 @@ public class ReservationServiceImpl implements ReservationService {
                         r.getStartTime(),
                         r.getEndTime(),
                         r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
-                        r.getPerson().getEmail()));
+                        r.getPerson().getEmail(),
+                        canRemoveReservation(r)));
             }
 
             return data;
@@ -91,7 +92,8 @@ public class ReservationServiceImpl implements ReservationService {
                         r.getStartTime(),
                         r.getEndTime(),
                         r.getPerson().getGivenname() + " " + r.getPerson().getSurname(),
-                        r.getPerson().getEmail()));
+                        r.getPerson().getEmail(),
+                        canRemoveReservation(r)));
             }
 
             return data;
@@ -160,12 +162,11 @@ public class ReservationServiceImpl implements ReservationService {
     public Response delete(ReservationData data) throws RestServiceException {
         try {
             Reservation reservation = reservationDao.read(data.getReservationId());
-            Person user = personDao.getLoggedPerson();
 
             if (reservation == null) {
                 throw new RestServiceException("No reservation with id " + data.getReservationId());
             } else {
-                if (user.getResearchGroups().contains(reservation.getResearchGroup()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority())) {
+                if (canRemoveReservation(reservation)) {
                     reservationDao.delete(reservation);
                     return Response.ok().build();
                 } else
@@ -175,5 +176,10 @@ public class ReservationServiceImpl implements ReservationService {
             log.error(e);
             throw new RestServiceException(e);
         }
+    }
+
+    private boolean canRemoveReservation(Reservation reservation){
+        Person user = personDao.getLoggedPerson();
+        return user.getResearchGroups().contains(reservation.getResearchGroup()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());
     }
 }

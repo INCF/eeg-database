@@ -23,17 +23,19 @@ public class ReservationData implements Serializable {
     private String creatorName;
     private String creatorMailUsername;
     private String creatorMailDomain;
+    private boolean canRemove;
 
     public ReservationData() {
     }
 
-    public ReservationData(int reservationId, String researchGroup, int researchGroupId, Date fromTime, Date toTime, String creatorName, String creatorMail) {
+    public ReservationData(int reservationId, String researchGroup, int researchGroupId, Date fromTime, Date toTime, String creatorName, String creatorMail, boolean canRemove) {
         this.reservationId = reservationId;
         this.researchGroup = researchGroup;
         this.researchGroupId = researchGroupId;
         this.fromTime = fromTime;
         this.toTime = toTime;
         this.creatorName = creatorName;
+        this.canRemove = canRemove;
 
         parseMail(creatorMail);
     }
@@ -114,5 +116,13 @@ public class ReservationData implements Serializable {
 
     public void setCreatorMailDomain(String creatorMailDomain) {
         this.creatorMailDomain = creatorMailDomain;
+    }
+
+    public boolean isCanRemove() {
+        return canRemove;
+    }
+
+    public void setCanRemove(boolean canRemove) {
+        this.canRemove = canRemove;
     }
 }
