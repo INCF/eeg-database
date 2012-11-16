@@ -29,7 +29,7 @@ public class EducationLevelServiceImpl implements EducationLevelService {
         
         for(EducationLevel entity : entities){
             EducationLevelDTO dto = new EducationLevelDTO();
-            dto.setEducationLevelId(entity.getEducationLevelId());
+            dto.setId(entity.getEducationLevelId());
             dto.setTitle(entity.getTitle());
             dto.setDefaultNumber(entity.getDefaultNumber());
             list.add(dto);

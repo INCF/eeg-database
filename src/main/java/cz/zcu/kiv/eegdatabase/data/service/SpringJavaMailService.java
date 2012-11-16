@@ -1,6 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.service;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.Locale;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,14 +14,11 @@ import org.springframework.mail.MailException;
 import org.springframework.mail.MailPreparationException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.stereotype.Service;
-import org.springframework.web.servlet.support.RequestContextUtils;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 
 /**
  * Created by IntelliJ IDEA.
@@ -54,8 +55,9 @@ public class SpringJavaMailService implements MailService {
         sb.append("<p>");
         sb.append(messageSource.getMessage("registration.email.body.clickToRegister",null, locale));
         sb.append("<br/>");
-        sb.append("<a href=\"http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + "\">"
-                + "http://" + domain + "/registration-confirmation.html?activation=" + user.getAuthenticationHash() + "</a>");
+        
+        String confirmURL = PageParametersUtils.getUrlForPage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.CONFIRM_ACTIVATION, user.getAuthenticationHash()));
+        sb.append("<a href=\"" + confirmURL + "\">"+ confirmURL + "</a>");
         sb.append("</p>");
         sb.append("</body></html>");
 

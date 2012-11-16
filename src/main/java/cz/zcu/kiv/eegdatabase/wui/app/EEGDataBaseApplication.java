@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import org.apache.wicket.ConverterLocator;
+import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
@@ -24,6 +26,8 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PeoplePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
@@ -37,32 +41,34 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     public void init() {
         super.init();
-        
+
         getMarkupSettings().setStripWicketTags(true);
-        //getMarkupSettings().setCompressWhitespace(true);
+        // getMarkupSettings().setCompressWhitespace(true);
         getMarkupSettings().setStripComments(true);
 
         // set the security strategy is spring and its this bean
         getSecuritySettings().setAuthorizationStrategy(new AnnotationsRoleAuthorizationStrategy(this));
         getSecuritySettings().setUnauthorizedComponentInstantiationListener(this);
-        
-        // set access denied page inserted in menu content. 
+
+        // set access denied page inserted in menu content.
         getApplicationSettings().setAccessDeniedPage(AccessDeniedPage.class);
         // set true for upload progress.
         getApplicationSettings().setUploadProgressUpdatesEnabled(true);
-        
+
         // add spring component injector listener
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
-        
+
         // mount pages in wicket application for better working with pages.
         mountPages();
 
     }
 
     private void mountPages() {
-        
+
         mountPage("access-denied", AccessDeniedPage.class);
-        
+        mountPage("registration-new", RegistrationPage.class);
+        mountPage("registration-confirm", ConfirmPage.class);
+
         mountPage("articles-page", ArticlesPage.class);
         mountPage("experiments-page", ExperimentsPage.class);
         mountPage("groups-page", GroupsPage.class);
@@ -73,6 +79,13 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-page", ScenariosPage.class);
         mountPage("search-page", SearchPage.class);
 
+    }
+    
+    @Override
+    protected IConverterLocator newConverterLocator() {
+        ConverterLocator locator = (ConverterLocator) super.newConverterLocator();
+        
+        return locator;
     }
 
     @Override

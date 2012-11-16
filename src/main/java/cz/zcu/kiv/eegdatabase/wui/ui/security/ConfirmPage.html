@@ -1,0 +1,17 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <h1 wicket:id="title"></h1>
+    <p>
+      <span wicket:id="message" />
+      <wicket:enclosure child="link">
+        <a href='#' wicket:id="link"><wicket:message key="action.login"></wicket:message></a>
+        <span wicket:id="message2" />
+      </wicket:enclosure>
+    </p>
+  </wicket:extend>
+</body>
+</html>

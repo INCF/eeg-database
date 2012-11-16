@@ -3,6 +3,9 @@ package cz.zcu.kiv.eegdatabase.data;
 import org.junit.Test;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+
 /**
  * Created by IntelliJ IDEA.
  * User: jnovotny

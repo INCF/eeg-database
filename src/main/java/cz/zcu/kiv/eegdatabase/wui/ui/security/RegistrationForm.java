@@ -1,11 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
@@ -18,21 +18,20 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.joda.time.DateTime;
 import org.odlabs.wiquery.ui.datepicker.DatePicker;
-import org.odlabs.wiquery.ui.dialog.Dialog;
 
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullUserDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
-public class RegistrationForm extends Form<FullUserDTO> {
+public class RegistrationForm extends Form<FullPersonDTO> {
 
     private static final long serialVersionUID = 4973918066620014022L;
 
@@ -43,7 +42,7 @@ public class RegistrationForm extends Form<FullUserDTO> {
     SecurityFacade securityFacade;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) {
-        super(id, new CompoundPropertyModel<FullUserDTO>(new FullUserDTO()));
+        super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
 
         TextField<String> name = new TextField<String>("name");
         name.setLabel(ResourceUtils.getModel("general.name"));
@@ -57,7 +56,7 @@ public class RegistrationForm extends Form<FullUserDTO> {
         FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
         add(surname, surnameLabel);
 
-        DatePicker<String> date = new DatePicker<String>("dateOfBirth");
+        DatePicker<Date> date = new DatePicker<Date>("dateOfBirth", Date.class);
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
         date.setRequired(true);
         date.setChangeMonth(true);
@@ -100,17 +99,18 @@ public class RegistrationForm extends Form<FullUserDTO> {
 
         RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
         gender.setSuffix("\n");
+        gender.setRequired(true);
         FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
         add(gender, genderLabel);
 
         DropDownChoice<EducationLevelDTO> educationLevel = new DropDownChoice<EducationLevelDTO>("educationLevel", educationLevelFacade.getAllRecords(),
-                new ChoiceRenderer<EducationLevelDTO>("title", "educationLevelId") {
+                new ChoiceRenderer<EducationLevelDTO>("title", "id") {
 
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public Object getDisplayValue(EducationLevelDTO object) {
-                        return object.getEducationLevelId() + " " + super.getDisplayValue(object);
+                        return object.getId() + " " + super.getDisplayValue(object);
                     }
 
                 });
@@ -119,27 +119,6 @@ public class RegistrationForm extends Form<FullUserDTO> {
         educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
         FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
         add(educationLevel, educationLevelLabel);
-
-        // dialog section - TODO maybe refactor this in one component like MessageDialog 
-        final Dialog dialog = new Dialog("dialog");
-        AjaxButton ok = new AjaxButton("ok", new Model<String>("ok"), this) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                dialog.close(target);
-                setResponsePage(HomePage.class);
-            }
-        };
-        dialog.setCloseOnEscape(false);
-        dialog.setModal(true);
-        dialog.setTitle(ResourceUtils.getModel("general.info"));
-        dialog.add(ok);
-
-        Label dialogContent = new Label("content", ResourceUtils.getModel("general.info.registration"));
-        add(dialog.add(dialogContent));
-        //
 
         AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("action.create.account"), this) {
 
@@ -152,10 +131,11 @@ public class RegistrationForm extends Form<FullUserDTO> {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                FullUserDTO user = RegistrationForm.this.getModelObject();
+                FullPersonDTO user = RegistrationForm.this.getModelObject();
                 if (user.isPasswordValid()) {
-                    securityFacade.createUser(user);
-                    dialog.open(target);
+                    user.setRegistrationDate(new DateTime());
+                    securityFacade.createPerson(user);
+                    setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
 
                 } else
                     error(ResourceUtils.getString("general.error.registration"));

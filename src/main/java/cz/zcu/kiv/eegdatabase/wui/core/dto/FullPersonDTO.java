@@ -1,19 +1,21 @@
 package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
 import java.io.Serializable;
+import java.util.Date;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
+import org.joda.time.DateTime;
 
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
-public class FullUserDTO implements Serializable {
+public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     private static final long serialVersionUID = -5467478793603707659L;
-    
+
     private String name;
     private String surname;
-    private String dateOfBirth;
+    private Date dateOfBirth;
     private Gender gender;
     private String email;
     private String password;
@@ -21,9 +23,12 @@ public class FullUserDTO implements Serializable {
     private EducationLevelDTO educationLevel;
     private String controlText;
     private String captcha;
-    
-    public FullUserDTO() {
+    private boolean confirmed;
+    private DateTime registrationDate;
+    private char laterality;
 
+    public FullPersonDTO() {
+        dateOfBirth = new Date();
     }
 
     public String getName() {
@@ -42,11 +47,11 @@ public class FullUserDTO implements Serializable {
         this.surname = surname;
     }
 
-    public String getDateOfBirth() {
+    public Date getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(String dateOfBirth) {
+    public void setDateOfBirth(Date dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
@@ -97,22 +102,46 @@ public class FullUserDTO implements Serializable {
     public void setControlText(String controlText) {
         this.controlText = controlText;
     }
-    
+
     public String getCaptcha() {
         return captcha;
     }
-    
+
     public void setCaptcha(String captcha) {
         this.captcha = captcha;
     }
-    
+
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
-    
-    public boolean isPasswordValid(){
+
+    public boolean isPasswordValid() {
         return password.equals(passwordVerify);
     }
-    
+
+    public boolean isConfirmed() {
+        return confirmed;
+    }
+
+    public void setConfirmed(boolean confirmed) {
+        this.confirmed = confirmed;
+    }
+
+    public DateTime getRegistrationDate() {
+        return registrationDate;
+    }
+
+    public void setRegistrationDate(DateTime registrationDate) {
+        this.registrationDate = registrationDate;
+    }
+
+    public char getLaterality() {
+        return laterality;
+    }
+
+    public void setLaterality(char laterality) {
+        this.laterality = laterality;
+    }
+
 }
