@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
@@ -60,6 +61,7 @@ public class ReservationData implements Serializable {
         this.reservationId = reservationId;
     }
 
+    @XmlElement(required = false)
     public String getResearchGroup() {
         return researchGroup;
     }
@@ -94,6 +96,7 @@ public class ReservationData implements Serializable {
         this.toTime = toTime;
     }
 
+    @XmlElement(required = false)
     public String getCreatorName() {
         return creatorName;
     }
@@ -102,6 +105,7 @@ public class ReservationData implements Serializable {
         this.creatorName = creatorName;
     }
 
+    @XmlElement(required = false)
     public String getCreatorMailUsername() {
         return creatorMailUsername;
     }
@@ -110,6 +114,7 @@ public class ReservationData implements Serializable {
         this.creatorMailUsername = creatorMailUsername;
     }
 
+    @XmlElement(required = false)
     public String getCreatorMailDomain() {
         return creatorMailDomain;
     }
@@ -118,6 +123,7 @@ public class ReservationData implements Serializable {
         this.creatorMailDomain = creatorMailDomain;
     }
 
+    @XmlElement(required = false)
     public boolean isCanRemove() {
         return canRemove;
     }

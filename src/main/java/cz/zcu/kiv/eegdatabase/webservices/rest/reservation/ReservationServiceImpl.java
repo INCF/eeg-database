@@ -159,12 +159,12 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Response delete(ReservationData data) throws RestServiceException {
+    public Response delete(int reservationId) throws RestServiceException {
         try {
-            Reservation reservation = reservationDao.read(data.getReservationId());
+            Reservation reservation = reservationDao.read(reservationId);
 
             if (reservation == null) {
-                throw new RestServiceException("No reservation with id " + data.getReservationId());
+                throw new RestServiceException("No reservation with id " + reservationId);
             } else {
                 if (canRemoveReservation(reservation)) {
                     reservationDao.delete(reservation);

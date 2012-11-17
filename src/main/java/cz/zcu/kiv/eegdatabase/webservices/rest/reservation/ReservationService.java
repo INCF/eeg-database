@@ -42,7 +42,6 @@ public interface ReservationService {
     public Response create(ReservationData reservationData) throws RestServiceException;
 
     @DELETE
-    @Consumes({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/")
-    public Response delete(ReservationData data) throws RestServiceException;
+    @Path("/{reservationId}")
+    public Response delete(@PathParam("reservationId")int reservationId) throws RestServiceException;
 }
