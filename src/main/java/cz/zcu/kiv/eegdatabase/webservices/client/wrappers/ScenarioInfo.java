@@ -9,8 +9,9 @@ public class ScenarioInfo {
     private int personOwner;
     private String title;
     private int scenarioLength;
+    private long fileLength;
     private boolean privateScenario;
-    private String researchGroupTitle;
+    private int researchGroupId;
     private String description;
     private String scenarioName;
     private String mimeType;
@@ -114,6 +115,14 @@ public class ScenarioInfo {
         return mimeType;
     }
 
+    public long getFileLength() {
+        return fileLength;
+    }
+
+    public void setFileLength(long fileLength) {
+        this.fileLength = fileLength;
+    }
+
     /**
      * Setter of MIME type.
      *
@@ -131,12 +140,12 @@ public class ScenarioInfo {
         this.privateScenario = privateScenario;
     }
 
-    public String getResearchGroupTitle() {
-        return researchGroupTitle;
+    public int getResearchGroupId() {
+        return researchGroupId;
     }
 
-    public void setResearchGroupTitle(String researchGroupTitle) {
-        this.researchGroupTitle = researchGroupTitle;
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
     }
 
     public int getPersonOwner() {

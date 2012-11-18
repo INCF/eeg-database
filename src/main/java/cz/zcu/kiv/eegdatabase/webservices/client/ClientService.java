@@ -25,7 +25,7 @@ public interface ClientService {
     public int addResearchGroup(ResearchGroupInfo info);
     public void addResearchGroupMembership(ResearchGroupMembershipInfo info);
     public int addPerson(PersonInfo info);
-    public int addScenario(ScenarioInfo info);
+    public int addScenario(ScenarioInfo info, @XmlMimeType("application/octet-stream") DataHandler inputData) throws ClientServiceException;
     public int addDataFile(DataFileInfo info, @XmlMimeType("application/octet-stream") DataHandler inputData) throws ClientServiceException;
     public int addPersonOptParamDef(PersonOptParamDefInfo info);
     public void addPersonOptParamVal(PersonOptParamValInfo info);
