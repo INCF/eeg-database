@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.core.security;
+package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -23,7 +23,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
-public class SecurityServiceImpl implements SecurityService {
+public class PersonServiceImpl implements PersonService {
 
     private Log log = LogFactory.getLog(getClass());
 
@@ -153,6 +153,16 @@ public class SecurityServiceImpl implements SecurityService {
     @Transactional
     public void updatePerson(FullPersonDTO user) {
         personDAO.update(convertToEntity(user, personDAO.getPerson(user.getEmail())));
+    }
+
+    @Override
+    public boolean usernameExists(String userName) {
+        return personDAO.usernameExists(userName);
+    }
+
+    @Override
+    public FullPersonDTO getPersonByUserName(String userName) {
+        return convertToDTO(personDAO.getPerson(userName));
     }
 
 }

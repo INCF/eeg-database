@@ -12,7 +12,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
 public class ConfirmPage extends MenuPage {
@@ -23,7 +23,7 @@ public class ConfirmPage extends MenuPage {
     public static final String EMAIL = "email";
 
     @SpringBean
-    SecurityFacade securityFacade;
+    PersonFacade personFacade;
 
     private final String TITLE_ID = "title";
     private final String MESSAGE_ID = "message";
@@ -64,7 +64,7 @@ public class ConfirmPage extends MenuPage {
 
             String activationHashCode = parameters.get(CONFIRM_ACTIVATION).toString();
 
-            FullPersonDTO person = securityFacade.getPersonByHash(activationHashCode);
+            FullPersonDTO person = personFacade.getPersonByHash(activationHashCode);
             if (person == null) {
                 titleText = ResourceUtils.getModel("pageTitle.registrationFalse");
                 messageText = ResourceUtils.getModel("text.registrationExpired");
@@ -76,12 +76,12 @@ public class ConfirmPage extends MenuPage {
             } else if (confirmedInTime(System.currentTimeMillis(), person)) {
                 confirm = true;
                 person.setConfirmed(true);
-                securityFacade.updatePerson(person);
+                personFacade.updatePerson(person);
                 titleText = ResourceUtils.getModel("pageTitle.confirmationSuccessfull");
                 messageText = ResourceUtils.getModel("text.registrationSuccessfull.youCanLogIn.part1");
                 message2Text = ResourceUtils.getModel("text.registrationSuccessfull.youCanLogIn.part2");
             } else {
-                securityFacade.deletePerson(person);
+                personFacade.deletePerson(person);
                 titleText = ResourceUtils.getModel("pageTitle.registrationFalse");
                 messageText = ResourceUtils.getModel("text.registrationExpired");
                 message2Text = messageText;

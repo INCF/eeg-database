@@ -120,6 +120,10 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         return password.equals(passwordVerify);
     }
 
+    public boolean isCaptchaValid() {
+        return captcha.equals(controlText);
+    }
+
     public boolean isConfirmed() {
         return confirmed;
     }

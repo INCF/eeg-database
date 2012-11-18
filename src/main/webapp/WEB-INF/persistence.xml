@@ -73,7 +73,7 @@
           factory-method="noOpText" />
           
  
-    <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.SocialConfig" />
+<!--     <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.SocialConfig" /> -->
     
     <bean id="SignInAdapter" class="cz.zcu.kiv.eegdatabase.logic.controller.social.SpringSecuritySignInAdapter"/>
     
@@ -141,6 +141,7 @@
 
     <bean id="captchaEngine"
           class="com.octo.captcha.engine.image.gimpy.SimpleListImageCaptchaEngine"/>
+          
     <bean id="captchaService"
           class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
         <constructor-arg index="0">

@@ -29,7 +29,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 public class RegistrationForm extends Form<FullPersonDTO> {
 
@@ -39,7 +39,9 @@ public class RegistrationForm extends Form<FullPersonDTO> {
     EducationLevelFacade educationLevelFacade;
 
     @SpringBean
-    SecurityFacade securityFacade;
+    PersonFacade personFacade;
+
+    private String captchaComponentPath;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) {
         super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
@@ -89,6 +91,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
         CaptchaImageResource imageResource = new CaptchaImageResource(captcha);
         Image captchaImage = new Image("captchaImage", imageResource);
+        captchaComponentPath = captchaImage.getPath();
         add(captchaImage);
 
         TextField<String> controlText = new TextField<String>("controlText");
@@ -100,6 +103,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
         gender.setSuffix("\n");
         gender.setRequired(true);
+        gender.setLabel(ResourceUtils.getModel("general.gender"));
         FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
         add(gender, genderLabel);
 
@@ -132,18 +136,53 @@ public class RegistrationForm extends Form<FullPersonDTO> {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 FullPersonDTO user = RegistrationForm.this.getModelObject();
-                if (user.isPasswordValid()) {
+                if (user.isCaptchaValid()) {
+
                     user.setRegistrationDate(new DateTime());
-                    securityFacade.createPerson(user);
-                    setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
-
-                } else
-                    error(ResourceUtils.getString("general.error.registration"));
-
+                    if (validation(user)) {
+                        personFacade.createPerson(user);
+                        setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
+                    }
+                } else {
+                    error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
+                }
                 target.add(feedback);
             }
         };
         add(submit);
+    }
+
+    @Override
+    protected void onBeforeRender() {
+        super.onBeforeRender();
+        if (captchaComponentPath != null) {
+            String captcha = StringUtils.getCaptchaString();
+            getModelObject().setCaptcha(captcha);
+
+            Image captchaImage = (Image) get(captchaComponentPath);
+            captchaImage.setImageResource(new CaptchaImageResource(captcha));
+        }
+    }
+
+    private boolean validation(FullPersonDTO user) {
+
+        boolean validate = true;
+
+        if (personFacade.usernameExists(user.getEmail())) {
+            error(ResourceUtils.getString("general.error.registration.userNameSame"));
+            validate = false;
+        }
+
+        if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
+            error(ResourceUtils.getString("general.error.registration.dateBirth"));
+            validate = false;
+        }
+
+        if (user.isPasswordValid()) {
+            error(ResourceUtils.getString("general.error.registration"));
+        }
+
+        return validate;
     }
 
 }

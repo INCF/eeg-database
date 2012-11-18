@@ -5,10 +5,12 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 
+import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 
@@ -50,7 +52,8 @@ public class MenuPage extends BasePage {
 
             @Override
             public void onClick() {
-
+                EEGDataBaseSession.get().invalidate();
+                setResponsePage(EEGDataBaseApplication.get().getHomePage());
             }
         };
         link.setVisibilityAllowed(signedIn);

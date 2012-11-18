@@ -11,7 +11,6 @@ import org.apache.wicket.validation.validator.StringValidator;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.security.LoginUserDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 public class HomeLoginForm extends Form<LoginUserDTO> {

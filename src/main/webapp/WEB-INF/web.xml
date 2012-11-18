@@ -24,11 +24,10 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
             /WEB-INF/applicationContext.xml
-			/WEB-INF/controllers.xml
-            /WEB-INF/url-mapping.xml
             /WEB-INF/persistence.xml
+            /WEB-INF/dao.xml
 
-            /WEB-INF/webservices.xml
+<!--             /WEB-INF/webservices.xml -->
         </param-value>
 	</context-param>
 
