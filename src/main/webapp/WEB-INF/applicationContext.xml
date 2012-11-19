@@ -13,12 +13,9 @@
     <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
     <bean id="personService " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
     <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
-
-
-
-    <!-- <bean id="placeholderConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"> <property name="ignoreUnresolvablePlaceholders" value="false" 
-        /> <property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE" /> <property name="ignoreResourceNotFound" value="false" /> <property name="locations"> <list> <value>classpath*:/jdbc.properties</value> 
-        </list> </property> </bean> -->
+    
+    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" />
+    <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
 
     <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
         <security:remember-me />

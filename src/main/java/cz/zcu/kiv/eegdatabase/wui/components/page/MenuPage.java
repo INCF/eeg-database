@@ -11,7 +11,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 
 public class MenuPage extends BasePage {
@@ -35,7 +35,7 @@ public class MenuPage extends BasePage {
             labelMessage = ResourceUtils.getString("general.header.logged");
             labelMessage += EEGDataBaseSession.get().getUserName();
             labelLink = ResourceUtils.getString("general.page.myaccount.link");
-            pageClass = MyAccountPage.class;
+            pageClass = AccountOverViewPage.class;
         } else {
             labelMessage = ResourceUtils.getString("general.header.notlogged");
             labelLink = ResourceUtils.getString("action.register");

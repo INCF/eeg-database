@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
-public class IdentifiDTO {
+import java.io.Serializable;
+
+public class IdentifiDTO implements Serializable {
     
     private int id;
     

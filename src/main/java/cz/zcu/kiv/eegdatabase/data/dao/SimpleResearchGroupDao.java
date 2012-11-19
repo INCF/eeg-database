@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 
 import java.util.List;
 
@@ -69,15 +70,15 @@ public class SimpleResearchGroupDao
         return list;
     }
 
-    public List getGroupDataForAccountOverview(Person person) {
-        String hqlQuery = "select new map("
+    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person) {
+        String hqlQuery = "select new cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo("
                 + "g.researchGroupId as groupId, "
-                + "g.title as groupTitle, "
+                + "g.title as title, "
                 + "m.authority as authority) "
                 + "from ResearchGroup g "
                 + "left join g.researchGroupMemberships m "
                 + "where m.person.personId = :personId";
-        List list = getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
+        List<ResearchGroupAccountInfo> list = getHibernateTemplate().findByNamedParam(hqlQuery, "personId", person.getPersonId());
         return list;
     }
 

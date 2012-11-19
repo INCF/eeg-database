@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 
 import java.util.List;
 
@@ -23,7 +24,7 @@ public interface ResearchGroupDao extends GenericDao<ResearchGroup, Integer> {
 
     public String getResearchGroupTitle(int groupId);
 
-    public List getGroupDataForAccountOverview(Person person);
+    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person);
 
     public List getListOfGroupMembers(int groupId);
 

@@ -26,6 +26,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private boolean confirmed;
     private DateTime registrationDate;
     private char laterality;
+    private String authority;
 
     public FullPersonDTO() {
         dateOfBirth = new Date();
@@ -146,6 +147,14 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     public void setLaterality(char laterality) {
         this.laterality = laterality;
+    }
+    
+    public String getAuthority() {
+        return authority;
+    }
+    
+    public void setAuthority(String authority) {
+        this.authority = authority;
     }
 
 }

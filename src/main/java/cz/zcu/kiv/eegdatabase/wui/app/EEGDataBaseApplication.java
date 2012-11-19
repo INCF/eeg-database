@@ -17,6 +17,9 @@ import org.springframework.context.ApplicationContextAware;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.ChangePasswordPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupsPage;
@@ -28,6 +31,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
@@ -65,9 +69,15 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
     private void mountPages() {
 
+        mountPage("welcome", WelcomePage.class);
+
         mountPage("access-denied", AccessDeniedPage.class);
         mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
+
+        mountPage("account-overview", AccountOverViewPage.class);
+        mountPage("account-change-pass", ChangePasswordPage.class);
+        mountPage("account-social", SocialNetworksPage.class);
 
         mountPage("articles-page", ArticlesPage.class);
         mountPage("experiments-page", ExperimentsPage.class);
@@ -80,11 +90,11 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("search-page", SearchPage.class);
 
     }
-    
+
     @Override
     protected IConverterLocator newConverterLocator() {
         ConverterLocator locator = (ConverterLocator) super.newConverterLocator();
-        
+
         return locator;
     }
 

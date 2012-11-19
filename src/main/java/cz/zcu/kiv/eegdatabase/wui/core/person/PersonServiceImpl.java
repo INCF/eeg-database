@@ -1,12 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import java.sql.Timestamp;
-import java.util.Date;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
@@ -20,8 +18,6 @@ import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 public class PersonServiceImpl implements PersonService {
 
@@ -33,6 +29,8 @@ public class PersonServiceImpl implements PersonService {
     PersonDao personDAO;
     EducationLevelDao educationLevelDao;
     MailService mailService;
+
+    private PersonMapper mapper = new PersonMapper();
 
     @Required
     public void setPersonDAO(PersonDao personDAO) {
@@ -48,12 +46,12 @@ public class PersonServiceImpl implements PersonService {
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
     }
-    
+
     @Override
     @Transactional
     public void createPerson(FullPersonDTO user) {
 
-        Person person = convertToEntity(user, new Person());
+        Person person = mapper.convertToEntity(user, new Person(), educationLevelDao);
         person.setPassword(encodePassword(user.getPassword()));
         person.setLaterality(DEFAULT_LATERALITY);
 
@@ -89,7 +87,7 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Laterality = " + person.getLaterality());
 
         personDAO.create(person);
-        
+
         mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
     }
 
@@ -97,50 +95,12 @@ public class PersonServiceImpl implements PersonService {
     @Transactional(readOnly = true)
     public FullPersonDTO getPersonByHash(String hashCode) {
 
-        return convertToDTO(personDAO.getPersonByHash(hashCode));
+        return mapper.convertToDTO(personDAO.getPersonByHash(hashCode), educationLevelDao);
 
     }
 
     private String encodePassword(String plaintextPassword) {
         return new BCryptPasswordEncoder().encode(plaintextPassword);
-    }
-
-    private FullPersonDTO convertToDTO(Person person) {
-
-        FullPersonDTO dto = new FullPersonDTO();
-        dto.setId(person.getPersonId());
-        dto.setName(person.getGivenname());
-        dto.setSurname(person.getSurname());
-        dto.setDateOfBirth(new Date(person.getDateOfBirth().getTime()));
-        dto.setEmail(person.getUsername());
-        dto.setGender(Gender.getGenderByShortcut(person.getGender()));
-        dto.setConfirmed(person.isConfirmed());
-        dto.setRegistrationDate(new DateTime(person.getRegistrationDate().getTime()));
-
-        EducationLevel educationLevel = educationLevelDao.read(person.getEducationLevel().getEducationLevelId());
-        EducationLevelDTO edu = new EducationLevelDTO();
-        edu.setId(educationLevel.getEducationLevelId());
-        edu.setTitle(educationLevel.getTitle());
-        dto.setEducationLevel(edu);
-        dto.setLaterality(person.getLaterality());
-
-        return dto;
-    }
-
-    private Person convertToEntity(FullPersonDTO dto, Person person) {
-
-        person.setPersonId(dto.getId());
-        person.setGivenname(dto.getName());
-        person.setSurname(dto.getSurname());
-        person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
-        person.setUsername(dto.getEmail());
-        person.setGender(dto.getGender().getShortcut());
-        person.setConfirmed(dto.isConfirmed());
-        person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
-        person.setEducationLevel(educationLevelDao.read(dto.getEducationLevel().getId()));
-        person.setLaterality(dto.getLaterality());
-
-        return person;
     }
 
     @Override
@@ -152,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void updatePerson(FullPersonDTO user) {
-        personDAO.update(convertToEntity(user, personDAO.getPerson(user.getEmail())));
+        personDAO.update(mapper.convertToEntity(user, personDAO.getPerson(user.getEmail()), educationLevelDao));
     }
 
     @Override
@@ -162,7 +122,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public FullPersonDTO getPersonByUserName(String userName) {
-        return convertToDTO(personDAO.getPerson(userName));
+        return mapper.convertToDTO(personDAO.getPerson(userName), educationLevelDao);
     }
 
 }

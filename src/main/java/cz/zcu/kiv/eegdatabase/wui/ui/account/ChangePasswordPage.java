@@ -6,12 +6,11 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
 @AuthorizeInstantiation("ROLE_USER")
-public class MyAccountPage extends MenuPage {
+public class ChangePasswordPage extends MenuPage {
 
-    private static final long serialVersionUID = -1967810037377960414L;
+    private static final long serialVersionUID = -2098428058200654117L;
 
-    public MyAccountPage() {
-        
-        setPageTitle(ResourceUtils.getModel("title.page.myaccount.overview"));
+    public ChangePasswordPage() {
+        setPageTitle(ResourceUtils.getModel("pageTitle.changePassword"));
     }
 }
