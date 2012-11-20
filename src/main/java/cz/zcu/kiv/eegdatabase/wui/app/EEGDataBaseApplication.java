@@ -22,7 +22,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.ChangePasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
@@ -81,7 +81,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("articles-page", ArticlesPage.class);
         mountPage("experiments-page", ExperimentsPage.class);
-        mountPage("groups-page", GroupsPage.class);
+        mountPage("groups-page", DetailResearchGroupsPage.class);
         mountPage("history-page", HistoryPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("lists-page", ListsPage.class);

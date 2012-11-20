@@ -5,6 +5,14 @@ import java.util.List;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
 public interface ResearchGroupService {
+    
+    void create(ResearchGroupDTO user);
+
+    void delete(ResearchGroupDTO user);
+
+    void update(ResearchGroupDTO user);
+
+    ResearchGroupDTO getResearchGroupById(int id);
 
     public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person);
 

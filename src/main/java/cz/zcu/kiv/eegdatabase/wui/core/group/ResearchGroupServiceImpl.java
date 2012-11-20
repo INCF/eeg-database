@@ -130,4 +130,28 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
         return list;
     }
+
+    @Override
+    @Transactional
+    public void create(ResearchGroupDTO user) {
+        researchGroupDAO.create(researchMapper.convertToEntity(user, new ResearchGroup()));
+    }
+
+    @Override
+    @Transactional
+    public void delete(ResearchGroupDTO user) {
+        researchGroupDAO.delete(researchGroupDAO.read(user.getId()));
+    }
+
+    @Override
+    @Transactional
+    public void update(ResearchGroupDTO user) {
+        researchGroupDAO.update(researchMapper.convertToEntity(user, researchGroupDAO.read(user.getId())));
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResearchGroupDTO getResearchGroupById(int id) {
+        return researchMapper.convertToDTO(researchGroupDAO.read(id));
+    }
 }

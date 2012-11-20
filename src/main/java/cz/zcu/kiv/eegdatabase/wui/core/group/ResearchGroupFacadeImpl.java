@@ -70,4 +70,24 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
         return service.getGroupsForList(start, limit);
     }
 
+    @Override
+    public void create(ResearchGroupDTO user) {
+        service.create(user);
+    }
+
+    @Override
+    public void delete(ResearchGroupDTO user) {
+        service.delete(user);
+    }
+
+    @Override
+    public void update(ResearchGroupDTO user) {
+        service.update(user);
+    }
+
+    @Override
+    public ResearchGroupDTO getResearchGroupById(int id) {
+        return service.getResearchGroupById(id);
+    }
+
 }

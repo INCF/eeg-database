@@ -6,6 +6,14 @@ import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
 public interface ResearchGroupFacade {
 
+    void create(ResearchGroupDTO user);
+
+    void delete(ResearchGroupDTO user);
+
+    void update(ResearchGroupDTO user);
+
+    ResearchGroupDTO getResearchGroupById(int id);
+
     public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person);
 
     public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person, int limit);

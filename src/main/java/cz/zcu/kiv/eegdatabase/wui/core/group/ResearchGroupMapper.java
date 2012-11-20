@@ -9,7 +9,7 @@ public class ResearchGroupMapper {
         ResearchGroupDTO dto = new ResearchGroupDTO();
         dto.setId(group.getResearchGroupId());
         dto.setTitle(group.getTitle());
-        dto.setDescription(group.getTitle());
+        dto.setDescription(group.getDescription());
 
         return dto;
     }
