@@ -23,5 +23,11 @@ public class CreateGroupValidator implements Validator {
         if (!researchGroupDao.canSaveTitle(data.getResearchGroupTitle(), data.getId())) {
             errors.rejectValue("researchGroupTitle", "error.valueAlreadyInDatabase");
         }
+        if (data.getResearchGroupTitle().length() > 100) {
+            errors.rejectValue("researchGroupTitle", "invalid.maxGroupTitleLength");
+        }
+        if (data.getResearchGroupDescription().length() > 250) {
+            errors.rejectValue("researchGroupDescription", "invalid.maxGroupDescriptionLength");
+        }
     }
 }
