@@ -41,6 +41,9 @@ public class AddPersonValidator implements Validator {
         } catch (ParseException e) {
             errors.rejectValue("dateOfBirth", "invalid.dateOfBirth");
         }
+        if (apc.getNote().length() > 255) {
+            errors.rejectValue("note", "invalid.maxLength");
+        }
         if (!apc.getPhoneNumber().isEmpty()) {
             try {
                 if (apc.getPhoneNumber().charAt(0) == '+') {
