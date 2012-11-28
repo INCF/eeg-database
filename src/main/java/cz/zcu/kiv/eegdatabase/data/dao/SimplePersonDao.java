@@ -20,6 +20,17 @@ public class SimplePersonDao
         super(Person.class);
     }
 
+    @Override
+    public Integer create(Person newInstance) {
+        newInstance.setUsername(newInstance.getUsername().toLowerCase());
+        return (Integer) getHibernateTemplate().save(newInstance);
+}
+
+    @Override
+    public void update(Person newInstance) {
+        newInstance.setUsername(newInstance.getUsername().toLowerCase());
+        getHibernateTemplate().update(newInstance);
+    }
     /**
      * This method finds record (Person) that have userName
      * identical with searched userName. Search only one record,

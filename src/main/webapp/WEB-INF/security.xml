@@ -59,7 +59,7 @@
     <authentication-manager alias="authenticationManager">
         <authentication-provider>
             <jdbc-user-service data-source-ref="dataSource"
-            users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and username=?"
+            users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=1 and lower(username)=lower(?)"
             authorities-by-username-query="select username, authority from person where username=?"/>
             <password-encoder ref="encoder"/>
         </authentication-provider>
