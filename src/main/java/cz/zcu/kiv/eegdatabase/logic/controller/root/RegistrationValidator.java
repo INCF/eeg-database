@@ -46,6 +46,12 @@ public class RegistrationValidator implements Validator {
         if (!registrationCommand.getPassword().equals(registrationCommand.getPassword2())) {
             errors.rejectValue("password2", "invalid.passwordMatch");
         }
+        if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*", registrationCommand.getGivenname())) {
+            errors.rejectValue("givenname", "invalid.givenname");
+        }
+        if (!Pattern.matches("[a-zA-Z][a-zA-Z\\s]*", registrationCommand.getSurname())) {
+            errors.rejectValue("surname", "invalid.surname");
+        }
 
         if (!Pattern.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", registrationCommand.getEmail())) {
             errors.rejectValue("email", "invalid.email");

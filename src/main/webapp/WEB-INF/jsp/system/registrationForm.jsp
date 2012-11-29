@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:standardTemplate pageTitle="pageTitle.registration" dateOfBirthCalendar="true">
+<ui:standardTemplate pageTitle="pageTitle.registration" dateOfBirthCalendar="true" dateOfBirthSpinner="true">
 
   <h1><fmt:message key="pageTitle.registration"/></h1>
 

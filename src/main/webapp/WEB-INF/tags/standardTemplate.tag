@@ -5,9 +5,11 @@
 <%@attribute name="dateOfBirthCalendar" %>
 <%@attribute name="mainPage" %>
 <%@attribute name="allowJQuery" %>
+<%@attribute name="dateOfBirthSpinner" %>
 
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:abstractTemplate pageTitle="${pageTitle}" dateOfBirthCalendar="${dateOfBirthCalendar}" mainPage="true" allowJQuery ="true">
+<ui:abstractTemplate pageTitle="${pageTitle}" dateOfBirthSpinner="${dateOfBirthSpinner}"
+                     dateOfBirthCalendar="${dateOfBirthCalendar}" mainPage="true" allowJQuery ="true">
     <div class="mainContent">
         <jsp:doBody/>
     </div>

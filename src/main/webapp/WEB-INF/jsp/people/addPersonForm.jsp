@@ -3,7 +3,7 @@
 <%@taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@taglib prefix="ui" tagdir="/WEB-INF/tags/" %>
-<ui:personsTemplate pageTitle="pageTitle.addEditPerson" dateOfBirthCalendar="true">
+<ui:personsTemplate pageTitle="pageTitle.addEditPerson" dateOfBirthCalendar="true" dateOfBirthSpinner="true">
     <c:choose>
         <c:when test="${addPerson.id > 0}">
             <!-- editation -->

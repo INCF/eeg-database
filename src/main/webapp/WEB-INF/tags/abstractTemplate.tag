@@ -16,6 +16,7 @@
 <%@attribute name="tableSortMin" %>
 <%@attribute name="jMetadata" %>
 <%@attribute name="jspinner" %>
+<%@attribute name="dateOfBirthSpinner" %>
 <%@attribute name="jaddWeather" %>
 <%@attribute name="jatoms" %>
 <%@attribute name="jaddData" %>
@@ -144,6 +145,16 @@
         </script>
         <script type="text/javascript" src="<c:url value='/files/js/dateTimeEdit.js' />"></script>
 
+    </c:if>
+    <c:if test="${dateOfBirthSpinner}">
+        <script type="text/javascript">
+            jQuery().ready(function($) {
+                $("#dateOfBirth").dateEntry({
+                    spinnerImage: '<c:url value="/files/images/spinnerDefault.png" />',
+                    dateFormat: 'dmy/'
+                });
+            });
+        </script>
     </c:if>
     <c:if test="${jatoms}">
         <script type="text/javascript">
