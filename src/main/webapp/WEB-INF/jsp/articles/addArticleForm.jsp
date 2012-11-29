@@ -47,7 +47,7 @@
       <h3><fmt:message key="label.text"/></h3>
       <div class="itemBox">
         <form:textarea path="text" cssClass="textAreaBig"  />
-        <form:errors path="title" cssClass="errorBox" />
+        <form:errors path="text" cssClass="errorBox" />
       </div>
       <div class="itemBox">
            <input type="checkbox" name="publishOnLinkedIn" value="publish" /><fmt:message key="label.linkedin"/>

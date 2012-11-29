@@ -369,6 +369,9 @@
         <property name="mailMessage" ref="mailMessage"/>
         <property name="domain" value="${app.domain}"/>
         <property name="auth" ref="authorizationManager"/>
+        <property name="validator">
+              <bean class="cz.zcu.kiv.eegdatabase.logic.controller.article.AddArticleValidator" />
+        </property>
     </bean>
 
 
