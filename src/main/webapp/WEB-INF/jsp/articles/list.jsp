@@ -60,7 +60,7 @@
 
 
                 <div class="content">
-                        <c:out value="${fn:substring(article.text, 1, 500)}"/>
+                        <c:out value="${fn:substring(article.text, 0, 500)}"/>
                         <c:if test="${fn:length(article.text) > 500}">&hellip;</c:if>
                     <a href="<c:url value="detail.html?articleId=${article.articleId}" />"><fmt:message
                             key="readMore"/></a>
