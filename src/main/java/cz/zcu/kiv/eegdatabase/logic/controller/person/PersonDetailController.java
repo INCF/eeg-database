@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.apache.commons.logging.Log;
@@ -35,9 +34,12 @@ public class PersonDetailController extends AbstractController {
         }
         Person p = personDao.read(id);
 
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
         mav.addObject("personDetail", p);
         mav.addObject("canEdit", auth.userCanEditPerson(id));
 
         return mav;
     }
+
 }

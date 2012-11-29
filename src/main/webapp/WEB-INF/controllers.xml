@@ -613,6 +613,7 @@
     <!-- Person list controller loads persons from database -->
     <bean name="personListController" class="cz.zcu.kiv.eegdatabase.logic.controller.person.PersonListController">
         <property name="personDao" ref="personDao"/>
+        <property name="auth" ref="authorizationManager"/>
     </bean>
 
     <bean name="addScenarioController" class="cz.zcu.kiv.eegdatabase.logic.controller.scenario.AddScenarioController">

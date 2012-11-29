@@ -2,9 +2,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
@@ -69,6 +67,8 @@ public class EditPersonController extends SimpleFormController {
                 mav.setViewName("redirect:/people/list.html");
             }
         }
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
 
         return mav;
     }
@@ -78,7 +78,8 @@ public class EditPersonController extends SimpleFormController {
         ModelAndView mav = new ModelAndView(getSuccessView());
 
         AddPersonCommand data = (AddPersonCommand) command;
-
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
         String idString = request.getParameter("id");
         if (idString != null) {
             int id = Integer.parseInt(idString);

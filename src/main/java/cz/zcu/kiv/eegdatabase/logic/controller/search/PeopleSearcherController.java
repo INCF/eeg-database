@@ -5,8 +5,10 @@
 
 package cz.zcu.kiv.eegdatabase.logic.controller.search;
 
+import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -20,6 +22,8 @@ import java.util.List;
 public class PeopleSearcherController extends AbstractSearchController {
 
     private PersonDao personDao;
+    @Autowired
+    private AuthorizationManager auth;
 
     public PeopleSearcherController() {
         setCommandClass(PeopleSearcherCommand.class);
@@ -30,6 +34,15 @@ public class PeopleSearcherController extends AbstractSearchController {
     protected Object formBackingObject(HttpServletRequest request) throws Exception {
         PeopleSearcherCommand search = (PeopleSearcherCommand) super.formBackingObject(request);
         return search;
+    }
+
+    @Override
+    protected ModelAndView showForm(HttpServletRequest request, HttpServletResponse response, BindException errors) throws Exception {
+        ModelAndView mav = super.showForm(request, response, errors);
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
+
+        return mav;
     }
 
 
@@ -49,9 +62,10 @@ public class PeopleSearcherController extends AbstractSearchController {
             mav.addObject("mistake", e.getMessage());
             mav.addObject("error", true);
         }
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
         return mav;
     }
-
 
 
     public PersonDao getPersonDao() {
@@ -61,8 +75,6 @@ public class PeopleSearcherController extends AbstractSearchController {
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
     }
-
-
 
 
 }

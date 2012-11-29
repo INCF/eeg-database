@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.person;
 
+import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
@@ -16,7 +17,7 @@ import java.util.List;
 public class PersonListController extends AbstractController {
 
     private PersonDao personDao;
-
+    private AuthorizationManager auth;
     private static final int ITEMS_PER_PAGE = 20;
 
     @Override
@@ -34,6 +35,8 @@ public class PersonListController extends AbstractController {
         List<Person> list = personDao.getDataForList(paginator.getFirstItemIndex(), ITEMS_PER_PAGE);
 
         mav.addObject("personList", list);
+        boolean userIsExperimenter = auth.userIsExperimenter();
+        mav.addObject("userIsExperimenter", userIsExperimenter);
         mav.addObject("paginator", paginator.getLinks());
         return mav;
     }
@@ -44,5 +47,9 @@ public class PersonListController extends AbstractController {
 
     public void setPersonDao(PersonDao personDao) {
         this.personDao = personDao;
+    }
+
+    public void setAuth(AuthorizationManager auth) {
+        this.auth = auth;
     }
 }
