@@ -8,11 +8,11 @@
 <ui:articlesTemplate pageTitle="pageTitle.addEditArticle">
   <c:choose>
     <c:when test="${addArticle.articleId > 0}">
-      <h1><fmt:message key="pageTitle.editArticle" /></h1>
+      <h1><fmt:message key="label.addComment" /></h1>
       <c:url value="add-article-comment.html" var="formUrl" />
     </c:when>
     <c:otherwise>
-      <h1><fmt:message key="pageTitle.addArticle" /></h1>
+      <h1><fmt:message key="label.addComment" /></h1>
       <c:url value="edit-article-comment.html" var="formUrl" />
     </c:otherwise>
   </c:choose>

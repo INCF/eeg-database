@@ -21,6 +21,8 @@ import org.springframework.mail.javamail.JavaMailSenderImpl;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.validation.BindException;
 import org.springframework.validation.Errors;
+import org.springframework.validation.ValidationUtils;
+import org.springframework.validation.Validator;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 import org.springframework.web.servlet.support.RequestContextUtils;
@@ -39,7 +41,7 @@ import java.util.Set;
 /**
  * @author Jiri Vlasimsky
  */
-public class AddArticleCommentController extends SimpleFormController {
+public class AddArticleCommentController extends SimpleFormController implements Validator {
 
     private AuthorizationManager auth;
     private GenericDao<Article, Integer> articleDao;
@@ -259,7 +261,7 @@ public class AddArticleCommentController extends SimpleFormController {
     }
 
     public boolean supports(Class type) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        return type.equals(ArticleCommentCommand.class);
     }
 
     public GenericDao<Article, Integer> getArticleDao() {
@@ -271,7 +273,7 @@ public class AddArticleCommentController extends SimpleFormController {
     }
 
     public void validate(Object command, Errors errors) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "text", "required.field");
     }
 
     public AuthorizationManager getAuth() {
