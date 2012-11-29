@@ -16,7 +16,6 @@
       <c:url value="edit-article-comment.html" var="formUrl" />
     </c:otherwise>
   </c:choose>
-  <c:if test="${userIsAdminInAnyGroup}">
     <form:form action="${formUrl}" method="post" commandName="addArticleComment" cssClass="standardInputForm" name="addArticleComment">
       <form:hidden path="articleId" /> 
       <form:hidden path="parentId" /> 
@@ -29,5 +28,4 @@
         <input type="submit" value="<fmt:message key='button.save'/>" class="submitButton lightButtonLink" />
       </div>
     </form:form>
-  </c:if>
 </ui:articlesTemplate>
