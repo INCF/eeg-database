@@ -1,10 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.core.security;
 
-public interface SecurityFacade {
-
-    boolean authorization(String userName, String password);
-
-    void logout();
+public interface SecurityService {
 
     boolean personAbleToWriteIntoGroup(int researchGroupId);
 
@@ -29,5 +25,4 @@ public interface SecurityFacade {
     boolean userIsMemberInGroup(int groupId);
 
     boolean userCanEditPerson(int personId);
-
 }
