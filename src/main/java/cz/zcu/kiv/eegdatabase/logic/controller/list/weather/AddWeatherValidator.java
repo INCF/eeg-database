@@ -28,6 +28,13 @@ public class AddWeatherValidator implements Validator {
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "title", "required.field");
         ValidationUtils.rejectIfEmptyOrWhitespace(errors, "description", "required.field");
 
+        if (data.getTitle().length() > 30) {
+            errors.rejectValue("title", "invalid.fieldLength30");
+        }
+        if (data.getDescription().length() > 30) {
+                    errors.rejectValue("description", "invalid.fieldLength30");
+                }
+
         if(data.getResearchGroupId()==DEFAULT_ID){
             if (!weatherDao.canSaveDefaultTitle(data.getTitle(),data.getId())) {
                 errors.rejectValue("title", "error.valueAlreadyInDatabase");
