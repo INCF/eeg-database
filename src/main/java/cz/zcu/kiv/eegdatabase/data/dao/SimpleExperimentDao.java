@@ -67,7 +67,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
 
     @Override
     public List<Experiment> getExperimentsWhereSubject(Person person, int limit) {
-        return getExperimentsWhereSubject(person, 1, limit);
+        return getExperimentsWhereSubject(person, 0, limit);
     }
 
     @Override
