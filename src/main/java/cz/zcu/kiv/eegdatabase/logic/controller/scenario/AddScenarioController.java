@@ -159,7 +159,7 @@ public class AddScenarioController
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
-
+            scenarioType = scenario.getScenarioType();
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -190,17 +190,13 @@ public class AddScenarioController
             String filename = file.getOriginalFilename().replace(" ", "_");
             scenario.setScenarioName(filename);
             if (file.getContentType().length() > MAX_MIMETYPE_LENGTH) {
-                        int index = filename.lastIndexOf(".");
-                        scenario.setMimetype(filename.substring(index));
-                    } else {
-                        scenario.setMimetype(file.getContentType());
-                    }
-            if (id > 0) {
-            // scenarioType = (ScenarioType) context.getBean("scenarioTypeNonXml");
-            scenarioType = scenario.getScenarioType();
+                int index = filename.lastIndexOf(".");
+                scenario.setMimetype(filename.substring(index));
             } else {
-                scenarioType = new ScenarioTypeNonXml();
+                scenario.setMimetype(file.getContentType());
             }
+
+            scenarioType = new ScenarioTypeNonXml();
             scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
         }
 
@@ -250,8 +246,8 @@ public class AddScenarioController
         scenarioType.setScenario(scenario);
         if (id > 0) {
             // Editing existing
-           // scenarioTypeDao.update(scenarioType);
-           scenarioDao.update(scenario);
+            // scenarioTypeDao.update(scenarioType);
+            scenarioDao.update(scenario);
         } else {
             // Creating new
 
