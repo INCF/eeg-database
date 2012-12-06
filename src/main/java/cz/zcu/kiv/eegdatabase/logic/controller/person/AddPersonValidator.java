@@ -67,10 +67,12 @@ public class AddPersonValidator implements Validator {
         if (!Pattern.matches("^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,4}$", apc.getEmail())) {
             errors.rejectValue("email", "invalid.email");
         }
-
-        if (personDao.usernameExists(apc.getEmail())) {
-            errors.rejectValue("email", "inUse.email");
+        if (!apc.getEmail().equals(apc.getOldEmail())) {
+            if (personDao.usernameExists(apc.getEmail())) {
+                errors.rejectValue("email", "inUse.email");
+            }
         }
+        apc.setOldEmail("");
     }
 
     public PersonDao getPersonDao() {

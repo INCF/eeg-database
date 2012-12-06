@@ -15,6 +15,7 @@ public class AddPersonCommand {
     private String note;
     private String laterality;
     private int educationLevel;
+    private String oldEmail;
 
 
     public int getId() {
@@ -96,5 +97,13 @@ public class AddPersonCommand {
 
     public void setLaterality(String laterality) {
         this.laterality = laterality;
+    }
+
+    public String getOldEmail() {
+        return oldEmail;
+    }
+
+    public void setOldEmail(String oldEmail) {
+        this.oldEmail = oldEmail;
     }
 }

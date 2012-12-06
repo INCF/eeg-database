@@ -3,12 +3,15 @@ package cz.zcu.kiv.eegdatabase.logic.controller.person;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.validation.BindException;
+import org.springframework.validation.Errors;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
@@ -16,12 +19,18 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.sql.Timestamp;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 public class EditPersonController extends SimpleFormController {
 
     private Log log = LogFactory.getLog(getClass());
+    @Qualifier("personDao")
     @Autowired
     private PersonDao personDao;
+    @Qualifier("educationLevelDao")
+    @Autowired
     private EducationLevelDao educationLevelDao;
     @Autowired
     private AuthorizationManager auth;
@@ -51,6 +60,7 @@ public class EditPersonController extends SimpleFormController {
             data.setEmail(person.getUsername());
             data.setPhoneNumber(person.getPhoneNumber());
             data.setNote(person.getNote());
+            data.setOldEmail(person.getUsername());
         }
 
         return data;
@@ -72,6 +82,13 @@ public class EditPersonController extends SimpleFormController {
 
         return mav;
     }
+    @Override
+         protected Map referenceData(HttpServletRequest request, Object command, Errors errors) throws Exception {
+             Map map = new HashMap<String, Object>();
+             List<EducationLevel> list = educationLevelDao.getAllRecords();
+             map.put("education", list);
+             return map;
+         }
 
     @Override
     protected ModelAndView onSubmit(HttpServletRequest request, HttpServletResponse response, Object command, BindException bindException) throws Exception {
@@ -124,11 +141,6 @@ public class EditPersonController extends SimpleFormController {
         log.debug("Returning MAV");
         return mav;
     }
-
-    public EducationLevelDao getEducationLevelDao() {
-        return educationLevelDao;
-    }
-
     public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
         this.educationLevelDao = educationLevelDao;
     }
