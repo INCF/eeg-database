@@ -15,5 +15,9 @@ public interface PersonFacade {
     FullPersonDTO getPersonByUserName(String userName);
 
     public boolean usernameExists(String userName);
+    
+    void changeUserPassword(String userName, String newPass);
+    
+    boolean isPasswordEquals(String userName, String password);
 
 }

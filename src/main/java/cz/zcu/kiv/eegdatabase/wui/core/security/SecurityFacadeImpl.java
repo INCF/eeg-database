@@ -83,4 +83,9 @@ public class SecurityFacadeImpl implements SecurityFacade {
         return service.userCanEditPerson(personId);
     }
 
+    @Override
+    public boolean isAuthorizedToRequestGroupRole() {
+        return service.isAuthorizedToRequestGroupRole();
+    }
+
 }

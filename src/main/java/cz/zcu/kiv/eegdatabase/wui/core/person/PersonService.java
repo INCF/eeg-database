@@ -16,4 +16,7 @@ public interface PersonService {
 
     public boolean usernameExists(String userName);
 
+    void changeUserPassword(String userName, String password);
+
+    boolean isPasswordEquals(String userName, String password);
 }

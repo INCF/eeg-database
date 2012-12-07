@@ -169,17 +169,17 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         boolean validate = true;
 
         if (personFacade.usernameExists(user.getEmail())) {
-            error(ResourceUtils.getString("general.error.registration.userNameSame"));
+            error(ResourceUtils.getString("inUse.email"));
             validate = false;
         }
 
         if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
-            error(ResourceUtils.getString("general.error.registration.dateBirth"));
+            error(ResourceUtils.getString("invalid.dateOfBirth"));
             validate = false;
         }
 
         if (user.isPasswordValid()) {
-            error(ResourceUtils.getString("general.error.registration"));
+            error(ResourceUtils.getString("invalid.passwordMatch"));
         }
 
         return validate;

@@ -25,4 +25,6 @@ public interface SecurityService {
     boolean userIsMemberInGroup(int groupId);
 
     boolean userCanEditPerson(int personId);
+
+    boolean isAuthorizedToRequestGroupRole();
 }

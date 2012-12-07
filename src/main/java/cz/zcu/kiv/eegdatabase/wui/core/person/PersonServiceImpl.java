@@ -102,6 +102,10 @@ public class PersonServiceImpl implements PersonService {
     private String encodePassword(String plaintextPassword) {
         return new BCryptPasswordEncoder().encode(plaintextPassword);
     }
+    
+    private boolean matchPasswords(String plaintextPassword, String encodedPassword) {
+        return new BCryptPasswordEncoder().matches(plaintextPassword, encodedPassword);
+    }
 
     @Override
     @Transactional
@@ -121,8 +125,24 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public FullPersonDTO getPersonByUserName(String userName) {
         return mapper.convertToDTO(personDAO.getPerson(userName), educationLevelDao);
+    }
+
+    @Override
+    @Transactional
+    public void changeUserPassword(String userName, String password) {
+        Person person = personDAO.getPerson(userName);
+
+        person.setPassword(encodePassword(password));
+        personDAO.update(person);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isPasswordEquals(String userName, String password) {
+        return matchPasswords(password, personDAO.getPerson(userName).getPassword());
     }
 
 }

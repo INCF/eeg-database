@@ -4,9 +4,26 @@
   lang="en">
 <body>
   <wicket:extend>
-    <h1 wicket:id="title"></h1>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
 
-    <p wicket:id="description"></p>
+    <div class="mainContentWithMenu">
+      <h1 wicket:id="title"></h1>
+  
+      <p wicket:id="description"></p>
+      
+      <div class="actionBox">
+        <a href="#" wicket:id="request" class="lightButtonLink">
+        <wicket:message key="button.membershipRequest" /></a>
+  
+        <a href="#" wicket:id="listOfMembers" class="lightButtonLink">
+        <wicket:message key="button.listOfMembers" /></a>
+  
+        <a href="#" wicket:id="addMember" class="lightButtonLink">
+        <wicket:message key="button.addMemberToGroup" /></a> 
+        <a href="#" wicket:id="editGroup" class="lightButtonLink">
+        <wicket:message key="button.edit" /></a>
+      </div>
+    </div>
   </wicket:extend>
 </body>
 </html>

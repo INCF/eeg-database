@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 /**
  * DAO for checking permissions of users.
@@ -73,4 +72,6 @@ public interface AuthorizationManager {
     boolean userIsMemberInGroup(int groupId);
 
     boolean userCanEditPerson(int personId);
+    
+    boolean isAuthorizedToRequestGroupRole();
 }

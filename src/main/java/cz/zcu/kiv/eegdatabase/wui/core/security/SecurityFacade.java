@@ -30,4 +30,6 @@ public interface SecurityFacade {
 
     boolean userCanEditPerson(int personId);
 
+    boolean isAuthorizedToRequestGroupRole();
+
 }

@@ -11,6 +11,7 @@
     <bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
 
     <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
+    <bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
     <bean id="personService " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
     <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
     

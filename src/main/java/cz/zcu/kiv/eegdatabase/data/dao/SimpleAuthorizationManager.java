@@ -209,4 +209,13 @@ public class SimpleAuthorizationManager extends HibernateDaoSupport implements A
 
         return (list.size() > 0);
     }
+    
+    @Override
+    public boolean isAuthorizedToRequestGroupRole() {
+        Person loggedUser = personDao.getLoggedPerson();
+        
+        return (loggedUser.getAuthority().equals(Util.ROLE_ADMIN)
+                || loggedUser.getAuthority().equals(Util.ROLE_USER)
+                || !loggedUser.getResearchGroupMemberships().isEmpty());
+    }
 }

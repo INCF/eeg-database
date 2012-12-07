@@ -43,4 +43,14 @@ public class PersonFacadeImpl implements PersonFacade {
         return personService.getPersonByUserName(userName);
     }
 
+    @Override
+    public void changeUserPassword(String userName, String password) {
+        personService.changeUserPassword(userName, password);
+    }
+
+    @Override
+    public boolean isPasswordEquals(String userName, String password) {
+        return personService.isPasswordEquals(userName, password);
+    }
+
 }
