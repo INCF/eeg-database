@@ -19,4 +19,6 @@ public interface PersonService {
     void changeUserPassword(String userName, String password);
 
     boolean isPasswordEquals(String userName, String password);
+    
+    void forgottenPassword(FullPersonDTO person);
 }

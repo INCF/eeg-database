@@ -52,5 +52,10 @@ public class PersonFacadeImpl implements PersonFacade {
     public boolean isPasswordEquals(String userName, String password) {
         return personService.isPasswordEquals(userName, password);
     }
+    
+    @Override
+    public void forgottenPassword(FullPersonDTO person) {
+        personService.forgottenPassword(person);
+    }
 
 }

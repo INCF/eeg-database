@@ -17,6 +17,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private String surname;
     private Date dateOfBirth;
     private Gender gender;
+    private String username;
     private String email;
     private String password;
     private String passwordVerify;
@@ -148,13 +149,21 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     public void setLaterality(char laterality) {
         this.laterality = laterality;
     }
-    
+
     public String getAuthority() {
         return authority;
     }
-    
+
     public void setAuthority(String authority) {
         this.authority = authority;
+    }
+
+    public String getUsername() {
+        return username;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
     }
 
 }

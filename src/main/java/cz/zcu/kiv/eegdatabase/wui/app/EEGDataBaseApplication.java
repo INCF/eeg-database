@@ -30,6 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.PeoplePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
@@ -74,6 +75,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("access-denied", AccessDeniedPage.class);
         mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
+        mountPage("forgotten-pass", ForgottenPasswordPage.class);
 
         mountPage("account-overview", AccountOverViewPage.class);
         mountPage("account-change-pass", ChangePasswordPage.class);

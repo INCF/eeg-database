@@ -21,7 +21,7 @@ public interface MailService {
      * @param emailBody body text, can be HTML
      * @throws MailException when mail sending fails
      */
-    void sendEmail(String toEmail, String subject, String emailBody) throws MailException;
+    boolean sendEmail(String toEmail, String subject, String emailBody) throws MailException;
 
     /**
      * Sends activation link to confirm user registration
@@ -31,7 +31,7 @@ public interface MailService {
      * @param locale browser locale
      * @throws MailException when mail sending fails
      */
-    void sendRegistrationConfirmMail(Person user, Locale locale) throws MailException;
+    boolean sendRegistrationConfirmMail(Person user, Locale locale) throws MailException;
 
     /**
      * Sends request for changing group role
@@ -43,7 +43,7 @@ public interface MailService {
      * @param locale             user browser locale
      * @throws MailException when mail sending fails
      */
-    void sendRequestForGroupRoleMail(String toEmail, int requestId, String userName,
+    boolean sendRequestForGroupRoleMail(String toEmail, int requestId, String userName,
                                      String researchGroupTitle, Locale locale) throws MailException;
 
     /**
@@ -56,6 +56,8 @@ public interface MailService {
      * @param locale             user browser locale
      * @throws MailException when mail sending fails
      */
-    void sendRequestForJoiningGroupMail(String toEmail, int requestId, String userName,
+    boolean sendRequestForJoiningGroupMail(String toEmail, int requestId, String userName,
                                      String researchGroupTitle, Locale locale) throws MailException;
+    
+    boolean sendForgottenPasswordMail(String email, String plainPassword);
 }

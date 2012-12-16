@@ -19,5 +19,7 @@ public interface PersonFacade {
     void changeUserPassword(String userName, String newPass);
     
     boolean isPasswordEquals(String userName, String password);
+    
+    void forgottenPassword(FullPersonDTO person);
 
 }

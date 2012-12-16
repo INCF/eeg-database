@@ -21,10 +21,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jiri Novotny
- * Date: 11.3.12
- * Time: 23:57
+ * Created by IntelliJ IDEA. User: Jiri Novotny Date: 11.3.12 Time: 23:57
  */
 public class SpringJavaMailService implements MailService {
 
@@ -40,50 +37,52 @@ public class SpringJavaMailService implements MailService {
     private String domain;
 
     @Override
-    public void sendRegistrationConfirmMail(Person user, Locale locale) throws MailException {
+    public boolean sendRegistrationConfirmMail(Person user, Locale locale) throws MailException {
         log.debug("Creating email content");
         StringBuilder sb = new StringBuilder();
         String login = "<b>" + user.getUsername() + "</b>";
 
         sb.append("<html><body>");
         sb.append("<h4>");
-        sb.append(messageSource.getMessage("registration.email.welcome",null, locale));
+        sb.append(messageSource.getMessage("registration.email.welcome", null, locale));
         sb.append("</h4>");
         sb.append("<p>");
-        sb.append(messageSource.getMessage("registration.email.body.yourLogin", new String[]{login}, locale));
+        sb.append(messageSource.getMessage("registration.email.body.yourLogin", new String[] { login }, locale));
         sb.append("</p>");
         sb.append("<p>");
-        sb.append(messageSource.getMessage("registration.email.body.clickToRegister",null, locale));
+        sb.append(messageSource.getMessage("registration.email.body.clickToRegister", null, locale));
         sb.append("<br/>");
-        
+
         String confirmURL = PageParametersUtils.getUrlForPage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.CONFIRM_ACTIVATION, user.getAuthenticationHash()));
-        sb.append("<a href=\"" + confirmURL + "\">"+ confirmURL + "</a>");
+        sb.append("<a href=\"" + confirmURL + "\">" + confirmURL + "</a>");
         sb.append("</p>");
         sb.append("</body></html>");
 
         String emailSubject = messageSource.getMessage("registration.email.subject", null, locale);
-        sendEmail(user.getEmail(),emailSubject,sb.toString());
+        return sendEmail(user.getEmail(), emailSubject, sb.toString());
     }
 
     @Override
-    public void sendRequestForJoiningGroupMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
-        sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, true);
+    public boolean sendRequestForJoiningGroupMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
+        return sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, true);
     }
 
     @Override
-    public void sendRequestForGroupRoleMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
-        sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, false);
+    public boolean sendRequestForGroupRoleMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale) {
+        return sendGroupRoleEditMail(toEmail, requestId, userName, researchGroupTitle, locale, false);
     }
 
-    public void sendGroupRoleEditMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale, boolean newMember) {
+    private boolean sendGroupRoleEditMail(String toEmail, int requestId, String userName, String researchGroupTitle, Locale locale, boolean newMember) {
         log.debug("Creating email content");
         String userNameElement = "<b>" + userName + "</b>";
         String researchGroupTitleElement = "<b>" + researchGroupTitle + "</b>";
 
-        //Email body is obtained from resource bunde. Url of domain is obtained from
-        //configuration property file defined in persistence.xml
-        //Locale is from request it ensures that user obtain localized email according to
-        //his/her browser setting
+        // Email body is obtained from resource bunde. Url of domain is obtained
+        // from
+        // configuration property file defined in persistence.xml
+        // Locale is from request it ensures that user obtain localized email
+        // according to
+        // his/her browser setting
         StringBuilder sb = new StringBuilder();
         sb.append("<html><body>");
         sb.append("<h4>");
@@ -92,7 +91,7 @@ public class SpringJavaMailService implements MailService {
         sb.append("<p>");
         sb.append(messageSource.getMessage(newMember ? "editgrouprole.email.body.userWantsToJoinGroup"
                 : "editgrouprole.email.body.userWantsToChangeRole",
-                new String[]{userNameElement, researchGroupTitleElement}, locale));
+                new String[] { userNameElement, researchGroupTitleElement }, locale));
         sb.append("</p>");
         sb.append("<p>");
         sb.append(messageSource.getMessage("editgrouprole.email.body.clickToConfirm", null, locale));
@@ -103,22 +102,50 @@ public class SpringJavaMailService implements MailService {
         sb.append("</body></html>");
 
         String subject = messageSource.getMessage(newMember ? "editgrouprole.email.subject.joinGroup"
-                 : "editgrouprole.email.subject.changeRole", null, locale);
-        sendEmail(toEmail, subject, sb.toString());
+                : "editgrouprole.email.subject.changeRole", null, locale);
+        return sendEmail(toEmail, subject, sb.toString());
     }
 
     @Override
-    public void sendEmail(String to, String subject, String emailBody) throws MailException {
-        sendEmail(mailMessage.getFrom(), to, subject, emailBody);
+    public boolean sendForgottenPasswordMail(String email, String plainPassword) {
+        log.debug("Creating new mail object");
+        SimpleMailMessage mail = new SimpleMailMessage(mailMessage);
+
+        log.debug("Composing e-mail - TO: " + email);
+
+        String subject = mail.getSubject() + " - Password reset";
+        log.debug("Composing e-mail - SUBJECT: " + subject);
+        mail.setSubject(subject);
+
+        String text = "Your password for EEGbase portal was reset. Your new password (within brackets) is [" + plainPassword + "]\n\n" +
+                "Please change the password after logging into system.";
+        log.debug("Composing e-mail - TEXT: " + text);
+        mail.setText(text);
+
+        return sendEmail(email, mail.getSubject(), mail.getText());
     }
 
-    protected void sendEmail(String from, String to, String subject, String emailBody) throws MailException {//make public if needed
-        log.debug("email body: " + emailBody);
-        log.debug("Composing e-mail message");
-        MimeMessage mimeMessage = createMimeMessage(from, to,subject,emailBody);
-        log.debug("MailSender " + mailSender + " sending email");
-        mailSender.send(mimeMessage);
-        log.debug("E-mail was sent");
+    @Override
+    public boolean sendEmail(String to, String subject, String emailBody) throws MailException {
+        return sendEmail(mailMessage.getFrom(), to, subject, emailBody);
+    }
+
+    private boolean sendEmail(String from, String to, String subject, String emailBody) throws MailException {// make
+                                                                                                              // public
+                                                                                                              // if
+                                                                                                              // needed
+        try {
+            log.debug("email body: " + emailBody);
+            log.debug("Composing e-mail message");
+            MimeMessage mimeMessage = createMimeMessage(from, to, subject, emailBody);
+            log.debug("MailSender " + mailSender + " sending email");
+            mailSender.send(mimeMessage);
+            log.debug("E-mail was sent");
+            return true;
+        } catch (MailException e) {
+            log.error(e.getMessage(), e);
+            return false;
+        }
     }
 
     protected MimeMessage createMimeMessage(String from, String to, String subject, String emailBody) throws MailException {
@@ -126,14 +153,14 @@ public class SpringJavaMailService implements MailService {
             MimeMessage mimeMessage = mailSender.createMimeMessage();
             MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
             message.setFrom(from);
-            //  message.setContent("text/html");
+            // message.setContent("text/html");
             message.setTo(to);
             message.setSubject(subject);
             message.setText(emailBody, true);
             log.debug("Message " + message);
             return mimeMessage;
-        } catch (MessagingException e) {//rethrow as MailException
-            throw new MailPreparationException(e.getMessage(),e);
+        } catch (MessagingException e) {// rethrow as MailException
+            throw new MailPreparationException(e.getMessage(), e);
         }
     }
 }

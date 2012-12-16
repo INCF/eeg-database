@@ -102,7 +102,7 @@ public class PersonServiceImpl implements PersonService {
     private String encodePassword(String plaintextPassword) {
         return new BCryptPasswordEncoder().encode(plaintextPassword);
     }
-    
+
     private boolean matchPasswords(String plaintextPassword, String encodedPassword) {
         return new BCryptPasswordEncoder().matches(plaintextPassword, encodedPassword);
     }
@@ -143,6 +143,24 @@ public class PersonServiceImpl implements PersonService {
     @Transactional(readOnly = true)
     public boolean isPasswordEquals(String userName, String password) {
         return matchPasswords(password, personDAO.getPerson(userName).getPassword());
+    }
+
+    @Override
+    @Transactional
+    public void forgottenPassword(FullPersonDTO person) {
+        Person user = personDAO.getPerson(person.getEmail());
+        String plainPassword = ControllerUtils.getRandomPassword();
+
+        if (mailService.sendForgottenPasswordMail(user.getEmail(), plainPassword)) {
+            log.debug("Updating new password into database");
+            user.setPassword(new BCryptPasswordEncoder().encode(plainPassword));
+            personDAO.update(user);
+            log.debug("Password updated");
+        } else {
+            log.debug("E-mail message was NOT sent");
+            log.debug("Password was NOT changed");
+        }
+
     }
 
 }
