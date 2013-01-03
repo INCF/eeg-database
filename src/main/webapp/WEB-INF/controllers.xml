@@ -61,8 +61,12 @@
     <bean id="connectController" class="org.springframework.social.connect.web.ConnectController">
         <constructor-arg ref="connectionFactoryLocator"/>
         <constructor-arg ref="connectionRepository"/>
-      
-       
+        <property name="interceptors">
+                <list>
+                    <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.EnsureUniqueConnectInterceptor" />
+                </list>
+            </property>
+
     </bean>
 
     <bean name="graphController" class="cz.zcu.kiv.eegdatabase.logic.controller.history.GraphController">
