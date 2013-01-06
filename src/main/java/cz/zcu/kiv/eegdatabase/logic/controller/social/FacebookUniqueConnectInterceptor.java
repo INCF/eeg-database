@@ -13,7 +13,7 @@ import org.springframework.web.context.request.WebRequest;
 import java.util.List;
 
 
-public class EnsureUniqueConnectInterceptor implements ConnectInterceptor<Facebook> {
+public class FacebookUniqueConnectInterceptor implements ConnectInterceptor<Facebook> {
 
    @Autowired
    private UsersConnectionRepository usersConnectionRepository;
@@ -21,34 +21,26 @@ public class EnsureUniqueConnectInterceptor implements ConnectInterceptor<Facebo
    @Autowired
    private ConnectionRepository connectionRepository;
 
-    public EnsureUniqueConnectInterceptor() {
+    public FacebookUniqueConnectInterceptor() {
     }
 
     @Override
     public void preConnect(ConnectionFactory<Facebook> connectionFactory, MultiValueMap<String, String> parameters, WebRequest request) {
-
+     //Nothing to do
     }
 
     @Override
     public void postConnect(Connection<Facebook> connection, WebRequest request) {
-        boolean connectionAlreadyAssociatedWithAnotherUser = usersConnectionRepository
-       .findUserIdsWithConnection(connection).size() > 1;
+        ConnectionRepository repo;
         List<String> users = usersConnectionRepository
                .findUserIdsWithConnection(connection);
 
-       if (connectionAlreadyAssociatedWithAnotherUser) {
-         //connectionRepository.removeConnections("facebook");
+       if (users.size() > 1) {
            for (String user: users) {
-                     System.out.println(user);
-               connectionRepository.removeConnections("facebook");
+               repo = usersConnectionRepository.createConnectionRepository(user);
+               repo.removeConnections("facebook");
                  }
-          // connectionRepository.addConnection(connection);
-//       RuntimeException nonUniqueConnectionException = new RuntimeException(
-//       "The connection is already associated with a different account");
-//       request.setAttribute("lastSessionException",
-//       nonUniqueConnectionException, WebRequest.SCOPE_SESSION);
-//       throw nonUniqueConnectionException;
+         connectionRepository.addConnection(connection);
        }
-        System.out.println("postconnect");
     }
 }

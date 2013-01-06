@@ -63,7 +63,7 @@
         <constructor-arg ref="connectionRepository"/>
         <property name="interceptors">
                 <list>
-                    <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.EnsureUniqueConnectInterceptor" />
+                    <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.FacebookUniqueConnectInterceptor" />
                 </list>
             </property>
 
