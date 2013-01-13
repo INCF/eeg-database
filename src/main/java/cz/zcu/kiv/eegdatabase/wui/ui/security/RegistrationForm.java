@@ -21,7 +21,8 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
-import org.odlabs.wiquery.ui.datepicker.DatePicker;
+
+import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -58,11 +59,9 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
         add(surname, surnameLabel);
 
-        DatePicker<Date> date = new DatePicker<Date>("dateOfBirth", Date.class);
+        DatePicker date = new DatePicker("dateOfBirth");
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
         date.setRequired(true);
-        date.setChangeMonth(true);
-        date.setChangeYear(true);
         FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
         add(date, dateLabel);
 
