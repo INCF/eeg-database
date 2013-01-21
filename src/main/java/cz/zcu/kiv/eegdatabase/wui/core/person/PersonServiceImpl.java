@@ -15,6 +15,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
@@ -58,22 +59,55 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Setting authority = ROLE_USER");
         person.setAuthority(Util.ROLE_USER);
 
-        if (person.getAuthenticationHash() == null) {
+        
+        person = createPerson(person);
+
+        mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
+    }
+    
+    @Override
+    @Transactional
+    public Person createPerson(SocialUser userFb, Integer educationLevelId){
+        //copying the data to Person entity
+
+        Person person = personDAO.getPerson(userFb.getEmail());
+        if (person != null) {
+            return person;
+        }
+        
+        person = new Person();
+        person.setUsername(userFb.getEmail());
+        person.setGivenname(userFb.getFirstName());
+        person.setSurname(userFb.getLastName());
+        person.setGender('M');
+       
+        person.setLaterality(DEFAULT_LATERALITY);
+        person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
+
+        //Code specific for this object type
+        person.setPassword(encodeRandomPassword());
+        log.debug("Setting authority to ROLE_USER");
+        person.setAuthority("ROLE_USER");
+        log.debug("Setting confirmed");
+        person.setConfirmed(true);
+        
+        return createPerson(person);
+    }
+
+    private Person createPerson(Person person) {
+        if(person.getAuthenticationHash() == null){
             log.debug("Hashing the username");
             person.setAuthenticationHash(ControllerUtils.getMD5String(person.getUsername()));
         }
-
-        if (person.getRegistrationDate() == null) {
+        if(person.getRegistrationDate() == null){
             log.debug("Setting registration date");
             person.setRegistrationDate(new Timestamp(System.currentTimeMillis()));
         }
-
-        if (person.getEducationLevel() == null) {
+        if(person.getEducationLevel() == null){//TODO remove if educationLevel is nullable or always set by the caller
             log.info("EducationLevel of " + person.getUsername() + " is not set, trying to assign default value " + DEFAULT_EDUCATION_LEVEL);
             List<EducationLevel> def = educationLevelDao.getEducationLevels(DEFAULT_EDUCATION_LEVEL);
             person.setEducationLevel(def.isEmpty() ? null : def.get(0));
         }
-
         log.debug("Persisting new Person");
         log.debug("Username = " + person.getUsername());
         log.debug("Givenname = " + person.getGivenname());
@@ -87,8 +121,7 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Laterality = " + person.getLaterality());
 
         personDAO.create(person);
-
-        mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
+        return person;
     }
 
     @Override
@@ -101,6 +134,11 @@ public class PersonServiceImpl implements PersonService {
 
     private String encodePassword(String plaintextPassword) {
         return new BCryptPasswordEncoder().encode(plaintextPassword);
+    }
+    
+    private String encodeRandomPassword(){
+        log.debug("Generating random password");
+        return encodePassword(ControllerUtils.getRandomPassword());
     }
 
     private boolean matchPasswords(String plaintextPassword, String encodedPassword) {

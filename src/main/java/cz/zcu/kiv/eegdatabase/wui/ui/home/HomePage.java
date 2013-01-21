@@ -18,6 +18,10 @@ public class HomePage extends MenuPage {
         if (EEGDataBaseSession.get().isSignedIn())
             throw new RestartResponseAtInterceptPageException(WelcomePage.class);
 
+        if (EEGDataBaseSession.get().authenticatedSocial()) {
+            throw new RestartResponseAtInterceptPageException(WelcomePage.class);
+        }
+
         setPageTitle(ResourceUtils.getModel("title.page.home"));
         add(new HomeLoginForm("login"));
 

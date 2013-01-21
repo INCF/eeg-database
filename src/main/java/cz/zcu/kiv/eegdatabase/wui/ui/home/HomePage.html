@@ -4,12 +4,64 @@
   lang="en">
 <body>
   <wicket:extend>
-    <div class="notlogged">
-      <div class="homepageLeftColumn"></div>
+    <div class="notLogged">
+      <div class="homepageLeftColumn">
+        <h1>
+          <wicket:message key="homePage.welcomeHeading" />
+        </h1>
+
+        <p>
+          <wicket:message key="homePage.description1"></wicket:message>
+        <div class="left">
+          <img src="./files/images/eeg-foto-main.jpg" />
+        </div>
+        <div class="right">
+          <h2>
+            <wicket:message key="homePage.featuresHeading"></wicket:message>
+          </h2>
+          <wicket:message key="homePage.featuresList"></wicket:message>
+        </div>
+        <div class="clear"></div>
+        </p>
+
+        <p>
+          <wicket:message key="homePage.description2" />
+        </p>
+
+        <div class="homePageActionBoxes">
+          <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"> <wicket:message
+              key="system.register" /></a>
+        </div>
+
+        <div class="clear"></div>
+
+        <h2>
+          <wicket:message key="homePage.discoverHeading" />
+        </h2>
+
+        <div class="showreel">
+          <ul>
+            <li><a href="http://www.youtube.com/watch?v=B6RKeipMgvghttp://www.youtube.com"
+              target="_blank"><img src="./files/images/video1.jpg" alt="Downloading"
+                title="Downloading"></a></li>
+            <li><a href="http://www.youtube.com/watch?v=EmlR6vfGdD4" target="_blank"><img
+                src="./files/images/video2.jpg" alt="Add group" title="Add group"></a></li>
+            <li><a href="http://www.youtube.com/watch?v=FJLo8qM0HfM" target="_blank"><img
+                src="./files/images/video3.jpg" alt="Account management" title="Account management"></a>
+            </li>
+            <li><a href="http://www.youtube.com/watch?v=qufQ6sLtyAE" target="_blank"><img
+                src="./files/images/video4.jpg" alt="Wizard - add experiment"
+                title="Wizard - add experiment"></a></li>
+          </ul>
+        </div>
+      </div>
+
+
       <div class="homepageRightColumn">
-      
-      <a href='#' wicket:id="forgottenPass"><wicket:message key="system.forgottenPassword"></wicket:message>?</a>
-      
+        <h2>Login</h2>
+
+        <a href='#' wicket:id="forgottenPass"><wicket:message key="system.forgottenPassword"></wicket:message>?</a>
+
         <form wicket:id="login" class="loginForm">
           <fieldset>
             <div>
@@ -17,16 +69,55 @@
               <input type="text" wicket:id="userName" />
             </div>
             <div>
-              <label for="password" class="fieldLabel"><wicket:message key="general.password">[password]</wicket:message></label>
-              <input type="password" wicket:id="password" />
+              <label for="password" class="fieldLabel"><wicket:message
+                  key="general.password">[password]</wicket:message></label> <input type="password"
+                wicket:id="password" />
             </div>
-            <div class="rememberMeBox"></div>
+            <div class="rememberMeBox">
+              <input type="checkbox" name="_spring_security_remember_me"
+                id="_spring_security_remember_me" /> <label for="_spring_security_remember_me"><wicket:message
+                  key="label.rememberMe" /></label>
+            </div>
             <div>
               <input type="submit" wicket:id="submit" />
             </div>
           </fieldset>
         </form>
+        
+        <div>OR</div>
+        
+        <div>
+          <form id="fb_signin" action="signin/facebook.html" method="POST">
+            <input type="hidden" name="scope" value="email,user_birthday" />
+            <button type="submit" style="border: 0; background-color: transparent">
+              <img src="files/images/facebook-login-button.png" />
+            </button>
+          </form>
+        </div>
+        
+        <div>
+          <form id="li_signin" action="signin/linkedin.html" method="POST">
+            <input type="hidden" name="scope"
+              value="publish_stream,offline_access,email,user_birthday" />
+            <button type="submit" style="border: 0; background-color: transparent">
+              <img src="files/images/linkedin_login.png" />
+            </button>
+          </form>
+        </div>
+
+        <h2>Partners</h2>
+        <ul class="partners">
+          <li><a href="http://www.neuinfo.org/" target="_blank"> <img
+              src="http://neuinfo.org/images/registered_with_nif_button.jpg"
+              alt="Registered with NIF" title="Registered with NIF" style="border: none;" />
+          </a></li>
+          <li><a href="http://www.incf.org/" target="_blank"> <img
+              src="files/incf-logo.jpg" alt="INCF National node of Czech Republic"
+              title="INCF National node of Czech Republic" style="border: none;" />
+          </a></li>
+        </ul>
       </div>
+      
     </div>
   </wicket:extend>
 </body>

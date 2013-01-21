@@ -20,8 +20,8 @@ public class PersonMapper {
         dto.setId(person.getPersonId());
         dto.setName(person.getGivenname());
         dto.setSurname(person.getSurname());
-        dto.setDateOfBirth(new Date(person.getDateOfBirth().getTime()));
-        dto.setEmail(person.getUsername());
+        dto.setDateOfBirth(person.getDateOfBirth() == null ? null : new Date(person.getDateOfBirth().getTime())); // TODO null pointer exception with social registration
+        dto.setEmail(person.getUsername().toLowerCase());
         dto.setUsername(person.getUsername());
         dto.setGender(Gender.getGenderByShortcut(person.getGender()));
         dto.setConfirmed(person.isConfirmed());
@@ -44,7 +44,7 @@ public class PersonMapper {
         person.setGivenname(dto.getName());
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
-        person.setUsername(dto.getEmail());
+        person.setUsername(dto.getEmail().toLowerCase());
         person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));

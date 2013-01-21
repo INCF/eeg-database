@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
 import java.util.Arrays;
-import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -19,6 +18,7 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
 
@@ -50,12 +50,14 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         TextField<String> name = new TextField<String>("name");
         name.setLabel(ResourceUtils.getModel("general.name"));
         name.setRequired(true);
+        name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
         FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
         add(name, nameLabel);
 
         TextField<String> surname = new TextField<String>("surname");
         surname.setLabel(ResourceUtils.getModel("general.surname"));
         surname.setRequired(true);
+        surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
         FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
         add(surname, surnameLabel);
 

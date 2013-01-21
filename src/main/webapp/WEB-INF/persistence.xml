@@ -52,39 +52,10 @@
         </property>
     </bean>
 
-<bean id="connectionFactoryLocator" 
-          class="org.springframework.social.connect.support.ConnectionFactoryRegistry">
-        <property name="connectionFactories">
-            <list>
-                <bean id="facebook" class="org.springframework.social.facebook.connect.FacebookConnectionFactory">
-                    <constructor-arg value="${facebook.appId}" />
-                    <constructor-arg value="${facebook.appSecret}" />	 
-                  
-                </bean>
-                <bean id="linkedIn" class="org.springframework.social.linkedin.connect.LinkedInConnectionFactory">
-                    <constructor-arg value="${linkedin.consumerKey}" />
-                    <constructor-arg value="${linkedin.consumerSecret}" />				
-                </bean>
-            </list>
-        </property>
-    </bean>
-    
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
           factory-method="noOpText" />
           
  
-<!--     <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.SocialConfig" /> -->
-    
-    <bean id="SignInAdapter" class="cz.zcu.kiv.eegdatabase.logic.controller.social.SpringSecuritySignInAdapter"/>
-    
-    <bean id="linkedin" class="cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager" >
-        <constructor-arg value="${linkedin.consumerKey}" />
-        <constructor-arg value="${linkedin.consumerSecret}" />	
-        <constructor-arg value="${linkedin.accessToken}" />
-        <constructor-arg value="${linkedin.accessTokenSecret}" />	
-        <constructor-arg value="${linkedin.groupId}" />	
-    </bean>
-
     <bean id="indexingBean" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingData" init-method="init">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

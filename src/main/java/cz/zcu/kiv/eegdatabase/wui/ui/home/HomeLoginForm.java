@@ -41,7 +41,7 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
             @Override
             public void onSubmit() {
                 LoginUserDTO object = HomeLoginForm.this.getModelObject();
-                if (secFacade.authorization(object.getUserName(), object.getPassword())) {
+                if (secFacade.authorization(object.getUserName().toLowerCase(), object.getPassword())) {
                     continueToOriginalDestination();
                     setResponsePage(WelcomePage.class);
 

@@ -7,18 +7,20 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-
-    <bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
-
-    <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
-    <bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
-    <bean id="personService " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
-    <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
     
-    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" />
-    <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
-
+    <!-- SECURITY -->
     <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
+
+        <security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+        <security:intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
+        <security:intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />
+        <security:intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />
+        <security:intercept-url pattern="/status" access="IS_AUTHENTICATED_FULLY" />
+        <security:intercept-url pattern="/oauthcallback" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+
         <security:remember-me />
         <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
     </security:http>
@@ -44,28 +46,24 @@
 
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
+    <!-- CORE -->
+    <bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
+
+    <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
+    <bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
+    <bean id="personServiceWUI" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
+    <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
+
+    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" />
+    <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
+
     <bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />
     <bean name="educationLevelFacade" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl" autowire="byType" />
 
+    <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" />
 
-    <!-- // OLD trash -->
-    
-<!--     nahazuji zbytek okolo controlleru a vse v logic a webservice co potrebuje bean -->
-<!--     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic"/> -->
-    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
-    
-    <bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-        <property name="personDao" ref="personDao" />
-    </bean>
-
-    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
-
-<!--     <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
-
+    <!-- MAIL -->
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
-
-<!--     <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
 
     <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${email.smtp}" />
@@ -75,6 +73,24 @@
         <property name="from" value="${email.from}" />
         <property name="subject" value="${email.subject}" />
     </bean>
+
+
+    <!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
+
+    <!-- nahazuji zbytek okolo controlleru a vse v logic a webservice co potrebuje bean -->
+    <!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic"/> -->
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices" />
+
+    <bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="personDao" ref="personDao" />
+    </bean>
+
+    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
+
+    <!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
+    <!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
+
 
     <bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
     </bean>

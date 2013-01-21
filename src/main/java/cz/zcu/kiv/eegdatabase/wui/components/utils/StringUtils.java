@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
 public class StringUtils {
+    
+    public static String REGEX_ONLY_LETTERS = "[a-zA-Z][a-zA-Z\\s]*";
 
     private static int randomInt(int min, int max)
     {

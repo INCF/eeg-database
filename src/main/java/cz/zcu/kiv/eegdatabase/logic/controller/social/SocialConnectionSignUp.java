@@ -31,13 +31,8 @@ public final class SocialConnectionSignUp implements ConnectionSignUp {
 
         SocialUser user = new SocialUser(profile.getEmail(),
                 profile.getFirstName(), profile.getLastName());
-        
       
         Person person = personService.createPerson(user, null);
-        
-      
-
-       
 
         return person.getUsername();
 
