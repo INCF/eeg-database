@@ -1,41 +1,61 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE log4j:configuration SYSTEM
         "D:\Projects\EEG-Database\Idea-SVN\branches\maven_build\src\main\resources\log4j.dtd">
-<!--
-	Basic log4j logger configuration.
-	It's configured to save all debugs or errors into the log file by the append at the end of log file method.
-
--->
+<!-- Basic log4j logger configuration. It's configured to save all debugs or errors into the log file by the append at the end of log file method. -->
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="all">
 
     <appender name="logFile" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="c:/logs/eeg_database.log"/>
-        <param name="Append" value="true"/>
-        <param name="DatePattern" value=".yyyy-MM-dd"/>
-        <param name="maxBackupIndex" value="90"/>
-        <param name="MaxFileSize" value="30000KB"/>
+        <param name="File" value="c:/logs/eeg_database.log" />
+        <param name="Append" value="true" />
+        <param name="DatePattern" value=".yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%d [%t] %C %p - %m%n"/>
+            <param name="ConversionPattern" value="%d [%t] %C %p - %m%n" />
 
         </layout>
     </appender>
 
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
-        <param name="Target" value="System.out"/>
+        <param name="Target" value="System.out" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%-5p %c{1} - %m%n"/>
+            <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
         </layout>
     </appender>
 
-    <root>
-        <priority value="info"/>
-        <appender-ref ref="logFile"/>
-        <appender-ref ref="console"/>
-    </root>
-    
-    <log4j:logger name="log4j.logger.org.apache.wicket"><log4j:level value="info"/></log4j:logger>
-    <log4j:logger name="log4j.logger.org.apache.wicket.protocol.http.HttpSessionStore"><log4j:level value="info"/></log4j:logger>
-    <log4j:logger name="log4j.logger.org.apache.wicket.version"><log4j:level value="info"/></log4j:logger>
-    <log4j:logger name="log4j.logger.org.apache.wicket.RequestCycle"><log4j:level value="info"/></log4j:logger>
+    <logger name="org.hibernate">
+        <level value="warn" />
+    </logger>
 
+    <logger name="org.hibernate.SQL">
+        <level value="debug" />
+    </logger>
+
+    <logger name="org.hibernate.type">
+        <level value="warn" />
+    </logger>
+    
+    <logger name="org.springframework">
+        <level value="warn" />
+    </logger>
+    
+    <logger name="org.apache.wicket">
+        <level value="warn" />
+    </logger>
+    <logger name="org.apache.wicket.protocol.http.HttpSessionStore">
+        <level value="info" />
+    </logger>
+    <logger name="org.apache.wicket.version">
+        <level value="info" />
+    </logger>
+    <logger name="org.apache.wicket.RequestCycle">
+        <level value="info" />
+    </logger>
+    <logger name="cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession">
+        <level value="info" />
+    </logger>
+
+    <root>
+        <priority value="warn" />
+        <appender-ref ref="logFile" />
+        <appender-ref ref="console" />
+    </root>
 </log4j:configuration>

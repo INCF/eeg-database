@@ -76,7 +76,7 @@
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="autocommmit">true</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">false</prop>
                 <!-- Hibernate Search configuration
  <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
  <prop key="hibernate.search.default.indexBase">./users/application/indexes</prop>              -->
@@ -241,6 +241,8 @@
             <tx:method name="*" read-only="false"/>
         </tx:attributes>
     </tx:advice>
+    
+    <tx:annotation-driven transaction-manager="txManager"/>
 
 
     <aop:config>

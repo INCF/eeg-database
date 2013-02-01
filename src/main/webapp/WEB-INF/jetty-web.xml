@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<Configure class="org.mortbay.jetty.webapp.WebAppContext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
+<Configure class="org.eclipse.jetty.webapp.WebAppContext" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
   <Set name="contextPath">/</Set>
   <Get name="sessionHandler">
         <Get name="sessionManager">
