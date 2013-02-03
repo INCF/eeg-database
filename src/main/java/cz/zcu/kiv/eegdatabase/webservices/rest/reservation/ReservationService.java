@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.reservation;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.springframework.security.access.annotation.Secured;
 
@@ -30,11 +29,6 @@ public interface ReservationService {
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
     @Path("/{fromDate}/{toDate}")
     public List<ReservationData> getFromToDate(@PathParam("fromDate") String fromDate, @PathParam("toDate") String toDate) throws RestServiceException;
-
-    @GET
-    @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})
-    @Path("/groups")
-    public List<ResearchGroupData> getMyGroups() throws RestServiceException;
 
     @POST
     @Produces({MediaType.APPLICATION_XML, MediaType.APPLICATION_JSON})

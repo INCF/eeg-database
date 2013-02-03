@@ -7,7 +7,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -103,23 +102,6 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-    @Override
-    public List<ResearchGroupData> getMyGroups() throws RestServiceException {
-
-        try {
-            Set<ResearchGroup> groups = personDao.getLoggedPerson().getResearchGroups();
-            List<ResearchGroupData> data = new ArrayList<ResearchGroupData>(groups.size());
-
-            for (ResearchGroup g : groups) {
-                ResearchGroupData d = new ResearchGroupData(g.getResearchGroupId(), g.getTitle());
-                data.add(d);
-            }
-
-            return data;
-        } catch (Exception e) {
-            throw new RestServiceException(e);
-        }
-    }
 
     @Override
     public Response create(ReservationData reservationData) throws RestServiceException {
