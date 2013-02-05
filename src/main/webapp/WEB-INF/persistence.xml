@@ -76,7 +76,7 @@
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="autocommmit">true</prop>
-                <prop key="hibernate.show_sql">true</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <!-- Hibernate Search configuration
  <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
  <prop key="hibernate.search.default.indexBase">./users/application/indexes</prop>              -->
