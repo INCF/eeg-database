@@ -4,7 +4,13 @@
   lang="en">
 <body>
   <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
 
+    <div class="mainContentWithMenu">
+      <h1 wicket:id="title"></h1>
+      <wicket:container wicket:id="userNotMemberOfAnyGroup"></wicket:container>
+      <table class="dataTable measurationListDataTable" wicket:id="list"></table>
+    </div>
   </wicket:extend>
 </body>
 </html>

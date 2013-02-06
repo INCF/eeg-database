@@ -1,0 +1,71 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1>
+        <wicket:message key="pageTitle.experimentDetail" />
+      </h1>
+
+      <table class="standardValueTable">
+        <tr>
+          <th><wicket:message key="label.measurationId" /></th>
+          <td wicket:id="experimentId"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.beginningOfMeasuration" /></th>
+          <td wicket:id="startTime"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.endOfMeasuration" /></th>
+          <td wicket:id="endTime"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.temperature" /></th>
+          <td wicket:id="temperature"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.weather" /></th>
+          <td wicket:id="weather.title"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.weatherNote" /></th>
+          <td wicket:id="environmentNote"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.private" /></th>
+          <td wicket:id="privateExperiment"></td>
+        </tr>
+      </table>
+
+      <h2>
+        <wicket:message key="heading.subjectPerson" />
+      </h2>
+      <table class="standardValueTable">
+        <tr>
+          <th><wicket:message key="label.gender" /></th>
+          <td wicket:id="gender"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.yearOfBirth" /></th>
+          <td wicket:id="dateOfBirth"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><a href='#' wicket:id="detailLink" /></td>
+        </tr>
+      </table>
+
+      <div wicket:id="container">
+        <div wicket:id="view"></div>
+      </div>
+    </div>
+  </wicket:extend>
+</body>
+</html>

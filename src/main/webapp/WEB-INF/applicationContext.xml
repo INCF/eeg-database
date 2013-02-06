@@ -60,6 +60,12 @@
     <bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />
     <bean name="educationLevelFacade" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl" autowire="byType" />
 
+    <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
+    <bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
+    
+    <bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />
+    <bean name="fileFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileFacadeImpl" autowire="byType" />
+
     <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" />
 
     <!-- MAIL -->
