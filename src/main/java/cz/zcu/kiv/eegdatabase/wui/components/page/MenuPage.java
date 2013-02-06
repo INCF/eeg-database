@@ -32,7 +32,7 @@ public class MenuPage extends BasePage {
 
         if (signedIn) {
             labelMessage = ResourceUtils.getString("general.header.logged");
-            labelMessage += EEGDataBaseSession.get().getUserName();
+            labelMessage += EEGDataBaseSession.get().getLoggedUser().getUsername();
             labelLink = ResourceUtils.getString("general.page.myaccount.link");
             pageClass = AccountOverViewPage.class;
         } else {

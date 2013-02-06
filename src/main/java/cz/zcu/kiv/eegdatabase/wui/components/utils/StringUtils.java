@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.wui.components.utils;
 public class StringUtils {
     
     public static String REGEX_ONLY_LETTERS = "[a-zA-Z][a-zA-Z\\s]*";
+    public static String DATE_TIME_FORMAT_PATTER = "dd.MM.yyyy, HH:mm";
+    public static String DATE_TIME_FORMAT_PATTER_ONLY_YEAR = "yyyy";
 
     private static int randomInt(int min, int max)
     {

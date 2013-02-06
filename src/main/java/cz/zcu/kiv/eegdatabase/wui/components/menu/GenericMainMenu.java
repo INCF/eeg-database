@@ -1,8 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.components.menu;
 
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
@@ -20,10 +19,10 @@ public enum GenericMainMenu implements MenuDefinition {
     HomePage(HomePage.class, "title.page.home.menu"),
     ArticlesPage(ArticlesPage.class, "title.page.articles.menu"),
     SearchPage(SearchPage.class, "title.page.search.menu"),
-    ExperimentsPage(ExperimentsPage.class, "title.page.experiments.menu"),
+    ExperimentsPage(ListExperimentsPage.class, "title.page.experiments.menu"),
     ScenariosPage(ScenariosPage.class, "title.page.scenarios.menu"),
     GroupsPage(HomePage.class, "title.page.groups.menu"),
-    PeoplePage(ExperimentsPage.class, "title.page.people.menu"),
+    PeoplePage(ListExperimentsPage.class, "title.page.people.menu"),
     ListsPage(ListsPage.class, "title.page.lists.menu"),
     HistoryPage(HistoryPage.class, "title.page.history.menu"),
 
