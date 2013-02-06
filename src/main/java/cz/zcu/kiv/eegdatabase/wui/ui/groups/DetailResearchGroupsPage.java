@@ -11,12 +11,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 
@@ -45,10 +45,10 @@ public class DetailResearchGroupsPage extends MenuPage {
         StringValue value = parseParameters(parameters);
 
         int groupId = value.toInt();
-        ResearchGroupDTO groupDTO = researchGroupFacade.getResearchGroupById(groupId);
+        ResearchGroup group = researchGroupFacade.getResearchGroupById(groupId);
 
-        add(new Label("title", groupDTO.getTitle()));
-        add(new Label("description", groupDTO.getDescription()));
+        add(new Label("title", group.getTitle()));
+        add(new Label("description", group.getDescription()));
 
         Link<Void> requestMembership = new Link<Void>("request") {
 

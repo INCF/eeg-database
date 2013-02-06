@@ -11,12 +11,12 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
@@ -39,10 +39,10 @@ public class AccountOverViewPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
-        FullPersonDTO user = personFacade.getPersonByUserName(EEGDataBaseSession.get().getUserName());
+        Person user = EEGDataBaseSession.get().getLoggedUser();
 
         add(new Label("userName", new PropertyModel<String>(user, "email")));
-        add(new Label("fullName", user.getName() + " " + user.getSurname()));
+        add(new Label("fullName", user.getGivenname() + " " + user.getSurname()));
         add(new Label("authority", new PropertyModel<String>(user, "authority")));
 
         List<ResearchGroupAccountInfo> groupDataForAccountOverview = researchGroupFacade.getGroupDataForAccountOverview(user);

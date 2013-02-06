@@ -8,10 +8,10 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
@@ -64,7 +64,7 @@ public class ConfirmPage extends MenuPage {
 
             String activationHashCode = parameters.get(CONFIRM_ACTIVATION).toString();
 
-            FullPersonDTO person = personFacade.getPersonByHash(activationHashCode);
+            Person person = personFacade.getPersonByHash(activationHashCode);
             if (person == null) {
                 titleText = ResourceUtils.getModel("pageTitle.registrationFalse");
                 messageText = ResourceUtils.getModel("text.registrationExpired");
@@ -106,8 +106,8 @@ public class ConfirmPage extends MenuPage {
 
     }
 
-    private boolean confirmedInTime(long clickTime, FullPersonDTO person) {
-        long requestTime = person.getRegistrationDate().toDateMidnight().getMillis();
+    private boolean confirmedInTime(long clickTime, Person person) {
+        long requestTime = person.getRegistrationDate().getTime();
         // 8 days in ms
         long maximumDelay = 691200000;
         return (clickTime - requestTime < maximumDelay);

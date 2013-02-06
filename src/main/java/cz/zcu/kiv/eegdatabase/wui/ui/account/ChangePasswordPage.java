@@ -96,7 +96,7 @@ public class ChangePasswordPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     ChangePasswordObj obj = ChangePasswordForm.this.getModelObject();
-                    String userName = EEGDataBaseSession.get().getUserName();
+                    String userName = EEGDataBaseSession.get().getLoggedUser().getUsername();
                     // check if old pass is actual password in db
                     if (personFacade.isPasswordEquals(userName, obj.getOldPassword())) {
                         // check if new password is equals with verify
