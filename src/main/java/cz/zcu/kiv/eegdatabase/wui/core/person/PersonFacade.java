@@ -1,25 +1,25 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 public interface PersonFacade {
 
-    void createPerson(FullPersonDTO user);
+    void createPerson(Person user);
 
-    void deletePerson(FullPersonDTO user);
+    void deletePerson(Person user);
 
-    void updatePerson(FullPersonDTO user);
+    void updatePerson(Person user);
 
-    FullPersonDTO getPersonByHash(String hashCode);
+    Person getPersonByHash(String hashCode);
 
-    FullPersonDTO getPersonByUserName(String userName);
+    Person getPersonByUserName(String userName);
 
     public boolean usernameExists(String userName);
-    
+
     void changeUserPassword(String userName, String newPass);
-    
+
     boolean isPasswordEquals(String userName, String password);
-    
-    void forgottenPassword(FullPersonDTO person);
+
+    void forgottenPassword(Person person);
 
 }

@@ -2,33 +2,34 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 public interface ResearchGroupFacade {
 
-    void create(ResearchGroupDTO user);
+    void create(ResearchGroup user);
 
-    void delete(ResearchGroupDTO user);
+    void delete(ResearchGroup user);
 
-    void update(ResearchGroupDTO user);
+    void update(ResearchGroup user);
 
-    ResearchGroupDTO getResearchGroupById(int id);
+    ResearchGroup getResearchGroupById(int id);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person);
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person, int limit);
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereOwner(FullPersonDTO person);
+    public List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereAbleToWriteInto(FullPersonDTO person);
+    public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
 
     public String getResearchGroupTitle(int groupId);
 
-    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(FullPersonDTO person);
+    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person);
 
     public List getListOfGroupMembers(int groupId);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereUserIsGroupAdmin(FullPersonDTO person);
+    public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
 
     public boolean canSaveTitle(String title, int id);
 

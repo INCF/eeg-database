@@ -18,7 +18,6 @@ import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
 public class PersonServiceImpl implements PersonService {
 
@@ -30,8 +29,6 @@ public class PersonServiceImpl implements PersonService {
     PersonDao personDAO;
     EducationLevelDao educationLevelDao;
     MailService mailService;
-
-    private PersonMapper mapper = new PersonMapper();
 
     @Required
     public void setPersonDAO(PersonDao personDAO) {
@@ -50,17 +47,16 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void createPerson(FullPersonDTO user) {
+    public void createPerson(Person person) {
 
-        Person person = mapper.convertToEntity(user, new Person(), educationLevelDao);
-        person.setPassword(encodePassword(user.getPassword()));
+        person.setPassword(encodePassword(person.getPassword()));
         person.setLaterality(DEFAULT_LATERALITY);
 
         log.debug("Setting authority = ROLE_USER");
         person.setAuthority(Util.ROLE_USER);
 
         
-        person = createPerson(person);
+        person = newPerson(person);
 
         mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
     }
@@ -91,10 +87,10 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Setting confirmed");
         person.setConfirmed(true);
         
-        return createPerson(person);
+        return newPerson(person);
     }
 
-    private Person createPerson(Person person) {
+    private Person newPerson(Person person) {
         if(person.getAuthenticationHash() == null){
             log.debug("Hashing the username");
             person.setAuthenticationHash(ControllerUtils.getMD5String(person.getUsername()));
@@ -126,9 +122,9 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public FullPersonDTO getPersonByHash(String hashCode) {
+    public Person getPersonByHash(String hashCode) {
 
-        return mapper.convertToDTO(personDAO.getPersonByHash(hashCode), educationLevelDao);
+        return personDAO.getPersonByHash(hashCode);
 
     }
 
@@ -147,14 +143,14 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deletePerson(FullPersonDTO user) {
+    public void deletePerson(Person user) {
         personDAO.delete(personDAO.getPerson(user.getEmail()));
     }
 
     @Override
     @Transactional
-    public void updatePerson(FullPersonDTO user) {
-        personDAO.update(mapper.convertToEntity(user, personDAO.getPerson(user.getEmail()), educationLevelDao));
+    public void updatePerson(Person user) {
+        personDAO.update(user);
     }
 
     @Override
@@ -164,8 +160,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public FullPersonDTO getPersonByUserName(String userName) {
-        return mapper.convertToDTO(personDAO.getPerson(userName), educationLevelDao);
+    public Person getPersonByUserName(String userName) {
+        return personDAO.getPerson(userName);
     }
 
     @Override
@@ -185,7 +181,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void forgottenPassword(FullPersonDTO person) {
+    public void forgottenPassword(Person person) {
         Person user = personDAO.getPerson(person.getEmail());
         String plainPassword = ControllerUtils.getRandomPassword();
 

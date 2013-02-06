@@ -5,8 +5,6 @@ import java.util.Date;
 
 import org.joda.time.DateTime;
 
-import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
@@ -14,23 +12,21 @@ import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 public class PersonMapper {
 
-    public FullPersonDTO convertToDTO(Person person, EducationLevelDao educationLevelDao) {
+    public FullPersonDTO convertToDTO(Person person) {
 
         FullPersonDTO dto = new FullPersonDTO();
         dto.setId(person.getPersonId());
         dto.setName(person.getGivenname());
         dto.setSurname(person.getSurname());
-        dto.setDateOfBirth(person.getDateOfBirth() == null ? null : new Date(person.getDateOfBirth().getTime())); // TODO null pointer exception with social registration
+        dto.setDateOfBirth(person.getDateOfBirth() == null ? null : new Date(person.getDateOfBirth().getTime()));
         dto.setEmail(person.getUsername().toLowerCase());
         dto.setUsername(person.getUsername());
         dto.setGender(Gender.getGenderByShortcut(person.getGender()));
         dto.setConfirmed(person.isConfirmed());
         dto.setRegistrationDate(new DateTime(person.getRegistrationDate().getTime()));
 
-        EducationLevel educationLevel = educationLevelDao.read(person.getEducationLevel().getEducationLevelId());
         EducationLevelDTO edu = new EducationLevelDTO();
-        edu.setId(educationLevel.getEducationLevelId());
-        edu.setTitle(educationLevel.getTitle());
+        edu.setId(person.getEducationLevel().getEducationLevelId());
         dto.setEducationLevel(edu);
         dto.setLaterality(person.getLaterality());
         dto.setAuthority(person.getAuthority());
@@ -38,7 +34,7 @@ public class PersonMapper {
         return dto;
     }
 
-    public Person convertToEntity(FullPersonDTO dto, Person person, EducationLevelDao educationLevelDao) {
+    public Person convertToEntity(FullPersonDTO dto, Person person) {
 
         person.setPersonId(dto.getId());
         person.setGivenname(dto.getName());
@@ -48,9 +44,9 @@ public class PersonMapper {
         person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
-        person.setEducationLevel(educationLevelDao.read(dto.getEducationLevel().getId()));
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
+        person.setPassword(dto.getPassword());
 
         return person;
     }

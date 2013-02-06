@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 public class PersonFacadeImpl implements PersonFacade {
 
@@ -14,22 +14,22 @@ public class PersonFacadeImpl implements PersonFacade {
     }
 
     @Override
-    public void createPerson(FullPersonDTO user) {
+    public void createPerson(Person user) {
         personService.createPerson(user);
     }
 
     @Override
-    public FullPersonDTO getPersonByHash(String hashCode) {
+    public Person getPersonByHash(String hashCode) {
         return personService.getPersonByHash(hashCode);
     }
 
     @Override
-    public void deletePerson(FullPersonDTO user) {
+    public void deletePerson(Person user) {
         personService.deletePerson(user);
     }
 
     @Override
-    public void updatePerson(FullPersonDTO user) {
+    public void updatePerson(Person user) {
         personService.updatePerson(user);
     }
 
@@ -39,7 +39,7 @@ public class PersonFacadeImpl implements PersonFacade {
     }
 
     @Override
-    public FullPersonDTO getPersonByUserName(String userName) {
+    public Person getPersonByUserName(String userName) {
         return personService.getPersonByUserName(userName);
     }
 
@@ -54,7 +54,7 @@ public class PersonFacadeImpl implements PersonFacade {
     }
     
     @Override
-    public void forgottenPassword(FullPersonDTO person) {
+    public void forgottenPassword(Person person) {
         personService.forgottenPassword(person);
     }
 

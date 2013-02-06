@@ -2,21 +2,20 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
 public interface PersonService {
 
-    void createPerson(FullPersonDTO user);
+    void createPerson(Person user);
     
     Person createPerson(SocialUser userFb, Integer educationLevelId);
 
-    void deletePerson(FullPersonDTO user);
+    void deletePerson(Person user);
 
-    void updatePerson(FullPersonDTO user);
+    void updatePerson(Person user);
 
-    FullPersonDTO getPersonByHash(String hashCode);
+    Person getPersonByHash(String hashCode);
 
-    FullPersonDTO getPersonByUserName(String userName);
+    Person getPersonByUserName(String userName);
 
     public boolean usernameExists(String userName);
 
@@ -24,5 +23,5 @@ public interface PersonService {
 
     boolean isPasswordEquals(String userName, String password);
     
-    void forgottenPassword(FullPersonDTO person);
+    void forgottenPassword(Person person);
 }
