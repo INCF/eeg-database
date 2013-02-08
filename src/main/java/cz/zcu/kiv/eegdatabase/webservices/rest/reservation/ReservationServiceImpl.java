@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
@@ -17,7 +18,10 @@ import javax.jws.WebService;
 import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  * Controller for mapping REST requests upon reservation system.
@@ -29,20 +33,16 @@ import java.util.*;
 public class ReservationServiceImpl implements ReservationService {
 
     private final static Log log = LogFactory.getLog(ReservationServiceImpl.class);
-
+    private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
     @Autowired
     @Qualifier("reservationDao")
     private ReservationDao reservationDao;
-
     @Autowired
     @Qualifier("researchGroupDao")
     private ResearchGroupDao researchGroupDao;
-
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
-
-    private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
 
     @Override
     public List<ReservationData> getToDate(String date) throws RestServiceException {
@@ -102,20 +102,19 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-
     @Override
     public Response create(ReservationData reservationData) throws RestServiceException {
         try {
             ResearchGroup group = researchGroupDao.read(reservationData.getResearchGroupId());
             Person user = personDao.getLoggedPerson();
 
-            if(group == null)
+            if (group == null)
                 throw new RestServiceException("Existing group Id must be specified");
-            if(reservationData.getFromTime() == null)
+            if (reservationData.getFromTime() == null)
                 throw new RestServiceException("Start time must be specified");
-            if(reservationData.getToTime() == null)
+            if (reservationData.getToTime() == null)
                 throw new RestServiceException("End time must be specified");
-            if (!user.getResearchGroups().contains(group))
+            if (!isInGroup(user, group.getResearchGroupId()))
                 throw new RestServiceException("You are not a member of " + group.getTitle() + " group!");
 
             Reservation reservation = new Reservation();
@@ -140,6 +139,17 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    private boolean isInGroup(Person user, int researchGroupId) {
+        if (!user.getResearchGroupMemberships().isEmpty()) {
+            for (ResearchGroupMembership rm : user.getResearchGroupMemberships()) {
+                if (rm.getResearchGroup().getResearchGroupId() == researchGroupId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
     @Override
     public Response delete(int reservationId) throws RestServiceException {
         try {
@@ -160,8 +170,8 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-    private boolean canRemoveReservation(Reservation reservation){
+    private boolean canRemoveReservation(Reservation reservation) {
         Person user = personDao.getLoggedPerson();
-        return user.getResearchGroups().contains(reservation.getResearchGroup()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());
+        return isInGroup(user, reservation.getResearchGroup().getResearchGroupId()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());
     }
 }
