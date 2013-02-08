@@ -20,7 +20,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 
 @AuthorizeInstantiation("ROLE_USER")
 public class AccountOverViewPage extends MenuPage {
@@ -60,7 +60,7 @@ public class AccountOverViewPage extends MenuPage {
                 ResearchGroupAccountInfo modelObject = item.getModelObject();
                 item.add(new Label("title", modelObject.getTitle()));
                 item.add(new Label("authority", modelObject.getAuthority()));
-                item.add(new BookmarkablePageLink<DetailResearchGroupsPage>("link", DetailResearchGroupsPage.class, PageParametersUtils.getDefaultPageParameters(modelObject.getGroupId())));
+                item.add(new BookmarkablePageLink<ResearchGroupsDetailPage>("link", ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(modelObject.getGroupId())));
             }
         };
         groups.setVisibilityAllowed(!emptyGroups);

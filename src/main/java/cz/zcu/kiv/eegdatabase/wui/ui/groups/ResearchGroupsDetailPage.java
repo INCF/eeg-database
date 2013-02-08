@@ -21,7 +21,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 
 @AuthorizeInstantiation("ROLE_USER")
-public class DetailResearchGroupsPage extends MenuPage {
+public class ResearchGroupsDetailPage extends MenuPage {
 
     private static final long serialVersionUID = -1967810037377960414L;
 
@@ -31,12 +31,12 @@ public class DetailResearchGroupsPage extends MenuPage {
     @SpringBean
     SecurityFacade securityFacade;
 
-    public DetailResearchGroupsPage() {
+    public ResearchGroupsDetailPage() {
 
         setPageTitle(ResourceUtils.getModel("title.page.groups"));
     }
 
-    public DetailResearchGroupsPage(PageParameters parameters) {
+    public ResearchGroupsDetailPage(PageParameters parameters) {
 
         setPageTitle(ResourceUtils.getModel("title.page.groups"));
 

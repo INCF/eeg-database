@@ -23,7 +23,9 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
@@ -83,10 +85,14 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("account-social", SocialNetworksPage.class);
 
         mountPage("articles-page", ArticlesPage.class);
-        mountPage("experiments-page", ListExperimentsPage.class);
+
+        mountPage("experiments-list", ListExperimentsPage.class);
         mountPage("experiments-detail", ExperimentsDetailPage.class);
 
-        mountPage("groups-page", DetailResearchGroupsPage.class);
+        mountPage("groups-list", ListResearchGroupsPage.class);
+        mountPage("groups-detail", ResearchGroupsDetailPage.class);
+        mountPage("groups-my", MyGroupsPage.class);
+
         mountPage("history-page", HistoryPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("lists-page", ListsPage.class);

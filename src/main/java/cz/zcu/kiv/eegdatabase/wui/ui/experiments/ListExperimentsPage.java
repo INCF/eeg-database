@@ -34,6 +34,7 @@ public class ListExperimentsPage extends MenuPage {
 
     private static final long serialVersionUID = -1967810037377960414L;
 
+    private static final int ITEMS_PER_PAGE = 20;
     public static final String PARAM_OWNER = "OWNER";
     public static final String PARAM_SUBJECT = "SUBJECT";
 
@@ -74,8 +75,8 @@ public class ListExperimentsPage extends MenuPage {
         add(new Label("userNotMemberOfAnyGroup", ResourceUtils.getModel("text.notMemberOfAnyGroup")).setVisibilityAllowed(userNotMemberOfAnyGroup));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        DefaultDataTable<Experiment, String> list = new DefaultDataTable<Experiment, String>("list", createListColumns(), new ListExperimentsDataProvider(facade, loggedUser, owner, subject),
-                20);
+        DefaultDataTable<Experiment, String> list = new DefaultDataTable<Experiment, String>("list", createListColumns(),
+                new ListExperimentsDataProvider(facade, loggedUser, owner, subject), ITEMS_PER_PAGE);
 
         add(list);
     }

@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
+package cz.zcu.kiv.eegdatabase.wui.ui.groups;
 
 import java.io.Serializable;
 import java.util.Collections;
@@ -14,45 +14,36 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 
-public class ListExperimentsDataProvider extends SortableDataProvider<Experiment, String> {
+public class ListResearchGroupsDataProvider extends SortableDataProvider<ResearchGroup, String> {
 
     private static final long serialVersionUID = -2474056753967062150L;
 
     protected Log log = LogFactory.getLog(getClass());
 
-    ExperimentsFacade facade;
+    ResearchGroupFacade facade;
 
-    private List<Experiment> list;
+    private List<ResearchGroup> list;
 
     private int size;
 
-    public ListExperimentsDataProvider(ExperimentsFacade facade, Person person, boolean owner, boolean subject) {
+    public ListResearchGroupsDataProvider(ResearchGroupFacade facade) {
 
         this.facade = facade;
-        setSort("experimentId", SortOrder.ASCENDING);
+        setSort("title", SortOrder.ASCENDING);
 
-        if (owner) {
-            size = facade.getCountForExperimentsWhereOwner(person);
-            list = facade.getExperimentsWhereOwner(person, (int) 0, (int) size());
-        } else if (subject) {
-            size = facade.getCountForExperimentsWhereSubject(person);
-            list = facade.getExperimentsWhereSubject(person, (int) 0, (int) size());
-        } else {
-            size = facade.getCountForAllExperimentsForUser(person);
-            list = facade.getAllExperimentsForUser(person, (int) 0, (int) size());
-        }
+        size = facade.getCountForList();
+        list = facade.getGroupsForList(0, size);
 
     }
 
     @Override
-    public Iterator<? extends Experiment> iterator(long first, long count) {
+    public Iterator<? extends ResearchGroup> iterator(long first, long count) {
 
         if (getSort() != null)
-            Collections.sort(list, new ExperimentsDataProviderComparator());
+            Collections.sort(list, new ResearchGroupsDataProviderComparator());
 
         if (size() < first + count)
             list.subList((int) first, (int) (first + size() - first)).iterator();
@@ -66,16 +57,16 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
     }
 
     @Override
-    public IModel<Experiment> model(Experiment object) {
-        return new Model<Experiment>(object);
+    public IModel<ResearchGroup> model(ResearchGroup object) {
+        return new Model<ResearchGroup>(object);
     }
 
-    private class ExperimentsDataProviderComparator implements Comparator<Experiment>, Serializable {
-        
+    private class ResearchGroupsDataProviderComparator implements Comparator<ResearchGroup>, Serializable {
+
         private static final long serialVersionUID = 1L;
 
         @SuppressWarnings("unchecked")
-        public int compare(final Experiment o1, final Experiment o2) {
+        public int compare(final ResearchGroup o1, final ResearchGroup o2) {
             PropertyModel<Comparable> model1 = new PropertyModel<Comparable>(o1, getSort().getProperty());
             PropertyModel<Comparable> model2 = new PropertyModel<Comparable>(o2, getSort().getProperty());
 
