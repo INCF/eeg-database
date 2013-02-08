@@ -17,7 +17,7 @@ public interface PersonService {
 
     Person getPersonByUserName(String userName);
 
-    public boolean usernameExists(String userName);
+    boolean usernameExists(String userName);
 
     void changeUserPassword(String userName, String password);
 

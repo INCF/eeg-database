@@ -17,7 +17,7 @@ public interface ScenarioDao extends GenericDao<Scenario, Integer> {
 
     public List<Scenario> getRecordsNewerThan(long oracleScn);
 
-    public List getScenariosWhereOwner(Person person, int LIMIT);
+    public List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
 
     public List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
 

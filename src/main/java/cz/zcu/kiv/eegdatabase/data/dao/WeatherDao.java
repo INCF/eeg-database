@@ -7,6 +7,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
 import java.util.List;
 
 public interface WeatherDao extends GenericDao<Weather, Integer> {
+
     public List<Weather> getItemsForList();
 
     public List<Weather> getRecordsNewerThan(long oracleScn);
@@ -17,11 +18,6 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
 
     public boolean canDelete(int id);
 
-    /**
-     * Description of weather must be unique in a research group
-     * @param description - description of weather
-     * @return
-     */
     public boolean canSaveNewDescription(String description, int groupId);
 
     public void createDefaultRecord(Weather weather);

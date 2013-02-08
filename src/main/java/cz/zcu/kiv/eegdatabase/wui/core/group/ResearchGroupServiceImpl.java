@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -11,6 +13,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
+
+    protected Log log = LogFactory.getLog(getClass());
 
     ResearchGroupDao researchGroupDAO;
     PersonDao personDAO;
@@ -33,6 +37,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
         List<ResearchGroup> list = getResearchGroupsWhereMember(person);
 
@@ -84,20 +89,20 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List getGroupsForList(int start, int limit) {
+    public List<ResearchGroup> getGroupsForList(int start, int limit) {
         return researchGroupDAO.getGroupsForList(start, limit);
     }
 
     @Override
-    public List getListOfGroupMembers(int groupId) {
+    public List<Person> getListOfGroupMembers(int groupId) {
         // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     @Transactional
-    public void create(ResearchGroup group) {
-        researchGroupDAO.create(group);
+    public Integer create(ResearchGroup group) {
+        return researchGroupDAO.create(group);
     }
 
     @Override
@@ -116,5 +121,41 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Transactional(readOnly = true)
     public ResearchGroup getResearchGroupById(int id) {
         return researchGroupDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResearchGroup read(Integer id) {
+        return researchGroupDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
+        return researchGroupDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+        return researchGroupDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> getAllRecords() {
+        return researchGroupDAO.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> getRecordsAtSides(int first, int max) {
+        return researchGroupDAO.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountRecords() {
+        return researchGroupDAO.getCountRecords();
     }
 }

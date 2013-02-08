@@ -15,25 +15,25 @@ public interface ResearchGroupFacade {
 
     ResearchGroup getResearchGroupById(int id);
 
-    public List<ResearchGroup> getResearchGroupsWhereMember(Person person);
+    List<ResearchGroup> getResearchGroupsWhereMember(Person person);
 
-    public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
+    List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
 
-    public List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
+    List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
 
-    public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
+    List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
 
-    public String getResearchGroupTitle(int groupId);
+    String getResearchGroupTitle(int groupId);
 
-    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person);
+    List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person);
 
-    public List getListOfGroupMembers(int groupId);
+    List getListOfGroupMembers(int groupId);
 
-    public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
+    List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
 
-    public boolean canSaveTitle(String title, int id);
+    boolean canSaveTitle(String title, int id);
 
-    public int getCountForList();
+    int getCountForList();
 
-    List getGroupsForList(int start, int limit);
+    List<ResearchGroup> getGroupsForList(int start, int limit);
 }

@@ -1,10 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 public class PersonFacadeImpl implements PersonFacade {
+
+    protected Log log = LogFactory.getLog(getClass());
 
     PersonService personService;
 
@@ -52,7 +56,7 @@ public class PersonFacadeImpl implements PersonFacade {
     public boolean isPasswordEquals(String userName, String password) {
         return personService.isPasswordEquals(userName, password);
     }
-    
+
     @Override
     public void forgottenPassword(Person person) {
         personService.forgottenPassword(person);

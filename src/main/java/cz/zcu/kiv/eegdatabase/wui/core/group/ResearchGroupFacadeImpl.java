@@ -2,12 +2,16 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
+
+    protected Log log = LogFactory.getLog(getClass());
 
     ResearchGroupService service;
 
