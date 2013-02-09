@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -9,6 +11,7 @@ import javax.xml.bind.annotation.XmlType;
 
 @XmlType(propOrder = {"name","surname","rights"})
 @XmlRootElement(name = "user")
+@XStreamAlias("user")
 public class UserInfo {
     private String name;
     private String surname;

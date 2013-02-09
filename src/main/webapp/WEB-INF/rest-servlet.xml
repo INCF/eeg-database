@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:security="http://www.springframework.org/schema/security"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+  http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+  http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+  http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd">
+
+    <mvc:annotation-driven/>
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices.rest"/>
+    <security:global-method-security secured-annotations="enabled"/>
+
+    <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+        <property name="order" value="1"/>
+        <property name="favorPathExtension" value="true"/>
+        <property name="favorParameter" value="true" />
+        <property name="defaultContentType" value="application/xml"/>
+        <property name="mediaTypes">
+            <map>
+                <entry key="xml" value="application/xml"/>
+                <entry key="json" value="application/json"/>
+            </map>
+        </property>
+        <property name="defaultViews">
+            <list>
+                <ref bean="xmlView"/>
+                <ref bean="jsonView"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jsonView"
+          class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
+        <property name="contentType" value="application/json;charset=UTF-8"/>
+        <property name="disableCaching" value="false"/>
+    </bean>
+
+    <bean id="xmlView"
+          class="org.springframework.web.servlet.view.xml.MarshallingView">
+        <property name="contentType" value="application/xml;charset=UTF-8"/>
+        <constructor-arg>
+            <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
+                <property name="classesToBeBound">
+                    <list>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationDataList</value>
+                    </list>
+                </property>
+            </bean>
+        </constructor-arg>
+
+    </bean>
+
+</beans>
