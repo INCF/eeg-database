@@ -1,7 +1,5 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers;
 
-import com.thoughtworks.xstream.annotations.XStreamAlias;
-import com.thoughtworks.xstream.annotations.XStreamConverter;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -18,7 +16,6 @@ import java.util.Date;
  */
 @XmlType
 @XmlRootElement(name = "reservation")
-@XStreamAlias("reservation")
 public class ReservationData implements Serializable {
 
     private int reservationId;
