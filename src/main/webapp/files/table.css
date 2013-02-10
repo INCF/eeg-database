@@ -128,7 +128,26 @@
     padding: 3px 5px 1px;
     background-color: #fff;
   }
-
+  
+  table .width30 {
+  	width: 30px;
+  }
+  
+  table .width50 {
+  	width: 50px;
+  }
+  
+  table .width80 {
+  	width: 80px;
+  }
+  
+  table .width100 {
+  	width: 100px;
+  }
+  
+  table .width300 {
+  	width: 300px;
+  }
 
 
 

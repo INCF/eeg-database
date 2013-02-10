@@ -65,6 +65,12 @@
     
     <bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />
     <bean name="fileFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileFacadeImpl" autowire="byType" />
+    
+    <bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
+    <bean name="weatherFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacadeImpl" autowire="byType" />
+    
+    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" />
+    <bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
 
     <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" />
 

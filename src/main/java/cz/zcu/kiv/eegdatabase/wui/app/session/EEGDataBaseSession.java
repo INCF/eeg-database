@@ -58,7 +58,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     public boolean authenticate(String username, String password) {
 
         if (password.equalsIgnoreCase(SOCIAL_PASSWD)) {
-            this.setLoggedUser(facade.getPersonByUserName(username));
+            this.setLoggedUser(facade.getPerson(username));
             return true;
         }
 
@@ -67,7 +67,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             authenticated = authentication.isAuthenticated();
-            this.setLoggedUser(facade.getPersonByUserName(username));
+            this.setLoggedUser(facade.getPerson(username));
 
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));

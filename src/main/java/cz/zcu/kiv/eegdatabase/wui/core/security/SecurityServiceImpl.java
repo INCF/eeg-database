@@ -1,11 +1,15 @@
 package cz.zcu.kiv.eegdatabase.wui.core.security;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 
 public class SecurityServiceImpl implements SecurityService {
+    
+    protected Log log = LogFactory.getLog(getClass());
 
     AuthorizationManager manager;
 

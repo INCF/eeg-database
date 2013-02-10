@@ -1,27 +1,48 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
+import java.util.List;
+import java.util.Map;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
-public interface PersonService {
+public interface PersonService extends GenericService<Person, Integer> {
 
-    void createPerson(Person user);
-    
-    Person createPerson(SocialUser userFb, Integer educationLevelId);
-
-    void deletePerson(Person user);
-
-    void updatePerson(Person user);
+    Person getPerson(String userName);
 
     Person getPersonByHash(String hashCode);
 
-    Person getPersonByUserName(String userName);
+    Person getPersonByFbUid(String fbUid);
+
+    void changeUserPassword(String userName, String newPass);
+
+    boolean isPasswordEquals(String userName, String password);
+
+    void forgottenPassword(Person person);
+
+    List<Person> getPersonsWherePendingRequirement();
 
     boolean usernameExists(String userName);
 
-    void changeUserPassword(String userName, String password);
+    boolean fbUidExists(String id);
 
-    boolean isPasswordEquals(String userName, String password);
+    List<Person> getSupervisors();
+
+    Person getLoggedPerson();
+
+    Map getInfoForAccountOverview(Person loggedPerson);
+
+    List<Person> getRecordsNewerThan(long oracleScn);
+
+    boolean userNameInGroup(String userName, int groupId);
+
+    List<Person> getPersonSearchResults(List<SearchRequest> requests);
+
+    int getCountForList();
+
+    List<Person> getDataForList(int start, int limit);
     
-    void forgottenPassword(Person person);
+    Person createPerson(SocialUser userFb, Integer educationLevelId);
 }

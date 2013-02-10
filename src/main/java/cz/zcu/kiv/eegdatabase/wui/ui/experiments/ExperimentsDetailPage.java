@@ -17,6 +17,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
@@ -43,6 +44,9 @@ public class ExperimentsDetailPage extends MenuPage {
     }
 
     private void setupComponents(Long experimentId) {
+        
+        setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
+        
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
         Experiment experiment = facade.getExperimentForDetail(experimentId.intValue());

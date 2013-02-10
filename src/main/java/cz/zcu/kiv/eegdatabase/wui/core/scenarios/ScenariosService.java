@@ -1,13 +1,13 @@
-package cz.zcu.kiv.eegdatabase.wui.core.scenario;
+package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
-public interface ScenarioFacade extends GenericFacade<Scenario, Integer> {
+public interface ScenariosService extends GenericService<Scenario, Integer> {
 
     List<Scenario> getScenariosWhereOwner(Person owner);
 

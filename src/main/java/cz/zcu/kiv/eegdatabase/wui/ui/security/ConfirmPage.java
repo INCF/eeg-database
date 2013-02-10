@@ -76,12 +76,12 @@ public class ConfirmPage extends MenuPage {
             } else if (confirmedInTime(System.currentTimeMillis(), person)) {
                 confirm = true;
                 person.setConfirmed(true);
-                personFacade.updatePerson(person);
+                personFacade.update(person);
                 titleText = ResourceUtils.getModel("pageTitle.confirmationSuccessfull");
                 messageText = ResourceUtils.getModel("text.registrationSuccessfull.youCanLogIn.part1");
                 message2Text = ResourceUtils.getModel("text.registrationSuccessfull.youCanLogIn.part2");
             } else {
-                personFacade.deletePerson(person);
+                personFacade.delete(person);
                 titleText = ResourceUtils.getModel("pageTitle.registrationFalse");
                 messageText = ResourceUtils.getModel("text.registrationExpired");
                 message2Text = messageText;

@@ -143,7 +143,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
                     user.setRegistrationDate(new DateTime());
                     if (validation(user)) {
-                        personFacade.createPerson(new PersonMapper().convertToEntity(user, new Person()));
+                        personFacade.create(new PersonMapper().convertToEntity(user, new Person()));
                         setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
                     }
                 } else {

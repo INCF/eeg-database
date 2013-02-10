@@ -1,10 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.security;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 
 public class SecurityFacadeImpl implements SecurityFacade {
+    
+    protected Log log = LogFactory.getLog(getClass());
 
     SecurityService service;
 

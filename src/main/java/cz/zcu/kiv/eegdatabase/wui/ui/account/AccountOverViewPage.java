@@ -35,7 +35,7 @@ public class AccountOverViewPage extends MenuPage {
 
     public AccountOverViewPage() {
 
-        setPageTitle(ResourceUtils.getModel("title.page.myaccount.overview"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.accountOverview"));
 
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 

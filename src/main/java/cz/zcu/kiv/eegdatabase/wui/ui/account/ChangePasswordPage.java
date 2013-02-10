@@ -32,8 +32,6 @@ public class ChangePasswordPage extends MenuPage {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.changePassword"));
 
-        add(new Label("headTitle", ResourceUtils.getModel("pageTitle.changePassword")));
-
         setupComponents(true);
     }
 

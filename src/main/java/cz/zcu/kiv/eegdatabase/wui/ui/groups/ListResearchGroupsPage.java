@@ -36,7 +36,7 @@ public class ListResearchGroupsPage extends MenuPage {
 
     public ListResearchGroupsPage() {
 
-        setPageTitle(ResourceUtils.getModel("title.page.groups"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.listOfGroups"));
         setupComponents();
     }
 

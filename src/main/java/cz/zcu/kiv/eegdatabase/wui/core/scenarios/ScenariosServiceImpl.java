@@ -1,103 +1,121 @@
-package cz.zcu.kiv.eegdatabase.wui.core.scenario;
+package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
 import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
-public class ScenarioFacadeImpl implements ScenarioFacade {
+public class ScenariosServiceImpl implements ScenariosService {
 
     protected Log log = LogFactory.getLog(getClass());
 
-    ScenarioService service;
+    ScenarioDao scenarioDAO;
 
     @Required
-    public void setService(ScenarioService service) {
-        this.service = service;
+    public void setScenarioDAO(ScenarioDao scenarioDAO) {
+        this.scenarioDAO = scenarioDAO;
     }
 
     @Override
+    @Transactional
     public Integer create(Scenario newInstance) {
-        return service.create(newInstance);
+        return scenarioDAO.create(newInstance);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Scenario read(Integer id) {
-        return service.read(id);
+        return scenarioDAO.read(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
+        return scenarioDAO.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> readByParameter(String parameterName, String parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
+        return scenarioDAO.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional
     public void update(Scenario transientObject) {
-        service.update(transientObject);
+        scenarioDAO.update(transientObject);
     }
 
     @Override
+    @Transactional
     public void delete(Scenario persistentObject) {
-        service.delete(persistentObject);
+        scenarioDAO.delete(persistentObject);
     }
 
     @Override
     public List<Scenario> getAllRecords() {
-        return service.getAllRecords();
+        return scenarioDAO.getAllRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getRecordsAtSides(int first, int max) {
-        return service.getRecordsAtSides(first, max);
+        return scenarioDAO.getRecordsAtSides(first, max);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getCountRecords() {
-        return service.getCountRecords();
+        return scenarioDAO.getCountRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getScenariosWhereOwner(Person owner) {
-        return service.getScenariosWhereOwner(owner);
+        return scenarioDAO.getScenariosWhereOwner(owner);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getRecordsNewerThan(long oracleScn) {
-        return service.getRecordsNewerThan(oracleScn);
+        return scenarioDAO.getRecordsNewerThan(oracleScn);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getScenariosWhereOwner(Person person, int LIMIT) {
-        return service.getScenariosWhereOwner(person, LIMIT);
+        return scenarioDAO.getScenariosWhereOwner(person, LIMIT);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId) {
-        return service.getScenarioSearchResults(request, personId);
+        return scenarioDAO.getScenarioSearchResults(request, personId);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public void canSaveTitle(String title, int id) {
-        service.canSaveTitle(title, id);
+        scenarioDAO.canSaveTitle(title, id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getScenariosForList(Person person, int start, int count) {
-        return service.getScenariosForList(person, start, count);
+        return scenarioDAO.getScenariosForList(person, start, count);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getScenarioCountForList(Person person) {
-        return service.getScenarioCountForList(person);
+        return scenarioDAO.getScenarioCountForList(person);
     }
+
 }

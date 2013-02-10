@@ -33,12 +33,12 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
     public ResearchGroupsDetailPage() {
 
-        setPageTitle(ResourceUtils.getModel("title.page.groups"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.researchGroupDetail"));
     }
 
     public ResearchGroupsDetailPage(PageParameters parameters) {
 
-        setPageTitle(ResourceUtils.getModel("title.page.groups"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.researchGroupDetail"));
 
         add(new ButtonPageMenu("leftMenu", prepareLeftMenu()));
 

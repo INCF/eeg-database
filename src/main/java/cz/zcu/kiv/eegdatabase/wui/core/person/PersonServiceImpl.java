@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,6 +16,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -47,7 +49,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void createPerson(Person person) {
+    public Integer create(Person person) {
 
         person.setPassword(encodePassword(person.getPassword()));
         person.setLaterality(DEFAULT_LATERALITY);
@@ -58,6 +60,8 @@ public class PersonServiceImpl implements PersonService {
         person = newPerson(person);
 
         mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
+
+        return person.getPersonId();
     }
 
     @Override
@@ -144,14 +148,14 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deletePerson(Person user) {
-        personDAO.delete(personDAO.getPerson(user.getEmail()));
+    public void delete(Person person) {
+        personDAO.delete(personDAO.read(person.getPersonId()));
     }
 
     @Override
     @Transactional
-    public void updatePerson(Person user) {
-        personDAO.update(user);
+    public void update(Person person) {
+        personDAO.update(person);
     }
 
     @Override
@@ -162,8 +166,8 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public Person getPersonByUserName(String userName) {
-        return personDAO.getPerson(userName);
+    public Person getPerson(String username) {
+        return personDAO.getPerson(username);
     }
 
     @Override
@@ -197,6 +201,106 @@ public class PersonServiceImpl implements PersonService {
             log.debug("Password was NOT changed");
         }
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person read(Integer id) {
+        return personDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> readByParameter(String parameterName, int parameterValue) {
+        return personDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> readByParameter(String parameterName, String parameterValue) {
+        return personDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getAllRecords() {
+        return personDAO.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getRecordsAtSides(int first, int max) {
+        return personDAO.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountRecords() {
+        return personDAO.getCountRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person getPersonByFbUid(String fbUid) {
+        return personDAO.getPersonByFbUid(fbUid);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getPersonsWherePendingRequirement() {
+        return personDAO.getPersonsWherePendingRequirement();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean fbUidExists(String id) {
+        return personDAO.fbUidExists(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getSupervisors() {
+        return personDAO.getSupervisors();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person getLoggedPerson() {
+        return personDAO.getLoggedPerson();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map getInfoForAccountOverview(Person loggedPerson) {
+        return personDAO.getInfoForAccountOverview(loggedPerson);
+    }
+
+    @Override
+    public List<Person> getRecordsNewerThan(long oracleScn) {
+        return personDAO.getRecordsNewerThan(oracleScn);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean userNameInGroup(String userName, int groupId) {
+        return personDAO.userNameInGroup(userName, groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getPersonSearchResults(List<SearchRequest> requests) {
+        return personDAO.getPersonSearchResults(requests);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountForList() {
+        return personDAO.getCountForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getDataForList(int start, int limit) {
+        return personDAO.getDataForList(start, limit);
     }
 
 }

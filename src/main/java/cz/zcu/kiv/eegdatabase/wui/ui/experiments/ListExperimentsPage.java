@@ -46,7 +46,6 @@ public class ListExperimentsPage extends MenuPage {
 
     public ListExperimentsPage() {
 
-        setPageTitle(ResourceUtils.getModel("title.page.experiments"));
         setupComponents(null);
     }
 
@@ -60,15 +59,20 @@ public class ListExperimentsPage extends MenuPage {
         boolean owner = false;
         boolean subject = false;
 
+        IModel<String> title = null;
         if (param == null) {
-            add(new Label("title", ResourceUtils.getModel("pageTitle.allExperiments")));
+            title = ResourceUtils.getModel("pageTitle.allExperiments");
+            add(new Label("title", title));
         } else if (param.equals(PARAM_OWNER)) {
             owner = true;
-            add(new Label("title", ResourceUtils.getModel("pageTitle.myExperiments")));
+            title = ResourceUtils.getModel("pageTitle.myExperiments");
+            add(new Label("title", title));
         } else if (param.equals(PARAM_SUBJECT)) {
             subject = true;
-            add(new Label("title", ResourceUtils.getModel("pageTitle.myExperiments")));
+            title = ResourceUtils.getModel("pageTitle.myExperiments");
+            add(new Label("title", title));
         }
+        setPageTitle(title);
 
         Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
         boolean userNotMemberOfAnyGroup = researchFacade.getResearchGroupsWhereMember(loggedUser).isEmpty();
