@@ -5,10 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupData;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupDataList;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
+import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -56,7 +53,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExperimentData> getMyExperiments() throws RestServiceException {
+    public ExperimentDataList getMyExperiments() throws RestServiceException {
         try {
 
             Set<Experiment> exps = personDao.getLoggedPerson().getExperiments();
@@ -71,7 +68,7 @@ public class UserServiceImpl implements UserService {
                 expData.setScenarioName(exp.getScenario().getScenarioName());
                 experiments.add(expData);
             }
-            return experiments;
+            return new ExperimentDataList(experiments);
         } catch (Exception e) {
             throw new RestServiceException(e);
         }

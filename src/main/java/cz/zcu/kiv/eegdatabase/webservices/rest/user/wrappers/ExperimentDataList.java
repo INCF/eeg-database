@@ -19,7 +19,7 @@ public class ExperimentDataList {
         this(Collections.<ExperimentData>emptyList());
     }
 
-    public ExperimentDataList(List<ExperimentData> researchGroups) {
-        this.experiments = researchGroups;
+    public ExperimentDataList(List<ExperimentData> experiments) {
+        this.experiments = experiments;
     }
 }
