@@ -34,6 +34,8 @@
         </property>
     </bean>
 
+    <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
+
     <bean id="jsonView"
           class="org.springframework.web.servlet.view.json.MappingJacksonJsonView">
         <property name="contentType" value="application/json;charset=UTF-8"/>
