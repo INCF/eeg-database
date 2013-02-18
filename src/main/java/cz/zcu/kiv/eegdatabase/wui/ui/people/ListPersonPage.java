@@ -16,11 +16,11 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.StyleClassPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 
 @AuthorizeInstantiation("ROLE_USER")
 public class ListPersonPage extends MenuPage {
@@ -69,13 +69,14 @@ public class ListPersonPage extends MenuPage {
                 return new Model<String>(displayModel.getObject().substring(0, 70));
             }
         });
+        // TODO person detail page
         columns.add(new StyleClassPropertyColumn<Person, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null, "width50") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void populateItem(Item<ICellPopulator<Person>> item, String componentId, IModel<Person> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ResearchGroupsDetailPage.class, "personId", rowModel, ResourceUtils.getModel("link.detail")));
+                item.add(new ViewLinkPanel(componentId, UnderConstructPage.class, "personId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
 

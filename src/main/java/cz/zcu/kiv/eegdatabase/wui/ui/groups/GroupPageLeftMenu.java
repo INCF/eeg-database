@@ -4,15 +4,15 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 
 public enum GroupPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_GROUPS(ListResearchGroupsPage.class, "menuItem.listOfGroups", null),
     MY_GROUPS(MyGroupsPage.class, "menuItem.myGroups", null),
-    REQUEST_FOR_GROUP_ROLE(WelcomePage.class, "menuItem.requestForGroupRole", null),
-    BOOKING_ROOM(WelcomePage.class, "menuItem.bookingRoom", null),
-    CREATE_GROUP(WelcomePage.class, "menuItem.createGroup", null), ;
+    REQUEST_FOR_GROUP_ROLE(UnderConstructPage.class, "menuItem.requestForGroupRole", null),
+    BOOKING_ROOM(UnderConstructPage.class, "menuItem.bookingRoom", null),
+    CREATE_GROUP(UnderConstructPage.class, "menuItem.createGroup", null), ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;

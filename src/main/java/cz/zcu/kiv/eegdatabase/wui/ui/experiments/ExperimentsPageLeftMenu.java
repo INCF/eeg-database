@@ -4,6 +4,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 
 public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
@@ -11,10 +12,9 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
     LIST_OF_EXPERIMENTS(ListExperimentsPage.class, "menuItem.experiments.allExperiments", null),
     LIST_OF_EXPERIMENTS_AS_OWNER(ListExperimentsPage.class, "menuItem.experiments.myExperiments", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_OWNER)),
     LIST_OF_EXPERIMENTS_AS_SUBJECT(ListExperimentsPage.class, "menuItem.experiments.meAsSubject", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_SUBJECT)),
-    SEARCH(ListExperimentsPage.class, "menuItem.searchMeasuration", null),
-    // ADD_EXPERIMENTS(ListExperimentsPage.class,
-    // "menuItem.experiments.meAsSubject", null),
-    RESULT(ListExperimentsPage.class, "menuItem.serviceResult", null),
+    SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
+    ADD_EXPERIMENTS(UnderConstructPage.class, "menuItem.experiments.addExperiment", null),
+    RESULT(UnderConstructPage.class, "menuItem.serviceResult", null),
 
     ;
 

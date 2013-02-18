@@ -54,7 +54,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
             @Override
             public void onClick() {
-                // TODO Auto-generated method stub
+                // TODO missing action
 
             }
         };
@@ -63,7 +63,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
             @Override
             public void onClick() {
-                // TODO Auto-generated method stub
+                // TODO list of members
 
             }
         };
@@ -72,7 +72,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
             @Override
             public void onClick() {
-                // TODO Auto-generated method stub
+                // TODO add member action
 
             }
         };
@@ -82,7 +82,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
             @Override
             public void onClick() {
-                // TODO Auto-generated method stub
+                // TODO edit group action
 
             }
         };

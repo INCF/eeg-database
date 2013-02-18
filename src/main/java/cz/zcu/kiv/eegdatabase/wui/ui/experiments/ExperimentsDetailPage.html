@@ -57,11 +57,90 @@
           <th><wicket:message key="label.yearOfBirth" /></th>
           <td wicket:id="dateOfBirth"></td>
         </tr>
+        <wicket:enclosure child="personLink">
+          <tr>
+            <td colspan="2"><a href='#' wicket:id="personLink"><wicket:message
+                  key="link.detail" /></a></td>
+          </tr>
+        </wicket:enclosure>
+      </table>
+
+      <h2>
+        <wicket:message key="heading.scenario" />
+      </h2>
+      <table class="standardValueTable">
         <tr>
-          <td colspan="2"><a href='#' wicket:id="detailLink" /></td>
+          <th><wicket:message key="label.scenarioTitle" /></th>
+          <td wicket:id="scenario.title"></td>
+        </tr>
+        <tr>
+          <td colspan="2"><a href="#" wicket:id="scenarioLink"><wicket:message
+                key="link.viewDetailOfScenario" /></a></td>
         </tr>
       </table>
 
+      <h2>
+        <wicket:message key="heading.usedHardware" />
+      </h2>
+      <table class="dataTable" style="width: 450px;">
+        <thead>
+          <tr>
+            <th style="width: 250px;"><wicket:message key="dataTable.heading.hardwareTitle" /></th>
+            <th><wicket:message key="dataTable.heading.hardwareType" /></th>
+          </tr>
+        </thead>
+        <tr wicket:id="hardware">
+          <td wicket:id="title"></td>
+          <td wicket:id="type"></td>
+        </tr>
+      </table>
+
+      <h2>
+        <wicket:message key="heading.optionalParameters" />
+      </h2>
+      <table class="dataTable" style="width: 450px;">
+        <thead>
+          <tr>
+            <th style="width: 250px;"><wicket:message
+                key="dataTable.heading.measurationOptionalParamName" /></th>
+            <th><wicket:message key="dataTable.heading.measurationOptionalParamValue" /></th>
+          </tr>
+        </thead>
+        <tr wicket:id="addParameters">
+          <td wicket:id="experimentOptParamDef.paramName"></td>
+          <td wicket:id="paramValue"></td>
+        </tr>
+      </table>
+
+      <h2>
+        <wicket:message key="heading.dataFiles" />
+      </h2>
+      <table class="dataTable" style="width: 500px;">
+        <thead>
+          <tr>
+            <th style="width: 250px;"><wicket:message key="dataTable.heading.fileName" /></th>
+            <th style="width: 150px;"><wicket:message key="dataTable.heading.description" /></th>
+            <th>
+              <!-- column with link for detail -->
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr wicket:id="files">
+            <td wicket:id="filename"></td>
+            <td wicket:id="description"></td>
+            <td wicket:id="detail"></td>
+          </tr>
+        </tbody>
+      </table>
+      
+      <div class="actionBox">
+      <a href="#" wicket:id="addParameterLink" class="lightButtonLink"><wicket:message:message key="button.addOptionalParameter"/></a>
+      <a href="#" wicket:id="addFileLink" class="lightButtonLink"><wicket:message:message key="button.addDataFile"/></a>
+      <a href="#" wicket:id="editExpLink" class="lightButtonLink"><wicket:message:message key="button.editExperiment"/></a>
+      <a href="#" wicket:id="downloadExpLink" class="lightButtonLink"><wicket:message key="button.downloadExperiment"/></a>
+    </div>
+      
       <div wicket:id="container">
         <div wicket:id="view"></div>
       </div>

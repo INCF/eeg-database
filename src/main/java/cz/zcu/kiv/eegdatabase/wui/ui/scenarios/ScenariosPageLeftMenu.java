@@ -4,15 +4,15 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 
 public enum ScenariosPageLeftMenu implements IButtonPageMenu {
 
-    LIST_OF_SCENARIOS(WelcomePage.class, "menuItem.listOfScenarios", null),
-    MY_SCENARIOS(WelcomePage.class, "menuItem.myScenarios", null),
-    SEARCH_SCENARIOS(WelcomePage.class, "menuItem.searchScenario", null),
-    ADD_SCENARIOS(WelcomePage.class, "menuItem.addScenario", null),
-    ADD_SCENARIOS_SCHEMA(WelcomePage.class, "menuItem.addScenarioSchema", null), ;
+    LIST_OF_SCENARIOS(ListScenariosPage.class, "menuItem.listOfScenarios", null),
+    MY_SCENARIOS(UnderConstructPage.class, "menuItem.myScenarios", null),
+    SEARCH_SCENARIOS(UnderConstructPage.class, "menuItem.searchScenario", null),
+    ADD_SCENARIOS(UnderConstructPage.class, "menuItem.addScenario", null),
+    ADD_SCENARIOS_SCHEMA(UnderConstructPage.class, "menuItem.addScenarioSchema", null), ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;

@@ -15,12 +15,11 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.table.ScenarioDownloadLink;
 import cz.zcu.kiv.eegdatabase.wui.components.table.StyleClassPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 @AuthorizeInstantiation("ROLE_USER")
 public class ListScenariosPage extends MenuPage {
@@ -62,11 +61,19 @@ public class ListScenariosPage extends MenuPage {
 
             @Override
             public void populateItem(Item<ICellPopulator<Scenario>> item, String componentId, IModel<Scenario> rowModel) {
-                item.add(new ViewLinkPanel(componentId, WelcomePage.class, "scenarioId", rowModel, ResourceUtils.getModel("link.detail")));
+                item.add(new ViewLinkPanel(componentId, ScenarioDetailPage.class, "scenarioId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
-        // TODO download file if he exist
-        columns.add(new StyleClassPropertyColumn<Scenario, String>(ResourceUtils.getModel("dataTable.heading.file"), null, null, "width80"));
+        columns.add(new StyleClassPropertyColumn<Scenario, String>(ResourceUtils.getModel("dataTable.heading.file"), null, null, "width80") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void populateItem(Item<ICellPopulator<Scenario>> item, String componentId, IModel<Scenario> rowModel) {
+
+                item.add(new ScenarioDownloadLink(componentId, rowModel));
+            }
+        });
 
         return columns;
     }

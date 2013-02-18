@@ -4,12 +4,13 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 
 public enum PersonPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_PERSONS(ListPersonPage.class, "pageTitle.listOfPeople", null),
-    SEARCH_PERSON(ListPersonPage.class, "menuItem.searchPeople", null),
-    ADD_PERSON(ListPersonPage.class, "button.addPerson", null),
+    SEARCH_PERSON(UnderConstructPage.class, "menuItem.searchPeople", null),
+    ADD_PERSON(UnderConstructPage.class, "button.addPerson", null),
     ;
     
     private Class<? extends MenuPage> pageClass;

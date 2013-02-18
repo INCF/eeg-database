@@ -102,6 +102,7 @@ public class ListExperimentsPage extends MenuPage {
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
                 "personBySubjectPersonId.dateOfBirth", "yyyy"));
+        // TODO service page missing.
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
 
             @Override
@@ -116,6 +117,7 @@ public class ListExperimentsPage extends MenuPage {
                 item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
+        // TODO download experiment missing.
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.download"), null, null) {
 
             @Override

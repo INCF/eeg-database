@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
+import oracle.net.aso.s;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -76,8 +78,8 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public void create(ResearchGroup user) {
-        service.create(user);
+    public Integer create(ResearchGroup user) {
+        return service.create(user);
     }
 
     @Override
@@ -93,6 +95,36 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     @Override
     public ResearchGroup getResearchGroupById(int id) {
         return service.getResearchGroupById(id);
+    }
+
+    @Override
+    public ResearchGroup read(Integer id) {
+        return service.read(id);
+    }
+
+    @Override
+    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
+        return service.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+        return service.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ResearchGroup> getAllRecords() {
+        return service.getAllRecords();
+    }
+
+    @Override
+    public List<ResearchGroup> getRecordsAtSides(int first, int max) {
+        return service.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountRecords() {
+        return service.getCountRecords();
     }
 
 }

@@ -4,10 +4,9 @@ import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
-public interface ResearchGroupFacade {
-
-    void create(ResearchGroup user);
+public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integer>{
 
     void delete(ResearchGroup user);
 

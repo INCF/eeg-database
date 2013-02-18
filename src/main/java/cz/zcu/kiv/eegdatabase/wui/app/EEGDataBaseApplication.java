@@ -17,15 +17,17 @@ import org.springframework.context.ApplicationContextAware;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.ChangePasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
@@ -79,6 +81,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
         mountPage("forgotten-pass", ForgottenPasswordPage.class);
+        mountPage("under-construct", UnderConstructPage.class);
 
         mountPage("account-overview", AccountOverViewPage.class);
         mountPage("account-change-pass", ChangePasswordPage.class);
@@ -88,6 +91,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("experiments-list", ListExperimentsPage.class);
         mountPage("experiments-detail", ExperimentsDetailPage.class);
+        mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);
         mountPage("groups-detail", ResearchGroupsDetailPage.class);
