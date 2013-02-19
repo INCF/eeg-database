@@ -32,6 +32,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
@@ -97,10 +98,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("groups-detail", ResearchGroupsDetailPage.class);
         mountPage("groups-my", MyGroupsPage.class);
 
+        mountPage("people-list", ListPersonPage.class);
+        mountPage("people-detail", PersonDetailPage.class);
+
         mountPage("history-page", HistoryPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("lists-page", ListsPage.class);
-        mountPage("people-page", ListPersonPage.class);
         mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("search-page", SearchPage.class);
 

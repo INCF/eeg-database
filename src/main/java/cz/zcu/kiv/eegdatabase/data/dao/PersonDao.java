@@ -18,6 +18,8 @@ public interface PersonDao extends GenericDao<Person, Integer> {
     public Person getPersonByHash(String hashCode);
 
     public Person getPersonByFbUid(String fbUid);
+    
+    public Person getPersonForDetail(int id);
 
     public List<Person> getPersonsWherePendingRequirement();
 

@@ -1,0 +1,68 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1>
+        <wicket:message key="pageTitle.personDetail" />
+      </h1>
+
+      <table class="standardValueTable">
+        <tr>
+          <th><wicket:message key="label.name" /></th>
+          <td wicket:id="name"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.gender" /></th>
+          <td wicket:id="gender"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.dateOfBirth" /></th>
+          <td wicket:id="dateOfBirth"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.email" /></th>
+          <td wicket:id="email"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.phoneNumber" /></th>
+          <td wicket:id="phone"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="label.userNote" /></th>
+          <td wicket:id="note"></td>
+        </tr>
+      </table>
+
+      <h2>
+        <wicket:message key="heading.optionalParameters" />
+      </h2>
+      <table class="dataTable" style="width: 450px;">
+        <thead>
+          <tr>
+            <th style="width: 250px;">
+              <wicket:message key="dataTable.heading.personOptionalParamName" />
+            </th>
+            <th>
+              <wicket:message key="dataTable.heading.personOptionalParamValue" />
+            </th>
+          </tr>
+        </thead>
+          <tr wicket:id="params">
+            <td wicket:id="paramName"></td>
+            <td wicket:id="paramValue"></td>
+          </tr>
+      </table>
+
+      <div class="actionBox">
+        <a href="#" wicket:id="addOptParamLink" class="lightButtonLink"><wicket:message key="button.addOptionalParameter" /></a>
+        <a href="#" wicket:id="editLink" class="lightButtonLink"><wicket:message key="button.edit" /></a>
+      </div>
+    </div>
+  </wicket:extend>
+</body>
+</html>

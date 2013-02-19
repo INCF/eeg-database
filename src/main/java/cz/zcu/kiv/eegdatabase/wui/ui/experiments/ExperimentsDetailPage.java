@@ -34,9 +34,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 @AuthorizeInstantiation("ROLE_USER")
 public class ExperimentsDetailPage extends MenuPage {
@@ -76,8 +76,8 @@ public class ExperimentsDetailPage extends MenuPage {
         Person personBySubjectPersonId = experiment.getPersonBySubjectPersonId();
         add(new TimestampLabel("dateOfBirth", personBySubjectPersonId.getDateOfBirth(), StringUtils.DATE_TIME_FORMAT_PATTER_ONLY_YEAR));
         add(new EnumLabel<Gender>("gender", Gender.getGenderByShortcut(personBySubjectPersonId.getGender())));
-        // TODO person detail page
-        BookmarkablePageLink<Void> personLink = new BookmarkablePageLink<Void>("personLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(personBySubjectPersonId.getPersonId()));
+        
+        BookmarkablePageLink<Void> personLink = new BookmarkablePageLink<Void>("personLink", PersonDetailPage.class, PageParametersUtils.getDefaultPageParameters(personBySubjectPersonId.getPersonId()));
         personLink.setVisibilityAllowed(security.userCanViewPersonDetails(personBySubjectPersonId.getPersonId()));
         add(personLink);
         BookmarkablePageLink<Void> scenarioLink = new BookmarkablePageLink<Void>("scenarioLink", ScenarioDetailPage.class, PageParametersUtils.getDefaultPageParameters(experiment.getScenario().getScenarioId()));

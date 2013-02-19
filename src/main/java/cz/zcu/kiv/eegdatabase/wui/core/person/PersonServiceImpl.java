@@ -303,4 +303,10 @@ public class PersonServiceImpl implements PersonService {
         return personDAO.getDataForList(start, limit);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public Person getPersonForDetail(int id) {
+        return personDAO.getPersonForDetail(id);
+    }
+
 }

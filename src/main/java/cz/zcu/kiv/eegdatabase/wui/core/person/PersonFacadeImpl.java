@@ -151,4 +151,9 @@ public class PersonFacadeImpl implements PersonFacade {
         return personService.getDataForList(start, limit);
     }
 
+    @Override
+    public Person getPersonForDetail(int id) {
+        return personService.getPersonForDetail(id);
+    }
+
 }

@@ -15,6 +15,8 @@ public interface PersonService extends GenericService<Person, Integer> {
     Person getPersonByHash(String hashCode);
 
     Person getPersonByFbUid(String fbUid);
+    
+    Person getPersonForDetail(int id);
 
     void changeUserPassword(String userName, String newPass);
 

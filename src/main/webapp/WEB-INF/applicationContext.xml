@@ -51,8 +51,15 @@
 
     <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
     <bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
+
     <bean id="personServiceWUI" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
     <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
+    
+    <bean name="personOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamServiceImpl" autowire="byType" >
+        <property name="valDAO" ref="personOptParamValDao"/>
+    </bean>
+    <bean name="personOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamFacadeImpl" autowire="byType" />
+    
 
     <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" />
     <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />

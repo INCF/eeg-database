@@ -231,4 +231,11 @@ public class SimplePersonDao
 
         return today.get(Calendar.DAY_OF_MONTH) + "-" + (today.get(Calendar.MONTH) + 1) + "-" + yearOfBirth;
     }
+
+    @Override
+    public Person getPersonForDetail(int id) {
+        String HQLselect = "from Person person left join fetch person.personOptParamVals paramVal left join fetch paramVal.personOptParamDef paramDef where person.personId = :id";
+        Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "id", id));
+        return foundUser;
+    }
 }

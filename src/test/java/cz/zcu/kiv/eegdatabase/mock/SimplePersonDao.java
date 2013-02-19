@@ -140,4 +140,9 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
     {
         return (realPersonDao == null) ? null : realPersonDao.getFulltextResults(fullTextQuery);
     }
+
+    @Override
+    public Person getPersonForDetail(int id) {
+        return (realPersonDao == null) ? null : realPersonDao.getPersonForDetail(id);
+    }
 }
