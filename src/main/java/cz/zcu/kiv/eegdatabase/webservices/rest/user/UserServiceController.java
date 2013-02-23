@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentDataList;
@@ -11,11 +12,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.util.List;
 
 /**
@@ -31,6 +32,29 @@ public class UserServiceController {
     private final static Log log = LogFactory.getLog(UserServiceController.class);
     @Autowired
     UserService service;
+
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    @ResponseStatus(HttpStatus.CREATED)
+    public void create(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") String name,
+                       @RequestParam("surname") String surname, @RequestParam("gender") String gender,
+                       @RequestParam("birthday") String birthday, @RequestParam("email") String email,
+                       @RequestParam(value = "phone", required = false) String phoneNumber,
+                       @RequestParam(value = "note", required = false) String note,
+                       @RequestParam(value = "laterality", required = false) String laterality,
+                       @RequestParam(value = "educationLevel", required = false) Integer educationLevel) throws RestServiceException {
+        AddPersonCommand command = new AddPersonCommand();
+        command.setGivenname(name);
+        command.setSurname(surname);
+        command.setDateOfBirth(birthday);
+        command.setGender(gender);
+        command.setEmail(email);
+        command.setPhoneNumber(phoneNumber);
+        command.setNote(note);
+        command.setLaterality(laterality);
+        if(educationLevel != null)
+        command.setEducationLevel(educationLevel);
+        service.create(command, RequestContextUtils.getLocale(request));
+    }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public UserInfo login() {

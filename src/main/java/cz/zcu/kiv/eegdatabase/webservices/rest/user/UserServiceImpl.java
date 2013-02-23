@@ -4,15 +4,24 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.service.MailService;
+import cz.zcu.kiv.eegdatabase.data.service.PersonService;
+import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.*;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.mail.MailException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.support.RequestContextUtils;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 import java.util.Set;
 
 /**
@@ -22,9 +31,30 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
+    private final static Log log = LogFactory.getLog(UserServiceImpl.class);
+
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
+
+    @Qualifier("personService")
+    @Autowired
+    private PersonService personService;
+
+    @Qualifier("mailService")
+    @Autowired
+    private MailService mailService;
+
+    @Override
+    public void create(AddPersonCommand cmd, Locale locale) throws RestServiceException {
+        try {
+            Person person = personService.createPerson(cmd);
+            mailService.sendRegistrationConfirmMail(person, locale);
+        } catch (ParseException e) {
+            log.error(e.getMessage(),e);
+            throw new RestServiceException(e);
+        }
+    }
 
     @Override
     @Transactional(readOnly = true)
