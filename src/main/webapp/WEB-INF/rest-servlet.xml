@@ -10,6 +10,15 @@
   http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
   http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-3.1.xsd http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd">
 
+    <!-- It is not sure whether this file will be used or not. -->
+    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <property name="locations">
+            <list>
+                <value>/WEB-INF/project.properties</value>
+            </list>
+        </property>
+    </bean>
+
     <mvc:annotation-driven/>
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices.rest"/>
     <tx:annotation-driven transaction-manager="txManager"/>

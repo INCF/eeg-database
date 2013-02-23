@@ -2,13 +2,14 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -17,7 +18,6 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.util.List;
 
 /**
  * Implementation of user service
@@ -32,16 +32,18 @@ public class UserServiceController {
     private final static Log log = LogFactory.getLog(UserServiceController.class);
     @Autowired
     UserService service;
+    @Value("${app.domain}")
+    private String domain;
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public UserInfo create(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") String name,
-                       @RequestParam("surname") String surname, @RequestParam("gender") String gender,
-                       @RequestParam("birthday") String birthday, @RequestParam("email") String email,
-                       @RequestParam(value = "phone", required = false) String phoneNumber,
-                       @RequestParam(value = "note", required = false) String note,
-                       @RequestParam(value = "laterality", required = false) String laterality,
-                       @RequestParam(value = "educationLevel", required = false) Integer educationLevel) throws RestServiceException {
+                           @RequestParam("surname") String surname, @RequestParam("gender") String gender,
+                           @RequestParam("birthday") String birthday, @RequestParam("email") String email,
+                           @RequestParam(value = "phone", required = false) String phoneNumber,
+                           @RequestParam(value = "note", required = false) String note,
+                           @RequestParam(value = "laterality", required = false) String laterality,
+                           @RequestParam(value = "educationLevel", required = false) Integer educationLevel) throws RestServiceException {
         AddPersonCommand command = new AddPersonCommand();
         command.setGivenname(name);
         command.setSurname(surname);
@@ -51,9 +53,12 @@ public class UserServiceController {
         command.setPhoneNumber(phoneNumber);
         command.setNote(note);
         command.setLaterality(laterality);
-        if(educationLevel != null)
-        command.setEducationLevel(educationLevel);
-        return service.create(command, RequestContextUtils.getLocale(request));
+        if (educationLevel != null)
+            command.setEducationLevel(educationLevel);
+
+        String url = "http://" + domain + "/registration-confirm?" + ConfirmPage.CONFIRM_ACTIVATION + "=";
+
+        return service.create(url, command, RequestContextUtils.getLocale(request));
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

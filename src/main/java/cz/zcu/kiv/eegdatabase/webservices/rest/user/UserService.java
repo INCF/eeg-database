@@ -16,7 +16,7 @@ import java.util.Locale;
  */
 public interface UserService {
 
-    public UserInfo create(AddPersonCommand cmd, Locale locale) throws RestServiceException;
+    public UserInfo create(String registrationPath, AddPersonCommand cmd, Locale locale) throws RestServiceException;
 
     public UserInfo login();
 
