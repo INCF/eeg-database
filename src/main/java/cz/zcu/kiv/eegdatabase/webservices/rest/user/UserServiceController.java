@@ -35,7 +35,7 @@ public class UserServiceController {
 
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") String name,
+    public UserInfo create(HttpServletRequest request, HttpServletResponse response, @RequestParam("name") String name,
                        @RequestParam("surname") String surname, @RequestParam("gender") String gender,
                        @RequestParam("birthday") String birthday, @RequestParam("email") String email,
                        @RequestParam(value = "phone", required = false) String phoneNumber,
@@ -53,7 +53,7 @@ public class UserServiceController {
         command.setLaterality(laterality);
         if(educationLevel != null)
         command.setEducationLevel(educationLevel);
-        service.create(command, RequestContextUtils.getLocale(request));
+        return service.create(command, RequestContextUtils.getLocale(request));
     }
 
     @RequestMapping(value = "/login", method = RequestMethod.GET)

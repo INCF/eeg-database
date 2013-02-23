@@ -46,10 +46,11 @@ public class UserServiceImpl implements UserService {
     private MailService mailService;
 
     @Override
-    public void create(AddPersonCommand cmd, Locale locale) throws RestServiceException {
+    public UserInfo create(AddPersonCommand cmd, Locale locale) throws RestServiceException {
         try {
             Person person = personService.createPerson(cmd);
             mailService.sendRegistrationConfirmMail(person, locale);
+            return new UserInfo(person.getGivenname(), person.getSurname(), person.getAuthority());
         } catch (ParseException e) {
             log.error(e.getMessage(),e);
             throw new RestServiceException(e);
