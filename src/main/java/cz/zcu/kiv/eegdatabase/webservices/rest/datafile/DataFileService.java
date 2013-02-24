@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.rest.base;
+package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import org.springframework.web.multipart.MultipartFile;

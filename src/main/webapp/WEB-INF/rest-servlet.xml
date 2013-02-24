@@ -58,13 +58,15 @@
             <bean class="org.springframework.oxm.jaxb.Jaxb2Marshaller">
                 <property name="classesToBeBound">
                     <list>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupData</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData</value>
-                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioDataList</value>
                     </list>
                 </property>
             </bean>

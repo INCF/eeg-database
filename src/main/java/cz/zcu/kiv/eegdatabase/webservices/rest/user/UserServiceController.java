@@ -2,8 +2,6 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentDataList;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import org.apache.commons.logging.Log;
@@ -64,16 +62,6 @@ public class UserServiceController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public UserInfo login() {
         return service.login();
-    }
-
-    @RequestMapping(value = "/groups", method = RequestMethod.GET)
-    public ResearchGroupDataList getMyGroups() throws RestServiceException {
-        return service.getMyGroups();
-    }
-
-    @RequestMapping(value = "/experiments", method = RequestMethod.GET)
-    public ExperimentDataList getMyExperiments() throws RestServiceException {
-        return service.getMyExperiments();
     }
 
     @ExceptionHandler(RestServiceException.class)

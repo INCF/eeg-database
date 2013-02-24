@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.rest.base;
+package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import org.apache.commons.logging.Log;
@@ -21,7 +21,7 @@ import java.sql.SQLException;
  */
 @Secured("IS_AUTHENTICATED_FULLY")
 @Controller
-@RequestMapping("/base/datafile")
+@RequestMapping("/datafile")
 public class DataFileServiceController {
 
     private final static Log logger = LogFactory.getLog(DataFileServiceController.class);

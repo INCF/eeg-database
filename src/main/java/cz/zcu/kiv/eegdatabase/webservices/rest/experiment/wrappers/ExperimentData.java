@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers;
+package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
 
@@ -12,7 +12,7 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
-@XmlType
+@XmlType(propOrder = { "experimentId", "scenarioId", "scenarioName", "artifactId", "startTime", "endTime", "environmentNote" })
 @XmlRootElement(name = "experiment")
 public class ExperimentData {
 
