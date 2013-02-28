@@ -19,6 +19,7 @@ public class AccessDeniedPage extends MenuPage {
 
     @Override
     protected void setHeaders(final WebResponse response) {
+	    super.setHeaders(response);
         response.setStatus(HttpServletResponse.SC_FORBIDDEN);
     }
 

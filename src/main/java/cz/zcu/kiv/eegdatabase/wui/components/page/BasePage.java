@@ -5,6 +5,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import org.apache.wicket.request.http.WebResponse;
 
 public class BasePage extends WebPage {
 
@@ -18,5 +19,12 @@ public class BasePage extends WebPage {
 
     protected void setPageTitle(IModel<String> model) {
         get("pageTitle").setDefaultModel(model);
+    }
+
+    @Override
+    protected void setHeaders(WebResponse response) {
+        super.setHeaders(response);
+        //Protection against ClickJacking, prevents the page from being rendered in an iframe element
+        response.setHeader("X-Frame-Options","deny");
     }
 }

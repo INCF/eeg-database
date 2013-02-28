@@ -7,6 +7,7 @@ import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
+import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
@@ -41,7 +42,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     public java.lang.Class<? extends Page> getHomePage() {
 
         return HomePage.class;
-    };
+    }
 
     @Override
     public void init() {
@@ -62,6 +63,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         // add spring component injector listener
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
+
+        //Enables encryption of generated URLs except for pages mounted in mountPages method
+        setRootRequestMapper(new CryptoMapper(getRootRequestMapperAsCompound(), this));
 
         // mount pages in wicket application for better working with pages.
         mountPages();
