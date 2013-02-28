@@ -2,11 +2,18 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
+import oracle.net.aso.s;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
+
+    protected Log log = LogFactory.getLog(getClass());
 
     ResearchGroupService service;
 
@@ -16,22 +23,22 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person) {
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person) {
         return service.getResearchGroupsWhereAbleToWriteInto(person);
     }
 
     @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person, int limit) {
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
         return service.getResearchGroupsWhereMember(person, limit);
     }
 
     @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereOwner(FullPersonDTO person) {
+    public List<ResearchGroup> getResearchGroupsWhereOwner(Person person) {
         return service.getResearchGroupsWhereOwner(person);
     }
 
     @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereAbleToWriteInto(FullPersonDTO person) {
+    public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person) {
         return service.getResearchGroupsWhereAbleToWriteInto(person);
     }
 
@@ -41,7 +48,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(FullPersonDTO person) {
+    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person) {
         return service.getGroupDataForAccountOverview(person);
     }
 
@@ -51,7 +58,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereUserIsGroupAdmin(FullPersonDTO person) {
+    public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person) {
         return service.getResearchGroupsWhereUserIsGroupAdmin(person);
     }
 
@@ -71,23 +78,53 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public void create(ResearchGroupDTO user) {
-        service.create(user);
+    public Integer create(ResearchGroup user) {
+        return service.create(user);
     }
 
     @Override
-    public void delete(ResearchGroupDTO user) {
+    public void delete(ResearchGroup user) {
         service.delete(user);
     }
 
     @Override
-    public void update(ResearchGroupDTO user) {
+    public void update(ResearchGroup user) {
         service.update(user);
     }
 
     @Override
-    public ResearchGroupDTO getResearchGroupById(int id) {
+    public ResearchGroup getResearchGroupById(int id) {
         return service.getResearchGroupById(id);
+    }
+
+    @Override
+    public ResearchGroup read(Integer id) {
+        return service.read(id);
+    }
+
+    @Override
+    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
+        return service.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+        return service.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ResearchGroup> getAllRecords() {
+        return service.getAllRecords();
+    }
+
+    @Override
+    public List<ResearchGroup> getRecordsAtSides(int first, int max) {
+        return service.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountRecords() {
+        return service.getCountRecords();
     }
 
 }

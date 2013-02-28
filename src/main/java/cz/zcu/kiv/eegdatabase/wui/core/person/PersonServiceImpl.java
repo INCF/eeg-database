@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import java.sql.Timestamp;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -15,10 +16,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
 public class PersonServiceImpl implements PersonService {
 
@@ -30,8 +31,6 @@ public class PersonServiceImpl implements PersonService {
     PersonDao personDAO;
     EducationLevelDao educationLevelDao;
     MailService mailService;
-
-    private PersonMapper mapper = new PersonMapper();
 
     @Required
     public void setPersonDAO(PersonDao personDAO) {
@@ -50,60 +49,62 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void createPerson(FullPersonDTO user) {
+    public Integer create(Person person) {
 
-        Person person = mapper.convertToEntity(user, new Person(), educationLevelDao);
-        person.setPassword(encodePassword(user.getPassword()));
+        person.setPassword(encodePassword(person.getPassword()));
         person.setLaterality(DEFAULT_LATERALITY);
 
         log.debug("Setting authority = ROLE_USER");
         person.setAuthority(Util.ROLE_USER);
 
-        
-        person = createPerson(person);
+        person = newPerson(person);
 
         mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
+
+        return person.getPersonId();
     }
-    
+
     @Override
     @Transactional
-    public Person createPerson(SocialUser userFb, Integer educationLevelId){
-        //copying the data to Person entity
+    public Person createPerson(SocialUser userFb, Integer educationLevelId) {
+        // copying the data to Person entity
 
         Person person = personDAO.getPerson(userFb.getEmail());
         if (person != null) {
             return person;
         }
-        
+
         person = new Person();
         person.setUsername(userFb.getEmail());
         person.setGivenname(userFb.getFirstName());
         person.setSurname(userFb.getLastName());
         person.setGender('M');
-       
+
         person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
 
-        //Code specific for this object type
+        // Code specific for this object type
         person.setPassword(encodeRandomPassword());
         log.debug("Setting authority to ROLE_USER");
         person.setAuthority("ROLE_USER");
         log.debug("Setting confirmed");
         person.setConfirmed(true);
-        
-        return createPerson(person);
+
+        return newPerson(person);
     }
 
-    private Person createPerson(Person person) {
-        if(person.getAuthenticationHash() == null){
+    private Person newPerson(Person person) {
+        if (person.getAuthenticationHash() == null) {
             log.debug("Hashing the username");
             person.setAuthenticationHash(ControllerUtils.getMD5String(person.getUsername()));
         }
-        if(person.getRegistrationDate() == null){
+        if (person.getRegistrationDate() == null) {
             log.debug("Setting registration date");
             person.setRegistrationDate(new Timestamp(System.currentTimeMillis()));
         }
-        if(person.getEducationLevel() == null){//TODO remove if educationLevel is nullable or always set by the caller
+        if (person.getEducationLevel() == null) {// TODO remove if
+                                                 // educationLevel is nullable
+                                                 // or always set by the caller
             log.info("EducationLevel of " + person.getUsername() + " is not set, trying to assign default value " + DEFAULT_EDUCATION_LEVEL);
             List<EducationLevel> def = educationLevelDao.getEducationLevels(DEFAULT_EDUCATION_LEVEL);
             person.setEducationLevel(def.isEmpty() ? null : def.get(0));
@@ -126,17 +127,17 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public FullPersonDTO getPersonByHash(String hashCode) {
+    public Person getPersonByHash(String hashCode) {
 
-        return mapper.convertToDTO(personDAO.getPersonByHash(hashCode), educationLevelDao);
+        return personDAO.getPersonByHash(hashCode);
 
     }
 
     private String encodePassword(String plaintextPassword) {
         return new BCryptPasswordEncoder().encode(plaintextPassword);
     }
-    
-    private String encodeRandomPassword(){
+
+    private String encodeRandomPassword() {
         log.debug("Generating random password");
         return encodePassword(ControllerUtils.getRandomPassword());
     }
@@ -147,25 +148,26 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void deletePerson(FullPersonDTO user) {
-        personDAO.delete(personDAO.getPerson(user.getEmail()));
+    public void delete(Person person) {
+        personDAO.delete(personDAO.read(person.getPersonId()));
     }
 
     @Override
     @Transactional
-    public void updatePerson(FullPersonDTO user) {
-        personDAO.update(mapper.convertToEntity(user, personDAO.getPerson(user.getEmail()), educationLevelDao));
+    public void update(Person person) {
+        personDAO.update(person);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public boolean usernameExists(String userName) {
         return personDAO.usernameExists(userName);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public FullPersonDTO getPersonByUserName(String userName) {
-        return mapper.convertToDTO(personDAO.getPerson(userName), educationLevelDao);
+    public Person getPerson(String username) {
+        return personDAO.getPerson(username);
     }
 
     @Override
@@ -185,7 +187,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional
-    public void forgottenPassword(FullPersonDTO person) {
+    public void forgottenPassword(Person person) {
         Person user = personDAO.getPerson(person.getEmail());
         String plainPassword = ControllerUtils.getRandomPassword();
 
@@ -199,6 +201,112 @@ public class PersonServiceImpl implements PersonService {
             log.debug("Password was NOT changed");
         }
 
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person read(Integer id) {
+        return personDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> readByParameter(String parameterName, int parameterValue) {
+        return personDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> readByParameter(String parameterName, String parameterValue) {
+        return personDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getAllRecords() {
+        return personDAO.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getRecordsAtSides(int first, int max) {
+        return personDAO.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountRecords() {
+        return personDAO.getCountRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person getPersonByFbUid(String fbUid) {
+        return personDAO.getPersonByFbUid(fbUid);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getPersonsWherePendingRequirement() {
+        return personDAO.getPersonsWherePendingRequirement();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean fbUidExists(String id) {
+        return personDAO.fbUidExists(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getSupervisors() {
+        return personDAO.getSupervisors();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person getLoggedPerson() {
+        return personDAO.getLoggedPerson();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Map getInfoForAccountOverview(Person loggedPerson) {
+        return personDAO.getInfoForAccountOverview(loggedPerson);
+    }
+
+    @Override
+    public List<Person> getRecordsNewerThan(long oracleScn) {
+        return personDAO.getRecordsNewerThan(oracleScn);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean userNameInGroup(String userName, int groupId) {
+        return personDAO.userNameInGroup(userName, groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getPersonSearchResults(List<SearchRequest> requests) {
+        return personDAO.getPersonSearchResults(requests);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountForList() {
+        return personDAO.getCountForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Person> getDataForList(int start, int limit) {
+        return personDAO.getDataForList(start, limit);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public Person getPersonForDetail(int id) {
+        return personDAO.getPersonForDetail(id);
     }
 
 }

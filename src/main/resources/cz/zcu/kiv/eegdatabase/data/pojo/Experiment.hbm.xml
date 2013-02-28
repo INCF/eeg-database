@@ -8,10 +8,10 @@
             <column name="EXPERIMENT_ID" precision="22" scale="0"/>
             <generator class="increment"/>
         </id>
-        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Weather" fetch="select" name="weather">
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Weather" fetch="select" lazy="false" name="weather">
             <column name="WEATHER_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
-        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="personBySubjectPersonId">
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" lazy="false" name="personBySubjectPersonId">
             <column name="SUBJECT_PERSON_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario" fetch="select" name="scenario">

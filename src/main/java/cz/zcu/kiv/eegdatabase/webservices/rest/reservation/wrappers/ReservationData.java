@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import java.io.Serializable;
 import java.util.Date;
@@ -13,6 +14,7 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
+@XmlType
 @XmlRootElement(name = "reservation")
 public class ReservationData implements Serializable {
 

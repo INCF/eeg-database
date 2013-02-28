@@ -24,6 +24,7 @@ import org.joda.time.DateTime;
 
 import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
@@ -31,6 +32,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 
 public class RegistrationForm extends Form<FullPersonDTO> {
 
@@ -141,7 +143,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
                     user.setRegistrationDate(new DateTime());
                     if (validation(user)) {
-                        personFacade.createPerson(user);
+                        personFacade.create(new PersonMapper().convertToEntity(user, new Person()));
                         setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
                     }
                 } else {

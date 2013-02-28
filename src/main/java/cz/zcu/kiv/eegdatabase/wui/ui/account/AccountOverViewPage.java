@@ -11,16 +11,16 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 
 @AuthorizeInstantiation("ROLE_USER")
 public class AccountOverViewPage extends MenuPage {
@@ -35,14 +35,14 @@ public class AccountOverViewPage extends MenuPage {
 
     public AccountOverViewPage() {
 
-        setPageTitle(ResourceUtils.getModel("title.page.myaccount.overview"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.accountOverview"));
 
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
-        FullPersonDTO user = personFacade.getPersonByUserName(EEGDataBaseSession.get().getUserName());
+        Person user = EEGDataBaseSession.get().getLoggedUser();
 
         add(new Label("userName", new PropertyModel<String>(user, "email")));
-        add(new Label("fullName", user.getName() + " " + user.getSurname()));
+        add(new Label("fullName", user.getGivenname() + " " + user.getSurname()));
         add(new Label("authority", new PropertyModel<String>(user, "authority")));
 
         List<ResearchGroupAccountInfo> groupDataForAccountOverview = researchGroupFacade.getGroupDataForAccountOverview(user);
@@ -60,7 +60,7 @@ public class AccountOverViewPage extends MenuPage {
                 ResearchGroupAccountInfo modelObject = item.getModelObject();
                 item.add(new Label("title", modelObject.getTitle()));
                 item.add(new Label("authority", modelObject.getAuthority()));
-                item.add(new BookmarkablePageLink<DetailResearchGroupsPage>("link", DetailResearchGroupsPage.class, PageParametersUtils.getDefaultPageParameters(modelObject.getGroupId())));
+                item.add(new BookmarkablePageLink<ResearchGroupsDetailPage>("link", ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(modelObject.getGroupId())));
             }
         };
         groups.setVisibilityAllowed(!emptyGroups);

@@ -9,9 +9,9 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 public class ForgottenPasswordPage extends MenuPage {
@@ -26,34 +26,38 @@ public class ForgottenPasswordPage extends MenuPage {
         add(new ForgottenForm("form", getFeedback()));
     }
 
-    class ForgottenForm extends Form<FullPersonDTO> {
+    class ForgottenForm extends Form<Person> {
 
         private static final long serialVersionUID = 1L;
 
         public ForgottenForm(String id, final FeedbackPanel feedback) {
-            super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
+            super(id, new CompoundPropertyModel<Person>(new Person()));
 
-            FormComponent<String> username = new EmailTextField("email");
+            final FormComponent<String> username = new EmailTextField("username");
             username.setRequired(true);
 
-            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.send"), this) {
+            final AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.send"), this) {
 
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-                    FullPersonDTO person = ForgottenForm.this.getModelObject();
+                    Person person = ForgottenForm.this.getModelObject();
 
-                    if (personFacade.usernameExists(person.getEmail())) {
+                    if (personFacade.usernameExists(person.getUsername())) {
                         personFacade.forgottenPassword(person);
 
                         info(ResourceUtils.getString("pageTitle.forgottenPasswordSuccess"));
+                        username.setVisibilityAllowed(false);
+                        this.setVisibilityAllowed(false);
                     } else {
 
                         error(ResourceUtils.getString("pageTitle.forgottenPasswordFailed"));
                     }
 
+                    target.add(this);
+                    target.add(username);
                     target.add(feedback);
                 }
 
@@ -63,7 +67,8 @@ public class ForgottenPasswordPage extends MenuPage {
                 }
 
             };
-
+            username.setOutputMarkupId(true);
+            submit.setOutputMarkupId(true);
             add(username, submit);
         }
     }

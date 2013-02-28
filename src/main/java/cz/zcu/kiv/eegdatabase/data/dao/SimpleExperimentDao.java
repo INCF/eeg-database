@@ -79,7 +79,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
 
 
     public Experiment getExperimentForDetail(int experimentId) {
-        String query = "from Experiment e left join fetch e.dataFiles " +
+        String query = "from Experiment e left join fetch e.dataFiles left join fetch e.hardwares left join fetch e.experimentOptParamVals left join fetch e.scenario " +
                 "where e.experimentId = :experimentId";
         return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
     }

@@ -2,37 +2,33 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
-public interface ResearchGroupService {
+public interface ResearchGroupService extends GenericService<ResearchGroup, Integer> {
     
-    void create(ResearchGroupDTO user);
+    ResearchGroup getResearchGroupById(int id);
 
-    void delete(ResearchGroupDTO user);
+    List<ResearchGroup> getResearchGroupsWhereMember(Person person);
 
-    void update(ResearchGroupDTO user);
+    List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit);
 
-    ResearchGroupDTO getResearchGroupById(int id);
+    List<ResearchGroup> getResearchGroupsWhereOwner(Person person);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person);
+    List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person, int limit);
+    String getResearchGroupTitle(int groupId);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereOwner(FullPersonDTO person);
+    List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person);
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereAbleToWriteInto(FullPersonDTO person);
+    List getListOfGroupMembers(int groupId);
 
-    public String getResearchGroupTitle(int groupId);
+    List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person);
 
-    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(FullPersonDTO person);
+    boolean canSaveTitle(String title, int id);
 
-    public List getListOfGroupMembers(int groupId);
+    int getCountForList();
 
-    public List<ResearchGroupDTO> getResearchGroupsWhereUserIsGroupAdmin(FullPersonDTO person);
-
-    public boolean canSaveTitle(String title, int id);
-
-    public int getCountForList();
-
-    List getGroupsForList(int start, int limit);
+    List<ResearchGroup> getGroupsForList(int start, int limit);
 }

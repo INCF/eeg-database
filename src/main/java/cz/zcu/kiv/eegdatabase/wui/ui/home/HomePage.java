@@ -5,7 +5,9 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
@@ -16,7 +18,7 @@ public class HomePage extends MenuPage {
     public HomePage() {
 
         if (EEGDataBaseSession.get().isSignedIn())
-            throw new RestartResponseAtInterceptPageException(WelcomePage.class);
+            throw new RestartResponseAtInterceptPageException(DataFileDetailPage.class, PageParametersUtils.getDefaultPageParameters(Long.valueOf(317)));
 
         if (EEGDataBaseSession.get().authenticatedSocial()) {
             throw new RestartResponseAtInterceptPageException(WelcomePage.class);

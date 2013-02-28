@@ -1,26 +1,23 @@
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
 
+    protected Log log = LogFactory.getLog(getClass());
+
     ResearchGroupDao researchGroupDAO;
     PersonDao personDAO;
-    EducationLevelDao educationLevelDao;
-
-    ResearchGroupMapper researchMapper = new ResearchGroupMapper();
-    PersonMapper personMapper = new PersonMapper();
 
     @Required
     public void setResearchGroupDAO(ResearchGroupDao researchGroupDAO) {
@@ -32,46 +29,32 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         this.personDAO = personDAO;
     }
 
-    @Required
-    public void setEducationLevelDao(EducationLevelDao educationLevelDao) {
-        this.educationLevelDao = educationLevelDao;
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person) {
+
+        return researchGroupDAO.getResearchGroupsWhereMember(person);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person) {
-
-        List<ResearchGroup> entityList = researchGroupDAO.getResearchGroupsWhereMember(personDAO.getPerson(person.getEmail()));
-        List<ResearchGroupDTO> list = new ArrayList<ResearchGroupDTO>(entityList.size());
-
-        return convertEntityListToDTOs(entityList, list);
-    }
-
-    // TODO this isnt nice and refactor will be nice.
-    @Override
-    public List<ResearchGroupDTO> getResearchGroupsWhereMember(FullPersonDTO person, int limit) {
-        List<ResearchGroupDTO> list = getResearchGroupsWhereMember(person);
+    public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
+        List<ResearchGroup> list = getResearchGroupsWhereMember(person);
 
         return list.subList(0, limit);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroupDTO> getResearchGroupsWhereOwner(FullPersonDTO person) {
+    public List<ResearchGroup> getResearchGroupsWhereOwner(Person person) {
 
-        List<ResearchGroup> entityList = researchGroupDAO.getResearchGroupsWhereOwner(personDAO.getPerson(person.getEmail()));
-        List<ResearchGroupDTO> list = new ArrayList<ResearchGroupDTO>(entityList.size());
-
-        return convertEntityListToDTOs(entityList, list);
+        return researchGroupDAO.getResearchGroupsWhereOwner(person);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroupDTO> getResearchGroupsWhereAbleToWriteInto(FullPersonDTO person) {
-        List<ResearchGroup> entityList = researchGroupDAO.getResearchGroupsWhereAbleToWriteInto(personDAO.getPerson(person.getEmail()));
-        List<ResearchGroupDTO> list = new ArrayList<ResearchGroupDTO>(entityList.size());
-
-        return convertEntityListToDTOs(entityList, list);
+    public List<ResearchGroup> getResearchGroupsWhereAbleToWriteInto(Person person) {
+        return researchGroupDAO.getResearchGroupsWhereAbleToWriteInto(person);
     }
 
     @Override
@@ -82,17 +65,14 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(FullPersonDTO person) {
-        return researchGroupDAO.getGroupDataForAccountOverview(personDAO.getPerson(person.getEmail()));
+    public List<ResearchGroupAccountInfo> getGroupDataForAccountOverview(Person person) {
+        return researchGroupDAO.getGroupDataForAccountOverview(person);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroupDTO> getResearchGroupsWhereUserIsGroupAdmin(FullPersonDTO person) {
-        List<ResearchGroup> entityList = researchGroupDAO.getResearchGroupsWhereUserIsGroupAdmin(personDAO.getPerson(person.getEmail()));
-        List<ResearchGroupDTO> list = new ArrayList<ResearchGroupDTO>(entityList.size());
-
-        return convertEntityListToDTOs(entityList, list);
+    public List<ResearchGroup> getResearchGroupsWhereUserIsGroupAdmin(Person person) {
+        return researchGroupDAO.getResearchGroupsWhereUserIsGroupAdmin(person);
     }
 
     @Override
@@ -109,49 +89,73 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List getGroupsForList(int start, int limit) {
+    public List<ResearchGroup> getGroupsForList(int start, int limit) {
         return researchGroupDAO.getGroupsForList(start, limit);
     }
 
     @Override
-    public List getListOfGroupMembers(int groupId) {
+    public List<Person> getListOfGroupMembers(int groupId) {
         // TODO Auto-generated method stub
         return null;
     }
 
-    private List<ResearchGroupDTO> convertEntityListToDTOs(List<ResearchGroup> entityList, List<ResearchGroupDTO> list) {
-        for (ResearchGroup tmp : entityList) {
-            ResearchGroupDTO dto = researchMapper.convertToDTO(tmp);
-            dto.setOwner(personMapper.convertToDTO(tmp.getPerson(), educationLevelDao));
-
-            list.add(dto);
-
-        }
-
-        return list;
+    @Override
+    @Transactional
+    public Integer create(ResearchGroup group) {
+        return researchGroupDAO.create(group);
     }
 
     @Override
     @Transactional
-    public void create(ResearchGroupDTO user) {
-        researchGroupDAO.create(researchMapper.convertToEntity(user, new ResearchGroup()));
+    public void delete(ResearchGroup group) {
+        researchGroupDAO.delete(researchGroupDAO.read(group.getResearchGroupId()));
     }
 
     @Override
     @Transactional
-    public void delete(ResearchGroupDTO user) {
-        researchGroupDAO.delete(researchGroupDAO.read(user.getId()));
-    }
-
-    @Override
-    @Transactional
-    public void update(ResearchGroupDTO user) {
-        researchGroupDAO.update(researchMapper.convertToEntity(user, researchGroupDAO.read(user.getId())));
+    public void update(ResearchGroup group) {
+        researchGroupDAO.update(group);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public ResearchGroupDTO getResearchGroupById(int id) {
-        return researchMapper.convertToDTO(researchGroupDAO.read(id));
+    public ResearchGroup getResearchGroupById(int id) {
+        return researchGroupDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResearchGroup read(Integer id) {
+        return researchGroupDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
+        return researchGroupDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+        return researchGroupDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> getAllRecords() {
+        return researchGroupDAO.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroup> getRecordsAtSides(int first, int max) {
+        return researchGroupDAO.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountRecords() {
+        return researchGroupDAO.getCountRecords();
     }
 }

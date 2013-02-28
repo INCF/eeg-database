@@ -8,44 +8,44 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.reservation.wrappers.ReservationDataList;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import javax.jws.WebService;
-import javax.ws.rs.core.Response;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
- * Controller for mapping REST requests upon reservation system.
- *
  * @author Petr Miko
+ *         Date: 10.2.13
  */
-@WebService(endpointInterface = "ReservationService")
-@SuppressWarnings("unchecked")
+
+@Service
 public class ReservationServiceImpl implements ReservationService {
 
     private final static Log log = LogFactory.getLog(ReservationServiceImpl.class);
-
-    @Autowired
+    private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
+    @Autowired(required = true)
     @Qualifier("reservationDao")
     private ReservationDao reservationDao;
-
-    @Autowired
+    @Autowired(required = true)
     @Qualifier("researchGroupDao")
     private ResearchGroupDao researchGroupDao;
-
-    @Autowired
+    @Autowired(required = true)
     @Qualifier("personDao")
     private PersonDao personDao;
 
-    private final SimpleDateFormat sf = new SimpleDateFormat("dd-MM-yyyy");
-
     @Override
-    public List<ReservationData> getToDate(String date) throws RestServiceException {
+    @Transactional(readOnly = true)
+    public ReservationDataList getToDate(String date) throws RestServiceException {
         GregorianCalendar calendarFrom = new GregorianCalendar();
         GregorianCalendar calendarTo = new GregorianCalendar();
         try {
@@ -66,8 +66,7 @@ public class ReservationServiceImpl implements ReservationService {
                         r.getPerson().getEmail(),
                         canRemoveReservation(r)));
             }
-
-            return data;
+            return new ReservationDataList(data);
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RestServiceException(e);
@@ -75,7 +74,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public List<ReservationData> getFromToDate(String fromDate, String toDate) throws RestServiceException {
+    @Transactional(readOnly = true)
+    public ReservationDataList getFromToDate(String fromDate, String toDate) throws RestServiceException {
         GregorianCalendar fromCalendar = new GregorianCalendar();
         GregorianCalendar toCalendar = new GregorianCalendar();
         try {
@@ -95,27 +95,27 @@ public class ReservationServiceImpl implements ReservationService {
                         canRemoveReservation(r)));
             }
 
-            return data;
+            return new ReservationDataList(data);
         } catch (Exception e) {
             log.error(String.format("From date: %s | To date: %s | Error: %s", fromDate, toDate, e.getMessage()), e);
             throw new RestServiceException(e);
         }
     }
 
-
     @Override
-    public Response create(ReservationData reservationData) throws RestServiceException {
+    @Transactional
+    public ReservationData create(ReservationData reservationData) throws RestServiceException {
         try {
             ResearchGroup group = researchGroupDao.read(reservationData.getResearchGroupId());
             Person user = personDao.getLoggedPerson();
 
-            if(group == null)
+            if (group == null)
                 throw new RestServiceException("Existing group Id must be specified");
-            if(reservationData.getFromTime() == null)
+            if (reservationData.getFromTime() == null)
                 throw new RestServiceException("Start time must be specified");
-            if(reservationData.getToTime() == null)
+            if (reservationData.getToTime() == null)
                 throw new RestServiceException("End time must be specified");
-            if (!user.getResearchGroups().contains(group))
+            if (!isInGroup(user, group.getResearchGroupId()))
                 throw new RestServiceException("You are not a member of " + group.getTitle() + " group!");
 
             Reservation reservation = new Reservation();
@@ -133,7 +133,7 @@ public class ReservationServiceImpl implements ReservationService {
             reservationData.setResearchGroup(group.getTitle());
             reservationData.setCreatorName(user.getGivenname() + " " + user.getSurname());
             reservationData.parseMail(user.getEmail());
-            return Response.ok(reservationData).build();
+            return reservationData;
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RestServiceException(e);
@@ -141,7 +141,8 @@ public class ReservationServiceImpl implements ReservationService {
     }
 
     @Override
-    public Response delete(int reservationId) throws RestServiceException {
+    @Transactional
+    public void delete(int reservationId) throws RestServiceException {
         try {
             Reservation reservation = reservationDao.read(reservationId);
 
@@ -150,7 +151,6 @@ public class ReservationServiceImpl implements ReservationService {
             } else {
                 if (canRemoveReservation(reservation)) {
                     reservationDao.delete(reservation);
-                    return Response.ok().build();
                 } else
                     throw new RestServiceException("You are not administrator nor member of the group!");
             }
@@ -160,8 +160,19 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
-    private boolean canRemoveReservation(Reservation reservation){
+    private boolean isInGroup(Person user, int researchGroupId) {
+        if (!user.getResearchGroupMemberships().isEmpty()) {
+            for (ResearchGroup g : researchGroupDao.getResearchGroupsWhereMember(user)) {
+                if (g.getResearchGroupId() == researchGroupId) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+
+    private boolean canRemoveReservation(Reservation reservation) {
         Person user = personDao.getLoggedPerson();
-        return user.getResearchGroups().contains(reservation.getResearchGroup()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());
+        return isInGroup(user, reservation.getResearchGroup().getResearchGroupId()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());
     }
 }

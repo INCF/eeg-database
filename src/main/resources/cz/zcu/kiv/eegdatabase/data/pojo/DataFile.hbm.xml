@@ -26,7 +26,7 @@
         <property name="scn" type="long" access="field" insert="false" update="false">
             <column name="ORA_ROWSCN"/>
         </property>
-        <set inverse="true" name="fileMetadataParamVals">
+        <set inverse="true" name="fileMetadataParamVals" fetch="select" lazy="false">
             <key>
                 <column name="DATA_FILE_ID" not-null="true" precision="22" scale="0"/>
             </key>

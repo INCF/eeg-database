@@ -1,10 +1,18 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
+import java.util.List;
+import java.util.Map;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 public class PersonFacadeImpl implements PersonFacade {
+
+    protected Log log = LogFactory.getLog(getClass());
 
     PersonService personService;
 
@@ -14,23 +22,23 @@ public class PersonFacadeImpl implements PersonFacade {
     }
 
     @Override
-    public void createPerson(FullPersonDTO user) {
-        personService.createPerson(user);
+    public Integer create(Person person) {
+        return personService.create(person);
     }
 
     @Override
-    public FullPersonDTO getPersonByHash(String hashCode) {
+    public Person getPersonByHash(String hashCode) {
         return personService.getPersonByHash(hashCode);
     }
 
     @Override
-    public void deletePerson(FullPersonDTO user) {
-        personService.deletePerson(user);
+    public void delete(Person person) {
+        personService.delete(person);
     }
 
     @Override
-    public void updatePerson(FullPersonDTO user) {
-        personService.updatePerson(user);
+    public void update(Person person) {
+        personService.update(person);
     }
 
     @Override
@@ -39,8 +47,8 @@ public class PersonFacadeImpl implements PersonFacade {
     }
 
     @Override
-    public FullPersonDTO getPersonByUserName(String userName) {
-        return personService.getPersonByUserName(userName);
+    public Person getPerson(String username) {
+        return personService.getPerson(username);
     }
 
     @Override
@@ -52,10 +60,100 @@ public class PersonFacadeImpl implements PersonFacade {
     public boolean isPasswordEquals(String userName, String password) {
         return personService.isPasswordEquals(userName, password);
     }
-    
+
     @Override
-    public void forgottenPassword(FullPersonDTO person) {
+    public void forgottenPassword(Person person) {
         personService.forgottenPassword(person);
+    }
+
+    @Override
+    public Person read(Integer id) {
+        return personService.read(id);
+    }
+
+    @Override
+    public List<Person> readByParameter(String parameterName, int parameterValue) {
+        return personService.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<Person> readByParameter(String parameterName, String parameterValue) {
+        return personService.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<Person> getAllRecords() {
+        return personService.getAllRecords();
+    }
+
+    @Override
+    public List<Person> getRecordsAtSides(int first, int max) {
+        return personService.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountRecords() {
+        return personService.getCountRecords();
+    }
+
+    @Override
+    public Person getPersonByFbUid(String fbUid) {
+        return personService.getPersonByFbUid(fbUid);
+    }
+
+    @Override
+    public List<Person> getPersonsWherePendingRequirement() {
+        return personService.getPersonsWherePendingRequirement();
+    }
+
+    @Override
+    public boolean fbUidExists(String id) {
+        return personService.fbUidExists(id);
+    }
+
+    @Override
+    public List<Person> getSupervisors() {
+        return personService.getSupervisors();
+    }
+
+    @Override
+    public Person getLoggedPerson() {
+        return personService.getLoggedPerson();
+    }
+
+    @Override
+    public Map getInfoForAccountOverview(Person loggedPerson) {
+        return personService.getInfoForAccountOverview(loggedPerson);
+    }
+
+    @Override
+    public List<Person> getRecordsNewerThan(long oracleScn) {
+        return personService.getRecordsNewerThan(oracleScn);
+    }
+
+    @Override
+    public boolean userNameInGroup(String userName, int groupId) {
+        return personService.userNameInGroup(userName, groupId);
+    }
+
+    @Override
+    public List<Person> getPersonSearchResults(List<SearchRequest> requests) {
+        return personService.getPersonSearchResults(requests);
+    }
+
+    @Override
+    public int getCountForList() {
+        return personService.getCountForList();
+    }
+
+    @Override
+    public List<Person> getDataForList(int start, int limit) {
+        return personService.getDataForList(start, limit);
+    }
+
+    @Override
+    public Person getPersonForDetail(int id) {
+        return personService.getPersonForDetail(id);
     }
 
 }

@@ -22,6 +22,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
+    <context:annotation-config/>
     <security:global-method-security secured-annotations="enabled" />
 
     <jaxws:endpoint id="clientService"
@@ -85,26 +86,9 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <property name="researchGroupMembershipDao" ref="researchGroupMembershipDao"/>
     </bean>
 
-
     <cxf:bus>
         <cxf:features>
             <cxf:logging/>
         </cxf:features>
     </cxf:bus>
-
-    <jaxrs:server id="restContainer" address="/rest">
-        <jaxrs:providers>
-            <bean class="org.codehaus.jackson.jaxrs.JacksonJaxbJsonProvider"/>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.SecurityExceptionMapper"/>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.RestServiceExceptionMapper"/>
-        </jaxrs:providers>
-        <jaxrs:extensionMappings>
-            <entry key="xml" value="application/xml" />
-            <entry key="json" value="application/json" />
-        </jaxrs:extensionMappings>
-        <jaxrs:serviceBeans>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.user.UserServiceImpl"/>
-            <bean class="cz.zcu.kiv.eegdatabase.webservices.rest.reservation.ReservationServiceImpl"/>
-        </jaxrs:serviceBeans>
-      </jaxrs:server>
 </beans>

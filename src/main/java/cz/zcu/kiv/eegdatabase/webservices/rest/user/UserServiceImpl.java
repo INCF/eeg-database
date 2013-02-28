@@ -1,75 +1,102 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.service.PersonService;
+import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ExperimentData;
-import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.ResearchGroupData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.HierarchicalMessageSource;
+import org.springframework.mail.MailException;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Set;
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.text.ParseException;
+import java.util.Locale;
 
 /**
- * Implementation of user service
- *
  * @author Petr Miko
+ *         Date: 10.2.13
  */
+@Service
 public class UserServiceImpl implements UserService {
 
+    private final static Log log = LogFactory.getLog(UserServiceImpl.class);
+    @Qualifier("mailSender")
+    @Autowired
+    private JavaMailSender mailSender;
+    @Qualifier("messageSource")
+    @Autowired
+    private HierarchicalMessageSource messageSource;
+    @Qualifier("mailMessage")
+    @Autowired
+    private SimpleMailMessage mailMessage;
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
+    @Qualifier("personService")
+    @Autowired
+    private PersonService personService;
 
     @Override
+    public UserInfo create(String registrationPath, AddPersonCommand cmd, Locale locale) throws RestServiceException {
+        try {
+            Person person = personService.createPerson(cmd);
+            sendRegistrationConfirmMail(registrationPath, person, locale);
+            return new UserInfo(person.getGivenname(), person.getSurname(), person.getAuthority());
+        } catch (ParseException e) {
+            log.error(e.getMessage(), e);
+            throw new RestServiceException(e);
+        } catch (MessagingException e) {
+            log.error(e.getMessage(), e);
+            throw new RestServiceException(e);
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public UserInfo login() {
         Person user = personDao.getLoggedPerson();
         return new UserInfo(user.getGivenname(), user.getSurname(), user.getAuthority());
     }
 
-    @Override
-    public List<ResearchGroupData> getMyGroups() throws RestServiceException {
+    private void sendRegistrationConfirmMail(String registrationPath, Person user, Locale locale) throws MailException, MessagingException {
+        log.debug("Creating email content");
+        StringBuilder sb = new StringBuilder();
+        String login = "<b>" + user.getUsername() + "</b>";
 
-        try {
-            Set<ResearchGroup> groups = personDao.getLoggedPerson().getResearchGroups();
-            List<ResearchGroupData> data = new ArrayList<ResearchGroupData>(groups.size());
+        sb.append("<html><body>");
+        sb.append("<h4>");
+        sb.append(messageSource.getMessage("registration.email.welcome", null, locale));
+        sb.append("</h4>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage("registration.email.body.yourLogin", new String[]{login}, locale));
+        sb.append("</p>");
+        sb.append("<p>");
+        sb.append(messageSource.getMessage("registration.email.body.clickToRegister", null, locale));
+        sb.append("<br/>");
 
-            for (ResearchGroup g : groups) {
-                ResearchGroupData d = new ResearchGroupData(g.getResearchGroupId(), g.getTitle());
-                data.add(d);
-            }
+        String confirmURL = registrationPath + user.getAuthenticationHash();
+        sb.append("<a href=\"").append(confirmURL).append("\">").append(confirmURL).append("</a>");
+        sb.append("</p>");
+        sb.append("</body></html>");
 
-            return data;
-        } catch (Exception e) {
-            throw new RestServiceException(e);
-        }
-    }
-
-    @Override
-    public List<ExperimentData> getMyExperiments() throws RestServiceException {
-        try {
-
-            Set<Experiment> experiments = personDao.getLoggedPerson().getExperiments();
-            List<ExperimentData> data = new ArrayList<ExperimentData>(experiments.size());
-
-            for(Experiment exp : experiments){
-                ExperimentData expData = new ExperimentData();
-                expData.setExperimentId(exp.getExperimentId());
-                expData.setStartTime(exp.getStartTime());
-                expData.setEndTime(exp.getEndTime());
-                expData.setScenarioId(exp.getScenario().getScenarioId());
-                expData.setScenarioName(exp.getScenario().getScenarioName());
-                data.add(expData);
-            }
-            return data;
-        } catch (Exception e) {
-            throw new RestServiceException(e);
-        }
+        String emailSubject = messageSource.getMessage("registration.email.subject", null, locale);
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+        message.setFrom(mailMessage.getFrom());
+        message.setTo(user.getEmail());
+        message.setSubject(emailSubject);
+        message.setText(sb.toString(), true);
+        mailSender.send(mimeMessage);
     }
 }

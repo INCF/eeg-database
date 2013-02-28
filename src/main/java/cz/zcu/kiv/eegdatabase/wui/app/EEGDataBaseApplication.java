@@ -18,17 +18,23 @@ import org.springframework.context.ApplicationContextAware;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.ChangePasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.DetailResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.PeoplePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
@@ -80,19 +86,29 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
         mountPage("forgotten-pass", ForgottenPasswordPage.class);
+        mountPage("under-construct", UnderConstructPage.class);
 
         mountPage("account-overview", AccountOverViewPage.class);
         mountPage("account-change-pass", ChangePasswordPage.class);
         mountPage("account-social", SocialNetworksPage.class);
 
         mountPage("articles-page", ArticlesPage.class);
-        mountPage("experiments-page", ExperimentsPage.class);
-        mountPage("groups-page", DetailResearchGroupsPage.class);
+
+        mountPage("experiments-list", ListExperimentsPage.class);
+        mountPage("experiments-detail", ExperimentsDetailPage.class);
+        mountPage("file-detail", DataFileDetailPage.class);
+
+        mountPage("groups-list", ListResearchGroupsPage.class);
+        mountPage("groups-detail", ResearchGroupsDetailPage.class);
+        mountPage("groups-my", MyGroupsPage.class);
+
+        mountPage("people-list", ListPersonPage.class);
+        mountPage("people-detail", PersonDetailPage.class);
+
         mountPage("history-page", HistoryPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("lists-page", ListsPage.class);
-        mountPage("people-page", PeoplePage.class);
-        mountPage("scenarios-page", ScenariosPage.class);
+        mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("search-page", SearchPage.class);
 
     }

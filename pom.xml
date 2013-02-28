@@ -13,7 +13,7 @@
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <build.timestamp>${maven.build.timestamp}</build.timestamp>
-        <spring.version>3.0.5.RELEASE</spring.version>
+        <spring.version>3.0.6.RELEASE</spring.version>
         <spring.security.version>3.1.0.RELEASE</spring.security.version>
         <org.springframework.social-version>1.0.2.RELEASE</org.springframework.social-version>
         <org.springframework.social.facebook-version>1.0.1.RELEASE</org.springframework.social.facebook-version>
@@ -23,7 +23,7 @@
         <slf4j-version>1.6.1</slf4j-version>
 
         <jetty.version>7.5.0.v20110901</jetty.version>
-        <wicket.version>6.2.0</wicket.version>
+        <wicket.version>6.5.0</wicket.version>
 
         <!-- Delete this line when the project tests are ready to use -->
         <skipTests>true</skipTests>
@@ -428,6 +428,12 @@
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-core</artifactId>
+            <version>3.6.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-snowball</artifactId>
             <version>3.0.3</version>
         </dependency>
@@ -570,6 +576,12 @@
         </dependency>
 
         <!--======================================= Other libraries ============================================= -->
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-oxm</artifactId>
+            <version>${spring.version}</version>
+        </dependency>
+
         <dependency>
             <groupId>com.itextpdf</groupId>
             <artifactId>itextpdf</artifactId>

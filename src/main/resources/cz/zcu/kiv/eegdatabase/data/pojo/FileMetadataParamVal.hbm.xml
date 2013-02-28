@@ -11,7 +11,7 @@
         <column name="DATA_FILE_ID" precision="22" scale="0"/>
       </key-property>
     </composite-id>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef" fetch="select" insert="false" name="fileMetadataParamDef" update="false">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef" fetch="select" lazy="false" insert="false" name="fileMetadataParamDef" update="false">
       <column name="FILE_METADATA_PARAM_DEF_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile" fetch="select" insert="false" name="dataFile" update="false">

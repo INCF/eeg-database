@@ -241,6 +241,8 @@
             <tx:method name="*" read-only="false"/>
         </tx:attributes>
     </tx:advice>
+    
+    <tx:annotation-driven transaction-manager="txManager"/>
 
 
     <aop:config>

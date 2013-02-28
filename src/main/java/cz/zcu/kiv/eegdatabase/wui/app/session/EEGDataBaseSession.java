@@ -16,6 +16,7 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 public class EEGDataBaseSession extends AuthenticatedWebSession {
 
@@ -26,7 +27,11 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     @SpringBean(name = "authenticationManager")
     private AuthenticationManager authenticationManager;
 
-    private String userName;
+    @SpringBean
+    PersonFacade facade;
+
+    private Person loggedUser;
+    private final String SOCIAL_PASSWD = "#SOCIAL#";
 
     public static EEGDataBaseSession get()
     {
@@ -52,8 +57,8 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     @Override
     public boolean authenticate(String username, String password) {
 
-        if (username.equalsIgnoreCase(password)) {
-            this.userName = username;
+        if (password.equalsIgnoreCase(SOCIAL_PASSWD)) {
+            this.setLoggedUser(facade.getPerson(username));
             return true;
         }
 
@@ -62,7 +67,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             Authentication authentication = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(username, password));
             SecurityContextHolder.getContext().setAuthentication(authentication);
             authenticated = authentication.isAuthenticated();
-            this.userName = username;
+            this.setLoggedUser(facade.getPerson(username));
 
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
@@ -78,8 +83,9 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
             Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
-            for (GrantedAuthority auth : authentication.getAuthorities())
+            for (GrantedAuthority auth : authentication.getAuthorities()) {
                 roles.add(auth.getAuthority());
+            }
         }
 
         return roles;
@@ -95,25 +101,29 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         return getRoles().hasAnyRole(roles);
     }
 
-    public String getUserName() {
-        return userName;
-    }
-
     public boolean authenticatedSocial() {
 
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         for (GrantedAuthority auth : authentication.getAuthorities()) {
-            if (auth.getAuthority().equalsIgnoreCase("ROLE_ANONYMOUS"))
+            if (auth.getAuthority().equals("ROLE_ANONYMOUS"))
                 return false;
         }
 
         if (authentication.isAuthenticated()) {
             Person user = (Person) authentication.getPrincipal();
-            
-            return signIn(user.getUsername(), user.getUsername());
+
+            return signIn(user.getUsername(), SOCIAL_PASSWD);
         }
 
         return false;
+    }
+
+    public Person getLoggedUser() {
+        return loggedUser;
+    }
+
+    private void setLoggedUser(Person loggedUser) {
+        this.loggedUser = loggedUser;
     }
 }
