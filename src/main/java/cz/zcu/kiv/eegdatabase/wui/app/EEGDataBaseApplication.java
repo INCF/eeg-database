@@ -48,7 +48,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     public java.lang.Class<? extends Page> getHomePage() {
 
         return HomePage.class;
-    }
+    };
 
     @Override
     public void init() {
