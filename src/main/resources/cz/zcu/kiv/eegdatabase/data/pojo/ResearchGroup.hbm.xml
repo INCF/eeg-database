@@ -145,7 +145,7 @@
                 <column name="PERSON_ID" precision="22" scale="0"/>
             </many-to-many>
         </set>
-        <set name="artifacts" table="ARTEFACT_GROUP_REL">
+        <set name="artifacts" lazy="false" fetch="select" table="ARTEFACT_GROUP_REL">
             <key>
                 <column name="RESEARCH_GROUP_ID" precision="22" scale="0"/>
             </key>

@@ -132,7 +132,7 @@ public class HardwareServiceImpl implements HardwareService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteGroupRel(HardwareGroupRel hardwareGroupRel) {
         hardwareDao.deleteGroupRel(hardwareGroupRel);
     }

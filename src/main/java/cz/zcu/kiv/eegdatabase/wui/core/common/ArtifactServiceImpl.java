@@ -105,7 +105,7 @@ public class ArtifactServiceImpl implements ArtifactService {
     }
 
     @Override
-    @Transactional(readOnly = true)
+    @Transactional
     public void deleteGroupRel(Artifact persistent, ResearchGroup researchGroup) {
         artifactDao.deleteGroupRel(persistent, researchGroup);
     }

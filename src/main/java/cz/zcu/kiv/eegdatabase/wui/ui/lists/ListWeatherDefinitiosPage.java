@@ -117,9 +117,9 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                                 if (groupId == CoreConstants.DEFAULT_ITEM_ID) { // delete default weather if it's from default group
                                     if (!facade.hasGroupRel(id)) { // delete only if it doesn't have group relationship
                                         facade.delete(item.getModelObject());
-                                        info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
                                     } else {
-                                        error(ResourceUtils.getString("text.itemInUse"));
+                                        getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                                     }
                                 } else {
                                     WeatherGroupRel h = facade.getGroupRel(id, groupId);
@@ -127,12 +127,12 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                                         facade.delete(item.getModelObject());
                                     }
                                     facade.deleteGroupRel(h);
-                                    info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                    getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
                                 }
                             }
 
                         } else {
-                            error(ResourceUtils.getString("text.itemInUse"));
+                            getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
 
                         target.add(container);

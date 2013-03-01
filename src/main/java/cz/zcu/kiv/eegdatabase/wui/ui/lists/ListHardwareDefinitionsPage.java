@@ -81,7 +81,7 @@ public class ListHardwareDefinitionsPage extends MenuPage {
         else
             groups = researchGroupFacade.getResearchGroupsWhereMember(EEGDataBaseSession.get().getLoggedUser());
 
-        PropertyListView<Hardware> weathers = new PropertyListView<Hardware>("hardware", model) {
+        PropertyListView<Hardware> hardware = new PropertyListView<Hardware>("hardware", model) {
 
             private static final long serialVersionUID = 1L;
 
@@ -113,9 +113,9 @@ public class ListHardwareDefinitionsPage extends MenuPage {
                                 if (groupId == CoreConstants.DEFAULT_ITEM_ID) { // delete default weather if it's from default group
                                     if (!facade.hasGroupRel(id)) { // delete only if it doesn't have group relationship
                                         facade.delete(item.getModelObject());
-                                        info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
                                     } else {
-                                        error(ResourceUtils.getString("text.itemInUse"));
+                                        getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                                     }
                                 } else {
                                     HardwareGroupRel h = facade.getGroupRel(id, groupId);
@@ -123,12 +123,12 @@ public class ListHardwareDefinitionsPage extends MenuPage {
                                         facade.delete(item.getModelObject());
                                     }
                                     facade.deleteGroupRel(h);
-                                    info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                    getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
                                 }
                             }
 
                         } else {
-                            error(ResourceUtils.getString("text.itemInUse"));
+                            getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
 
                         target.add(container);
@@ -149,7 +149,7 @@ public class ListHardwareDefinitionsPage extends MenuPage {
 
             }
         };
-        container.add(weathers);
+        container.add(hardware);
 
         AjaxLink<Void> link = new AjaxLink<Void>("addHardwareLink") {
 

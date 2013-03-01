@@ -80,7 +80,7 @@ public class ListArtifactDefinitions extends MenuPage {
         else
             groups = researchGroupFacade.getResearchGroupsWhereMember(EEGDataBaseSession.get().getLoggedUser());
 
-        PropertyListView<Artifact> weathers = new PropertyListView<Artifact>("artifacts", model) {
+        PropertyListView<Artifact> artifacts = new PropertyListView<Artifact>("artifacts", model) {
 
             private static final long serialVersionUID = 1L;
 
@@ -100,16 +100,18 @@ public class ListArtifactDefinitions extends MenuPage {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
+                        
                         int id = item.getModelObject().getArtifactId();
                         ResearchGroup group = model.getCriteriaModel().getObject();
 
                         if (facade.canDelete(id)) {
                             if (group != null) {
-                                facade.deleteGroupRel(item.getModelObject(), group);
-                                info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                facade.deleteGroupRel(item.getModelObject(), researchGroupFacade.getResearchGroupById(group.getResearchGroupId()));
+                                facade.delete(item.getModelObject());
+                                getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
                             }
                         } else {
-                            error(ResourceUtils.getString("text.itemInUse"));
+                            getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
 
                         target.add(container);
@@ -130,7 +132,7 @@ public class ListArtifactDefinitions extends MenuPage {
 
             }
         };
-        container.add(weathers);
+        container.add(artifacts);
 
         AjaxLink<Void> link = new AjaxLink<Void>("addArtifactLink") {
 
