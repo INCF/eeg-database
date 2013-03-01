@@ -60,7 +60,7 @@ public class FileMetadataParamFacadeImpl implements FileMetadataParamFacade {
 
     @Override
     public List<FileMetadataParamDef> getRecordsAtSides(int first, int max) {
-        return getRecordsAtSides(first, max);
+        return service.getRecordsAtSides(first, max);
     }
 
     @Override

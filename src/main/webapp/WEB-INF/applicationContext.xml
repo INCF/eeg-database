@@ -70,6 +70,9 @@
     <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
     <bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
     
+    <bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" />
+    <bean name="experimentsOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamFacadeImpl" autowire="byType" />
+    
     <bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />
     <bean name="fileFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileFacadeImpl" autowire="byType" />
 
@@ -83,6 +86,14 @@
 
     <bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
     <bean name="weatherFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacadeImpl" autowire="byType" />
+    
+    <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
+    <bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
+    
+    <bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+    </bean>
+    <bean name="artifactFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacadeImpl" autowire="byType" />
     
     <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" />
     <bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
