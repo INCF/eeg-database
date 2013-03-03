@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.logic.util.BookingRoomUtils;
 import cz.zcu.kiv.eegdatabase.logic.AbstractControllerTest;
 import cz.zcu.kiv.eegdatabase.mock.MockFactory;
 import cz.zcu.kiv.eegdatabase.mock.SimplePersonDao;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.mock.web.MockHttpServletRequest;
 

@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ReservationDao;
 import cz.zcu.kiv.eegdatabase.data.DaoCollection;
 import org.hibernate.SessionFactory;
+import org.junit.Ignore;
 import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 
