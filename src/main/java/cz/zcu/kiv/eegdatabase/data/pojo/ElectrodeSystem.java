@@ -1,5 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -20,8 +23,10 @@ public class ElectrodeSystem implements Serializable {
     @Column(name = "ELECTRODE_SYSTEM_ID")
     private int electrodeSystemId;
     @Column(name = "TITLE")
+    @SolrField(name = IndexField.TITLE)
     private String title;
     @Column(name = "DESCRIPTION")
+    @SolrField(name = IndexField.DESCRIPTION)
     private String description;
     @Column(name = "IS_DEFAULT")
     private int defaultNumber;

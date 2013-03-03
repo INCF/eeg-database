@@ -1,6 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.solr.update.SolrIndexConfig;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -21,6 +25,7 @@ public class ArticleComment {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "COMMENT_ID")
+    @SolrId
     private int commentId;
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
@@ -36,6 +41,7 @@ public class ArticleComment {
             @Field(name = "text")})
     @Column(name = "TEXT")
     @Lob
+    @SolrField(name = IndexField.TEXT)
     private String text;
     @Column(name = "TIME")
     private Timestamp time;

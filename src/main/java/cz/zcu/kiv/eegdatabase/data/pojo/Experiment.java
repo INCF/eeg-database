@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
 import org.hibernate.search.annotations.*;
@@ -20,7 +23,8 @@ import java.util.Set;
 @javax.persistence.Table(name="EXPERIMENT")
 public class Experiment implements Serializable {
 
-    @DocumentId//Mark id property shared by Core and Search
+    @SolrId
+    @DocumentId //Mark id property shared by Core and Search
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EXPERIMENT_ID")
@@ -52,6 +56,7 @@ public class Experiment implements Serializable {
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES), // environmentNote value is stored in the index
             @Field(name = "temperature")})   // use a different field name
+    @SolrField(name = IndexField.TEMPERATURE)
     @Column(name = "TEMPERATURE")
     private int temperature;
     @Fields({
@@ -60,6 +65,7 @@ public class Experiment implements Serializable {
             @Field(name = "environmentNote")})   // use a different field name
     //@Boost(2)//Boost environmentNote field
     @Column(name = "ENVIRONMENT_NOTE")
+    @SolrField(name = IndexField.NOTE)
     private String environmentNote;
     @ManyToMany(mappedBy = "experiments")
     private Set<Person> persons = new HashSet<Person>(0);

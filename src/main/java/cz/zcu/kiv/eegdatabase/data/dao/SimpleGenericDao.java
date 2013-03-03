@@ -8,6 +8,9 @@ import java.util.*;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -22,6 +25,10 @@ import org.apache.lucene.search.highlight.*;
 import org.apache.lucene.search.highlight.Formatter;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.util.Version;
+import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.UpdateResponse;
+import org.apache.solr.common.SolrInputDocument;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.criterion.DetachedCriteria;
@@ -31,6 +38,7 @@ import org.hibernate.search.FullTextQuery;
 import org.hibernate.search.FullTextSession;
 import org.hibernate.search.annotations.Fields;
 import org.hibernate.search.store.DirectoryProvider;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 /**
@@ -42,6 +50,9 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
  */
 public class SimpleGenericDao<T, PK extends Serializable>
         extends HibernateDaoSupport implements GenericDao<T, PK> {
+
+    @Autowired
+    PojoIndexer<T> indexer;
 
     protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_31;
 
@@ -61,7 +72,24 @@ public class SimpleGenericDao<T, PK extends Serializable>
     * @return record (row) saving in database
     */
     public PK create(T newInstance) {
-        return (PK) getHibernateTemplate().save(newInstance);
+        // first save the instance
+        PK primaryKey = (PK) getHibernateTemplate().save(newInstance);
+        // then add marked fields to the solr index
+        // currently DISABLED, because when the solr server is down,
+        // an exception is thrown
+        /*
+        try {
+            indexer.index(newInstance);
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SolrServerException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        }
+        */
+
+        return primaryKey;
     }
 
     /**
@@ -78,7 +106,8 @@ public class SimpleGenericDao<T, PK extends Serializable>
 
     /**
      * Method read record (row) in database based on column and it's value.
-     * @param parameterName - hibernate name of the parameter (column)
+     *
+     * @param parameterName  - hibernate name of the parameter (column)
      * @param parameterValue - value of the parameter
      * @return object that was selected in database
      */
@@ -90,7 +119,8 @@ public class SimpleGenericDao<T, PK extends Serializable>
 
     /**
      * Method read record (row) in database based on column and it's value.
-     * @param parameterName - hibernate name of the parameter (column)
+     *
+     * @param parameterName  - hibernate name of the parameter (column)
      * @param parameterValue - value of the parameter
      * @return object that was selected in database
      */
@@ -107,6 +137,19 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public void update(T transientObject) {
         getHibernateTemplate().update(transientObject);
+        // currently DISABLED, because when the solr server is down,
+        // an exception is thrown
+        /*
+        try {
+            indexer.index(transientObject);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (SolrServerException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        */
     }
 
     /**
@@ -117,6 +160,17 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public void delete(T persistentObject) {
         getHibernateTemplate().delete(persistentObject);
+        // currently DISABLED, because when the solr server is down,
+        // an exception is thrown
+        /*
+        try {
+            indexer.unindex(persistentObject);
+        } catch (IOException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        } catch (SolrServerException e) {
+            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+        }
+        */
     }
 
     /**
@@ -125,7 +179,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
      * @return list that includes all records
      */
     public List<T> getAllRecords() {
-       return getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(type));
+        return getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(type));
         //return getHibernateTemplate().loadAll(type);
     }
 
@@ -165,7 +219,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         String[] fields = new String[fieldsList.size()];
         fields = fieldsList.toArray(fields);
 
-        MultiFieldQueryParser parser = new MultiFieldQueryParser(LUCENE_COMPATIBILITY_VERSION,fields, new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION));
+        MultiFieldQueryParser parser = new MultiFieldQueryParser(LUCENE_COMPATIBILITY_VERSION, fields, new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION));
         Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
         FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
 

@@ -438,6 +438,7 @@
             <version>3.0.3</version>
         </dependency>
 
+        <!--
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
@@ -448,6 +449,26 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        -->
+
+        <!--======================================= Solr ============================================= -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>3.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-jdk14</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>3.1.0</version>
         </dependency>
 
         <!--======================================= Apache commons ============================================= -->
@@ -679,7 +700,7 @@
             </testResource>
             <testResource>
                 <filtering>false</filtering>
-                <directory>src/test/java</directory>
+                <directory>src/test/java/cz</directory>
                 <includes>
                     <include>**</include>
                 </includes>

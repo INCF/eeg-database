@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -29,6 +31,7 @@ public class ExperimentOptParamDef implements java.io.Serializable {
             // @Field(store=Store.YES),
             @Field(name = "paramDataType")}) //use a different field name
     @Column(name = "PARAM_DATA_TYPE")
+    @SolrField(name = IndexField.PARAM_DATATYPE)
     private String paramDataType;
     @OneToMany(mappedBy = "experimentOptParamDef")
     private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);

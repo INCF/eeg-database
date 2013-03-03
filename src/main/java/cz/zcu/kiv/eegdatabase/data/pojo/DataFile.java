@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import org.apache.solr.search.SolrFieldCacheMBean;
 import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
@@ -34,11 +37,13 @@ public class DataFile implements Serializable {
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "mimetype")}) //use a different field name
     @Column(name = "MIMETYPE")
+    @SolrField(name = IndexField.FILE_MIMETYPE)
     private String mimetype;
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "filename")}) //use a different field name
     @Column(name = "FILENAME")
+    @SolrField(name = IndexField.NAME)
     private String filename;
     @OneToMany(mappedBy = "dataFile")
     private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(0);
