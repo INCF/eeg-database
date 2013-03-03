@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Hibernate;
@@ -43,7 +44,7 @@ public class DataFileServiceImpl implements DataFileService {
 
     @Override
     @Transactional(readOnly = true)
-    public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException {
+    public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException, RestNotFoundException {
         List<DataFile> expsForId = experimentDao.getDataFilesWhereId(id);
         DataFile file = null;
 
@@ -51,7 +52,7 @@ public class DataFileServiceImpl implements DataFileService {
             file = expsForId.get(0);
         }
 
-        if (file == null) throw new RestServiceException("No file with such id!");
+        if (file == null) throw new RestNotFoundException("No file with such id!");
         InputStream is = file.getFileContent().getBinaryStream();
         // copy it to response's OutputStream
         response.setContentType(file.getMimetype());

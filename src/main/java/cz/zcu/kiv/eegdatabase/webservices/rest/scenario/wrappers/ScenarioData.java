@@ -7,13 +7,14 @@ import javax.xml.bind.annotation.XmlType;
  * @author Petr Miko
  *         Date: 24.2.13
  */
-@XmlType(propOrder = {"scenarioId", "scenarioName", "ownerName", "researchGroupName", "fileName", "mimeType", "fileLength", "description", "private"})
+@XmlType(propOrder = {"scenarioId", "scenarioName", "ownerName", "researchGroupId", "researchGroupName", "fileName", "mimeType", "fileLength", "description", "private"})
 @XmlRootElement(name = "scenario")
 public class ScenarioData {
 
     private int scenarioId;
     private String scenarioName;
     private String ownerName;
+    private int researchGroupId;
     private String researchGroupName;
     private String description;
     private boolean isPrivate;
@@ -43,6 +44,14 @@ public class ScenarioData {
 
     public void setOwnerName(String ownerName) {
         this.ownerName = ownerName;
+    }
+
+    public int getResearchGroupId() {
+        return researchGroupId;
+    }
+
+    public void setResearchGroupId(int researchGroupId) {
+        this.researchGroupId = researchGroupId;
     }
 
     public String getResearchGroupName() {

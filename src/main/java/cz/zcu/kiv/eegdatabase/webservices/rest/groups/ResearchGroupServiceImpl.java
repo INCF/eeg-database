@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.text.Collator;
 import java.util.*;
 
 /**
@@ -26,6 +25,14 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Qualifier("researchGroupDao")
     private ResearchGroupDao groupDao;
 
+    private final Comparator<ResearchGroupData> nameComparator = new Comparator<ResearchGroupData>() {
+
+        @Override
+        public int compare(ResearchGroupData o1, ResearchGroupData o2) {
+            return o1.getGroupName().compareTo(o2.getGroupName());
+        }
+    };
+
     @Override
     @Transactional(readOnly = true)
     public List<ResearchGroupData> getAllGroups() {
@@ -37,7 +44,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
             list.add(d);
         }
 
-        Collections.sort(list, Collator.getInstance());
+        Collections.sort(list, nameComparator);
         return list;
     }
 
@@ -53,7 +60,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
             ResearchGroupData d = new ResearchGroupData(g.getResearchGroupId(), g.getTitle());
             list.add(d);
         }
-        Collections.sort(list, Collator.getInstance());
+        Collections.sort(list, nameComparator);
         return list;
     }
 }
