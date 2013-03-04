@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -55,7 +56,8 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentData> getMyExperiments() {
-        Set<Experiment> exps = personDao.getLoggedPerson().getExperiments();
+        Person loggedUser = personDao.getLoggedPerson();
+        Collection<Experiment> exps = loggedUser.getExperimentsForOwnerId();
         List<ExperimentData> experiments = new ArrayList<ExperimentData>(exps.size());
 
         for (Experiment exp : exps) {
