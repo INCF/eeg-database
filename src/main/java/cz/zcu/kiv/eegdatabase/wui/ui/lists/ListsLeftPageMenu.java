@@ -12,7 +12,7 @@ public enum ListsLeftPageMenu implements IButtonPageMenu {
     EXPERIMENT_OPT_PARAM(ListExperimentOptParamPage.class, "menuItem.optionalParametersForExperiments", null),
     FILE_METADATA_DEFINITIONS(ListFileMetadataPage.class, "menuItem.fileMetadataDefinitions", null),
     WEATHER_DEFINITIONS(ListWeatherDefinitiosPage.class, "menuItem.weatherDefinitions", null),
-    ARTIFACT_DEFINITIONS(ListArtifactDefinitions.class, "menuItem.artifactDefinitions", null)
+    ARTIFACT_DEFINITIONS(ListArtifactDefinitionsPage.class, "menuItem.artifactDefinitions", null)
     ;
 
     private Class<? extends MenuPage> pageClass;

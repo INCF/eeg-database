@@ -24,7 +24,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
@@ -33,8 +32,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListWeatherDefinitiosPage extends MenuPage {
 
     private static final long serialVersionUID = 7423167902623052151L;
@@ -81,9 +81,12 @@ public class ListWeatherDefinitiosPage extends MenuPage {
         List<ResearchGroup> groups;
         final boolean isAdmin = security.isAdmin();
         final boolean isExperimenter = security.userIsExperimenter();
-        if (isAdmin)
+        if (isAdmin) {
+            ResearchGroup defaultGroup = new ResearchGroup(CoreConstants.DEFAULT_ITEM_ID,
+                    EEGDataBaseSession.get().getLoggedUser(), ResourceUtils.getString("label.defaultWeather"), "-");
             groups = researchGroupFacade.getAllRecords();
-        else
+            groups.add(0, defaultGroup);
+        } else
             groups = researchGroupFacade.getResearchGroupsWhereMember(EEGDataBaseSession.get().getLoggedUser());
 
         PropertyListView<Weather> weathers = new PropertyListView<Weather>("weathers", model) {
@@ -97,9 +100,9 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                 item.add(new Label("description"));
 
                 PageParameters parameters = PageParametersUtils.getDefaultPageParameters(item.getModelObject().getWeatherId())
-                        .add("GROUP", model.getCriteriaModel().getObject().getResearchGroupId());
+                        .add(PageParametersUtils.GROUP_PARAM, model.getCriteriaModel().getObject().getResearchGroupId());
 
-                item.add(new BookmarkablePageLink<Void>("edit", UnderConstructPage.class, parameters));
+                item.add(new BookmarkablePageLink<Void>("edit", WeatherFormPage.class, parameters));
                 item.add(new AjaxLink<Void>("delete") {
 
                     private static final long serialVersionUID = 1L;
@@ -162,7 +165,7 @@ public class ListWeatherDefinitiosPage extends MenuPage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 int researchGroupId = model.getCriteriaModel().getObject().getResearchGroupId();
-                setResponsePage(UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(researchGroupId));
+                setResponsePage(WeatherFormPage.class, PageParametersUtils.getPageParameters(PageParametersUtils.GROUP_PARAM, researchGroupId));
             }
         };
         link.setVisibilityAllowed(isAdmin || isExperimenter);

@@ -22,7 +22,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacade;
@@ -30,9 +29,10 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ArtifactFormPage;
 
-@AuthorizeInstantiation("ROLE_USER")
-public class ListArtifactDefinitions extends MenuPage {
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+public class ListArtifactDefinitionsPage extends MenuPage {
 
     private static final long serialVersionUID = -8825403613513488101L;
 
@@ -45,7 +45,7 @@ public class ListArtifactDefinitions extends MenuPage {
     @SpringBean
     SecurityFacade security;
 
-    public ListArtifactDefinitions() {
+    public ListArtifactDefinitionsPage() {
 
         setupComponents();
     }
@@ -91,16 +91,16 @@ public class ListArtifactDefinitions extends MenuPage {
                 item.add(new Label("rejectCondition"));
 
                 PageParameters parameters = PageParametersUtils.getDefaultPageParameters(item.getModelObject().getArtifactId())
-                        .add("GROUP", model.getCriteriaModel().getObject().getResearchGroupId());
+                        .add(PageParametersUtils.GROUP_PARAM, model.getCriteriaModel().getObject().getResearchGroupId());
 
-                item.add(new BookmarkablePageLink<Void>("edit", UnderConstructPage.class, parameters));
+                item.add(new BookmarkablePageLink<Void>("edit", ArtifactFormPage.class, parameters));
                 item.add(new AjaxLink<Void>("delete") {
 
                     private static final long serialVersionUID = 1L;
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        
+
                         int id = item.getModelObject().getArtifactId();
                         ResearchGroup group = model.getCriteriaModel().getObject();
 
@@ -141,7 +141,7 @@ public class ListArtifactDefinitions extends MenuPage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 int researchGroupId = model.getCriteriaModel().getObject().getResearchGroupId();
-                setResponsePage(UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(researchGroupId));
+                setResponsePage(ArtifactFormPage.class, PageParametersUtils.getPageParameters(PageParametersUtils.GROUP_PARAM, researchGroupId));
             }
         };
         link.setVisibilityAllowed(isAdmin || isExperimenter);

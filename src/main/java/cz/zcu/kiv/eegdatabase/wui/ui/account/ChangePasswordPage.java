@@ -22,7 +22,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.obj.ChangePasswordObj;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ChangePasswordPage extends MenuPage {
 
     private static final long serialVersionUID = -2098428058200654117L;

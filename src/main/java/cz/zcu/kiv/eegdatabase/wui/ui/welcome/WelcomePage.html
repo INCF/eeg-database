@@ -1,11 +1,160 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en" lang="en">
-<wicket:head>
-  <title><wicket:message key="title.page.experiments">[HomePage]</wicket:message></title>
-</wicket:head>
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
 <body>
-<wicket:extend>
+  <wicket:extend>
+    <h1 class="homepageHeading">
+      <wicket:message key="pageTitle.homePage" />
+    </h1>
 
-</wicket:extend>
+    <div class="homepageLeftColumn">
+
+      <h2>
+        <wicket:message key="heading.myArticles" />
+        <a href="<c:url value='/articles/list.html'/>"><wicket:message key="seeAll" /></a>
+      </h2>
+      <table class="dataTable">
+        <thead>
+          <tr>
+            <th class="columnDate"><wicket:message key="dataTable.heading.date" /></th>
+            <th class="columnTitle"><wicket:message key="dataTable.heading.articleTitle" /></th>
+            <th class="columnGroup"><wicket:message key="dataTable.heading.groupTitle" /></th>
+            <th class="columnCommentsCount"><wicket:message key="heading.comments" /></th>
+          </tr>
+        </thead>
+
+        <tbody id="homepageMyArticlesList">
+
+          <tr>
+            <td>article.time</td>
+            <td><a href="#" ></a></td>
+            <td>if / else</td>
+            <td>length(article.articleComments)</td>
+          </tr>
+        </tbody>
+
+      </table>
+      <h2>
+        <wicket:message key="heading.myExperiments" />
+        <a href="#"><wicket:message key="seeAll" /></a>
+      </h2>
+
+      <!--         <c:when test="${myExperimentsEmpty}"> -->
+      <!--           <div class="emptyDataTable"> -->
+      <!--             <fmt:message key="emptyTable.noItems" /> -->
+      <!--           </div> -->
+      <!--         </c:when> -->
+      <table class="dataTable" id="homepageMyExperimentsList">
+        <thead>
+          <tr>
+            <th class="columnDate"><wicket:message key="dataTable.heading.date" /></th>
+            <th class="columnId"><wicket:message key="dataTable.heading.id" /></th>
+            <th class="columnScenarioTitle"><wicket:message
+                key="dataTable.heading.scenarioTitle" /></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>experiment.startTime</td>
+            <td>experiment.experimentId</td>
+            <td>experiment.scenario.title</td>
+            <td><a href="#"><wicket:message key="link.detail" /></a></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <h2>
+        <wicket:message key="heading.meAsSubject" />
+        <a href="#"><wicket:message key="seeAll" /></a>
+      </h2>
+
+      <!--         <c:when test="${meAsSubjectListEmpty}"> -->
+      <!--           <div class="emptyDataTable"> -->
+      <!--             <fmt:message key="emptyTable.noItems" /> -->
+      <!--           </div> -->
+      <!--         </c:when> -->
+      <table class="dataTable" id="homepageMeAsSubjectList">
+        <thead>
+          <tr>
+            <th class="columnDate"><wicket:message key="dataTable.heading.date" /></th>
+            <th class="columnId"><wicket:message key="dataTable.heading.id" /></th>
+            <th class="columnScenarioTitle"><wicket:message
+                key="dataTable.heading.scenarioTitle" /></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>experiment.startTime</td>
+            <td>experiment.experimentId</td>
+            <td>experiment.scenario.title</td>
+            <td><a href="#"><wicket:message key="link.detail" /></a></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+
+    </div>
+
+    <div class="homepageRightColumn">
+      <h2>
+        <wicket:message key="heading.myScenarios" />
+        <a href="<c:url value='/scenarios/my-scenarios.html'/>"><wicket:message key="seeAll" /></a>
+      </h2>
+
+      <!--         <c:when test="${myScenariosEmpty}"> -->
+      <!--           <div class="emptyDataTable"> -->
+      <!--             <fmt:message key="emptyTable.noItems" /> -->
+      <!--           </div> -->
+      <!--         </c:when> -->
+      <table class="dataTable" id="homepageMyScenariosList">
+        <thead>
+          <tr>
+            <th class="columnTitle"><wicket:message key="dataTable.heading.scenarioTitle" /></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>scenario.title</td>
+            <td><a href="#"><wicket:message key="link.detail" /></a></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+      <h2>
+        <wicket:message key="heading.myMemberGroups" />
+        <a href="#"><wicket:message key="seeAll" /></a>
+      </h2>
+
+
+      <!--         <c:when test="${groupListEmpty}"> -->
+      <!--           <div class="emptyDataTable"> -->
+      <!--             <fmt:message key="emptyTable.noItems" /> -->
+      <!--           </div> -->
+      <!--         </c:when> -->
+      <table class="dataTable" id="homepageMyGroupsList">
+        <thead>
+          <tr>
+            <th class="columnTitle"><wicket:message key="dataTable.heading.groupTitle" /></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><a id="#" class="changeGroup">group.title</a></td>
+            <td><a href="#"><wicket:message key="link.detail" /></a></td>
+          </tr>
+        </tbody>
+
+      </table>
+
+    </div>
+  </wicket:extend>
 </body>
 </html>

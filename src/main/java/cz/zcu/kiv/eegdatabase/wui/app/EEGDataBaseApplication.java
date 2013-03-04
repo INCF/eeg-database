@@ -30,13 +30,19 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitions;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitionsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListExperimentOptParamPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListFileMetadataPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListHardwareDefinitionsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListPersonOptParamPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListWeatherDefinitiosPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ArtifactFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ExperimentOptParamFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.FileMetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.HardwareFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.PersonOptParamFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
@@ -109,11 +115,17 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("lists", ListListsPage.class);
         mountPage("lists-weather", ListWeatherDefinitiosPage.class);
+        mountPage("lists-weather-form", WeatherFormPage.class);
         mountPage("lists-hardware", ListHardwareDefinitionsPage.class);
+        mountPage("lists-hardware-form", HardwareFormPage.class);
         mountPage("lists-file-metadata", ListFileMetadataPage.class);
+        mountPage("lists-file-metadata-form", FileMetadataFormPage.class);
         mountPage("lists-person-param", ListPersonOptParamPage.class);
+        mountPage("lists-person-param-form", PersonOptParamFormPage.class);
         mountPage("lists-experiment-param", ListExperimentOptParamPage.class);
-        mountPage("lists-artifact", ListArtifactDefinitions.class);
+        mountPage("lists-experiment-param-form", ExperimentOptParamFormPage.class);
+        mountPage("lists-artifact", ListArtifactDefinitionsPage.class);
+        mountPage("lists-artifact-form", ArtifactFormPage.class);
         
         
         mountPage("history-page", HistoryPage.class);

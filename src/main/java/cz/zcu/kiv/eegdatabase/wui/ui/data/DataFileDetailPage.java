@@ -48,7 +48,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class DataFileDetailPage extends MenuPage {
 
     private static final long serialVersionUID = 2432720497396689233L;

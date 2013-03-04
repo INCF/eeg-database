@@ -22,7 +22,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
@@ -31,8 +30,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.HardwareFormPage;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListHardwareDefinitionsPage extends MenuPage {
 
     private static final long serialVersionUID = 1429684247549031445L;
@@ -76,9 +76,12 @@ public class ListHardwareDefinitionsPage extends MenuPage {
         List<ResearchGroup> groups;
         final boolean isAdmin = security.isAdmin();
         final boolean isExperimenter = security.userIsExperimenter();
-        if (isAdmin)
+        if (isAdmin) {
+            ResearchGroup defaultGroup = new ResearchGroup(CoreConstants.DEFAULT_ITEM_ID,
+                    EEGDataBaseSession.get().getLoggedUser(), ResourceUtils.getString("label.defaultHardware"), "-");
             groups = researchGroupFacade.getAllRecords();
-        else
+            groups.add(0, defaultGroup);
+        } else
             groups = researchGroupFacade.getResearchGroupsWhereMember(EEGDataBaseSession.get().getLoggedUser());
 
         PropertyListView<Hardware> hardware = new PropertyListView<Hardware>("hardware", model) {
@@ -93,9 +96,9 @@ public class ListHardwareDefinitionsPage extends MenuPage {
                 item.add(new Label("description"));
 
                 PageParameters parameters = PageParametersUtils.getDefaultPageParameters(item.getModelObject().getHardwareId())
-                        .add("GROUP", model.getCriteriaModel().getObject().getResearchGroupId());
+                        .add(PageParametersUtils.GROUP_PARAM, model.getCriteriaModel().getObject().getResearchGroupId());
 
-                item.add(new BookmarkablePageLink<Void>("edit", UnderConstructPage.class, parameters));
+                item.add(new BookmarkablePageLink<Void>("edit", HardwareFormPage.class, parameters));
                 item.add(new AjaxLink<Void>("delete") {
 
                     private static final long serialVersionUID = 1L;
@@ -158,7 +161,7 @@ public class ListHardwareDefinitionsPage extends MenuPage {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 int researchGroupId = model.getCriteriaModel().getObject().getResearchGroupId();
-                setResponsePage(UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(researchGroupId));
+                setResponsePage(HardwareFormPage.class, PageParametersUtils.getPageParameters(PageParametersUtils.GROUP_PARAM, researchGroupId));
             }
         };
         link.setVisibilityAllowed(isAdmin || isExperimenter);

@@ -6,7 +6,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListListsPage extends MenuPage {
     
     private static final long serialVersionUID = -1967810037377960414L;

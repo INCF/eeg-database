@@ -38,7 +38,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDetailPage extends MenuPage {
 
     private static final long serialVersionUID = 957980612639804114L;
