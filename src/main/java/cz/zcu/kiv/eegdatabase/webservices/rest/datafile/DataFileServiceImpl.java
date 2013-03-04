@@ -38,7 +38,9 @@ public class DataFileServiceImpl implements DataFileService {
         DataFile datafile = new DataFile();
         datafile.setExperiment(experimentDao.getExperimentForDetail(experimentId));
         datafile.setDescription(description);
+        datafile.setFilename(file.getOriginalFilename().replace(" ", "_"));
         datafile.setFileContent(Hibernate.createBlob(file.getInputStream()));
+        datafile.setMimetype(file.getContentType() != null ? file.getContentType() : "application/octet-stream");
         return dataFileDao.create(datafile);
     }
 
