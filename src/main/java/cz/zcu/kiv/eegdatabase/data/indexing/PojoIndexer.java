@@ -22,10 +22,8 @@ import java.util.Iterator;
  * Time: 0:30
  * To change this template use File | Settings | File Templates.
  */
-public class PojoIndexer<T> implements Indexer<T> {
+public class PojoIndexer<T> extends Indexer<T> {
 
-    @Autowired
-    private SolrServer solrServer;
 
     protected Log log = LogFactory.getLog(getClass());
 
@@ -41,34 +39,11 @@ public class PojoIndexer<T> implements Indexer<T> {
      */
     public void index(T instance) throws IOException, SolrServerException, IllegalAccessException {
 
-        SolrInputDocument document = new SolrInputDocument();
-        Field[] fields = instance.getClass().getDeclaredFields();
+        SolrInputDocument document = getDocumentFromAnnotatedFields(instance);
 
-        String className =  instance.getClass().getName();
-        for (Field field : fields) {
-            // add uuid, class name and id of the instance to the solr index
-            if (field.isAnnotationPresent(SolrId.class)) {
-                field.setAccessible(true); // necessary since the id field is private
-                int id = 0;
-                try {
-                    id = (Integer) field.get(instance);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                document.addField(IndexField.UUID.getValue(), className + id);
-                document.addField(IndexField.ID.getValue(), id);
-                document.addField(IndexField.CLASS.getValue(), className);
-
-            }
-
-            // check presence of the SolrField annotation for each field
-            else if (field.isAnnotationPresent(SolrField.class)) {
-                field.setAccessible(true); // necessary since all fields are private
-                Object fieldValue = field.get(instance);
-                System.out.println(fieldValue.toString());
-
-                document.addField(field.getAnnotation(SolrField.class).name().getValue(), fieldValue);
-            }
+        if(document == null) {
+            log.info("Document is null;");
+            // TODO Throw new exception?
         }
 
         if(document.isEmpty()) {
@@ -82,7 +57,6 @@ public class PojoIndexer<T> implements Indexer<T> {
         log.info("Document " + document.get("uuid").getValue().toString() + " added to the solr index.");
         long time = response.getElapsedTime();
         int status = response.getStatus();
-
         log.info("Time elapsed: " + time + ", status code: " + status);
     }
 
@@ -111,13 +85,14 @@ public class PojoIndexer<T> implements Indexer<T> {
 
         String uuid = className + id;
         solrServer.deleteById(uuid);
+        solrServer.commit();
     }
 
     public void getDocumentFieldValuePairs(SolrInputDocument document) {
         Iterator<String> nameIterator = document.getFieldNames().iterator();
         while (nameIterator.hasNext()) {
             String name = nameIterator.next();
-            System.out.println(name + ": " + document.getFieldValue(name));
+            log.info(name + ": " + document.getFieldValue(name));
         }
     }
 
