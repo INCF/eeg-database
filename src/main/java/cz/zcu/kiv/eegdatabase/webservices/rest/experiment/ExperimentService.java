@@ -10,7 +10,9 @@ import java.util.List;
  */
 public interface ExperimentService {
 
-    public List<ExperimentData> getAllExperiments();
+    public List<ExperimentData> getPublicExperiments(int fromId, int count);
 
     public List<ExperimentData> getMyExperiments();
+
+    public int getPublicExperimentsCount();
 }

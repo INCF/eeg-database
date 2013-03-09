@@ -1,10 +1,15 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
+import javax.ws.rs.PathParam;
 
 /**
  * @author Petr Miko
@@ -18,9 +23,22 @@ public class ExperimentServiceController {
     @Autowired
     private ExperimentService service;
 
-    @RequestMapping(value = "/all")
-    public ExperimentDataList getAllExperiments() {
-        return new ExperimentDataList(service.getAllExperiments());
+    @RequestMapping(value = "/public/{fromId}/{count}")
+    public ExperimentDataList getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
+        return new ExperimentDataList(service.getPublicExperiments(fromId, count));
+    }
+
+    @RequestMapping(value = "/public/{count}")
+    public ExperimentDataList getPublicExperiments(@PathVariable int count) {
+        return new ExperimentDataList(service.getPublicExperiments(0, count));
+    }
+
+    @RequestMapping(value = "/count")
+    public RecordCountData getCount() {
+        RecordCountData countData = new RecordCountData();
+        countData.setMyRecords(service.getMyExperiments().size());
+        countData.setPublicRecords(service.getPublicExperimentsCount());
+        return countData;
     }
 
     @RequestMapping(value = "/mine")
