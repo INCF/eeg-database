@@ -26,7 +26,7 @@
         <wicket.version>6.5.0</wicket.version>
 
         <!-- Delete this line when the project tests are ready to use -->
-        <skipTests>true</skipTests>
+        <skipTests>false</skipTests>
     </properties>
 
     <dependencies>
@@ -420,6 +420,7 @@
 
         <!--======================================= Hibernate search ============================================= -->
 
+        <!--
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>
@@ -429,7 +430,7 @@
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>3.6.0</version>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
@@ -438,7 +439,6 @@
             <version>3.0.3</version>
         </dependency>
 
-        <!--
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
@@ -456,7 +456,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
-            <version>3.1.0</version>
+            <version>4.1.0</version>
             <exclusions>
                 <exclusion>
                     <artifactId>slf4j-jdk14</artifactId>
@@ -468,7 +468,7 @@
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-solrj</artifactId>
-            <version>3.1.0</version>
+            <version>4.1.0</version>
         </dependency>
 
         <!--======================================= Apache commons ============================================= -->

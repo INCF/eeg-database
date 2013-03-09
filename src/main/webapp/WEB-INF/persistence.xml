@@ -81,10 +81,11 @@
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
                 <!-- Hibernate Search configuration
  <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
- <prop key="hibernate.search.default.indexBase">./users/application/indexes</prop>              -->
+ <prop key="hibernate.search.default.indexBase">./users/application/indexes</prop>
                 <prop key="hibernate.search.default.directory_provider">
                     org.hibernate.search.store.RAMDirectoryProvider
                 </prop>
+                -->
 
                 <prop key="hibernate.cfgfile">/hibernate.cfg.xml</prop>
             </props>

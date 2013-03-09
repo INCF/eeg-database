@@ -185,7 +185,7 @@
     <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
 
     <!-- Solr Server instance -->
-    <bean name="solrServer" class="org.apache.solr.client.solrj.impl.CommonsHttpSolrServer">
+    <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
         <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
         <property name="defaultMaxConnectionsPerHost" value="${solr.defaultMaxConnectionsPerHost}"/>

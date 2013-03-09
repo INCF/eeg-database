@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
-import org.apache.lucene.queryParser.ParseException;
 
 import java.util.List;
 import java.util.Map;
