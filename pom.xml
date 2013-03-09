@@ -26,7 +26,7 @@
         <wicket.version>6.5.0</wicket.version>
 
         <!-- Delete this line when the project tests are ready to use -->
-        <skipTests>false</skipTests>
+        <skipTests>true</skipTests>
     </properties>
 
     <dependencies>
