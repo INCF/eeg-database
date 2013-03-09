@@ -1,6 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -11,12 +15,15 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="FILE_METADATA_PARAM_DEF")
 public class FileMetadataParamDef implements java.io.Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "FILE_METADATA_PARAM_DEF_ID")
     private int fileMetadataParamDefId;
+    @SolrField(name = IndexField.NAME)
     @Column(name = "PARAM_NAME")
     private String paramName;
+    @SolrField(name = IndexField.PARAM_DATATYPE)
     @Column(name = "PARAM_DATA_TYPE")
     private String paramDataType;
     @OneToMany(mappedBy = "fileMetadataParamDef")

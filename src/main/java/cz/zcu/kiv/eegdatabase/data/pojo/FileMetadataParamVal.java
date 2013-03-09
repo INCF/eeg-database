@@ -2,6 +2,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 
 
@@ -11,7 +15,7 @@ import javax.persistence.*;
 @Entity
 @javax.persistence.Table(name = "FILE_METADATA_PARAM_VAL")
 public class FileMetadataParamVal implements java.io.Serializable {
-
+    //@SolrId TODO resolve the compound primary key issue
     @EmbeddedId
     private FileMetadataParamValId id;
     @ManyToOne
@@ -20,6 +24,7 @@ public class FileMetadataParamVal implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "DATA_FILE_ID")
     private DataFile dataFile;
+    //@SolrField(name = IndexField.TEXT)
     @Column(name = "METADATA_VALUE")
     private String metadataValue;
 

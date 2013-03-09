@@ -4,6 +4,10 @@
  */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,6 +19,7 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="KEYWORDS")
 public class Keywords implements Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "KEYWORDS_ID")
@@ -22,6 +27,7 @@ public class Keywords implements Serializable {
     @ManyToOne
     @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
+    @SolrField(name = IndexField.TITLE) // choose a better field?
     @Column(name = "KEYWORDS_TEXT")
     private String keywordsText;
     

@@ -7,8 +7,6 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -19,14 +17,14 @@ import java.util.Set;
  * @author Jiri Vlasimsky
  */
 @Entity
-@Indexed//Mark for indexing
-@Analyzer(impl = StandardAnalyzer.class)
+//@Indexed//Mark for indexing
+//@Analyzer(impl = StandardAnalyzer.class)
 @javax.persistence.Table(name = "ARTICLES")
 public class Article implements java.io.Serializable {
 
-    @DocumentId
-    @Id
+    //@DocumentId
     @SolrId
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ARTICLE_ID")
     private int articleId;
@@ -36,20 +34,24 @@ public class Article implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
+    /*
     @Fields({
             @Field(index = Index.TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES),       // title value is stored in the index
             @Field(name = "title")})   // use a different field name
+    */
     @Column(name = "TITLE")
     @SolrField(name = IndexField.TITLE) // Solr fulltext search
     private String title;
+    /*
     @Fields({
             @Field(index = Index.TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES),       // text value is stored in the index
             @Field(name = "text")})   // use a different field name
+    */
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "TEXT")
     @Lob
-    @SolrField(name = IndexField.TEXT)
     private String text;
     @Column(name = "TIME")
     private Timestamp time;

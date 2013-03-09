@@ -1,6 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -12,6 +16,7 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="RESEARCH_GROUP")
 public class ResearchGroup implements Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RESEARCH_GROUP_ID")
@@ -19,8 +24,10 @@ public class ResearchGroup implements Serializable {
     @ManyToOne
     @JoinColumn(name = "OWNER_ID")
     private Person person;
+    @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
+    @SolrField(name = IndexField.DESCRIPTION)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "researchGroup")

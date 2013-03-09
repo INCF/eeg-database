@@ -1,6 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -15,16 +19,19 @@ import java.sql.Blob;
 @Entity
 @javax.persistence.Table(name="SERVICE_RESULT")
 public class ServiceResult implements Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "RESULT_ID")
     private int serviceResultId;
     @Column(name = "FIGURE")
     private Blob figure;
+    @SolrField(name = IndexField.NAME)
     @Column(name = "FILENAME")
     private String filename;
     @Column(name = "STATUS")
     private String status;
+    @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
     @ManyToOne

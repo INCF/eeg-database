@@ -2,6 +2,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
@@ -13,18 +17,25 @@ import java.util.Set;
 //@Indexed
 @javax.persistence.Table(name = "PERSON_OPT_PARAM_DEF")
 public class PersonOptParamDef implements java.io.Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "PERSON_OPT_PARAM_DEF_ID")
     private int personOptParamDefId;
-    //  @Fields({
-//    @Field(index = Index.TOKENIZED), //same property indexed multiple times
-//    @Field(name = "PERSONPARAMNAME")}) //use a different field name
+    /*
+    @Fields({
+    @Field(index = Index.TOKENIZED), //same property indexed multiple times
+    @Field(name = "PERSONPARAMNAME")}) //use a different field name
+    */
+    @SolrField(name = IndexField.NAME)
     @Column(name = "PARAM_NAME")
     private String paramName;
-    //  @Fields({
-//    @Field(index = Index.TOKENIZED), //same property indexed multiple times
-//    @Field(name = "PARAMDATATYPE")}) //use a different field name
+    /*
+    @Fields({
+    @Field(index = Index.TOKENIZED), //same property indexed multiple times
+    @Field(name = "PARAMDATATYPE")}) //use a different field name
+    */
+    @SolrField(name = IndexField.PARAM_DATATYPE)
     @Column(name = "PARAM_DATA_TYPE")
     private String paramDataType;
     @OneToMany(mappedBy = "personOptParamDef")

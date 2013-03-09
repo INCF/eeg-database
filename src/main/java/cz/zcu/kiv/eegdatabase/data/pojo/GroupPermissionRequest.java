@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 
 /**
@@ -8,6 +12,7 @@ import javax.persistence.*;
 @Entity
 @javax.persistence.Table(name = "GROUP_PERMISSION_REQUEST")
 public class GroupPermissionRequest implements java.io.Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "REQUEST_ID")
@@ -18,6 +23,7 @@ public class GroupPermissionRequest implements java.io.Serializable {
     @ManyToOne
     @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "REQUESTED_PERMISSION")
     private String requestedPermission;
     @Column(name = "GRANTED")

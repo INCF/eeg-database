@@ -3,9 +3,6 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-import org.apache.lucene.analysis.standard.StandardAnalyzer;
-import org.apache.solr.update.SolrIndexConfig;
-import org.hibernate.search.annotations.*;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -16,16 +13,16 @@ import java.util.Set;
  * @author Jiri Vlasimsky
  */
 @Entity
-@Indexed//Mark for indexing
-@Analyzer(impl = StandardAnalyzer.class)
+//@Indexed//Mark for indexing
+//@Analyzer(impl = StandardAnalyzer.class)
 @javax.persistence.Table(name = "ARTICLES_COMMENTS")
 public class ArticleComment {
 
-    @DocumentId
+    //@DocumentId
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "COMMENT_ID")
-    @SolrId
     private int commentId;
     @ManyToOne
     @JoinColumn(name = "PERSON_ID")
@@ -35,13 +32,15 @@ public class ArticleComment {
     private ArticleComment parent;
     @OneToMany(mappedBy = "parent")
     private Set<ArticleComment> children = new HashSet<ArticleComment>(0);
+    /*
     @Fields({
             @Field(index = Index.TOKENIZED), // same property indexed multiple times
             @Field(store = Store.YES), // text value is stored in the index
             @Field(name = "text")})
+    */
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "TEXT")
     @Lob
-    @SolrField(name = IndexField.TEXT)
     private String text;
     @Column(name = "TIME")
     private Timestamp time;

@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 
 import javax.persistence.*;
@@ -19,15 +20,16 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="ELECTRODE_LOCATION")
 public class ElectrodeLocation implements Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ELECTRODE_LOCATION_ID")
     private int electrodeLocationId;
-    @Column(name = "TITLE")
     @SolrField(name = IndexField.TITLE)
+    @Column(name = "TITLE")
     private String title;
-    @Column(name = "DESCRIPTION")
     @SolrField(name = IndexField.DESCRIPTION)
+    @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "SHORTCUT")
     private String shortcut;

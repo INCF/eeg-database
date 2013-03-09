@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -15,10 +19,12 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="EDUCATION_LEVEL")
 public class EducationLevel implements Serializable {
+    @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EDUCATION_LEVEL_ID")
     private int educationLevelId;
+    @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
     @Column(name = "IS_DEFAULT")
