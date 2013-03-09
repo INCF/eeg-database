@@ -53,6 +53,10 @@
         <level value="info" />
     </logger>
 
+    <logger name="cz.zcu.kiv.eegdatabase.Tests">
+        <level value="info" />
+    </logger>
+
     <root>
         <priority value="warn" />
         <appender-ref ref="logFile" />
