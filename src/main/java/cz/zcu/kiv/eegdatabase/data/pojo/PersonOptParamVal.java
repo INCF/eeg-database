@@ -2,6 +2,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 
 /**
@@ -11,19 +15,23 @@ import javax.persistence.*;
 //@Indexed
 @javax.persistence.Table(name = "PERSON_OPT_PARAM_VAL")
 public class PersonOptParamVal implements java.io.Serializable {
-//@DocumentId
-    @EmbeddedId
+  //@SolrId TODO resolve the compound primary key issue
+  //@DocumentId
+  @EmbeddedId
   private PersonOptParamValId id;
-    @ManyToOne
-    @JoinColumn(name = "PERSON_OPT_PARAM_DEFID")
+  @ManyToOne
+  @JoinColumn(name = "PERSON_OPT_PARAM_DEFID")
   private PersonOptParamDef personOptParamDef;
-    @ManyToOne
-    @JoinColumn(name = "PERSON_ID")
+  @ManyToOne
+  @JoinColumn(name = "PERSON_ID")
   private Person person;
-//  @Fields({
-//    @Field(index = Index.TOKENIZED), //same property indexed multiple times
-//    @Field(name = "PERSONPARAMVALUE")}) //use a different field name
-    @Column(name = "PARAM_VALUE")
+   //@SolrField(name = IndexField.TEXT)
+  /*
+  @Fields({
+    @Field(index = Index.TOKENIZED), //same property indexed multiple times
+    @Field(name = "PERSONPARAMVALUE")}) //use a different field name
+  */
+  @Column(name = "PARAM_VALUE")
   private String paramValue;
 
   public PersonOptParamVal() {

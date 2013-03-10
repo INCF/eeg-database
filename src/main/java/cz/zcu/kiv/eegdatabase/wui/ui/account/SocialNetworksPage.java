@@ -5,7 +5,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class SocialNetworksPage extends MenuPage {
 
     private static final long serialVersionUID = -5514036024012232250L;

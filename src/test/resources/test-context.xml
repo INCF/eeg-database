@@ -27,6 +27,8 @@
         <property name="locations">
             <list>
                 <value>project.test.properties</value>
+                <value>classpath:/facebook.properties</value>
+                <value>classpath:/linkedin.properties</value>
             </list>
         </property>
     </bean>
@@ -285,5 +287,37 @@
         <property name="from" value="${email.from}"/>
         <property name="subject" value="${email.subject}"/>
     </bean>
+
+    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
+
+    <!-- =============== Solr-related bean definitions =============== -->
+
+    <!-- Remote Solr server -->
+    <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
+        <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
+        <property name="defaultMaxConnectionsPerHost" value="${solr.defaultMaxConnectionsPerHost}"/>
+        <property name="maxTotalConnections" value="${solr.maxTotalConnections}"/>
+    </bean>
+
+    <!-- Embedded Solr server for testing purposes -->
+    <!--
+    <bean name="solrTestServer" class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer">
+        <constructor-arg name="coreContainer" ref="coreContainer"/>
+        <constructor-arg name="coreName" value="${solr.core.name}" />
+    </bean>
+
+    <bean class="java.io.File" name="solrConfigFile">
+        <constructor-arg index="0"
+                         type="java.lang.String"
+                         value="${solr.solr.config}"/>
+    </bean>
+
+    <bean name="coreContainer" class="org.apache.solr.core.CoreContainer">
+        <constructor-arg name="dir" value="${solr.solr.home}"
+                         type="java.lang.String"/>
+        <constructor-arg name="configFile" ref="solrConfigFile"/>
+    </bean>
+    -->
 
 </beans>

@@ -420,6 +420,7 @@
 
         <!--======================================= Hibernate search ============================================= -->
 
+        <!--
         <dependency>
             <groupId>org.hibernate</groupId>
             <artifactId>hibernate-search</artifactId>
@@ -429,7 +430,7 @@
         <dependency>
             <groupId>org.apache.lucene</groupId>
             <artifactId>lucene-core</artifactId>
-            <version>3.6.0</version>
+            <version>4.1.0</version>
         </dependency>
 
         <dependency>
@@ -448,6 +449,26 @@
                     <groupId>org.slf4j</groupId>
                 </exclusion>
             </exclusions>
+        </dependency>
+        -->
+
+        <!--======================================= Solr ============================================= -->
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-core</artifactId>
+            <version>4.1.0</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>slf4j-jdk14</artifactId>
+                    <groupId>org.slf4j</groupId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.solr</groupId>
+            <artifactId>solr-solrj</artifactId>
+            <version>4.1.0</version>
         </dependency>
 
         <!--======================================= Apache commons ============================================= -->
@@ -653,6 +674,12 @@
             <artifactId>jcommon</artifactId>
             <version>1.0.16</version>
         </dependency>
+        <dependency>
+            <groupId>org.reflections</groupId>
+            <artifactId>reflections</artifactId>
+            <version>0.9.8</version>
+        </dependency>
+
     </dependencies>
 
     <build>
@@ -679,7 +706,7 @@
             </testResource>
             <testResource>
                 <filtering>false</filtering>
-                <directory>src/test/java</directory>
+                <directory>src/test/java/cz</directory>
                 <includes>
                     <include>**</include>
                 </includes>

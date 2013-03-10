@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
@@ -16,6 +17,7 @@ import org.springframework.web.servlet.support.RequestContextUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
 
 /**
  * Implementation of user service
@@ -65,9 +67,14 @@ public class UserServiceController {
     }
 
     @ExceptionHandler(RestServiceException.class)
-    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE, reason = "REST service error occurred")
-    public String handleRSException(RestServiceException ex) {
+    public void handleException(RestServiceException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
         log.error(ex);
-        return ex.getMessage();
+    }
+
+    @ExceptionHandler(RestNotFoundException.class)
+    public void handleException(RestNotFoundException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, ex.getMessage());
+        log.error(ex);
     }
 }

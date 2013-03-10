@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+
+      <h1 wicket:id="title"></h1>
+
+      <form class="standardInputForm" wicket:id="form">
+        <fieldset>
+        
+          <div class="itemBox">
+            <label class="textFieldLabel"><wicket:message key="label.researchGroup" /></label>
+            <input type="text" wicket:id="group" class="textField" maxlength="50"/>
+          </div>
+
+          <div class="itemBox">
+            <label class="textFieldLabel"><wicket:message key="label.title" /></label>
+            <input type="text" wicket:id="title" class="textField" maxlength="50"/>
+          </div>
+          
+          <div class="itemBox">
+            <label class="textFieldLabel"><wicket:message key="label.type" /></label>
+            <input type="text" wicket:id="type" class="textField" maxlength="30"/>
+          </div>
+          
+          <div class="itemBox">
+            <label class="textFieldLabel"><wicket:message key="label.description" /></label>
+            <input type="text" wicket:id="description" class="textField" maxlength="30"/>
+          </div>
+
+          <div class="itemBox">
+            <input type="submit" wicket:id="submit" class="submitButton lightButtonLink" />
+          </div>
+
+        </fieldset>
+      </form>
+    </div>
+  </wicket:extend>
+</body>
+</html>

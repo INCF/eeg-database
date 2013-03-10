@@ -5,8 +5,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
+import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
+import org.hibernate.criterion.LogicalExpression;
+import org.hibernate.criterion.Restrictions;
 
 import java.io.Serializable;
 import java.text.ParseException;
@@ -185,6 +188,25 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         }
 
         return results;
+    }
+
+    @Override
+    public List<Experiment> getVisibleExperiments(int personId, int start, int limit) {
+
+        Criteria criteria = getSession().createCriteria(Experiment.class);
+        criteria.setMaxResults(limit);
+        criteria.add(Restrictions.ge("experimentId", start));
+        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
+       return criteria.list();
+
+
+    }
+
+    @Override
+    public int getVisibleExperimentsCount(int personId) {
+        Criteria criteria = getSession().createCriteria(Experiment.class);
+        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
+        return criteria.list().size();
     }
 
     private String getCondition(String choice) {

@@ -8,6 +8,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 
 public class PageParametersUtils {
+    
+    public static final String GROUP_PARAM = "GROUP";
 
     public static PageParameters getPageParameters(String key, Object object) {
 

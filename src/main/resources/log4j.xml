@@ -49,7 +49,11 @@
     <logger name="org.apache.wicket.RequestCycle">
         <level value="info" />
     </logger>
-    <logger name="cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession">
+    <logger name="org.apache.wicket.protocol.http.WebSession=INFO">
+        <level value="info" />
+    </logger>
+
+    <logger name="cz.zcu.kiv.eegdatabase.Tests">
         <level value="info" />
     </logger>
 

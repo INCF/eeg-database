@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,11 +20,14 @@ import java.util.Set;
 @javax.persistence.Table(name="DISEASE")
 public class Disease implements Serializable{
     @Id
+    @SolrId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "DISEASE_ID")
     private int diseaseId;
+    @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
+    @SolrField(name = IndexField.DESCRIPTION)
     @Column(name = "DESCRIPTION")
     private String description;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

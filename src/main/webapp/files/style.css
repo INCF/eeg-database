@@ -564,5 +564,30 @@ li.comment li li li {
     form.globalSearch {
         display: none;
     }
+    
+}
 
+.feedbackPanelDEBUG {
+	font-weight: bold;
+	color: #00bfff;
+}
+
+.feedbackPanelINFO {
+	font-weight: bold;
+	color: #00ff00;
+}
+
+.feedbackPanelWARNING {
+	font-weight: bold;
+	color: #ffd700;
+}
+
+.feedbackPanelERROR {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+.feedbackPanelFATAL {
+	font-weight: bold;
+	color: #ff00ff;
 }

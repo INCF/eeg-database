@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -15,5 +16,5 @@ public interface DataFileService {
 
     public int create(int experimentId, String description, MultipartFile file) throws IOException;
 
-    public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException;
+    public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException, RestNotFoundException;
 }

@@ -24,7 +24,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
 
     @Override
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person) {
-        return service.getResearchGroupsWhereAbleToWriteInto(person);
+        return service.getResearchGroupsWhereMember(person);
     }
 
     @Override

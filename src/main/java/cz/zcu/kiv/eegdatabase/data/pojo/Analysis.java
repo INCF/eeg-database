@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -16,6 +20,7 @@ import java.util.Set;
 @javax.persistence.Table(name="ANALYSIS")
 public class Analysis implements Serializable {
     @Id
+    @SolrId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ANALYSIS_ID")
     private int analysisId;
@@ -25,6 +30,7 @@ public class Analysis implements Serializable {
     private int prestimulusTime;
     @Column(name = "POSTSTIMULUS_TIME")
     private int poststimulusTime;
+    @SolrField(name = IndexField.DESCRIPTION)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "analysis")

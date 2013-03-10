@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import org.jfree.data.time.TimeSeriesTableModel;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;

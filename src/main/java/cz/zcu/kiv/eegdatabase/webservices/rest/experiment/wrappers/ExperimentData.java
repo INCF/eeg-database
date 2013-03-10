@@ -1,7 +1,9 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
+import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -12,7 +14,7 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
-@XmlType(propOrder = { "experimentId", "scenarioId", "scenarioName", "artifactId", "startTime", "endTime", "environmentNote" })
+@XmlType(propOrder = { "experimentId", "scenario", "artifact", "startTime", "endTime", "subject", "diseases", "digitization", "environmentNote", "weather" })
 @XmlRootElement(name = "experiment")
 public class ExperimentData {
 
@@ -20,18 +22,21 @@ public class ExperimentData {
 
     public ExperimentData(){}
 
-    private int artifactId;
+    private ArtifactData artifact;
     private Date startTime, endTime;
     private String environmentNote;
-    private int scenarioId;
-    private String scenarioName;
+    private ScenarioSimpleData scenario;
+    private WeatherData weather;
+    private SubjectData subject;
+    private DiseaseDataList diseases;
+    private DigitizationData digitization;
 
-    public int getArtifactId() {
-        return artifactId;
+    public ArtifactData getArtifact() {
+        return artifact;
     }
 
-    public void setArtifactId(int artifactId) {
-        this.artifactId = artifactId;
+    public void setArtifact(ArtifactData artifact) {
+        this.artifact = artifact;
     }
 
     @XmlJavaTypeAdapter(DateAdapter.class)
@@ -60,20 +65,12 @@ public class ExperimentData {
         this.environmentNote = environmentNote;
     }
 
-    public int getScenarioId() {
-        return scenarioId;
+    public ScenarioSimpleData getScenario() {
+        return scenario;
     }
 
-    public void setScenarioId(int scenarioId) {
-        this.scenarioId = scenarioId;
-    }
-
-    public String getScenarioName() {
-        return scenarioName;
-    }
-
-    public void setScenarioName(String scenarioName) {
-        this.scenarioName = scenarioName;
+    public void setScenario(ScenarioSimpleData scenario) {
+        this.scenario = scenario;
     }
 
     public void setExperimentId(int experimentId) {
@@ -82,5 +79,37 @@ public class ExperimentData {
 
     public int getExperimentId() {
         return experimentId;
+    }
+
+    public SubjectData getSubject() {
+        return subject;
+    }
+
+    public void setSubject(SubjectData subject) {
+        this.subject = subject;
+    }
+
+    public WeatherData getWeather() {
+        return weather;
+    }
+
+    public void setWeather(WeatherData weatherData) {
+        this.weather = weatherData;
+    }
+
+    public DiseaseDataList getDiseases() {
+        return diseases;
+    }
+
+    public void setDiseases(DiseaseDataList diseases) {
+        this.diseases = diseases;
+    }
+
+    public DigitizationData getDigitization() {
+        return digitization;
+    }
+
+    public void setDigitization(DigitizationData digitization) {
+        this.digitization = digitization;
     }
 }

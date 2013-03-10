@@ -6,7 +6,6 @@ package cz.zcu.kiv.eegdatabase.data.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.hibernate.Session;
-import org.hibernate.search.FullTextSession;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
@@ -20,6 +19,7 @@ import java.util.List;
 public class IndexingData<T, PK extends Serializable> extends HibernateDaoSupport {
 
   public void init() {
+      /*
     HibernateTemplate hb = createHibernateTemplate(getSessionFactory());
     Session session = hb.getSessionFactory().openSession();
     FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
@@ -39,5 +39,6 @@ public class IndexingData<T, PK extends Serializable> extends HibernateDaoSuppor
    }
     //System.out.println(type);
     fts.getTransaction().commit(); //index are written at commit time
+    */
   }
 }

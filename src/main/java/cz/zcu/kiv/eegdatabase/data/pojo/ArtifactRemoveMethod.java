@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
@@ -17,11 +21,14 @@ import java.util.Set;
 public class ArtifactRemoveMethod implements Serializable {
 
     @Id
+    @SolrId
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "ARTEFACT_REMOVING_METHOD_ID")
     private int artifactRemoveMethodId;
+    @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
+    @SolrField(name = IndexField.DESCRIPTION)
     @Column(name = "DESCRIPTION")
     private String description;
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

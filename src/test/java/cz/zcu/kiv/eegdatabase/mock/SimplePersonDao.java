@@ -4,7 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-import org.apache.lucene.queryParser.ParseException;
+import org.apache.lucene.queryparser.classic.ParseException;
 
 import java.io.Serializable;
 import java.util.List;
@@ -136,8 +136,7 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
         return (realPersonDao == null) ? 0 : realPersonDao.getCountRecords();
     }
 
-    public Map<Person, String> getFulltextResults(String fullTextQuery) throws ParseException
-    {
+    public Map<Person, String> getFulltextResults(String fullTextQuery) throws ParseException {
         return (realPersonDao == null) ? null : realPersonDao.getFulltextResults(fullTextQuery);
     }
 

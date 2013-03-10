@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -24,7 +25,7 @@ import java.sql.SQLException;
 @RequestMapping("/datafile")
 public class DataFileServiceController {
 
-    private final static Log logger = LogFactory.getLog(DataFileServiceController.class);
+    private final static Log log = LogFactory.getLog(DataFileServiceController.class);
     @Autowired
     DataFileService dataFileService;
 
@@ -34,22 +35,22 @@ public class DataFileServiceController {
         try {
             int pk = dataFileService.create(experimentId, description, file);
             response.addHeader("Location", buildLocation(request, pk));
-            logger.debug("File upload detected: " + file.getName());
+            log.debug("File upload detected: " + file.getName());
         } catch (IOException e) {
-            logger.error("File upload failed: " + file.getName());
+            log.error("File upload failed: " + file.getName());
             throw new RestServiceException(e);
         }
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
-    public void getFile(@PathVariable("id") int id, HttpServletResponse response) throws RestServiceException {
+    public void getFile(@PathVariable("id") int id, HttpServletResponse response) throws RestServiceException, RestNotFoundException {
         try {
             dataFileService.getFile(id, response);
         } catch (IOException ex) {
-            logger.info("Error writing file to output stream. Filename was '" + id + "'");
+            log.error("Error writing file to output stream. Filename was '" + id + "'");
             throw new RestServiceException(ex);
         } catch (SQLException e) {
-            logger.info("Error writing file to output stream. Filename was '" + id + "'");
+            log.error("Error writing file to output stream. Filename was '" + id + "'");
             throw new RestServiceException(e);
         }
     }
@@ -58,6 +59,18 @@ public class DataFileServiceController {
         StringBuffer url = request.getRequestURL();
         UriTemplate ut = new UriTemplate(url.append("/{id}").toString());
         return ut.expand(id).toASCIIString();
+    }
+
+    @ExceptionHandler(RestServiceException.class)
+    public void handleException(RestServiceException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
+        log.error(ex);
+    }
+
+    @ExceptionHandler(RestNotFoundException.class)
+    public void handleException(RestNotFoundException ex, HttpServletResponse response) throws IOException {
+        response.sendError(HttpServletResponse.SC_NOT_FOUND, ex.getMessage());
+        log.error(ex);
     }
 
 }

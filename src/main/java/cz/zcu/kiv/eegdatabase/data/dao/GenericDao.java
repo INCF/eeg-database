@@ -3,7 +3,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-import org.apache.lucene.queryParser.ParseException;
+
+import org.apache.lucene.queryparser.classic.ParseException;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Restrictions;
 
