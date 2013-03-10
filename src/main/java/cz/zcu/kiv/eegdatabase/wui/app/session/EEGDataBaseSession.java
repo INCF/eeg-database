@@ -33,6 +33,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private Person loggedUser;
     private final String SOCIAL_PASSWD = "#SOCIAL#";
+
     private ShoppingCart shoppingCart;
 
     public static EEGDataBaseSession get()
