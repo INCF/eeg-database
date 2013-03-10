@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.app.session;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ShoppingCart;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Session;
@@ -32,6 +33,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private Person loggedUser;
     private final String SOCIAL_PASSWD = "#SOCIAL#";
+    private ShoppingCart shoppingCart;
 
     public static EEGDataBaseSession get()
     {
@@ -68,6 +70,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             authenticated = authentication.isAuthenticated();
             this.setLoggedUser(facade.getPerson(username));
+            this.createShoppingCart();
 
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
@@ -125,5 +128,17 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private void setLoggedUser(Person loggedUser) {
         this.loggedUser = loggedUser;
+    }
+
+    private void createShoppingCart(){
+        this.shoppingCart = new ShoppingCart();
+    }
+
+    public ShoppingCart getShoppingCart(){
+        return shoppingCart;
+    }
+
+    public void addToCart(){
+
     }
 }

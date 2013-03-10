@@ -70,11 +70,13 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // add spring component injector listener
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 
-        //Enables encryption of generated URLs except for pages mounted in mountPages method
+        //Enables encryption of generated URLs
+        //Pages mounted in mountPages method remain bookmarkable and accessible by their mount name
         setRootRequestMapper(new CryptoMapper(getRootRequestMapperAsCompound(), this));
 
         // mount pages in wicket application for better working with pages.
         mountPages();
+
 
     }
 

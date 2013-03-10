@@ -2,7 +2,8 @@
 <web-app xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     version="3.0">
-	<display-name>EEGDatabase</display-name>
+
+    <display-name>EEGDatabase</display-name>
 
     <!-- spring context loader -->
     <listener>
@@ -96,19 +97,10 @@
 
     <!-- Filter mappings starting -->
 
-	<filter-mapping>
-		<filter-name>OpenSessionInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-
-    <session-config>
-        <session-timeout>
-            60
-        </session-timeout>
-        <cookie-config>
-            <http-only>true</http-only>
-        </cookie-config>
-    </session-config>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
 
     <filter-mapping>
         <filter-name>myWicketFilter</filter-name>
@@ -119,6 +111,15 @@
         <filter-name>OpenSessionInViewFilter</filter-name>
         <url-pattern>/*</url-pattern>
     </filter-mapping>
+
+    <session-config>
+        <session-timeout>
+            60
+        </session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
 
     <servlet>
         <servlet-name>CXFServlet</servlet-name>

@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.BuyLinkPanel;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -126,6 +127,14 @@ public class ListExperimentsPage extends MenuPage {
             }
         });
 
+        //Add to cart
+        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.buy"), null, null) {
+
+            @Override
+            public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
+                item.add(new BuyLinkPanel(componentId, rowModel));
+            }
+        });
         return columns;
     }
 }

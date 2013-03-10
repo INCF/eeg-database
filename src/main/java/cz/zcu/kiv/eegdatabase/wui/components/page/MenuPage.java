@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
@@ -12,6 +13,9 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
+import org.apache.wicket.model.Model;
+
+import java.io.Serializable;
 
 public class MenuPage extends BasePage {
 
@@ -44,6 +48,23 @@ public class MenuPage extends BasePage {
         BookmarkablePageLink headerLink = new BookmarkablePageLink("userHeaderLink", pageClass);
         headerLink.add(new Label("linkLabel", labelLink));
         add(headerLink);
+
+        BookmarkablePageLink cart = new BookmarkablePageLink("cart", ShoppingCartPage.class);
+        String cartLabel = ResourceUtils.getString("general.page.myCart.link") + " ";
+        if(signedIn){
+            //
+            cart.add(new Label("cartSizeLabel", new Model(){
+                @Override
+                public Serializable getObject(){
+                    String cartSize =  "" + EEGDataBaseSession.get().getShoppingCart().getOrder().size();
+                    return cartSize;
+                }
+            }));
+
+        }
+        cart.add(new Label("cartLabel", cartLabel));
+        cart.setVisibilityAllowed(signedIn);
+        add(cart);
 
         Link<Void> link = new Link<Void>("logout") {
 
