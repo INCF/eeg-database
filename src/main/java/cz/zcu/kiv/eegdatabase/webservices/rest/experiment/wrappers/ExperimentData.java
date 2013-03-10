@@ -1,9 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
-import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData;
 
-import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -14,14 +12,12 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
-@XmlType(propOrder = { "experimentId", "scenario", "artifact", "startTime", "endTime", "subject", "diseases", "digitization", "environmentNote", "weather" })
+@XmlType(propOrder = {"experimentId", "scenario", "artifact", "startTime", "endTime", "subject", "diseases", "hardwareList", "digitization", "environmentNote", "weather"})
 @XmlRootElement(name = "experiment")
 public class ExperimentData {
 
     private int experimentId;
-
-    public ExperimentData(){}
-
+    private HardwareDataList hardwareList;
     private ArtifactData artifact;
     private Date startTime, endTime;
     private String environmentNote;
@@ -30,6 +26,10 @@ public class ExperimentData {
     private SubjectData subject;
     private DiseaseDataList diseases;
     private DigitizationData digitization;
+
+
+    public ExperimentData() {
+    }
 
     public ArtifactData getArtifact() {
         return artifact;
@@ -73,12 +73,12 @@ public class ExperimentData {
         this.scenario = scenario;
     }
 
-    public void setExperimentId(int experimentId) {
-        this.experimentId = experimentId;
-    }
-
     public int getExperimentId() {
         return experimentId;
+    }
+
+    public void setExperimentId(int experimentId) {
+        this.experimentId = experimentId;
     }
 
     public SubjectData getSubject() {
@@ -111,5 +111,13 @@ public class ExperimentData {
 
     public void setDigitization(DigitizationData digitization) {
         this.digitization = digitization;
+    }
+
+    public HardwareDataList getHardwareList() {
+        return hardwareList;
+    }
+
+    public void setHardwareList(HardwareDataList hardwareList) {
+        this.hardwareList = hardwareList;
     }
 }

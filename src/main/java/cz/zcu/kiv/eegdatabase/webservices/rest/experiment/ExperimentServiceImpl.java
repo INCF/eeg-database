@@ -4,8 +4,6 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
-import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData;
-import org.eclipse.core.internal.dtree.DataTreeLookup;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,7 +36,7 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentData> getPublicExperiments(int from, int max) {
-        return fillAndSort( experimentDao.getVisibleExperiments(personDao.getLoggedPerson().getPersonId(), from, max));
+        return fillAndSort(experimentDao.getVisibleExperiments(personDao.getLoggedPerson().getPersonId(), from, max));
     }
 
     @Override
@@ -53,8 +51,7 @@ public class ExperimentServiceImpl implements ExperimentService {
         return experimentDao.getVisibleExperimentsCount(personDao.getLoggedPerson().getPersonId());
     }
 
-
-    private List<ExperimentData> fillAndSort(Collection<Experiment> exps){
+    private List<ExperimentData> fillAndSort(Collection<Experiment> exps) {
         List<ExperimentData> experiments = new ArrayList<ExperimentData>(exps.size());
 
         for (Experiment exp : exps) {
@@ -90,8 +87,8 @@ public class ExperimentServiceImpl implements ExperimentService {
 
             Set<Disease> diseases = exp.getDiseases();
             List<DiseaseData> diseaseDatas = new ArrayList<DiseaseData>();
-            for(Disease dis : diseases){
-            DiseaseData diseaseData = new DiseaseData();
+            for (Disease dis : diseases) {
+                DiseaseData diseaseData = new DiseaseData();
                 diseaseData.setDiseaseId(dis.getDiseaseId());
                 diseaseData.setName(dis.getTitle());
                 diseaseData.setDescription(dis.getDescription());
@@ -104,6 +101,18 @@ public class ExperimentServiceImpl implements ExperimentService {
             dgData.setFilter(digitization.getFilter());
             dgData.setSamplingRate(digitization.getSamplingRate());
 
+            Set<Hardware> hardwares = exp.getHardwares();
+            List<HardwareData> hardwareDatas = new ArrayList<HardwareData>();
+            for (Hardware h : hardwares) {
+                HardwareData hw = new HardwareData();
+                hw.setHardwareId(h.getHardwareId());
+                hw.setTitle(h.getTitle());
+                hw.setType(h.getType());
+                hw.setDefaultNumber(h.getDefaultNumber());
+                hardwareDatas.add(hw);
+            }
+
+            expData.setHardwareList(new HardwareDataList(hardwareDatas));
             expData.setScenario(scenarioData);
             expData.setArtifact(artifactData);
             expData.setSubject(subjectData);

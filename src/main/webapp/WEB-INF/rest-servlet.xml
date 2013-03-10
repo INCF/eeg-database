@@ -67,6 +67,8 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.WeatherData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DiseaseData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DiseaseDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.HardwareData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.HardwareDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ScenarioSimpleData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SubjectData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ArtifactData</value>
