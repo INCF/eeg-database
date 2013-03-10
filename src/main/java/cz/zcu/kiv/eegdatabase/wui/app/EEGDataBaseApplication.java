@@ -85,13 +85,13 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("welcome", WelcomePage.class);
 
         mountPage("access-denied", AccessDeniedPage.class);
-        mountPage("registration-new", RegistrationPage.class);
+        //mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
-        mountPage("forgotten-pass", ForgottenPasswordPage.class);
+        //mountPage("forgotten-pass", ForgottenPasswordPage.class);
         mountPage("under-construct", UnderConstructPage.class);
 
         mountPage("account-overview", AccountOverViewPage.class);
-        mountPage("account-change-pass", ChangePasswordPage.class);
+        //mountPage("account-change-pass", ChangePasswordPage.class);
         mountPage("account-social", SocialNetworksPage.class);
 
         mountPage("articles-page", ArticlesPage.class);
