@@ -1,9 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
@@ -47,4 +49,6 @@ public interface PersonService extends GenericService<Person, Integer> {
     List<Person> getDataForList(int start, int limit);
     
     Person createPerson(SocialUser userFb, Integer educationLevelId);
+    
+    Person createPerson(AddPersonCommand apc) throws ParseException;
 }

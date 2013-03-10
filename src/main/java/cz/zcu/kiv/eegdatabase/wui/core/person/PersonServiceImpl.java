@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
 import java.sql.Timestamp;
+import java.text.ParseException;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +17,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
@@ -89,6 +91,29 @@ public class PersonServiceImpl implements PersonService {
         person.setAuthority("ROLE_USER");
         log.debug("Setting confirmed");
         person.setConfirmed(true);
+
+        return newPerson(person);
+    }
+    
+    @Override
+    @Transactional
+    public Person createPerson(AddPersonCommand apc) throws ParseException {
+        //copying the data to Person entity
+        Person person = new Person();
+        person.setGivenname(apc.getGivenname());
+        person.setSurname(apc.getSurname());
+        person.setDateOfBirth(new Timestamp(ControllerUtils.getDateFormat().parse(apc.getDateOfBirth()).getTime()));
+        person.setGender(apc.getGender().charAt(0));
+        person.setPhoneNumber(apc.getPhoneNumber());
+        person.setNote(apc.getNote());
+        person.setLaterality(apc.getLaterality().charAt(0));
+        person.setEducationLevel(educationLevelDao.read(apc.getEducationLevel()));
+
+        //Code specific for this object type
+        person.setUsername(apc.getEmail());
+        person.setPassword(encodeRandomPassword());
+        log.debug("Setting authority to ROLE_READER");
+        person.setAuthority(Util.ROLE_READER);
 
         return newPerson(person);
     }

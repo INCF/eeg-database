@@ -2,10 +2,11 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.service.PersonService;
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -40,9 +41,12 @@ public class UserServiceImpl implements UserService {
     @Qualifier("mailMessage")
     @Autowired
     private SimpleMailMessage mailMessage;
+    
+    @Deprecated()
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
+    
     @Qualifier("personService")
     @Autowired
     private PersonService personService;
@@ -65,7 +69,7 @@ public class UserServiceImpl implements UserService {
     @Override
     @Transactional(readOnly = true)
     public UserInfo login() {
-        Person user = personDao.getLoggedPerson();
+        Person user = personService.getLoggedPerson();
         return new UserInfo(user.getGivenname(), user.getSurname(), user.getAuthority());
     }
 

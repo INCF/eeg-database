@@ -22,7 +22,7 @@
     <property name="title" type="string">
       <column name="TITLE"/>
     </property>
-    <set inverse="true" name="articleComments" lazy="extra">
+    <set inverse="true" name="articleComments" lazy="false">
       <key>
         <column name="ARTICLE_ID" not-null="true" precision="22" scale="0"/>
       </key>

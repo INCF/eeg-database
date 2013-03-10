@@ -21,7 +21,7 @@ import org.springframework.social.facebook.api.Facebook;
 import org.springframework.social.linkedin.api.LinkedIn;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.service.PersonService;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 
 /**
  * Configuration of beans for spring social implementation.

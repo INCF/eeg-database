@@ -39,9 +39,8 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional(readOnly = true)
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
-        List<ResearchGroup> list = getResearchGroupsWhereMember(person);
-
-        return list.subList(0, limit);
+        
+        return researchGroupDAO.getResearchGroupsWhereMember(person, limit);
     }
 
     @Override

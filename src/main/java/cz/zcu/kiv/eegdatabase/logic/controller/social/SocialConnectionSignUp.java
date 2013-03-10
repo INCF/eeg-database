@@ -1,7 +1,8 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.service.PersonService;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
+
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
