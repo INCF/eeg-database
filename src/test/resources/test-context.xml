@@ -21,17 +21,23 @@
 
     <context:annotation-config/>
 
-    <!--================== Persistence setup based on persistence.xml file contents ==================-->
+    <!--================== System properties settings ==================-->
 
-    <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-        <property name="locations">
-            <list>
-                <value>project.test.properties</value>
-                <value>classpath:/facebook.properties</value>
-                <value>classpath:/linkedin.properties</value>
-            </list>
+    <bean id="systemProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" value="#{@systemProperties}" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments">
+            <util:properties>
+                <prop key="javax.xml.parsers.SAXParserFactory">org.apache.xerces.jaxp.SAXParserFactoryImpl</prop>
+                <prop key="javax.xml.parsers.DocumentBuilderFactory">org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</prop>
+            </util:properties>
         </property>
     </bean>
+
+    <!--================== Persistence setup based on persistence.xml file contents ==================-->
+
+    <context:property-placeholder location="classpath:/project.test.properties,
+        classpath:/facebook.properties,classpath:/linkedin.properties"/>
 
      <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>
@@ -288,11 +294,9 @@
         <property name="subject" value="${email.subject}"/>
     </bean>
 
-    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
+    <!--==================  Solr-related bean definitions ==================-->
 
-    <!-- =============== Solr-related bean definitions =============== -->
-
-    <!-- Remote Solr server -->
+    <!-- Remote Solr test server -->
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
         <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
@@ -300,24 +304,18 @@
         <property name="maxTotalConnections" value="${solr.maxTotalConnections}"/>
     </bean>
 
-    <!-- Embedded Solr server for testing purposes -->
-    <!--
-    <bean name="solrTestServer" class="org.apache.solr.client.solrj.embedded.EmbeddedSolrServer">
-        <constructor-arg name="coreContainer" ref="coreContainer"/>
-        <constructor-arg name="coreName" value="${solr.core.name}" />
-    </bean>
+    <!-- POJO indexer for Solr -->
+    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
 
-    <bean class="java.io.File" name="solrConfigFile">
-        <constructor-arg index="0"
-                         type="java.lang.String"
-                         value="${solr.solr.config}"/>
-    </bean>
+    <!-- LinkedIn indexer for Solr -->
+    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
 
-    <bean name="coreContainer" class="org.apache.solr.core.CoreContainer">
-        <constructor-arg name="dir" value="${solr.solr.home}"
-                         type="java.lang.String"/>
-        <constructor-arg name="configFile" ref="solrConfigFile"/>
-    </bean>
-    -->
+    <!--==================  LinkedIn template ==================-->
 
+    <bean id="linkedInTemplate" class="org.springframework.social.linkedin.api.impl.LinkedInTemplate">
+        <constructor-arg name="accessToken" value="${linkedin.accessToken}"/>
+        <constructor-arg name="accessTokenSecret" value="${linkedin.accessTokenSecret}"/>
+        <constructor-arg name="consumerKey" value="${linkedin.consumerKey}"/>
+        <constructor-arg name="consumerSecret" value="${linkedin.consumerSecret}"/>
+    </bean>
 </beans>

@@ -22,7 +22,8 @@ public enum IndexField {
     TEMPERATURE("temperature"),
     TEXT("text"),
     TITLE("title"),
-    UUID("uuid");
+    UUID("uuid"),
+    SOURCE("source");
 
     private String value;
 

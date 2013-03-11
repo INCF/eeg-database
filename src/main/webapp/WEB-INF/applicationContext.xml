@@ -178,10 +178,13 @@
 
     <bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
-    <!-- Solr indexer -->
+    <!-- Solr POJO indexer -->
     <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
 
-    <!-- Solr Server instance -->
+    <!-- Solr indexer for LinkedIn articles -->
+    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
+
+    <!-- Solr Server instance (production server) -->
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
         <property name="connectionTimeout" value="${solr.connectionTimeout}"/>

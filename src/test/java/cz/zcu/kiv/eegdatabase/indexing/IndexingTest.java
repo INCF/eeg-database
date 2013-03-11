@@ -51,15 +51,6 @@ public class IndexingTest {
     private static List<Experiment> experimentList;
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
-    public IndexingTest() {
-        changeParserImplementationToXerces();//Important!
-    }
-
-    private void changeParserImplementationToXerces() {
-        System.setProperty("javax.xml.parsers.SAXParserFactory", "org.apache.xerces.jaxp.SAXParserFactoryImpl");
-        System.setProperty("javax.xml.parsers.DocumentBuilderFactory", "org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
-    }
-
     @BeforeClass
     public static void setUpTestSuite() {
         createTestPojos();
@@ -72,6 +63,7 @@ public class IndexingTest {
     //@Ignore
     @Test
     public void indexArticleComments() throws Exception {
+        log.info("Indexing sample article comments...");
         PojoIndexer<ArticleComment> articleCommentIndexer = new PojoIndexer<ArticleComment>();
         articleCommentIndexer.setSolrServer(solrServer);
 
@@ -87,6 +79,7 @@ public class IndexingTest {
     //@Ignore
     @Test
     public void indexArticles() throws Exception {
+        log.info("Indexing sample articles...");
         PojoIndexer<Article> articleIndexer = new PojoIndexer<Article>();
         articleIndexer.setSolrServer(solrServer);
         for (Article article : articleList) {
@@ -97,6 +90,7 @@ public class IndexingTest {
     //@Ignore
     @Test
     public void indexExperiments() throws Exception {
+        log.info("Indexing sample experiments...");
         PojoIndexer<Experiment> experimentIndexer = new PojoIndexer<Experiment>();
         experimentIndexer.setSolrServer(solrServer);
         for (Experiment experiment : experimentList) {
@@ -107,6 +101,7 @@ public class IndexingTest {
     //@Ignore
     @Test
     public void deleteExperimentsFromIndex() throws SolrServerException, IllegalAccessException, IOException {
+        log.info("Adding sample experiments to the index...");
         PojoIndexer<Experiment> experimentIndexer = new PojoIndexer<Experiment>();
         experimentIndexer.setSolrServer(solrServer);
         // add new experiment data to the index
@@ -189,8 +184,10 @@ public class IndexingTest {
     //@Ignore
     @Test
     public void getIndexableClassesTest() {
+        log.info("Getting all indexable classes...");
         List<Class<?>> solrIndexableClasses = IndexingUtils.getIndexableClasses();
         int indexedClasses = solrIndexableClasses.size();
+        log.info("Classes found: " + indexedClasses);
         assertEquals(30, indexedClasses);
     }
 
@@ -205,6 +202,7 @@ public class IndexingTest {
 
         List<Class<?>> solrIndexableClasses = IndexingUtils.getIndexableClasses();
 
+        log.info("Creating one instance of each indexable class...");
         int i = 0;
         for (Class<?> clazz : solrIndexableClasses) {
 

@@ -1,14 +1,15 @@
 package cz.zcu.kiv.eegdatabase.data.indexing;
 
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServer;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.lang.reflect.Field;
+import java.io.IOException;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -24,43 +25,55 @@ public abstract class Indexer<T> {
 
     protected Log log = LogFactory.getLog(getClass());
 
-    protected abstract void index(T instance) throws Exception; // TODO specify (own) exceptions
+    /**
+     * Performs indexing of a POJO object.
+     * @param instance The POJO to be indexed.
+     * @throws IllegalAccessException
+     * @throws IOException
+     * @throws SolrServerException
+     */
+    public void index(T instance) throws IllegalAccessException,
+            IOException, SolrServerException {
+        SolrInputDocument document = prepareForIndexing(instance);
+        prepareForIndexing(instance);
+        System.out.println(document);
+        addDocumentToIndex(document);
+    } // TODO specify (own) exceptions
 
-    protected abstract void unindex(T instance) throws Exception; // TODO specify (own) exceptions
+    public void indexAll(List<T> instanceList) throws IllegalAccessException, SolrServerException, IOException {
+        for(T instance : instanceList) {
+            index(instance);
+        }
+    }
 
-    protected SolrInputDocument getDocumentFromAnnotatedFields(T instance) throws IllegalAccessException {
-        SolrInputDocument document = new SolrInputDocument();
-        Field[] fields = instance.getClass().getDeclaredFields();
+    public abstract void unindex(T instance) throws Exception; // TODO specify (own) exceptions
 
-        String className =  instance.getClass().getName();
-        for (Field field : fields) {
-            // add uuid, class name and id of the instance to the solr index
-            if (field.isAnnotationPresent(SolrId.class)) {
-                field.setAccessible(true); // necessary since the id field is private
-                int id = 0;
-                try {
-                    id = (Integer) field.get(instance);
-                } catch (IllegalAccessException e) {
-                    e.printStackTrace();
-                }
-                document.addField(IndexField.UUID.getValue(), className + id);
-                document.addField(IndexField.ID.getValue(), id);
-                document.addField(IndexField.CLASS.getValue(), className);
+    public abstract SolrInputDocument prepareForIndexing(T instance) throws IllegalAccessException, IOException, SolrServerException;
 
-            }
-
-            // check presence of the SolrField annotation for each field
-            else if (field.isAnnotationPresent(SolrField.class)) {
-                field.setAccessible(true); // necessary since all fields are private
-                Object fieldValue = field.get(instance);
-                log.info("Indexing - field: "
-                        + field.getAnnotation(SolrField.class).name().getValue()
-                        + " value: " + fieldValue.toString());
-
-                document.addField(field.getAnnotation(SolrField.class).name().getValue(), fieldValue);
-            }
+    protected void addDocumentToIndex(SolrInputDocument document)
+            throws IOException, SolrServerException {
+        if(document == null) {
+            log.info("Document is null;");
+            // TODO Throw new exception?
         }
 
-        return document;
+        if(document.isEmpty()) {
+            log.info("Nothing added to the solr index.");
+            return;
+        }
+
+        solrServer.add(document); // if the document already exists, it is replaced by the new one
+
+        UpdateResponse response = solrServer.commit();
+
+        log.info("Document " + document.get("uuid").getValue().toString() + " added to the solr index.");
+        long time = response.getElapsedTime();
+        int status = response.getStatus();
+        log.info("Time elapsed: " + time + ", status code: " + status);
+    }
+
+
+    public void setSolrServer(SolrServer solrServer) {
+        this.solrServer = solrServer;
     }
 }
