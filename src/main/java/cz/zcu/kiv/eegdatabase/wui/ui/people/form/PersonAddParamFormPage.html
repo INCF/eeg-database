@@ -1,0 +1,37 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1>
+        <wicket:message key="pageTitle.addPersonOptionalParameter" />
+      </h1>
+
+      <form class="standardInputForm" wicket:id="form">
+        <fieldset>
+          <div class="itemBox">
+            <label class="selectBoxLabel"><wicket:message key="label.parameterType" /></label> <select
+              wicket:id="personOptParamDef" class="selectBox"></select>
+          </div>
+
+          <div class="itemBox">
+            <label for="paramValue" class="textFieldLabel"><wicket:message
+                key="label.parameterValue" /></label> <input wicket:id="paramValue" class="textField" />
+          </div>
+
+
+          <div class="itemBox">
+            <input type="submit" wicket:id="submit" class="submitButton lightButtonLink" />
+          </div>
+        </fieldset>
+      </form>
+      
+    </div>
+  </wicket:extend>
+</body>
+</html>

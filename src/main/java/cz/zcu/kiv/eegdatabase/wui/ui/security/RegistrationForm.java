@@ -24,6 +24,7 @@ import org.joda.time.DateTime;
 
 import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -110,14 +111,14 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
         add(gender, genderLabel);
 
-        DropDownChoice<EducationLevelDTO> educationLevel = new DropDownChoice<EducationLevelDTO>("educationLevel", educationLevelFacade.getAllRecords(),
-                new ChoiceRenderer<EducationLevelDTO>("title", "id") {
+        DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
+                new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
 
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public Object getDisplayValue(EducationLevelDTO object) {
-                        return object.getId() + " " + super.getDisplayValue(object);
+                    public Object getDisplayValue(EducationLevel object) {
+                        return object.getEducationLevelId() + " " + super.getDisplayValue(object);
                     }
 
                 });

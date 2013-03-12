@@ -7,7 +7,6 @@ import org.joda.time.DateTime;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 public class PersonMapper {
@@ -25,9 +24,7 @@ public class PersonMapper {
         dto.setConfirmed(person.isConfirmed());
         dto.setRegistrationDate(new DateTime(person.getRegistrationDate().getTime()));
 
-        EducationLevelDTO edu = new EducationLevelDTO();
-        edu.setId(person.getEducationLevel().getEducationLevelId());
-        dto.setEducationLevel(edu);
+        dto.setEducationLevel(person.getEducationLevel());
         dto.setLaterality(person.getLaterality());
         dto.setAuthority(person.getAuthority());
 
@@ -47,6 +44,7 @@ public class PersonMapper {
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
         person.setPassword(dto.getPassword());
+        person.setEducationLevel(dto.getEducationLevel());
 
         return person;
     }

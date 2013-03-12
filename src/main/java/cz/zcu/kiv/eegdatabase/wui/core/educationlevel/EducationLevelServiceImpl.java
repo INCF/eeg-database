@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.core.educationlevel;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.logging.Log;
@@ -24,22 +23,8 @@ public class EducationLevelServiceImpl implements EducationLevelService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<EducationLevelDTO> getAllRecords() {
-        return convertEntities(educationLevelDAO.getAllRecords());
-    }
-
-    private List<EducationLevelDTO> convertEntities(List<EducationLevel> entities) {
-        List<EducationLevelDTO> list = new ArrayList<EducationLevelDTO>(entities.size());
-        
-        for(EducationLevel entity : entities){
-            EducationLevelDTO dto = new EducationLevelDTO();
-            dto.setId(entity.getEducationLevelId());
-            dto.setTitle(entity.getTitle());
-            dto.setDefaultNumber(entity.getDefaultNumber());
-            list.add(dto);
-        }
-        
-        return list;
+    public List<EducationLevel> getAllRecords() {
+        return educationLevelDAO.getAllRecords();
     }
 
 }

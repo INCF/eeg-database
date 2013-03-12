@@ -114,7 +114,7 @@ public class WelcomePage extends MenuPage {
                 protected void populateItem(ListItem<Article> item) {
                     item.add(new TimestampLabel("time", item.getModelObject().getTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
                     item.add(new Label("groupTitle", item.getModelObject().getResearchGroup() != null ? item.getModelObject().getResearchGroup().getTitle() : "Public Article"));
-                    item.add(new Label("comments", item.getModelObject().getArticleComments().size()));
+                    item.add(new Label("comments", item.getModelObject().getArticleComments().size() + ""));
                     item.add(new ViewLinkPanel("articleTitle", UnderConstructPage.class, "articleId", item.getModel(), "title"));
                 }
             };

@@ -1,0 +1,78 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1 wicket:id="title"></h1>
+
+      <form class="standardInputForm" wicket:id="form">
+        <fieldset>
+
+          <div class="itemBox">
+            <label for=givenname wicket:id="nameLb" class="textFieldLabel"> <wicket:message
+                key="label.name">[name]</wicket:message></label> <input wicket:id="givenname" class="textField"
+              type="text" />
+          </div>
+
+          <div class="itemBox">
+            <label for="surname" wicket:id="surnameLb" class="textFieldLabel"> <wicket:message
+                key="label.surname">[surname]</wicket:message></label> <input wicket:id="surname"
+              class="textField" type="text" />
+          </div>
+
+          <div class="itemBox">
+            <label for="dateOfBirth" wicket:id="dateLb" class="textFieldLabel"> <wicket:message
+                key="label.dateOfBirth">[date of birth]</wicket:message></label>
+                <input wicket:id="dateOfBirth" class="textField dateField" type="text" />
+              <span class="note"><wicket:message key="form.note.dateFormatDDMMYYYY"/></span>
+          </div>
+
+          <div class="itemBox">
+            <label for="gender" wicket:id="genderLb" class="radio2ButtonsLabel"> <wicket:message
+                key="general.gender">[gender]</wicket:message></label> <span wicket:id="gender"></span>
+          </div>
+
+          <div class="itemBox">
+            <label for="username" wicket:id="emailLb" class="textFieldLabel"> <wicket:message
+                key="general.email">[email]</wicket:message></label> <input wicket:id="username"
+              class="textField" type="email" />
+          </div>
+          
+          <div class="itemBox">
+                <label for="phoneNumber" wicket:id="phoneNumberLb" class="textFieldLabel"><wicket:message
+                        key="label.phoneNumber"/></label>
+
+                <input wicket:id="phoneNumber" class="textField"/>
+            </div>
+
+          <div class="itemBox">
+            <label for="note" wicket:id="noteLb" class="textareaFieldLabel"><wicket:message key="label.note" /></label>
+
+            <textarea wicket:id="note" class="textareaField"></textarea>
+          </div>
+          
+          <div class="itemBox">
+            <label for="laterality" wicket:id="lateralityLb" class="textFieldLabel">
+              <wicket:message key="label.laterality">[laterality]</wicket:message>
+            </label> <select wicket:id="laterality" id="selectLaterality" class="selectBox"></select>
+          </div>
+
+          <div class="itemBox">
+            <label for="educationLevel" wicket:id="educationLevelLb" class="textFieldLabel">
+              <wicket:message key="label.educationLevel">[education level]</wicket:message>
+            </label> <select wicket:id="educationLevel" id="selectEducationLevel" class="selectBox"></select>
+          </div>
+
+          <div class="itemBox">
+            <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
+          </div>
+        </fieldset>
+        </form>
+    </div>
+  </wicket:extend>
+</body>
+</html>

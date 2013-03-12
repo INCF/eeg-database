@@ -234,7 +234,7 @@ public class SimplePersonDao
 
     @Override
     public Person getPersonForDetail(int id) {
-        String HQLselect = "from Person person left join fetch person.personOptParamVals paramVal left join fetch paramVal.personOptParamDef paramDef where person.personId = :id";
+        String HQLselect = "from Person person left join fetch person.researchGroups left join fetch person.personOptParamVals paramVal left join fetch paramVal.personOptParamDef paramDef where person.personId = :id";
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "id", id));
         return foundUser;
     }

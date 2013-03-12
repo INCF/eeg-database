@@ -5,6 +5,8 @@ import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 
 import javax.persistence.*;
+
+import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -16,8 +18,10 @@ import java.util.Set;
 //@Indexed//Mark for indexing
 //@Analyzer(impl = StandardAnalyzer.class)
 @javax.persistence.Table(name = "ARTICLES_COMMENTS")
-public class ArticleComment {
+public class ArticleComment implements Serializable {
 
+    private static final long serialVersionUID = -8594589377952874454L;
+    
     //@DocumentId
     @SolrId
     @Id

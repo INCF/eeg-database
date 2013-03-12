@@ -19,13 +19,14 @@ import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
@@ -54,8 +55,6 @@ public class PersonDetailPage extends MenuPage {
         
         Person person = personFacade.getPersonForDetail(personId);
         
-        
-        
         add(new EnumLabel<Gender>("gender", Gender.getGenderByShortcut(person.getGender())));
         add(new Label("name", person.getGivenname() + " " + person.getSurname()));
         add(new Label("email", person.getUsername()));
@@ -76,8 +75,8 @@ public class PersonDetailPage extends MenuPage {
         };
         
         
-        BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addOptParamLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(personId));
-        BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(personId));
+        BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addOptParamLink", PersonAddParamFormPage.class, PageParametersUtils.getDefaultPageParameters(personId));
+        BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", PersonFormPage.class, PageParametersUtils.getDefaultPageParameters(personId));
         editLink.setVisibilityAllowed(security.userCanEditPerson(personId));
         add(param, addParameterLink, editLink);
     }

@@ -6,6 +6,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
+
 public class EducationLevelFacadeImpl implements EducationLevelFacade {
     
     protected Log log = LogFactory.getLog(getClass());
@@ -18,7 +20,7 @@ public class EducationLevelFacadeImpl implements EducationLevelFacade {
     }
     
     @Override
-    public List<EducationLevelDTO> getAllRecords() {
+    public List<EducationLevel> getAllRecords() {
         return service.getAllRecords();
     }
 

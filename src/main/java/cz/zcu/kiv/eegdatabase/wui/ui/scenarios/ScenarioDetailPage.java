@@ -67,8 +67,8 @@ public class ScenarioDetailPage extends MenuPage {
 
         add(new Label("title", scenario.getTitle()));
         add(new Label("description", scenario.getDescription()));
-        add(new Label("length", scenario.getScenarioLength()));
-        add(new Label("private", scenario.isPrivateScenario()));
+        add(new Label("length", scenario.getScenarioLength()+ ""));
+        add(new Label("private", scenario.isPrivateScenario() + ""));
 
         boolean existFile = scenarioTypeFacade.read(scenarioId).getScenarioXml() != null;
 

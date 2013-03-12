@@ -6,7 +6,7 @@ import java.util.Date;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.joda.time.DateTime;
 
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 public class FullPersonDTO extends IdentifiDTO implements Serializable {
@@ -21,7 +21,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private String email;
     private String password;
     private String passwordVerify;
-    private EducationLevelDTO educationLevel;
+    private EducationLevel educationLevel;
     private String controlText;
     private String captcha;
     private boolean confirmed;
@@ -89,11 +89,11 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         this.passwordVerify = passwordVerify;
     }
 
-    public EducationLevelDTO getEducationLevel() {
+    public EducationLevel getEducationLevel() {
         return educationLevel;
     }
 
-    public void setEducationLevel(EducationLevelDTO educationLevel) {
+    public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
     }
 

@@ -64,13 +64,13 @@ public class ExperimentsDetailPage extends MenuPage {
 
         Experiment experiment = facade.getExperimentForDetail(experimentId);
 
-        add(new Label("experimentId", experiment.getExperimentId()));
+        add(new Label("experimentId", experiment.getExperimentId()+""));
         add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         add(new TimestampLabel("endTime", experiment.getEndTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
-        add(new Label("temperature", experiment.getTemperature()));
+        add(new Label("temperature", experiment.getTemperature()+""));
         add(new Label("weather.title", experiment.getWeather().getTitle()));
         add(new Label("environmentNote", experiment.getEnvironmentNote()));
-        add(new Label("privateExperiment", experiment.isPrivateExperiment()));
+        add(new Label("privateExperiment", experiment.isPrivateExperiment()+""));
         add(new Label("scenario.title", experiment.getScenario().getTitle()));
 
         Person personBySubjectPersonId = experiment.getPersonBySubjectPersonId();

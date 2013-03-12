@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
-import org.apache.wicket.protocol.http.RequestUtils;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -8,7 +7,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 
 public class PageParametersUtils {
-    
+
     public static final String GROUP_PARAM = "GROUP";
 
     public static PageParameters getPageParameters(String key, Object object) {
@@ -30,12 +29,10 @@ public class PageParametersUtils {
         parameters.add(key, object);
         return parameters;
     }
-    
-    public static String getUrlForPage(Class page, PageParameters parameters){
-        
-        CharSequence relativeUrl = RequestCycle.get().urlFor(page, parameters); 
-        String absoluteUrl = RequestUtils.toAbsolutePath("/", relativeUrl.toString()); 
-        final Url url = Url.parse(absoluteUrl); 
-        return RequestCycle.get().getUrlRenderer().renderFullUrl(url);
+
+    public static String getUrlForPage(Class page, PageParameters parameters) {
+
+        return RequestCycle.get().getUrlRenderer().renderFullUrl(
+                Url.parse(RequestCycle.get().urlFor(page, parameters).toString()));
     }
 }

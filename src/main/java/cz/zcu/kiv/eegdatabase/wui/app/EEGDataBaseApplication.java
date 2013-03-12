@@ -20,7 +20,6 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.ChangePasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
@@ -46,11 +45,11 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.PersonOptParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
@@ -82,13 +81,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // add spring component injector listener
         getComponentInstantiationListeners().add(new SpringComponentInjector(this));
 
-        //Enables encryption of generated URLs
-        //Pages mounted in mountPages method remain bookmarkable and accessible by their mount name
+        // Enables encryption of generated URLs
+        // Pages mounted in mountPages method remain bookmarkable and accessible by their mount name
         setRootRequestMapper(new CryptoMapper(getRootRequestMapperAsCompound(), this));
 
         // mount pages in wicket application for better working with pages.
         mountPages();
-
 
     }
 
@@ -97,13 +95,13 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("welcome", WelcomePage.class);
 
         mountPage("access-denied", AccessDeniedPage.class);
-        //mountPage("registration-new", RegistrationPage.class);
+        // mountPage("registration-new", RegistrationPage.class);
         mountPage("registration-confirm", ConfirmPage.class);
-        //mountPage("forgotten-pass", ForgottenPasswordPage.class);
+        // mountPage("forgotten-pass", ForgottenPasswordPage.class);
         mountPage("under-construct", UnderConstructPage.class);
 
         mountPage("account-overview", AccountOverViewPage.class);
-        //mountPage("account-change-pass", ChangePasswordPage.class);
+        // mountPage("account-change-pass", ChangePasswordPage.class);
         mountPage("account-social", SocialNetworksPage.class);
 
         mountPage("articles-page", ArticlesPage.class);
@@ -118,6 +116,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("people-list", ListPersonPage.class);
         mountPage("people-detail", PersonDetailPage.class);
+        mountPage("people-form", PersonFormPage.class);
+        mountPage("people-param-form", PersonAddParamFormPage.class);
 
         mountPage("lists", ListListsPage.class);
         mountPage("lists-weather", ListWeatherDefinitiosPage.class);
@@ -132,8 +132,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("lists-experiment-param-form", ExperimentOptParamFormPage.class);
         mountPage("lists-artifact", ListArtifactDefinitionsPage.class);
         mountPage("lists-artifact-form", ArtifactFormPage.class);
-        
-        
+
         mountPage("history-page", HistoryPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("scenarios-page", ListScenariosPage.class);

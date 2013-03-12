@@ -54,10 +54,13 @@ public class PersonServiceImpl implements PersonService {
     public Integer create(Person person) {
 
         person.setPassword(encodePassword(person.getPassword()));
-        person.setLaterality(DEFAULT_LATERALITY);
+
+        if (person.getLaterality() == '\u0000')
+            person.setLaterality(DEFAULT_LATERALITY);
 
         log.debug("Setting authority = ROLE_USER");
-        person.setAuthority(Util.ROLE_USER);
+        if (person.getAuthority() == null)
+            person.setAuthority(Util.ROLE_USER);
 
         person = newPerson(person);
 
@@ -94,11 +97,11 @@ public class PersonServiceImpl implements PersonService {
 
         return newPerson(person);
     }
-    
+
     @Override
     @Transactional
     public Person createPerson(AddPersonCommand apc) throws ParseException {
-        //copying the data to Person entity
+        // copying the data to Person entity
         Person person = new Person();
         person.setGivenname(apc.getGivenname());
         person.setSurname(apc.getSurname());
@@ -109,7 +112,7 @@ public class PersonServiceImpl implements PersonService {
         person.setLaterality(apc.getLaterality().charAt(0));
         person.setEducationLevel(educationLevelDao.read(apc.getEducationLevel()));
 
-        //Code specific for this object type
+        // Code specific for this object type
         person.setUsername(apc.getEmail());
         person.setPassword(encodeRandomPassword());
         log.debug("Setting authority to ROLE_READER");
@@ -159,6 +162,10 @@ public class PersonServiceImpl implements PersonService {
     }
 
     private String encodePassword(String plaintextPassword) {
+
+        if (plaintextPassword == null)
+            return encodeRandomPassword();
+
         return new BCryptPasswordEncoder().encode(plaintextPassword);
     }
 
