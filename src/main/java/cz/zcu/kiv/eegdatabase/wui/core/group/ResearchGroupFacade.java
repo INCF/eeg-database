@@ -4,6 +4,8 @@ import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
 public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integer>{
@@ -35,4 +37,22 @@ public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integ
     int getCountForList();
 
     List<ResearchGroup> getGroupsForList(int start, int limit);
+    
+    ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance);
+
+    ResearchGroupMembership readMemberhip(ResearchGroupMembershipId id);
+
+    List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, int parameterValue);
+
+    List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, String parameterValue);
+
+    void updateMemberhip(ResearchGroupMembership transientObject);
+
+    void deleteMemberhip(ResearchGroupMembership persistentObject);
+
+    List<ResearchGroupMembership> getAllMemberhipRecords();
+
+    List<ResearchGroupMembership> getMemberhipRecordsAtSides(int first, int max);
+
+    int getCountMemberhipRecords();
 }

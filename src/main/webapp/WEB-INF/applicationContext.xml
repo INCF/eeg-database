@@ -61,7 +61,9 @@
     <bean name="personOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamFacadeImpl" autowire="byType" />
     
 
-    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" />
+    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" >
+        <property name="membershipDao" ref="researchGroupMembershipDao"/>
+    </bean>
     <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
 
     <bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />

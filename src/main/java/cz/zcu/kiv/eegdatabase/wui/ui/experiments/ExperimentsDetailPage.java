@@ -30,13 +30,13 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDetailPage extends MenuPage {

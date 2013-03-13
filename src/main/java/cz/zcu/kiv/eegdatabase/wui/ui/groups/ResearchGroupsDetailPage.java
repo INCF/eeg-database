@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -16,6 +17,7 @@ import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
@@ -59,25 +61,14 @@ public class ResearchGroupsDetailPage extends MenuPage {
             }
         };
         requestMembership.setVisibilityAllowed(!securityFacade.userIsMemberInGroup(groupId));
-        Link<Void> listOfMembers = new Link<Void>("listOfMembers") {
 
-            @Override
-            public void onClick() {
-                // TODO list of members
+        BookmarkablePageLink<Void> listOfMembers = new BookmarkablePageLink<Void>("listOfMembers", ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+        BookmarkablePageLink<Void> addMember = new BookmarkablePageLink<Void>("addMember", AddMemberToGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
 
-            }
-        };
-        listOfMembers.setVisibilityAllowed(securityFacade.userIsExperimenterInGroup(groupId));
-        Link<Void> addMember = new Link<Void>("addMember") {
-
-            @Override
-            public void onClick() {
-                // TODO add member action
-
-            }
-        };
         boolean userIsAdminInGroup = securityFacade.userIsAdminInGroup(groupId);
+        listOfMembers.setVisibilityAllowed(securityFacade.userIsExperimenterInGroup(groupId));
         addMember.setVisibilityAllowed(userIsAdminInGroup);
+
         Link<Void> editGroup = new Link<Void>("editGroup") {
 
             @Override

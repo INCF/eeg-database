@@ -23,11 +23,11 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonDetailPage extends MenuPage {

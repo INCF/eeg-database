@@ -6,8 +6,8 @@ import java.util.Date;
 import org.joda.time.DateTime;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
 
 public class PersonMapper {
 

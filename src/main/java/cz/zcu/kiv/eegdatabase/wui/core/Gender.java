@@ -1,19 +1,18 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.security;
+package cz.zcu.kiv.eegdatabase.wui.core;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public enum Laterality {
+public enum Gender {
 
-    LEFT('L'),
-    RIGHT('R'),
-    UNSPECIFIED('X');
+    MALE('M'),
+    FEMALE('F');
 
     public static final String ENUM_PROPERTY_PREFIX = "general.gender.${name}";
 
     private char shortcut;
 
-    private Laterality(char shortcut) {
+    private Gender(char shortcut) {
         this.shortcut = shortcut;
     }
 
@@ -21,9 +20,9 @@ public enum Laterality {
         return shortcut;
     }
 
-    public static Laterality getLateralityByShortcut(char shortcut) {
+    public static Gender getGenderByShortcut(char shortcut) {
 
-        for (Laterality tmp : values()) {
+        for (Gender tmp : values()) {
             if (tmp.getShortcut() == shortcut)
                 return tmp;
         }
@@ -31,11 +30,12 @@ public enum Laterality {
     }
 
     public static List<Character> getShortcutList() {
-        
+
         List<Character> list = new ArrayList<Character>();
-        for (Laterality tmp : values()) {
+        for (Gender tmp : values()) {
             list.add(tmp.getShortcut());
         }
         return list;
     }
+
 }

@@ -10,6 +10,8 @@ import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 
 public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
 
@@ -125,6 +127,51 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+    
+    @Override
+    public ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance) {
+        return service.createMemberhip(newInstance);
+    }
+
+    @Override
+    public ResearchGroupMembership readMemberhip(ResearchGroupMembershipId id) {
+        return service.readMemberhip(id);
+    }
+
+    @Override
+    public List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, int parameterValue) {
+        return service.readMemberhipByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, String parameterValue) {
+        return service.readMemberhipByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public void updateMemberhip(ResearchGroupMembership transientObject) {
+        service.updateMemberhip(transientObject);
+    }
+
+    @Override
+    public void deleteMemberhip(ResearchGroupMembership persistentObject) {
+        service.deleteMemberhip(persistentObject);
+    }
+
+    @Override
+    public List<ResearchGroupMembership> getAllMemberhipRecords() {
+        return service.getAllMemberhipRecords();
+    }
+
+    @Override
+    public List<ResearchGroupMembership> getMemberhipRecordsAtSides(int first, int max) {
+        return service.getMemberhipRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountMemberhipRecords() {
+        return service.getCountMemberhipRecords();
     }
 
 }

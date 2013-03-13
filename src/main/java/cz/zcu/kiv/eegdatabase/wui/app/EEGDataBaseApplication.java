@@ -25,6 +25,8 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.AddMemberToGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
@@ -113,6 +115,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("groups-list", ListResearchGroupsPage.class);
         mountPage("groups-detail", ResearchGroupsDetailPage.class);
         mountPage("groups-my", MyGroupsPage.class);
+        mountPage("groups-member-list", ListOfMembersGroupPage.class);
+        mountPage("groups-member-add", AddMemberToGroupPage.class);
 
         mountPage("people-list", ListPersonPage.class);
         mountPage("people-detail", PersonDetailPage.class);

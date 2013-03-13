@@ -7,10 +7,13 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
 
@@ -18,6 +21,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
     ResearchGroupDao researchGroupDAO;
     PersonDao personDAO;
+    GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> membershipDao;
 
     @Required
     public void setResearchGroupDAO(ResearchGroupDao researchGroupDAO) {
@@ -27,6 +31,10 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Required
     public void setPersonDAO(PersonDao personDAO) {
         this.personDAO = personDAO;
+    }
+
+    public void setMembershipDao(GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> membershipDao) {
+        this.membershipDao = membershipDao;
     }
 
     @Override
@@ -39,7 +47,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional(readOnly = true)
     public List<ResearchGroup> getResearchGroupsWhereMember(Person person, int limit) {
-        
+
         return researchGroupDAO.getResearchGroupsWhereMember(person, limit);
     }
 
@@ -93,9 +101,9 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     }
 
     @Override
-    public List<Person> getListOfGroupMembers(int groupId) {
-        // TODO Auto-generated method stub
-        return null;
+    @Transactional(readOnly = true)
+    public List getListOfGroupMembers(int groupId) {
+        return researchGroupDAO.getListOfGroupMembers(groupId);
     }
 
     @Override
@@ -157,4 +165,59 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     public int getCountRecords() {
         return researchGroupDAO.getCountRecords();
     }
+
+    @Override
+    @Transactional
+    public ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance) {
+        return membershipDao.create(newInstance);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ResearchGroupMembership readMemberhip(ResearchGroupMembershipId id) {
+        return membershipDao.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, int parameterValue) {
+        return membershipDao.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroupMembership> readMemberhipByParameter(String parameterName, String parameterValue) {
+        return membershipDao.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional
+    public void updateMemberhip(ResearchGroupMembership transientObject) {
+        membershipDao.update(transientObject);
+    }
+
+    @Override
+    @Transactional
+    public void deleteMemberhip(ResearchGroupMembership persistentObject) {
+        membershipDao.delete(persistentObject);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroupMembership> getAllMemberhipRecords() {
+        return membershipDao.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ResearchGroupMembership> getMemberhipRecordsAtSides(int first, int max) {
+        return membershipDao.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountMemberhipRecords() {
+        return membershipDao.getCountRecords();
+    }
+
 }

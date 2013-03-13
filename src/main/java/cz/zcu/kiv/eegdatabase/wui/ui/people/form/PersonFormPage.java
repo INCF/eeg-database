@@ -33,14 +33,17 @@ import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
+import cz.zcu.kiv.eegdatabase.wui.core.Laterality;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Laterality;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonFormPage extends MenuPage {
@@ -53,6 +56,9 @@ public class PersonFormPage extends MenuPage {
     @SpringBean
     PersonFacade facade;
 
+    @SpringBean
+    SecurityFacade securityFacade;
+
     public PersonFormPage() {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.addPerson"));
@@ -64,19 +70,22 @@ public class PersonFormPage extends MenuPage {
     }
 
     public PersonFormPage(PageParameters parameters) {
-        
+
         StringValue paramId = parameters.get(DEFAULT_PARAM_ID);
 
         if (paramId.isNull() || paramId.isEmpty())
             throw new RestartResponseAtInterceptPageException(ListPersonPage.class);
-        
+
         setPageTitle(ResourceUtils.getModel("pageTitle.editPerson"));
         add(new Label("title", ResourceUtils.getModel("pageTitle.editPerson")));
 
         add(new ButtonPageMenu("leftMenu", PersonPageLeftMenu.values()));
-        
+
         Person person = facade.getPersonForDetail(paramId.toInt());
-        
+
+        if (!securityFacade.userCanEditPerson(person.getPersonId()))
+            throw new RestartResponseAtInterceptPageException(PersonDetailPage.class, PageParametersUtils.getDefaultPageParameters(person.getPersonId()));
+
         add(new PersonForm("form", new Model<Person>(person), educationFacade, facade, getFeedback()));
     }
 
@@ -195,9 +204,9 @@ public class PersonFormPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     Person user = PersonForm.this.getModelObject();
-                    
+
                     boolean isEdit = user.getPersonId() > 0;
-                    
+
                     if (validation(user, personFacade, isEdit)) {
                         if (isEdit) {
                             personFacade.update(user);
@@ -216,7 +225,7 @@ public class PersonFormPage extends MenuPage {
         private boolean validation(Person user, PersonFacade facade, boolean editation) {
 
             boolean validate = true;
-            
+
             // if its editation we can't check if email exist
             if (!editation && facade.usernameExists(user.getEmail())) {
                 error(ResourceUtils.getString("inUse.email"));

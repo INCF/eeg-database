@@ -1,0 +1,45 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+
+      <h1>
+        <wicket:message key="pageTitle.listOfGroupMembers" />
+      </h1>
+
+      <h2 wicket:id="title">group title</h2>
+
+      <table class="dataTable listOfPersonsDataTable" wicket:id="container">
+        <thead>
+          <tr>
+            <th><wicket:message key="dataTable.heading.name" /></th>
+            <th><wicket:message key="dataTable.heading.surname" /></th>
+            <th><wicket:message key="dataTable.heading.email" /></th>
+            <th><wicket:message key="dataTable.heading.roleInGroup" /></th>
+            <th style="width: 250px;"><wicket:message key="dataTable.heading.changeRoleTo" /></th>
+          </tr>
+        </thead>
+        <tr wicket:id="members">
+          <td wicket:id="givenname">item.givenname</td>
+          <td wicket:id="surname">item.surname</td>
+          <td wicket:id="username">item.username</td>
+          <td wicket:id="authority">item.authority</td>
+          <td><select name="role" wicket:id="roles">
+          </select><a wicket:id="removeFromGroupLink"><wicket:message key="link.changeGroupRole.remove" /></a></td>
+        </tr>
+      </table>
+
+      <div class="actionBox">
+        <a href="#" class="lightButtonLink" wicket:id="backLink"><wicket:message key="button.backToGroupDetail" /></a>
+        <a href="#" class="lightButtonLink" wicket:id="addMemberLink"><wicket:message key="button.addMemberToGroup" /></a>
+      </div>
+    </div>
+  </wicket:extend>
+</body>
+</html>

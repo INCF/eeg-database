@@ -7,7 +7,7 @@ import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.joda.time.DateTime;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.Gender;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 
 public class FullPersonDTO extends IdentifiDTO implements Serializable {
 

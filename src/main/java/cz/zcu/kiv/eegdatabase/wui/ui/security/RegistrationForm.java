@@ -29,6 +29,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
