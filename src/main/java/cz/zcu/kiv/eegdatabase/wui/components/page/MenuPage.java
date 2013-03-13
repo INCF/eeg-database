@@ -56,7 +56,7 @@ public class MenuPage extends BasePage {
             cart.add(new Label("cartSizeLabel", new Model(){
                 @Override
                 public Serializable getObject(){
-                    String cartSize =  "" + EEGDataBaseSession.get().getShoppingCart().getOrder().size();
+                    String cartSize =  "" + EEGDataBaseSession.get().getShoppingCart().size();
                     return cartSize;
                 }
             }));

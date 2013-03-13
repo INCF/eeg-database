@@ -7,7 +7,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
@@ -16,7 +15,9 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColu
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -41,12 +42,27 @@ public class ShoppingCartPage  extends MenuPage {
         add(new Label("title", title));
         setPageTitle(title);
 
-        add(new Label("emptyCart", ResourceUtils.getModel("text.emptyCart")).setVisibilityAllowed(EEGDataBaseSession.get().getShoppingCart().getOrder().isEmpty()));
+        add(new Label("emptyCart", ResourceUtils.getModel("text.emptyCart")){
+            @Override
+            public boolean isVisible(){
+                return EEGDataBaseSession.get().getShoppingCart().isEmpty();
+            }
+        });
 
         DefaultDataTable<Experiment, String> list = new DefaultDataTable<Experiment, String>("list", createListColumns(),
                 new CartDataProvider(), ITEMS_PER_PAGE);
-
         add(list);
+
+        add(new Label("totalPriceMessage", ResourceUtils.getString("label.totalPrice") + " "));
+        add(new Label("totalPriceAmount", new Model(){
+            @Override
+            public Serializable getObject(){
+                String totalPrice =  "" + EEGDataBaseSession.get().getShoppingCart().getTotalPrice();
+                return totalPrice;
+            }
+        }));
+        add(new Label("totalPriceCurrency", " " + ResourceUtils.getString("currency.euro")));
+
     }
 
     private List<? extends IColumn<Experiment, String>> createListColumns() {
@@ -76,4 +92,7 @@ public class ShoppingCartPage  extends MenuPage {
         });
         return columns;
     }
+
 }
+
+

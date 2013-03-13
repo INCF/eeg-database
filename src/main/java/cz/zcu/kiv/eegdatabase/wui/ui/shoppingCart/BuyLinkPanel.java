@@ -2,15 +2,11 @@ package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 
 /**
  * Created with IntelliJ IDEA.
@@ -32,8 +28,9 @@ public class BuyLinkPanel  extends Panel {
 
             @Override
             public void onClick() {
-                EEGDataBaseSession.get().getShoppingCart().getOrder().add(experiment);
+                EEGDataBaseSession.get().getShoppingCart().addToCart(experiment);
             }
-        }.add(new Label("label", ResourceUtils.getModel("link.addToCart"))));
+        }.add(new Label("label", ResourceUtils.getModel("link.addToCart")))
+         .setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isInCart(experiment)));
     }
 }

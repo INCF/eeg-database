@@ -26,7 +26,8 @@ public class RemoveLinkPanel extends Panel {
 
             @Override
             public void onClick() {
-                EEGDataBaseSession.get().getShoppingCart().getOrder().remove(experiment);
+                EEGDataBaseSession.get().getShoppingCart().removeFromCart(experiment);
+                setResponsePage(ShoppingCartPage.class);
             }
         }.add(new Label("label", ResourceUtils.getModel("link.removeFromCart"))));
     }
