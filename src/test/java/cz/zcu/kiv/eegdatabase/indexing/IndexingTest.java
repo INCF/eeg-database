@@ -121,14 +121,6 @@ public class IndexingTest {
         log.info("Documents found: " + documentsFound);
         assertEquals(1, documentsFound);
 
-        /* print the found document(s)
-        for (SolrDocument document : documents) {
-            for (String fieldName : document.getFieldNames()) {
-                log.info(fieldName + ": " + document.getFieldValue(fieldName));
-            }
-        }
-        */
-
         response = createSimpleQuery("notepad");
         documentsFound = response.getResults().size();
         log.info("Documents found: " + documentsFound);
@@ -161,22 +153,6 @@ public class IndexingTest {
     }
 
     /**
-     * Creates a simple query.
-     * @param phrase The input query phrase.
-     * @return The query response from the Solr server.
-     * @throws SolrServerException
-     */
-    private QueryResponse createSimpleQuery(String phrase) throws SolrServerException {
-        log.info("searching \"" + phrase + "\"...");
-        SolrQuery query = new SolrQuery();
-        query.set("df", "text_all");
-        query.setQuery(phrase);
-        query.setRows(10);
-
-        return solrServer.query(query);
-    }
-
-    /**
      * Tests the getIndexableClasses method from the IndexingUtils class.
      * The method should return the assumed number of classes to be indexed by Solr.
      * (i.e. classes containing appropriate annotations)
@@ -202,6 +178,8 @@ public class IndexingTest {
 
         List<Class<?>> solrIndexableClasses = IndexingUtils.getIndexableClasses();
 
+        assertEquals(30, solrIndexableClasses.size());
+
         log.info("Creating one instance of each indexable class...");
         int i = 0;
         for (Class<?> clazz : solrIndexableClasses) {
@@ -218,7 +196,7 @@ public class IndexingTest {
                     log.info(field.getName() + ": " + field.get(instance));
                 } else if (field.isAnnotationPresent(SolrField.class)) {
                     if (field.getType().equals(String.class)) {
-                        field.set(instance, "Hola hola");
+                        field.set(instance, "Mam to nejlepsi turbodmychadlo.");
                     } else {
                         field.set(instance, 99);
                     }
@@ -234,7 +212,7 @@ public class IndexingTest {
 
         SolrQuery query = new SolrQuery();
         query.set("df", "text_all");
-        query.setQuery("hola");
+        query.setQuery("turbodmychadlo");
         query.setIncludeScore(true);
         query.setRows(50); // max number of rows to be returned
         //query.setSortField("class", SolrQuery.ORDER.asc);
@@ -254,6 +232,24 @@ public class IndexingTest {
         }
         assertEquals(30, documentsFound);
     }
+
+
+    /**
+     * Creates a simple query.
+     * @param phrase The input query phrase.
+     * @return The query response from the Solr server.
+     * @throws SolrServerException
+     */
+    private QueryResponse createSimpleQuery(String phrase) throws SolrServerException {
+        log.info("searching \"" + phrase + "\"...");
+        SolrQuery query = new SolrQuery();
+        query.set("df", "text_all");
+        query.setQuery(phrase);
+        query.setRows(10);
+
+        return solrServer.query(query);
+    }
+
 
     /**
      * Creates lists of test POJOs.

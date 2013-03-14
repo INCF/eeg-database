@@ -1,12 +1,12 @@
 package cz.zcu.kiv.eegdatabase.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.Indexer;
-import cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer;
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServer;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.apache.solr.client.solrj.response.QueryResponse;
 import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -24,6 +24,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import static org.junit.Assert.assertTrue;
+
 /**
  * Created with IntelliJ IDEA.
  * User: Jan Koren
@@ -31,6 +33,7 @@ import java.util.List;
  * Time: 19:50
  * To change this template use File | Settings | File Templates.
  */
+//@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/test-context.xml"})
 public class LinkedInIndexingTest {
@@ -53,10 +56,49 @@ public class LinkedInIndexingTest {
 
     //@Ignore
     @Test
-    public void addNewArticle() throws IllegalAccessException, SolrServerException, IOException {
+    public void indexLastSavedLinkedInPost() throws IllegalAccessException, SolrServerException, IOException {
 
+        Post lastPost = getLastPost();
+        LinkedInProfile profile = lastPost.getCreator();
+        log.info("post id: " + lastPost.getId());
+        log.info("post title: " + lastPost.getTitle());
+        log.info("post summary: " + lastPost.getSummary());
+        log.info("post creator: " + profile.getFirstName() + " " + profile.getLastName());
+
+        String groupDescription = linkedInTemplate.groupOperations().getGroupDetails(groupId).getDescription();
+        log.info("group description: " + groupDescription);
+
+        log.info("post id: " + lastPost.getId());
+        indexer.index(lastPost);
+    }
+
+    //@Ignore
+    @Test
+    public void indexSampleLinkedInPosts() throws IllegalAccessException, SolrServerException, IOException {
+        log.info("indexing sample posts...");
+        List<Post> posts = new ArrayList<Post>();
+        createPost("prvni post", "de kad peofd alsd lala mads");
+        Post firstPost = getLastPost();
+        createPost("druhy post", "popo laodl oedps ldaspof novy");
+        Post secondPost = getLastPost();
+        createPost("treti post", "juchacha juchuchu");
+        Post thirdPost = getLastPost();
+        posts.add(firstPost);
+        posts.add(secondPost);
+        posts.add(thirdPost);
+        indexer.indexAll(posts);
+
+        deletePost(firstPost.getId());
+        deletePost(secondPost.getId());
+        deletePost(thirdPost.getId());
+    }
+
+    //@Ignore
+    @Test
+    public void indexAllLinkedInPosts() throws IllegalAccessException, SolrServerException, IOException {
+        log.info("indexing all posts...");
         List<Post> posts = getGroupPostsWithMoreInfo();
-        //List<Post> posts = linkedInTemplate.groupOperations().getGroupDetails(groupId).getPosts().getPosts();
+        log.info("indexing all " + posts.size() + " posts...");
         for(Post post : posts) {
             LinkedInProfile profile = post.getCreator();
             log.info("post id: " + post.getId());
@@ -66,41 +108,54 @@ public class LinkedInIndexingTest {
             log.info("post creator: " + profile.getFirstName() + " " + profile.getLastName());
         }
 
-        Post lastPost = getPostById("g-4394884-S-221382883");
-        LinkedInProfile profile = lastPost.getCreator();
-        log.info("post id: " + lastPost.getId());
-        log.info("post title: " + lastPost.getTitle());
-        log.info("post summary: " + lastPost.getSummary());
-        log.info("post creator: " + profile.getFirstName() + " " + profile.getLastName());
+        indexer.indexAll(posts);
 
-        String groupDescription = linkedInTemplate.groupOperations().getGroupDetails(groupId).getDescription();
+        log.info("unindexing all " + posts.size() + " posts...");
 
-        log.info("group description: " + groupDescription);
+        indexer.unindexAll();
 
-        Post lastOne = getLastPost();
-        log.info("post id: " + lastOne.getId());
+        SolrQuery query = new SolrQuery();
+        query.set("df", "source");
+        query.setRows(100);
+        query.setQuery("linkedin");
+        QueryResponse response = solrServer.query(query);
+        int foundPosts = response.getResults().size();
+        log.info("found posts after unindexing: " + foundPosts);
 
-        indexer.index(lastOne);
-
-
+        assertTrue(foundPosts == 0);
     }
 
+
+    @Ignore
     @Test
-    public void indexAllLinkedInPosts() throws IllegalAccessException, SolrServerException, IOException {
+    public void editTestPost() {
+        //linkedInTemplate.restOperations().put();
+    }
+
+    //@Ignore
+    @Test
+    public void deletePostsTest() {
+
+        int postsBefore = getGroupPostsWithMoreInfo().size();
+        log.info("Posts before deletion: " + postsBefore);
+
         List<Post> posts = new ArrayList<Post>();
-        String postId = createPost("prvni post", "de kad peofd alsd lala mads");
-        //Post firstPost = getPostById(postId);
-        Post firstPost = getLastPost();
-        postId = createPost("druhy post", "popo laodl oedps ldaspof novy");
-        //Post secondPost = getPostById(postId);
-        Post secondPost = getLastPost();
-        postId = createPost("treti post", "juchacha juchuchu");
-        //Post thirdPost = getPostById(postId);
-        Post thirdPost = getLastPost();
-        posts.add(firstPost);
-        posts.add(secondPost);
-        posts.add(thirdPost);
-        indexer.indexAll(posts);
+        createPost("first ", "ffffffff iiiiiiiiii rrrrrrrrrr ssssssssss tttttt");
+        posts.add(getLastPost());
+        createPost("second", "ssssssss eeeeeeeee cccccccc oooooooo nnnnnnn ddddd");
+        posts.add(getLastPost());
+        createPost("third", "tttttt hhhhhhh iiiiiii rrrrrrrr dddddddd");
+        posts.add(getLastPost());
+
+        for(Post post : posts) {
+            log.info("Deleting post " + post.getId() + "...");
+            deletePost(post.getId());
+        }
+
+        int postsAfter = getGroupPostsWithMoreInfo().size();
+        log.info("Posts after deletion: " + postsAfter);
+
+        assertTrue(postsBefore == postsAfter);
     }
 
     /**
@@ -108,11 +163,11 @@ public class LinkedInIndexingTest {
      * Posts contain all required information.
      * @return
      */
-    private List<Post> getGroupPostsWithMoreInfo() {
+    private synchronized List<Post> getGroupPostsWithMoreInfo() {
         Group.GroupPosts groupPosts = linkedInTemplate.restOperations().getForObject(
                 "http://api.linkedin.com/v1/groups/{group-id}/posts" +
                 ":(creation-timestamp,title,summary,id," +
-                "creator:(first-name,last-name))?order=recency", Group.GroupPosts.class, groupId);
+                "creator:(first-name,last-name))?count=50&order=recency", Group.GroupPosts.class, groupId);
         return groupPosts.getPosts();
     }
 
@@ -149,9 +204,8 @@ public class LinkedInIndexingTest {
         return myPost;
     }
 
-    @Ignore
-    @Test
-    public void editTestPost() {
-
+    private synchronized void deletePost(String id) {
+        linkedInTemplate.restOperations().delete(
+                "http://api.linkedin.com/v1/posts/{post-id}", id);
     }
 }

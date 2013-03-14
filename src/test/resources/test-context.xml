@@ -144,6 +144,7 @@
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+
     <bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
@@ -310,12 +311,15 @@
     <!-- LinkedIn indexer for Solr -->
     <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
 
+    <!-- indexing service for database and LinkedIn indexing -->
+    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingService" />
+
     <!--==================  LinkedIn template ==================-->
 
     <bean id="linkedInTemplate" class="org.springframework.social.linkedin.api.impl.LinkedInTemplate">
-        <constructor-arg name="accessToken" value="${linkedin.accessToken}"/>
-        <constructor-arg name="accessTokenSecret" value="${linkedin.accessTokenSecret}"/>
-        <constructor-arg name="consumerKey" value="${linkedin.consumerKey}"/>
-        <constructor-arg name="consumerSecret" value="${linkedin.consumerSecret}"/>
-    </bean>
+    <constructor-arg name="accessToken" value="${linkedin.accessToken}"/>
+    <constructor-arg name="accessTokenSecret" value="${linkedin.accessTokenSecret}"/>
+    <constructor-arg name="consumerKey" value="${linkedin.consumerKey}"/>
+    <constructor-arg name="consumerSecret" value="${linkedin.consumerSecret}"/>
+</bean>
 </beans>
