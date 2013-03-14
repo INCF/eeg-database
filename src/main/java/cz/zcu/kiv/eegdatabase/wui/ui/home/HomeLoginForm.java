@@ -46,7 +46,7 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
                     setResponsePage(WelcomePage.class);
 
                 } else {
-                    error("fail");
+                    error("User cannot be log in.");
                 }
             }
         };

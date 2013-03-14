@@ -25,11 +25,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.AddMemberToGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitionsPage;
@@ -117,6 +118,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("groups-my", MyGroupsPage.class);
         mountPage("groups-member-list", ListOfMembersGroupPage.class);
         mountPage("groups-member-add", AddMemberToGroupPage.class);
+        mountPage("groups-form", ResearchGroupFormPage.class);
 
         mountPage("people-list", ListPersonPage.class);
         mountPage("people-detail", PersonDetailPage.class);

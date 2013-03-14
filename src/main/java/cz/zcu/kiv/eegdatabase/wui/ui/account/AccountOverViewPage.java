@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.account;
 
 import java.util.List;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
@@ -21,6 +22,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AccountOverViewPage extends MenuPage {
@@ -40,6 +42,9 @@ public class AccountOverViewPage extends MenuPage {
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
         Person user = EEGDataBaseSession.get().getLoggedUser();
+        
+        if(user == null)
+            throw new RestartResponseAtInterceptPageException(HomePage.class);
 
         add(new Label("userName", new PropertyModel<String>(user, "email")));
         add(new Label("fullName", user.getGivenname() + " " + user.getSurname()));

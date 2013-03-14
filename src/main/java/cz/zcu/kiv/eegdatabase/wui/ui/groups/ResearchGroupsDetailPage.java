@@ -21,6 +21,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ResearchGroupsDetailPage extends MenuPage {
@@ -64,19 +66,12 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
         BookmarkablePageLink<Void> listOfMembers = new BookmarkablePageLink<Void>("listOfMembers", ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
         BookmarkablePageLink<Void> addMember = new BookmarkablePageLink<Void>("addMember", AddMemberToGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+        BookmarkablePageLink<Void> editGroup = new BookmarkablePageLink<Void>("editGroup", ResearchGroupFormPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
 
         boolean userIsAdminInGroup = securityFacade.userIsAdminInGroup(groupId);
         listOfMembers.setVisibilityAllowed(securityFacade.userIsExperimenterInGroup(groupId));
         addMember.setVisibilityAllowed(userIsAdminInGroup);
 
-        Link<Void> editGroup = new Link<Void>("editGroup") {
-
-            @Override
-            public void onClick() {
-                // TODO edit group action
-
-            }
-        };
         editGroup.setVisibilityAllowed(userIsAdminInGroup);
 
         add(requestMembership, listOfMembers, addMember, editGroup);

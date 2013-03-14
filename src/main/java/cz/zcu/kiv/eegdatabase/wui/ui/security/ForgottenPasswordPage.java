@@ -43,9 +43,9 @@ public class ForgottenPasswordPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-                    Person person = ForgottenForm.this.getModelObject();
-
-                    if (personFacade.usernameExists(person.getUsername())) {
+                    Person personObj = ForgottenForm.this.getModelObject();
+                    Person person = personFacade.getPerson(personObj.getUsername());
+                    if (person != null && person.isConfirmed()) {
                         personFacade.forgottenPassword(person);
 
                         info(ResourceUtils.getString("pageTitle.forgottenPasswordSuccess"));

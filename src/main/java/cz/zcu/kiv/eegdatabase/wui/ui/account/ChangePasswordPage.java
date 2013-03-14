@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.account;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -32,6 +33,7 @@ public class ChangePasswordPage extends MenuPage {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.changePassword"));
 
+        add(new Label("headTitle", ResourceUtils.getModel("pageTitle.changePassword")));
         setupComponents(true);
     }
 
@@ -41,7 +43,8 @@ public class ChangePasswordPage extends MenuPage {
         if (!value.isNull() && !value.isEmpty() && value.toString().equals(PARAM_ID)) {
             add(new Label("headTitle", ResourceUtils.getModel("pageTitle.changesWereMade")));
             setupComponents(false);
-        }
+        } else
+            throw new RestartResponseAtInterceptPageException(AccountOverViewPage.class);
 
     }
 

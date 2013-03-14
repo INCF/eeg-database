@@ -4,35 +4,27 @@
   lang="en">
 <body>
   <wicket:extend>
-
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
     <div class="mainContentWithMenu">
 
-      <h1>
-        <wicket:message key="pageTitle.addMemberToGroup" />
-      </h1>
-
-      <h2 wicket:id="title">group title</h2>
+      <h1 wicket:id="title"></h1>
 
       <form class="standardForm" wicket:id="form">
         <fieldset>
-
           <div class="textBox">
-            <label for="username"><wicket:message key="label.email" /></label>
-            <input type="text" wicket:id="username" />
+            <label for="researchGroupTitle" cssErrorClass="error"><wicket:message key="label.researchGroupTitle" /></label>
+            <input path="researchGroupTitle" wicket:id="title"/>
           </div>
 
-
-          <div class="selectBox">
-            <label for="roles"><wicket:message key="label.userRole" /></label>
-            <select path="userRole" wicket:id="roles"></select>
+          <div class="textareaBox">
+            <label path="researchGroupDescription"> <wicket:message key="label.researchGroupDescription" /></label>
+            <textarea path="researchGroupDescription" wicket:id="description"></textarea>
           </div>
 
-          <div class="itemBox">
+          <div class="submitBox">
             <input type="submit" class="submitButton lightButtonLink" wicket:id="submit"/>
           </div>
-
         </fieldset>
       </form>
     </div>

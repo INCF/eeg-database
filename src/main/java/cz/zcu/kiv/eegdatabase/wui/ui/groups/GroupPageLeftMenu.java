@@ -5,6 +5,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
 
 public enum GroupPageLeftMenu implements IButtonPageMenu {
 
@@ -12,7 +13,7 @@ public enum GroupPageLeftMenu implements IButtonPageMenu {
     MY_GROUPS(MyGroupsPage.class, "menuItem.myGroups", null),
     REQUEST_FOR_GROUP_ROLE(UnderConstructPage.class, "menuItem.requestForGroupRole", null),
     BOOKING_ROOM(UnderConstructPage.class, "menuItem.bookingRoom", null),
-    CREATE_GROUP(UnderConstructPage.class, "menuItem.createGroup", null), ;
+    CREATE_GROUP(ResearchGroupFormPage.class, "menuItem.createGroup", null), ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;

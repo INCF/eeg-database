@@ -7,13 +7,26 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
+import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
+import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonOptParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
 
@@ -22,6 +35,43 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     ResearchGroupDao researchGroupDAO;
     PersonDao personDAO;
     GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> membershipDao;
+    
+    HardwareDao hardwareDao;
+    GenericListDao<Artifact> artifactDao;
+    WeatherDao weatherDao;
+    ExperimentOptParamDefDao experiemntParamDefDao;
+    FileMetadataParamDefDao fileMetadataParamDefDao;
+    PersonOptParamDefDao personOptParamDefDao;
+    
+    @Required
+    public void setPersonOptParamDefDao(PersonOptParamDefDao personOptParamDefDao) {
+        this.personOptParamDefDao = personOptParamDefDao;
+    }
+    
+    @Required
+    public void setFileMetadataParamDefDao(FileMetadataParamDefDao fileMetadataParamDefDao) {
+        this.fileMetadataParamDefDao = fileMetadataParamDefDao;
+    }
+    
+    @Required
+    public void setExperiemntParamDefDao(ExperimentOptParamDefDao experiemntParamDefDao) {
+        this.experiemntParamDefDao = experiemntParamDefDao;
+    }
+
+    @Required
+    public void setWeatherDao(WeatherDao weatherDao) {
+        this.weatherDao = weatherDao;
+    }
+    
+    @Required
+    public void setArtifactDao(GenericListDao<Artifact> artifactDao) {
+        this.artifactDao = artifactDao;
+    }
+
+    @Required
+    public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
+    }
 
     @Required
     public void setResearchGroupDAO(ResearchGroupDao researchGroupDAO) {
@@ -109,7 +159,22 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional
     public Integer create(ResearchGroup group) {
-        return researchGroupDAO.create(group);
+
+        log.debug("Saving new ResearchGroup object.");
+        Integer groupId = researchGroupDAO.create(group);
+
+        log.debug("Assigning user to the group as member with level GROUP_ADMIN.");
+        ResearchGroupMembership membership = new ResearchGroupMembership();
+        membership.setAuthority(Util.GROUP_ADMIN);
+        membership.setId(new ResearchGroupMembershipId(group.getPerson().getPersonId(), groupId));
+        log.debug("Saving membership relation.");
+        membershipDao.create(membership);
+
+        log.debug("Creating of research group done.");
+        
+        preparedDefaultListsForNewGroup(group);
+
+        return groupId;
     }
 
     @Override
@@ -218,6 +283,62 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Transactional(readOnly = true)
     public int getCountMemberhipRecords() {
         return membershipDao.getCountRecords();
+    }
+    
+    private void preparedDefaultListsForNewGroup(ResearchGroup researchGroup){
+        List<Hardware> hardwareList = hardwareDao.getDefaultRecords();
+        Hardware hardware;
+        Weather weather;
+        PersonOptParamDef personOptParamDef;
+        FileMetadataParamDef fileMetadataParamDef;
+        ExperimentOptParamDef experimentOptParamDef;
+
+        for(int i = 0;i< hardwareList.size();i++){
+            hardware = new Hardware();
+            hardware.setDefaultNumber(0);
+            hardware.setDescription(hardwareList.get(i).getDescription());
+            hardware.setTitle(hardwareList.get(i).getTitle());
+            hardware.setType(hardwareList.get(i).getType());
+            hardwareDao.create(hardware);
+            hardwareDao.createGroupRel(hardware,researchGroup);
+        }
+        List<Weather> weatherList = weatherDao.getDefaultRecords();
+        for(int i = 0;i< weatherList.size();i++){
+            weather = new Weather();
+            weather.setDefaultNumber(0);
+            weather.setDescription(weatherList.get(i).getDescription());
+            weather.setTitle(weatherList.get(i).getTitle());
+            weatherDao.create(weather);
+            weatherDao.createGroupRel(weather,researchGroup);
+        }
+
+        List<PersonOptParamDef> personOptParamDefList = personOptParamDefDao.getDefaultRecords();
+        for(int i = 0;i< personOptParamDefList.size();i++){
+            personOptParamDef = new PersonOptParamDef();
+            personOptParamDef.setDefaultNumber(0);
+            personOptParamDef.setParamDataType(personOptParamDefList.get(i).getParamDataType());
+            personOptParamDef.setParamName(personOptParamDefList.get(i).getParamName());
+            personOptParamDefDao.create(personOptParamDef);
+            personOptParamDefDao.createGroupRel(personOptParamDef,researchGroup);
+        }
+        List<FileMetadataParamDef> fileMetadataParamDefList = fileMetadataParamDefDao.getDefaultRecords();
+        for(int i = 0;i< fileMetadataParamDefList.size();i++){
+            fileMetadataParamDef = new FileMetadataParamDef();
+            fileMetadataParamDef.setDefaultNumber(0);
+            fileMetadataParamDef.setParamDataType(fileMetadataParamDefList.get(i).getParamDataType());
+            fileMetadataParamDef.setParamName(fileMetadataParamDefList.get(i).getParamName());
+            fileMetadataParamDefDao.create(fileMetadataParamDef);
+            fileMetadataParamDefDao.createGroupRel(fileMetadataParamDef,researchGroup);
+        }
+        List<ExperimentOptParamDef> experimentOptParamDefList = experiemntParamDefDao.getDefaultRecords();
+        for(int i = 0;i< experimentOptParamDefList.size();i++){
+            experimentOptParamDef = new ExperimentOptParamDef();
+            experimentOptParamDef.setDefaultNumber(0);
+            experimentOptParamDef.setParamDataType(experimentOptParamDefList.get(i).getParamDataType());
+            experimentOptParamDef.setParamName(experimentOptParamDefList.get(i).getParamName());
+            experiemntParamDefDao.create(experimentOptParamDef);
+            experiemntParamDefDao.createGroupRel(experimentOptParamDef,researchGroup);
+        }
     }
 
 }

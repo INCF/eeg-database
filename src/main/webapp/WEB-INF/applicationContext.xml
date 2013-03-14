@@ -63,6 +63,7 @@
 
     <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" >
         <property name="membershipDao" ref="researchGroupMembershipDao"/>
+        <property name="artifactDao" ref="artifactDao"/>
     </bean>
     <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
 
