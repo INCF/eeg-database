@@ -21,8 +21,14 @@ public class LinkedInIndexer extends Indexer<Post> {
     private final static String SOURCE_LINKEDIN = "linkedin";
 
     @Override
-    public void unindex(Post instance) throws Exception {
+    public void unindex(Post post) throws IOException, SolrServerException {
+        solrServer.deleteById(post.getId());
+        solrServer.commit();
+    }
 
+    public void unindexAll() throws IOException, SolrServerException {
+        solrServer.deleteByQuery("source:linkedin");
+        solrServer.commit();
     }
 
     @Override

@@ -35,6 +35,7 @@ public class PojoIndexer<T> extends Indexer<T> {
 
     /**
      * Removes the indexed POJO values from the Solr index.
+     *
      * @param instance POJO whose document in the index should be removed.
      * @throws IOException
      * @throws SolrServerException
@@ -42,7 +43,7 @@ public class PojoIndexer<T> extends Indexer<T> {
     public void unindex(T instance) throws IOException, SolrServerException {
 
         Field[] fields = instance.getClass().getDeclaredFields();
-        String className =  instance.getClass().getName();
+        String className = instance.getClass().getName();
         int id = 0;
 
         for (Field field : fields) {
@@ -61,6 +62,12 @@ public class PojoIndexer<T> extends Indexer<T> {
         solrServer.commit();
     }
 
+    @Override
+    public void unindexAll() throws IOException, SolrServerException {
+        solrServer.deleteByQuery("!source:linkedin");
+        solrServer.commit();
+    }
+
     private SolrInputDocument getDocumentFromAnnotatedFields(T instance) throws IllegalAccessException {
         SolrInputDocument document = new SolrInputDocument();
         Field[] fields = instance.getClass().getDeclaredFields();
@@ -68,7 +75,14 @@ public class PojoIndexer<T> extends Indexer<T> {
             // check presence of the SolrField annotation for each field
             if (field.isAnnotationPresent(SolrField.class)) {
                 field.setAccessible(true); // necessary since all fields are private
-                Object fieldValue = field.get(instance);
+                Object fieldValue = field.get(instance); // actual value of the annotated field
+                log.debug(instance.getClass().getName());
+
+                // null values are skipped
+                if (fieldValue == null) {
+                    continue;
+                }
+
                 log.info("Indexing - field: "
                         + field.getAnnotation(SolrField.class).name().getValue()
                         + " value: " + fieldValue.toString());
@@ -82,7 +96,7 @@ public class PojoIndexer<T> extends Indexer<T> {
 
     private SolrInputDocument createDocumentId(T instance, SolrInputDocument document) {
         Field[] fields = instance.getClass().getDeclaredFields();
-        String className =  instance.getClass().getName();
+        String className = instance.getClass().getName();
         for (Field field : fields) {
             // add uuid, class name and id of the instance to the solr index
             if (field.isAnnotationPresent(SolrId.class)) {
@@ -93,6 +107,7 @@ public class PojoIndexer<T> extends Indexer<T> {
                 } catch (IllegalAccessException e) {
                     e.printStackTrace();
                 }
+                log.debug("ID: " + id);
                 document.addField(IndexField.UUID.getValue(), className + id);
                 document.addField(IndexField.ID.getValue(), id);
                 document.addField(IndexField.CLASS.getValue(), className);
@@ -100,7 +115,7 @@ public class PojoIndexer<T> extends Indexer<T> {
             }
         }
         return document;
-     }
+    }
 
     public void getDocumentFieldValuePairs(SolrInputDocument document) {
         Iterator<String> nameIterator = document.getFieldNames().iterator();
