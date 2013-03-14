@@ -113,13 +113,19 @@ public class LinkedInManager {
     /**
      * Returns all posts from the EEG database group.
      * Posts contain all required information.
-     * @return list of posts with more detailed information from EEG/ERP portal group on LinkedIn.
+     * @param count number of posts to be returned. The maximum value is 50.
+     * @param start index of the first returned post
+     * @return list of posts with more detailed information from the EEG/ERP portal group on LinkedIn.
      */
-    public synchronized List<Post> getGroupPostsWithMoreInfo() {
+    public synchronized List<Post> getGroupPostsWithMoreInfo(int count, int start) {
         Group.GroupPosts groupPosts = linkedin.restOperations().getForObject(
                 "http://api.linkedin.com/v1/groups/{group-id}/posts" +
                         ":(creation-timestamp,title,summary,id," +
-                        "creator:(first-name,last-name))?order=recency", Group.GroupPosts.class, groupId);
+                        "creator:(first-name,last-name))?" +
+                        "count=" + count +
+                        "&start=" + start +
+                        "&order=recency",
+                Group.GroupPosts.class, groupId);
         return groupPosts.getPosts();
     }
 
@@ -146,7 +152,7 @@ public class LinkedInManager {
     public synchronized Post getLastPost() {
         // the line below is commented because it returns the null value for summary
         // return linkedInTemplate.groupOperations().getGroupDetails(groupId).getPosts().getPosts().get(0);
-        return getGroupPostsWithMoreInfo().get(0);
+        return getGroupPostsWithMoreInfo(1,0).get(0);
     }
 
     /**
@@ -172,6 +178,15 @@ public class LinkedInManager {
         log.info(myPost.getId());
         log.info(myPost.getTitle());
         return myPost;
+    }
+
+    /**
+     * Deletes a post.
+     * @param id The id of the post to be deleted.
+     */
+    public synchronized void deletePost(String id) {
+        linkedin.restOperations().delete(
+                "http://api.linkedin.com/v1/posts/{post-id}", id);
     }
 
 }
