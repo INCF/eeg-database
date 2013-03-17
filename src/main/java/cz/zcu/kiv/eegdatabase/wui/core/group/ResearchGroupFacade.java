@@ -2,13 +2,16 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
+import org.springframework.mail.MailException;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
-public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integer>{
+public interface ResearchGroupFacade extends GenericFacade<ResearchGroup, Integer> {
 
     void delete(ResearchGroup user);
 
@@ -37,7 +40,8 @@ public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integ
     int getCountForList();
 
     List<ResearchGroup> getGroupsForList(int start, int limit);
-    
+
+    // MEMBERSHIP
     ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance);
 
     ResearchGroupMembership readMemberhip(ResearchGroupMembershipId id);
@@ -55,4 +59,25 @@ public interface ResearchGroupFacade  extends GenericFacade<ResearchGroup, Integ
     List<ResearchGroupMembership> getMemberhipRecordsAtSides(int first, int max);
 
     int getCountMemberhipRecords();
+
+    // GROUP ROLE REQUEST
+    Integer createPermissionRequest(GroupPermissionRequest newInstance) throws MailException;
+
+    GroupPermissionRequest readPermissionRequest(int id);
+
+    List<GroupPermissionRequest> readPermissionRequestByParameter(String parameterName, int parameterValue);
+
+    List<GroupPermissionRequest> readPermissionRequestByParameter(String parameterName, String parameterValue);
+
+    void updatePermissionRequest(GroupPermissionRequest transientObject);
+
+    void deletePermissionRequest(GroupPermissionRequest persistentObject);
+
+    List<GroupPermissionRequest> getAllPermissionRequestRecords();
+
+    List<GroupPermissionRequest> getPermissionRequestRecordsAtSides(int first, int max);
+
+    int getCountPermissionRequestRecords();
+
+    void grantGroupPermisson(GroupPermissionRequest request);
 }

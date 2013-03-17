@@ -12,12 +12,14 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.HierarchicalMessageSource;
 import org.springframework.mail.MailException;
 import org.springframework.mail.MailPreparationException;
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 
 /**
@@ -96,8 +98,8 @@ public class SpringJavaMailService implements MailService {
         sb.append("<p>");
         sb.append(messageSource.getMessage("editgrouprole.email.body.clickToConfirm", null, locale));
         sb.append("<br/>");
-        sb.append("<a href=\"http://" + domain + "/groups/accept-role-request.html?id=" + requestId + "\">" +
-                "http://" + domain + "/groups/accept-role-request.html?id=" + requestId + "</a>");
+        String requestUrl = PageParametersUtils.getUrlForPage(GroupRoleAcceptPage.class, PageParametersUtils.getDefaultPageParameters(requestId));
+        sb.append("<a href=\"" + requestUrl + "\">" + requestUrl + "</a>");
         sb.append("</p>");
         sb.append("</body></html>");
 
@@ -144,7 +146,7 @@ public class SpringJavaMailService implements MailService {
             return true;
         } catch (MailException e) {
             log.error(e.getMessage(), e);
-            return false;
+            throw new MailSendException(e.getMessage(), e);
         }
     }
 

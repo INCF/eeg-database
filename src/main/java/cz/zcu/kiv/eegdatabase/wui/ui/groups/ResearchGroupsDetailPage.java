@@ -4,16 +4,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.springframework.mail.MailException;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -49,19 +57,45 @@ public class ResearchGroupsDetailPage extends MenuPage {
         StringValue value = parseParameters(parameters);
 
         int groupId = value.toInt();
-        ResearchGroup group = researchGroupFacade.getResearchGroupById(groupId);
+        final ResearchGroup group = researchGroupFacade.getResearchGroupById(groupId);
 
         add(new Label("title", group.getTitle()));
         add(new Label("description", group.getDescription()));
 
-        Link<Void> requestMembership = new Link<Void>("request") {
+        AjaxLink<Void> requestMembership = new AjaxLink<Void>("request") {
+
+            private static final long serialVersionUID = 1L;
 
             @Override
-            public void onClick() {
-                // TODO missing action
+            public void onClick(AjaxRequestTarget target) {
+                try {
 
+                    GroupPermissionRequest request = new GroupPermissionRequest();
+                    request.setPerson(EEGDataBaseSession.get().getLoggedUser());
+                    request.setResearchGroup(group);
+                    request.setRequestedPermission(Util.GROUP_EXPERIMENTER);
+
+                    researchGroupFacade.createPermissionRequest(request);
+                    info("Request was send.");
+                    setVisibilityAllowed(false);
+                    target.add(this);
+                } catch (MailException e) {
+                    error("Request was not send.");
+                }
+                target.add(getFeedback());
+            }
+
+            @Override
+            protected void updateAjaxAttributes(AjaxRequestAttributes attributes)
+            {
+                super.updateAjaxAttributes(attributes);
+
+                AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.confirmSendingMembershipRequest", new Model<ResearchGroup>(group)) + "');");
+                attributes.getAjaxCallListeners().add(ajaxCallListener);
             }
         };
+
         requestMembership.setVisibilityAllowed(!securityFacade.userIsMemberInGroup(groupId));
 
         BookmarkablePageLink<Void> listOfMembers = new BookmarkablePageLink<Void>("listOfMembers", ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));

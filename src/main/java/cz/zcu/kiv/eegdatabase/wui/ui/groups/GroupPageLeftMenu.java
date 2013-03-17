@@ -6,12 +6,13 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleRequestPage;
 
 public enum GroupPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_GROUPS(ListResearchGroupsPage.class, "menuItem.listOfGroups", null),
     MY_GROUPS(MyGroupsPage.class, "menuItem.myGroups", null),
-    REQUEST_FOR_GROUP_ROLE(UnderConstructPage.class, "menuItem.requestForGroupRole", null),
+    REQUEST_FOR_GROUP_ROLE(GroupRoleRequestPage.class, "menuItem.requestForGroupRole", null),
     BOOKING_ROOM(UnderConstructPage.class, "menuItem.bookingRoom", null),
     CREATE_GROUP(ResearchGroupFormPage.class, "menuItem.createGroup", null), ;
 

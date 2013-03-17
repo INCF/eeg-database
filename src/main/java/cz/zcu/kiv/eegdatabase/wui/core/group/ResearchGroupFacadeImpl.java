@@ -2,12 +2,12 @@ package cz.zcu.kiv.eegdatabase.wui.core.group;
 
 import java.util.List;
 
-import oracle.net.aso.s;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.mail.MailException;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
@@ -128,7 +128,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     public int getCountRecords() {
         return service.getCountRecords();
     }
-    
+
     @Override
     public ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance) {
         return service.createMemberhip(newInstance);
@@ -172,6 +172,56 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     @Override
     public int getCountMemberhipRecords() {
         return service.getCountMemberhipRecords();
+    }
+
+    @Override
+    public Integer createPermissionRequest(GroupPermissionRequest newInstance) throws MailException {
+        return service.createPermissionRequest(newInstance);
+    }
+
+    @Override
+    public GroupPermissionRequest readPermissionRequest(int id) {
+        return service.readPermissionRequest(id);
+    }
+
+    @Override
+    public List<GroupPermissionRequest> readPermissionRequestByParameter(String parameterName, int parameterValue) {
+        return service.readPermissionRequestByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<GroupPermissionRequest> readPermissionRequestByParameter(String parameterName, String parameterValue) {
+        return service.readPermissionRequestByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public void updatePermissionRequest(GroupPermissionRequest transientObject) {
+        service.updatePermissionRequest(transientObject);
+    }
+
+    @Override
+    public void deletePermissionRequest(GroupPermissionRequest persistentObject) {
+        service.deletePermissionRequest(persistentObject);
+    }
+
+    @Override
+    public List<GroupPermissionRequest> getAllPermissionRequestRecords() {
+        return service.getAllPermissionRequestRecords();
+    }
+
+    @Override
+    public List<GroupPermissionRequest> getPermissionRequestRecordsAtSides(int first, int max) {
+        return service.getPermissionRequestRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountPermissionRequestRecords() {
+        return service.getCountPermissionRequestRecords();
+    }
+
+    @Override
+    public void grantGroupPermisson(GroupPermissionRequest request) {
+        service.grantGroupPermisson(request);
     }
 
 }
