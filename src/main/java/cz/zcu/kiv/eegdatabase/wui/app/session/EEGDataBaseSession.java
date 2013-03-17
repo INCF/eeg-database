@@ -132,14 +132,12 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
     private void createShoppingCart(){
-        this.shoppingCart = new ShoppingCart();
+        if(this.shoppingCart == null){
+            this.shoppingCart = new ShoppingCart();
+        }
     }
 
     public ShoppingCart getShoppingCart(){
         return shoppingCart;
-    }
-
-    public void addToCart(){
-
     }
 }
