@@ -12,7 +12,8 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
-@XmlType(propOrder = {"experimentId", "scenario", "artifact", "startTime", "endTime", "subject", "diseases", "hardwareList", "digitization", "environmentNote", "weather"})
+@XmlType(propOrder = {"experimentId", "scenario", "artifact", "startTime", "endTime", "subject",
+        "diseases", "hardwareList", "digitization", "environmentNote", "weather", "electrodeConf"})
 @XmlRootElement(name = "experiment")
 public class ExperimentData {
 
@@ -26,6 +27,7 @@ public class ExperimentData {
     private SubjectData subject;
     private DiseaseDataList diseases;
     private DigitizationData digitization;
+    private ElectrodeConfData electrodeConf;
 
 
     public ExperimentData() {
@@ -119,5 +121,13 @@ public class ExperimentData {
 
     public void setHardwareList(HardwareDataList hardwareList) {
         this.hardwareList = hardwareList;
+    }
+
+    public ElectrodeConfData getElectrodeConf() {
+        return electrodeConf;
+    }
+
+    public void setElectrodeConf(ElectrodeConfData electrodeConf) {
+        this.electrodeConf = electrodeConf;
     }
 }

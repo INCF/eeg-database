@@ -18,6 +18,7 @@ import java.util.*;
  *         Date: 24.2.13
  */
 @Service
+@Transactional
 public class ExperimentServiceImpl implements ExperimentService {
 
     private final Comparator<ExperimentData> idComparator = new Comparator<ExperimentData>() {
@@ -78,6 +79,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             subjectData.setLeftHanded(subject.getLaterality() == 'L' || subject.getLaterality() == 'l');
             subjectData.setGender(subject.getGender());
             subjectData.setAge(Years.yearsBetween(new LocalDate(subject.getDateOfBirth()), new LocalDate()).getYears());
+            subjectData.setMail(subject.getUsername());
 
             Artifact artifact = exp.getArtifact();
             ArtifactData artifactData = new ArtifactData();
@@ -112,6 +114,56 @@ public class ExperimentServiceImpl implements ExperimentService {
                 hardwareDatas.add(hw);
             }
 
+            ElectrodeConf elConf = exp.getElectrodeConf();
+            ElectrodeConfData electrodeConfData = new ElectrodeConfData();
+            //set primitive types
+            electrodeConfData.setId(elConf.getElectrodeConfId());
+            electrodeConfData.setId(elConf.getImpedance());
+            //set electrode system
+            ElectrodeSystem elSystem = elConf.getElectrodeSystem();
+            ElectrodeSystemData electrodeSystemData = new ElectrodeSystemData();
+            electrodeSystemData.setId(elSystem.getElectrodeSystemId());
+            electrodeSystemData.setDescription(elSystem.getDescription());
+            electrodeSystemData.setTitle(elSystem.getTitle());
+            electrodeSystemData.setDefaultNumber(elSystem.getDefaultNumber());
+            electrodeConfData.setElectrodeSystem(electrodeSystemData);
+            //set electrode locations
+            Set<ElectrodeLocation> elLocations = elConf.getElectrodeLocations();
+
+            if(elLocations != null && !elLocations.isEmpty()){
+                List<ElectrodeLocationData> electrodeLocations = new ArrayList<ElectrodeLocationData>(elLocations.size());
+
+                for(ElectrodeLocation el : elLocations){
+                    ElectrodeLocationData electrodeLocation = new ElectrodeLocationData();
+                    //set primitives
+                    electrodeLocation.setId(el.getElectrodeLocationId());
+                    electrodeLocation.setTitle(el.getTitle());
+                    electrodeLocation.setDescription(el.getDescription());
+                    electrodeLocation.setAbbr(el.getShortcut());
+                    electrodeLocation.setDefaultNumber(el.getDefaultNumber());
+                    //set complex types
+                    ElectrodeFix elFix = el.getElectrodeFix();
+                    ElectrodeFixData electrodeFix = new ElectrodeFixData();
+                    electrodeFix.setId(elFix.getElectrodeFixId());
+                    electrodeFix.setTitle(elFix.getTitle());
+                    electrodeFix.setDescription(elFix.getDescription());
+                    electrodeFix.setDefaultNumber(elFix.getDefaultNumber());
+                    electrodeLocation.setElectrodeFix(electrodeFix);
+
+                    ElectrodeType elType = el.getElectrodeType();
+                    ElectrodeTypeData electrodeType = new ElectrodeTypeData();
+                    electrodeType.setId(elType.getElectrodeTypeId());
+                    electrodeType.setTitle(elType.getTitle());
+                    electrodeType.setDescription(elType.getDescription());
+                    electrodeType.setDefaultNumber(elType.getDefaultNumber());
+                    electrodeLocation.setElectrodeType(electrodeType);
+
+                    electrodeLocations.add(electrodeLocation);
+                }
+                electrodeConfData.setElectrodeLocations(new ElectrodeLocationDataList(electrodeLocations));
+            }
+
+            expData.setElectrodeConf(electrodeConfData);
             expData.setHardwareList(new HardwareDataList(hardwareDatas));
             expData.setScenario(scenarioData);
             expData.setArtifact(artifactData);

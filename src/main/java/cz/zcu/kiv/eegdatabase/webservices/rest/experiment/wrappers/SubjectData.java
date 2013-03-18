@@ -10,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
  *         Date: 9.3.13
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "subject", propOrder = {"personId", "name", "surname", "gender", "age", "leftHanded" })
+@XmlType(name = "subject", propOrder = {"personId", "name", "surname", "gender", "age", "leftHanded", "mailUsername", "mailDomain"})
 public class SubjectData {
 
     private int personId;
@@ -18,6 +18,8 @@ public class SubjectData {
     private String gender;
     private int age;
     private boolean leftHanded;
+    private String mailUsername;
+    private String mailDomain;
 
     public int getPersonId() {
         return personId;
@@ -69,5 +71,32 @@ public class SubjectData {
 
     public void setLeftHanded(boolean leftHanded) {
         this.leftHanded = leftHanded;
+    }
+
+    @XmlTransient
+    public void setMail(String mail) {
+        if (mail != null && mail.contains("@")) {
+            String[] mailParts = mail.split("@");
+            if (mailParts.length == 2) {
+                mailUsername = mailParts[0];
+                mailDomain = mailParts[1];
+            }
+        }
+    }
+
+    public String getMailUsername() {
+        return mailUsername;
+    }
+
+    public void setMailUsername(String mailUsername) {
+        this.mailUsername = mailUsername;
+    }
+
+    public String getMailDomain() {
+        return mailDomain;
+    }
+
+    public void setMailDomain(String mailDomain) {
+        this.mailDomain = mailDomain;
     }
 }

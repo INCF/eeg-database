@@ -20,7 +20,7 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeFix" fetch="select" name="electrodeFix">
             <column name="ELECTRODE_FIX_ID" precision="22" scale="0"/>
         </many-to-one>
-        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem" fetch="select" name="electrodeType">
+        <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeType" fetch="select" name="electrodeType">
             <column name="ELECTRODE_TYPE_ID" precision="22" scale="0"/>
         </many-to-one>
         <set inverse="true" name="electrodeConfs" table="ELECTRODE_LOCATION_REL">
