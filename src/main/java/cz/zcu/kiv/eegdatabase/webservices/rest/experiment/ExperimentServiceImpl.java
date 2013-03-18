@@ -163,6 +163,33 @@ public class ExperimentServiceImpl implements ExperimentService {
                 electrodeConfData.setElectrodeLocations(new ElectrodeLocationDataList(electrodeLocations));
             }
 
+            Set<Pharmaceutical> pharms = exp.getPharmaceuticals();
+            List<PharmaceuticalData> pharmaceuticals = new ArrayList<PharmaceuticalData>();
+            if(pharms != null && !pharms.isEmpty()){
+                for(Pharmaceutical p : pharms) {
+                   PharmaceuticalData pharmaceutical = new PharmaceuticalData();
+                    pharmaceutical.setId(p.getPharmaceuticalId());
+                    pharmaceutical.setTitle(p.getTitle());
+                    pharmaceutical.setDescription(p.getDescription());
+                    pharmaceuticals.add(pharmaceutical);
+                }
+            }
+
+            Set<Software> softs = exp.getSoftwares();
+            List<SoftwareData> softwareList = new ArrayList<SoftwareData>();
+            if(softs != null && !softs.isEmpty()){
+                for(Software s : softs){
+                    SoftwareData software = new SoftwareData();
+                    software.setId(s.getSoftwareId());
+                    software.setTitle(s.getTitle());
+                    software.setDescription(s.getDescription());
+                    software.setDefaultNumber(s.getDefaultNumber());
+                    softwareList.add(software);
+                }
+            }
+
+            expData.setPharmaceuticals(new PharmaceuticalDataList(pharmaceuticals));
+            expData.setSoftwareList(new SoftwareDataList(softwareList));
             expData.setElectrodeConf(electrodeConfData);
             expData.setHardwareList(new HardwareDataList(hardwareDatas));
             expData.setScenario(scenarioData);

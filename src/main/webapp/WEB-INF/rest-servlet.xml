@@ -73,6 +73,16 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SubjectData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ArtifactData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DigitizationData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationDataList</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeTypeData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeConfData</value>
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupDataList</value>

@@ -6,6 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Data container for marshaling list of hardware containers.
+ * Allows XML marshaling using JAXB.
+ *
  * @author Petr Miko
  *         Date: 9.2.13
  */
