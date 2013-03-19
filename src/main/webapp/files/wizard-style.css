@@ -1,0 +1,388 @@
+html, body {
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    padding: 0;
+    background: white;
+    font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+    font-family: Verdana, "Geneva CE", lucida, sans-serif;
+    font-weight: normal;
+    font-size: small;
+}
+
+.container {
+    border-radius: 12px;
+    -moz-border-radius: 12px;
+    -webkit-border-radius: 12px;
+}
+
+.nav {
+    list-style: none;
+    padding: 0px;
+    margin: 0px;
+    background: #ccc;
+    position: absolute;
+    left: 0;
+    right: 200px;
+    top: 0;
+    bottom: 0;
+    border-radius: 15px 0px 0px 15px;
+    -moz-border-radius: 15px 0 0 15px;
+    -webkit-border-radius: 15px 0 0 15px;
+    width: 200px;
+    font-size: small;
+
+    height: auto;
+    background: white;
+    border-radius: 15px 15px 15px 15px;
+    -moz-border-radius: 15px 15px 15px 15px;
+    -webkit-border-radius: 15px 15px 15px 15px;
+}
+
+.nav>li>a {
+    display: block;
+    width: 170px;
+    height: 28px;
+    padding: 10px;
+    padding-left: 20px;
+    padding-top: 17px;
+    text-decoration: none;
+    text-align: left;
+    text-transform: uppercase;
+    color: black;
+    background-color: #77c2e8;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #77c2e8), color-stop(50%, #39a7e0), color-stop(50%, #219ede), color-stop(100%, #239fde));
+    background-image: -webkit-linear-gradient(top, #77c2e8 0%, #39a7e0 50%, #219ede 50%, #239fde 100%);
+    background-image: -moz-linear-gradient(top, #77c2e8 0%, #39a7e0 50%, #219ede 50%, #239fde 100%);
+    background-image: -ms-linear-gradient(top, #77c2e8 0%, #39a7e0 50%, #219ede 50%, #239fde 100%);
+    background-image: -o-linear-gradient(top, #77c2e8 0%, #39a7e0 50%, #219ede 50%, #239fde 100%);
+    background-image: linear-gradient(top, #77c2e8 0%, #39a7e0 50%, #219ede 50%, #239fde 100%);
+    font-family: Verdana, "Geneva CE", lucida, sans-serif;
+    font-weight: bold;
+
+    padding-top: 15px;
+    padding-bottom: 5px;
+    background: #fbfbfb;
+    width: 150px;
+    margin-left: 10px;
+    -moz-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    box-shadow: inset 0 0 6px 6px #f4f4f4;
+    border-top: 1px solid #dfdfdf;
+    border-bottom: 1px solid #dfdfdf;
+}
+
+.nav>li:first-child>a {
+    border-radius: 12px 0 0 0;
+    -moz-border-radius: 12px 0 0 0;
+    -webkit-border-radius: 12px 0 0 0;
+    padding-top: 19px;
+
+    border-radius: 12px 12px 0 0;
+    -moz-border-radius: 12px 12px 0 0;
+    -webkit-border-radius: 12px 12px 0 0;
+    margin-top: 10px;
+    background: white;
+    -moz-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    box-shadow: inset 0 0 6px 6px #f4f4f4;
+    border-top: #f4f4f4;
+}
+
+.nav>li.last>a {
+    border-radius: 0 0 0 12px;
+    -moz-border-radius: 0 0 0 12px;
+    -webkit-border-radius: 0 0 0 12px;
+
+    border-radius: 0 0 12px 12px;
+    -moz-border-radius: 0 0 12px 12px;
+    -webkit-border-radius: 0 0 12px 12px;
+    background: white;
+    -moz-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    box-shadow: inset 0 0 6px 6px #f4f4f4;
+    border-bottom: #f4f4f4;
+}
+
+.nav>li>a:hover {
+    background-color: #ffffff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #ffffff), color-stop(50%, #d1ebf8), color-stop(50%, #bee3f6), color-stop(100%, #c0e4f6));
+    background-image: -webkit-linear-gradient(top, #ffffff 0%, #d1ebf8 50%, #bee3f6 50%, #c0e4f6 100%);
+    background-image: -moz-linear-gradient(top, #ffffff 0%, #d1ebf8 50%, #bee3f6 50%, #c0e4f6 100%);
+    background-image: -ms-linear-gradient(top, #ffffff 0%, #d1ebf8 50%, #bee3f6 50%, #c0e4f6 100%);
+    background-image: -o-linear-gradient(top, #ffffff 0%, #d1ebf8 50%, #bee3f6 50%, #c0e4f6 100%);
+    background-image: linear-gradient(top, #ffffff 0%, #d1ebf8 50%, #bee3f6 50%, #c0e4f6 100%);
+
+    background: #dfdfdf;
+    -moz-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    box-shadow: inset 0 0 6px 6px #f4f4f4;
+}
+
+.nav li.selected>a,
+.nav>li>a:active {
+    background-color: #f4fcff;
+    background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f4fcff), color-stop(50%, #c2e4f6), color-stop(50%, #acdbf3), color-stop(100%, #aedbf3));
+    background-image: -webkit-linear-gradient(top, #f4fcff 0%, #c2e4f6 50%, #acdbf3 50%, #aedbf3 100%);
+    background-image: -moz-linear-gradient(top, #f4fcff 0%, #c2e4f6 50%, #acdbf3 50%, #aedbf3 100%);
+    background-image: -ms-linear-gradient(top, #f4fcff 0%, #c2e4f6 50%, #acdbf3 50%, #aedbf3 100%);
+    background-image: -o-linear-gradient(top, #f4fcff 0%, #c2e4f6 50%, #acdbf3 50%, #aedbf3 100%);
+    background-image: linear-gradient(top, #f4fcff 0%, #c2e4f6 50%, #acdbf3 50%, #aedbf3 100%);
+
+    background: #9f9f9f;
+    -moz-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 6px 6px #f4f4f4;
+    box-shadow: inset 0 0 6px 6px #f4f4f4;
+}
+
+.nav>li>a>img {
+    position: absolute;
+    left: 150px;
+    width: 24px;
+    height: 24px;
+    padding: 0px;
+    margin: 0 auto 0 auto;
+    border: none;
+}
+
+/*
+.nav li.selected:after {
+
+    border: solid transparent;
+    border-top: 30px solid transparent;
+    border-bottom: 30px solid transparent;
+
+    border-left: 30px solid silver;
+    content: " ";
+    height: 0;
+    width: 0;
+    position: absolute;
+    pointer-events: none;
+    top: 0px;
+    left: 200px;
+    z-index: 10;
+    margin: 0px;
+    padding: 0px;
+}
+*/
+
+.content {
+    position: absolute;
+    top: 0;
+    left: 200px;
+    right: 0px;
+    height: 100%;
+    width: 560px auto;
+    overflow: auto;
+    background: #f4fcff;
+    border-radius: 0 12px 12px 0;
+    -moz-border-radius: 0 12px 12px 0;
+    -webkit-border-radius: 0 12px 12px 0;
+
+    /* The background is used to specify the border background */
+    background: -moz-linear-gradient(45deg, #acdbf3, #f4fcff, #f4fcff, #acdbf3, #acdbf3, #f4fcff, #f4fcff, #acdbf3);
+    background: -webkit-linear-gradient(45deg, #acdbf3, #f4fcff, #f4fcff, #acdbf3, #acdbf3, #f4fcff, #f4fcff, #acdbf3);
+    /* Background origin is the padding box by default.
+    Override to make the background cover the border as well. */
+    -moz-background-origin: border;
+    background-origin: border-box;
+
+    background: white;
+}
+
+.no-nav {
+    left: 0px;
+}
+
+input:not([type=checkbox]), textarea {
+    width: 250px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+label,
+form h1 {
+    float: left;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-size: small;
+}
+
+label {
+    width: 130px;
+}
+
+input:not([type="checkbox"]), textarea, select {
+    width: 250px;
+    padding: 5px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    -moz-border-radius: 5px;
+    -webkit-border-radius: 5px;
+}
+
+form {
+    position: absolute;
+    top: 8px;
+    left: 8px;
+    height: auto;
+    width: 482px;
+    margin: 0 auto 0 auto;
+    margin-right: 8px;
+    background: #f4fcff;
+    padding: 20px;
+    border-radius: 12px 12px 12px 12px;
+    -moz-border-radius: 12px 12px 12px 12px;
+    -webkit-border-radius: 12px 12px 12px 12px;
+
+    background: white;
+    -moz-box-shadow: inset 0 0 12px 12px #f4f4f4;
+    -webkit-box-shadow: inset 0 0 12px 12px #f4f4f4;
+    box-shadow: inset 0 0 12px 12px #f4f4f4;
+}
+
+.form-item {
+    width: 460px;
+    margin-bottom: 20px;
+    border: 1px solid #b4b4b4;
+    border-radius: 10px;
+    -moz-border-radius: 10px;
+    -webkit-border-radius: 10px;
+    padding: 10px;
+    background-image: -moz-linear-gradient(top, #f7f7f7, #e5e5e5); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #e5e5e5), color-stop(1, #f7f7f7)); /* Saf4+, Chrome */
+}
+
+.form-sub-item {
+    width: 100%;
+    display: block;
+    float: left;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.form-sub-item:before {
+    display: block;
+    content: " ";
+    width: 440;
+    height: 2px;
+    margin-bottom: 10px;
+    background-image: -moz-linear-gradient(top left, #e5e5e5 30%, #b4b4b4 65%, #e5e5e5); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left top, right bottom, color-stop(0, #e5e5e5), color-stop(0.3, #b4b4b4), color-stop(1, #e5e5e5)); /* Saf4+, Chrome */
+
+}
+
+.long-label {
+    width: 50%;
+    margin-bottom: 5px;
+}
+
+.after-long-label {
+    margin-left: 130px;
+}
+
+input[type=submit], input[type=button] {
+    width: 60px;
+    color: #f3f3f3;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background: #0cb114;
+    background-image: -moz-linear-gradient(top, #0cb114, #07580b); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #07580b), color-stop(1, #0cb114)); /* Saf4+, Chrome */
+    -webkit-box-shadow: #4b4b4b 0px 2px 5px;
+    -moz-box-shadow: #4e4e4e 0px 2px 5px;
+    box-shadow: #e3e3e3 0px 2px 5px;
+    border: none;
+    margin-left: 10px;
+}
+
+input[type=reset] {
+    width: 60px;
+    color: #f3f3f3;
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    background: #d01111;
+    background-image: -moz-linear-gradient(top, #d01111, #7e0c0c); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #7e0c0c), color-stop(1, #d01111)); /* Saf4+, Chrome */
+    -webkit-box-shadow: #4b4b4b 0px 2px 5px;
+    -moz-box-shadow: #4e4e4e 0px 2px 5px;
+    box-shadow: #e3e3e3 0px 2px 5px;
+    border: none;
+}
+
+input[type=file] {
+    width: 280px;
+}
+
+input[type=number], input[type=text], input.datalist, textarea {
+    width: 235px;
+}
+
+input[type=date] {
+    width: 160px;
+}
+
+input[type=time] {
+    width: 60px;
+}
+
+ol.radio-group {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    padding-left: 140px;
+}
+
+ol.radio-group>li>label {
+    width: 270px;
+    float: left;
+    clear: right;
+}
+
+input[type="radio"] {
+    display: block;
+    width: 30px;
+    float: left;
+}
+
+.close {
+    clear: both;
+}
+
+.added {
+    color: purple;
+}
+
+.hidden {
+    display: none;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: gray;
+    z-index: 10;
+    opacity: 0.4;
+}
+
+.modal {
+    position: absolute;
+    top: 50px;
+    left: 50px;
+    bottom: 50px;
+    right: 50px;
+    z-index: 11;
+    background-color: white;
+    border: 2px solid black;
+    border-radius: 15px;
+    overflow: auto;
+}
