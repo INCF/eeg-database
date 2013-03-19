@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
 import java.io.Serializable;
+import java.sql.Timestamp;
 import java.util.Date;
 
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
@@ -15,7 +16,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     private String name;
     private String surname;
-    private Date dateOfBirth;
+    private Timestamp dateOfBirth;
     private Gender gender;
     private String username;
     private String email;
@@ -30,7 +31,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private String authority;
 
     public FullPersonDTO() {
-        dateOfBirth = new Date();
+        dateOfBirth = new Timestamp(new Date().getTime());
     }
 
     public String getName() {
@@ -49,11 +50,11 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         this.surname = surname;
     }
 
-    public Date getDateOfBirth() {
+    public Timestamp getDateOfBirth() {
         return dateOfBirth;
     }
 
-    public void setDateOfBirth(Date dateOfBirth) {
+    public void setDateOfBirth(Timestamp dateOfBirth) {
         this.dateOfBirth = dateOfBirth;
     }
 
