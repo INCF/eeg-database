@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
 import java.util.Arrays;
+import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -18,6 +19,7 @@ import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
@@ -26,12 +28,12 @@ import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
@@ -45,8 +47,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
     @SpringBean
     PersonFacade personFacade;
-
-    private String captchaComponentPath;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) {
         super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
@@ -65,7 +65,15 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
         add(surname, surnameLabel);
 
-        DatePicker date = new DatePicker("dateOfBirth");
+        DatePicker date = new DatePicker("dateOfBirth") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public <C> IConverter<C> getConverter(Class<C> type) {
+                return (IConverter<C>) new TimestampConverter();
+            }
+        };
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
         date.setRequired(true);
         FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
@@ -96,13 +104,12 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
         CaptchaImageResource imageResource = new CaptchaImageResource(captcha);
         Image captchaImage = new Image("captchaImage", imageResource);
-        captchaComponentPath = captchaImage.getPath();
         add(captchaImage);
 
         TextField<String> controlText = new TextField<String>("controlText");
-        surname.setLabel(ResourceUtils.getModel("general.controlText"));
-        surname.setRequired(true);
-        FormComponentLabel controlTextLabel = new FormComponentLabel("controlTextLb", surname);
+        controlText.setLabel(ResourceUtils.getModel("general.controlText"));
+        controlText.setRequired(true);
+        FormComponentLabel controlTextLabel = new FormComponentLabel("controlTextLb", controlText);
         add(controlText, controlTextLabel);
 
         RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
@@ -157,18 +164,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         add(submit);
     }
 
-    @Override
-    protected void onBeforeRender() {
-        super.onBeforeRender();
-        if (captchaComponentPath != null) {
-            String captcha = StringUtils.getCaptchaString();
-            getModelObject().setCaptcha(captcha);
-
-            Image captchaImage = (Image) get(captchaComponentPath);
-            captchaImage.setImageResource(new CaptchaImageResource(captcha));
-        }
-    }
-
     private boolean validation(FullPersonDTO user) {
 
         boolean validate = true;
@@ -178,13 +173,14 @@ public class RegistrationForm extends Form<FullPersonDTO> {
             validate = false;
         }
 
-        if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
+        if (user.getDateOfBirth().getTime() >= new Date().getTime()) {
             error(ResourceUtils.getString("invalid.dateOfBirth"));
             validate = false;
         }
 
-        if (user.isPasswordValid()) {
+        if (!user.isPasswordValid()) {
             error(ResourceUtils.getString("invalid.passwordMatch"));
+            validate = false;
         }
 
         return validate;

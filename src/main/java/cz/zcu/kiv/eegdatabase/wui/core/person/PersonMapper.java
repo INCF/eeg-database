@@ -17,7 +17,7 @@ public class PersonMapper {
         dto.setId(person.getPersonId());
         dto.setName(person.getGivenname());
         dto.setSurname(person.getSurname());
-        dto.setDateOfBirth(person.getDateOfBirth() == null ? null : new Date(person.getDateOfBirth().getTime()));
+        dto.setDateOfBirth(person.getDateOfBirth() == null ? null : person.getDateOfBirth());
         dto.setEmail(person.getUsername().toLowerCase());
         dto.setUsername(person.getUsername());
         dto.setGender(Gender.getGenderByShortcut(person.getGender()));
