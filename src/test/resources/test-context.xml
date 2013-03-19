@@ -314,6 +314,9 @@
     <!-- indexing service for database and LinkedIn indexing -->
     <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingService" />
 
+    <bean name="fulltextSearchService"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />
+
     <!--==================  LinkedIn template ==================-->
 
     <bean id="linkedInTemplate" class="org.springframework.social.linkedin.api.impl.LinkedInTemplate">
