@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
+import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
 import org.joda.time.LocalDate;
 import org.joda.time.Years;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -130,10 +131,10 @@ public class ExperimentServiceImpl implements ExperimentService {
             //set electrode locations
             Set<ElectrodeLocation> elLocations = elConf.getElectrodeLocations();
 
-            if(elLocations != null && !elLocations.isEmpty()){
+            if (elLocations != null && !elLocations.isEmpty()) {
                 List<ElectrodeLocationData> electrodeLocations = new ArrayList<ElectrodeLocationData>(elLocations.size());
 
-                for(ElectrodeLocation el : elLocations){
+                for (ElectrodeLocation el : elLocations) {
                     ElectrodeLocationData electrodeLocation = new ElectrodeLocationData();
                     //set primitives
                     electrodeLocation.setId(el.getElectrodeLocationId());
@@ -165,9 +166,9 @@ public class ExperimentServiceImpl implements ExperimentService {
 
             Set<Pharmaceutical> pharms = exp.getPharmaceuticals();
             List<PharmaceuticalData> pharmaceuticals = new ArrayList<PharmaceuticalData>();
-            if(pharms != null && !pharms.isEmpty()){
-                for(Pharmaceutical p : pharms) {
-                   PharmaceuticalData pharmaceutical = new PharmaceuticalData();
+            if (pharms != null && !pharms.isEmpty()) {
+                for (Pharmaceutical p : pharms) {
+                    PharmaceuticalData pharmaceutical = new PharmaceuticalData();
                     pharmaceutical.setId(p.getPharmaceuticalId());
                     pharmaceutical.setTitle(p.getTitle());
                     pharmaceutical.setDescription(p.getDescription());
@@ -177,8 +178,8 @@ public class ExperimentServiceImpl implements ExperimentService {
 
             Set<Software> softs = exp.getSoftwares();
             List<SoftwareData> softwareList = new ArrayList<SoftwareData>();
-            if(softs != null && !softs.isEmpty()){
-                for(Software s : softs){
+            if (softs != null && !softs.isEmpty()) {
+                for (Software s : softs) {
                     SoftwareData software = new SoftwareData();
                     software.setId(s.getSoftwareId());
                     software.setTitle(s.getTitle());
@@ -188,6 +189,25 @@ public class ExperimentServiceImpl implements ExperimentService {
                 }
             }
 
+            ResearchGroup rg = exp.getResearchGroup();
+            ResearchGroupData researchGroup = new ResearchGroupData();
+
+            researchGroup.setGroupId(rg.getResearchGroupId());
+            researchGroup.setGroupName(rg.getTitle());
+
+            Person ow = exp.getPersonByOwnerId();
+            OwnerData owner = new OwnerData();
+            String mail[] = ow.getUsername().split("@");
+            owner.setId(ow.getPersonId());
+            owner.setName(ow.getGivenname());
+            owner.setSurname(ow.getSurname());
+            if (mail.length == 2) {
+                owner.setMailUsername(mail[0]);
+                owner.setMailDomain(mail[1]);
+            }
+
+            expData.setOwner(owner);
+            expData.setResearchGroup(researchGroup);
             expData.setPharmaceuticals(new PharmaceuticalDataList(pharmaceuticals));
             expData.setSoftwareList(new SoftwareDataList(softwareList));
             expData.setElectrodeConf(electrodeConfData);
