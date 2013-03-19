@@ -7,7 +7,9 @@
 		http://www.springframework.org/schema/context/spring-context-3.0.xsd
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd">
-    
+
+    <!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic.controller" /> -->
+
     <!-- SECURITY -->
     <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
 
@@ -109,6 +111,8 @@
     <bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
     
     <bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
+
+    <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />
 
     <!-- MAIL -->
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />

@@ -221,6 +221,10 @@
     "showArticles":"Show articles",
     "submitDisable":"Submitting, please wait..."
   },
+  "currency":
+  {
+    "euro":"€"
+  },
   "dataTable":
   {
     "heading":
@@ -534,6 +538,7 @@
     "times":"Start and end time",
     "title":"Title",
     "toDate":"To:",
+    "totalPrice":"Total Price:",
     "type":"Type",
     "unableToEditArticle":"Unable to add or edit article (low level of permissions)",
     "unspecified":"Unspecified",

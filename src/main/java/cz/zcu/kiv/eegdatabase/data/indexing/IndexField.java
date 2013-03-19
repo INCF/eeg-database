@@ -23,7 +23,8 @@ public enum IndexField {
     TEXT("text"),
     TITLE("title"),
     UUID("uuid"),
-    SOURCE("source");
+    SOURCE("source"),
+    AUTOCOMPLETE("autocomplete");
 
     private String value;
 
