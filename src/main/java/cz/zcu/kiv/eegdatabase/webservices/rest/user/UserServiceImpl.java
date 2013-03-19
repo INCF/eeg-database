@@ -25,8 +25,9 @@ import java.text.ParseException;
 import java.util.Locale;
 
 /**
+ * Implementation of user service.
+ *
  * @author Petr Miko
- *         Date: 10.2.13
  */
 @Service
 public class UserServiceImpl implements UserService {
@@ -51,6 +52,9 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private PersonService personService;
 
+    /**
+     * @{@inheritDoc}
+     */
     @Override
     public UserInfo create(String registrationPath, AddPersonCommand cmd, Locale locale) throws RestServiceException {
         try {
@@ -66,6 +70,9 @@ public class UserServiceImpl implements UserService {
         }
     }
 
+    /**
+     * @{@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public UserInfo login() {
@@ -73,6 +80,14 @@ public class UserServiceImpl implements UserService {
         return new UserInfo(user.getGivenname(), user.getSurname(), user.getAuthority());
     }
 
+    /**
+     * Method for sending registration confirmation email.
+     * @param registrationPath path to registration confirmation page
+     * @param user created user object
+     * @param locale locale
+     * @throws MailException error during sending mail
+     * @throws MessagingException error during sending mail
+     */
     private void sendRegistrationConfirmMail(String registrationPath, Person user, Locale locale) throws MailException, MessagingException {
         log.debug("Creating email content");
         StringBuilder sb = new StringBuilder();

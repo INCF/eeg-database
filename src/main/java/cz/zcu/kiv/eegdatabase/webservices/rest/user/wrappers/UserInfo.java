@@ -5,6 +5,9 @@ import javax.xml.bind.annotation.XmlType;
 
 /**
  * Data container for user information.
+ * Used for returning basic information about certain person.
+ *
+ * @author Petr Miko
  */
 
 @XmlType(propOrder = {"name","surname","rights"})

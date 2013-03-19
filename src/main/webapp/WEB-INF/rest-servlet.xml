@@ -61,6 +61,7 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData</value>
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData</value>
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList</value>
@@ -83,6 +84,7 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeConfData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.OwnerData</value>
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupDataList</value>

@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
+import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author Petr Miko
  */
-@XmlType(propOrder = {"experimentId", "scenario", "artifact", "startTime", "endTime", "subject",
+@XmlType(propOrder = {"experimentId", "scenario", "researchGroup","artifact", "startTime", "endTime", "owner", "subject",
         "diseases", "hardwareList", "digitization", "environmentNote", "weather", "electrodeConf", "pharmaceuticals",
         "softwareList"})
 @XmlRootElement(name = "experiment")
@@ -25,12 +26,14 @@ public class ExperimentData {
     private String environmentNote;
     private ScenarioSimpleData scenario;
     private WeatherData weather;
+    private OwnerData owner;
     private SubjectData subject;
     private DiseaseDataList diseases;
     private DigitizationData digitization;
     private ElectrodeConfData electrodeConf;
     private PharmaceuticalDataList pharmaceuticals;
     private SoftwareDataList softwareList;
+    private ResearchGroupData researchGroup;
 
 
     public ExperimentData() {
@@ -84,6 +87,14 @@ public class ExperimentData {
 
     public void setExperimentId(int experimentId) {
         this.experimentId = experimentId;
+    }
+
+    public OwnerData getOwner() {
+        return owner;
+    }
+
+    public void setOwner(OwnerData owner) {
+        this.owner = owner;
     }
 
     public SubjectData getSubject() {
@@ -148,5 +159,13 @@ public class ExperimentData {
 
     public void setSoftwareList(SoftwareDataList softwareList) {
         this.softwareList = softwareList;
+    }
+
+    public ResearchGroupData getResearchGroup() {
+        return researchGroup;
+    }
+
+    public void setResearchGroup(ResearchGroupData researchGroup) {
+        this.researchGroup = researchGroup;
     }
 }
