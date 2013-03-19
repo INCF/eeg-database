@@ -2,11 +2,11 @@ package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
-
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
 import org.springframework.social.linkedin.api.LinkedIn;
+import org.springframework.social.linkedin.api.LinkedInProfileFull;
 
 import javax.inject.Inject;
 
@@ -29,6 +29,16 @@ public final class SocialConnectionSignUp implements ConnectionSignUp {
     @Override
     public String execute(Connection<?> connection) {
         UserProfile profile = connection.fetchUserProfile();
+        String email = profile.getEmail();
+
+        if (email == null) {
+           LinkedIn ln = (LinkedIn) connection.getApi();
+           LinkedInProfileFull full = ln.profileOperations().getUserProfileFull();
+           System.out.println("xxxx " + full.getId());
+
+        }
+        System.out.println("zzzz " + email);
+        linkedin.profileOperations().getUserProfile().getId();
 
         SocialUser user = new SocialUser(profile.getEmail(),
                 profile.getFirstName(), profile.getLastName());
