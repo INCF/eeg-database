@@ -11,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
@@ -127,6 +128,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("account-overview", AccountOverViewPage.class);
         // mountPage("account-change-pass", ChangePasswordPage.class);
         mountPage("account-social", SocialNetworksPage.class);
+        
+        mountPage("administration-change-user-role", ChangeUserRolePage.class);
 
         mountPage("articles-page", ArticlesPage.class);
 
