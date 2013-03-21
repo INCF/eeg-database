@@ -138,6 +138,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
     public ShoppingCart getShoppingCart(){
+        this.createShoppingCart(); //does nothing if already created
         return shoppingCart;
     }
 }
