@@ -1,0 +1,17 @@
+
+.git
+.idea
+lib
+target
+*.project
+*.iml
+bin
+.project
+.classpath
+.gitignore
+.settings
+src/main/webapp/files/js/messages-en.json
+nb-configuration.xml
+src/main/resources/rebel.xml
+src/main/webapp/META-INF/context.xml
+
