@@ -33,10 +33,10 @@ public class ExperimentPackage implements Serializable {
 	@Column(name = "NAME")
 	private String name;
 	
-	@OneToMany(mappedBy= "EXPERIMENT_PACKAGE_LICENSES")
+	@OneToMany(mappedBy= "experimentPackage")
 	private Set<ExperimentPackageLicense> experimentPackageLicenses;
 	
-	@OneToMany(mappedBy = "EXPERIMENT_PACKAGE_CONNECTIONS")
+	@OneToMany(mappedBy = "experimentPackage")
 	private Set<ExperimentPackageConnection> experimentPackageConnections;
 
 	public int getExperimentPackageId() {
