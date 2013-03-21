@@ -38,6 +38,7 @@ public class ResearchGroup implements Serializable {
     
     @OneToMany(mappedBy = "researchGroup")
     private Set<Scenario> scenarios = new HashSet<Scenario>(0);
+    //TODO will be removed after package implementation
     @OneToMany(mappedBy = "researchGroup")
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     @OneToMany(mappedBy = "defaultGroup")
@@ -82,6 +83,9 @@ public class ResearchGroup implements Serializable {
     private Set<StimulusType> stimulusTypes = new HashSet<StimulusType>(0);
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
+
+    @OneToMany(mappedBy="researchGroup")
+    private Set<ExperimentPackage> experimentPackages = new HashSet<ExperimentPackage>(0);
 
     public ResearchGroup() {
     }
@@ -387,6 +391,14 @@ public class ResearchGroup implements Serializable {
 
     public void setStimulusTypes(Set<StimulusType> stimulusTypes) {
         this.stimulusTypes = stimulusTypes;
+    }
+
+    public Set<ExperimentPackage> getExperimentPackages() {
+	return experimentPackages;
+    }
+
+    public void setExperimentPackages(Set<ExperimentPackage> experimentPackages) {
+	this.experimentPackages = experimentPackages;
     }
 }
 

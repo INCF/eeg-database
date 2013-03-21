@@ -104,6 +104,9 @@ public class Experiment implements Serializable {
     @JoinColumn(name = "ELECTRODE_CONF_ID")
     private ElectrodeConf electrodeConf;
 
+    @OneToMany(mappedBy="experiment")
+    private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
+
 
     public Experiment() {
     }

@@ -102,6 +102,9 @@ public class Person implements Serializable, Comparable<Person> {
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
+    @OneToMany(mappedBy = "person")
+    private Set<PersonalLicense> personalLicenses = new HashSet<PersonalLicense>(0);
+
     public Person() {
     }
 
@@ -375,6 +378,14 @@ public class Person implements Serializable, Comparable<Person> {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+    public Set<PersonalLicense> getPersonalLicenses() {
+	return personalLicenses;
+    }
+
+    public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
+	this.personalLicenses = personalLicenses;
     }
 }
 
