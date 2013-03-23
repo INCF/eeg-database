@@ -11,6 +11,9 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletResponse;
+import java.io.IOException;
+
 /**
  * Controller for mapping REST requests upon reservation system.
  *
@@ -50,9 +53,8 @@ public class ReservationServiceController {
     }
 
     @ExceptionHandler(RestServiceException.class)
-    @ResponseStatus(value = HttpStatus.SERVICE_UNAVAILABLE, reason = "REST service error occurred")
-    public String handleRSException(RestServiceException ex) {
+    public void handleRSException(RestServiceException ex, HttpServletResponse response) throws IOException {
         log.error(ex);
-        return ex.getMessage();
+        response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
     }
 }
