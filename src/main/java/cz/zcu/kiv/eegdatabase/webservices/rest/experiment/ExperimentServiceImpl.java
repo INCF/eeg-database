@@ -95,6 +95,7 @@ public class ExperimentServiceImpl implements ExperimentService {
                 diseaseData.setDiseaseId(dis.getDiseaseId());
                 diseaseData.setName(dis.getTitle());
                 diseaseData.setDescription(dis.getDescription());
+                diseaseDatas.add(diseaseData);
             }
 
             Digitization digitization = exp.getDigitization();
