@@ -48,20 +48,10 @@ public class UserServiceController {
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public UserInfo create(HttpServletRequest request, @RequestBody PersonData person) throws RestServiceException {
-        //create person command for service
-        AddPersonCommand command = new AddPersonCommand();
-        command.setGivenname(person.getName());
-        command.setSurname(person.getSurname());
-        command.setDateOfBirth(person.getBirthday());
-        command.setGender(person.getGender());
-        command.setEmail(person.getEmail());
-        command.setPhoneNumber(person.getPhone());
-        command.setNote(person.getNotes());
-        command.setLaterality(person.getLeftHanded());
 
         String url = "http://" + domain + "/registration-confirm?" + ConfirmPage.CONFIRM_ACTIVATION + "=";
 
-        return service.create(url, command, RequestContextUtils.getLocale(request));
+        return service.create(url, person, RequestContextUtils.getLocale(request));
     }
 
     /**
