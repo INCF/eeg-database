@@ -12,7 +12,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class ShoppingCart implements Serializable {
-    private static double EXPERIMENT_TEST_PRICE = 5.0;
+    public static double EXPERIMENT_TEST_PRICE = 5.0;
     private List<Experiment> order = new ArrayList<Experiment>();
 
     public List<Experiment> getOrder() {

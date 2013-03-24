@@ -2,9 +2,11 @@ package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -13,10 +15,20 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.pages.RedirectPage;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.protocol.http.WebApplication;
+import urn.ebay.api.PayPalAPI.PayPalAPIInterfaceServiceService;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutReq;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutRequestType;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutResponseType;
+import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
+import urn.ebay.apis.eBLBaseComponents.*;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
@@ -29,7 +41,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 @AuthorizeInstantiation("ROLE_USER")
-public class ShoppingCartPage  extends MenuPage {
+public class ShoppingCartPage extends MenuPage {
 
     private static final int ITEMS_PER_PAGE = 20;
 
@@ -41,6 +53,8 @@ public class ShoppingCartPage  extends MenuPage {
         IModel<String> title = ResourceUtils.getModel("pageTitle.myCart");
         add(new Label("title", title));
         setPageTitle(title);
+
+        add(new ButtonPageMenu("leftMenu", ShoppingCartPageLeftMenu.values()));
 
         add(new Label("emptyCart", ResourceUtils.getModel("text.emptyCart")){
             @Override
@@ -62,6 +76,23 @@ public class ShoppingCartPage  extends MenuPage {
             }
         }));
         add(new Label("totalPriceCurrency", " " + ResourceUtils.getString("currency.euro")));
+
+        add(new Link<Void>("PayPalExpressCheckoutLink") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick() {
+                if(!EEGDataBaseSession.get().getShoppingCart().isEmpty()){
+                    setResponsePage(new RedirectPage(PayPalTools.setExpressCheckout()));
+                }
+                //Partially fixes trouble with browser caching and back button
+                else {
+                    setResponsePage(ShoppingCartPage.class);
+                }
+
+            }
+        }.setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isEmpty()));
 
     }
 
@@ -94,5 +125,4 @@ public class ShoppingCartPage  extends MenuPage {
     }
 
 }
-
 

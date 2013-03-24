@@ -22,13 +22,13 @@ import java.util.List;
  * Time: 18:13
  * To change this template use File | Settings | File Templates.
  */
-public class CartDataProvider extends SortableDataProvider<Experiment, String> {
+public class OrderDataProvider extends SortableDataProvider<Experiment, String> {
 
     private List<Experiment> list;
 
-    public CartDataProvider(){
+    public OrderDataProvider(List<Experiment> order){
         setSort("experimentId", SortOrder.ASCENDING);
-        list = EEGDataBaseSession.get().getShoppingCart().getOrder();
+        list = order;
 
     }
 
