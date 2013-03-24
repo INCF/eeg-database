@@ -1,15 +1,12 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
-import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
-
-import javax.ws.rs.PathParam;
 
 /**
  * @author Petr Miko
@@ -45,4 +42,60 @@ public class ExperimentServiceController {
     public ExperimentDataList getMyExperiments() {
         return new ExperimentDataList(service.getMyExperiments());
     }
+
+    @RequestMapping(value = "/artifacts")
+    public ArtifactDataList getArtifacts() {
+        return new ArtifactDataList(service.getArtifacts());
+    }
+
+    @RequestMapping(value = "/digitizations")
+    public DigitizationDataList getDigitizations() {
+        return new DigitizationDataList(service.getDigitizations());
+    }
+
+    @RequestMapping("/diseases")
+    public DiseaseDataList getDiseases() {
+        return new DiseaseDataList(service.getDiseases());
+    }
+
+    @RequestMapping("/hardwareList")
+    public HardwareDataList getHardwareList() {
+        return new HardwareDataList(service.getHardwareList());
+    }
+
+    @RequestMapping("/softwareList")
+    public SoftwareDataList getSoftwareList() {
+        return new SoftwareDataList(service.getSoftwareList());
+    }
+
+    @RequestMapping("/weatherList")
+    public WeatherDataList getWeatherList() {
+        return new WeatherDataList(service.getWeatherList());
+    }
+
+    @RequestMapping("/pharmaceuticals")
+    public PharmaceuticalDataList getPharmaceuticals() {
+        return new PharmaceuticalDataList(service.getPharmaceuticals());
+    }
+
+    @RequestMapping("/electrodeLocations")
+    public ElectrodeLocationDataList getElectrodeLocations() {
+        return new ElectrodeLocationDataList(service.getElectrodeLocations());
+    }
+
+    @RequestMapping("/electrodeFixList")
+    public ElectrodeFixDataList getElectrodeFixList() {
+        return new ElectrodeFixDataList(service.getElectrodeFixList());
+    }
+
+    @RequestMapping("/electrodeTypes")
+    public ElectrodeTypeDataList getElectrodeTypes() {
+        return new ElectrodeTypeDataList(service.getElectrodeTypes());
+    }
+
+    @RequestMapping("/electrodeSystems")
+    public ElectrodeSystemDataList getElectrodeSystems() {
+        return new ElectrodeSystemDataList(service.getElectrodeSystems());
+    }
+
 }

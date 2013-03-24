@@ -67,6 +67,7 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.WeatherData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.WeatherDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DiseaseData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DiseaseDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.HardwareData</value>
@@ -74,7 +75,9 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ScenarioSimpleData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SubjectData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ArtifactData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ArtifactDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DigitizationData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.DigitizationDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.SoftwareDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.PharmaceuticalData</value>
@@ -82,8 +85,11 @@
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeLocationDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeTypeData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeTypeDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeFixDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeSystemDataList</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ElectrodeConfData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.OwnerData</value>
 
