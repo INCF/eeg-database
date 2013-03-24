@@ -74,7 +74,7 @@ public class PersonOptParamFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.editPersonOptionalParameterDefinition")));
 
         add(new PersonOptParamForm("form", new CompoundPropertyModel<PersonOptParamDef>(facade.read(personOptParamId)),
-                new Model<ResearchGroup>(groupFacade.read(researchGroupId)), getFeedback(), facade));
+                new Model<ResearchGroup>(getGroup(researchGroupId)), getFeedback(), facade));
     }
 
     private ResearchGroup getGroup(int researchGroupId) {

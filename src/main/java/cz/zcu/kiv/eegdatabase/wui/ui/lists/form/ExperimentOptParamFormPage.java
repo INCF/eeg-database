@@ -74,7 +74,7 @@ public class ExperimentOptParamFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.editExperimentOptionalParameterDefinition")));
 
         add(new ExperimentOptParamForm("form", new CompoundPropertyModel<ExperimentOptParamDef>(facade.read(experimentId)),
-                new Model<ResearchGroup>(groupFacade.read(researchGroupId)), getFeedback(), facade));
+                new Model<ResearchGroup>(getGroup(researchGroupId)), getFeedback(), facade));
     }
 
     private ResearchGroup getGroup(int researchGroupId) {

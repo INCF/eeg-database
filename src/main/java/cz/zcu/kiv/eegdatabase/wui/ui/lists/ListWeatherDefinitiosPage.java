@@ -70,7 +70,7 @@ public class ListWeatherDefinitiosPage extends MenuPage {
 
             @Override
             protected List<Weather> loadList(ResearchGroup group) {
-                if (group == null)
+                if (group == null  || group.getResearchGroupId() == CoreConstants.DEFAULT_ITEM_ID)
                     return facade.getDefaultRecords();
                 else {
                     return facade.getRecordsByGroup(group.getResearchGroupId());
@@ -100,7 +100,8 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                 item.add(new Label("description"));
 
                 PageParameters parameters = PageParametersUtils.getDefaultPageParameters(item.getModelObject().getWeatherId())
-                        .add(PageParametersUtils.GROUP_PARAM, model.getCriteriaModel().getObject().getResearchGroupId());
+                        .add(PageParametersUtils.GROUP_PARAM,
+                                (model.getCriteriaModel().getObject() == null) ? CoreConstants.DEFAULT_ITEM_ID : model.getCriteriaModel().getObject().getResearchGroupId());
 
                 item.add(new BookmarkablePageLink<Void>("edit", WeatherFormPage.class, parameters));
                 item.add(new AjaxLink<Void>("delete") {
