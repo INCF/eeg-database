@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
 
 import java.util.Locale;
@@ -22,7 +23,7 @@ public interface UserService {
      * @return basic information about created person/user
      * @throws RestServiceException error during person/user creation process
      */
-    public UserInfo create(String registrationPath, PersonData personData, Locale locale) throws RestServiceException;
+    public PersonData create(String registrationPath, PersonData personData, Locale locale) throws RestServiceException;
 
     /**
      * Method for verifying user's credentials.
@@ -30,4 +31,11 @@ public interface UserService {
      * @return basic information about accessing person/user
      */
     public UserInfo login();
+
+    /**
+     * Method for obtaining eeg base user list.
+     *
+     * @return users of eeg base
+     */
+    public PersonDataList getUsers();
 }

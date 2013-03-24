@@ -62,6 +62,7 @@
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData</value>
+                        <value>cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonDataList</value>
 
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData</value>
                         <value>cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentDataList</value>
