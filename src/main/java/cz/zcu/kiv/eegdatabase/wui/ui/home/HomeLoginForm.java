@@ -29,8 +29,8 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
         add(userName);
 
         PasswordTextField password = new PasswordTextField("password");
-        userName.add(new StringValidator(6, 25));
-        userName.setRequired(true);
+        password.add(StringValidator.minimumLength(6));
+        password.setRequired(true);
 
         add(password);
 
