@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 
 public enum ScenariosPageLeftMenu implements IButtonPageMenu {
 
@@ -13,7 +14,7 @@ public enum ScenariosPageLeftMenu implements IButtonPageMenu {
     MY_SCENARIOS(UnderConstructPage.class, "menuItem.myScenarios", null),
     SEARCH_SCENARIOS(UnderConstructPage.class, "menuItem.searchScenario", null),
     ADD_SCENARIOS(ScenarioFormPage.class, "menuItem.addScenario", null),
-    ADD_SCENARIOS_SCHEMA(UnderConstructPage.class, "menuItem.addScenarioSchema", null), ;
+    ADD_SCENARIOS_SCHEMA(ScenarioSchemaFormPage.class, "menuItem.addScenarioSchema", null), ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;

@@ -37,6 +37,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
@@ -172,6 +173,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("scenarios-detail", ScenarioDetailPage.class);
         mountPage("scenarios-form", ScenarioFormPage.class);
+        mountPage("scenarios-schema-form", ScenarioSchemaFormPage.class);
         mountPage("search-page", SearchPage.class);
 
         mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);

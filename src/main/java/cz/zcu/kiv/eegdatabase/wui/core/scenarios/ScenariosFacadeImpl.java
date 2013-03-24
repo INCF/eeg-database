@@ -129,6 +129,11 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     }
 
     @Override
+    public Integer createScenarioSchema(ScenarioSchemas newInstance) {
+        return service.createScenarioSchema(newInstance);
+    }
+
+    @Override
     public ScenarioSchemas readScenarioSchema(Integer id) {
         return service.readScenarioSchema(id);
     }

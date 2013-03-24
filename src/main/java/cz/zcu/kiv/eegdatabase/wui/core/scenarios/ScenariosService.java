@@ -30,6 +30,8 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
     
     Integer create(ScenarioSchemas newInstance);
 
+    Integer createScenarioSchema(ScenarioSchemas newInstance);
+
     ScenarioSchemas readScenarioSchema(Integer id);
 
     List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue);
