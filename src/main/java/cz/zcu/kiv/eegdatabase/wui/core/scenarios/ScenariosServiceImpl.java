@@ -128,7 +128,7 @@ public class ScenariosServiceImpl implements ScenariosService {
 
     @Override
     @Transactional
-    public Integer create(ScenarioSchemas newInstance) {
+    public Integer createScenarioSchema(ScenarioSchemas newInstance) {
         return schemaDAO.create(newInstance);
     }
 

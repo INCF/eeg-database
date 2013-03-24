@@ -814,7 +814,7 @@
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
     "writeRequestsList":"Write requests",
-    "youDontHavePermission":"You don't have permisson"
+    "youDontHavePermission":"You don't have permission"
   },
   "radio":
   {
@@ -832,7 +832,8 @@
       "body":
       {
         "clickToRegister":"Click on the link below to confirm your registration. Thank you.",
-        "yourLogin":"Your login to EEGBase is: {0}"
+        "yourLogin":"Your login to EEGBase is: {0}",
+        "yourPassword":"Your password is: {0}"
       },
       "subject":"Your access to EEG-base",
       "welcome":"Welcome!"

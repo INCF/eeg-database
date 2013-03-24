@@ -94,9 +94,9 @@ public class ScenarioFormPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.addScenario"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.addScenarioSchema"));
 
-        add(new Label("title", ResourceUtils.getModel("pageTitle.addScenario")));
+        add(new Label("title", ResourceUtils.getModel("pageTitle.addScenarioSchema")));
 
         ScenarioForm scenarioForm = new ScenarioForm("form", new Model<Scenario>(new Scenario()), scenarioFacade, getFeedback());
         add(scenarioForm);
@@ -112,9 +112,9 @@ public class ScenarioFormPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.editScenario"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.editScenarioSchema"));
 
-        add(new Label("title", ResourceUtils.getModel("pageTitle.editScenario")));
+        add(new Label("title", ResourceUtils.getModel("pageTitle.editScenarioSchema")));
 
         int scenarioId = parseParameters(params);
 

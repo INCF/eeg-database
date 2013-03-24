@@ -24,7 +24,7 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
 
     int getScenarioCountForList(Person person);
     
-    Integer create(ScenarioSchemas newInstance);
+    Integer createScenarioSchema(ScenarioSchemas newInstance);
 
     ScenarioSchemas readScenarioSchema(Integer id);
 
