@@ -77,7 +77,7 @@ public class WeatherFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.editWeatherDefinition")));
 
         add(new WeatherForm("form", new CompoundPropertyModel<Weather>(facade.read(weatherId)),
-                new Model<ResearchGroup>(groupFacade.read(researchGroupId)), getFeedback(), facade));
+                new Model<ResearchGroup>(getGroup(researchGroupId)), getFeedback(), facade));
     }
 
     private ResearchGroup getGroup(int researchGroupId) {

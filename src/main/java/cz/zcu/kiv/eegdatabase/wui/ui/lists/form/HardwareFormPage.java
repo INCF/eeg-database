@@ -76,7 +76,7 @@ public class HardwareFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.editHardwareDefinition")));
 
         add(new HardwareForm("form", new CompoundPropertyModel<Hardware>(facade.read(hardwareId)),
-                new Model<ResearchGroup>(groupFacade.read(researchGroupId)), getFeedback(), facade));
+                new Model<ResearchGroup>(getGroup(researchGroupId)), getFeedback(), facade));
     }
 
     private ResearchGroup getGroup(int researchGroupId) {

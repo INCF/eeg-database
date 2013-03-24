@@ -76,7 +76,7 @@ public class FileMetadataFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.editFileMetadataDefinition")));
 
         add(new FileMetadataForm("form", new CompoundPropertyModel<FileMetadataParamDef>(facade.read(fileMetadataId)),
-                new Model<ResearchGroup>(groupFacade.read(researchGroupId)), getFeedback(), facade));
+                new Model<ResearchGroup>(getGroup(researchGroupId)), getFeedback(), facade));
     }
 
     private ResearchGroup getGroup(int researchGroupId) {
