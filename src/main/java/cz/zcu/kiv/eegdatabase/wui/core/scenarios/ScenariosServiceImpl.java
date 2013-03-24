@@ -1,21 +1,30 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioSchemasDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 public class ScenariosServiceImpl implements ScenariosService {
 
     protected Log log = LogFactory.getLog(getClass());
 
     ScenarioDao scenarioDAO;
+    ScenarioSchemasDao schemaDAO;
+
+    @Required
+    public void setSchemaDAO(ScenarioSchemasDao schemaDAO) {
+        this.schemaDAO = schemaDAO;
+    }
 
     @Required
     public void setScenarioDAO(ScenarioDao scenarioDAO) {
@@ -108,8 +117,8 @@ public class ScenariosServiceImpl implements ScenariosService {
 
     @Override
     @Transactional(readOnly = true)
-    public void canSaveTitle(String title, int id) {
-        scenarioDAO.canSaveTitle(title, id);
+    public boolean canSaveTitle(String title, int id) {
+        return scenarioDAO.canSaveTitle(title, id);
     }
 
     @Override
@@ -128,6 +137,11 @@ public class ScenariosServiceImpl implements ScenariosService {
     public void flush() {
         scenarioDAO.flush();
     }
+    
+    @Transactional
+    public Integer create(ScenarioSchemas newInstance) {
+        return schemaDAO.create(newInstance);
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -138,6 +152,66 @@ public class ScenariosServiceImpl implements ScenariosService {
         } else {
             return null;
         }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ScenarioSchemas readScenarioSchema(Integer id) {
+        return schemaDAO.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue) {
+        return schemaDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue) {
+        return schemaDAO.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional
+    public void updateScenarioSchema(ScenarioSchemas transientObject) {
+        schemaDAO.update(transientObject);
+    }
+
+    @Override
+    @Transactional
+    public void deleteScenarioSchema(ScenarioSchemas persistentObject) {
+        schemaDAO.delete(persistentObject);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScenarioSchemas> getAllScenarioSchemasRecords() {
+        return schemaDAO.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max) {
+        return schemaDAO.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getCountScenarioSchemasRecords() {
+        return schemaDAO.getCountRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public int getNextSchemaId() {
+        return schemaDAO.getNextSchemaId();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ScenarioSchemas> getListOfScenarioSchemas() {
+        return schemaDAO.getListOfScenarioSchemas();
     }
 
 }

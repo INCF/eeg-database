@@ -1,0 +1,97 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1 wicket:id="title"></h1>
+      
+      <form wicket:id="form" class="standardInputForm">
+        <fieldset>
+
+            <div class="itemBox">
+                <label for="researchGroup" class="selectBoxLabel"><wicket:message key="label.researchGroup"/></label>
+                <select wicket:id="researchGroup" class="selectBox"></select>
+            </div>
+
+            <div class="itemBox">
+                <label for="title" class="textFieldLabel"><wicket:message key="label.scenarioTitle"/></label>
+                <input wicket:id="title" class="textField"/>
+            </div>
+
+            <div class="itemBox">
+                <label for="length" class="textFieldLabel"><wicket:message key="label.scenarioLength"/></label>
+                <input wicket:id="scenarioLength" class="textField" style="width: 80px;"/> <wicket:message key="label.minutes"/>
+            </div>
+
+            <div class="itemBox">
+                <label for="description" class="textareaFieldLabel"><wicket:message key="label.scenarioDescription"/></label>
+                <textarea wicket:id="description" class="textareaField" rows="5" cols="40"></textarea>
+            </div>
+
+            <div class="itemBox">
+                <label for="dataFileAvailable" class="fileFieldLabel"><wicket:message key="description.fileType.dataFileAvailable"/></label>
+                <input type="checkbox" wicket:id="dataAvailable" class="checkBox"/>
+            </div>
+
+       <!--     <div class="itemBox" id="scenarioXml">
+
+                <label path="xmlFileCheckBox" cssClass="textFieldLabel"
+                            cssErrorClass="textFieldLabel errorLabel"><wicket:message key="label.dataFileIsXml"/></label>
+
+                <checkbox path="xmlFileCheckBox" cssClass="checkBox" id="isScenarioXml"/>
+
+                <errors path="xmlFileCheckBox" cssClass="errorBox"/>
+            </div>             -->
+          <div wicket:id="contailer">
+            <div class="itemBox" id="dataFile">
+              <label for="dataFile" class="fileFieldLabel"><wicket:message key="description.fileType.dataFile" /></label> 
+              <input type="file" wicket:id="file" class="fileField" />
+            </div>
+
+            <div class="itemBox" id="dataFileXml">
+<!--               <label for="dataFileXml" class="fileFieldLabel"><wicket:message key="label.xmlDataFile" /></label> -->
+              <input type="file" wicket:id="xmlfile"class="fileField" />
+            </div>
+
+            <div class="itemBox">
+<!--               <label for="scenarioSchema" class="selectBoxLabel"><wicket:message key="label.scenarioSchema" /></label> -->
+              
+              <span wicket:id="schema">
+                <input type="radio" wicket:id="noschema" class="radioButton" />
+                <wicket:message key="radio.noSchema" />
+              
+                <input type="radio" wicket:id="fromschema" class="radioButton" />
+                <wicket:message key="radio.fromSchemaList" />
+              </span>
+              
+              <select wicket:id="schemaList" class="selectBox"></select>
+            </div>
+          </div>
+
+          <!--
+            <div class="itemBox" id="schemaDescription">
+                 -->
+
+            <div class="itemBox">
+
+                <label for="privateNote" class="textFieldLabel"><wicket:message key="label.private"/></label>
+
+                <input wicket:id="privateScenario" type="checkbox" class="checkBox"/>
+            </div>
+
+
+            <div class="itemBox">
+                <input type="submit" wicket:id="submit" class="submitButton lightButtonLink"/>
+            </div>
+
+
+        </fieldset>
+    </form>
+    </div>
+  </wicket:extend>
+</body>
+</html>

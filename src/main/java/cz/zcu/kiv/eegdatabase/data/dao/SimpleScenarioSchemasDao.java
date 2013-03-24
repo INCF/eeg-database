@@ -19,13 +19,21 @@ public class SimpleScenarioSchemasDao
     public SimpleScenarioSchemasDao() {
         super(ScenarioSchemas.class);
     }
-
+    
+    /**
+     * This list isn't what method name say. Depraceted. Instead of this use getListOfScenarioSchemas().
+     */
+    @Deprecated
     public List<ScenarioSchemas> getSchemaNames() {
         String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
         List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
         return list;
     }
-
+    
+    /**
+     * This list isn't what method name say. Depraceted. Instead of this use getListOfScenarioSchemas().
+     */
+    @Deprecated
     public List<ScenarioSchemas> getSchemaDescriptions() {
         String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
         List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
@@ -37,6 +45,13 @@ public class SimpleScenarioSchemasDao
         List<Integer> idList = getHibernateTemplate().find(hqlSelect);
         int id = idList.get(0) + 1;
         return id;
+    }
+
+    @Override
+    public List<ScenarioSchemas> getListOfScenarioSchemas() {
+        String hqlSelect = "from ScenarioSchemas scenarioSchemas where scenarioSchemas.approved='y'";
+        List<ScenarioSchemas> list = getHibernateTemplate().find(hqlSelect);
+        return list;
     }
 
 }

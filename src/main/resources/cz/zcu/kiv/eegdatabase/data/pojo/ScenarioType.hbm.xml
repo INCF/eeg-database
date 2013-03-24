@@ -24,7 +24,7 @@
 			constrained="true"/>
 
     <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
-                     table="SCENARIO_TYPE_NONXML">
+                     table="SCENARIO_TYPE_NONXML" lazy="false">
         <key column="SCENARIO_ID"/>
         <property name="scenarioXml" type="java.sql.Blob">
             <column name="SCENARIO_XML"/>
@@ -32,7 +32,7 @@
     </joined-subclass>
 
     <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
-                     table="SCENARIO_TYPE_NONSCHEMA">
+                     table="SCENARIO_TYPE_NONSCHEMA" lazy="false">
         <key column="SCENARIO_ID"/>
         <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
             <column name="SCENARIO_XML"/>
@@ -40,7 +40,7 @@
     </joined-subclass>
 
     <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
-                     table="SCENARIO_TYPE_SCHEMA_1">
+                     table="SCENARIO_TYPE_SCHEMA_1" lazy="false">
         <key column="SCENARIO_ID"/>
         <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
             <column name="SCENARIO_XML"/>
@@ -48,7 +48,7 @@
     </joined-subclass>
 
     <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
-                     table="SCENARIO_TYPE_SCHEMA_2">
+                     table="SCENARIO_TYPE_SCHEMA_2" lazy="false">
         <key column="SCENARIO_ID"/>
         <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
             <column name="SCENARIO_XML"/>
@@ -56,7 +56,7 @@
     </joined-subclass>
 
     <joined-subclass name="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
-                     table="SCENARIO_TYPE_SCHEMA_3">
+                     table="SCENARIO_TYPE_SCHEMA_3" lazy="false">
         <key column="SCENARIO_ID"/>
         <property name="scenarioXml" type="cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType">
             <column name="SCENARIO_XML"/>
