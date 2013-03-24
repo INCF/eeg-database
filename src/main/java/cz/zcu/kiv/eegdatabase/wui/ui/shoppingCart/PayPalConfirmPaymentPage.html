@@ -4,20 +4,22 @@
       lang="en">
 <body>
 <wicket:extend>
-    <div class="leftMenu" wicket:id="leftMenu"></div>
-
-    <div class="mainContentWithMenu">
+    <div class="mainContent">
         <h1 wicket:id="title"></h1>
-        <wicket:container wicket:id="emptyCart"></wicket:container>
+        <wicket:container wicket:id="orderHeader"></wicket:container>
         <table class="dataTable measurationListDataTable" wicket:id="list"></table>
         <div>
             <span wicket:id="totalPriceMessage"></span>
             <span wicket:id="totalPriceAmount"></span>
             <span wicket:id="totalPriceCurrency"></span>
-            <a href="#" wicket:id="PayPalExpressCheckoutLink">
-                <img src="https://www.paypal.com/en_US/i/btn/btn_xpressCheckout.gif" align="right" style="margin-right:7px;">
-            </a>
         </div>
+        <div class="actionBox">
+            <a href="#" wicket:id="cancel" class="lightButtonLink"><wicket:message key="button.cancelPayment" /></a>
+
+            <a href="#" wicket:id="confirm" class="lightButtonLink"><wicket:message key="button.confirmPayment" /></a>
+
+        </div>
+
     </div>
 </wicket:extend>
 </body>

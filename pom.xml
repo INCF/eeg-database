@@ -596,6 +596,18 @@
             <version>1.0.2</version>
         </dependency>
 
+        <!-- =================================== PayPal Integration SDK ========================================= -->
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>merchantsdk</artifactId>
+            <version>2.2.98</version>
+        </dependency>
+        <dependency>
+            <groupId>com.paypal.sdk</groupId>
+            <artifactId>permissionssdk</artifactId>
+            <version>2.1.96</version>
+        </dependency>
+
         <!--======================================= Other libraries ============================================= -->
         <dependency>
             <groupId>org.springframework</groupId>
