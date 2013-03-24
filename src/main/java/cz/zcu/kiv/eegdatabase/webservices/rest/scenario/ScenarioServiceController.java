@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.scenario;
 
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData;
@@ -7,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioDataLis
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
@@ -37,7 +42,14 @@ public class ScenarioServiceController {
     private final static Log log = LogFactory.getLog(ScenarioServiceController.class);
 
     @Autowired
-    ScenarioService scenarioService;
+    @Qualifier("personDao")
+    private PersonDao personDao;
+    @Autowired
+    @Qualifier("researchGroupDao")
+    private ResearchGroupDao researchGroupDao;
+
+    @Autowired
+    private ScenarioService scenarioService;
 
     @RequestMapping("/all")
     public ScenarioDataList getAllScenarios(){
@@ -51,7 +63,7 @@ public class ScenarioServiceController {
 
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public void create(HttpServletRequest request, HttpServletResponse response,
+    public ScenarioData create(HttpServletRequest request, HttpServletResponse response,
                        @RequestParam("scenarioName") String scenarioName, @RequestParam("researchGroupId") int researchGroupId,
                        @RequestParam(value = "mimeType", required = false) String mimeType,
                        @RequestParam(value = "private", required = false) boolean isPrivate,
@@ -66,7 +78,15 @@ public class ScenarioServiceController {
 
         try {
             int pk = scenarioService.create(scenarioData, file);
+            scenarioData.setScenarioId(pk);
+
+            Person user = personDao.getLoggedPerson();
+            scenarioData.setOwnerName(user.getGivenname() + " " + user.getSurname());
+            ResearchGroup group = researchGroupDao.read(scenarioData.getResearchGroupId());
+            scenarioData.setResearchGroupName(group.getTitle());
+
             response.addHeader("Location", buildLocation(request, pk));
+            return scenarioData;
         } catch (IOException e) {
             log.error(e);
             throw new RestServiceException(e);
