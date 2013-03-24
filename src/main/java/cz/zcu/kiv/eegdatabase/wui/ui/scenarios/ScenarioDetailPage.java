@@ -22,7 +22,6 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
@@ -30,6 +29,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ScenarioDetailPage extends MenuPage {
@@ -101,7 +101,7 @@ public class ScenarioDetailPage extends MenuPage {
 
         add(new Label("noFile", ResourceUtils.getModel("scenarioDetail.noFile")).setVisibilityAllowed(!existFile));
         
-        BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("edit", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(scenarioId));
+        BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("edit", ScenarioFormPage.class, PageParametersUtils.getDefaultPageParameters(scenarioId));
         
         boolean isOwnerOrAdmin = (security.userIsOwnerOfScenario(scenarioId) || security.isAdmin());
         editLink.setVisibilityAllowed(isOwnerOrAdmin);

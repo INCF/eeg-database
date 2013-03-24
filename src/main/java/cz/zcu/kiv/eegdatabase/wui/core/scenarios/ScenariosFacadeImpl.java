@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 public class ScenariosFacadeImpl implements ScenariosFacade {
@@ -87,8 +88,8 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     }
 
     @Override
-    public void canSaveTitle(String title, int id) {
-        service.canSaveTitle(title, id);
+    public boolean canSaveTitle(String title, int id) {
+        return service.canSaveTitle(title, id);
     }
 
     @Override
@@ -99,5 +100,60 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     @Override
     public int getScenarioCountForList(Person person) {
         return service.getScenarioCountForList(person);
+    }
+    
+    @Override
+    public Integer create(ScenarioSchemas newInstance) {
+        return service.create(newInstance);
+    }
+
+    @Override
+    public ScenarioSchemas readScenarioSchema(Integer id) {
+        return service.readScenarioSchema(id);
+    }
+
+    @Override
+    public List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue) {
+        return service.readScenarioSchemaByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue) {
+        return service.readScenarioSchemaByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    public void updateScenarioSchema(ScenarioSchemas transientObject) {
+        service.updateScenarioSchema(transientObject);
+    }
+
+    @Override
+    public void deleteScenarioSchema(ScenarioSchemas persistentObject) {
+        service.deleteScenarioSchema(persistentObject);
+    }
+
+    @Override
+    public List<ScenarioSchemas> getAllScenarioSchemasRecords() {
+        return service.getAllScenarioSchemasRecords();
+    }
+
+    @Override
+    public List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max) {
+        return service.getScenarioSchemasRecordsAtSides(first, max);
+    }
+
+    @Override
+    public int getCountScenarioSchemasRecords() {
+        return service.getCountScenarioSchemasRecords();
+    }
+
+    @Override
+    public int getNextSchemaId() {
+        return service.getNextSchemaId();
+    }
+
+    @Override
+    public List<ScenarioSchemas> getListOfScenarioSchemas() {
+        return service.getListOfScenarioSchemas();
     }
 }

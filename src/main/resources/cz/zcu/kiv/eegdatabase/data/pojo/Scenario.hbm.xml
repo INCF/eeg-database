@@ -10,10 +10,10 @@
               <param name="property">scenarioType</param>
         </generator>
     </id>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" name="person">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" fetch="select" lazy="false" name="person">
       <column name="OWNER_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
-    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
+    <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" lazy="false" name="researchGroup">
       <column name="RESEARCH_GROUP_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
     <property name="title" type="string">
@@ -52,6 +52,6 @@
 
     <many-to-one name="scenarioType" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"
                  column="SCENARIO_ID" insert="false" update="false"
-                 cascade="all" unique="true"/>
+                 cascade="all" unique="true" lazy="false"/>
   </class>
 </hibernate-mapping>
