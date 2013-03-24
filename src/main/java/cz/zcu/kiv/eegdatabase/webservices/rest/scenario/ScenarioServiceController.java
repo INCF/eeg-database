@@ -75,6 +75,8 @@ public class ScenarioServiceController {
         scenarioData.setDescription(description);
         scenarioData.setMimeType(mimeType != null ? mimeType : file.getContentType());
         scenarioData.setPrivate(isPrivate);
+        scenarioData.setFileName(file.getName());
+        scenarioData.setFileLength((int) file.getSize());
 
         try {
             int pk = scenarioService.create(scenarioData, file);

@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
+import com.paypal.svcs.types.perm.PersonalDataList;
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
@@ -9,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.EducationLevelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 import org.apache.commons.logging.Log;
@@ -28,8 +30,10 @@ import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
+import java.util.Set;
 
 /**
  * Implementation of user service.
@@ -63,7 +67,7 @@ public class UserServiceImpl implements UserService {
      */
     @Transactional
     @Override
-    public UserInfo create(String registrationPath, PersonData personData, Locale locale) throws RestServiceException {
+    public PersonData create(String registrationPath, PersonData personData, Locale locale) throws RestServiceException {
         try {
             Person person = new Person();
             person.setGivenname(personData.getName());
@@ -90,9 +94,12 @@ public class UserServiceImpl implements UserService {
             person.setAuthenticationHash(ControllerUtils.getMD5String(personData.getEmail()));
             person.setPassword(new BCryptPasswordEncoder().encode(plainPassword));
 
-            personDao.create(person);
+            int pk = personDao.create(person);
             sendRegistrationConfirmMail(registrationPath, plainPassword,person, locale);
-            return new UserInfo(person.getGivenname(), person.getSurname(), person.getAuthority());
+
+            personData.setId(pk);
+
+            return personData;
         } catch (ParseException e) {
             log.error(e.getMessage(), e);
             throw new RestServiceException(e);
@@ -110,6 +117,38 @@ public class UserServiceImpl implements UserService {
     public UserInfo login() {
         Person user = personDao.getLoggedPerson();
         return new UserInfo(user.getGivenname(), user.getSurname(), user.getAuthority());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PersonDataList getUsers() {
+        List<Person> original = personDao.getAllRecords();
+        List<PersonData> people = new ArrayList<PersonData>();
+
+        if(original != null){
+           for(Person p : original){
+               //records without email are not real users - omitted
+
+
+               PersonData person = new PersonData();
+               person.setId(p.getPersonId());
+               person.setName(p.getGivenname());
+               person.setSurname(p.getSurname());
+               person.setEmail(p.getUsername() == null ? p.getEmail() : p.getUsername());
+
+               //people without mail contact are not real users - omitted
+               if(person.getEmail() == null) continue;
+
+               if(p.getDateOfBirth() != null)
+               person.setBirthday(ControllerUtils.getDateFormat().format(p.getDateOfBirth()));
+               person.setGender(String.valueOf(p.getGender()));
+               person.setLeftHanded(String.valueOf(p.getLaterality()));
+               person.setNotes(p.getNote());
+               people.add(person);
+           }
+        }
+
+        return new PersonDataList(people);
     }
 
     /**

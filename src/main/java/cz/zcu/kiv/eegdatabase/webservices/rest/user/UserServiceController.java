@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import org.apache.commons.logging.Log;
@@ -47,7 +48,7 @@ public class UserServiceController {
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
-    public UserInfo create(HttpServletRequest request, @RequestBody PersonData person) throws RestServiceException {
+    public PersonData create(HttpServletRequest request, @RequestBody PersonData person) throws RestServiceException {
 
         String url = "http://" + domain + "/registration-confirm?" + ConfirmPage.CONFIRM_ACTIVATION + "=";
 
@@ -62,6 +63,11 @@ public class UserServiceController {
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public UserInfo login() {
         return service.login();
+    }
+
+    @RequestMapping(value = "/all", method = RequestMethod.GET)
+    public PersonDataList getUsers(){
+        return service.getUsers();
     }
 
     /**
