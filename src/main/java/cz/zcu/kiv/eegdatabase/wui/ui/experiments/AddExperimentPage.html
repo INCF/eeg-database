@@ -1,0 +1,27 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+</head>
+<body>
+<wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+        <form wicket:id="login" class="loginForm">
+            <fieldset>
+                <div>
+                    <label for="name" class="fieldLabel">Email</label>
+                    <input type="text" wicket:id="name" class="autocomplete" autosrc="/get-json-append"/>
+                </div>
+                <div>
+                    <input type="submit" wicket:id="submit" />
+                </div>
+            </fieldset>
+        </form>
+    </div>
+</wicket:extend>
+</body>
+</html>
