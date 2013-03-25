@@ -426,6 +426,7 @@
             <artifactId>hibernate-search</artifactId>
             <version>3.4.1.Final</version>
         </dependency>
+        -->
 
         <dependency>
             <groupId>org.apache.lucene</groupId>
@@ -438,7 +439,7 @@
             <artifactId>lucene-snowball</artifactId>
             <version>3.0.3</version>
         </dependency>
-
+        <!--
         <dependency>
             <groupId>org.apache.solr</groupId>
             <artifactId>solr-core</artifactId>
@@ -451,7 +452,6 @@
             </exclusions>
         </dependency>
         -->
-
         <!--======================================= Solr ============================================= -->
         <dependency>
             <groupId>org.apache.solr</groupId>
