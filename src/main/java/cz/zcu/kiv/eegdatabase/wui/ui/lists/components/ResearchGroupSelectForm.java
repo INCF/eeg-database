@@ -39,9 +39,9 @@ public class ResearchGroupSelectForm extends Form<Void> {
         super(id);
         this.setOutputMarkupPlaceholderTag(true);
         final DropDownChoice<ResearchGroup> groups = new DropDownChoice<ResearchGroup>("groups", model, choices, new ChoiceRenderer<ResearchGroup>("title", "researchGroupId"));
-        groups.setNullValid(isNullValid);
+        groups.setNullValid(false);
 
-        if (isNullValid && !choices.getObject().isEmpty())
+        if (!choices.getObject().isEmpty())
             groups.setModelObject(choices.getObject().get(0));
 
         groups.setOutputMarkupPlaceholderTag(true);
