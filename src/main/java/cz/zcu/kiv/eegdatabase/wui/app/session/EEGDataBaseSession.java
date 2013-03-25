@@ -62,6 +62,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
         if (password.equalsIgnoreCase(SOCIAL_PASSWD)) {
             this.setLoggedUser(facade.getPerson(username));
+            this.createShoppingCart();
             return true;
         }
 
