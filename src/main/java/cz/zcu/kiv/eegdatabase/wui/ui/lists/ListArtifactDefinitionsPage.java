@@ -24,6 +24,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
@@ -140,7 +141,7 @@ public class ListArtifactDefinitionsPage extends MenuPage {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                int researchGroupId = model.getCriteriaModel().getObject().getResearchGroupId();
+                int researchGroupId = (model.getCriteriaModel().getObject() == null) ? CoreConstants.DEFAULT_ITEM_ID : model.getCriteriaModel().getObject().getResearchGroupId();
                 setResponsePage(ArtifactFormPage.class, PageParametersUtils.getPageParameters(PageParametersUtils.GROUP_PARAM, researchGroupId));
             }
         };

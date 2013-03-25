@@ -160,7 +160,7 @@ public class ListPersonOptParamPage extends MenuPage {
 
             @Override
             public void onClick(AjaxRequestTarget target) {
-                int researchGroupId = model.getCriteriaModel().getObject().getResearchGroupId();
+                int researchGroupId = (model.getCriteriaModel().getObject() == null) ? CoreConstants.DEFAULT_ITEM_ID : model.getCriteriaModel().getObject().getResearchGroupId();
                 setResponsePage(PersonOptParamFormPage.class, PageParametersUtils.getPageParameters(PageParametersUtils.GROUP_PARAM, researchGroupId));
             }
         };
