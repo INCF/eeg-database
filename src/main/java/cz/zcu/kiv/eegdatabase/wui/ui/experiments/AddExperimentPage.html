@@ -89,8 +89,16 @@
                 </div>
             </form>
         </div>
-    </div>
-</div>
+
+        <div class="result tabContent hidden">
+            <form wicket:id="results" action="" method="post" autocomplete="on">
+
+                <div class="form-item">
+                    <label for="resultFile">Results file:</label>
+                    <input type="file" name="resultFile" wicket:id="resultFile"/>
+                </div>
+            </form>
+        </div>
     </div>
 </wicket:extend>
 </body>

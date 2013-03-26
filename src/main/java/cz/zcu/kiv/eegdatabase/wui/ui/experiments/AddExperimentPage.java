@@ -24,8 +24,6 @@ public class AddExperimentPage extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-//        add(new AddExperimentForm("login"));
-
         add(new AddExperimentScenarioForm("scenarioTab"));
 //        add(new AddExperimentScenarioForm("environmentTab"));
 //        add(new AddExperimentScenarioForm("resultTab"));
