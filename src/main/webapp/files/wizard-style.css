@@ -45,7 +45,7 @@ html, body {
     -webkit-border-radius: 15px 15px 15px 15px;
     
     display: inline-block;
-    width: 560px;
+    width: 570px;
 }
 
 .wizard .nav>li>a {
@@ -79,7 +79,7 @@ html, body {
     border-bottom: 1px solid #dfdfdf;
     
     float: left;
-    width: 143px;
+    width: 144px;
 }
 
 .wizard .nav>li:first-child>a {
@@ -217,6 +217,7 @@ html, body {
 
 .wizard label {
     width: 130px;
+    padding-top: 5px;
 }
 
 .wizard input:not([type="checkbox"]),
@@ -338,12 +339,12 @@ html, body {
 }
 
 .wizard input[type=date],
-.wizard .date {
+.wizard input.date {
     width: 160px;
 }
 
 .wizard input[type=time],
-.wizard .time {
+.wizard input.time {
     width: 60px;
 }
 
