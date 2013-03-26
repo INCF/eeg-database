@@ -133,13 +133,7 @@ public class ExperimentsDetailPage extends MenuPage {
 
         add(hardware, addParameters, files);
 
-        final WebMarkupContainer container = new WebMarkupContainer("container");
-        container.setOutputMarkupId(true);
-        container.setOutputMarkupPlaceholderTag(true);
-        container.setVisibilityAllowed(true);
-        container.add(experimentViewPanel);
 
-        add(container);
     }
 
     private int parseParameters(PageParameters parameters) {

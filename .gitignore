@@ -11,3 +11,5 @@ bin
 .gitignore
 .settings
 src/main/webapp/files/js/messages-en.json
+/*.xml
+/*.properties

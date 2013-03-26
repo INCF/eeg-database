@@ -129,6 +129,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
         add(educationLevel, educationLevelLabel);
 
+
         AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("action.create.account"), this) {
 
             private static final long serialVersionUID = 1L;

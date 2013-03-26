@@ -17,9 +17,9 @@ public class MainMenu extends WebMarkupContainer {
 
     private static final long serialVersionUID = -4669294618890833486L;
 
-    private static final String LI_START_TAG = "<li";
+    private static final String LI_START_TAG = "<li>";
     private static final String LI_END_TAG = "</li>";
-    private static final String A_START_TAG_LINK = "><a href=\'";
+    private static final String A_START_TAG_LINK = "<a href=\'";
     private static final String A_START_TAG_FOOTER = "\' title=\'";
     private static final String A_START_TAG_FOOTER2 = "\'>";
     private static final String A_END_TAG = "</a>";

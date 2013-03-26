@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPage;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -148,6 +149,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("search-page", SearchPage.class);
 
+        mountPage("add-experiment-page", AddExperimentPage.class);
     }
 
     @Override
