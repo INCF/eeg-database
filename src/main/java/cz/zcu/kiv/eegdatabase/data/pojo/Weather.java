@@ -28,7 +28,7 @@ public class Weather implements Serializable {
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
             @Field(name = "description")}) //use a different field name
     */
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     /*

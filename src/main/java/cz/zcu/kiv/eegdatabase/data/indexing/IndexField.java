@@ -9,21 +9,18 @@ package cz.zcu.kiv.eegdatabase.data.indexing;
  */
 public enum IndexField {
 
-    // properties are sorted alhpabetically
     CHILD_CLASS("child_class"), // e.g. ArtifactRemoveMethod is the child class of Artifact
     CLASS("class"),
-    DESCRIPTION("description"),
     FILE_MIMETYPE("file_mimetype"),
     ID("id"),
     NAME("name"),
-    NOTE("note"),
     PARAM_DATATYPE("param_datatype"),
     PARENT_CLASS("parent_class"), // e.g. Article is the parent class of ArticleComment
+    SOURCE("source"), // Database/LinkedIn
     TEMPERATURE("temperature"),
-    TEXT("text"),
+    TEXT("text"), // for long text, notes, description etc.
     TITLE("title"),
     UUID("uuid"),
-    SOURCE("source"),
     AUTOCOMPLETE("autocomplete");
 
     private String value;

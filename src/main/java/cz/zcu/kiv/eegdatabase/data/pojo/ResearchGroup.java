@@ -28,7 +28,7 @@ public class ResearchGroup implements Serializable, IAutoCompletable {
     @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "researchGroup")

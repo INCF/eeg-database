@@ -27,7 +27,7 @@ public class Keywords implements Serializable {
     @ManyToOne
     @JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
-    @SolrField(name = IndexField.TITLE) // choose a better field?
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "KEYWORDS_TEXT")
     private String keywordsText;
     
