@@ -21,7 +21,6 @@ public class AddExperimentForm extends Form<ExperimentAddDTO> {
 
         TextField<String> userName = new TextField<String>("name");
         userName.setRequired(true);
-
         add(userName);
 
         Button submit = new Button("submit", ResourceUtils.getModel("action.login")) {

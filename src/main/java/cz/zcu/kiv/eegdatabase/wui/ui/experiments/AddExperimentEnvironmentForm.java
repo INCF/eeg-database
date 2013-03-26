@@ -1,22 +1,29 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentAddDTO;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextField;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-public class AddExperimentEnvironmentForm extends Form<ExperimentAddDTO> {
+import java.util.Arrays;
+import java.util.List;
+
+public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
     public AddExperimentEnvironmentForm(String id){
-        super(id, new CompoundPropertyModel<ExperimentAddDTO>(new ExperimentAddDTO()));
+        super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
+
+        List values = Arrays.asList(new String[] {"Value 1", "Value 2", "Value 3", "Value 4", "Value 5", "Value 6" });
+
+        ListMultipleChoice hw = new ListMultipleChoice("hardware", values).setMaxRows(5);
+        add(hw);
+        ListMultipleChoice sw = new ListMultipleChoice("software", values).setMaxRows(5);
+        add(sw);
+
+        add(new DropDownChoice("weather", values));
 
         TextField<String> weatherNote = new TextField<String>("weatherNote");
-        weatherNote.setRequired(true);
         add(weatherNote);
 
-        TextField<String> temperature = new TextField<String>("temperature");
+        NumberTextField<Integer> temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
         add(temperature);
 
@@ -29,19 +36,6 @@ public class AddExperimentEnvironmentForm extends Form<ExperimentAddDTO> {
         add(pharmaceutical);
 
         TextField<String> privateNote = new TextField<String>("privateNote");
-        privateNote.setRequired(true);
         add(privateNote);
-
-        Button submit = new Button("submit", ResourceUtils.getModel("action.login")) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onSubmit() {
-                ExperimentAddDTO experiment = AddExperimentEnvironmentForm.this.getModelObject();
-                setResponsePage(WelcomePage.class);
-            }
-        };
-        add(submit);
     }
 }

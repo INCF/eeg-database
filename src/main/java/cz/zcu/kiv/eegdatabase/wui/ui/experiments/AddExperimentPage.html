@@ -9,18 +9,69 @@
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
-    <div class="mainContentWithMenu">
-        <form wicket:id="login" class="loginForm">
-            <fieldset>
-                <div>
-                    <label for="name" class="fieldLabel">Email</label>
-                    <input type="text" wicket:id="name" class="autocomplete" autosrc="/get-json-append"/>
+        <div class="environment tabContent hidden">
+            <form wicket:id="environment" action="" method="post" autocomplete="on">
+                <fieldset>
+
+                    <div class="form-item">
+                        <label for="hardware">*Hardware:</label>
+                        <select name="hardware" wicket:id="hardware" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
+                        </select>
+                        <input type="button" class="openurl" data="/experiments/wizard/addHW" name="newHardware" value="Add">
+                    </div>
+
+                    <div class="form-item added">
+                        <label for="software">*Software:</label>
+                        <select name="software" wicket:id="software" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
+                        </select>
+                        <input type="button" class="openurl" data="/jsp/experiments/addSW" name="newSoftware" value="Add">
+                    </div>
+
+                   <div class="form-item">
+                        <label for="weather">*Weather:</label>
+                        <select name="weather" wicket:id="weather">
+                        </select>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="weatherNote" class="long-label">Weather note:</label>
+                        <input type="text" wicket:id="weatherNote" name="weatherNote" class="after-long-label"/>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="temperature">*Temperature:</label>
+                        <input type="number" wicket:id="temperature" name="temperature" required/>
+                    </div>
+
+                    <div class="form-item">
+                        <label for="disease">*Diseases:</label>
+                        <input type="text" name="disease" wicket:id="disease" class="required autocomplete" autosrc="/experiments/wizard/json/disease">
+                        <input type="button" name="newDisease" class="openurl" data="/experiments/wizard/addDisease" value="Add">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="pharmaceutical">*Pharmaceuticals:</label>
+                        <input type="text" name="pharmaceutical" wicket:id="pharmaceutical" class="required autocomplete multiple" autosrc="/experiments/wizard/json/pharmaceutical">
+                        <input type="button" name="newPharmaceutical" class="openurl" data="/experiments/wizard/addPharmaceutical" value="Add">
+                    </div>
+
+                    <div class="form-item">
+                        <label for="privateNote">Private note:</label>
+                        <input type="text" wicket:id="privateNote" name="privateNote"/>
+                    </div>
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="result tabContent hidden">
+            <form wicket:id="results" action="" method="post" autocomplete="on">
+
+                <div class="form-item">
+                    <label for="resultFile">Results file:</label>
+                    <input type="file" name="resultFile" wicket:id="resultFile"/>
                 </div>
-                <div>
-                    <input type="submit" wicket:id="submit" />
-                </div>
-            </fieldset>
-        </form>
+            </form>
+        </div>
     </div>
 </wicket:extend>
 </body>

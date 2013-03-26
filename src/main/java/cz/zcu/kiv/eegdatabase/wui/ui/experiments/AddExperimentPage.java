@@ -23,7 +23,8 @@ public class AddExperimentPage extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        add(new AddExperimentForm("login"));
+        add(new AddExperimentEnvironmentForm("environment"));
+        add(new AddExperimentResultsForm("results"));
     }
 
     @Override
