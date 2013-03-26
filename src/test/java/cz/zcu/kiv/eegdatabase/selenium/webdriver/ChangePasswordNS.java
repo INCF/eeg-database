@@ -18,14 +18,14 @@ public class ChangePasswordNS {
   @Before
   public void setUp() throws Exception {
     driver = new FirefoxDriver();
-    baseUrl = Config.BASE_URL;
+    baseUrl = "http://localhost:8080/";
     driver.manage().timeouts().implicitlyWait(30, TimeUnit.SECONDS);
   }
 
   @Test
   public void testChangePasswordNS() throws Exception {
     driver.get(baseUrl + "/home-page?0");
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     } catch (Error e) {
@@ -36,40 +36,40 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).sendKeys("123456");
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Logged user: testaccountforeeg2@seznam\\.cz[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//span[@wicketpath='userHeaderLink_linkLabel']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Account overview[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//a[@wicketpath='leftMenu_menu_1_link']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Change password[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password again' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -82,13 +82,13 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("123");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*'New password' is shorter than the minimum of 6 characters\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*'New password again' is shorter than the minimum of 6 characters\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -101,13 +101,13 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password again' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -118,13 +118,13 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password again' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -137,7 +137,7 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("654321");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted password doesn't match current password\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -150,7 +150,7 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("654321");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Current password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -163,7 +163,7 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("654321");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -176,7 +176,7 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'New password again' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -189,7 +189,7 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("123456");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*New password is the same as the old one\\.[\\s\\S]*$"));
     } catch (Error e) {
@@ -202,14 +202,14 @@ public class ChangePasswordNS {
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_verPassword']")).sendKeys("654321");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//a[@wicketpath='logout']")).click();
-
+    // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     } catch (Error e) {
