@@ -24,7 +24,7 @@ public class StimulusType implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "STIMULUS_TYPE_ID")
     private int stimulusTypeId;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "IS_DEFAULT")

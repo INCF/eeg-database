@@ -66,7 +66,7 @@ public class Experiment implements Serializable {
             @Field(name = "environmentNote")})   // use a different field name
     */
     //@Boost(2)//Boost environmentNote field
-    @SolrField(name = IndexField.NOTE)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "ENVIRONMENT_NOTE")
     private String environmentNote;
     @ManyToMany(mappedBy = "experiments")

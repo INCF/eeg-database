@@ -28,7 +28,7 @@ public class ElectrodeSystem implements Serializable {
     @SolrField(name = IndexField.TITLE)
     private String title;
     @Column(name = "DESCRIPTION")
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     private String description;
     @Column(name = "IS_DEFAULT")
     private int defaultNumber;

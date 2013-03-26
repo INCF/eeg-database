@@ -53,7 +53,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
             @Field(name = "description"),
             @Field(store = Store.YES)}) //use a different field name
     */
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "scenario")

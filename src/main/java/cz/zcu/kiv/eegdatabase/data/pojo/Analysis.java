@@ -30,7 +30,7 @@ public class Analysis implements Serializable {
     private int prestimulusTime;
     @Column(name = "POSTSTIMULUS_TIME")
     private int poststimulusTime;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "analysis")

@@ -55,7 +55,7 @@ public class Person implements Serializable, Comparable<Person> {
             @Field(name = "note"),
             @Field(store = Store.YES)}) //use a different field name
     */
-    @SolrField(name = IndexField.NOTE)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "NOTE")
     private String note;
     @Column(name = "USERNAME")

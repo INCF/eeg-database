@@ -32,7 +32,7 @@ public class ScenarioSchemas implements java.io.Serializable {
     private Clob pojo;
     @Column(name = "BEAN")
     private String bean;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "APPROVED")

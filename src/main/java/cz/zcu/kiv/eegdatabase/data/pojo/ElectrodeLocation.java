@@ -28,7 +28,7 @@ public class ElectrodeLocation implements Serializable {
     @SolrField(name = IndexField.TITLE)
     @Column(name = "TITLE")
     private String title;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "SHORTCUT")

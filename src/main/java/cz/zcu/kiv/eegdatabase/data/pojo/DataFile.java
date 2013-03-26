@@ -28,6 +28,7 @@ public class DataFile implements Serializable {
     @ManyToOne
     @JoinColumn(name = "EXPERIMENT_ID")
     private Experiment experiment;
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @Column(name = "FILE_CONTENT")

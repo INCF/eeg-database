@@ -24,7 +24,7 @@ public class Stimulus implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "STIMULUS_ID")
     private int stimulusId;
-    @SolrField(name = IndexField.DESCRIPTION)
+    @SolrField(name = IndexField.TEXT)
     @Column(name = "DESCRIPTION")
     private String description;
     @OneToMany(mappedBy = "stimulus")
