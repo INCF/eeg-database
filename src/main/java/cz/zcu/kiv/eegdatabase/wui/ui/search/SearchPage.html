@@ -21,9 +21,11 @@
 </head>
 <body>
 <wicket:extend>
-    <form wicket:id="searchForm">
-        <input type="text" wicket:id="autocomplete" size="50"/>
-    </form>
+    <div wicket:id="feedback" class="feedback">Feedback is displayed here</div>
+
+    <wicket:container wicket:id="searchPanel"></wicket:container>
+    <wicket:container wicket:id="resultPanel"></wicket:container>
+
 </wicket:extend>
 </body>
 </html>
