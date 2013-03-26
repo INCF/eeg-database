@@ -10,17 +10,87 @@
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
     <div class="mainContentWithMenu">
-        <form wicket:id="login" class="loginForm">
-            <fieldset>
-                <div>
-                    <label for="name" class="fieldLabel">Email</label>
-                    <input type="text" wicket:id="name" class="autocomplete" autosrc="/get-json-append"/>
+
+<div class="wizard">
+
+    <!-- wizard navigation -->
+    <ul class="nav">
+
+        <li class="selected">
+            <a class="tab" name="scenarioTab">Scenario</a>
+        </li>
+
+        <li>
+            <a class="tab" name="environment">Environment</a>
+        </li>
+
+        <li class="last">
+            <a class="tab" name="result">Result</a>
+        </li>
+    </ul>
+    <!-- wizard navigation end -->
+
+    <!-- main page content -->
+    <div class="content">
+
+        <div class="scenarioTab tabContent">
+            <form wicket:id="scenarioTab">
+                <div class="form-item">
+                    <label for="scenario">Scenario</label>
+                    <input type="text" wicket:id="scenario" class="autocomplete" autosrc="/get-json-append"/>
+                    <input type="button" id="newScenario" name="newScenario" class="openurl" data="/experiments/wizard/addScenario" value="Add">
                 </div>
-                <div>
-                    <input type="submit" wicket:id="submit" />
+
+                <div class="form-item">
+                    <label for="group">Group</label>
+                    <input type="text" wicket:id="group" class="autocomplete" autosrc="/experiments/wizard/json/group">
+                    <input type="button" id="newGroup" name="newGroup" class="openurl" data="/experiments/wizard/addGroup" value="Add">
+                    <input type="checkbox" name="defaultGroup" wicket:id="isDefaultGroup" value="isDefault">Set as default
                 </div>
-            </fieldset>
-        </form>
+
+                <div class="form-item">
+                    <label for="project">Project component</label>
+                    <input type="text" wicket:id="project" class="autocomplete" autosrc="/get-json-append"/>
+                    <input type="button" id="newProject" name="newProject" class="openurl" data="/experiments/wizard/addProjectType" value="Add">
+                </div>
+
+                <div class="form-item">
+
+                    <label for="startDate">Start</label>
+                    <input type="text" name="startDay" class="date" wicket:id="startDate"/>
+
+                    <input type="text" name="startTime" class="time" wicket:id="startTime"/>
+                </div>
+
+                <div class="form-item">
+
+                    <label for="finishDate">Finish</label>
+                    <input type="text" name="finishDate" class="date" wicket:id="finishDate"/>
+
+                    <input type="text" name="finishTime" class="time" wicket:id="finishTime"/>
+                </div>
+
+                <div class="form-item">
+                    <label for="subjects">Tested subject</label>
+                    <input type="text" class="autocomplete" wicket:id="subjects" autosrc="/experiments/wizard/json/person">
+                    <input type="button" id="addTested" class="openurl" data="/experiments/wizard/addPerson" name="addTested" value="Add">
+                </div>
+
+                <div class="form-item">
+                    <label for="stimulus">Stimulus</label>
+                    <input type="text" name="stimulus" wicket:id="stimulus" class="required autocomplete multiple" autosrc="/experiments/wizard/json/stimulus">
+                    <input type="button" name="newStimulus" class="openurl" data="/experiments/wizard/addStimulus" value="Add">
+                </div>
+
+                <div class="form-item">
+                    <label for="coExperimenters">Co - experimenters</label>
+                    <input type="text" class="autocomplete multiple"
+                           wicket:id="coExperimenters" autosrc="experimentators.jsp">
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
     </div>
 </wicket:extend>
 </body>

@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -23,7 +24,11 @@ public class AddExperimentPage extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        add(new AddExperimentForm("login"));
+//        add(new AddExperimentForm("login"));
+
+        add(new AddExperimentScenarioForm("scenarioTab"));
+//        add(new AddExperimentScenarioForm("environmentTab"));
+//        add(new AddExperimentScenarioForm("resultTab"));
     }
 
     @Override
@@ -33,6 +38,7 @@ public class AddExperimentPage extends MenuPage {
         response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/jquery.validate.min.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/date.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/wizard.js"));
+        response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
         super.renderHead(response);
     }
 }

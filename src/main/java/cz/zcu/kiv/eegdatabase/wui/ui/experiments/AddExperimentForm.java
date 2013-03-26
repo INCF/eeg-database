@@ -16,6 +16,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
  * To change this template use File | Settings | File Templates.
  */
 public class AddExperimentForm extends Form<ExperimentAddDTO> {
+
     public AddExperimentForm(String id){
         super(id, new CompoundPropertyModel<ExperimentAddDTO>(new ExperimentAddDTO()));
 

@@ -20,7 +20,7 @@
 
 <body>
 
-<div class="container">
+<div class="wizard">
 
     <!-- navigation -->
     <ul class="nav">

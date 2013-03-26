@@ -11,3 +11,6 @@ bin
 .gitignore
 .settings
 src/main/webapp/files/js/messages-en.json
+/module_eegdatabase.xml
+/eegdatabase.xml
+/eegdatabase.properties
