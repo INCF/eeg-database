@@ -24,7 +24,7 @@ public class ExperimentPackageConnection implements Serializable {
 	
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "EXPERIMENT_PACKAGE_CONNECTION_ID")
+    @Column(name = "EPC_ID")
 	private int experimentPackgageConnectionId;
 	
 	
