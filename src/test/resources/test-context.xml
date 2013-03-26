@@ -247,6 +247,9 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
+    <bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
+
     <bean id="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario">
         <property name="title" value="scenario title test"/>
         <property name="scenarioName" value="scenario_name_test"/>
