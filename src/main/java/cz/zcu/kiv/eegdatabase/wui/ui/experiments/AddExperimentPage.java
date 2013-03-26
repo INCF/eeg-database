@@ -1,12 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.head.JavaScriptHeaderItem;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
@@ -17,22 +15,23 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * To change this template use File | Settings | File Templates.
  */
 public class AddExperimentPage extends MenuPage {
-
-    public AddExperimentPage(PageParameters parameters) {
-
+    public AddExperimentPage(PageParameters parameter){
         setupComponents();
     }
 
     private void setupComponents() {
-        setPageTitle(ResourceUtils.getModel("pageTitle.addExperimentPage"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-
-        add(new AddExperimentForm("addExperiment"));
+        add(new AddExperimentForm("login"));
     }
 
     @Override
     public void renderHead(IHeaderResponse response) {
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/jquery-1.9.1.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/jquery-ui-1.10.1.custom.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/jquery.validate.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/date.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/experiments/wizard.js"));
         super.renderHead(response);
     }

@@ -10,15 +10,14 @@
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
     <div class="mainContentWithMenu">
-        sdjhvzsdjg
-        <form wicket:id="addExperiment" class="loginForm">
+        <form wicket:id="login" class="loginForm">
             <fieldset>
                 <div>
-                    <label for="name" class="fieldLabel">Name</label>
-                    <input type="text" wicket:id="name" />
+                    <label for="name" class="fieldLabel">Email</label>
+                    <input type="text" wicket:id="name" class="autocomplete" autosrc="/get-json-append"/>
                 </div>
                 <div>
-                  <input type="submit" wicket:id="submit" />
+                    <input type="submit" wicket:id="submit" />
                 </div>
             </fieldset>
         </form>

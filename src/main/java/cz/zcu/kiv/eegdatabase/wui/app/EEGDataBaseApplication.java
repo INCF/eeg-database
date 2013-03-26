@@ -1,6 +1,36 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPageJson;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleRequestPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -16,47 +46,6 @@ import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleRequestPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitionsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListExperimentOptParamPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListFileMetadataPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListHardwareDefinitionsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListListsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListPersonOptParamPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListWeatherDefinitiosPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ArtifactFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ExperimentOptParamFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.FileMetadataFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.HardwareFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.PersonOptParamFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
@@ -150,6 +139,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("search-page", SearchPage.class);
 
         mountPage("add-experiment-page", AddExperimentPage.class);
+        mountPage("get-json-append", AddExperimentPageJson.class);
     }
 
     @Override

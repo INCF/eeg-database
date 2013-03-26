@@ -14,6 +14,7 @@ import java.io.Serializable;
 public class ExperimentAddDTO extends IdentifiDTO implements Serializable {
     private String name;
 
+
     public String getName() {
         return name;
     }
