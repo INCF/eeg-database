@@ -9,6 +9,7 @@ import urn.ebay.apis.eBLBaseComponents.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
 
 /**
  * Created with IntelliJ IDEA.
@@ -25,7 +26,9 @@ public class PayPalTools {
         String cancelURL = PageParametersUtils.getUrlForPage(ShoppingCartPage.class, null);
 
         try{
-            PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(WebApplication.get().getServletContext().getResourceAsStream("/WEB-INF/PayPal.properties"));
+            Properties PayPalProperties =  new Properties();
+            PayPalProperties.load(WebApplication.get().getServletContext().getResourceAsStream("/WEB-INF/PayPal.properties"));
+            PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(PayPalProperties);
             SetExpressCheckoutRequestType setExpressCheckoutReq = new SetExpressCheckoutRequestType();
             SetExpressCheckoutRequestDetailsType details = new SetExpressCheckoutRequestDetailsType();
 
@@ -47,6 +50,7 @@ public class PayPalTools {
             details.setNoShipping("1");
             details.setAllowNote("0");
 
+            //HardCoded String. Will be replaced when eshop goes live and Experiments are replaced with prepared packages.
             details.setOrderDescription("Experiments for total of: " + Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()) + " GBP.");
 
             setExpressCheckoutReq.setSetExpressCheckoutRequestDetails(details);
@@ -55,23 +59,15 @@ public class PayPalTools {
             expressCheckoutReq
                     .setSetExpressCheckoutRequest(setExpressCheckoutReq);
 
-            expressCheckoutReq.toString();
-
             SetExpressCheckoutResponseType setExpressCheckoutResponse = service
                     .setExpressCheckout(expressCheckoutReq);
 
             if (setExpressCheckoutResponse.getAck() == AckCodeType.SUCCESS) {
                 String token = setExpressCheckoutResponse.getToken();
-                //Need to figure out how to load this url from property file
-                return ("https://www.sandbox.paypal.com/cgi-bin/webscr?cmd=_express-checkout&token=" + token);
+                //Reads redirect URL from property file
+                return (PayPalProperties.getProperty("service.SetExpressCheckoutRedirectURL") + token);
             }
-            else {
-                return PageParametersUtils.getUrlForPage(PaymentErrorPage.class, null);
-            }
-
-        } catch (Exception e) {
-
-        }
+        } catch (Exception e) {}
         return PageParametersUtils.getUrlForPage(PaymentErrorPage.class, null);
     }
 
@@ -116,15 +112,10 @@ public class PayPalTools {
             DoExpressCheckoutPaymentResponseType doCheckoutPaymentResponse = service
                     .doExpressCheckoutPayment(doExpressCheckoutPaymentReq);
 
-            if(doCheckoutPaymentResponse == null || doCheckoutPaymentResponse.getAck() != AckCodeType.SUCCESS){
-                return false;
+            if(doCheckoutPaymentResponse != null && doCheckoutPaymentResponse.getAck() == AckCodeType.SUCCESS){
+                return true;
             }
-
-            return true;
-
-        } catch (Exception e) {
-
-        }
+        } catch (Exception e) {}
         return false;
     }
 }
