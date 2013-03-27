@@ -4,12 +4,12 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.io.Serializable;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 
 /**
  *
  * @author bydga
  */
-public interface ExperimentPackageLicenseDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface ExperimentPackageLicenseDao extends GenericDao<ExperimentPackageLicense, Integer> {
 	
 }

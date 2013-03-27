@@ -11,5 +11,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
  *
  * @author bydga
  */
-public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<ExperimentPackageConnection, Integer> implements ExperimentPackageConnectionDao<ExperimentPackageConnection, Integer> {
+public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<ExperimentPackageConnection, Integer> implements ExperimentPackageConnectionDao {
+
+    public SimpleExperimentPackageConnectionDao() {
+	super(ExperimentPackageConnection.class);
+    }
+    
 }

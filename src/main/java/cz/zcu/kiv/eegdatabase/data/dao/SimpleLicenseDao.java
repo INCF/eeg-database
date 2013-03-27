@@ -10,5 +10,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
  *
  * @author bydga
  */
-public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> implements LicenseDao<License, Integer> {
+public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> implements LicenseDao {
+
+    public SimpleLicenseDao() {
+	super(License.class);
+    }
+    
 }

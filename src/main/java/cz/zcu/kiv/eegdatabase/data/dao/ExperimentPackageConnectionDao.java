@@ -4,12 +4,13 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import java.io.Serializable;
 
 /**
  *
  * @author bydga
  */
-public interface ExperimentPackageConnectionDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPackageConnection, Integer> {
 	
 }

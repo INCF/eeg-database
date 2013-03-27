@@ -10,5 +10,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
  *
  * @author bydga
  */
-public class SimpleExperimentPackageLicenseDao extends SimpleGenericDao<ExperimentPackageLicense, Integer> implements ExperimentPackageLicenseDao<ExperimentPackageLicense, Integer> {
+public class SimpleExperimentPackageLicenseDao extends SimpleGenericDao<ExperimentPackageLicense, Integer> implements ExperimentPackageLicenseDao {
+
+    public SimpleExperimentPackageLicenseDao() {
+	super(ExperimentPackageLicense.class);
+    }
 }
