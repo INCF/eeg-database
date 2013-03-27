@@ -1,16 +1,24 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 /**
  *
- * @author veveri
+ * @author Jakub Danek
  */
 public enum LicenseType {
+    /**
+     * Public experiments
+     */
     OPEN_DOMAIN,
+    /**
+     * Experiments published for research/education purposes only
+     */
     ACADEMIC,
+    /**
+     * For any purpose, paid
+     */
     BUSINESS,
+    /**
+     * Private experiments
+     */
     PRIVATE
 }

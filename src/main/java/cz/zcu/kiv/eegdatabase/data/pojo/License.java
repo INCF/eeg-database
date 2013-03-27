@@ -12,7 +12,7 @@ import javax.persistence.*;
 @Table(name="LICENSE")
 public class License implements Serializable{
 	
-	@Id
+    @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "LICENSE_ID")
     private int licenseId;
