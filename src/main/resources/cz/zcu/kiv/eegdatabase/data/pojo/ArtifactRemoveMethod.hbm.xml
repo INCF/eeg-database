@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod" schema="EEGTEST"
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod"
            table="ARTEFACT_REMOVING_METHOD">
         <id name="artifactRemoveMethodId" type="int">
             <column name="ARTEFACT_REMOVING_METHOD_ID" precision="22" scale="0"/>
