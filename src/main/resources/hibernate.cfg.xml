@@ -16,8 +16,14 @@
             org.hibernate.cache.NoCacheProvider
     </property>
     <!--<property name="hibernate.hbm2dll.auto">create</property>-->
+
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
    
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
+<!--    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Weather.hbm.xml"/>
@@ -28,6 +34,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/SyncChanges.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>-->
   </session-factory>
 </hibernate-configuration>

@@ -66,6 +66,9 @@
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml"/>
      <!--   <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo" />-->
+	<property name="configLocation">
+            <value>classpath:hibernate.cfg.xml</value>
+        </property>
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">${db.dialect}</prop>
