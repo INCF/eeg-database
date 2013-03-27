@@ -129,7 +129,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     public void init() {
         super.init();
 
-      getDebugSettings().setOutputComponentPath(true);
+      	getDebugSettings().setOutputComponentPath(true);
 
         getMarkupSettings().setStripWicketTags(true);
         // getMarkupSettings().setCompressWhitespace(true);
