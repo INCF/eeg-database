@@ -8,7 +8,7 @@ public class DataFileDTO extends IdentifiDTO {
 
     private String fileName;
     private String mimetype;
-    byte[] fileContent;
+    byte[] fileContent = new byte[0];
     
     public String getFileName() {
         return fileName;

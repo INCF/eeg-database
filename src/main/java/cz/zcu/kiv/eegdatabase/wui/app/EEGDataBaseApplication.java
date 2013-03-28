@@ -15,6 +15,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.*;
@@ -138,6 +139,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("experiments-list", ListExperimentsPage.class);
         mountPage("experiments-detail", ExperimentsDetailPage.class);
+        mountPage("experiments-download", ExperimentsDownloadPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);

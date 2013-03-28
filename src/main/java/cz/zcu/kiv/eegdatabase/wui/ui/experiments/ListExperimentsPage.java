@@ -108,7 +108,7 @@ public class ListExperimentsPage extends MenuPage {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
+                item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")));
             }
         });
 
@@ -123,7 +123,7 @@ public class ListExperimentsPage extends MenuPage {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
+                item.add(new ViewLinkPanel(componentId, ExperimentsDownloadPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.download")));
             }
         });
 

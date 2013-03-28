@@ -1,0 +1,136 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1>
+        <wicket:message key="pageTitle.chooseMetadata" />
+      </h1>
+
+      <form class="standardInputForm" wicket:id="form">
+        <table style="width: 27%;" class="standardValueTable">
+          <tr>
+            <th class="multiple"><wicket:message key="label.chooseAll" /></th>
+            <td><input wicket:id="chooseAll" type="checkbox" /></td>
+          </tr>
+        </table>
+        <table id="personsTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.person" /></th>
+            <td><input wicket:id="person" type="checkbox" /></td>
+          </tr>
+          <wicket:enclosure child="name">
+            <tr>
+              <th><wicket:message key="label.name" /></th>
+              <td><input type="checkbox" wicket:id="name" /></td>
+              <th><wicket:message key="label.phoneNumber" /></th>
+              <td><input type="checkbox" wicket:id="phoneNumber" /></td>
+            </tr>
+            <tr>
+              <th><wicket:message key="label.email" /></th>
+              <td><input type="checkbox" wicket:id="email" /></td>
+              <th><wicket:message key="label.dateOfBirth" /></th>
+              <td><input type="checkbox" wicket:id="birth" /></td>
+            </tr>
+          </wicket:enclosure>
+          <tr>
+            <th><wicket:message key="label.gender" /></th>
+            <td><input type="checkbox" wicket:id="gender" /></td>
+            <th><wicket:message key="label.note" /></th>
+            <td><input type="checkbox" wicket:id="note" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.addParams" /></th>
+            <td><input type="checkbox" wicket:id="personAddParams" /></td>
+          </tr>
+        </table>
+
+        <table id="scenariosTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.scenario" /></th>
+            <td><input type="checkbox" wicket:id="scenario" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.scenarioTitle" /></th>
+            <td><input type="checkbox" wicket:id="title" /></td>
+            <th><wicket:message key="label.scenarioLength" /></th>
+            <td><input type="checkbox" wicket:id="length" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.scenarioDescription" /></th>
+            <td><input type="checkbox" wicket:id="description" /></td>
+            <th><wicket:message key="label.scenarioFile" /></th>
+            <td><input type="checkbox" wicket:id="scenFile" /></td>
+          </tr>
+        </table>
+        <table id="measurationTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.measuration" /></th>
+            <td><input type="checkbox" wicket:id="measuration" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.times" /></th>
+            <td><input type="checkbox" wicket:id="times" /></td>
+            <th><wicket:message key="label.temperature" /></th>
+            <td><input type="checkbox" wicket:id="temperature" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.weather" /></th>
+            <td><input type="checkbox" wicket:id="weather" /></td>
+            <th><wicket:message key="label.weatherNote" /></th>
+            <td><input type="checkbox" wicket:id="weatherNote" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.hardware" /></th>
+            <td><input type="checkbox" wicket:id="hardware" /></td>
+            <th><wicket:message key="label.addParams" /></th>
+            <td><input type="checkbox" wicket:id="measurationAddParams" /></td>
+          </tr>
+
+        </table>
+        <h2>
+          <wicket:message key="label.data" />
+        </h2>
+
+        <table wicket:id="filecheck">
+          <tr wicket:id="fileList">
+            <table class="standardValueTable">
+              <tr>
+                <th colspan="3" wicket:id="filename"></th>
+                <td><input type="checkbox" wicket:id="checkFull"/></td>
+              </tr>
+              <tr>
+                <th colspan="3"><wicket:message key="label.datafile.content" /></th>
+                <td><input type="checkbox" wicket:id="checkbox" /></td>
+              </tr>
+              <tbody wicket:id="valGroup">
+                <wicket:enclosure child="params">
+                  <tr>
+                    <td><wicket:message key="label.datafile.name" /></td>
+                    <td><wicket:message key="label.datafile.value" /></td>
+                    <td><wicket:message key="label.datafile.datatype" /></td>
+                    <td></td>
+                  </tr>
+                  <tr wicket:id="params">
+                    <td wicket:id="metadataValue"></td>
+                    <td wicket:id="fileMetadataParamDef.paramName"></td>
+                    <td wicket:id="fileMetadataParamDef.paramDataType"></td>
+                    <td><input type="checkbox" wicket:id="checkboxVal" /></td>
+                  </tr>
+                </wicket:enclosure>
+              </tbody>
+            </table>
+          </tr>
+        </table>
+        <div class="actionBox">
+          <input type="submit" wicket:id="submit" class="lightButtonLink" />
+        </div>
+      </form>
+    </div>
+  </wicket:extend>
+</body>
+</html>
