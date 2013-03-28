@@ -1,5 +1,6 @@
-package cz.zcu.kiv.eegdatabase.wui.components.menu;
+package cz.zcu.kiv.eegdatabase.wui.app.menu;
 
+import cz.zcu.kiv.eegdatabase.wui.components.menu.MenuDefinition;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
@@ -17,7 +18,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
  * @author Jakub Rinkes
  * 
  */
-public enum GenericMainMenu implements MenuDefinition {
+public enum EEGDatabaseMainMenu implements MenuDefinition {
 
     HomePage(HomePage.class, "menuItem.home"),
     ArticlesPage(ArticlesPage.class, "menuItem.articles"),
@@ -30,21 +31,21 @@ public enum GenericMainMenu implements MenuDefinition {
     HistoryPage(HistoryPage.class, "menuItem.history"),
     Administration(ChangeUserRolePage.class, "menuItem.administration"),
 
-    Main(new GenericMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage,
+    Main(new EEGDatabaseMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage,
     PeoplePage, ListsPage, HistoryPage, Administration }, ""),
 
     ;
 
-    private GenericMainMenu[] submenu = null;
+    private EEGDatabaseMainMenu[] submenu = null;
     private Class<?> page;
     private final String title;
 
-    private GenericMainMenu(Class<?> page, String title) {
+    private EEGDatabaseMainMenu(Class<?> page, String title) {
         this.page = page;
         this.title = title;
     }
 
-    private GenericMainMenu(GenericMainMenu[] submenu, String title) {
+    private EEGDatabaseMainMenu(EEGDatabaseMainMenu[] submenu, String title) {
         this.submenu = submenu;
         this.title = title;
     }
@@ -58,7 +59,7 @@ public enum GenericMainMenu implements MenuDefinition {
         return title;
     }
 
-    public GenericMainMenu[] getSubmenu() {
+    public EEGDatabaseMainMenu[] getSubmenu() {
         return submenu;
     }
 

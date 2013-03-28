@@ -8,6 +8,12 @@ import java.util.Date;
 import org.apache.wicket.WicketRuntimeException;
 import org.apache.wicket.model.IModel;
 
+/**
+ * Implementation of model with Timestamp object inside. In constructor is format getting formated output.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class TimestampModel implements IModel<String>
 {
     private final IModel<Timestamp> inner;
@@ -37,7 +43,7 @@ public class TimestampModel implements IModel<String>
         SimpleDateFormat dateFormatter = new SimpleDateFormat(format);
         return dateFormatter.format(date);
     }
-    
+
     @Override
     public void setObject(String s)
     {
@@ -51,6 +57,5 @@ public class TimestampModel implements IModel<String>
             throw new WicketRuntimeException("Unable to parse date.", e);
         }
     }
-    
-    
+
 }

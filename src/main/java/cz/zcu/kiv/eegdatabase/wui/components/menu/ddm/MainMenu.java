@@ -9,10 +9,17 @@ import org.apache.wicket.markup.MarkupStream;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.request.cycle.RequestCycle;
 
+import cz.zcu.kiv.eegdatabase.wui.app.menu.EEGDatabaseMainMenu;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.GenericMainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
+/**
+ * Component for Main menu on page. Generated html code which is used like drop down horizontal menu on pages. Menu structure have to implement interface MenuDefinition. MenuItem
+ * is only help object for preprocess menu structure.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class MainMenu extends WebMarkupContainer {
 
     private static final long serialVersionUID = -4669294618890833486L;
@@ -32,24 +39,32 @@ public class MainMenu extends WebMarkupContainer {
     public void onComponentTagBody(MarkupStream markupStream, ComponentTag openTag) {
 
         StringBuilder buf = new StringBuilder(2048);
-        MenuItem menu = new MenuItem(GenericMainMenu.Main);
+        MenuItem menu = new MenuItem(EEGDatabaseMainMenu.Main);
 
         processMenu(menu, buf, RequestCycle.get(), Application.get().getResourceSettings().getLocalizer());
         getResponse().write(buf);
     }
 
+    /**
+     * Generate string which is html code with menu structure. String is added by write method in response.
+     * 
+     * @param menu
+     * @param buf
+     * @param requestCycle
+     * @param localizer
+     */
     @SuppressWarnings("unchecked")
     private void processMenu(final MenuItem menu, final StringBuilder buf, final RequestCycle requestCycle, final Localizer localizer) {
 
         if (menu.isLinkable() && hasRoleForThisPage(menu)) {
-
+            // create final link in menu.
             String title = ResourceUtils.getString(menu.getString());
             buf.append(A_START_TAG_LINK).append(RequestCycle.get().urlFor(menu.getClassForUrl(), null)).append(A_START_TAG_FOOTER).append(title).append(A_START_TAG_FOOTER2).append(title)
-            .append(A_END_TAG);
+                    .append(A_END_TAG);
         }
 
         if (menu.hasSubmenu()) {
-
+            // create submenu of links.
             for (MenuItem item : menu.getSubmenu()) {
 
                 buf.append(LI_START_TAG);

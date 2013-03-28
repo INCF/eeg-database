@@ -62,6 +62,13 @@ import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
+/**
+ * Main class for wicket core. Initialization of wicket core, mounter pages on specific url,
+ * prepare project settings: security policy, redirect policy.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
     private ApplicationContext appCtx;
@@ -99,7 +106,10 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPages();
 
     }
-
+    
+    /**
+     * Mount pages on specific URL.
+     */
     private void mountPages() {
 
         mountPage("welcome", WelcomePage.class);
@@ -164,7 +174,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     protected IConverterLocator newConverterLocator() {
         ConverterLocator locator = (ConverterLocator) super.newConverterLocator();
-
+        
+        // here should be added custom convertor for converting types.
+        
         return locator;
     }
 

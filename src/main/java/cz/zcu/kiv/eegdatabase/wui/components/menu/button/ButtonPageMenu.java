@@ -14,6 +14,13 @@ import org.apache.wicket.markup.html.panel.Panel;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
+/**
+ * Component for creating left menu on pages. Works with Enumeration of menu structure. Enumeration have to implements IButtonPageMenu interface. Menu use AuthorizeInstantiation
+ * annotation for filtering menu item which logged user cannot see.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class ButtonPageMenu extends Panel {
 
     private static final long serialVersionUID = 6708846586316988188L;

@@ -9,6 +9,17 @@ import org.apache.wicket.model.PropertyModel;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 
+/**
+ * Simple Panel with link, this link redirect on pages in constructor. And Label for this links is definied by property expression.
+ * 
+ * Model - contains data object.
+ * PropertyExpression - tell model what information is used like parameter for redirect and label of links if displayProperty addded. 
+ * Page is page where will be redirect after click on link.
+ * DisplayExpression - tell model what information is used for label if its different like propertyExpression
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class ViewLinkPanel extends Panel {
 
     private static final long serialVersionUID = 5458856518415845451L;
@@ -19,7 +30,7 @@ public class ViewLinkPanel extends Panel {
         add(new BookmarkablePageLink("link", page, PageParametersUtils.getDefaultPageParameters(viewModel.getObject()))
                 .add(new Label("label", viewModel)));
     }
-    
+
     public ViewLinkPanel(String id, Class<? extends MenuPage> page, String propertyExpression, IModel model, String displayProperty) {
         super(id);
         PropertyModel paramModel = new PropertyModel(model, propertyExpression);
@@ -27,7 +38,7 @@ public class ViewLinkPanel extends Panel {
         add(new BookmarkablePageLink("link", page, PageParametersUtils.getDefaultPageParameters(paramModel.getObject()))
                 .add(new Label("label", viewModel)));
     }
-    
+
     public ViewLinkPanel(String id, Class<? extends MenuPage> page, String propertyExpression, IModel model, IModel<String> displayModel) {
         super(id);
         PropertyModel param = new PropertyModel(model, propertyExpression);
