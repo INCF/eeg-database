@@ -171,6 +171,7 @@ public class HardwareFormPage extends MenuPage {
                                     facade.update(hardware);
                                 } else {
                                     getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+                                    this.setEnabled(true);
                                     return;
                                 }
                             }

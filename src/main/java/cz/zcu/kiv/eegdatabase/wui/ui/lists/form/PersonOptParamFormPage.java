@@ -152,6 +152,7 @@ public class PersonOptParamFormPage extends MenuPage {
                                     facade.update(personOptParam);
                                 } else {
                                     getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+                                    this.setEnabled(true);
                                     return;
                                 }
                             }

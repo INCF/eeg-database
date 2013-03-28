@@ -116,7 +116,7 @@ public class ListExperimentOptParamPage extends MenuPage {
                                 if (groupId == CoreConstants.DEFAULT_ITEM_ID) { // delete default weather if it's from default group
                                     if (!facade.hasGroupRel(id)) { // delete only if it doesn't have group relationship
                                         facade.delete(item.getModelObject());
-                                        getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        setResponsePage(ListExperimentOptParamPage.class);
                                     } else {
                                         getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                                     }
@@ -126,7 +126,7 @@ public class ListExperimentOptParamPage extends MenuPage {
                                         facade.delete(item.getModelObject());
                                     }
                                     facade.deleteGroupRel(h);
-                                    getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                    setResponsePage(ListExperimentOptParamPage.class);
                                 }
                             }
 
@@ -134,7 +134,6 @@ public class ListExperimentOptParamPage extends MenuPage {
                             getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
 
-                        target.add(container);
                         target.add(getFeedback());
                     }
 

@@ -109,13 +109,12 @@ public class ListArtifactDefinitionsPage extends MenuPage {
                             if (group != null) {
                                 facade.deleteGroupRel(item.getModelObject(), researchGroupFacade.getResearchGroupById(group.getResearchGroupId()));
                                 facade.delete(item.getModelObject());
-                                getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                setResponsePage(ListArtifactDefinitionsPage.class);
                             }
                         } else {
                             getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
 
-                        target.add(container);
                         target.add(getFeedback());
                     }
 

@@ -57,6 +57,7 @@ public class ListHardwareDefinitionsPage extends MenuPage {
         add(new ButtonPageMenu("leftMenu", ListsLeftPageMenu.values()));
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
+        container.setOutputMarkupId(true);
         container.setOutputMarkupPlaceholderTag(true);
 
         final ListModelWithResearchGroupCriteria<Hardware> model = new ListModelWithResearchGroupCriteria<Hardware>() {
@@ -106,7 +107,8 @@ public class ListHardwareDefinitionsPage extends MenuPage {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-
+                        
+                        target.add(getFeedback());
                         int id = item.getModelObject().getHardwareId();
                         ResearchGroup group = model.getCriteriaModel().getObject();
 
@@ -117,26 +119,26 @@ public class ListHardwareDefinitionsPage extends MenuPage {
                                 if (groupId == CoreConstants.DEFAULT_ITEM_ID) { // delete default weather if it's from default group
                                     if (!facade.hasGroupRel(id)) { // delete only if it doesn't have group relationship
                                         facade.delete(item.getModelObject());
-                                        getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        //getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        setResponsePage(ListHardwareDefinitionsPage.class);
                                     } else {
                                         getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                                     }
                                 } else {
                                     HardwareGroupRel h = facade.getGroupRel(id, groupId);
+                                    facade.deleteGroupRel(h);
                                     if (!facade.isDefault(id)) { // delete only non default weather
                                         facade.delete(item.getModelObject());
                                     }
-                                    facade.deleteGroupRel(h);
-                                    getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                    setResponsePage(ListHardwareDefinitionsPage.class);
                                 }
                             }
 
                         } else {
                             getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                         }
-
-                        target.add(container);
-                        target.add(getFeedback());
+                        
+                        
                     }
 
                     @Override

@@ -177,6 +177,7 @@ public class WeatherFormPage extends MenuPage {
                                     facade.update(weather);
                                 } else {
                                     getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+                                    this.setEnabled(true);
                                     return;
                                 }
                             }

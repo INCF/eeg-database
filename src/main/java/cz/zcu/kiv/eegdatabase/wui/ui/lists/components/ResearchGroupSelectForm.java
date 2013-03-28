@@ -14,15 +14,11 @@ import org.apache.wicket.model.util.ListModel;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 /***
- * Filter select option for research group. When you select some value - id of
- * this value is set into model. After that is called ajax update on container.
- * So if u select value then is your selection set into model and in container
- * is filtered output by using this value and called ajax update for container
- * where is output. Model is used for transport selection from filter to output
- * component.
+ * Filter select option for research group. When you select some value - id of this value is set into model. After that is called ajax update on container. So if u select value
+ * then is your selection set into model and in container is filtered output by using this value and called ajax update for container where is output. Model is used for transport
+ * selection from filter to output component.
  * 
- * This if just form. You have to add markup for this component into markup
- * where u want use this.
+ * This if just form. You have to add markup for this component into markup where u want use this.
  * 
  * Base markup: <form wicket:id="id"><select wicket:id="groups"></select></form>
  * 
@@ -39,7 +35,7 @@ public class ResearchGroupSelectForm extends Form<Void> {
         super(id);
         this.setOutputMarkupPlaceholderTag(true);
         final DropDownChoice<ResearchGroup> groups = new DropDownChoice<ResearchGroup>("groups", model, choices, new ChoiceRenderer<ResearchGroup>("title", "researchGroupId"));
-        groups.setNullValid(false);
+        groups.setNullValid(!true);
 
         if (!choices.getObject().isEmpty())
             groups.setModelObject(choices.getObject().get(0));

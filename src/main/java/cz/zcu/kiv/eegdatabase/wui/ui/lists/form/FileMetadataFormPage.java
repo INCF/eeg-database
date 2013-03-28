@@ -154,6 +154,7 @@ public class FileMetadataFormPage extends MenuPage {
                                     facade.update(fileMetadata);
                                 } else {
                                     getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+                                    this.setEnabled(true);
                                     return;
                                 }
                             }
