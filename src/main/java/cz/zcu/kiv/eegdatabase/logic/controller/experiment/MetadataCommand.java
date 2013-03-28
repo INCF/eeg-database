@@ -5,16 +5,31 @@
 
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
+import java.io.Serializable;
+
 /**
  * @author Jan Štěbeták
+ * 
+ * UPDATE: Used and improved in wicket for download experiment.
+ * 
+ * Added check logic for ExperimentDownloadPage. 
+ * 
+ * chooseAll just check all groups on pages. 
+ * 
+ * check groups is:
+ * Person - all information about person
+ * Scenario - all information about scenario
+ * Measuration - all information about experiment
+ * Files - check all files and parameters.
  */
-public class MetadataCommand {
+public class MetadataCommand implements Serializable {
 
+    private static final long serialVersionUID = -6561777586934738318L;
+    
     private boolean chooseAll;
     private boolean person;
     private boolean scenario;
     private boolean measuration;
-
 
     private boolean name;
     private boolean birth;
@@ -160,6 +175,12 @@ public class MetadataCommand {
 
     public void setMeasuration(boolean measuration) {
         this.measuration = measuration;
+        setTimes(measuration);
+        setTemperature(measuration);
+        setWeather(measuration);
+        setWeatherNote(measuration);
+        setHardware(measuration);
+        setMeasurationAddParams(measuration);
     }
 
     public void setMeasurationAddParams(boolean measurationAddParams) {
@@ -172,6 +193,9 @@ public class MetadataCommand {
 
     public void setChooseAll(boolean chooseAll) {
         this.chooseAll = chooseAll;
+        setPerson(chooseAll);
+        setScenario(chooseAll);
+        setMeasuration(chooseAll);
     }
 
     public void setDescription(boolean description) {
@@ -212,6 +236,13 @@ public class MetadataCommand {
 
     public void setPerson(boolean person) {
         this.person = person;
+        setName(person);
+        setNote(person);
+        setBirth(person);
+        setGender(person);
+        setPhoneNumber(person);
+        setEmail(person);
+        setPersonAddParams(person);
     }
 
     public void setPersonAddParams(boolean personAddParams) {
@@ -228,6 +259,10 @@ public class MetadataCommand {
 
     public void setScenario(boolean scenario) {
         this.scenario = scenario;
+        setTitle(scenario);
+        setLength(scenario);
+        setDescription(scenario);
+        setScenFile(scenario);
     }
 
     public void setTemperature(boolean temperature) {
@@ -249,6 +284,5 @@ public class MetadataCommand {
     public void setWeatherNote(boolean weatherNote) {
         this.weatherNote = weatherNote;
     }
-
 
 }

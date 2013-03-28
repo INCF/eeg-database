@@ -75,6 +75,7 @@
 
     <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
     <bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
+    <bean name="experimentDownloadProvider" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider" autowire="byType" />
     
     <bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" />
     <bean name="experimentsOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamFacadeImpl" autowire="byType" />
