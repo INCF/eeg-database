@@ -113,6 +113,14 @@ public class Experiment implements Serializable {
     @OneToMany(mappedBy="experiment")
     private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
 
+	public Set<ExperimentPackageConnection> getExperimentPackageConnections() {
+		return experimentPackageConnections;
+	}
+
+	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
+		this.experimentPackageConnections = experimentPackageConnections;
+	}
+
 
     public Experiment() {
     }
