@@ -152,6 +152,7 @@ public class ExperimentOptParamFormPage extends MenuPage {
                                     facade.update(experimentOptParam);
                                 } else {
                                     getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+                                    this.setEnabled(true);
                                     return;
                                 }
                             }

@@ -17,10 +17,12 @@ public abstract class ListModelWithResearchGroupCriteria<T> extends LoadableDeta
     private Model<ResearchGroup> criteriaModel = new Model<ResearchGroup>(null);
 
     protected abstract List<T> loadList(ResearchGroup group);
-    
+
     @Override
     protected List<T> load() {
-        return loadList(criteriaModel.getObject());
+
+        List<T> loadList = loadList(criteriaModel.getObject());
+        return loadList;
     }
 
     public Model<ResearchGroup> getCriteriaModel() {

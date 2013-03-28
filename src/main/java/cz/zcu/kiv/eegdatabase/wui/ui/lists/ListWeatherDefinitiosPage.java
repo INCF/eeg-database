@@ -70,7 +70,7 @@ public class ListWeatherDefinitiosPage extends MenuPage {
 
             @Override
             protected List<Weather> loadList(ResearchGroup group) {
-                if (group == null  || group.getResearchGroupId() == CoreConstants.DEFAULT_ITEM_ID)
+                if (group == null || group.getResearchGroupId() == CoreConstants.DEFAULT_ITEM_ID)
                     return facade.getDefaultRecords();
                 else {
                     return facade.getRecordsByGroup(group.getResearchGroupId());
@@ -121,7 +121,7 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                                 if (groupId == CoreConstants.DEFAULT_ITEM_ID) { // delete default weather if it's from default group
                                     if (!facade.hasGroupRel(id)) { // delete only if it doesn't have group relationship
                                         facade.delete(item.getModelObject());
-                                        getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                        setResponsePage(ListWeatherDefinitiosPage.class);
                                     } else {
                                         getFeedback().error(ResourceUtils.getString("text.itemInUse"));
                                     }
@@ -131,7 +131,7 @@ public class ListWeatherDefinitiosPage extends MenuPage {
                                         facade.delete(item.getModelObject());
                                     }
                                     facade.deleteGroupRel(h);
-                                    getFeedback().info(ResourceUtils.getString("text.itemWasDeletedFromDatabase"));
+                                    setResponsePage(ListWeatherDefinitiosPage.class);
                                 }
                             }
 
