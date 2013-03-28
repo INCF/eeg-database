@@ -1,17 +1,19 @@
 package cz.zcu.kiv.eegdatabase.wui.components.table;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
+/**
+ * Simple enhancement link for download file. In constructor is added file id and link get file after click.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class SimpleDownloadLink extends Link<Void> {
 
     private static final long serialVersionUID = -2130280618030423577L;
@@ -32,22 +34,7 @@ public class SimpleDownloadLink extends Link<Void> {
 
         final DataFileDTO file = getFile();
 
-        if (file == null)
-            return;
-
-        AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter()
-        {
-            private static final long serialVersionUID = 1L;
-
-            public void write(OutputStream output) throws IOException
-            {
-                output.write(file.getFileContent());
-            }
-        };
-
-        getRequestCycle().scheduleRequestHandlerAfterCurrent(new
-                ResourceStreamRequestHandler(stream).setFileName(file.getFileName()));
-
+        getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(file));
     }
 
     private DataFileDTO getFile() {

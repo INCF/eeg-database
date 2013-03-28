@@ -5,6 +5,12 @@ import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.MenuDefinition;
 
+/**
+ * Help object for preprocess menu structure.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class MenuItem {
 
     private MenuDefinition definition;

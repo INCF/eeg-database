@@ -17,6 +17,13 @@ import org.apache.wicket.model.Model;
 
 import java.io.Serializable;
 
+/**
+ * MenuPage for EEGDatabase portal, added header section with information about logged user,
+ * added base feedback panel and footer link.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class MenuPage extends BasePage {
 
     private static final long serialVersionUID = -9208758802775141621L;

@@ -6,7 +6,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 /**
  * Base feedback panel for global messages.
  * 
- * @author Jake
+ * @author Jakub Rinkes
  * 
  */
 public class BaseFeedbackMessagePanel extends FeedbackPanel {

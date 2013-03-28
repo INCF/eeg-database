@@ -19,6 +19,12 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
+/**
+ * Implementation custom session object. Prepared authorization and keep information about roles.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private static final long serialVersionUID = 4193935519312775047L;
