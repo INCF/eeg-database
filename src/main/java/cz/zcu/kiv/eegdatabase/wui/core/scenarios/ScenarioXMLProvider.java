@@ -27,6 +27,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 
+/**
+ * Provider for prepare downloaded file for scenario.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ScenarioXMLProvider {
 
     protected Log log = LogFactory.getLog(getClass());
@@ -56,6 +62,13 @@ public class ScenarioXMLProvider {
         this.scenarioTypeFacade = scenarioTypeFacade;
     }
     
+    /**
+     * Prepare scenario file for download.
+     * 
+     * @param scenarioId
+     * @param loggedUserName
+     * @return
+     */
     @Transactional
     public DataFileDTO getXmlFileForScenario(int scenarioId, String loggedUserName) {
 

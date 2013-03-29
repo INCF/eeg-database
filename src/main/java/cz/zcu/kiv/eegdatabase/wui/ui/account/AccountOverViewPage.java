@@ -24,6 +24,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
+/**
+ * Account overview page with logged user information
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AccountOverViewPage extends MenuPage {
 
@@ -42,10 +48,11 @@ public class AccountOverViewPage extends MenuPage {
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
         Person user = EEGDataBaseSession.get().getLoggedUser();
-        
-        if(user == null)
+
+        if (user == null)
             throw new RestartResponseAtInterceptPageException(HomePage.class);
 
+        // user information
         add(new Label("userName", new PropertyModel<String>(user, "email")));
         add(new Label("fullName", user.getGivenname() + " " + user.getSurname()));
         add(new Label("authority", new PropertyModel<String>(user, "authority")));
@@ -56,6 +63,7 @@ public class AccountOverViewPage extends MenuPage {
         WebMarkupContainer noGroups = new WebMarkupContainer("noGroups");
         noGroups.setVisibilityAllowed(emptyGroups);
 
+        // list of user groups
         ListView<ResearchGroupAccountInfo> groups = new ListView<ResearchGroupAccountInfo>("groups", groupDataForAccountOverview) {
 
             private static final long serialVersionUID = 1L;

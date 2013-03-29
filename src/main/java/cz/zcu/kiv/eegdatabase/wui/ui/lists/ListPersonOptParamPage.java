@@ -32,6 +32,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroup
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.PersonOptParamFormPage;
 
+/**
+ * Page with list of person opt parameters.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListPersonOptParamPage extends MenuPage {
 

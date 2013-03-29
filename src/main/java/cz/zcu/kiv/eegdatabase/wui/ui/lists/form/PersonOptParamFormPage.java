@@ -32,6 +32,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListPersonOptParamPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
 
+/**
+ * Page add / edit action of person opt parameters.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class PersonOptParamFormPage extends MenuPage {
 
     private static final long serialVersionUID = 2786930680478056041L;

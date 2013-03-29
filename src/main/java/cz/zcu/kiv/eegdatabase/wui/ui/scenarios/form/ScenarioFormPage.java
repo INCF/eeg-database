@@ -63,11 +63,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPageLeftMenu;
 
-/*
- * TODO file field for xml was not visible in old portal. I dont know why. 
- * So I hided it but its implemented and not tested.
+/**
+ * Page for add / edit action on scenario.
+ * 
+ * @author Jakub Rinkes
+ *
  */
-
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ScenarioFormPage extends MenuPage {
 
@@ -131,7 +132,8 @@ public class ScenarioFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
         return value.toInt();
     }
-
+    
+    // inner form for add / edit action of scenario
     private class ScenarioForm extends Form<Scenario> {
 
         private static final long serialVersionUID = 1L;
@@ -172,6 +174,10 @@ public class ScenarioFormPage extends MenuPage {
             fileContainer.setVisibilityAllowed(false);
             fileContainer.setOutputMarkupPlaceholderTag(true);
             
+            /*
+             * TODO file field for xml was not visible in old portal. I dont know why. 
+             * So I hided it but its implemented and not tested.
+             */
             // hidded line in old portal
             final DropDownChoice<ScenarioSchemas> schemaList = new DropDownChoice<ScenarioSchemas>("schemaList", new Model<ScenarioSchemas>(), scenarioFacade.getListOfScenarioSchemas(),
                     new ChoiceRenderer<ScenarioSchemas>("schemaName", "schemaId"));

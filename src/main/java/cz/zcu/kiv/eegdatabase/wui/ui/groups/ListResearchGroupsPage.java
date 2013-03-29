@@ -21,6 +21,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 
+/**
+ * Page with list of research groups.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListResearchGroupsPage extends MenuPage {
 

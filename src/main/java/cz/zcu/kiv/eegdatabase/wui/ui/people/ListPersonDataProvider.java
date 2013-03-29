@@ -17,6 +17,12 @@ import org.apache.wicket.model.PropertyModel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
+/**
+ * Dataprovider implementation used in table on ListPersonPage.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ListPersonDataProvider extends SortableDataProvider<Person, String> {
 
     private static final long serialVersionUID = -5120095037204498930L;

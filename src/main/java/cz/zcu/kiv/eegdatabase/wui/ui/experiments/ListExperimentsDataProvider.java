@@ -18,6 +18,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 
+/**
+ * Dataprovider implementation used in table on ListExperimentPage.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ListExperimentsDataProvider extends SortableDataProvider<Experiment, String> {
 
     private static final long serialVersionUID = -2474056753967062150L;

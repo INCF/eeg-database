@@ -36,6 +36,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 
+/**
+ * Page for add / edit action on research group.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ResearchGroupFormPage extends MenuPage {
 

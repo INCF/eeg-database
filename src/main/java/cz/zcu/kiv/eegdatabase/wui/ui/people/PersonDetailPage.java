@@ -29,6 +29,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 
+/**
+ * Page of detail for person.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonDetailPage extends MenuPage {
 

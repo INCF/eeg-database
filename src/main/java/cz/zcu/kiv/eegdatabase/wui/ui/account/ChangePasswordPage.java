@@ -23,12 +23,19 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.obj.ChangePasswordObj;
 
+/**
+ * Change password page.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ChangePasswordPage extends MenuPage {
 
     private static final long serialVersionUID = -2098428058200654117L;
     private static final String PARAM_ID = "changeDone";
-
+    
+    // this constructor is for page with password change action
     public ChangePasswordPage() {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.changePassword"));
@@ -36,7 +43,8 @@ public class ChangePasswordPage extends MenuPage {
         add(new Label("headTitle", ResourceUtils.getModel("pageTitle.changePassword")));
         setupComponents(true);
     }
-
+    
+    // this constructor is for page with message after password change
     public ChangePasswordPage(PageParameters parameters) {
 
         StringValue value = parameters.get(PARAM_ID);
@@ -53,7 +61,8 @@ public class ChangePasswordPage extends MenuPage {
 
         add(new ChangePasswordForm("form", getFeedback()).setVisibilityAllowed(visible));
     }
-
+    
+    // inner form on page used for password change.
     class ChangePasswordForm extends Form<ChangePasswordObj> {
 
         private static final long serialVersionUID = 1L;
@@ -63,7 +72,7 @@ public class ChangePasswordPage extends MenuPage {
 
         public ChangePasswordForm(String id, final FeedbackPanel feedback) {
             super(id, new CompoundPropertyModel<ChangePasswordObj>(new ChangePasswordObj()));
-
+            
             PasswordTextField oldPassword = new PasswordTextField("oldPassword");
             oldPassword.setLabel(ResourceUtils.getModel("page.myAccount.currentPassword"));
             oldPassword.setRequired(true);

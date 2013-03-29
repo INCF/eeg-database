@@ -9,6 +9,13 @@ import org.apache.wicket.model.Model;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
+/**
+ * Model implementation used for filtering list of definitio or parameters in lists section. Filter parameters is research group.
+ * 
+ * @author Jakub Rinkes
+ * 
+ * @param <T>
+ */
 public abstract class ListModelWithResearchGroupCriteria<T> extends LoadableDetachableModel<List<T>> {
 
     private static final long serialVersionUID = -8410077884285556462L;

@@ -8,6 +8,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 
+/**
+ * Enumeration of left menu page for scenario section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum ScenariosPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_SCENARIOS(ListScenariosPage.class, "menuItem.listOfScenarios", null),

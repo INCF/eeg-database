@@ -19,6 +19,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 
+/**
+ * Dataprovider implementation used in table on ListScenarioPage.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ListScenariosDataProvider extends SortableDataProvider<Scenario, String> {
 
     private static final long serialVersionUID = 3555979400074686801L;

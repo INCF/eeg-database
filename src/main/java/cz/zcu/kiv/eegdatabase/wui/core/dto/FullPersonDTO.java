@@ -10,6 +10,12 @@ import org.joda.time.DateTime;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 
+/**
+ * Object used for registration. Help with validation and prepared data for creating user.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     private static final long serialVersionUID = -5467478793603707659L;

@@ -37,6 +37,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
 
+/**
+ * Page add person opt parameter value.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonAddParamFormPage extends MenuPage {
 
@@ -66,7 +72,8 @@ public class PersonAddParamFormPage extends MenuPage {
 
         add(new PersonAddParamForm("form", new Model<PersonOptParamVal>(param), facade, getFeedback()));
     }
-
+    
+    // inner form for add person opt parameter value action.
     class PersonAddParamForm extends Form<PersonOptParamVal> {
 
         private static final long serialVersionUID = 1L;

@@ -2,14 +2,22 @@ package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
 import java.io.Serializable;
 
+/**
+ * Object for identifiable DTOs. Its parent object. Implemented equals and hashcode.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class IdentifiDTO implements Serializable {
-    
+
+    private static final long serialVersionUID = 1L;
+
     private int id;
-    
+
     public int getId() {
         return id;
     }
-    
+
     public void setId(int id) {
         this.id = id;
     }
@@ -35,6 +43,5 @@ public class IdentifiDTO implements Serializable {
             return false;
         return true;
     }
-    
-    
+
 }

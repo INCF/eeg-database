@@ -31,6 +31,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
 
+/**
+ * Page of detail for scenario.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ScenarioDetailPage extends MenuPage {
 

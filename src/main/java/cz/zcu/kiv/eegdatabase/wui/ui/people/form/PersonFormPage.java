@@ -45,6 +45,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
 
+/**
+ * Page add / edit action of person.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonFormPage extends MenuPage {
 
@@ -88,7 +94,8 @@ public class PersonFormPage extends MenuPage {
 
         add(new PersonForm("form", new Model<Person>(person), educationFacade, facade, getFeedback()));
     }
-
+    
+    // inner form for add / edit person action.
     private class PersonForm extends Form<Person> {
 
         private static final long serialVersionUID = 1L;

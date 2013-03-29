@@ -48,6 +48,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 
+/**
+ * Page of detail on data file. Form for add file parameter action.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class DataFileDetailPage extends MenuPage {
 
@@ -90,7 +96,8 @@ public class DataFileDetailPage extends MenuPage {
         add(new Label("researchGroupTitle", new PropertyModel<DataFile>(groupFacade.read(experiment.getResearchGroup().getResearchGroupId()), "title")));
         add(new Label("filename", new PropertyModel<DataFile>(file, "filename")));
         add(new Label("description", new PropertyModel<DataFile>(file, "description")));
-
+        
+        // list of file parameters
         PropertyListView<FileMetadataParamVal> params = new PropertyListView<FileMetadataParamVal>("params", new ListModel<FileMetadataParamVal>(new ArrayList<FileMetadataParamVal>(
                 file.getFileMetadataParamVals()))) {
 
@@ -108,7 +115,8 @@ public class DataFileDetailPage extends MenuPage {
         BookmarkablePageLink<Void> backLink = new BookmarkablePageLink<Void>("backLink", ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(file.getExperiment()
                 .getExperimentId()));
         SimpleDownloadLink downloadLink = new SimpleDownloadLink("downloadLink", id);
-
+        
+        // form for add file parameter action
         add(new AddMetadataForm("form", metadataParamFacade, coexperimenter, id, experiment.getResearchGroup().getResearchGroupId(), getFeedback()).add(params));
         add(backLink, downloadLink);
     }
@@ -129,7 +137,8 @@ public class DataFileDetailPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
         return value.toInt();
     }
-
+    
+    // inner form for add file parameter action.
     class AddMetadataForm extends Form<FileMetadataParamVal> {
 
         private static final long serialVersionUID = 1L;

@@ -5,6 +5,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 
+/**
+ * Enumeration of left menu page for lists section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum ListsLeftPageMenu implements IButtonPageMenu {
     
     HARDWARE_DEFINITIONS(ListHardwareDefinitionsPage.class, "menuItem.hardwareDefinitions", null),

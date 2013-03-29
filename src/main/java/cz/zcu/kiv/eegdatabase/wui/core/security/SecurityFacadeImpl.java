@@ -6,6 +6,12 @@ import org.springframework.beans.factory.annotation.Required;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 
+/**
+ * Security facade for working with some security and access policy. Login and logout action above session.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class SecurityFacadeImpl implements SecurityFacade {
     
     protected Log log = LogFactory.getLog(getClass());

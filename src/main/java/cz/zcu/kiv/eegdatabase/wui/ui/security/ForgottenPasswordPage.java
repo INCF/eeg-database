@@ -14,6 +14,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
+/**
+ * Page for generate new password and send it on email adress if the email adress is in system.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ForgottenPasswordPage extends MenuPage {
 
     private static final long serialVersionUID = 8777241488694645558L;

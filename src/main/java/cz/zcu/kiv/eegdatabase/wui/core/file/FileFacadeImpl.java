@@ -75,7 +75,10 @@ public class FileFacadeImpl implements FileFacade {
     public Blob createBlob(InputStream input, int length) {
         return fileService.createBlob(input, length);
     }
-
+    
+    /**
+     * Method prepared file with file Id. File data is copied from database into byte array inside DataFileDTO.
+     */
     @Override
     public DataFileDTO getFile(int fileId) {
         return fileService.getFile(fileId);

@@ -46,6 +46,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 
+/**
+ * Page for download experiment file.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDownloadPage extends MenuPage {
 
@@ -85,7 +91,8 @@ public class ExperimentsDownloadPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
         return value.toInt();
     }
-
+    
+    // inner form for information used in generator.
     private class ExperimentDownloadForm extends Form<MetadataCommand> {
 
         private static final long serialVersionUID = 1L;

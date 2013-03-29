@@ -5,6 +5,12 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 
+/**
+ * Enumeration of left page menu for account section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum MyAccountPageLeftMenu implements IButtonPageMenu {
 
     ACCOUNT_OVERVIEW(AccountOverViewPage.class, "menuItem.myAccount.overview", null),

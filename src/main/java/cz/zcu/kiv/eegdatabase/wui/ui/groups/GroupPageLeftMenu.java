@@ -8,6 +8,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleRequestPage;
 
+/**
+ * Enumeration of left menu page for research group section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum GroupPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_GROUPS(ListResearchGroupsPage.class, "menuItem.listOfGroups", null),

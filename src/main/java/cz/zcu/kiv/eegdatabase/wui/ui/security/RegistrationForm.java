@@ -38,6 +38,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 
+/**
+ * Form for registration new user.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class RegistrationForm extends Form<FullPersonDTO> {
 
     private static final long serialVersionUID = 4973918066620014022L;

@@ -34,6 +34,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroup
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
 
+/**
+ * Page with list of weather definitions.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListWeatherDefinitiosPage extends MenuPage {
 

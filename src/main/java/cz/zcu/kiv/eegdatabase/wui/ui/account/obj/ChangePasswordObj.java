@@ -2,6 +2,12 @@ package cz.zcu.kiv.eegdatabase.wui.ui.account.obj;
 
 import java.io.Serializable;
 
+/**
+ * Object used for data in change password form.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ChangePasswordObj implements Serializable {
 
     private static final long serialVersionUID = 1L;
