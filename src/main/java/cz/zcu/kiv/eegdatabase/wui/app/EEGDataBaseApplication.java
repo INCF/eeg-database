@@ -20,6 +20,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.core.common.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
@@ -128,7 +129,6 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     public void init() {
         super.init();
-
       	getDebugSettings().setOutputComponentPath(true);
 
         getMarkupSettings().setStripWicketTags(true);
@@ -217,8 +217,11 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-form", ScenarioFormPage.class);
         mountPage("scenarios-schema-form", ScenarioSchemaFormPage.class);
         mountPage("search-page", SearchPage.class);
-
         mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);
+
+		//TODO remove before production deployment
+		mountPage("migrateDb", DbMigrationPage.class);
+
     }
 
     @Override

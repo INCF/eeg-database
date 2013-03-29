@@ -109,8 +109,6 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
-    @OneToMany(mappedBy = "person")
-    private Set<PersonalLicense> personalLicenses = new HashSet<PersonalLicense>(0);
 
     public Person() {
     }

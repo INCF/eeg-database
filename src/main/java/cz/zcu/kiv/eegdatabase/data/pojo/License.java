@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.*;
 /**
@@ -25,12 +26,6 @@ public class License implements Serializable{
 	
     @Column(name = "DESCRIPTION")
     private String description;
-	
-	@OneToMany(mappedBy = "license")
-	private Set<PersonalLicense> personalLicenses;
-	
-	@OneToMany(mappedBy = "license")
-	private Set<ExperimentPackageLicense> experimentPackageLicenses;
 	
 	@Column(name = "LICENSE_TYPE" )
 	private LicenseType licenseType;
@@ -65,22 +60,6 @@ public class License implements Serializable{
 
 	public void setDescription(String description) {
 		this.description = description;
-	}
-
-	public Set<PersonalLicense> getPersonalLicenses() {
-		return personalLicenses;
-	}
-
-	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
-		this.personalLicenses = personalLicenses;
-	}
-
-	public Set<ExperimentPackageLicense> getExperimentPackageLicenses() {
-		return experimentPackageLicenses;
-	}
-
-	public void setExperimentPackageLicenses(Set<ExperimentPackageLicense> experimentPackageLicenses) {
-		this.experimentPackageLicenses = experimentPackageLicenses;
 	}
 
 	public LicenseType getLicenseType() {

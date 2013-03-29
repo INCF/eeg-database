@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
+import java.util.HashSet;
 import java.util.Set;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -32,12 +33,6 @@ public class ExperimentPackage implements Serializable {
 	
 	@Column(name = "NAME")
 	private String name;
-	
-	@OneToMany(mappedBy= "experimentPackage")
-	private Set<ExperimentPackageLicense> experimentPackageLicenses;
-	
-	@OneToMany(mappedBy = "experimentPackage")
-	private Set<ExperimentPackageConnection> experimentPackageConnections;
 
 	public int getExperimentPackageId() {
 		return experimentPackageId;
@@ -61,23 +56,6 @@ public class ExperimentPackage implements Serializable {
 
 	public void setName(String name) {
 		this.name = name;
-	}
-
-	public Set<ExperimentPackageLicense> getExperimentPackageLicenses() {
-		return experimentPackageLicenses;
-	}
-
-	public void setExperimentPackageLicenses(Set<ExperimentPackageLicense> experimentPackageLicenses) {
-		this.experimentPackageLicenses = experimentPackageLicenses;
-	}
-
-	public Set<ExperimentPackageConnection> getExperimentPackageConnections() {
-		return experimentPackageConnections;
-	}
-
-	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
-		this.experimentPackageConnections = experimentPackageConnections;
-	}
-	
+	}	
 	
 }

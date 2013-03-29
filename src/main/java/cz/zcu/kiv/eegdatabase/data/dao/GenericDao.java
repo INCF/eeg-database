@@ -6,6 +6,7 @@ import java.util.Map;
 
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.hibernate.Criteria;
+import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -16,6 +17,9 @@ import org.hibernate.criterion.Restrictions;
  */
 public interface GenericDao <T, PK extends Serializable>{
 
+	
+	SessionFactory getSessionFactory();
+	
     /**
      * Create new record (row) in database.
      * @param newInstance - Object that will be created in database

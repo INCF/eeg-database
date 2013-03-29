@@ -1,15 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <endpoints version="2.0" xmlns="http://java.sun.com/xml/ns/jax-ws/ri/runtime">
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="userDataService" url-pattern="/webservice/UserDataService"/>
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="semanticService" url-pattern="/webservice/SemanticService"/>
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="UserDataImpl" url-pattern="/UserDataImpl"/>
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="SemanticServiceImpl" url-pattern="/SemanticServiceImpl"/>
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="UserDataImpl" url-pattern="/UserDataImpl"/>
-  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="SemanticServiceImpl" url-pattern="/SemanticServiceImpl"/>
   <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl" name="UserDataImplService" url-pattern="/UserDataImplService"/>
+  <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl" name="ClientServiceImplService" url-pattern="/ClientServiceImplService"/>
   <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.semantic.SemanticServiceImpl" name="SemanticServiceImplService" url-pattern="/SemanticServiceImplService"/>
-
-    <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl" name="ClientServiceImpl" url-pattern="/ClientServiceImpl"/>
-    <endpoint implementation="cz.zcu.kiv.eegdatabase.webservices.client.ClientServiceImpl" name="clientService" url-pattern="/webservice/ClientService"/>
-
 </endpoints>

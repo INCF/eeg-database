@@ -30,47 +30,47 @@ public class PersonalLicense implements Serializable{
     private int personalLicenseId;
 	
 	
-	@ManyToOne
-	@JoinColumn(name = "PERSON")
-	private Person person;
-	
-	@ManyToOne
-	@JoinColumn(name = "LICENSE")
-	private License license;
+    @ManyToOne
+    @JoinColumn(name = "PERSON")
+    private Person person;
 
-	@Column(name = "DATE_FROM")
-	@Temporal(javax.persistence.TemporalType.DATE)
-	private Date dateFrom;
+    @ManyToOne
+    @JoinColumn(name = "LICENSE")
+    private License license;
 
-	public int getPersonalLicenseId() {
-		return personalLicenseId;
-	}
+    @Column(name = "DATE_FROM")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date dateFrom;
 
-	public void setPersonalLicenseId(int personalLicenseId) {
-		this.personalLicenseId = personalLicenseId;
-	}
+    public int getPersonalLicenseId() {
+	    return personalLicenseId;
+    }
 
-	public Person getPerson() {
-		return person;
-	}
+    public void setPersonalLicenseId(int personalLicenseId) {
+	    this.personalLicenseId = personalLicenseId;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
+    public Person getPerson() {
+	    return person;
+    }
 
-	public License getLicense() {
-		return license;
-	}
+    public void setPerson(Person person) {
+	    this.person = person;
+    }
 
-	public void setLicense(License license) {
-		this.license = license;
-	}
+    public License getLicense() {
+	    return license;
+    }
 
-	public Date getDateFrom() {
-	    return dateFrom;
-	}
+    public void setLicense(License license) {
+	    this.license = license;
+    }
 
-	public void setDateFrom(Date dateFrom) {
-	    this.dateFrom = dateFrom;
-	}		
+    public Date getDateFrom() {
+	return dateFrom;
+    }
+
+    public void setDateFrom(Date dateFrom) {
+	this.dateFrom = dateFrom;
+    }
 }
