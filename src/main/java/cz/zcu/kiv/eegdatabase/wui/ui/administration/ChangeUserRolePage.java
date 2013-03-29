@@ -23,6 +23,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
+/**
+ * Page for change user role.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation("ROLE_ADMIN")
 public class ChangeUserRolePage extends MenuPage {
 
@@ -39,7 +45,8 @@ public class ChangeUserRolePage extends MenuPage {
 
         add(new ChangeUserRoleForm("form", new Model<Person>(), personFacade, getFeedback()));
     }
-
+    
+    // inner for used for change user role
     private class ChangeUserRoleForm extends Form<Person> {
 
         private static final long serialVersionUID = 1L;

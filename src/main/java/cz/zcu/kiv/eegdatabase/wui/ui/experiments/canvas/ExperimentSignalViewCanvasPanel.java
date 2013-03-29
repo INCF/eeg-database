@@ -26,6 +26,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
+/**
+ * Panel with painting signals from experiment. It's prototype.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
 
     private static final long serialVersionUID = 6848826477541304726L;

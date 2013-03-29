@@ -13,6 +13,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.LoginUserDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
+/**
+ * Form for login form on page.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class HomeLoginForm extends Form<LoginUserDTO> {
 
     private static final long serialVersionUID = -5196364867691352802L;

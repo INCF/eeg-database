@@ -17,6 +17,12 @@ import org.apache.wicket.model.PropertyModel;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 
+/**
+ * Dataprovider implementation used in table on ListResearchGroupPage.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ListResearchGroupsDataProvider extends SortableDataProvider<ResearchGroup, String> {
 
     private static final long serialVersionUID = -2474056753967062150L;

@@ -32,6 +32,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitionsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
 
+/**
+ * Page add / edit action of artifact definitions.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ArtifactFormPage extends MenuPage {
 

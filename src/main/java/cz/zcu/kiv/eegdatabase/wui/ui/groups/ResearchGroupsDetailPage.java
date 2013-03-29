@@ -32,6 +32,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
 
+/**
+ * Page of detail for research group.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ResearchGroupsDetailPage extends MenuPage {
 

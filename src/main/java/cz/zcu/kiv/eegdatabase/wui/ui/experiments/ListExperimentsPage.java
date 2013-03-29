@@ -30,6 +30,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 
+/**
+ * Page with list of experiments
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListExperimentsPage extends MenuPage {
 
@@ -118,7 +124,6 @@ public class ListExperimentsPage extends MenuPage {
                 item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
-        // TODO download experiment missing.
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.download"), null, null) {
 
             @Override

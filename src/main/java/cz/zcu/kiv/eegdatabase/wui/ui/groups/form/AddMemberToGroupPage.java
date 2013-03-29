@@ -38,6 +38,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 
+/**
+ * Page for add member to group action.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AddMemberToGroupPage extends MenuPage {
 
@@ -100,7 +106,8 @@ public class AddMemberToGroupPage extends MenuPage {
 
         return value;
     }
-
+    
+    // inner for for add member to group action.
     private class AddMemberForm extends Form<Void> {
 
         private static final long serialVersionUID = 1L;

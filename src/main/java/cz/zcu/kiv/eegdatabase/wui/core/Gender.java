@@ -3,6 +3,12 @@ package cz.zcu.kiv.eegdatabase.wui.core;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enumeration for gender.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum Gender {
 
     MALE('M'),
@@ -19,7 +25,13 @@ public enum Gender {
     public char getShortcut() {
         return shortcut;
     }
-
+    
+    /**
+     * Parse database value to enum value.
+     * 
+     * @param shortcut
+     * @return
+     */
     public static Gender getGenderByShortcut(char shortcut) {
 
         for (Gender tmp : values()) {
@@ -28,7 +40,12 @@ public enum Gender {
         }
         return null;
     }
-
+    
+    /**
+     * Method create list of shortcuts.
+     * 
+     * @return
+     */
     public static List<Character> getShortcutList() {
 
         List<Character> list = new ArrayList<Character>();

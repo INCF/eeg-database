@@ -1,5 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core;
 
+/**
+ * Enumeration for user roles.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum UserRole {
     
     ROLE_READER,

@@ -7,6 +7,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 
+/**
+ * Enumeration of left menu page for person section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum PersonPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_PERSONS(ListPersonPage.class, "pageTitle.listOfPeople", null),

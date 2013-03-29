@@ -32,6 +32,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListExperimentOptParamPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
 
+/**
+ * Page add / edit action of experiment opt parameters.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ExperimentOptParamFormPage extends MenuPage {
 
     private static final long serialVersionUID = -7254696725369039226L;

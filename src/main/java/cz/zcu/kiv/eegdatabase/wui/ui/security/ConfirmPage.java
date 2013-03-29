@@ -15,6 +15,18 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 
+/**
+ * Confirm page after registration. Page is used for confirm action after registration. 
+ * Link on this page is generated and added in email which is sended on registration email.
+ * After open this link page parse parameters and act.
+ * 
+ * If registration is older like 7 days - remove account like expired.
+ * If registration is confirmed yet show message about this information.
+ * If registration isnt confirmed yet - confirm this account and show message about this.
+ * 
+ * @author Jakub Rinkes
+ * 
+ */
 public class ConfirmPage extends MenuPage {
 
     private static final long serialVersionUID = 3478535046128166026L;

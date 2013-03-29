@@ -7,6 +7,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 
+/**
+ * Enumeration of left menu page for experiment section.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_EXPERIMENTS(ListExperimentsPage.class, "menuItem.experiments.allExperiments", null),

@@ -22,8 +22,17 @@ import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileService;
+import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryService;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 
+/**
+ * Provider for experiment download. Provider get data from page and prepared file for download.
+ * 
+ * TODO this should be in facade ???
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public class ExperimentDownloadProvider {
 
     protected Log log = LogFactory.getLog(getClass());
@@ -33,6 +42,8 @@ public class ExperimentDownloadProvider {
     PersonService personService;
 
     FileService fileService;
+    
+    HistoryService historyService;
 
     ZipGenerator zipGenerator;
 
@@ -55,7 +66,21 @@ public class ExperimentDownloadProvider {
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
-
+    
+    @Required
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
+    
+    /**
+     * Method get data from web page, preprocess them for generator and generate zip file with content.
+     * 
+     * @param exp
+     * @param mc
+     * @param files
+     * @param params
+     * @return
+     */
     @Transactional
     public DataFileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
         try {
@@ -64,7 +89,7 @@ public class ExperimentDownloadProvider {
             String scenarioName = experiment.getScenario().getTitle();
 
             Set<DataFile> newFiles = new HashSet<DataFile>();
-
+            // prepared files for generator
             if (files != null || params != null) {
                 // list selected files and prepare new files which we use for generated zip file.
                 for (DataFile item : files) {
@@ -89,7 +114,8 @@ public class ExperimentDownloadProvider {
                     newFiles.add(newItem);
                 }
             }
-
+            
+            // prepared history log 
             Person user = personService.getLoggedPerson();
             Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
             History history = new History();
@@ -100,8 +126,7 @@ public class ExperimentDownloadProvider {
             log.debug("Setting time of download");
             history.setDateOfDownload(currentTimestamp);
             log.debug("Saving download history");
-            // TODO add missing history creation
-            // historyDao.create(history);
+            historyService.create(history);
 
             log.error("files count " + newFiles.size());
             ByteArrayOutputStream stream = (ByteArrayOutputStream) zipGenerator.generate(experiment, mc, newFiles);

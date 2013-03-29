@@ -11,5 +11,6 @@ public interface FileFacade extends GenericFacade<DataFile, Integer>{
     Blob createBlob(byte[] input);
     Blob createBlob(InputStream input, int length);
     
+    // get file with fileId
     DataFileDTO getFile(int fileId);
 }

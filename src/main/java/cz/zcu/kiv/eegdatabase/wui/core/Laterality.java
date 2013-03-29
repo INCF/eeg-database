@@ -3,6 +3,12 @@ package cz.zcu.kiv.eegdatabase.wui.core;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Enumeration for laterality values.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 public enum Laterality {
 
     LEFT('L'),
@@ -20,7 +26,13 @@ public enum Laterality {
     public char getShortcut() {
         return shortcut;
     }
-
+    
+    /**
+     * Parse database value to enumeration value.
+     * 
+     * @param shortcut
+     * @return
+     */
     public static Laterality getLateralityByShortcut(char shortcut) {
 
         for (Laterality tmp : values()) {
@@ -29,7 +41,12 @@ public enum Laterality {
         }
         return null;
     }
-
+    
+    /**
+     * Method create list of shortcuts.
+     * 
+     * @return
+     */
     public static List<Character> getShortcutList() {
         
         List<Character> list = new ArrayList<Character>();

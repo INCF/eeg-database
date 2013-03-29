@@ -33,6 +33,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListFileMetadataPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
 
+/**
+ * Page add / edit action of file metadata parameters.
+ * 
+ * @author Jakub Rinkes
+ *
+ */
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class FileMetadataFormPage extends MenuPage {
 

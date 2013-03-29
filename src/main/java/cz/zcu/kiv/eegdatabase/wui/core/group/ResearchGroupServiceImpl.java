@@ -157,7 +157,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional
     public Integer create(ResearchGroup group) {
-
+        
         log.debug("Saving new ResearchGroup object.");
         Integer groupId = researchGroupDAO.create(group);
 
@@ -383,7 +383,12 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
         membershipDao.create(membership);
     }
-
+    
+    /**
+     * Prepare default list values if the new group is created.
+     * 
+     * @param researchGroup
+     */
     private void preparedDefaultListsForNewGroup(ResearchGroup researchGroup) {
         List<Hardware> hardwareList = hardwareDao.getDefaultRecords();
         Hardware hardware;
