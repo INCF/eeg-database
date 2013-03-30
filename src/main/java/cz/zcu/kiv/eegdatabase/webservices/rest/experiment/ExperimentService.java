@@ -148,4 +148,11 @@ public interface ExperimentService {
      * @return primary key
      */
     public Integer createElectrodeFix(ElectrodeFixData fix);
+
+    /**
+     * Creates new experiment record.
+     * @param experiment experiment to be created
+     * @return primary key
+     */
+    public Integer createExperiment(ExperimentData experiment);
 }

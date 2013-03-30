@@ -1,9 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
-import javax.xml.bind.annotation.XmlAccessType;
-import javax.xml.bind.annotation.XmlAccessorType;
-import javax.xml.bind.annotation.XmlTransient;
-import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.*;
 
 /**
  * @author Petr Miko
@@ -15,10 +12,15 @@ public class SubjectData {
 
     private int personId;
     private String name, surname;
+    @XmlElement(required = false)
     private String gender;
+    @XmlElement(required = false)
     private int age;
+    @XmlElement(required = false)
     private boolean leftHanded;
+    @XmlElement(required = false)
     private String mailUsername;
+    @XmlElement(required = false)
     private String mailDomain;
 
     public int getPersonId() {

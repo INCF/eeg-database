@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -17,7 +17,7 @@ public class SoftwareDataList {
     public List<SoftwareData> softwareList;
 
     public SoftwareDataList(){
-        this(Collections.<SoftwareData>emptyList());
+        this(new ArrayList<SoftwareData>());
     }
 
     public SoftwareDataList(List<SoftwareData> softwareList) {

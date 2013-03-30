@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -19,7 +19,7 @@ public class HardwareDataList {
     public List<HardwareData> hardwares;
 
     public HardwareDataList() {
-        this(Collections.<HardwareData>emptyList());
+        this(new ArrayList<HardwareData>());
     }
 
     public HardwareDataList(List<HardwareData> hardwares) {
