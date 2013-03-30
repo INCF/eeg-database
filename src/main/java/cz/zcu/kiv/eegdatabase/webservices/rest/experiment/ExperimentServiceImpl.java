@@ -295,9 +295,11 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Transactional
     public Integer createElectrodeLocation(ElectrodeLocationData electrodeLocation) {
         ElectrodeLocation el = new ElectrodeLocation();
+
         el.setTitle(electrodeLocation.getTitle());
         el.setDescription(electrodeLocation.getDescription());
         el.setShortcut(electrodeLocation.getAbbr());
+        el.setDefaultNumber(electrodeLocation.getDefaultNumber());
 
         ElectrodeType type = electrodeTypeDao.read(electrodeLocation.getElectrodeType().getId());
         ElectrodeFix fix = electrodeFixDao.read(electrodeLocation.getElectrodeFix().getId());
