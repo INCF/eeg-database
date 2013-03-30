@@ -9,7 +9,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author Petr Miko
  */
 @XmlType(propOrder = {"id", "title", "description", "defaultNumber"})
-@XmlRootElement(name = "electrodeTypeData")
+@XmlRootElement(name = "electrodeType")
 public class ElectrodeTypeData {
 
     private int id;

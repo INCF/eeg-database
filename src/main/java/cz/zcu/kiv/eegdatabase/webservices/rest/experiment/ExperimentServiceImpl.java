@@ -325,8 +325,8 @@ public class ExperimentServiceImpl implements ExperimentService {
     public Integer createDisease(DiseaseData disease) {
 
         Disease record = new Disease();
-        disease.setName(disease.getName());
-        disease.setDescription(disease.getDescription());
+        record.setTitle(disease.getName());
+        record.setDescription(disease.getDescription());
 
         return diseaseDao.create(record);
     }
@@ -339,6 +339,16 @@ public class ExperimentServiceImpl implements ExperimentService {
         record.setRejectCondition(artifact.getRejectCondition());
 
         return artifactDao.create(record);
+    }
+
+    @Override
+    @Transactional
+    public Integer createElectrodeFix(ElectrodeFixData fix) {
+        ElectrodeFix record = new ElectrodeFix();
+        record.setTitle(fix.getTitle());
+        record.setDescription(fix.getDescription());
+
+        return electrodeFixDao.create(record);
     }
 
     private List<ExperimentData> fillAndSortExperiments(Collection<Experiment> exps) {

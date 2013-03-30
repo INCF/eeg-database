@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -9,7 +10,7 @@ import javax.xml.bind.annotation.XmlType;
  * @author Petr Miko
  */
 @XmlType(propOrder = {"id", "title", "description", "defaultNumber"})
-@XmlRootElement(name = "electrodeFixData")
+@XmlRootElement(name = "electrodeFix")
 public class ElectrodeFixData {
 
     private int id;
@@ -17,6 +18,7 @@ public class ElectrodeFixData {
     private String description;
     private int defaultNumber;
 
+    @XmlElement(required = false)
     public int getId() {
         return id;
     }
@@ -41,6 +43,7 @@ public class ElectrodeFixData {
         this.description = description;
     }
 
+    @XmlElement(required = false)
     public int getDefaultNumber() {
         return defaultNumber;
     }
