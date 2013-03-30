@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
  * @author Petr Miko
@@ -48,14 +50,47 @@ public class ExperimentServiceController {
         return new ArtifactDataList(service.getArtifacts());
     }
 
+    @RequestMapping(value = "/artifacts", method = RequestMethod.POST)
+    public ArtifactData createArtifact(@RequestBody ArtifactData artifact) {
+        Integer pk = service.createArtifact(artifact);
+
+        if (pk != null) {
+            artifact.setArtifactId(pk);
+            return artifact;
+        } else
+            return null;
+    }
+
     @RequestMapping(value = "/digitizations")
     public DigitizationDataList getDigitizations() {
         return new DigitizationDataList(service.getDigitizations());
     }
 
+    @RequestMapping(value = "/digitizations", method = RequestMethod.POST)
+    public DigitizationData createDigitization(@RequestBody DigitizationData digitization) {
+        Integer pk = service.createDigitization(digitization);
+
+        if (pk != null) {
+            digitization.setDigitizationId(pk);
+            return digitization;
+        } else
+            return null;
+    }
+
     @RequestMapping("/diseases")
     public DiseaseDataList getDiseases() {
         return new DiseaseDataList(service.getDiseases());
+    }
+
+    @RequestMapping(value = "/diseases", method = RequestMethod.POST)
+    public DiseaseData createDisease(@RequestBody DiseaseData disease) {
+        Integer pk = service.createDisease(disease);
+
+        if (pk != null) {
+            disease.setDiseaseId(pk);
+            return disease;
+        } else
+            return null;
     }
 
     @RequestMapping("/hardwareList")
@@ -81,6 +116,16 @@ public class ExperimentServiceController {
     @RequestMapping("/electrodeLocations")
     public ElectrodeLocationDataList getElectrodeLocations() {
         return new ElectrodeLocationDataList(service.getElectrodeLocations());
+    }
+
+    @RequestMapping(value = "/electrodeLocations", method = RequestMethod.POST)
+    public ElectrodeLocationData createElectrodeLocation(@RequestBody ElectrodeLocationData electrodeLocation) {
+        Integer pk = service.createElectrodeLocation(electrodeLocation);
+
+        if (pk != null) {
+            electrodeLocation.setId(pk);
+            return electrodeLocation;
+        } else return null;
     }
 
     @RequestMapping("/electrodeFixList")

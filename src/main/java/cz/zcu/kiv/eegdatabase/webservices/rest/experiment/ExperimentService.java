@@ -110,4 +110,35 @@ public interface ExperimentService {
      * @return electrode locations
      */
     public List<ElectrodeLocationData> getElectrodeLocations();
+
+    /**
+     * Method for creating new record of electrode location.
+     *
+     * @param electrodeLocation record to be created
+     * @return identifier of newly created record
+     */
+    public Integer createElectrodeLocation(ElectrodeLocationData electrodeLocation);
+
+    /**
+     * Creates new digitization record.
+     *
+     * @param digitization digitization to be created
+     * @return primary key
+     */
+    public Integer createDigitization(DigitizationData digitization);
+
+    /**
+     * Creates new disease record.
+     *
+     * @param disease disease to be created
+     * @return primary key
+     */
+    public Integer createDisease(DiseaseData disease);
+
+    /**
+     * Creates new artifact record.
+     * @param artifact artifact to be created
+     * @return primary key
+     */
+    public Integer createArtifact(ArtifactData artifact);
 }

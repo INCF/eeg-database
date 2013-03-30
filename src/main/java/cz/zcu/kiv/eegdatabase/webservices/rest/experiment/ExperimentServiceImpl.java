@@ -59,9 +59,6 @@ public class ExperimentServiceImpl implements ExperimentService {
     private SimpleElectrodeFixDao electrodeFixDao;
     @Autowired
     private SimpleElectrodeSystemDao electrodeSystemDao;
-    @Autowired
-    @Qualifier("experimentDao")
-    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -292,6 +289,56 @@ public class ExperimentServiceImpl implements ExperimentService {
         }
 
         return electrodeLocations;
+    }
+
+    @Override
+    @Transactional
+    public Integer createElectrodeLocation(ElectrodeLocationData electrodeLocation) {
+        ElectrodeLocation el = new ElectrodeLocation();
+        el.setTitle(electrodeLocation.getTitle());
+        el.setDescription(electrodeLocation.getDescription());
+        el.setShortcut(electrodeLocation.getAbbr());
+
+        ElectrodeType type = electrodeTypeDao.read(electrodeLocation.getElectrodeType().getId());
+        ElectrodeFix fix = electrodeFixDao.read(electrodeLocation.getElectrodeFix().getId());
+
+        el.setElectrodeFix(fix);
+        el.setElectrodeType(type);
+
+        return electrodeLocationDao.create(el);
+    }
+
+    @Override
+    @Transactional
+    public Integer createDigitization(DigitizationData digitization) {
+
+        Digitization record = new Digitization();
+        record.setFilter(digitization.getFilter());
+        record.setSamplingRate(digitization.getSamplingRate());
+        record.setGain(digitization.getGain());
+
+        return digitizationDao.create(record);
+    }
+
+    @Override
+    @Transactional
+    public Integer createDisease(DiseaseData disease) {
+
+        Disease record = new Disease();
+        disease.setName(disease.getName());
+        disease.setDescription(disease.getDescription());
+
+        return diseaseDao.create(record);
+    }
+
+    @Override
+    @Transactional
+    public Integer createArtifact(ArtifactData artifact) {
+        Artifact record = new Artifact();
+        record.setCompensation(artifact.getCompensation());
+        record.setRejectCondition(artifact.getRejectCondition());
+
+        return artifactDao.create(record);
     }
 
     private List<ExperimentData> fillAndSortExperiments(Collection<Experiment> exps) {

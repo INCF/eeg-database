@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
@@ -20,6 +21,7 @@ public class ElectrodeLocationData {
     private ElectrodeFixData electrodeFix;
     private ElectrodeTypeData electrodeType;
 
+    @XmlElement(required = false)
     public int getId() {
         return id;
     }
@@ -36,6 +38,7 @@ public class ElectrodeLocationData {
         this.title = title;
     }
 
+    @XmlElement(required = false)
     public String getAbbr() {
         return abbr;
     }
@@ -44,6 +47,7 @@ public class ElectrodeLocationData {
         this.abbr = abbr;
     }
 
+    @XmlElement(required = false)
     public String getDescription() {
         return description;
     }
@@ -52,6 +56,7 @@ public class ElectrodeLocationData {
         this.description = description;
     }
 
+    @XmlElement(required = false)
     public int getDefaultNumber() {
         return defaultNumber;
     }
