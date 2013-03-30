@@ -141,4 +141,11 @@ public interface ExperimentService {
      * @return primary key
      */
     public Integer createArtifact(ArtifactData artifact);
+
+    /**
+     * Creates new electrode fix record.
+     * @param fix electrode fix to be created
+     * @return primary key
+     */
+    public Integer createElectrodeFix(ElectrodeFixData fix);
 }

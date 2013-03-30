@@ -133,6 +133,16 @@ public class ExperimentServiceController {
         return new ElectrodeFixDataList(service.getElectrodeFixList());
     }
 
+    @RequestMapping(value = "/electrodeFixList", method = RequestMethod.POST)
+    public ElectrodeFixData createElectrodeFix(@RequestBody ElectrodeFixData fix){
+        Integer pk = service.createElectrodeFix(fix);
+
+        if (pk != null) {
+            fix.setId(pk);
+            return fix;
+        } else return null;
+    }
+
     @RequestMapping("/electrodeTypes")
     public ElectrodeTypeDataList getElectrodeTypes() {
         return new ElectrodeTypeDataList(service.getElectrodeTypes());
