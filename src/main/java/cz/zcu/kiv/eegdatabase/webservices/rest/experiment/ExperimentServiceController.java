@@ -22,6 +22,17 @@ public class ExperimentServiceController {
     @Autowired
     private ExperimentService service;
 
+    @RequestMapping(value = "/create", method = RequestMethod.POST)
+    public ExperimentData createExperiment(@RequestBody ExperimentData experiment){
+        Integer pk = service.createExperiment(experiment);
+
+        if(pk!= null){
+            experiment.setExperimentId(pk);
+            return experiment;
+        }
+        return null;
+    }
+
     @RequestMapping(value = "/public/{fromId}/{count}")
     public ExperimentDataList getPublicExperiments(@PathVariable int fromId, @PathVariable int count) {
         return new ExperimentDataList(service.getPublicExperiments(fromId, count));

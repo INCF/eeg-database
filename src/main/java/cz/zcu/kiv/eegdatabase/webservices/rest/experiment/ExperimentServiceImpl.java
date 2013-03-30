@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 /**
@@ -31,6 +32,12 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
+    @Autowired
+    @Qualifier("researchGroupDao")
+    private ResearchGroupDao groupDao;
+    @Autowired
+    @Qualifier("scenarioDao")
+    private ScenarioDao scenarioDao;
     @Autowired
     @Qualifier("experimentDao")
     private ExperimentDao experimentDao;
@@ -59,6 +66,12 @@ public class ExperimentServiceImpl implements ExperimentService {
     private SimpleElectrodeFixDao electrodeFixDao;
     @Autowired
     private SimpleElectrodeSystemDao electrodeSystemDao;
+    @Autowired
+    @Qualifier("subjectGroupDao")
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
+    @Autowired
+    @Qualifier("electrodeConfDao")
+    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
 
     @Override
     @Transactional(readOnly = true)
@@ -353,6 +366,103 @@ public class ExperimentServiceImpl implements ExperimentService {
         return electrodeFixDao.create(record);
     }
 
+    @Override
+    @Transactional
+    public Integer createExperiment(ExperimentData experiment) {
+
+        Experiment exp = new Experiment();
+        exp.setStartTime(new Timestamp(experiment.getStartTime().getTime()));
+        exp.setEndTime(new Timestamp(experiment.getEndTime().getTime()));
+
+        Person user = personDao.getLoggedPerson();
+        exp.setPersonByOwnerId(user);
+
+        Person subject = personDao.read(experiment.getSubject().getPersonId());
+        exp.setPersonBySubjectPersonId(subject);
+
+        Artifact art = artifactDao.read(experiment.getArtifact().getArtifactId());
+        exp.setArtifact(art);
+        Digitization dig = digitizationDao.read(experiment.getDigitization().getDigitizationId());
+        exp.setDigitization(dig);
+        ResearchGroup group = groupDao.read(experiment.getResearchGroup().getGroupId());
+        exp.setResearchGroup(group);
+        Scenario scenario = scenarioDao.read(experiment.getScenario().getScenarioId());
+        exp.setScenario(scenario);
+
+        Weather weather = new Weather();
+        weather.setTitle(experiment.getWeather().getTitle());
+        weather.setDescription(experiment.getWeather().getDescription());
+        Integer weatherPk = weatherDao.create(weather);
+        weather.setWeatherId(weatherPk);
+        exp.setWeather(weather);
+
+        exp.setEnvironmentNote(experiment.getEnvironmentNote());
+        exp.setTemperature(experiment.getTemperature());
+
+        ElectrodeConfData confData = experiment.getElectrodeConf();
+        ElectrodeConf conf = new ElectrodeConf();
+        conf.setImpedance(confData.getImpedance());
+        ElectrodeSystem system = electrodeSystemDao.read(confData.getElectrodeSystem().getId());
+        conf.setElectrodeSystem(system);
+        Set<ElectrodeLocation> locations = new HashSet<ElectrodeLocation>();
+        if (confData.getElectrodeLocations() != null)
+            for (ElectrodeLocationData loc : confData.getElectrodeLocations().electrodeLocations) {
+                ElectrodeLocation location = electrodeLocationDao.read(loc.getId());
+                locations.add(location);
+            }
+
+        conf.setElectrodeLocations(locations);
+
+        int confPk = electrodeConfDao.create(conf);
+        conf.setElectrodeConfId(confPk);
+        exp.setElectrodeConf(conf);
+
+        Set<Disease> diseases = new HashSet<Disease>();
+        DiseaseDataList disList = experiment.getDiseases();
+        if (disList != null)
+            for (DiseaseData dis : disList.diseases) {
+                Disease disease = diseaseDao.read(dis.getDiseaseId());
+                diseases.add(disease);
+            }
+        exp.setDiseases(diseases);
+
+        Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>();
+        PharmaceuticalDataList pharms = experiment.getPharmaceuticals();
+
+        if (pharms != null)
+            for (PharmaceuticalData pharm : pharms.pharmaceuticals) {
+                Pharmaceutical pharmaceutical = pharmaceuticalDao.read(pharm.getId());
+                pharmaceuticals.add(pharmaceutical);
+            }
+        exp.setPharmaceuticals(pharmaceuticals);
+
+        Set<Hardware> hardwares = new HashSet<Hardware>();
+        HardwareDataList hws = experiment.getHardwareList();
+
+        if (hws != null)
+            for (HardwareData hw : hws.hardwares) {
+                Hardware hardware = hardwareDao.read(hw.getHardwareId());
+                hardwares.add(hardware);
+            }
+        exp.setHardwares(hardwares);
+
+        Set<Software> softwares = new HashSet<Software>();
+        SoftwareDataList sws = experiment.getSoftwareList();
+        if (sws != null)
+            for (SoftwareData sw : sws.softwareList) {
+                Software soft = softwareDao.read(sw.getId());
+                softwares.add(soft);
+            }
+        exp.setSoftwares(softwares);
+
+        //subject group is not yet definitive feature of EEG Portal
+        //this is just workaround to make creating of experiments working
+        SubjectGroup subGroup = subjectGroupDao.read(1);
+        exp.setSubjectGroup(subGroup);
+
+        return (Integer) experimentDao.create(exp);
+    }
+
     private List<ExperimentData> fillAndSortExperiments(Collection<Experiment> exps) {
         List<ExperimentData> experiments = new ArrayList<ExperimentData>(exps.size());
 
@@ -506,6 +616,8 @@ public class ExperimentServiceImpl implements ExperimentService {
                 owner.setMailUsername(mail[0]);
                 owner.setMailDomain(mail[1]);
             }
+
+            expData.setTemperature(exp.getTemperature());
 
             expData.setOwner(owner);
             expData.setResearchGroup(researchGroup);

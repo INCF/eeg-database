@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.DateAdapter;
 import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
 
+import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
@@ -14,7 +15,7 @@ import java.util.Date;
  * @author Petr Miko
  */
 @XmlType(propOrder = {"experimentId", "scenario", "researchGroup","artifact", "startTime", "endTime", "owner", "subject",
-        "diseases", "hardwareList", "digitization", "environmentNote", "weather", "electrodeConf", "pharmaceuticals",
+        "diseases", "hardwareList", "digitization", "temperature", "environmentNote", "weather", "electrodeConf", "pharmaceuticals",
         "softwareList"})
 @XmlRootElement(name = "experiment")
 public class ExperimentData {
@@ -34,6 +35,7 @@ public class ExperimentData {
     private PharmaceuticalDataList pharmaceuticals;
     private SoftwareDataList softwareList;
     private ResearchGroupData researchGroup;
+    private int temperature;
 
 
     public ExperimentData() {
@@ -81,6 +83,7 @@ public class ExperimentData {
         this.scenario = scenario;
     }
 
+    @XmlElement(required = false)
     public int getExperimentId() {
         return experimentId;
     }
@@ -89,6 +92,7 @@ public class ExperimentData {
         this.experimentId = experimentId;
     }
 
+    @XmlElement(required = false)
     public OwnerData getOwner() {
         return owner;
     }
@@ -167,5 +171,14 @@ public class ExperimentData {
 
     public void setResearchGroup(ResearchGroupData researchGroup) {
         this.researchGroup = researchGroup;
+    }
+
+    @XmlElement(required = false)
+    public int getTemperature() {
+        return temperature;
+    }
+
+    public void setTemperature(int temperature) {
+        this.temperature = temperature;
     }
 }

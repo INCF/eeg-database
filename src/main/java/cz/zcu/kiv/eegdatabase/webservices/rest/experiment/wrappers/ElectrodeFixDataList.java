@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -18,7 +18,7 @@ public class ElectrodeFixDataList {
     public List<ElectrodeFixData> electrodeFixList;
 
     public ElectrodeFixDataList(){
-        this(Collections.<ElectrodeFixData>emptyList());
+        this(new ArrayList<ElectrodeFixData>());
     }
 
     public ElectrodeFixDataList(List<ElectrodeFixData> electrodeFixList) {

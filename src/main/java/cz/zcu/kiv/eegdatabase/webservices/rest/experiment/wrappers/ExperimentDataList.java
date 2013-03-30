@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import java.util.Collections;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -16,7 +16,7 @@ public class ExperimentDataList {
     public List<ExperimentData> experiments;
 
     public ExperimentDataList() {
-        this(Collections.<ExperimentData>emptyList());
+        this(new ArrayList<ExperimentData>());
     }
 
     public ExperimentDataList(List<ExperimentData> experiments) {
