@@ -7,8 +7,9 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 /**
+ * Controller for handling requests upon Research group service.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @Secured("IS_AUTHENTICATED_FULLY")
 @Controller
@@ -18,11 +19,21 @@ public class ResearchGroupServiceController {
     @Autowired
     private ResearchGroupService groupService;
 
+    /**
+     * Getter of all research groups.
+     *
+     * @return list container of research groups
+     */
     @RequestMapping(value = "/all")
     public ResearchGroupDataList getAllGroups() {
         return new ResearchGroupDataList(groupService.getAllGroups());
     }
 
+    /**
+     * Getter of user's research groups.
+     *
+     * @return list container of research groups
+     */
     @RequestMapping(value = "/mine")
     public ResearchGroupDataList getMyGroups() {
         return new ResearchGroupDataList(groupService.getMyGroups());

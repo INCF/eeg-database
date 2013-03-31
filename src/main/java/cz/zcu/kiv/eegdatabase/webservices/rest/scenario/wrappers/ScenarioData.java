@@ -4,8 +4,10 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
+ * Scenario data container for XML marshaling.
+ * Used in REST webservice.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @XmlType(propOrder = {"scenarioId", "scenarioName", "ownerName", "researchGroupId", "researchGroupName", "fileName", "mimeType", "fileLength", "description", "private"})
 @XmlRootElement(name = "scenario")

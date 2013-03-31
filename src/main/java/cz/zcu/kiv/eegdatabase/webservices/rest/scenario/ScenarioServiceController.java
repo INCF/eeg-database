@@ -17,7 +17,6 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.util.UriTemplate;
 import org.xml.sax.SAXException;
 
@@ -27,12 +26,11 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 import java.io.IOException;
 import java.sql.SQLException;
-import java.util.Collections;
-import java.util.Map;
 
 /**
+ * Controller for mapping requests upon scenario REST service.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @Secured("IS_AUTHENTICATED_FULLY")
 @Controller
@@ -40,35 +38,57 @@ import java.util.Map;
 public class ScenarioServiceController {
 
     private final static Log log = LogFactory.getLog(ScenarioServiceController.class);
-
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
     @Autowired
     @Qualifier("researchGroupDao")
     private ResearchGroupDao researchGroupDao;
-
     @Autowired
     private ScenarioService scenarioService;
 
+    /**
+     * Getter of all scenarios on server.
+     *
+     * @return scenarios
+     */
     @RequestMapping("/all")
-    public ScenarioDataList getAllScenarios(){
-       return new ScenarioDataList(scenarioService.getAllScenarios());
+    public ScenarioDataList getAllScenarios() {
+        return new ScenarioDataList(scenarioService.getAllScenarios());
     }
 
+    /**
+     * Getter of user's scenarios.
+     *
+     * @return scenarios
+     */
     @RequestMapping("/mine")
-    public ScenarioDataList getMyScenarios(){
+    public ScenarioDataList getMyScenarios() {
         return new ScenarioDataList(scenarioService.getMyScenarios());
     }
 
+    /**
+     * Creates new scenario record.
+     *
+     * @param request         HTTP request
+     * @param response        HTTP response
+     * @param scenarioName    scenario name
+     * @param researchGroupId research group to which should be new record assigned
+     * @param mimeType        scenario file MIME type
+     * @param isPrivate       is scenario private
+     * @param description     scenario description
+     * @param file            file content
+     * @return filled scenario data container
+     * @throws RestServiceException error while creating new scenario record
+     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public ScenarioData create(HttpServletRequest request, HttpServletResponse response,
-                       @RequestParam("scenarioName") String scenarioName, @RequestParam("researchGroupId") int researchGroupId,
-                       @RequestParam(value = "mimeType", required = false) String mimeType,
-                       @RequestParam(value = "private", required = false) boolean isPrivate,
-                       @RequestParam("description") String description,
-                       @RequestParam("file") MultipartFile file) throws RestServiceException {
+                               @RequestParam("scenarioName") String scenarioName, @RequestParam("researchGroupId") int researchGroupId,
+                               @RequestParam(value = "mimeType", required = false) String mimeType,
+                               @RequestParam(value = "private", required = false) boolean isPrivate,
+                               @RequestParam("description") String description,
+                               @RequestParam("file") MultipartFile file) throws RestServiceException {
         ScenarioData scenarioData = new ScenarioData();
         scenarioData.setScenarioName(scenarioName);
         scenarioData.setResearchGroupId(researchGroupId);
@@ -101,14 +121,15 @@ public class ScenarioServiceController {
         }
     }
 
-    /*
-     *  FEATURE
+    /**
+     * Method for writing file content into HTTP response.
+     * Used for file download.
      *
-     *  Not used in final REST client application.
-     *  Preparations for downloading scenario file from server.
-     *  Authentication not resolved - all users could download anyting in current implementation.
-     *
-     *
+     * @param id       scenario identifier
+     * @param response HTTP response
+     * @throws RestServiceException  error while accessing the file
+     * @throws RestNotFoundException error, when no file with such id found on server
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public void getFile(@PathVariable("id") int id, HttpServletResponse response) throws RestServiceException, RestNotFoundException {
         try {
@@ -123,25 +144,47 @@ public class ScenarioServiceController {
             log.error("Error writing file to output stream. Filename was '" + id + "'");
             throw new RestServiceException(e);
         }
-    }     */
+    }
 
+    /**
+     * Method for creating download URL to scenario file.
+     *
+     * @param request HTTP request
+     * @param id      scenario identifier
+     * @return scenario file download location
+     */
     private String buildLocation(HttpServletRequest request, Object id) {
         StringBuffer url = request.getRequestURL();
         UriTemplate ut = new UriTemplate(url.append("/{id}").toString());
         return ut.expand(id).toASCIIString();
     }
 
+    /**
+     * Exception handler for RestServiceException.class.
+     * Writes exception message into HTTP response.
+     *
+     * @param ex       exception body
+     * @param response HTTP response
+     * @throws IOException error while writing into response
+     */
     @ExceptionHandler(RestServiceException.class)
     public void handleException(RestServiceException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
         log.error(ex);
     }
 
+    /**
+     * Exception handler for RestNotFoundException.class.
+     * Writes exception message into HTTP response.
+     *
+     * @param ex       exception body
+     * @param response HTTP response
+     * @throws IOException error while writing into response
+     */
     @ExceptionHandler(RestNotFoundException.class)
     public void handleException(RestNotFoundException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, ex.getMessage());
         log.error(ex);
     }
-
 
 }

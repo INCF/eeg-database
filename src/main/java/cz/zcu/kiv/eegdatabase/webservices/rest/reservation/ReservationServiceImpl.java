@@ -24,8 +24,9 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
+ * Reservation service implementation class.
+ *
  * @author Petr Miko
- *         Date: 10.2.13
  */
 
 @Service
@@ -43,6 +44,9 @@ public class ReservationServiceImpl implements ReservationService {
     @Qualifier("personDao")
     private PersonDao personDao;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public ReservationDataList getToDate(String date) throws RestServiceException {
@@ -73,6 +77,9 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public ReservationDataList getFromToDate(String fromDate, String toDate) throws RestServiceException {
@@ -102,6 +109,9 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public ReservationData create(ReservationData reservationData) throws RestServiceException {
@@ -140,6 +150,9 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public void delete(int reservationId) throws RestServiceException {
@@ -160,6 +173,13 @@ public class ReservationServiceImpl implements ReservationService {
         }
     }
 
+    /**
+     * Checks if is user a member of specified research group.
+     *
+     * @param user            user
+     * @param researchGroupId research group identifier
+     * @return true if is user in group
+     */
     private boolean isInGroup(Person user, int researchGroupId) {
         if (!user.getResearchGroupMemberships().isEmpty()) {
             for (ResearchGroup g : researchGroupDao.getResearchGroupsWhereMember(user)) {
@@ -171,6 +191,12 @@ public class ReservationServiceImpl implements ReservationService {
         return false;
     }
 
+    /**
+     * Check method, is user allowed to remove reservation record.
+     *
+     * @param reservation reservation record
+     * @return true if user can remove reservation
+     */
     private boolean canRemoveReservation(Reservation reservation) {
         Person user = personDao.getLoggedPerson();
         return isInGroup(user, reservation.getResearchGroup().getResearchGroupId()) || "ROLE_ADMIN".equalsIgnoreCase(user.getAuthority());

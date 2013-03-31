@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Data container for Reservation data collection.
+ *
  * @author Petr Miko
- *         Date: 9.2.13
  */
 @XmlRootElement(name = "reservations")
 public class ReservationDataList {
