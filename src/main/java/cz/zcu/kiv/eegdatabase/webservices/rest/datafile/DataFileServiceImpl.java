@@ -3,7 +3,9 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.datafile;
 import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
@@ -38,6 +40,9 @@ public class DataFileServiceImpl implements DataFileService {
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
+    @Autowired
+    @Qualifier("researchGroupDao")
+    private ResearchGroupDao researchGroupDao;
 
     /**
      * Creates new DataFile under specified experiment.
@@ -85,16 +90,8 @@ public class DataFileServiceImpl implements DataFileService {
 
         //if is user member of group, then he has rights to download file
         //basic verification, in future should be extended
-        boolean hasRights = false;
         ResearchGroup expGroup = file.getExperiment().getResearchGroup();
-        for (ResearchGroup res : personDao.getLoggedPerson().getResearchGroups()) {
-            if (res.getResearchGroupId() == expGroup.getResearchGroupId()) {
-                hasRights = true;
-                break;
-            }
-        }
-
-        if (!hasRights) throw new RestServiceException("User does not have access to this file!");
+        if (!isInGroup(personDao.getLoggedPerson(), expGroup.getResearchGroupId())) throw new RestServiceException("User does not have access to this file!");
 
         InputStream is = file.getFileContent().getBinaryStream();
         // copy it to response's OutputStream
@@ -103,5 +100,23 @@ public class DataFileServiceImpl implements DataFileService {
         response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
         IOUtils.copy(is, response.getOutputStream());
         response.flushBuffer();
+    }
+
+    /**
+     * Checks if is user a member of specified research group.
+     *
+     * @param user            user
+     * @param researchGroupId research group identifier
+     * @return true if is user in group
+     */
+    private boolean isInGroup(Person user, int researchGroupId) {
+        if (!user.getResearchGroupMemberships().isEmpty()) {
+            for (ResearchGroup g : researchGroupDao.getResearchGroupsWhereMember(user)) {
+                if (g.getResearchGroupId() == researchGroupId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

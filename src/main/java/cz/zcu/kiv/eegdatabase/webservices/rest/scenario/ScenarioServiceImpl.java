@@ -6,7 +6,6 @@ import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestNotFoundException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
-import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.ExperimentData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.scenario.wrappers.ScenarioData;
 import org.apache.commons.io.IOUtils;
 import org.hibernate.Hibernate;
@@ -16,7 +15,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 import org.w3c.dom.Document;
-import org.w3c.dom.Node;
 import org.xml.sax.SAXException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -26,7 +24,10 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.*;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
-import java.io.*;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -35,8 +36,9 @@ import java.util.Comparator;
 import java.util.List;
 
 /**
+ * Scenario service implementation.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @Service
 public class ScenarioServiceImpl implements ScenarioService {
@@ -58,6 +60,9 @@ public class ScenarioServiceImpl implements ScenarioService {
         }
     };
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ScenarioData> getAllScenarios() {
@@ -84,6 +89,9 @@ public class ScenarioServiceImpl implements ScenarioService {
         return scenarioDatas;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ScenarioData> getMyScenarios() {
@@ -109,6 +117,9 @@ public class ScenarioServiceImpl implements ScenarioService {
         return scenarioDatas;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public int create(ScenarioData scenarioData, MultipartFile file) throws IOException, SAXException, ParserConfigurationException {
@@ -148,12 +159,20 @@ public class ScenarioServiceImpl implements ScenarioService {
 
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException, TransformerException, RestNotFoundException {
         Scenario scenario = scenarioDao.read(id);
         IScenarioType scenarioType;
 
         if(scenario == null || (scenarioType = scenario.getScenarioType()) == null) throw new RestNotFoundException("No file with such id! ");
+
+        //if is user member of group, then he has rights to download file
+        //basic verification, in future should be extended
+        ResearchGroup expGroup = scenario.getResearchGroup();
+        if (!isInGroup(personDao.getLoggedPerson(), expGroup.getResearchGroupId())) throw new RestServiceException("User does not have access to this file!");
 
         if(scenarioType.getScenarioXml() == null) throw new RestNotFoundException("No present scenario file!");
 
@@ -191,5 +210,23 @@ public class ScenarioServiceImpl implements ScenarioService {
             }
         }
         else throw new RestServiceException("Unsupported file type!");
+    }
+
+    /**
+     * Checks if is user a member of specified research group.
+     *
+     * @param user            user
+     * @param researchGroupId research group identifier
+     * @return true if is user in group
+     */
+    private boolean isInGroup(Person user, int researchGroupId) {
+        if (!user.getResearchGroupMemberships().isEmpty()) {
+            for (ResearchGroup g : researchGroupDao.getResearchGroupsWhereMember(user)) {
+                if (g.getResearchGroupId() == researchGroupId) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

@@ -1,18 +1,15 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.user;
 
-import com.paypal.svcs.types.perm.PersonalDataList;
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.EducationLevelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.exception.RestServiceException;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.PersonDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.user.wrappers.UserInfo;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -33,7 +30,6 @@ import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
-import java.util.Set;
 
 /**
  * Implementation of user service.
@@ -43,9 +39,8 @@ import java.util.Set;
 @Service
 public class UserServiceImpl implements UserService {
 
-    private String DEFAULT_EDUCATION_LEVEL = "NotKnown";
-
     private final static Log log = LogFactory.getLog(UserServiceImpl.class);
+    private String DEFAULT_EDUCATION_LEVEL = "NotKnown";
     @Qualifier("mailSender")
     @Autowired
     private JavaMailSender mailSender;
@@ -95,7 +90,7 @@ public class UserServiceImpl implements UserService {
             person.setPassword(new BCryptPasswordEncoder().encode(plainPassword));
 
             int pk = personDao.create(person);
-            sendRegistrationConfirmMail(registrationPath, plainPassword,person, locale);
+            sendRegistrationConfirmMail(registrationPath, plainPassword, person, locale);
 
             personData.setId(pk);
 
@@ -125,27 +120,27 @@ public class UserServiceImpl implements UserService {
         List<Person> original = personDao.getAllRecords();
         List<PersonData> people = new ArrayList<PersonData>();
 
-        if(original != null){
-           for(Person p : original){
-               //records without email are not real users - omitted
+        if (original != null) {
+            for (Person p : original) {
+                //records without email are not real users - omitted
 
 
-               PersonData person = new PersonData();
-               person.setId(p.getPersonId());
-               person.setName(p.getGivenname());
-               person.setSurname(p.getSurname());
-               person.setEmail(p.getUsername() == null ? p.getEmail() : p.getUsername());
+                PersonData person = new PersonData();
+                person.setId(p.getPersonId());
+                person.setName(p.getGivenname());
+                person.setSurname(p.getSurname());
+                person.setEmail(p.getUsername() == null ? p.getEmail() : p.getUsername());
 
-               //people without mail contact are not real users - omitted
-               if(person.getEmail() == null) continue;
+                //people without mail contact are not real users - omitted
+                if (person.getEmail() == null) continue;
 
-               if(p.getDateOfBirth() != null)
-               person.setBirthday(ControllerUtils.getDateFormat().format(p.getDateOfBirth()));
-               person.setGender(String.valueOf(p.getGender()));
-               person.setLeftHanded(String.valueOf(p.getLaterality()));
-               person.setNotes(p.getNote());
-               people.add(person);
-           }
+                if (p.getDateOfBirth() != null)
+                    person.setBirthday(ControllerUtils.getDateFormat().format(p.getDateOfBirth()));
+                person.setGender(String.valueOf(p.getGender()));
+                person.setLeftHanded(String.valueOf(p.getLaterality()));
+                person.setNotes(p.getNote());
+                people.add(person);
+            }
         }
 
         return new PersonDataList(people);

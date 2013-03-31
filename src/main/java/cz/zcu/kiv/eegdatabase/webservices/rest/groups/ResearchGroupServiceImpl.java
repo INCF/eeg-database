@@ -12,18 +12,12 @@ import org.springframework.transaction.annotation.Transactional;
 import java.util.*;
 
 /**
+ * Research group service implementation.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @Service
 public class ResearchGroupServiceImpl implements ResearchGroupService {
-
-    @Autowired
-    @Qualifier("personDao")
-    private PersonDao personDao;
-    @Autowired
-    @Qualifier("researchGroupDao")
-    private ResearchGroupDao groupDao;
 
     private final Comparator<ResearchGroupData> nameComparator = new Comparator<ResearchGroupData>() {
 
@@ -32,7 +26,16 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
             return o1.getGroupName().compareTo(o2.getGroupName());
         }
     };
+    @Autowired
+    @Qualifier("personDao")
+    private PersonDao personDao;
+    @Autowired
+    @Qualifier("researchGroupDao")
+    private ResearchGroupDao groupDao;
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ResearchGroupData> getAllGroups() {
@@ -48,8 +51,10 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         return list;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
-
     @Transactional(readOnly = true)
     public List<ResearchGroupData> getMyGroups() {
 

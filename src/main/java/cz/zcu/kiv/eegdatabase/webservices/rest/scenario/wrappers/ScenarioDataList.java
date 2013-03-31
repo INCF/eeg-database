@@ -6,8 +6,10 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Container for list of scenarios' information.
+ * Used in REST webservice, supports JAXB XML marshaling.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
 @XmlRootElement(name = "scenarios")
 public class ScenarioDataList {
@@ -15,11 +17,11 @@ public class ScenarioDataList {
     @XmlElement(name = "scenario")
     private List<ScenarioData> scenarios;
 
-    public ScenarioDataList(){
+    public ScenarioDataList() {
         this.scenarios = Collections.emptyList();
     }
 
-    public ScenarioDataList(List<ScenarioData> scenarios){
+    public ScenarioDataList(List<ScenarioData> scenarios) {
         this.scenarios = scenarios;
     }
 }

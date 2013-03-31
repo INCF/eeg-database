@@ -74,8 +74,9 @@ public class DataFileServiceController {
 
     /**
      * Builds URL for file download.
+     *
      * @param request HTTP request
-     * @param id data file id
+     * @param id      data file id
      * @return URL string
      */
     private String buildLocation(HttpServletRequest request, Object id) {
@@ -85,8 +86,10 @@ public class DataFileServiceController {
     }
 
     /**
-     * Exception handler for RestServiceException.class
-     * @param ex exception body
+     * Exception handler for RestServiceException.class.
+     * Writes exception message into HTTP response.
+     *
+     * @param ex       exception body
      * @param response HTTP response
      * @throws IOException error while writing into response
      */
@@ -97,8 +100,10 @@ public class DataFileServiceController {
     }
 
     /**
-     * Exception handler for RestNotFoundException.class
-     * @param ex exception body
+     * Exception handler for RestNotFoundException.class.
+     * Writes exception message into HTTP response.
+     *
+     * @param ex       exception body
      * @param response HTTP response
      * @throws IOException error while writing into response
      */

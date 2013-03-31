@@ -6,8 +6,9 @@ import java.util.Collections;
 import java.util.List;
 
 /**
+ * Data container for holding a list of research groups.
+ *
  * @author Petr Miko
- *         Date: 9.2.13
  */
 @XmlRootElement(name = "researchGroups")
 public class ResearchGroupDataList {
