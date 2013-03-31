@@ -101,6 +101,14 @@ public class ScenarioServiceController {
         }
     }
 
+    /*
+     *  FEATURE
+     *
+     *  Not used in final REST client application.
+     *  Preparations for downloading scenario file from server.
+     *  Authentication not resolved - all users could download anyting in current implementation.
+     *
+     *
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public void getFile(@PathVariable("id") int id, HttpServletResponse response) throws RestServiceException, RestNotFoundException {
         try {
@@ -115,7 +123,7 @@ public class ScenarioServiceController {
             log.error("Error writing file to output stream. Filename was '" + id + "'");
             throw new RestServiceException(e);
         }
-    }
+    }     */
 
     private String buildLocation(HttpServletRequest request, Object id) {
         StringBuffer url = request.getRequestURL();
