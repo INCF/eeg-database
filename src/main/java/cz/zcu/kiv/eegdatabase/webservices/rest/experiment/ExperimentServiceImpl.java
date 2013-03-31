@@ -42,29 +42,37 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Qualifier("experimentDao")
     private ExperimentDao experimentDao;
     @Autowired
+    @Qualifier("artifactDao")
     private SimpleArtifactDao artifactDao;
     @Autowired
     @Qualifier("digitizationDao")
     private DigitizationDao digitizationDao;
     @Autowired
+    @Qualifier("diseaseDao")
     private SimpleDiseaseDao diseaseDao;
     @Autowired
     @Qualifier("hardwareDao")
     private HardwareDao hardwareDao;
     @Autowired
+    @Qualifier("softwareDao")
     private SimpleSoftwareDao softwareDao;
     @Autowired
     @Qualifier("weatherDao")
     private WeatherDao weatherDao;
     @Autowired
+    @Qualifier("pharmaceuticalDao")
     private SimplePharmaceuticalDao pharmaceuticalDao;
     @Autowired
+    @Qualifier("electrodeTypeDao")
     private SimpleElectrodeTypeDao electrodeTypeDao;
     @Autowired
+    @Qualifier("electrodeLocationDao")
     private SimpleElectrodeLocationDao electrodeLocationDao;
     @Autowired
+    @Qualifier("electrodeFixDao")
     private SimpleElectrodeFixDao electrodeFixDao;
     @Autowired
+    @Qualifier("electrodeSystemDao")
     private SimpleElectrodeSystemDao electrodeSystemDao;
     @Autowired
     @Qualifier("subjectGroupDao")
@@ -73,12 +81,21 @@ public class ExperimentServiceImpl implements ExperimentService {
     @Qualifier("electrodeConfDao")
     private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
 
+    /**
+     * {@inheritDoc}
+     *
+     * @param from start experiment ID
+     * @param max max record amount to return
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentData> getPublicExperiments(int from, int max) {
         return fillAndSortExperiments(experimentDao.getVisibleExperiments(personDao.getLoggedPerson().getPersonId(), from, max));
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentData> getMyExperiments() {
@@ -86,12 +103,18 @@ public class ExperimentServiceImpl implements ExperimentService {
         return fillAndSortExperiments(loggedUser.getExperimentsForOwnerId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public int getPublicExperimentsCount() {
         return experimentDao.getVisibleExperimentsCount(personDao.getLoggedPerson().getPersonId());
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ArtifactData> getArtifacts() {
@@ -109,6 +132,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return artifacts;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<DigitizationData> getDigitizations() {
@@ -127,6 +153,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return digitizations;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<DiseaseData> getDiseases() {
@@ -143,6 +172,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return diseases;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<WeatherData> getWeatherList() {
@@ -160,6 +192,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return weathers;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<HardwareData> getHardwareList() {
@@ -179,6 +214,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return hardwareList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<SoftwareData> getSoftwareList() {
@@ -196,6 +234,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return softwareList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<PharmaceuticalData> getPharmaceuticals() {
@@ -213,6 +254,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return pharmaceuticals;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ElectrodeSystemData> getElectrodeSystems() {
@@ -232,6 +276,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return systemList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ElectrodeTypeData> getElectrodeTypes() {
@@ -250,6 +297,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return electrodeTypes;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ElectrodeFixData> getElectrodeFixList() {
@@ -267,6 +317,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return fixList;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional(readOnly = true)
     public List<ElectrodeLocationData> getElectrodeLocations() {
@@ -304,6 +357,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return electrodeLocations;
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createElectrodeLocation(ElectrodeLocationData electrodeLocation) {
@@ -323,6 +379,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return electrodeLocationDao.create(el);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createDigitization(DigitizationData digitization) {
@@ -335,6 +394,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return digitizationDao.create(record);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createDisease(DiseaseData disease) {
@@ -346,6 +408,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return diseaseDao.create(record);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createArtifact(ArtifactData artifact) {
@@ -356,6 +421,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return artifactDao.create(record);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createElectrodeFix(ElectrodeFixData fix) {
@@ -366,6 +434,9 @@ public class ExperimentServiceImpl implements ExperimentService {
         return electrodeFixDao.create(record);
     }
 
+    /**
+     * {@inheritDoc}
+     */
     @Override
     @Transactional
     public Integer createExperiment(ExperimentData experiment) {
@@ -469,6 +540,11 @@ public class ExperimentServiceImpl implements ExperimentService {
         return (Integer) experimentDao.create(exp);
     }
 
+    /**
+     * Fetches provided collection into ExperimentData data container.
+     * @param exps collection of experiments
+     * @return experiment collection wrapped in ExperimentData container
+     */
     private List<ExperimentData> fillAndSortExperiments(Collection<Experiment> exps) {
         List<ExperimentData> experiments = new ArrayList<ExperimentData>(exps.size());
 
