@@ -90,6 +90,9 @@ public class ResearchGroup implements Serializable, IAutoCompletable {
     @OneToMany(mappedBy="researchGroup")
     private Set<ExperimentPackage> experimentPackages = new HashSet<ExperimentPackage>(0);
 
+	@Column(name = "PAID_ACCOUNT")
+	private boolean paidAccount;
+	
     public ResearchGroup() {
     }
 
@@ -149,6 +152,10 @@ public class ResearchGroup implements Serializable, IAutoCompletable {
 
     public long getScn() {
         return scn;
+    }
+
+    public boolean isPaidAccount() {
+        return this.paidAccount;
     }
 
     public void setDescription(String description) {
@@ -409,6 +416,11 @@ public class ResearchGroup implements Serializable, IAutoCompletable {
     public void setExperimentPackages(Set<ExperimentPackage> experimentPackages) {
 	this.experimentPackages = experimentPackages;
     }
+	
+	public void setPaidAccount(boolean isPaidAccount)
+	{
+		this.paidAccount = isPaidAccount;
+	}
 }
 
 
