@@ -1,21 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans"
        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:p="http://www.springframework.org/schema/p"
-       xmlns:aop="http://www.springframework.org/schema/aop"
-       xmlns:tx="http://www.springframework.org/schema/tx"
        xmlns:util="http://www.springframework.org/schema/util"
        xmlns:context="http://www.springframework.org/schema/context"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-       http://www.springframework.org/schema/op
-       http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
-       http://www.springframework.org/schema/tx
-       http://www.springframework.org/schema/tx/spring-tx-3.0.xsd
+
+
+
+
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd
-       http://www.springframework.org/schema/security
-       http://www.springframework.org/schema/security/spring-security-3.0.3.xsd
+
+
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
 
@@ -138,10 +135,19 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
-        </constructor-arg>
+    <bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="diseaseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="pharmaceuticalDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -149,6 +155,22 @@
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
         </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeTypeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeSystemDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeSystemDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeFixDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeFixDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="electrodeLocationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeLocationDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -198,10 +220,7 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
-    <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-        <constructor-arg>
-            <value>cz.zcu.kiv.eegdatabase.data.pojo.DataFile</value>
-        </constructor-arg>
+    <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDataFileDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
@@ -288,6 +307,8 @@
     <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>
 
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService"/>
+
+    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices.rest"/>
 
     <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
         <property name="host" value="${email.smtp}"/>
