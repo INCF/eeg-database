@@ -24,7 +24,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
  * Implementation custom session object. Prepared authorization and keep information about roles.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class EEGDataBaseSession extends AuthenticatedWebSession {
 
@@ -123,9 +123,15 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         }
 
         if (authentication.isAuthenticated()) {
-            User user = (User) authentication.getPrincipal();
 
-            return signIn(user.getUsername(), SOCIAL_PASSWD);
+            String username = "";
+
+            if (authentication.getPrincipal() instanceof User)
+                username = ((User) authentication.getPrincipal()).getUsername();
+            else if (authentication.getPrincipal() instanceof Person)
+                username = ((Person) authentication.getPrincipal()).getUsername();
+
+            return signIn(username, SOCIAL_PASSWD);
         }
 
         return false;
@@ -139,13 +145,13 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         this.loggedUser = loggedUser;
     }
 
-    private void createShoppingCart(){
-        if(this.shoppingCart == null){
+    private void createShoppingCart() {
+        if (this.shoppingCart == null) {
             this.shoppingCart = new ShoppingCart();
         }
     }
 
-    public ShoppingCart getShoppingCart(){
+    public ShoppingCart getShoppingCart() {
         return shoppingCart;
     }
 }
