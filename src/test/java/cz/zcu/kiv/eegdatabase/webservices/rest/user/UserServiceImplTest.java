@@ -67,6 +67,6 @@ public class UserServiceImplTest {
         }
 
         Assert.assertNotNull(userList);
-        Assert.assertEquals(users.size(), userList.getPeople().size());
+        Assert.assertEquals(users.size(), userList.people.size());
     }
 }

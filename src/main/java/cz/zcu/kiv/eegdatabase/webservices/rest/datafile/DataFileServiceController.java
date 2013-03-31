@@ -29,6 +29,15 @@ public class DataFileServiceController {
     @Autowired
     DataFileService dataFileService;
 
+    /**
+     * Creates new DataFile under specified experiment.
+     * In response is hidden url for file download.
+     *
+     * @param experimentId experiment identifier
+     * @param description  data file description
+     * @param file         data file multipart
+     * @throws RestServiceException error while creating record
+     */
     @RequestMapping(method = RequestMethod.POST)
     @ResponseStatus(HttpStatus.CREATED)
     public void create(HttpServletRequest request, HttpServletResponse response, @RequestParam("experimentId") int experimentId, @RequestParam("description") String description, @RequestParam("file") MultipartFile file) throws RestServiceException {
@@ -42,6 +51,14 @@ public class DataFileServiceController {
         }
     }
 
+    /**
+     * Method for downloading file from server.
+     *
+     * @param id       data file identifier
+     * @param response HTTP response
+     * @throws RestServiceException  error while accessing to file
+     * @throws RestNotFoundException no such file on server
+     */
     @RequestMapping(value = "/{id}", method = RequestMethod.GET)
     public void getFile(@PathVariable("id") int id, HttpServletResponse response) throws RestServiceException, RestNotFoundException {
         try {
@@ -55,18 +72,36 @@ public class DataFileServiceController {
         }
     }
 
+    /**
+     * Builds URL for file download.
+     * @param request HTTP request
+     * @param id data file id
+     * @return URL string
+     */
     private String buildLocation(HttpServletRequest request, Object id) {
         StringBuffer url = request.getRequestURL();
         UriTemplate ut = new UriTemplate(url.append("/{id}").toString());
         return ut.expand(id).toASCIIString();
     }
 
+    /**
+     * Exception handler for RestServiceException.class
+     * @param ex exception body
+     * @param response HTTP response
+     * @throws IOException error while writing into response
+     */
     @ExceptionHandler(RestServiceException.class)
     public void handleException(RestServiceException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, ex.getMessage());
         log.error(ex);
     }
 
+    /**
+     * Exception handler for RestNotFoundException.class
+     * @param ex exception body
+     * @param response HTTP response
+     * @throws IOException error while writing into response
+     */
     @ExceptionHandler(RestNotFoundException.class)
     public void handleException(RestNotFoundException ex, HttpServletResponse response) throws IOException {
         response.sendError(HttpServletResponse.SC_NOT_FOUND, ex.getMessage());
