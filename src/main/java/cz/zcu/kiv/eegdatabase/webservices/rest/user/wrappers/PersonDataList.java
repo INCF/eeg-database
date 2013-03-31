@@ -15,21 +15,13 @@ import java.util.List;
 public class PersonDataList {
 
     @XmlElement(name = "person")
-    private List<PersonData> people;
+    public List<PersonData> people;
 
     public PersonDataList() {
         this.people = Collections.emptyList();
     }
 
     public PersonDataList(List<PersonData> people) {
-        this.people = people;
-    }
-
-    public List<PersonData> getPeople() {
-        return people;
-    }
-
-    public void setPeople(List<PersonData> people) {
         this.people = people;
     }
 }
