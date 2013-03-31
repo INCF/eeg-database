@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.app.session;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ShoppingCart;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Session;
@@ -15,8 +14,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.User;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ShoppingCart;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 /**
@@ -122,7 +123,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         }
 
         if (authentication.isAuthenticated()) {
-            Person user = (Person) authentication.getPrincipal();
+            User user = (User) authentication.getPrincipal();
 
             return signIn(user.getUsername(), SOCIAL_PASSWD);
         }
