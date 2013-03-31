@@ -4,10 +4,11 @@ import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 /**
+ * Returns count of user's and public records.
+ *
  * @author Petr Miko
- *         Date: 24.2.13
  */
-@XmlType(name="recordCount", propOrder = {"myRecords", "publicRecords"})
+@XmlType(name = "recordCount", propOrder = {"myRecords", "publicRecords"})
 @XmlRootElement(name = "recordCount")
 public class RecordCountData {
 

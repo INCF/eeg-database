@@ -415,6 +415,8 @@ public class ExperimentServiceImpl implements ExperimentService {
 
         int confPk = electrodeConfDao.create(conf);
         conf.setElectrodeConfId(confPk);
+        conf.getExperiments().add(exp);
+        conf.setImpedance(confData.getImpedance());
         exp.setElectrodeConf(conf);
 
         Set<Disease> diseases = new HashSet<Disease>();
@@ -423,6 +425,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             for (DiseaseData dis : disList.diseases) {
                 Disease disease = diseaseDao.read(dis.getDiseaseId());
                 diseases.add(disease);
+                disease.getExperiments().add(exp);
             }
         exp.setDiseases(diseases);
 
@@ -433,6 +436,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             for (PharmaceuticalData pharm : pharms.pharmaceuticals) {
                 Pharmaceutical pharmaceutical = pharmaceuticalDao.read(pharm.getId());
                 pharmaceuticals.add(pharmaceutical);
+                pharmaceutical.getExperiments().add(exp);
             }
         exp.setPharmaceuticals(pharmaceuticals);
 
@@ -443,6 +447,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             for (HardwareData hw : hws.hardwares) {
                 Hardware hardware = hardwareDao.read(hw.getHardwareId());
                 hardwares.add(hardware);
+                hardware.getExperiments().add(exp);
             }
         exp.setHardwares(hardwares);
 
@@ -452,6 +457,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             for (SoftwareData sw : sws.softwareList) {
                 Software soft = softwareDao.read(sw.getId());
                 softwares.add(soft);
+                soft.getExperiments().add(exp);
             }
         exp.setSoftwares(softwares);
 
