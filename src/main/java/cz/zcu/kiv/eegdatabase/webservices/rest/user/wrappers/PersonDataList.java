@@ -24,4 +24,12 @@ public class PersonDataList {
     public PersonDataList(List<PersonData> people) {
         this.people = people;
     }
+
+    public List<PersonData> getPeople() {
+        return people;
+    }
+
+    public void setPeople(List<PersonData> people) {
+        this.people = people;
+    }
 }
