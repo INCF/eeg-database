@@ -37,7 +37,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class WelcomePage extends MenuPage {
 
     private static final long serialVersionUID = -1967810037377960414L;

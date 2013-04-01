@@ -7,6 +7,7 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 /**
@@ -38,6 +39,7 @@ public class HomePage extends MenuPage {
         add(new HomeLoginForm("login"));
 
         add(new BookmarkablePageLink<Void>("forgottenPass", ForgottenPasswordPage.class));
+        add(new BookmarkablePageLink<Void>("registerLink", RegistrationPage.class));
     }
 
 }

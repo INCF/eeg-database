@@ -30,7 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
  * @author Jakub Rinkes
  * 
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AccountOverViewPage extends MenuPage {
 
     private static final long serialVersionUID = -1967810037377960414L;

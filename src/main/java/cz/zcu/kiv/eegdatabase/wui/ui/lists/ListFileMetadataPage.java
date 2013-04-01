@@ -38,7 +38,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.FileMetadataFormPage;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListFileMetadataPage extends MenuPage {
 
     private static final long serialVersionUID = 1429684247549031445L;

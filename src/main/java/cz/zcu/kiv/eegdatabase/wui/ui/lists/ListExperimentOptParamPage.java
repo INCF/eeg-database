@@ -38,7 +38,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.ExperimentOptParamFormPage;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListExperimentOptParamPage extends MenuPage {
 
     private static final long serialVersionUID = -8825403613513488101L;

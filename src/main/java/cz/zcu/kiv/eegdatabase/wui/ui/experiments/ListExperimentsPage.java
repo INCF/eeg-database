@@ -24,6 +24,7 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -36,7 +37,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListExperimentsPage extends MenuPage {
 
     private static final long serialVersionUID = -1967810037377960414L;
@@ -114,7 +115,7 @@ public class ListExperimentsPage extends MenuPage {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")));
+                item.add(new ViewLinkPanel(componentId, UnderConstructPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")));
             }
         });
 

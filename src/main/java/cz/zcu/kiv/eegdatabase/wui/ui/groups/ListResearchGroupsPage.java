@@ -27,7 +27,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ListResearchGroupsPage extends MenuPage {
 
     private static final long serialVersionUID = -4292371108898020659L;
