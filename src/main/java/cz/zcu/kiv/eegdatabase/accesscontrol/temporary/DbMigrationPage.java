@@ -4,22 +4,14 @@
  */
 package cz.zcu.kiv.eegdatabase.accesscontrol.temporary;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
-import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -30,6 +22,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  */
 public class DbMigrationPage extends BasePage {
 
+	@SpringBean
+	PersonalLicenseDao personalLicenseDao;
+	@SpringBean
+	PersonDao personDao;
 	@SpringBean
 	LicenseDao licenseDao;
 	@SpringBean
@@ -154,8 +150,66 @@ public class DbMigrationPage extends BasePage {
 		
 	}
 
-	public DbMigrationPage() {
+	
+	private void doWork2() {
+		
+		// set public licences
+		log.error("Public licenses adding started.");
+		List<License> publicLicences = licenseDao.readByParameter("licenseType", 0);
+		License publicLicense = publicLicences.get(0);
+		List<Person> allPersons = personDao.getAllRecords();
+		
+		for(Person person : allPersons) {
+			PersonalLicense personalLicence = new PersonalLicense();
+			personalLicence.setPerson(person);
+			personalLicence.setLicense(publicLicense);
+			personalLicenseDao.create(personalLicence);
+			log.info("Added public license " + publicLicense.getLicenseId() + " to person " + person.getPersonId() + ".");
+		}
+		log.error("Public licenses adding ended.");
+		
+		
+		// set private licences
+		log.error("Private licenses adding started.");
+		List<License> privateLicences = licenseDao.readByParameter("licenseType", 3);
+		for (License licence : privateLicences) {
+			
+			log.info("Licence ID: " + licence.getLicenseId());
+			log.info("Licence Title: " + licence.getTitle());
+			
+			List<ExperimentPackageLicense> experimentPackageLicenses = experimentPackageLicenseDao.readByParameter("license", licence.getLicenseId());
+			
+			for( ExperimentPackageLicense epl : experimentPackageLicenses ) {
+				
+				log.info("--EPL package: " + epl.getExperimentPackage());
+				log.info("--EPL licence: " + epl.getExperimentPackageLicenseId());
+				
+				List<ExperimentPackage> experimentPackages = experimentPackageDao.readByParameter("experimentPackageId", epl.getExperimentPackageLicenseId());
+				
+				for( ExperimentPackage ep : experimentPackages) {
+					
+					log.info("----Package ID: " + ep.getExperimentPackageId());
+					log.info("----Package research group: " + ep.getResearchGroup());
+					
+					Set<ResearchGroupMembership> memberships = ep.getResearchGroup().getResearchGroupMemberships();
+					
+					for( ResearchGroupMembership membership : memberships ) {
+						
+						log.info("------NEW PersonalLicense: person " + membership.getPerson().getPersonId() + ", license " + licence.getLicenseId());
+						
+						//PersonalLicense personalLicence = new PersonalLicense();
+						//personalLicence.setPerson(membership.getPerson());
+						//personalLicence.setLicense(licence);
+						//personalLicenseDao.create(personalLicence);
+					}
+				}
+			}
+			
+		}
+		log.error("Private licenses adding ended.");
+	}
 
-		doWork();
+	public DbMigrationPage() {
+		doWork2();
 	}
 }
