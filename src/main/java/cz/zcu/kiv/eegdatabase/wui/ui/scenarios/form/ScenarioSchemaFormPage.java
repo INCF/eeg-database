@@ -28,10 +28,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPageLeftMenu;
 
@@ -41,7 +38,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenariosPageLeftMenu;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ScenarioSchemaFormPage extends MenuPage {
 
     private static final long serialVersionUID = -7987971485930885797L;

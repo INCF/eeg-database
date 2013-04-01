@@ -38,7 +38,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ArtifactFormPage extends MenuPage {
 
     private static final long serialVersionUID = 7504584906065279245L;

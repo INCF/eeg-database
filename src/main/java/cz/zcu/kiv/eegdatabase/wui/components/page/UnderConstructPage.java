@@ -9,7 +9,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * @author Jakub Rinkes
  * 
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class UnderConstructPage extends MenuPage {
 
     private static final long serialVersionUID = 1L;

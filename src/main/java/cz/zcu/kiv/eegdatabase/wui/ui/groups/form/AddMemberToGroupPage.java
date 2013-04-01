@@ -44,7 +44,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AddMemberToGroupPage extends MenuPage {
 
     private static final long serialVersionUID = 7280002331574740721L;
