@@ -24,8 +24,9 @@ import java.util.Collection;
 import java.util.List;
 
 /**
+ * Tests for Research group service.
+ *
  * @author Petr Miko
- *         Date: 1.4.13
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:test-context.xml"})
