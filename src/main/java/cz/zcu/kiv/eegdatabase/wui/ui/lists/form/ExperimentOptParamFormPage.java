@@ -5,6 +5,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -38,6 +39,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
  * @author Jakub Rinkes
  *
  */
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentOptParamFormPage extends MenuPage {
 
     private static final long serialVersionUID = -7254696725369039226L;
