@@ -44,7 +44,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDetailPage extends MenuPage {
 
     private static final long serialVersionUID = 957980612639804114L;

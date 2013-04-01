@@ -29,7 +29,7 @@
         </p>
 
         <div class="homePageActionBoxes">
-          <a href="<c:url value='registration.html'/>" class="homepageRegistrationLink"> <wicket:message
+          <a wicket:id="registerLink" class="homepageRegistrationLink"> <wicket:message
               key="system.register" /></a>
         </div>
 
@@ -98,7 +98,7 @@
         <div>
           <form id="li_signin" action="signin/linkedin.html" method="POST">
             <input type="hidden" name="scope"
-              value="r_basicprofile r_emailaddress" />
+              value="publish_stream,offline_access,email,user_birthday" />
             <button type="submit" style="border: 0; background-color: transparent">
               <img src="files/images/linkedin_login.png" />
             </button>

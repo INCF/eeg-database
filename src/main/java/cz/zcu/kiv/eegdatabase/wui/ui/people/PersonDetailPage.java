@@ -35,7 +35,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PersonDetailPage extends MenuPage {
 
     private static final long serialVersionUID = 1L;
