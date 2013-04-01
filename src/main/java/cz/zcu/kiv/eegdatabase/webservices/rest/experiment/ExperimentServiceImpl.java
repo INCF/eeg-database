@@ -612,7 +612,7 @@ public class ExperimentServiceImpl implements ExperimentService {
             ElectrodeConfData electrodeConfData = new ElectrodeConfData();
             //set primitive types
             electrodeConfData.setId(elConf.getElectrodeConfId());
-            electrodeConfData.setId(elConf.getImpedance());
+            electrodeConfData.setImpedance(elConf.getImpedance());
             //set electrode system
             ElectrodeSystem elSystem = elConf.getElectrodeSystem();
             ElectrodeSystemData electrodeSystemData = new ElectrodeSystemData();
