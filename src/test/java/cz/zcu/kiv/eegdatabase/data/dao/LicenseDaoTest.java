@@ -36,7 +36,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest{
        
        license = new License();
        license.setDescription("junit@test.description");
-       license.setLicenseId(-111);
+     //license.setLicenseId(-111);
        license.setPrice(-1000);
        license.setTitle("junit@test.title");
        license.setExperimentPackageLicenses((Set<ExperimentPackageLicense>) experimentPackageLicense);
@@ -48,26 +48,33 @@ public class LicenseDaoTest extends AbstractDataAccessTest{
     @Test
     public void testCreateExperimentPackageLicense() {
         experimentPackageLicense.setLicense(license);
-        experimentPackageLicenseDao.create(experimentPackageLicense);
-        assertNotNull(experimentPackageLicenseDao.read(experimentPackageLicense.getExperimentPackageLicenseId()));
+        int id= (Integer) experimentPackageLicenseDao.create(experimentPackageLicense);
+        assertNotNull(experimentPackageLicenseDao.read(id));
     }
     
     @Test
     public void testCreateLicense(){
-        licenseDao.create(license);
-        assertNotNull(licenseDao.read(license.getLicenseId()));
+        int id= (Integer)licenseDao.create(license);
+        assertNotNull(licenseDao.read(id));
     }
     
     @Test
     public void testChangeLicenseType(){
+        int id= (Integer) licenseDao.create(license);
+        assertNotNull(licenseDao.read(id));
+        
+        license = (License) licenseDao.read(id);
         license.setLicenseType(LicenseType.ACADEMIC);
         licenseDao.update(license);
-        assertNotNull(licenseDao.read(license.getLicenseId()));
+        
+        license = (License) licenseDao.read(id);
+        
+        assertEquals(LicenseType.ACADEMIC, license.getLicenseType());
     }
     
     @Test
     public void testDeleteLicense(){
         licenseDao.delete(license);
-        assertNull(license);
+        assertNull(licenseDao.read(license.getLicenseId()));
     }
 }

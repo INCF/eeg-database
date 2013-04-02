@@ -14,7 +14,6 @@ import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- *
  * @author Yaseen ALi
  */
 public class ExperimentPackageDaoTest extends AbstractDataAccessTest{
@@ -42,8 +41,8 @@ public class ExperimentPackageDaoTest extends AbstractDataAccessTest{
 
     @Test
     public void testCreateExperimentPackage() {
-        experimentPackageDao.create(experimentPackage);
-        assertNotNull(experimentPackageDao.read(experimentPackage.getExperimentPackageId()));
+        int id = (Integer) experimentPackageDao.create(experimentPackage);
+        assertNotNull(experimentPackageDao.read(id));
     }
     
     @Test
@@ -51,14 +50,14 @@ public class ExperimentPackageDaoTest extends AbstractDataAccessTest{
         int startCount= experimentPackageLicenseDao.getAllRecords().size();
         experimentPackageLicense.setExperimentPackage(experimentPackage);
         Integer id= (Integer) experimentPackageLicenseDao.create(experimentPackageLicense);
-        assertNotNull(id);
-        assertEquals(startCount + 1, experimentPackageLicenseDao.getAllRecords().size());
+        assertNotNull(experimentPackageLicenseDao.read(id));
+        assertEquals(startCount + 1, experimentPackageLicenseDao.getCountRecords());
         
     }
     
     @Test
     public void testDeleteExperimentPackage(){
         experimentPackageDao.delete(experimentPackage);
-        assertNull(experimentPackage);
+        assertNull(experimentPackageLicenseDao.read(experimentPackageLicense.getExperimentPackageLicenseId()));
     }
 }
