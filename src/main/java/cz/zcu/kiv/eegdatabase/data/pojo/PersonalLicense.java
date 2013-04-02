@@ -21,7 +21,7 @@ import javax.persistence.Temporal;
  * @author bydga
  */
 @Entity
-@Table(name="LICENSE")
+@Table(name="PERSONAL_LICENSE")
 public class PersonalLicense implements Serializable{
 	
     @Id
