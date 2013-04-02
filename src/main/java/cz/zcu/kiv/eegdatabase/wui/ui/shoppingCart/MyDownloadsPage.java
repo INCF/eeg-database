@@ -26,7 +26,7 @@ import java.util.List;
  * Time: 18:13
  * To change this template use File | Settings | File Templates.
  */
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class MyDownloadsPage  extends MenuPage {
     private static final int ITEMS_PER_PAGE = 20;
     private List<Experiment> order;

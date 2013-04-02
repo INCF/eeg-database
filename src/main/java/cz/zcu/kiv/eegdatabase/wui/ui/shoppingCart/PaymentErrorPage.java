@@ -16,7 +16,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
  * Time: 22:38
  * To change this template use File | Settings | File Templates.
  */
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PaymentErrorPage extends MenuPage{
 
     public PaymentErrorPage(){

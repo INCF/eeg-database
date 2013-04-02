@@ -27,7 +27,7 @@ import java.util.List;
  * Time: 22:38
  * To change this template use File | Settings | File Templates.
  */
-@AuthorizeInstantiation("ROLE_USER")
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PayPalConfirmPaymentPage extends MenuPage{
     private static final int ITEMS_PER_PAGE = 20;
 
