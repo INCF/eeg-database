@@ -6,12 +6,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import java.io.Serializable;
-import java.util.Set;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +19,10 @@ public class ExperimentPackageLicenseDaoTest extends AbstractDataAccessTest {
     
     @Autowired
     protected ExperimentPackageLicenseDao experimentPackageLicenseDao;
+    @Autowired
+    private LicenseDao licenseDao;
+    @Autowired
+    private ExperimentPackageDao experimentPackageDao;
     
     ExperimentPackageLicense experimentPackageLicense;
     License license;
@@ -31,22 +30,22 @@ public class ExperimentPackageLicenseDaoTest extends AbstractDataAccessTest {
         
     @Before
     public void setUp() {
-        
+        int id;
        license = new License();
        license.setDescription("junit@test.description");
        license.setLicenseId(-111);
        license.setPrice(-1000);
        license.setTitle("junit@test.title");
-       license.setExperimentPackageLicenses((Set<ExperimentPackageLicense>) experimentPackageLicense);
        license.setLicenseType(LicenseType.PRIVATE);
-       license.setPersonalLicenses(null); 
+       id = licenseDao.create(license);
+       license = licenseDao.read(id);
        
        experimentPackage = new ExperimentPackage();
        experimentPackage.setExperimentPackageId(-1);
        experimentPackage.setName("junit@test.name");
-       experimentPackage.setExperimentPackageConnections(null);
-       experimentPackage.setExperimentPackageLicenses((Set<ExperimentPackageLicense>) experimentPackageLicense);
-       experimentPackage.setResearchGroup(null); 
+       experimentPackage.setResearchGroup(null);
+       id = experimentPackageDao.create(experimentPackage);
+       experimentPackage = experimentPackageDao.read(id);
        
        experimentPackageLicense = new ExperimentPackageLicense();
        experimentPackageLicense.setExperimentPackage(experimentPackage);
@@ -62,6 +61,9 @@ public class ExperimentPackageLicenseDaoTest extends AbstractDataAccessTest {
     
     @Test
     public void testDeleteExperimentPackageLicense(){
+	int id = (Integer) experimentPackageLicenseDao.create(experimentPackageLicense);
+	experimentPackageLicense = experimentPackageLicenseDao.read(id);
+
         experimentPackageLicenseDao.delete(experimentPackageLicense);
         assertNull(experimentPackageLicenseDao.read(experimentPackageLicense.getExperimentPackageLicenseId()));
     }

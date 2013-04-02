@@ -81,6 +81,25 @@
 
     <!--============================== Bean mapping ==========================================-->
 
+    <bean name="licenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageConnectionDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageConnectionDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personalLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonalLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
     <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

@@ -4,11 +4,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
-import java.util.Set;
-import org.junit.After;
-import org.junit.AfterClass;
 import org.junit.Before;
-import org.junit.BeforeClass;
 import org.junit.Test;
 import static org.junit.Assert.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,18 +20,12 @@ public class ExperimentPackageDaoTest extends AbstractDataAccessTest{
     protected ExperimentPackageLicenseDao experimentPackageLicenseDao;
 
     ExperimentPackage experimentPackage;
-    ExperimentPackageLicense experimentPackageLicense;  
     
     @Before
-    public void setUp() {
-        experimentPackageLicense = new ExperimentPackageLicense();
-        experimentPackageLicense.setExperimentPackageLicenseId(-1);
-       
+    public void setUp() {       
         experimentPackage = new ExperimentPackage();
         experimentPackage.setExperimentPackageId(-1);
         experimentPackage.setName("junit@test.name");
-        experimentPackage.setExperimentPackageConnections(null);
-        experimentPackage.setExperimentPackageLicenses((Set<ExperimentPackageLicense>) experimentPackageLicense);
         experimentPackage.setResearchGroup(null);
     }
 
@@ -44,20 +34,11 @@ public class ExperimentPackageDaoTest extends AbstractDataAccessTest{
         int id = (Integer) experimentPackageDao.create(experimentPackage);
         assertNotNull(experimentPackageDao.read(id));
     }
-    
-    @Test
-    public void testCreateExperimentPackageLicense(){
-        int startCount= experimentPackageLicenseDao.getAllRecords().size();
-        experimentPackageLicense.setExperimentPackage(experimentPackage);
-        Integer id= (Integer) experimentPackageLicenseDao.create(experimentPackageLicense);
-        assertNotNull(experimentPackageLicenseDao.read(id));
-        assertEquals(startCount + 1, experimentPackageLicenseDao.getCountRecords());
-        
-    }
-    
+       
     @Test
     public void testDeleteExperimentPackage(){
+        int id = (Integer) experimentPackageDao.create(experimentPackage);
+        experimentPackage = experimentPackageDao.read(id);
         experimentPackageDao.delete(experimentPackage);
-        assertNull(experimentPackageLicenseDao.read(experimentPackageLicense.getExperimentPackageLicenseId()));
     }
 }
