@@ -31,12 +31,7 @@ public class ExperimentsOptParamFacadeImpl implements ExperimentsOptParamFacade 
     }
 
     @Override
-    public List<ExperimentOptParamDef> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<ExperimentOptParamDef> readByParameter(String parameterName, String parameterValue) {
+    public List<ExperimentOptParamDef> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

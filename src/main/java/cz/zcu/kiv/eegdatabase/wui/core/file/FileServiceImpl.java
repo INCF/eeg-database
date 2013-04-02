@@ -37,13 +37,7 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<DataFile> readByParameter(String parameterName, int parameterValue) {
-        return fileDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<DataFile> readByParameter(String parameterName, String parameterValue) {
+    public List<DataFile> readByParameter(String parameterName, Object parameterValue) {
         return fileDAO.readByParameter(parameterName, parameterValue);
     }
 

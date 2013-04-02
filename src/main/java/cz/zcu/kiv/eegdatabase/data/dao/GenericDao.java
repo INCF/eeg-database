@@ -42,15 +42,7 @@ public interface GenericDao <T, PK extends Serializable>{
      * @param parameterValue - value of the parameter
      * @return object that was selected in database
      */
-    List<T> readByParameter(String parameterName, int parameterValue);
-
-    /**
-     * Method read record (row) in database based on column and it's value.
-     * @param parameterName - hibernate name of the parameter (column)
-     * @param parameterValue - value of the parameter
-     * @return object that was selected in database
-     */
-    List <T> readByParameter(String parameterName, String parameterValue);
+    List <T> readByParameter(String parameterName, Object parameterValue);
 
     /**
      * Method update data in database.

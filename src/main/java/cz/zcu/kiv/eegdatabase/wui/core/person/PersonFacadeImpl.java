@@ -71,12 +71,7 @@ public class PersonFacadeImpl implements PersonFacade {
     }
 
     @Override
-    public List<Person> readByParameter(String parameterName, int parameterValue) {
-        return personService.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Person> readByParameter(String parameterName, String parameterValue) {
+    public List<Person> readByParameter(String parameterName, Object parameterValue) {
         return personService.readByParameter(parameterName, parameterValue);
     }
 

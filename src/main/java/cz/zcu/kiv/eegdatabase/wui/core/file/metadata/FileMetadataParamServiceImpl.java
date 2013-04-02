@@ -41,13 +41,7 @@ public class FileMetadataParamServiceImpl implements FileMetadataParamService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<FileMetadataParamDef> readByParameter(String parameterName, int parameterValue) {
-        return dao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<FileMetadataParamDef> readByParameter(String parameterName, String parameterValue) {
+    public List<FileMetadataParamDef> readByParameter(String parameterName, Object parameterValue) {
         return dao.readByParameter(parameterName, parameterValue);
     }
 

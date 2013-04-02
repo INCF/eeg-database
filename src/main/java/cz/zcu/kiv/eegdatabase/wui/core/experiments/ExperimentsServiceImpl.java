@@ -115,13 +115,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Experiment> readByParameter(String parameterName, int parameterValue) {
-        return experimentDao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Experiment> readByParameter(String parameterName, String parameterValue) {
+    public List<Experiment> readByParameter(String parameterName, Object parameterValue) {
         return experimentDao.readByParameter(parameterName, parameterValue);
     }
 

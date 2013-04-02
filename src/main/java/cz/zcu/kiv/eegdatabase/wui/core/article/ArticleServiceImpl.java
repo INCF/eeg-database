@@ -43,13 +43,7 @@ public class ArticleServiceImpl implements ArticleService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Article> readByParameter(String parameterName, int parameterValue) {
-        return dao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Article> readByParameter(String parameterName, String parameterValue) {
+    public List<Article> readByParameter(String parameterName, Object parameterValue) {
         return dao.readByParameter(parameterName, parameterValue);
     }
 

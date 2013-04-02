@@ -45,13 +45,7 @@ public class ScenariosServiceImpl implements ScenariosService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Scenario> readByParameter(String parameterName, int parameterValue) {
-        return scenarioDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Scenario> readByParameter(String parameterName, String parameterValue) {
+    public List<Scenario> readByParameter(String parameterName, Object parameterValue) {
         return scenarioDAO.readByParameter(parameterName, parameterValue);
     }
 

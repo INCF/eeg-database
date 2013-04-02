@@ -97,12 +97,7 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     }
 
     @Override
-    public List<Experiment> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Experiment> readByParameter(String parameterName, String parameterValue) {
+    public List<Experiment> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

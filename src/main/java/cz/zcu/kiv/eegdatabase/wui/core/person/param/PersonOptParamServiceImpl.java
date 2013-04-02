@@ -41,13 +41,7 @@ public class PersonOptParamServiceImpl implements PersonOptParamService {
 
     @Override
     @Transactional(readOnly=true)
-    public List<PersonOptParamDef> readByParameter(String parameterName, int parameterValue) {
-        return defDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly=true)
-    public List<PersonOptParamDef> readByParameter(String parameterName, String parameterValue) {
+    public List<PersonOptParamDef> readByParameter(String parameterName, Object parameterValue) {
         return defDAO.readByParameter(parameterName, parameterValue);
     }
 

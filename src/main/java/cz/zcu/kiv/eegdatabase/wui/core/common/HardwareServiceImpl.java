@@ -36,13 +36,7 @@ public class HardwareServiceImpl implements HardwareService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Hardware> readByParameter(String parameterName, int parameterValue) {
-        return hardwareDao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Hardware> readByParameter(String parameterName, String parameterValue) {
+    public List<Hardware> readByParameter(String parameterName, Object parameterValue) {
         return hardwareDao.readByParameter(parameterName, parameterValue);
     }
 

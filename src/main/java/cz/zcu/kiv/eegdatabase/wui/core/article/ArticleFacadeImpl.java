@@ -31,12 +31,7 @@ public class ArticleFacadeImpl implements ArticleFacade {
     }
 
     @Override
-    public List<Article> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Article> readByParameter(String parameterName, String parameterValue) {
+    public List<Article> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

@@ -29,15 +29,10 @@ public class FileMetadataParamFacadeImpl implements FileMetadataParamFacade {
     }
 
     @Override
-    public List<FileMetadataParamDef> readByParameter(String parameterName, int parameterValue) {
+    public List<FileMetadataParamDef> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
-
-    @Override
-    public List<FileMetadataParamDef> readByParameter(String parameterName, String parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
+    
     @Override
     public void update(FileMetadataParamDef transientObject) {
         service.update(transientObject);

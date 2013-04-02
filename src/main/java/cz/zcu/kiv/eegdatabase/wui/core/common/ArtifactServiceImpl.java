@@ -33,13 +33,7 @@ public class ArtifactServiceImpl implements ArtifactService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Artifact> readByParameter(String parameterName, int parameterValue) {
-        return artifactDao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Artifact> readByParameter(String parameterName, String parameterValue) {
+    public List<Artifact> readByParameter(String parameterName, Object parameterValue) {
         return artifactDao.readByParameter(parameterName, parameterValue);
     }
 

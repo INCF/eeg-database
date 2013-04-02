@@ -31,12 +31,7 @@ public class WeatherFacadeImpl implements WeatherFacade {
     }
 
     @Override
-    public List<Weather> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Weather> readByParameter(String parameterName, String parameterValue) {
+    public List<Weather> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

@@ -31,12 +31,7 @@ public class FileFacadeImpl implements FileFacade {
     }
 
     @Override
-    public List<DataFile> readByParameter(String parameterName, int parameterValue) {
-        return fileService.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<DataFile> readByParameter(String parameterName, String parameterValue) {
+    public List<DataFile> readByParameter(String parameterName, Object parameterValue) {
         return fileService.readByParameter(parameterName, parameterValue);
     }
 

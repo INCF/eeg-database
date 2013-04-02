@@ -242,13 +242,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Person> readByParameter(String parameterName, int parameterValue) {
-        return personDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Person> readByParameter(String parameterName, String parameterValue) {
+    public List<Person> readByParameter(String parameterName, Object parameterValue) {
         return personDAO.readByParameter(parameterName, parameterValue);
     }
 

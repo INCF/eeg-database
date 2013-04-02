@@ -9,9 +9,7 @@ public interface GenericFacade<T, PK extends Serializable> {
 
     T read(PK id);
 
-    List<T> readByParameter(String parameterName, int parameterValue);
-
-    List<T> readByParameter(String parameterName, String parameterValue);
+    List<T> readByParameter(String parameterName, Object parameterValue);
 
     void update(T transientObject);
 

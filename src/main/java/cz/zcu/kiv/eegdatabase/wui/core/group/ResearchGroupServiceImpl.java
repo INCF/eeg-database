@@ -201,13 +201,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
-        return researchGroupDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+    public List<ResearchGroup> readByParameter(String parameterName, Object parameterValue) {
         return researchGroupDAO.readByParameter(parameterName, parameterValue);
     }
 

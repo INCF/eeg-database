@@ -31,12 +31,7 @@ public class HardwareFacadeImpl implements HardwareFacade {
     }
 
     @Override
-    public List<Hardware> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Hardware> readByParameter(String parameterName, String parameterValue) {
+    public List<Hardware> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

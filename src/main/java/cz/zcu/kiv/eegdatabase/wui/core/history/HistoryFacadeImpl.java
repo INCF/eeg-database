@@ -28,12 +28,7 @@ public class HistoryFacadeImpl implements HistoryFacade {
     }
 
     @Override
-    public List<History> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<History> readByParameter(String parameterName, String parameterValue) {
+    public List<History> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

@@ -29,12 +29,7 @@ public class PersonOptParamFacadeImpl implements PersonOptParamFacade {
     }
 
     @Override
-    public List<PersonOptParamDef> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<PersonOptParamDef> readByParameter(String parameterName, String parameterValue) {
+    public List<PersonOptParamDef> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

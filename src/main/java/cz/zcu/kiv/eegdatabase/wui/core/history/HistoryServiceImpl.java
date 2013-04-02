@@ -33,13 +33,7 @@ public class HistoryServiceImpl implements HistoryService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<History> readByParameter(String parameterName, int parameterValue) {
-        return dao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<History> readByParameter(String parameterName, String parameterValue) {
+    public List<History> readByParameter(String parameterName, Object parameterValue) {
         return dao.readByParameter(parameterName, parameterValue);
     }
 
