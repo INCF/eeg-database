@@ -4,36 +4,44 @@
  */
 package cz.zcu.kiv.eegdatabase.accesscontrol.temporary;
 
-import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageConnectionService;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
+ * Data migration logic.
  *
- * @author veveri
+ * Thread.sleep is used to avoid running out of connections.
+ * Not pretty, yet suffitient for the time being.
+ *
+ * @author J. Danek
  */
 public class DbMigrationPage extends BasePage {
 
 	@SpringBean
-	PersonalLicenseDao personalLicenseDao;
+	PersonalLicenseService personalLicenseService;
 	@SpringBean
-	PersonDao personDao;
+	PersonFacade personFacade;
 	@SpringBean
-	LicenseDao licenseDao;
+	LicenseFacade licenseFacade;
 	@SpringBean
-	ExperimentPackageDao experimentPackageDao;
+	ExperimentPackageFacade experimentPackageFacade;
 	@SpringBean
-	ExperimentPackageConnectionDao experimentPackageConnectionDao;
+	ExperimentPackageConnectionService experimentPackageConnectionService;
 	@SpringBean
-	ExperimentPackageLicenseDao experimentPackageLicenseDao;
+	ExperimentPackageLicenseService experimentPackageLicenseService;
 	private Log log = LogFactory.getLog(getClass());
 
 	@SpringBean
@@ -52,8 +60,8 @@ public class DbMigrationPage extends BasePage {
 		publicLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
 		publicLicense.setPrice(0);
 		publicLicense.setTitle("Public license");
-		int id = licenseDao.create(publicLicense);
-		publicLicense = licenseDao.read(id);
+		int id = licenseFacade.create(publicLicense);
+		publicLicense = licenseFacade.read(id);
 
 
 
@@ -65,6 +73,12 @@ public class DbMigrationPage extends BasePage {
 		for (ResearchGroup group : groups) {
 			publicExperiments = new ArrayList<Experiment>();
 			privateExperiments = new ArrayList<Experiment>();
+
+			try {
+			    Thread.sleep(200);
+			} catch (Exception exc) {
+
+			}
 
 			//divide all group's experiments on public/private
 			List<Experiment> experiments = experimentsFacade.readByParameter("researchGroup.researchGroupId", group.getResearchGroupId());
@@ -84,8 +98,8 @@ public class DbMigrationPage extends BasePage {
 			publicExperimentPackage.setName("Default public pack");
 			publicExperimentPackage.setResearchGroup(group);
 			//get id and reload the newly created instance to ensure hibernate cache sanity
-			id = experimentPackageDao.create(publicExperimentPackage);
-			publicExperimentPackage = experimentPackageDao.read(id);
+			id = experimentPackageFacade.create(publicExperimentPackage);
+			publicExperimentPackage = experimentPackageFacade.read(id);
 
 			for (Experiment ex : publicExperiments) {
 			    if(ex.getExperimentId() == 0) { //avoid invalid db state
@@ -98,25 +112,31 @@ public class DbMigrationPage extends BasePage {
 			    ExperimentPackageConnection epc = new ExperimentPackageConnection();
 			    epc.setExperiment(ex);
 			    epc.setExperimentPackage(publicExperimentPackage);
-			    experimentPackageConnectionDao.create(epc);
+			    experimentPackageConnectionService.create(epc);
+			    try {
+				Thread.sleep(100);
+			    } catch (Exception exc) {
+				
+			    }
 			}
 
 			//bind the package to the public license
 			ExperimentPackageLicense experimentPackageLicense = new ExperimentPackageLicense();
 			experimentPackageLicense.setExperimentPackage(publicExperimentPackage);
 			experimentPackageLicense.setLicense(publicLicense);
-			experimentPackageLicenseDao.create(experimentPackageLicense);
+			experimentPackageLicenseService.create(experimentPackageLicense);
 			log.info("Public experiments migration FINISHED");
 
 			if (privateExperiments.size() > 0) {
 				log.info("Group " + group.getTitle() + "has " + privateExperiments.size() + " private experiments");
+
 				//create experiment package for private experiments
 				ExperimentPackage privateExperimentPackage = new ExperimentPackage();
 				privateExperimentPackage.setName("Default private pack");
 				privateExperimentPackage.setResearchGroup(group);
 				//get id and reload the newly created instance to ensure hibernate cache sanity
-				id = experimentPackageDao.create(privateExperimentPackage);
-				privateExperimentPackage = experimentPackageDao.read(id);
+				id = experimentPackageFacade.create(privateExperimentPackage);
+				privateExperimentPackage = experimentPackageFacade.read(id);
 
 				for (Experiment ex : privateExperiments) {
 				    if(ex.getExperimentId() == 0) { //avoid invalid db state
@@ -126,7 +146,13 @@ public class DbMigrationPage extends BasePage {
 				    ExperimentPackageConnection epc = new ExperimentPackageConnection();
 				    epc.setExperiment(ex);
 				    epc.setExperimentPackage(privateExperimentPackage);
-				    experimentPackageConnectionDao.create(epc);
+				    experimentPackageConnectionService.create(epc);
+
+				    try {
+					Thread.sleep(100);
+				    } catch (Exception exc) {
+
+				    }
 				}
 
 				//create private license for the package
@@ -135,14 +161,14 @@ public class DbMigrationPage extends BasePage {
 				privateLicense.setTitle("Private License");
 				privateLicense.setLicenseType(LicenseType.PRIVATE);
 				privateLicense.setPrice(0);
-				id = this.licenseDao.create(privateLicense);
-				privateLicense = licenseDao.read(id);
+				id = this.licenseFacade.create(privateLicense);
+				privateLicense = licenseFacade.read(id);
 
 				//bind the package to the license
 				experimentPackageLicense = new ExperimentPackageLicense();
 				experimentPackageLicense.setExperimentPackage(privateExperimentPackage);
 				experimentPackageLicense.setLicense(privateLicense);
-				experimentPackageLicenseDao.create(experimentPackageLicense);
+				experimentPackageLicenseService.create(experimentPackageLicense);
 			}
 
 		}
@@ -155,15 +181,15 @@ public class DbMigrationPage extends BasePage {
 		
 		// set public licences
 		log.error("Public licenses adding started.");
-		List<License> publicLicences = licenseDao.readByParameter("licenseType", 0);
+		List<License> publicLicences = licenseFacade.readByParameter("licenseType", LicenseType.OPEN_DOMAIN);
 		License publicLicense = publicLicences.get(0);
-		List<Person> allPersons = personDao.getAllRecords();
+		List<Person> allPersons = personFacade.getAllRecords();
 		
 		for(Person person : allPersons) {
 			PersonalLicense personalLicence = new PersonalLicense();
 			personalLicence.setPerson(person);
 			personalLicence.setLicense(publicLicense);
-			personalLicenseDao.create(personalLicence);
+			personalLicenseService.create(personalLicence);
 			log.info("Added public license " + publicLicense.getLicenseId() + " to person " + person.getPersonId() + ".");
 		}
 		log.error("Public licenses adding ended.");
@@ -171,36 +197,36 @@ public class DbMigrationPage extends BasePage {
 		
 		// set private licences
 		log.error("Private licenses adding started.");
-		List<License> privateLicences = licenseDao.readByParameter("licenseType", 3);
+		List<License> privateLicences = licenseFacade.readByParameter("licenseType", LicenseType.PRIVATE);
+		int groupId;
 		for (License licence : privateLicences) {
 			
 			log.info("Licence ID: " + licence.getLicenseId());
 			log.info("Licence Title: " + licence.getTitle());
 			
-			List<ExperimentPackageLicense> experimentPackageLicenses = experimentPackageLicenseDao.readByParameter("license", licence.getLicenseId());
+			List<ExperimentPackageLicense> experimentPackageLicenses = experimentPackageLicenseService.readByParameter("license.licenseId", licence.getLicenseId());
 			
 			for( ExperimentPackageLicense epl : experimentPackageLicenses ) {
 				
-				log.info("--EPL package: " + epl.getExperimentPackage());
+				log.info("--EPL package: " + epl.getExperimentPackage().getExperimentPackageId());
 				log.info("--EPL licence: " + epl.getExperimentPackageLicenseId());
 				
-				List<ExperimentPackage> experimentPackages = experimentPackageDao.readByParameter("experimentPackageId", epl.getExperimentPackageLicenseId());
-				
-				for( ExperimentPackage ep : experimentPackages) {
-					
-					log.info("----Package ID: " + ep.getExperimentPackageId());
-					log.info("----Package research group: " + ep.getResearchGroup());
-					
-					Set<ResearchGroupMembership> memberships = ep.getResearchGroup().getResearchGroupMemberships();
-					
-					for( ResearchGroupMembership membership : memberships ) {
-						
-						log.info("------NEW PersonalLicense: person " + membership.getPerson().getPersonId() + ", license " + licence.getLicenseId());
-						
-						//PersonalLicense personalLicence = new PersonalLicense();
-						//personalLicence.setPerson(membership.getPerson());
-						//personalLicence.setLicense(licence);
-						//personalLicenseDao.create(personalLicence);
+				groupId = epl.getExperimentPackage().getResearchGroup().getResearchGroupId();
+				List<ResearchGroupMembership> memberships = researchGroupFacade.readMemberhipByParameter("researchGroup.researchGroupId", groupId);
+
+
+				for( ResearchGroupMembership membership : memberships ) {
+
+					log.info("------NEW PersonalLicense: person " + membership.getPerson().getPersonId() + ", license " + licence.getLicenseId());
+
+					PersonalLicense personalLicence = new PersonalLicense();
+					personalLicence.setPerson(membership.getPerson());
+					personalLicence.setLicense(licence);
+					personalLicenseService.create(personalLicence);
+					try {
+					    Thread.sleep(100);
+					} catch (Exception exc) {
+
 					}
 				}
 			}
@@ -210,6 +236,7 @@ public class DbMigrationPage extends BasePage {
 	}
 
 	public DbMigrationPage() {
-		doWork2();
+	    doWork();
+	    doWork2();
 	}
 }
