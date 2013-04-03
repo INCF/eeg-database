@@ -1,18 +1,20 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentAddDTO;
-import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
-import org.apache.wicket.extensions.markup.html.form.DateTextField;
-import org.apache.wicket.extensions.yui.calendar.DateField;
-import org.apache.wicket.extensions.yui.calendar.DateTimeField;
-import org.apache.wicket.markup.html.form.Button;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+import org.apache.wicket.Page;
+import org.apache.wicket.ajax.AjaxEventBehavior;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 
-import java.util.Date;
+import java.util.*;
 
 
 /**
@@ -27,9 +29,157 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     public AddExperimentScenarioForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentScenarioDTO>(new AddExperimentScenarioDTO()));
 
-        TextField<String> scenario = new TextField<String>("scenario");
+        final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
+                new Model<String>(""))
+        {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+
+                List<String> choices = new ArrayList<String>(10);
+
+                Locale[] locales = Locale.getAvailableLocales();
+
+                for (final Locale locale : locales)
+                {
+                    final String country = locale.getDisplayCountry();
+
+                    if (country.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(country);
+                        if (choices.size() == 10)
+                        {
+                            break;
+                        }
+                    }
+                }
+
+                return choices.iterator();
+            }
+        };
         scenario.setRequired(true);
-        add(scenario);
+        this.add(scenario);
+
+        final ModalWindow addGroup;
+        add(addGroup = new ModalWindow("addGroupModal"));
+        addGroup.setCookieName("add-group");
+
+        addGroup.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                return new AddGroupPage(getPage().getPageReference(), addGroup);
+            }
+        });
+
+        AjaxButton addGroupAjax = new AjaxButton("addGroup", this)
+        {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form){
+                addGroup.show(target);
+            }
+        };
+        addGroupAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                addGroup.show(target);
+            }
+        });
+        add(addGroupAjax);
+
+        final ModalWindow newProject;
+        add(newProject = new ModalWindow("newProjectModal"));
+        newProject.setCookieName("new-project");
+
+        newProject.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                return new AddProjectPage(getPage().getPageReference(), newProject);
+            }
+        });
+
+        AjaxButton newProjectAjax = new AjaxButton("newProject", this)
+        {};
+        newProjectAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                newProject.show(target);
+            }
+        });
+        add(newProjectAjax);
+
+        final ModalWindow newScenario;
+        add(newScenario = new ModalWindow("newScenarioModal"));
+        newScenario.setCookieName("new-scenario");
+
+        newScenario.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                return new AddScenarioPage(getPage().getPageReference(), newScenario);
+            }
+        });
+
+        AjaxButton newScenarioAjax = new AjaxButton("newScenario", this)
+        {};
+        newScenarioAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                newScenario.show(target);
+            }
+        });
+        add(newScenarioAjax);
+
+        final ModalWindow addTested;
+        add(addTested = new ModalWindow("addTestedModal"));
+        addTested.setCookieName("add-tested");
+
+        addTested.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                return new AddTestedSubjectPage(getPage().getPageReference(), addTested);
+            }
+        });
+
+        AjaxButton addTestedAjax = new AjaxButton("addTested", this)
+        {};
+        addTestedAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                addTested.show(target);
+            }
+        });
+        add(addTestedAjax);
+
+        final ModalWindow newStimulus;
+        add(newStimulus = new ModalWindow("newStimulusModal"));
+        newStimulus.setCookieName("new-stimulus");
+
+        newStimulus.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                return new AddStimulusPage(getPage().getPageReference(), newStimulus);
+            }
+        });
+
+        AjaxButton newStimulusAjax = new AjaxButton("newStimulus", this)
+        {};
+        newStimulusAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                newStimulus.show(target);
+            }
+        });
+        add(newStimulusAjax);
+
 
         TextField<String> group = new TextField<String>("group");
         group.setRequired(true);

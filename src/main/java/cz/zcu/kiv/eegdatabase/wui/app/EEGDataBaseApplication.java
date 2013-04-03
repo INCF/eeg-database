@@ -7,10 +7,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPageJson;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -138,6 +135,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("search-page", SearchPage.class);
 
+        mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);
         mountPage("add-experiment-page", AddExperimentPage.class);
         mountPage("get-json-append", AddExperimentPageJson.class);
     }
