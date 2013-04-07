@@ -12,4 +12,5 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
  */
 public interface ExperimentPackageLicenseDao extends GenericDao<ExperimentPackageLicense, Integer> {
 	
+	public void removeLicenseFromPackage(int packageId, int licenseId );
 }

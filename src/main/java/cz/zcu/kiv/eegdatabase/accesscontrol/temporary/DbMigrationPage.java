@@ -59,6 +59,7 @@ public class DbMigrationPage extends BasePage {
 		publicLicense.setDescription("All experiments published under this license are available for all purposes");
 		publicLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
 		publicLicense.setPrice(0);
+		publicLicense.setResearchGroup(null);
 		publicLicense.setTitle("Public license");
 		int id = licenseFacade.create(publicLicense);
 		publicLicense = licenseFacade.read(id);
@@ -157,10 +158,11 @@ public class DbMigrationPage extends BasePage {
 
 				//create private license for the package
 				License privateLicense = new License();
-				privateLicense.setDescription("Default generated private license");
-				privateLicense.setTitle("Private License");
-				privateLicense.setLicenseType(LicenseType.PRIVATE);
+				privateLicense.setDescription("Default generated owner license");
+				privateLicense.setTitle("Owner License");
+				privateLicense.setLicenseType(LicenseType.OWNER);
 				privateLicense.setPrice(0);
+				privateLicense.setResearchGroup(group);
 				id = this.licenseFacade.create(privateLicense);
 				privateLicense = licenseFacade.read(id);
 
@@ -197,7 +199,7 @@ public class DbMigrationPage extends BasePage {
 		
 		// set private licences
 		log.error("Private licenses adding started.");
-		List<License> privateLicences = licenseFacade.readByParameter("licenseType", LicenseType.PRIVATE);
+		List<License> privateLicences = licenseFacade.readByParameter("licenseType", LicenseType.OWNER);
 		int groupId;
 		for (License licence : privateLicences) {
 			

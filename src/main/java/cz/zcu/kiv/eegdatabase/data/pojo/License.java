@@ -20,6 +20,9 @@ public class License implements Serializable{
 	
     @Column(name = "PRICE")
     private float price;
+    
+	@Column(name = "RESEARCH_GROUP_ID")
+    private ResearchGroup researchGroup;
 	
     @Column(name = "TITLE")
     private String title;
@@ -68,6 +71,14 @@ public class License implements Serializable{
 
 	public void setLicenseType(LicenseType licenseType) {
 		this.licenseType = licenseType;
+	}
+	
+	public void setResearchGroup(ResearchGroup group) {
+		this.researchGroup = group;
+	}
+	
+	public ResearchGroup getResearchGroup() {
+		return this.researchGroup;
 	}
 	
 

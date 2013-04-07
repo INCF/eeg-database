@@ -28,7 +28,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest{
        license.setLicenseId(-231);
        license.setPrice(-1000);
        license.setTitle("junit@test.title");
-       license.setLicenseType(LicenseType.PRIVATE);
+       license.setLicenseType(LicenseType.OWNER);
        
     }
 

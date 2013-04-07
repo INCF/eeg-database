@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import java.util.List;
 import org.hibernate.Query;
+import org.hibernate.Session;
 
 
 /**
@@ -27,5 +28,11 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 	query.setParameter("packageId", packageId);
 	return query.list();
     }
+
+	@Override
+	public void removeExperimentFromPackage(int experimentId, int packageId) {
+		String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experiment = :experiment and epc.experimentPackage = :package";
+        this.getSession().createQuery(hqlQuery).setInteger("experiment", experimentId).setInteger("package", packageId).executeUpdate();
+	}
     
 }

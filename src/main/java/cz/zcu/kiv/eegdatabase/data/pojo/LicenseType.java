@@ -20,5 +20,5 @@ public enum LicenseType {
     /**
      * Private experiments
      */
-    PRIVATE
+    OWNER
 }

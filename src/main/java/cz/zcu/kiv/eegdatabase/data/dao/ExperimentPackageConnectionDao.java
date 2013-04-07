@@ -17,4 +17,6 @@ public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPac
      * @return list of experiments or an empty list
      */
     public List<Experiment> listExperimentsByPackage(int packageId);
+	
+	public void removeExperimentFromPackage(int experimentId, int packageId);
 }
