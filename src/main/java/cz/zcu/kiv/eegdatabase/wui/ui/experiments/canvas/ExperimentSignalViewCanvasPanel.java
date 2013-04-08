@@ -115,13 +115,15 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
         // tahle metoda prinuti wicket dodat do hlavicky stranky scripty co jsou
         // potreba.
         // pridany scripty pro vizualizaci signalu a wicket jquery knihovny.
-        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/browserControl.js"));
-        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/visualization.js"));
-        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxcommon.js"));
-        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxtree.js"));
         IJavaScriptLibrarySettings settings = EEGDataBaseApplication.get().getJavaScriptLibrarySettings();
         response.render(JavaScriptHeaderItem.forReference(settings.getJQueryReference()));
         response.render(JavaScriptHeaderItem.forReference(settings.getWicketAjaxReference()));
+        //response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/browserControl.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/multiple-visualization.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxcommon.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxtree.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jquery.colorPicker.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jquery.jqplot.min.js"));
         super.renderHead(response);
     }
 
