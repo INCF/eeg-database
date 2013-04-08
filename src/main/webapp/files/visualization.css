@@ -5,30 +5,76 @@
     Description: Styles for visualization module on experiments/detail page.*/
 /* green button - start */
 @import "dhtmlxtree.css";
-.green {
-    color: white;
-    background-color: #41A128;
-    border-width: 1px;
+@import "colorPicker.css";
+@import "jquery.jqplot.min.css";
+
+.canvasbox {
+    width: 400px !important;
+    height: 200px !important;
+    background-color: #cccccc;
+    display: inline-block;
+    margin: 0px 5px 5px 0px;
 }
 
-/* blue button - stop */
-.blue {
-    color: white;
-    background-color: #6A93D4;
-    border-width: 1px;
+.active {
+    border: 1px solid #C5F44C;
+    background-color: #eeeeee;
+    width: 1000px;
+    height: 700px;
 }
 
-/* grey button - clear */
-.grey {
-    color: white;
-    background-color: #888;
-    border-width: 1px;
+#wrapper{
+    display:none;
+    position:absolute;
+    z-index:2;
+    font-size:13px;
 }
 
-/* progress container */
-canvas#canvas {
-    border: 1px solid #888888;
-    background-color: #f5f5f5;
+#panel {
+    display: none;
+    z-index: 100;
+    position: fixed;
+    bottom: 0px;
+    background-image: url('images/panel_bg.png');
+    background-repeat: no-repeat;
+    width: 704px;
+    background-attachment: fixed;
+    background-position: bottom;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+#panel img {
+    width: 70px;
+}
+
+#tree {
+    width:200px;
+    height:300px;
+    background-color:#f5f5f5;
+    border :1px solid Silver;
+    display: none;
+    z-index: 5;
+    position: absolute;
+    left: 20px;
+    top: 30%;
+}
+
+/*#wrapper div.wrap {
+        width: 400px;
+        height: 200px;
+        margin: 0px 5px 5px 0px;
+        display: inline-block;
+        background-color: #eeeeee;
+}*/
+
+#wrapper div input {
+    font-variant: small-caps;
+    color: #000000;
+    font-weight: bold;
+    background-color: lightgoldenrodyellow;
+    border: burlywood;
+    width: 170px;
 }
 
 /* slider label */
@@ -48,14 +94,22 @@ canvas#canvas {
     box-shadow: 0px 0px 50px #eee;
 }
 
-span#show {
-    width: 98%;
-    cursor: pointer;
-    display: table;
-    height: 11px;
-    background-image: url(images/arrow_right.png);
-    background-repeat: no-repeat;
-    border-bottom: 1px solid #000000;
-    padding-left: 2%;
-    margin-bottom: 5px;
+span.heading {
+    color: #eeeeee;
+    font-variant: small-caps;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#backgroundPopup{
+    display:none;
+    position:fixed;
+    _position:absolute; /* hack for internet explorer 6*/
+    height:100%;
+    width:100%;
+    top:0;
+    left:0;
+    background:#000000;
+    border:1px solid #cecece;
+    z-index:1;
 }
