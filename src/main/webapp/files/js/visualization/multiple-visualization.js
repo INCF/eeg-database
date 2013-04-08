@@ -7,6 +7,17 @@ var activeID;
 var context;
 var run=true;
 var x,y;
+var signalData = new Array();
+
+createArray = function (index) {
+    signalData[index] = new Array();
+};
+
+addToArray = function (index, index2, data) {
+    if (data != null) {
+        signalData[index][index2] = data;
+    }
+};
 
 //loading popup with jQuery magic!
 function loadPopup(){
@@ -262,12 +273,11 @@ function _click(id) {
 }
 
 $(document).ready(function() {
-    tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);
+    /*tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);
     tree.setSkin('dhx_skyblue');
-    tree.setImagePath("codebase/imgs/csh_bluebooks/");
+    tree.setImagePath("files/images/imgs/csh_bluebooks/");
     tree.enableDragAndDrop(false);
-    tree.setOnClickHandler(_click);
-    tree.loadXML("tree3.xml");
+    tree.setOnClickHandler(_click);*/
 
     $('#color1').colorPicker();
 
