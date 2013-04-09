@@ -20,5 +20,7 @@ public class AddExperimentResultsForm extends Form<AddExperimentResultsDTO> {
 
         setMultiPart(true);
         add(new FileUploadField("resultFile"));
+
+        /* TODO add submit button for the wizard */
     }
 }

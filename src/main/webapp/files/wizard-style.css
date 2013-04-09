@@ -319,7 +319,8 @@ html, body {
     margin-left: 10px;
 }
 
-.wizard input[type=reset] {
+.wizard input[type=reset],
+.wizard input[type=button].cancel-button {
     width: 60px;
     color: #f3f3f3;
     border-radius: 6px;
@@ -421,4 +422,8 @@ html, body {
 
 .wicket-aa ul li:hover {
     background-color: #fcefa1;
+}
+
+.test{
+    color: red;
 }

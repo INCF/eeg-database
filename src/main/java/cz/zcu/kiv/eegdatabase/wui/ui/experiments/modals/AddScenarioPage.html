@@ -2,26 +2,77 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
     <title>Add Scenario Page</title>
-    <style type="text/css">
-        body {
-            font-family: verdana, sans-serif;
-            font-size: 82%;
-            background-color: white;
-        }
-    </style>
 </head>
-<body>
-Add Scenario Page
-<p>
-    <a wicket:id="closeOK">Close this window with result "OK"</a><br/>
-    <a wicket:id="closeCancel">Close this window with result "Cancel"</a><br/>
-</p>
+<body class="tabpanel wizard">
+    <form wicket:id="addForm">
+        <div class="form-item">
 
-<p>
+            <h1 wicket:id="addScenarioHeader"></h1>
 
-<div>An example of a component that uses header contributions</div>
-<div wicket:id="dateTimeField"/>
-</p>
+            <div class="form-sub-item added">
+                <label for="group">Education level</label>
+                <select wicket:id="group"></select>
+            </div>
 
+            <div class="form-sub-item">
+                <label for="title">Scenario title</label>
+                <input type="text" wicket:id="title"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="length">Length</label>
+                <input type="text" wicket:id="length"/>
+            </div>
+
+            <div class="form-sub-item">
+                 <label for="description">Description</label>
+                 <textarea wicket:id="description" rows="3" cols="40"></textarea>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="availableFile">Available data file</label>
+                <input type="checkbox" wicket:id="availableFile"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="fileAsXML">Scenario as XML</label>
+                <input type="checkbox" wicket:id="isFileAsXML"/>
+            </div>
+
+
+            <div class="form-sub-item">
+                <label for="dataFile">Data file</label>
+                <input type="file" wicket:id="dataFile"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="dataFileXml">XML Data file</label>
+                <input type="file" wicket:id="fileAsXML" />
+            </div>
+
+            <!-- transform to Wicket -->
+            <div class="form-sub-item">
+                <label for="schema">Schema</label>
+                <ol class="radio-group">
+                    <li>
+                        <input name="schema" type="radio" value="noSchema" checked="checked">
+                        <label for="noSchema">None</label>
+                    </li>
+                    <li>
+                        <input name="schema" type="radio" value="fromList">
+                        <label for="fromList">From list</label>
+                    </li>
+                </ol>
+                <select wicket:id="schemaSelect"></select>
+                <div class="close"></div>
+            </div>
+
+            <div class="close"></div>
+
+            <label for="submitProjectType"></label>
+            <input type="button" wicket:id="submitForm" value="Create">
+            <input type="button" wicket:id="closeForm" value="Cancel" class="cancel-button">
+        </div>
+    </form>
 </body>
 </html>

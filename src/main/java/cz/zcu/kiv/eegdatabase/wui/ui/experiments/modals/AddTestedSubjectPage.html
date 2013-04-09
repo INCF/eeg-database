@@ -2,26 +2,78 @@
 <html xmlns:wicket="http://wicket.apache.org">
 <head>
     <title>Add Tested Subject Page</title>
-    <style type="text/css">
-        body {
-            font-family: verdana, sans-serif;
-            font-size: 82%;
-            background-color: white;
-        }
-    </style>
 </head>
-<body>
-Add Tested Subject Page
-<p>
-    <a wicket:id="closeOK">Close this window with result "OK"</a><br/>
-    <a wicket:id="closeCancel">Close this window with result "Cancel"</a><br/>
-</p>
+<body class="tabpanel wizard">
+    <form wicket:id="addForm">
+        <div class="form-item">
 
-<p>
+            <h1 wicket:id="addPersonHeader"></h1>
 
-<div>An example of a component that uses header contributions</div>
-<div wicket:id="dateTimeField"/>
-</p>
+            <div class="form-sub-item">
+                <label for="name">Name</label>
+                <input type="text" wicket:id="name"/>
+            </div>
 
+            <div class="form-sub-item">
+                <label for="surname">Surname</label>
+                <input type="text" wicket:id="surname"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="dateOfBirth">Date of birth</label>
+                <div wicket:id="dateOfBirth"/>
+            </div>
+
+
+        <div class="form-sub-item">
+            <label for="gender">Gender</label>
+            <ol class="radio-group">
+                <li>
+                    <input name="gender" type="radio" value="M" checked="checked">
+                    <label for="male">Male</label>
+                </li>
+                <li>
+                    <input name="gender" type="radio" value="F">
+                    <label for="female">Female</label>
+                </li>
+            </ol>
+            <div class="close"></div>
+        </div>
+
+        <div class="form-sub-item added">
+            <label for="education">Education level</label>
+            <select wicket:id="education">
+                <option value="edu0" selected="selected">Vzdělání nebylo vybráno</option>
+                <option value="edu1">Základní</option>
+                <option value="edu2">Středoškolské</option>
+                <option value="edu3">Středoškolské s maturitou</option>
+                <option value="edu4">Vysokoškolské</option>
+            </select>
+        </div>
+
+            <div class="form-sub-item">
+                <label for="email">E-mail</label>
+                <input type="text" wicket:id="email"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="phone">Phone number</label>
+                <input type="text" wicket:id="phone"/>
+            </div>
+
+
+
+            <div class="form-sub-item">
+                <label for="notes">Notes</label>
+                <textarea wicket:id="notes" rows="3" cols="40"></textarea>
+            </div>
+
+            <div class="close"></div>
+
+            <label for="submitProjectType"></label>
+            <input type="button" wicket:id="submitForm" value="Create">
+            <input type="button" wicket:id="closeForm" value="Cancel" class="cancel-button">
+        </div>
+    </form>
 </body>
 </html>
