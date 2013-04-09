@@ -25,14 +25,15 @@ public class ExperimentServiceController {
 
     /**
      * Creates new experiment record.
+     *
      * @param experiment experiment to be created
      * @return primary key
      */
     @RequestMapping(value = "/create", method = RequestMethod.POST)
-    public ExperimentData createExperiment(@RequestBody ExperimentData experiment){
+    public ExperimentData createExperiment(@RequestBody ExperimentData experiment) {
         Integer pk = service.createExperiment(experiment);
 
-        if(pk!= null){
+        if (pk != null) {
             experiment.setExperimentId(pk);
             return experiment;
         }
@@ -96,6 +97,7 @@ public class ExperimentServiceController {
 
     /**
      * Creates new artifact record.
+     *
      * @param artifact artifact to be created
      * @return primary key
      */
@@ -189,9 +191,27 @@ public class ExperimentServiceController {
      *
      * @return weather types
      */
-    @RequestMapping("/weatherList")
-    public WeatherDataList getWeatherList() {
-        return new WeatherDataList(service.getWeatherList());
+    @RequestMapping("/weatherList/{groupId}")
+    public WeatherDataList getWeatherList(@PathVariable int groupId) {
+        return new WeatherDataList(service.getWeatherList(groupId));
+    }
+
+    /**
+     * Creates new weather record for specified research group.
+     *
+     * @param weather     weather record to be created
+     * @param groupId research group for which is record being created
+     * @return record with identifier
+     */
+    @RequestMapping(value ="/weatherList/{groupId}", method = RequestMethod.POST)
+    public WeatherData createWeather(@RequestBody WeatherData weather, @PathVariable int groupId) {
+        Integer pk = service.createWeather(weather, groupId);
+
+        if (pk != null) {
+            weather.setWeatherId(pk);
+            return weather;
+        } else return null;
+
     }
 
     /**
@@ -242,11 +262,12 @@ public class ExperimentServiceController {
 
     /**
      * Creates new electrode fix record.
+     *
      * @param fix electrode fix to be created
      * @return primary key
      */
     @RequestMapping(value = "/electrodeFixList", method = RequestMethod.POST)
-    public ElectrodeFixData createElectrodeFix(@RequestBody ElectrodeFixData fix){
+    public ElectrodeFixData createElectrodeFix(@RequestBody ElectrodeFixData fix) {
         Integer pk = service.createElectrodeFix(fix);
 
         if (pk != null) {
