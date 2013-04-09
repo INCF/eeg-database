@@ -14,10 +14,10 @@ $(document).ready(function(){
         var actualTab = $("." + actual.attr("name"));
         if(actualTab.find("form").first().valid()) {
             actual.find("img").remove();
-            actual.append('<img src="images/passed.png">');
+            actual.append('<img src="/files/images/passed.png">');
         } else {
             actual.find("img").remove();
-            actual.append('<img src="images/failed.png">');
+            actual.append('<img src="/files/images/failed.png">');
         }
         return false;
     });

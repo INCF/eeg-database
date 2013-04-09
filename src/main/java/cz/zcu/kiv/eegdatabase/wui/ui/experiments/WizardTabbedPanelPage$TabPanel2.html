@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+    <form wicket:id="environmentTab" action="" method="post" autocomplete="on">
+        <div wicket:id="addHWModal"></div>
+        <div wicket:id="addSWModal"></div>
+        <div wicket:id="addDiseaseModal"></div>
+        <div wicket:id="addPharmaModal"></div>
+
+        <div class="form-item">
+            <label for="hardware">* Hardware</label>
+            <select name="hardware" wicket:id="hardware" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
+            </select>
+            <input type="button" wicket:id="addHW" value="Add">
+        </div>
+
+        <div class="form-item">
+            <label for="software">* Software</label>
+            <select name="software" wicket:id="software" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
+            </select>
+            <input type="button" wicket:id="addSW" value="Add">
+        </div>
+
+        <div class="form-item">
+            <label for="weather">* Weather</label>
+            <select name="weather" wicket:id="weather">
+            </select>
+        </div>
+
+        <div class="form-item">
+            <label for="weatherNote" class="long-label">Weather note</label>
+            <textarea wicket:id="weatherNote" class="after-long-label"></textarea>
+        </div>
+
+        <div class="form-item">
+            <label for="temperature">* Temperature</label>
+            <input type="number" wicket:id="temperature" name="temperature"/>
+        </div>
+
+        <div class="form-item">
+            <label for="disease">* Diseases</label>
+            <input type="text" name="disease" wicket:id="disease" class="required autocomplete" autosrc="/get-json-append"/>
+            <input type="button" wicket:id="addDisease" value="Add">
+        </div>
+
+        <div class="form-item">
+            <label for="pharmaceutical">* Pharmaceuticals</label>
+            <input type="text" name="pharmaceutical" wicket:id="pharmaceutical" class="required autocomplete multiple" autosrc="/get-json-append">
+            <input type="button" wicket:id="addPharma" value="Add">
+        </div>
+
+        <div class="form-item">
+            <label for="privateNote">Private note</label>
+            <input type="text" wicket:id="privateNote" name="privateNote"/>
+        </div>
+    </form>
+</wicket:panel>
+</html>

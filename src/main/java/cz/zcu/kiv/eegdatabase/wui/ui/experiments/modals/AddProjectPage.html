@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <title>Add Project Page</title>
+</head>
+<body class="tabpanel wizard">
+    <form wicket:id="addForm">
+        <div class="form-item">
+
+            <h1 wicket:id="addProjectHeader"></h1>
+
+            <div class="form-sub-item">
+                <label for="title">Title name</label>
+                <input type="text" wicket:id="title"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="description">Description</label>
+                <textarea wicket:id="description" rows="3" cols="40"></textarea>
+            </div>
+
+            <div class="close"></div>
+
+            <label for="submitProjectType"></label>
+            <input type="button" wicket:id="submitForm" value="Create">
+            <input type="button" wicket:id="closeForm" value="Cancel" class="cancel-button">
+        </div>
+    </form>
+</body>
+</html>
