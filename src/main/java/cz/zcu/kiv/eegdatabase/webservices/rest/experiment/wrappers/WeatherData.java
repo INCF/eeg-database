@@ -1,16 +1,20 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers;
 
 /**
+ *
+ * Data container for weather information.
+ *
  * @author Petr Miko
- *         Date: 9.3.13
  */
 
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
 
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "weather", propOrder = {"weatherId", "title", "description"})
+@XmlRootElement(name = "weather")
+@XmlType(propOrder = {"weatherId", "title", "description"})
 public class WeatherData {
 
     private int weatherId;

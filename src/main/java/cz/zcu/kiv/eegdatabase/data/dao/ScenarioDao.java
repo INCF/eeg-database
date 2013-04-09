@@ -25,5 +25,12 @@ public interface ScenarioDao extends GenericDao<Scenario, Integer> {
 
     public List<Scenario> getScenariosForList(Person person, int start, int count);
 
+    /**
+     * Getter of scenarios which belong to user's research group, or are public.
+     * @param person user
+     * @return list of scenarios
+     */
+    public List<Scenario> getAvailableScenarios(Person person);
+
     public int getScenarioCountForList(Person person);
 }

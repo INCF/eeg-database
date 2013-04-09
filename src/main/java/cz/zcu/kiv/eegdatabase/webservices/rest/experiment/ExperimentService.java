@@ -58,9 +58,10 @@ public interface ExperimentService {
     /**
      * Getter of registered weather types.
      *
+     * @param groupId identifier of a user's research group
      * @return weather types
      */
-    public List<WeatherData> getWeatherList();
+    public List<WeatherData> getWeatherList(int groupId);
 
     /**
      * Getter of registered hardware types.
@@ -137,6 +138,7 @@ public interface ExperimentService {
 
     /**
      * Creates new artifact record.
+     *
      * @param artifact artifact to be created
      * @return primary key
      */
@@ -144,6 +146,7 @@ public interface ExperimentService {
 
     /**
      * Creates new electrode fix record.
+     *
      * @param fix electrode fix to be created
      * @return primary key
      */
@@ -151,8 +154,18 @@ public interface ExperimentService {
 
     /**
      * Creates new experiment record.
+     *
      * @param experiment experiment to be created
      * @return primary key
      */
     public Integer createExperiment(ExperimentData experiment);
+
+    /**
+     * Creates new weather record.
+     *
+     * @param weatherData     weather record to be created.
+     * @param researchGroupId identifier of research group for which is weather record created
+     * @return primary key
+     */
+    public Integer createWeather(WeatherData weatherData, int researchGroupId);
 }

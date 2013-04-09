@@ -61,7 +61,12 @@ public class DataFileServiceImpl implements DataFileService {
         datafile.setDescription(description);
         datafile.setFilename(file.getOriginalFilename().replace(" ", "_"));
         datafile.setFileContent(Hibernate.createBlob(file.getInputStream()));
-        datafile.setMimetype(file.getContentType() != null ? file.getContentType() : "application/octet-stream");
+        datafile.setMimetype(file.getContentType() != null ? file.getContentType().toLowerCase() : "application/octet-stream");
+
+        //DB column size restriction
+        if(datafile.getMimetype().length() > 40){
+            datafile.setMimetype("application/octet-stream");
+        }
         return dataFileDao.create(datafile);
     }
 

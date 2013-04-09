@@ -177,9 +177,9 @@ public class ExperimentServiceImpl implements ExperimentService {
      */
     @Override
     @Transactional(readOnly = true)
-    public List<WeatherData> getWeatherList() {
+    public List<WeatherData> getWeatherList(int groupId) {
         List<WeatherData> weathers = new ArrayList<WeatherData>();
-        Collection<Weather> weatherList = weatherDao.getAllRecords();
+        Collection<Weather> weatherList = weatherDao.getRecordsByGroup(groupId);
 
         for (Weather w : weatherList) {
             WeatherData weather = new WeatherData();
@@ -460,11 +460,7 @@ public class ExperimentServiceImpl implements ExperimentService {
         Scenario scenario = scenarioDao.read(experiment.getScenario().getScenarioId());
         exp.setScenario(scenario);
 
-        Weather weather = new Weather();
-        weather.setTitle(experiment.getWeather().getTitle());
-        weather.setDescription(experiment.getWeather().getDescription());
-        Integer weatherPk = weatherDao.create(weather);
-        weather.setWeatherId(weatherPk);
+        Weather weather = weatherDao.read(experiment.getWeather().getWeatherId());
         exp.setWeather(weather);
 
         exp.setEnvironmentNote(experiment.getEnvironmentNote());
@@ -538,6 +534,22 @@ public class ExperimentServiceImpl implements ExperimentService {
         exp.setSubjectGroup(subGroup);
 
         return (Integer) experimentDao.create(exp);
+    }
+
+    @Override
+    @Transactional
+    public Integer createWeather(WeatherData weatherData, int researchGroupId) {
+
+        Weather weather = new Weather();
+        weather.setTitle(weatherData.getTitle());
+        weather.setDescription(weatherData.getDescription());
+        int pk = weatherDao.create(weather);
+        WeatherGroupRelId weatherGroupRelId = new WeatherGroupRelId(pk,researchGroupId);
+        ResearchGroup researchGroup = groupDao.read(researchGroupId);
+        WeatherGroupRel weatherGroupRel = new WeatherGroupRel(weatherGroupRelId,researchGroup,weather);
+        weatherDao.createGroupRel(weatherGroupRel);
+
+        return pk;
     }
 
     /**

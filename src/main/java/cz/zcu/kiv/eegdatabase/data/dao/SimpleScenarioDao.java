@@ -100,6 +100,26 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Scenario> getAvailableScenarios(Person person) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).list();
+        } else {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "where " +
+                    "s.privateScenario = false " +
+                    "or s.researchGroup.researchGroupId in " +
+                    "(select m.researchGroup.researchGroupId from ResearchGroupMembership m where m.person.personId = :personId) " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).list();
+        }
+    }
+
     @Override
     public int getScenarioCountForList(Person person) {
         if (person.getAuthority().equals("ROLE_ADMIN")) {

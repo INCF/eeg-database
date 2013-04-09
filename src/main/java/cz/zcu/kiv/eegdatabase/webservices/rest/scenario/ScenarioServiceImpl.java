@@ -66,7 +66,7 @@ public class ScenarioServiceImpl implements ScenarioService {
     @Override
     @Transactional(readOnly = true)
     public List<ScenarioData> getAllScenarios() {
-        List<Scenario> scenarios = scenarioDao.getAllRecords();
+        List<Scenario> scenarios = scenarioDao.getAvailableScenarios(personDao.getLoggedPerson());
         List<ScenarioData> scenarioDatas = new ArrayList<ScenarioData>(scenarios.size());
 
         for (Scenario s : scenarios) {
@@ -127,7 +127,12 @@ public class ScenarioServiceImpl implements ScenarioService {
         scenario.setDescription(scenarioData.getDescription());
         scenario.setTitle(scenarioData.getScenarioName());
         scenario.setScenarioName(file.getOriginalFilename().replace(" ", "_"));
-        scenario.setMimetype(scenarioData.getMimeType().trim());
+        scenario.setMimetype(scenarioData.getMimeType().toLowerCase().trim());
+
+        //DB column size restriction
+        if(scenario.getMimetype().length() > 30){
+            scenario.setMimetype("application/octet-stream");
+        }
 
         ResearchGroup group =  researchGroupDao.read(scenarioData.getResearchGroupId());
         scenario.setResearchGroup(group);
@@ -137,7 +142,7 @@ public class ScenarioServiceImpl implements ScenarioService {
         scenario.setScenarioLength((int) file.getSize());
         IScenarioType scenarioType;
 
-        if(scenarioData.getMimeType() != null && scenarioData.getMimeType().contains("xml")) {
+        if(scenarioData.getMimeType() != null && "application/xml".equals(scenario.getMimetype())) {
              //XML file type
             scenarioType = new ScenarioTypeNonSchema();
 
