@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.home;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.wizard.Wizard;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -27,13 +26,6 @@ public class HomePage extends MenuPage {
 
         setPageTitle(ResourceUtils.getModel("title.page.home"));
         add(new HomeLoginForm("login"));
-
-        add(new Link("sutrLink") {
-            @Override
-            public void onClick() {
-                setResponsePage(new Wizard());
-            }
-        });
 
         add(new BookmarkablePageLink<Void>("forgottenPass", ForgottenPasswordPage.class));
     }

@@ -40,6 +40,18 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
 
+        addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
+                "addDisease", AddDiseasePage.class.getName());
+
+        addModalWindowAndButton(this, "addPharmaModal", "add-pharma",
+                "addPharma", AddPharmaceuticalsPage.class.getName());
+
+        addModalWindowAndButton(this, "addHWModal", "add-hw",
+                "addHW", AddHardwarePage.class.getName());
+
+        addModalWindowAndButton(this, "addSWModal", "add-sw",
+                "addSW", AddSoftwarePage.class.getName());
+
         List<Hardware> hardwares = hardwareFacade.getAllRecords();
         ArrayList<String> hardwareTitles = new ArrayList<String>();
         for (Hardware hw : hardwares){
@@ -58,18 +70,9 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         for (Weather w : weathers){
             weatherTitles.add(w.getTitle());
         }
-        add(new DropDownChoice("weather", new PropertyModel(experiment, "weather"), weatherTitles));
+        add(new DropDownChoice<String>("weather",
+                new PropertyModel(experiment, "weather"), weatherTitles).setRequired(true));
 
-        addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
-                "addDisease", AddDiseasePage.class.getName());
-
-        addModalWindowAndButton(this, "addPharmaModal", "add-pharma",
-                "addPharma", AddPharmaceuticalsPage.class.getName());
-
-        add(new ListMultipleChoice<String>("hardware", values).setMaxRows(5).setRequired(true));
-        add(new ListMultipleChoice<String>("software", values).setMaxRows(5).setRequired(true));
-
-        add(new DropDownChoice<String>("weather", values).setRequired(true));
         add(new TextArea<String>("weatherNote"));
         add(new NumberTextField<Integer>("temperature").setRequired(true));
         //TODO autocomplete and create DiseaseFacade

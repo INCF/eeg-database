@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -12,6 +16,8 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 
 import java.util.*;
@@ -25,12 +31,22 @@ import java.util.*;
  * To change this template use File | Settings | File Templates.
  */
 public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
+    @SpringBean
+    private ResearchGroupFacade researchGroupFacade;
+    @SpringBean
+    private ScenariosFacade scenariosFacade;
+    @SpringBean
+    private PersonFacade personFacade;
+
+    private Experiment experiment = new Experiment();
+    final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentScenarioForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentScenarioDTO>(new AddExperimentScenarioDTO()));
 
+        //scenario autocomplete
         final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
-                new Model<String>(""))
+                new PropertyModel(experiment, "scenario.scenarioName"))
         {
             @Override
             protected Iterator<String> getChoices(String input)
@@ -40,30 +56,141 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                     List<String> emptyList = Collections.emptyList();
                     return emptyList.iterator();
                 }
-
-                List<String> choices = new ArrayList<String>(10);
-
-                Locale[] locales = Locale.getAvailableLocales();
-
-                for (final Locale locale : locales)
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Scenario> scenarios = scenariosFacade.getAllRecords();
+                for (final Scenario s : scenarios)
                 {
-                    final String country = locale.getDisplayCountry();
-
-                    if (country.toUpperCase().startsWith(input.toUpperCase()))
+                    final String data = s.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
                     {
-                        choices.add(country);
-                        if (choices.size() == 10)
-                        {
-                            break;
-                        }
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
                     }
                 }
-
                 return choices.iterator();
             }
         };
         scenario.setRequired(true);
         this.add(scenario);
+
+        //research group autocomplete
+        final AutoCompleteTextField<String> group = new AutoCompleteTextField<String>("group",
+                new PropertyModel(experiment, "researchGroup.title"))
+        {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<ResearchGroup> groups = researchGroupFacade.getAllRecords();
+                for (final ResearchGroup rg : groups)
+                {
+                    final String data = rg.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
+        group.setRequired(true);
+        add(group);
+
+        CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
+        isDefaultGroup.setRequired(true);
+        add(isDefaultGroup);
+
+        TextField<String> project = new TextField<String>("project");
+        //TODO autocomplete and create ProjectTypeFacade
+        project.setRequired(true);
+        add(project);
+
+        TextField<String> startDate = new TextField<String>("startDate");
+        startDate.setRequired(true);
+        add(startDate);
+
+        TextField<String> startTime = new TextField<String>("startTime");
+        startTime.setRequired(true);
+        add(startTime);
+
+        TextField<String> finishDate = new TextField<String>("finishDate");
+        finishDate.setRequired(true);
+        add(finishDate);
+
+        TextField<String> finishTime = new TextField<String>("finishTime");
+        finishTime.setRequired(true);
+        add(finishTime);
+
+        //testSubjects autocomplete
+        final AutoCompleteTextField<String> testSubject = new AutoCompleteTextField<String>("subjects",
+                new PropertyModel(experiment, "persons"))
+        {
+            //TODO which persons are co-experimenters and which are test subjects?
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Person> persons = personFacade.getAllRecords();
+                for (final Person p : persons)
+                {
+                    final String data = p.getGivenname() +" "+ p.getSurname();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
+        testSubject.setRequired(true);
+        add(testSubject);
+
+        TextField<String> stimulus = new TextField<String>("stimulus");
+        //TODO set autocomplete for stimulus, create StimulusFacade
+        stimulus.setRequired(true);
+        add(stimulus);
+
+        //coExperimenters autocomplete
+        final AutoCompleteTextField<String> coExperimenters = new AutoCompleteTextField<String>("coExperimenters",
+                new PropertyModel(experiment, "persons"))
+        {
+            //TODO which persons are co-experimenters and which are test subjects?
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Person> persons = personFacade.getAllRecords();
+                for (final Person p : persons)
+                {
+                    final String data = p.getGivenname() +" "+ p.getSurname();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
+        coExperimenters.setRequired(true);
+        add(coExperimenters);
 
         final ModalWindow addGroup;
         add(addGroup = new ModalWindow("addGroupModal"));
@@ -179,62 +306,5 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
             }
         });
         add(newStimulusAjax);
-
-
-        TextField<String> group = new TextField<String>("group");
-        group.setRequired(true);
-        add(group);
-
-        CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
-        isDefaultGroup.setRequired(true);
-        add(isDefaultGroup);
-
-        TextField<String> project = new TextField<String>("project");
-        project.setRequired(true);
-        add(project);
-/*
-        DateField startDate = new DateField("startDate");
-        startDate.setRequired(true);
-        add(startDate);
-
-        DateTimeField startTime = new DateTimeField("startTime");
-        startTime.setRequired(true);
-        add(startTime);
-
-        DateField finishDate = new DateField("finishDate");
-        finishDate.setRequired(true);
-        add(finishDate);
-
-        DateTimeField finishTime = new DateTimeField("finishTime");
-        finishTime.setRequired(true);
-        add(finishTime);
-*/
-        TextField<String> startDate = new TextField<String>("startDate");
-        startDate.setRequired(true);
-        add(startDate);
-
-        TextField<String> startTime = new TextField<String>("startTime");
-        startTime.setRequired(true);
-        add(startTime);
-
-        TextField<String> finishDate = new TextField<String>("finishDate");
-        finishDate.setRequired(true);
-        add(finishDate);
-
-        TextField<String> finishTime = new TextField<String>("finishTime");
-        finishTime.setRequired(true);
-        add(finishTime);
-
-        TextField<String> testSubject = new TextField<String>("subjects");
-        testSubject.setRequired(true);
-        add(testSubject);
-
-        TextField<String> stimulus = new TextField<String>("stimulus");
-        stimulus.setRequired(true);
-        add(stimulus);
-
-        TextField<String> coExperimenters = new TextField<String>("coExperimenters");
-        coExperimenters.setRequired(true);
-        add(coExperimenters);
     }
 }
