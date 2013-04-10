@@ -192,69 +192,15 @@ getHeight = function () {
     return $("#"+activeID).height();
 };
 
-rndCoord = function() {
-    var coordy = Math.floor((Math.random() * 2 - 1) * 150);
-    return coordy;
-};
-
-draw = function () {
-    rndCoord();
-    y = 200 + rndCoord();
-    ctx.lineTo(x, y);
-    ctx.strokeStyle = $("#color1").val();
-    ctx.stroke();
-    x += 10;
-    if (x >= (getWidth()-30)) {
-        run = false;
-    }
-    if (run) {
-        setTimeout(draw, 50 - 2 * 10);
-    }
-};
-
-initPosition = function () {
-    ctx.moveTo(15, 695);
-    ctx.beginPath();
-    ctx.lineWidth = 1;
-    ctx.lineJoin = 'round';
-    x = 15;
-};
-
-init = function () {
-    canvasClear();
-    ctx.fillStyle = '#eeeeee';
-    ctx.fillRect(0, 0, getWidth(), getHeight());
-    ctx.fill();
-    ctx.strokeStyle = '#303030';
-    ctx.lineWidth = 1;
-    ctx.moveTo(5,getHeight()-30);
-    ctx.lineTo(getWidth(),getHeight()-30);
-    ctx.stroke();
-    ctx.moveTo(15,5);
-    ctx.lineTo(15,695);
-    ctx.stroke();
-    ctx.fillStyle = '#303030';
-    ctx.font = '12px sans-serif';
-    ctx.fillText('0', 5, getHeight()-15);
-    ctx.fillText('\u03BCV', 0, 15);
-    ctx.fillText('s', getWidth() - 12, getHeight()-15);
-    var start = 5;
-    for (i = 1; i < 11; i++) {
-        ctx.moveTo(start + i * 100, getHeight()-35);
-        ctx.lineTo(start + i * 100, getHeight()-25);
-        ctx.stroke();
-        ctx.fillText(i, start + i * 100, getHeight()-15);
-    }
-    initPosition();
-};
-
 function _click(id) {
-    drawGraph(activeID, tree.getSelectedItemText());
+    drawGraph(activeID, tree.getSelectedItemText(), id);
 }
 
-function drawGraph(place, headline) {
-    plots[place] = $.jqplot (place, [[3,7,9,1,5,3,8,2,5]], {
+function drawGraph(place, headline, channel) {
+    plots[place] = $.jqplot (place, [signalData[channel]], {
         title: headline,
+        animate: true,
+        animateReplot: true,
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },
