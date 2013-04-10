@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.IModel;
@@ -21,8 +22,9 @@ public class SearchResultDataProvider extends ListDataProvider<FullTextResult> {
     FulltextSearchService searchService;
 
     private String searchQuery;
+    private ResultCategory category;
 
-    public SearchResultDataProvider(StringValue searchString) {
+    public SearchResultDataProvider(StringValue searchString, ResultCategory category) {
         Injector.get().inject(this);
 
         System.out.println(searchString);
@@ -32,16 +34,18 @@ public class SearchResultDataProvider extends ListDataProvider<FullTextResult> {
         else {
             this.searchQuery = searchString.toString();
         }
+
+        this.category = category;
     }
 
     @Override
     public Iterator<? extends FullTextResult> iterator(long first, long count) {
-        return searchService.getResultsForQuery(searchQuery, (int) first, (int) count).iterator();
+        return searchService.getResultsForQuery(searchQuery, category, (int) first, (int) count).iterator();
     }
 
     @Override
     public long size() {
-        return searchService.getTotalNumberOfDocumentsForQuery(searchQuery);
+        return searchService.getTotalNumberOfDocumentsForQuery(searchQuery, category);
     }
 
     @Override
