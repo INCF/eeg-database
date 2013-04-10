@@ -4,13 +4,20 @@
       lang="en">
 <body>
 <wicket:panel>
+    <label wicket:id="numberOfResults">12 results found.</label>
+    <wicket:container wicket:id="categories"></wicket:container>
+
     <div wicket:id="results">
         <h2 wicket:id="type">Type of the result (article, experiment, ...)</h2>
         <h3 wicket:id="title">First result</h3>
         <span wicket:id="uuid">its uuid</span>
-        <p wicket:id="text">result text</p>
+        <ul wicket:id="textFragments">
+            <li wicket:id="textFragment">result text</li>
+        </ul>
         <a href="#" wicket:id="link">Details</a>
+        <p wicket:id="timestamp">14 7 2013 13:59</p>
     </div>
+
     <div wicket:id="navigator">navigator aligator</div>
     <wicket:enclosure>
         <label wicket:id="noResultsFound">no results</label>

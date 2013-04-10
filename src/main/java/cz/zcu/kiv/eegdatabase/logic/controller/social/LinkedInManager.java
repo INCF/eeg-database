@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer;
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -118,15 +117,21 @@ public class LinkedInManager {
      * @return list of posts with more detailed information from the EEG/ERP portal group on LinkedIn.
      */
     public synchronized List<Post> getGroupPostsWithMoreInfo(int count, int start) {
-        Group.GroupPosts groupPosts = linkedin.restOperations().getForObject(
-                "http://api.linkedin.com/v1/groups/{group-id}/posts" +
-                        ":(creation-timestamp,title,summary,id," +
-                        "creator:(first-name,last-name))?" +
-                        "count=" + count +
-                        "&start=" + start +
-                        "&order=recency",
-                Group.GroupPosts.class, groupId);
-        return groupPosts.getPosts();
+        try {
+            this.connect();
+            Group.GroupPosts groupPosts = linkedin.restOperations().getForObject(
+                    "http://api.linkedin.com/v1/groups/{group-id}/posts" +
+                            ":(creation-timestamp,title,summary,id," +
+                            "creator:(first-name,last-name))?" +
+                            "count=" + count +
+                            "&start=" + start +
+                            "&order=recency",
+                    Group.GroupPosts.class, groupId);
+            return groupPosts.getPosts();
+        } catch (Exception e) {
+            log.debug("Exception occured when reading posts from group: " + groupId);
+        }
+        return null;
     }
 
     /**
@@ -150,9 +155,15 @@ public class LinkedInManager {
      * @return The last post added to the EEG Portal LinkedIn group.
      */
     public synchronized Post getLastPost() {
-        // the line below is commented because it returns the null value for summary
-        // return linkedInTemplate.groupOperations().getGroupDetails(groupId).getPosts().getPosts().get(0);
-        return getGroupPostsWithMoreInfo(1,0).get(0);
+        try {
+            this.connect();
+            // the line below is commented because it returns the null value for summary
+            // return linkedInTemplate.groupOperations().getGroupDetails(groupId).getPosts().getPosts().get(0);
+            return getGroupPostsWithMoreInfo(1,0).get(0);
+        } catch (Exception e) {
+            log.debug("An exception occured when reading the last inserted post from group: " + groupId);
+        }
+        return null;
     }
 
     /**
@@ -160,8 +171,14 @@ public class LinkedInManager {
      * @return the id value of the last post added to the EEG Portal LinkedIn group.
      */
     public synchronized String getLastPostId() {
-        Post lastPost = linkedin.groupOperations().getGroupDetails(groupId).getPosts().getPosts().get(0);
-        return lastPost.getId();
+        try {
+            this.connect();
+            Post lastPost = linkedin.groupOperations().getGroupDetails(groupId).getPosts().getPosts().get(0);
+            return lastPost.getId();
+        } catch (Exception e) {
+            log.debug("An exception occured when reading id of the last inserted post from group: " + groupId);
+        }
+        return null;
     }
 
     /**
@@ -170,14 +187,20 @@ public class LinkedInManager {
      * @return The found LinkedIn post.
      */
     public synchronized Post getPostById(String id) {
-        Post myPost = linkedin.restOperations().getForObject(
-                "http://api.linkedin.com/v1/posts/{post-id}" +
-                        ":(creation-timestamp,title,summary,id," +
-                        "creator:(first-name,last-name))", Post.class, id);
-        log.info(myPost.getCreationTimestamp());
-        log.info(myPost.getId());
-        log.info(myPost.getTitle());
-        return myPost;
+        try {
+            this.connect();
+            Post myPost = linkedin.restOperations().getForObject(
+                    "http://api.linkedin.com/v1/posts/{post-id}" +
+                            ":(creation-timestamp,title,summary,id," +
+                            "creator:(first-name,last-name))", Post.class, id);
+            log.info(myPost.getCreationTimestamp());
+            log.info(myPost.getId());
+            log.info(myPost.getTitle());
+            return myPost;
+        } catch (Exception e) {
+            log.debug("An exception occured when reading a post with id " + id + " from group: " + groupId);
+        }
+        return null;
     }
 
     /**
@@ -185,8 +208,13 @@ public class LinkedInManager {
      * @param id The id of the post to be deleted.
      */
     public synchronized void deletePost(String id) {
-        linkedin.restOperations().delete(
-                "http://api.linkedin.com/v1/posts/{post-id}", id);
+        try {
+            this.connect();
+            linkedin.restOperations().delete(
+                    "http://api.linkedin.com/v1/posts/{post-id}", id);
+        } catch (Exception e) {
+            log.debug("An exception occured when deleting a post with id " + id +" from group: " + groupId);
+        }
     }
 
 }
