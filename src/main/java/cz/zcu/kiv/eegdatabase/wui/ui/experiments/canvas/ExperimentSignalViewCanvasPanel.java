@@ -118,12 +118,13 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
         IJavaScriptLibrarySettings settings = EEGDataBaseApplication.get().getJavaScriptLibrarySettings();
         response.render(JavaScriptHeaderItem.forReference(settings.getJQueryReference()));
         response.render(JavaScriptHeaderItem.forReference(settings.getWicketAjaxReference()));
-        //response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/browserControl.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/multiple-visualization.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxcommon.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/dhtmlxtree.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jquery.colorPicker.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jquery.jqplot.min.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jqplot.canvasAxisLabelRenderer.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jqplot.canvasTextRenderer.js"));
         super.renderHead(response);
     }
 
