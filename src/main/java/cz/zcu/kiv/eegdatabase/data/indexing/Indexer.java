@@ -104,4 +104,8 @@ public abstract class Indexer<T> {
     public void setSolrServer(SolrServer solrServer) {
         this.solrServer = solrServer;
     }
+
+    public SolrServer getSolrServer() {
+        return solrServer;
+    }
 }

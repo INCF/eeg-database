@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Async;
@@ -35,6 +36,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
     private Indexer<Post> linkedInIndexer;
     @Autowired
     private Indexer<String> autocompleteIndexer;
+
 
     // if required, the tests would fail because the bean is not wired in the test context
     @Autowired(required = false)
@@ -128,11 +130,17 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws InvocationTargetException
      * @throws ClassNotFoundException
      */
-    @Scheduled(fixedDelay = 5*60*1000)
+    @Scheduled(cron = "${solr.indexingPeriod}")
     public void indexAll() {
+        log.info("Starting indexing data");
         try {
             indexDatabase();
             indexLinkedIn();
+            log.info("Optimalization of index started");
+            long start = System.currentTimeMillis();
+            indexer.getSolrServer().optimize();
+            long end = System.currentTimeMillis();
+            log.info("Optimalization ended, duration " + (end - start) + "ms");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         } catch (SolrServerException e) {
@@ -144,5 +152,6 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
         } catch (InstantiationException e) {
             e.printStackTrace();
         }
+        log.info("Indexing finished");
     }
 }
