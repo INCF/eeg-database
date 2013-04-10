@@ -4,6 +4,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
@@ -17,7 +18,7 @@ import java.util.Set;
  * @author Jiri Vlasimsky
  */
 @Entity
-//@Indexed//Mark for indexing
+@Indexed // Mark for indexing
 //@Analyzer(impl = StandardAnalyzer.class)
 @javax.persistence.Table(name = "ARTICLES")
 public class Article implements java.io.Serializable {
@@ -57,6 +58,7 @@ public class Article implements java.io.Serializable {
     private Timestamp time;
     private boolean userMemberOfGroup; // changes dynamically from app
     private boolean userIsOwnerOrAdmin; // changes dynamically from app
+    @Indexed
     @OneToMany(mappedBy = "article")
     private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})

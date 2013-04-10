@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -237,5 +238,11 @@ public class SimplePersonDao
         String HQLselect = "from Person person left join fetch person.researchGroups left join fetch person.personOptParamVals paramVal left join fetch paramVal.personOptParamDef paramDef where person.personId = :id";
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "id", id));
         return foundUser;
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Person> getAllRecordsFull() {
+        return super.getAllRecordsFull();
     }
 }

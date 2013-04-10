@@ -12,6 +12,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.util.string.Strings;
 
 import java.util.*;
@@ -28,18 +29,20 @@ public class SearchPanel extends Panel {
     @SpringBean
     private FulltextSearchService searchService;
 
-    public SearchPanel(String id) {
+    public SearchPanel(String id, StringValue searchString) {
         super(id);
-        add(new SearchForm("searchForm"));
+        add(new SearchForm("searchForm", searchString));
     }
 
     private class SearchForm extends Form {
 
         private String searchString;
 
-        public SearchForm(String id) {
+        public SearchForm(String id, StringValue searchString) {
             super(id);
-
+            if(!searchString.isNull() && !searchString.isEmpty()) {
+                this.searchString = searchString.toString();
+            }
             final AutoCompleteTextField<String> searchField = createTextField("autocomplete");
             add(searchField);
             final Button searchButton = createSearchButton("searchButton");

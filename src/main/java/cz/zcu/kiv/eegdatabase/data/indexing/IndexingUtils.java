@@ -1,21 +1,19 @@
 package cz.zcu.kiv.eegdatabase.data.indexing;
 
+import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.reflections.Reflections;
 
 import javax.persistence.Entity;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
+ * Utility class containing a set of useful indexing-related methods.
  * User: Jan Koren
  * Date: 4.3.13
- * Time: 17:12
- * To change this template use File | Settings | File Templates.
  */
 public class IndexingUtils {
 
@@ -29,9 +27,8 @@ public class IndexingUtils {
         // scan the package where all domain classes reside
         Reflections reflections = new Reflections(POJO_BASE);
 
-        // get all domain classes
-        // uses (depends on) the JPA @Entity annotation which must be present in the classes
-        Set<Class<?>> pojos = reflections.getTypesAnnotatedWith(Entity.class);
+        // get all domain classes to be indexed
+        Set<Class<?>> pojos = reflections.getTypesAnnotatedWith(Indexed.class);
         List<Class<?>> solrAnotated = new ArrayList<Class<?>>();
         int pojoCount =  pojos.size();
         Iterator<Class<?>> subtypesIterator = pojos.iterator();
@@ -49,6 +46,21 @@ public class IndexingUtils {
         }
 
         return solrAnotated;
+    }
+
+    /**
+     * Returns a defined set of DAO classes that are needed to perform indexing of desired POJOs.
+     * @return The set of DAO classes.
+     */
+    public static final Set<Class <? extends GenericDao>> getDaosForIndexing() {
+        Set<Class<? extends GenericDao>> classes = new HashSet<Class<? extends GenericDao>>();
+        classes.add(ArticleDao.class);
+        classes.add(ExperimentDao.class);
+        classes.add(PersonDao.class);
+        classes.add(ResearchGroupDao.class);
+        classes.add(ScenarioDao.class);
+
+        return classes;
     }
 
 }

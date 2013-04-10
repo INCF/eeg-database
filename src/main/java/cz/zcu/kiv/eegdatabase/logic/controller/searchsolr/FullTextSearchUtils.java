@@ -2,14 +2,10 @@ package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListFileMetadataPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListHardwareDefinitionsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListPersonOptParamPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListWeatherDefinitiosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import org.apache.wicket.Page;
@@ -28,57 +24,100 @@ public class FullTextSearchUtils {
 
     public final static int AUTOCOMPLETE_ROWS = 10;
 
-    private static Map<Class<?>, Class<? extends Page>> classMap = initializeClassMap();
-    private static Map<Class<?>, String> resultTypesMap = initializeResultTypes();
+    public static final String HIGHLIGHTED_TEXT_BEGIN = "<span class=\"hilite\">";
+    public static final String HIGHLIGHTED_TEXT_END = "</span>";
+    public static final String HIGHLIGHT_MERGE_SEQUENCE = HIGHLIGHTED_TEXT_END + " " + HIGHLIGHTED_TEXT_BEGIN;
 
-    private static final Map<Class<?>, Class<? extends Page>> initializeClassMap() {
+    /**
+     * Maps result categories to Page classes
+     */
+    private static Map<String, Class<? extends Page>> categoryToPageMap = initializeClassMap();
+    /**
+     * Maps Page classes to names of their documents in the index.
+     */
+    private static Map<Class<?>, String> pojoToCategoryMap = initializeResultTypes();
 
-        Map<Class<?>, Class<? extends Page>> map = new HashMap<Class<?>, Class<? extends Page>>();
+    /**
+     * Maps result categories to their application properties
 
-        map.put(Article.class, ArticlesPage.class);
-        map.put(DataFile.class, DataFileDetailPage.class);
-        map.put(Experiment.class, ExperimentsDetailPage.class);
-        map.put(Person.class, PersonDetailPage.class);
-        map.put(ResearchGroup.class, ResearchGroupsDetailPage.class);
-        map.put(Scenario.class, ScenarioDetailPage.class);
-        map.put(Hardware.class, ListHardwareDefinitionsPage.class);
-        map.put(FileMetadataParamDef.class, ListFileMetadataPage.class);
-        map.put(PersonOptParamDef.class, ListPersonOptParamPage.class);
-        map.put(Weather.class, ListWeatherDefinitiosPage.class);
+    private static Map<String, String> categoryToPropertyMap = initializeResultProperties();
+     */
+
+    /**
+     * Sets the POJO - Page class mapping.
+     * @return POJO classes to Page classes mapping.
+     */
+    private static final Map<String, Class<? extends Page>> initializeClassMap() {
+
+        Map<String, Class<? extends Page>> map = new HashMap<String, Class<? extends Page>>();
+
+        map.put(ResultCategory.ARTICLE.getValue(), ArticlesPage.class);
+        map.put(ResultCategory.EXPERIMENT.getValue(), ExperimentsDetailPage.class);
+        map.put(ResultCategory.PERSON.getValue(), PersonDetailPage.class);
+        map.put(ResultCategory.RESEARCH_GROUP.getValue(), ResearchGroupsDetailPage.class);
+        map.put(ResultCategory.SCENARIO.getValue(), ScenarioDetailPage.class);
 
         return map;
     }
 
+    /**
+     * Sets page - result type mapping.
+     * @return Page - result type mapping.
+     */
     private static final  Map<Class<?>, String> initializeResultTypes() {
 
         Map<Class<?>, String> map = new HashMap<Class<?>, String>();
 
-        map.put(ArticlesPage.class, "Article");
-        map.put(ScenarioDetailPage.class, "Scenario");
-        map.put(ExperimentsDetailPage.class, "Experiment");
-        map.put(PersonDetailPage.class, "Person");
-        map.put(ResearchGroupsDetailPage.class, "Research group");
+        map.put(Article.class, ResultCategory.ARTICLE.getValue());
+        map.put(Experiment.class, ResultCategory.EXPERIMENT.getValue());
+        map.put(Person.class, ResultCategory.PERSON.getValue());
+        map.put(ResearchGroup.class, ResultCategory.RESEARCH_GROUP.getValue());
+        map.put(Scenario.class, ResultCategory.SCENARIO.getValue());
 
         return map;
     }
 
-    public static Class<? extends Page> getTargetPage(Class<?> clazz) {
+    /**
+     * Gets a page class for a given POJO class.
+     * @param type The POJO class.
+     * @return The Wicket Page class.
+     */
+    public static Class<? extends Page> getTargetPage(String type) {
 
-        for(Class<?> listClass : classMap.keySet()) {
-            if(listClass.equals(clazz)) {
-                return classMap.get(listClass);
+        for(String typeValue : categoryToPageMap.keySet()) {
+            if(typeValue.equals(type)) {
+                return categoryToPageMap.get(typeValue);
             }
         }
 
         return UnderConstructPage.class;
     }
 
+    /**
+     * Gets a type of the document from a given Wicket Page class.
+     * @param clazz The Wicket Page class.
+     * @return The document type.
+     */
     public static String getDocumentType(Class<? extends Page> clazz) {
-        if(resultTypesMap.containsKey(clazz)) {
-            return resultTypesMap.get(clazz);
+
+        if(pojoToCategoryMap.containsKey(clazz)) {
+            return pojoToCategoryMap.get(clazz);
         }
         else {
             return "Other";
         }
+    }
+
+    /**
+     * Gets a type of the document from a given fulltext result instance.
+     * @param result The fulltext result.
+     * @return The document type.
+     */
+    public static String getDocumentType(FullTextResult result) {
+        if(result.getTargetPage() == null) {
+            return "Other";
+        }
+
+        return getDocumentType(result.getTargetPage());
     }
 }

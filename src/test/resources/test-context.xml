@@ -335,8 +335,11 @@
     <!-- LinkedIn indexer for Solr -->
     <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
 
+    <!-- LinkedIn indexer for Solr -->
+    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.AutocompleteIndexer" />
+
     <!-- indexing service for database and LinkedIn indexing -->
-    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingService" />
+    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingServiceImpl" />
 
     <bean name="fulltextSearchService"
           class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />

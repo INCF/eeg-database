@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -100,6 +101,26 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         }
     }
 
+    /**
+     * {@inheritDoc}
+     */
+    @Override
+    public List<Scenario> getAvailableScenarios(Person person) {
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).list();
+        } else {
+            String query = "from Scenario s join fetch s.scenarioType " +
+                    "where " +
+                    "s.privateScenario = false " +
+                    "or s.researchGroup.researchGroupId in " +
+                    "(select m.researchGroup.researchGroupId from ResearchGroupMembership m where m.person.personId = :personId) " +
+                    "order by s.scenarioName asc";
+            return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).list();
+        }
+    }
+
     @Override
     public int getScenarioCountForList(Person person) {
         if (person.getAuthority().equals("ROLE_ADMIN")) {
@@ -134,5 +155,11 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
                     "(lower(person.givenname) like lower('%" + words[1] + "%')" +
                     " and lower(person.surname) like lower('%" + words[0] + "%'))";
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Scenario> getAllRecordsFull() {
+        return super.getAllRecordsFull();
     }
 }

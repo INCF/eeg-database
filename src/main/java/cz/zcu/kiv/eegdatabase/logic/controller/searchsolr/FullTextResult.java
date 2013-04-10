@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
 import org.apache.wicket.Page;
 
 import java.io.Serializable;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -15,10 +17,11 @@ public class FullTextResult implements Serializable {
 
     private String uuid;
     private String title;
-    private String text;
+    private List<String> textFragments;
     private String type;
-    private Class<? extends Page> instance;
+    private Class<? extends Page> targetPage;
     private int id;
+    private Date timestamp;
 
     private static final long serialVersionUID = 5458851218415845861L;
 
@@ -54,19 +57,27 @@ public class FullTextResult implements Serializable {
         this.type = type;
     }
 
-    public String getText() {
-        return text;
+    public List<String> getTextFragments() {
+        return textFragments;
     }
 
-    public void setText(String text) {
-        this.text = text;
+    public void setTextFragments(List<String> textFragments) {
+        this.textFragments = textFragments;
     }
 
-    public Class<? extends Page> getInstance() {
-        return instance;
+    public Class<? extends Page> getTargetPage() {
+        return targetPage;
     }
 
-    public void setInstance(Class<? extends  Page> instance) {
-        this.instance = instance;
+    public void setTargetPage(Class<? extends Page> targetPage) {
+        this.targetPage = targetPage;
+    }
+
+    public Date getTimestamp() {
+        return timestamp;
+    }
+
+    public void setTimestamp(Date timestamp) {
+        this.timestamp = timestamp;
     }
 }
