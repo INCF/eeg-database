@@ -2,25 +2,33 @@ package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import org.apache.wicket.datetime.PatternDateConverter;
+import org.apache.wicket.datetime.markup.html.basic.DateLabel;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.markup.repeater.data.DataView;
+import org.apache.wicket.markup.repeater.data.IDataProvider;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.StringValue;
 
-import java.util.List;
+import java.io.Serializable;
 
 /**
+ * This component is responsible for displaying full text search results.
+ *
  * Created with IntelliJ IDEA.
  * User: Jan Koren
  * Date: 26.3.13
  * Time: 1:13
- * To change this template use File | Settings | File Templates.
  */
-
 public class SearchResultPanel extends Panel {
 
     private static long serialVersionUID = 1L;
@@ -29,14 +37,33 @@ public class SearchResultPanel extends Panel {
     private boolean isModelEmpty = false;
     private boolean foundResultsPerMultiplePages = false;
 
-    public SearchResultPanel(String id, IModel<List<FullTextResult>> fullTextResults) {
+    public SearchResultPanel(String id, StringValue searchString) {
         super(id);
-        if(fullTextResults.getObject().isEmpty()) {
+        IDataProvider<FullTextResult> fullTextResults = new SearchResultDataProvider(searchString);
+        long foundResults = fullTextResults.size();
+        if(foundResults == 0) {
             isModelEmpty = true;
         }
-        if(fullTextResults.getObject().size() > ITEMS_PER_PAGE) {
+        if(foundResults > ITEMS_PER_PAGE) {
             foundResultsPerMultiplePages = true;
         }
+
+        add(new Label("numberOfResults", ResourceUtils.getString("text.search.numberOfResultsFound",
+                new Model<Serializable>(foundResults))) {
+            @Override
+            public boolean isVisible() {
+                return !isModelEmpty;
+            }
+        });
+
+        add(new Label("noResultsFound", ResourceUtils.getString("text.search.noResults")) {
+            @Override
+            public boolean isVisible() {
+                return isModelEmpty;
+            }
+        });
+
+        add(new SearchFacets("categories", searchString));
 
         SearchResultList searchResultList =  new SearchResultList("results", fullTextResults, ITEMS_PER_PAGE);
         add(searchResultList);
@@ -46,30 +73,36 @@ public class SearchResultPanel extends Panel {
                 return foundResultsPerMultiplePages;
             }
         });
-
-        add(new Label("noResultsFound", "No results found") {
-            @Override
-            public boolean isVisible() {
-                return isModelEmpty;
-            }
-        });
     }
 
-    private class SearchResultList extends PageableListView<FullTextResult> {
+    /**
+     * List that renders full text results.
+     */
+    private class SearchResultList extends DataView<FullTextResult> {
 
-        public SearchResultList(final String id, final IModel<List<FullTextResult>> model, int itemsPerPage) {
-            super(id, model, itemsPerPage);
+        protected SearchResultList(String id, IDataProvider<FullTextResult> dataProvider, long itemsPerPage) {
+            super(id, dataProvider, itemsPerPage);
         }
 
         @Override
-        protected void populateItem(ListItem<FullTextResult> item) {
+        public void populateItem(Item<FullTextResult> item) {
             item.setModel(new CompoundPropertyModel<FullTextResult>(item.getModel()));
 
             item.add(new Label("uuid"));
-            item.add(new Label("title"));
+            String title = item.getModelObject().getTitle();
+            if(title.isEmpty()) {
+                title = ResourceUtils.getString("text.search.results.title.empty");
+            }
+            item.add(new Label("title", title).setEscapeModelStrings(false));
             item.add(new Label("type"));
-            item.add(new Label("text"));
-            BookmarkablePageLink link = new BookmarkablePageLink<Void>("link", item.getModelObject().getInstance(),
+            item.add(new ListView<String>("textFragments") {
+                @Override
+                protected void populateItem(ListItem<String> item) {
+                    item.add(new Label("textFragment", item.getModelObject()).setEscapeModelStrings(false));
+                }
+            });
+            item.add(new DateLabel("timestamp", new PatternDateConverter(StringUtils.DATE_TIME_FORMAT_PATTER, true)));
+            BookmarkablePageLink link = new BookmarkablePageLink<Void>("link", item.getModelObject().getTargetPage(),
                     PageParametersUtils.getDefaultPageParameters(item.getModelObject().getId()));
             item.add(link);
         }
