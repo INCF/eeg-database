@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.springframework.dao.support.DataAccessUtils;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.*;
 
@@ -241,5 +242,11 @@ public class SimplePersonDao
 
     public void initialize(Person person){
         getSessionFactory().getCurrentSession().update(person);
+    }
+    
+    @Transactional(readOnly = true)
+    @Override
+    public List<Person> getAllRecordsFull() {
+        return super.getAllRecordsFull();
     }
 }

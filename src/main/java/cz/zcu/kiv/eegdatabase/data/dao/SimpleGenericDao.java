@@ -8,17 +8,24 @@ import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.lucene.search.highlight.Highlighter;
 import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.apache.lucene.util.Version;
-import org.hibernate.Criteria;
+import org.apache.solr.client.solrj.SolrServerException;
+import org.hibernate.*;
+import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.metadata.ClassMetadata;
+import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.Serializable;
 import java.lang.reflect.Field;
-import java.util.List;
-import java.util.Map;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.*;
 
 /**
  * Class implements interface for connecting logic and data layer.
@@ -31,7 +38,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         extends HibernateDaoSupport implements GenericDao<T, PK> {
 
     @Autowired
-    PojoIndexer<T> indexer;
+    PojoIndexer indexer;
 
     protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_31;
 
@@ -56,7 +63,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         // then add marked fields to the solr index
         // currently DISABLED, because when the solr server is down,
         // an exception is thrown
-        /*
+
         try {
             indexer.index(newInstance);
         } catch (IOException e) {
@@ -66,7 +73,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
-        */
 
         return primaryKey;
     }
@@ -118,17 +124,15 @@ public class SimpleGenericDao<T, PK extends Serializable>
         getHibernateTemplate().update(transientObject);
         // currently DISABLED, because when the solr server is down,
         // an exception is thrown
-        /*
         try {
             indexer.index(transientObject);
-        } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
-        } catch (SolrServerException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         } catch (IllegalAccessException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (SolrServerException e) {
+            e.printStackTrace();
         }
-        */
     }
 
     /**
@@ -141,7 +145,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
         getHibernateTemplate().delete(persistentObject);
         // currently DISABLED, because when the solr server is down,
         // an exception is thrown
-        /*
+
         try {
             indexer.unindex(persistentObject);
         } catch (IOException e) {
@@ -149,7 +153,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
         } catch (SolrServerException e) {
             e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
         }
-        */
     }
 
     /**
@@ -160,6 +163,27 @@ public class SimpleGenericDao<T, PK extends Serializable>
     public List<T> getAllRecords() {
         return getHibernateTemplate().findByCriteria(DetachedCriteria.forClass(type));
         //return getHibernateTemplate().loadAll(type);
+    }
+
+    public List<T> getAllRecordsFull() {
+        List<T> records = getAllRecords();
+        for(T record : records) {
+            Method[] methods = record.getClass().getDeclaredMethods();
+            for (Method method : methods) {
+                if(method.getName().startsWith("get") && !method.getReturnType().isPrimitive()) {
+                    try {
+                        initializeProperty(method.invoke(record));
+                    } catch (IllegalAccessException e) {
+                        e.printStackTrace();
+                    } catch (InvocationTargetException e) {
+                        e.printStackTrace();
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        }
+        return records;
     }
 
     /**
@@ -270,6 +294,12 @@ public class SimpleGenericDao<T, PK extends Serializable>
             }
         }
         return text;
+    }
+
+    protected void initializeProperty(Object property) {
+        if(!Hibernate.isInitialized(property)) {
+            getHibernateTemplate().initialize(property);
+        }
     }
 }
 

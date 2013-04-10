@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -159,5 +160,11 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
                     "(lower(person.givenname) like lower('%" + words[1] + "%')" +
                     " and lower(person.surname) like lower('%" + words[0] + "%'))";
         }
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<Scenario> getAllRecordsFull() {
+        return super.getAllRecordsFull();
     }
 }

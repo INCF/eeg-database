@@ -7,8 +7,11 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.hibernate.Hibernate;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -129,4 +132,9 @@ public class SimpleArticleDao<T, PK extends Serializable>
         return articles;
     }
 
+    @Transactional(readOnly = true)
+    @Override
+    public List<T> getAllRecordsFull() {
+        return super.getAllRecordsFull();
+    }
 }
