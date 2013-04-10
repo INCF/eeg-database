@@ -64,7 +64,7 @@ public class IndexingTest {
     @Test
     public void indexArticleComments() throws Exception {
         log.info("Indexing sample article comments...");
-        PojoIndexer<ArticleComment> articleCommentIndexer = new PojoIndexer<ArticleComment>();
+        PojoIndexer articleCommentIndexer = new PojoIndexer();
         articleCommentIndexer.setSolrServer(solrServer);
 
         for (ArticleComment articleComment : articleCommentList) {
@@ -80,7 +80,7 @@ public class IndexingTest {
     @Test
     public void indexArticles() throws Exception {
         log.info("Indexing sample articles...");
-        PojoIndexer<Article> articleIndexer = new PojoIndexer<Article>();
+        PojoIndexer articleIndexer = new PojoIndexer();
         articleIndexer.setSolrServer(solrServer);
         for (Article article : articleList) {
             articleIndexer.index(article);
@@ -91,7 +91,7 @@ public class IndexingTest {
     @Test
     public void indexExperiments() throws Exception {
         log.info("Indexing sample experiments...");
-        PojoIndexer<Experiment> experimentIndexer = new PojoIndexer<Experiment>();
+        PojoIndexer experimentIndexer = new PojoIndexer();
         experimentIndexer.setSolrServer(solrServer);
         for (Experiment experiment : experimentList) {
             experimentIndexer.index(experiment);
@@ -102,7 +102,7 @@ public class IndexingTest {
     @Test
     public void deleteExperimentsFromIndex() throws SolrServerException, IllegalAccessException, IOException {
         log.info("Adding sample experiments to the index...");
-        PojoIndexer<Experiment> experimentIndexer = new PojoIndexer<Experiment>();
+        PojoIndexer experimentIndexer = new PojoIndexer();
         experimentIndexer.setSolrServer(solrServer);
         // add new experiment data to the index
         Experiment experiment1 = createTestExperiment(99, 15, "note notes notepad");
@@ -126,7 +126,7 @@ public class IndexingTest {
         log.info("Documents found: " + documentsFound);
         assertEquals(1, documentsFound);
 
-        response = createSimpleQuery("brain waves");;
+        response = createSimpleQuery("brain waves");
         documentsFound = response.getResults().size();
         log.info("Documents found: " + documentsFound);
         assertEquals(1, documentsFound);
@@ -164,7 +164,7 @@ public class IndexingTest {
         List<Class<?>> solrIndexableClasses = IndexingUtils.getIndexableClasses();
         int indexedClasses = solrIndexableClasses.size();
         log.info("Classes found: " + indexedClasses);
-        assertEquals(30, indexedClasses);
+        assertEquals(5, indexedClasses);
     }
 
     /**
@@ -178,7 +178,7 @@ public class IndexingTest {
 
         List<Class<?>> solrIndexableClasses = IndexingUtils.getIndexableClasses();
 
-        assertEquals(30, solrIndexableClasses.size());
+        assertEquals(5, solrIndexableClasses.size());
 
         log.info("Creating one instance of each indexable class...");
         int i = 0;
@@ -205,7 +205,7 @@ public class IndexingTest {
                 }
             }
 
-            PojoIndexer<Object> indexer = new PojoIndexer<Object>();
+            PojoIndexer indexer = new PojoIndexer();
             indexer.setSolrServer(solrServer);
             indexer.index(instance);
         }
@@ -230,7 +230,7 @@ public class IndexingTest {
                 log.info(fieldName + ": " + document.getFieldValue(fieldName));
             }
         }
-        assertEquals(30, documentsFound);
+        assertEquals(5, documentsFound);
     }
 
 
