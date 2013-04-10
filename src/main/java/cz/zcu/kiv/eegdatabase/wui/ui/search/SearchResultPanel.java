@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
@@ -37,9 +38,9 @@ public class SearchResultPanel extends Panel {
     private boolean isModelEmpty = false;
     private boolean foundResultsPerMultiplePages = false;
 
-    public SearchResultPanel(String id, StringValue searchString) {
+    public SearchResultPanel(String id, StringValue searchString, ResultCategory category) {
         super(id);
-        IDataProvider<FullTextResult> fullTextResults = new SearchResultDataProvider(searchString);
+        IDataProvider<FullTextResult> fullTextResults = new SearchResultDataProvider(searchString, category);
         long foundResults = fullTextResults.size();
         if(foundResults == 0) {
             isModelEmpty = true;
@@ -63,7 +64,7 @@ public class SearchResultPanel extends Panel {
             }
         });
 
-        add(new SearchFacets("categories", searchString));
+        add(new SearchFacets("categories", searchString, category));
 
         SearchResultList searchResultList =  new SearchResultList("results", fullTextResults, ITEMS_PER_PAGE);
         add(searchResultList);

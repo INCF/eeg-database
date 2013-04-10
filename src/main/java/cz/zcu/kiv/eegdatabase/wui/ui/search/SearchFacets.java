@@ -7,6 +7,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListItemModel;
 import org.apache.wicket.markup.html.list.ListView;
@@ -17,10 +18,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * Faceted navigation for fulltext search results.
@@ -38,10 +36,12 @@ public class SearchFacets extends Panel {
 
     private String searchString;
     private List<FacetCategory> categories;
+    private ResultCategory resultCategory;
 
-    public SearchFacets(String id, StringValue searchStringValue) {
+    public SearchFacets(String id, StringValue searchStringValue, final ResultCategory resultCategory) {
         super(id);
         this.searchString = searchStringValue.toString();
+        this.resultCategory = resultCategory;
         categories = new ArrayList<FacetCategory>();
 
         Map<String, Long> facets = searchService.getCategoryFacets(this.searchString);
@@ -52,16 +52,22 @@ public class SearchFacets extends Panel {
             }
         }
 
+        Collections.sort(categories);
+
         add(new ListView<FacetCategory>("categoryList", categories) {
             @Override
             protected void populateItem(ListItem<FacetCategory> category) {
                 PageParameters pageParameters = new PageParameters();
+                pageParameters.add("searchString", searchString);
+                pageParameters.add("category", category.getModelObject().getName());
+
                 String categoryName = getPropertyForType(category.getModelObject().getName());
-                pageParameters.add("searchString", searchString
-                        + " && class:\"" + category.getModelObject().getName() + "\"");
                 String categoryValue = categoryName + " (" + category.getModelObject().getCount() + ")";
-                category.add(new BookmarkablePageLink<Void>("category", SearchPage.class, pageParameters)
-                        .add(new Label("categoryName", categoryValue)));
+                Link link = new BookmarkablePageLink<Void>("category", SearchPage.class, pageParameters);
+                if (resultCategory != null && category.getModelObject().getName().equals(resultCategory.getValue())) {
+                    link.setEnabled(false);
+                }
+                category.add(link.add(new Label("categoryName", categoryValue)));
             }
         });
     }
@@ -74,6 +80,7 @@ public class SearchFacets extends Panel {
     private String getPropertyForType(String category) {
         Map<String, String> categoryToPropertyMap = new HashMap<String, String>();
 
+        categoryToPropertyMap.put(ResultCategory.ALL.getValue(), ResourceUtils.getString("text.search.facet.all"));
         categoryToPropertyMap.put(ResultCategory.ARTICLE.getValue(), ResourceUtils.getString("text.search.facet.articles"));
         categoryToPropertyMap.put(ResultCategory.EXPERIMENT.getValue(), ResourceUtils.getString("text.search.facet.experiments"));
         categoryToPropertyMap.put(ResultCategory.PERSON.getValue(), ResourceUtils.getString("text.search.facet.persons"));

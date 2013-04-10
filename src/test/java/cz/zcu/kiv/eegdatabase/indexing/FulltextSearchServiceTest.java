@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -63,7 +64,7 @@ public class FulltextSearchServiceTest {
     @Ignore
     @Test
     public void getDocumentCountForTestQuery() {
-        long count = fulltextSearchService.getTotalNumberOfDocumentsForQuery("");
+        long count = fulltextSearchService.getTotalNumberOfDocumentsForQuery("", ResultCategory.ALL);
         log.info("Count: " + count);
         assertTrue(count == 0);
     }

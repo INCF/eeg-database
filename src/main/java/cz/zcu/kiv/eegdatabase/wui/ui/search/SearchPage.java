@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -23,9 +24,10 @@ public class SearchPage extends MenuPage {
         if (searchString.isEmpty() || searchString.isNull()) {
             isSearchStringEmpty = true;
         }
+        ResultCategory category = ResultCategory.getCategory(params.get("category").toString());
 
-        SearchPanel searchPanel = new SearchPanel("searchPanel");
-        SearchResultPanel searchResultPanel = new SearchResultPanel("resultPanel", searchString) {
+        SearchPanel searchPanel = new SearchPanel("searchPanel", searchString);
+        SearchResultPanel searchResultPanel = new SearchResultPanel("resultPanel", searchString, category) {
 
             @Override
             public boolean isVisible() {

@@ -11,7 +11,8 @@ public enum ResultCategory {
     EXPERIMENT("Experiment"),
     PERSON("Person"),
     RESEARCH_GROUP("Research group"),
-    SCENARIO("Scenario");
+    SCENARIO("Scenario"),
+    ALL("All");
 
     private String value;
 
@@ -21,5 +22,14 @@ public enum ResultCategory {
 
     public String getValue() {
         return value;
+    }
+
+    public static ResultCategory getCategory(String value) {
+        for(ResultCategory category : values()) {
+            if(category.getValue().equals(value)) {
+                return category;
+            }
+        }
+        return null;
     }
 }

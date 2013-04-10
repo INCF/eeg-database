@@ -40,9 +40,9 @@ public class FulltextSearchService {
      * @param count Number of retrieved results.
      * @return List of full text results.
      */
-    public List<FullTextResult> getResultsForQuery(String inputQuery, int start, int count) {
+    public List<FullTextResult> getResultsForQuery(String inputQuery, ResultCategory category, int start, int count) {
 
-        SolrQuery query = configureQuery(inputQuery, start, count);
+        SolrQuery query = configureQuery(inputQuery, category, start, count);
         // fetches a response to the query
         QueryResponse response = null;
         try {
@@ -104,9 +104,12 @@ public class FulltextSearchService {
      * @param count Number of results we wish to display.
      * @return
      */
-    private SolrQuery configureQuery(String inputQuery, int start, int count) {
+    private SolrQuery configureQuery(String inputQuery, ResultCategory category, int start, int count) {
         SolrQuery query = new SolrQuery();
         query.setQuery(inputQuery);
+        if(category != null && !category.equals(ResultCategory.ALL)) {
+            query.addFilterQuery(IndexField.CLASS.getValue() + ":\"" + category.getValue() + "\"");
+        }
         query.setStart(start);
         query.setRows(count);
         query.setHighlightSimplePre(FullTextSearchUtils.HIGHLIGHTED_TEXT_BEGIN);
@@ -141,8 +144,8 @@ public class FulltextSearchService {
      * @throws SolrServerException
      */
     public List<FullTextResult> getAllResults() throws SolrServerException {
-        int resultsFound = getTotalNumberOfDocumentsForQuery("*");
-        return getResultsForQuery("*", 0, resultsFound);
+        int resultsFound = getTotalNumberOfDocumentsForQuery("*", ResultCategory.ALL);
+        return getResultsForQuery("*", ResultCategory.ALL,  0, resultsFound);
     }
 
     /**
@@ -173,7 +176,6 @@ public class FulltextSearchService {
 
             List<String> resultsPerDocument = response.getHighlighting().get(id).get(IndexField.AUTOCOMPLETE.getValue());
             for (String result : resultsPerDocument) {
-                //autocompleteSet.add(result.toLowerCase());
                 String resultValue;
                 int resultFrequency;
                 int delimiterPosition = result.lastIndexOf('#');
@@ -216,9 +218,12 @@ public class FulltextSearchService {
      * @param queryString The query string.
      * @return The number of all documents matching the query.
      */
-    public int getTotalNumberOfDocumentsForQuery(String queryString) {
+    public int getTotalNumberOfDocumentsForQuery(String queryString, ResultCategory category) {
         SolrQuery q = new SolrQuery();
         q.setQuery(queryString);
+        if(category != null && !category.equals(ResultCategory.ALL)) {
+            q.setFilterQueries(IndexField.CLASS.getValue() + ":\"" + category.getValue() + "\"") ;
+        }
         q.setRows(0); // don't actually request any data
         try {
             return (int) solrServer.query(q).getResults().getNumFound();
@@ -273,13 +278,21 @@ public class FulltextSearchService {
         } catch (SolrServerException e) {
             e.printStackTrace();
         }
-        for(FacetField field : response.getFacetFields()) {
+        long totalCount = 0;
+        List<FacetField> facets = response.getFacetFields();
+        for(FacetField field : facets) {
             log.info("count: " + field.getValueCount());
-            for (FacetField.Count count : field.getValues()) {
-                results.put(count.getName(), count.getCount());
-                log.info(count.getName() + ", " + count.getCount());
+            List<FacetField.Count> facetEntries = field.getValues();
+            for (FacetField.Count count : facetEntries) {
+                long countValue = count.getCount();
+                results.put(count.getName(), countValue);
+                log.info(count.getName() + ", " + countValue);
+                totalCount += countValue;
             }
         }
+
+        // add a "facet" for all results
+        results.put(ResultCategory.ALL.getValue(), totalCount);
 
         return results;
     }
