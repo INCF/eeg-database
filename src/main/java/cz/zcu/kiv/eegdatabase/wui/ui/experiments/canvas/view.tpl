@@ -17,7 +17,7 @@
     <img title="Show info about the experiment" id="info" src="files/images/panel_detail.png" />
     <img id="clear" title="Clear the canvas" src="files/images/panel_config.png" />
     <img alt="Add another canvas" title="Add another canvas" id="add" src="files/images/panel_run.png" />
-    <img id="export" title="Save the canvas as JPEG" src="files/images/panel_zoom.png" />
+    <img id="zoom" title="Reset zoom" src="files/images/panel_zoom.png" />
     <input id="color1" type="text" name="color1" value="#333399" />
 </div>
 <div id="backgroundPopup">

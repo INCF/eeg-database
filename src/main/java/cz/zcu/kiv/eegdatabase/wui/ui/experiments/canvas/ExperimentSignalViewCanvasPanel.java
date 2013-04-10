@@ -125,6 +125,7 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jquery.jqplot.min.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jqplot.canvasAxisLabelRenderer.js"));
         response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jqplot.canvasTextRenderer.js"));
+        response.render(JavaScriptHeaderItem.forUrl("/files/js/visualization/jqplot.cursor.min.js"));
         super.renderHead(response);
     }
 
