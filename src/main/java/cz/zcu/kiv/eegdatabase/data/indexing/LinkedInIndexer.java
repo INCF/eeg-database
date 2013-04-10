@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
+import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
@@ -38,6 +40,7 @@ public class LinkedInIndexer extends Indexer<Post> {
         document.addField(IndexField.ID.getValue(), 1);
         document.addField(IndexField.TITLE.getValue(), post.getTitle());
         document.addField(IndexField.TEXT.getValue(), post.getSummary());
+        document.addField(IndexField.CLASS.getValue(), ResultCategory.ARTICLE.getValue());
         document.addField(IndexField.SOURCE.getValue(), SOURCE_LINKEDIN);
         return document;
     }
