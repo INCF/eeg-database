@@ -8,6 +8,7 @@ var context;
 var run=true;
 var x,y;
 var signalData = new Array();
+var plots = new Array();
 
 createArray = function (index) {
     signalData[index] = new Array();
@@ -75,22 +76,7 @@ function centerPopup(){
             id: wraID,
             "class": "canvasbox"
         }).css({
-                //width: canvasWidth + 'px',
-                //height: canvasHeight + 'px'
             }).appendTo('#wrapper');
-        /*$('<img>').attr({
-         "class" : "del",
-         "src" : "img/delete.png"
-         }).css({
-         "width" : "18px",
-         "height" : "18px"
-         }).appendTo('#' + wraID);
-         $('<input>').attr({
-         id: spaID,
-         "class" : "sigLabel",
-         "maxlength" : 35
-         }).appendTo('#' + wraID);
-         $('#'+spaID).val('Label');*/
 
         $(".del").click(function(){
             $(this).parent().remove();
@@ -121,16 +107,21 @@ function centerPopup(){
                             border : "1px solid #e6e6e6"
                         }, 250);
                         $("#"+activeID).css({
-                            "position" : "static"
-                            //"width" : "400px",
-                            //"height" : "200px"
+                            "position" : "relative",
+                            top : "auto",
+                            left : "auto"
                         });
-                        //$("#"+activeID).draggable(false);
                         $("#"+activeID).removeClass("active");
                         $("#"+activeID).addClass("canvasbox");
                         $("#tree").hide();
                         active = 0;
+                        if (typeof plots[activeID] != 'undefined') {
+                            plots[activeID].replot();
+                        }
                     });
+                    if (typeof plots[activeID] != 'undefined') {
+                        plots[activeID].replot();
+                    }
                 }
                 if (event.which == 3) {
                     $(this).parent().remove();
@@ -143,17 +134,12 @@ function centerPopup(){
             $("#"+activeID).stop().animate({
                 top : "auto",
                 left : "auto",
-                //width : canvasWidth+"px",
-                //height : canvasHeight+"px",
                 background : "#cecece",
                 border : "1px solid #e6e6e6"
             }, 250);
             $("#"+activeID).css({
                 "position" : "static"
-                //"width" : "400px",
-                //"height" : "200px"
             });
-            //$("#"+activeID).draggable(false);
             $("#"+activeID).removeClass("active");
             $("#"+activeID).addClass("canvasbox");
             $("#tree").hide();
@@ -265,11 +251,30 @@ init = function () {
 };
 
 function _click(id) {
-    ctx = $("#"+activeID)[0].getContext('2d');
-    canvasClear();
-    run = true;
-    init();
-    draw();
+    drawGraph(activeID);
+}
+
+function drawGraph(place) {
+    plots[place] = $.jqplot (place, [[3,7,9,1,5,3,8,2,5]], {
+        title: 'Plot With Options',
+        axesDefaults: {
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+        },
+        seriesDefaults: {
+            rendererOptions: {
+                smooth: true
+            }
+        },
+        axes: {
+            xaxis: {
+                label: "X Axis",
+                pad: 0
+            },
+            yaxis: {
+                label: "Y Axis"
+            }
+        }
+    });
 }
 
 $(document).ready(function() {
