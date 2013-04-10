@@ -162,11 +162,9 @@ function centerPopup(){
             canvasClear();
         });
 
-        $("#export").click(function() {
+        $("#zoom").click(function() {
             if (active != 0) {
-                var canvas = document.getElementById(activeID);
-                var img = canvas.toDataURL("image/jpeg");
-                window.open(img);
+                plots[activeID].resetZoom();
             }
         });
 
@@ -251,12 +249,12 @@ init = function () {
 };
 
 function _click(id) {
-    drawGraph(activeID);
+    drawGraph(activeID, tree.getSelectedItemText());
 }
 
-function drawGraph(place) {
+function drawGraph(place, headline) {
     plots[place] = $.jqplot (place, [[3,7,9,1,5,3,8,2,5]], {
-        title: 'Plot With Options',
+        title: headline,
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },
@@ -273,17 +271,15 @@ function drawGraph(place) {
             yaxis: {
                 label: "Y Axis"
             }
+        },
+        cursor: {
+            zoom: true,
+            show: true
         }
     });
 }
 
 $(document).ready(function() {
-    /*tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);
-    tree.setSkin('dhx_skyblue');
-    tree.setImagePath("files/images/imgs/csh_bluebooks/");
-    tree.enableDragAndDrop(false);
-    tree.setOnClickHandler(_click);*/
-
     $('#color1').colorPicker();
 
     $("#visualization").click(function(){
