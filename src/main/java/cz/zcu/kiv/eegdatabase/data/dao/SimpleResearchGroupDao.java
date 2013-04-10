@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupAccountInfo;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -146,5 +147,11 @@ public class SimpleResearchGroupDao
     public List getGroupsForList(int start, int limit) {
         String query = "from ResearchGroup g order by g.title asc";
         return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(limit).list();
+    }
+
+    @Transactional(readOnly = true)
+    @Override
+    public List<ResearchGroup> getAllRecordsFull() {
+        return super.getAllRecordsFull();
     }
 }

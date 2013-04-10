@@ -81,5 +81,7 @@ public interface GenericDao <T, PK extends Serializable>{
      */
     int getCountRecords();
 
-    public Map<T, String> getFulltextResults(String fullTextQuery) throws ParseException;
+    public Map<T, String>  getFulltextResults(String fullTextQuery) throws ParseException;
+
+    public List<T> getAllRecordsFull();
 }
