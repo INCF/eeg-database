@@ -26,6 +26,11 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
+import java.util.HashSet;
+import java.util.Set;
+import org.apache.wicket.extensions.model.AbstractCheckBoxModel;
+import org.apache.wicket.markup.html.link.Link;
 
 /**
  * Panel which displays list of experiments inside a package.
@@ -43,6 +48,10 @@ public class ExperimentPackageContentPanel extends Panel {
      * Main model of the component - experiment package
      */
     private IModel<ExperimentPackage> epModel;
+    /**
+     * Set of selected experiments.
+     */
+    private Set<Experiment> selectedExperiments;
     
     //containers
     private WebMarkupContainer experimentListCont;
@@ -57,6 +66,7 @@ public class ExperimentPackageContentPanel extends Panel {
 	super(id);
 
 	this.epModel = model;
+	this.selectedExperiments = new HashSet<Experiment>();
 	
 	experimentListCont = new WebMarkupContainer("experimentListCont");
 	experimentListCont.setOutputMarkupPlaceholderTag(true);
@@ -78,6 +88,27 @@ public class ExperimentPackageContentPanel extends Panel {
 	
 	header.add(createVisibilityLink("showListLink", true));
 	header.add(createVisibilityLink("hideListLink", false));
+	header.add(createRemoveSelectedLink("removeSelectedLink"));
+    }
+
+    /**
+     * Creates link which provides action for removing selected experiments
+     * from the package
+     * @param id link component id
+     * @return the link
+     */
+    private Link createRemoveSelectedLink(String id) {
+	Link link = new Link(id) {
+
+	    @Override
+	    public void onClick() {
+		//TODO implement facade call
+		System.out.println(selectedExperiments.size());
+	    }
+	};
+
+	link.add(new Label("label", new StringResourceModel("button.removeSelected", this, null)));
+	return link;
     }
 
     /**
@@ -148,6 +179,36 @@ public class ExperimentPackageContentPanel extends Panel {
     private List<? extends IColumn<Experiment, String>> createListColumns() {
 	List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
 
+	columns.add(new CheckBoxColumn<Experiment, String> (Model.of("")) {
+
+	    @Override
+	    protected IModel<Boolean> newCheckBoxModel(final IModel<Experiment> rowModel) {
+		return new AbstractCheckBoxModel() {
+
+		    @Override
+		    public boolean isSelected() {
+			return selectedExperiments.contains(rowModel.getObject());
+		    }
+
+		    @Override
+		    public void select() {
+			selectedExperiments.add(rowModel.getObject());
+		    }
+
+		    @Override
+		    public void unselect() {
+			selectedExperiments.add(rowModel.getObject());
+		    }
+
+		    @Override
+		    public void detach() {
+			rowModel.detach();
+		    }
+
+		};
+
+	    }
+	});
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.date"), "startTime", "startTime"));
