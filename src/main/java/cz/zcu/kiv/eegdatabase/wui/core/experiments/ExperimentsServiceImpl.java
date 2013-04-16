@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -17,10 +18,16 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     protected Log log = LogFactory.getLog(getClass());
 
     ExperimentDao<Experiment, Integer> experimentDao;
+    private ExperimentPackageConnectionDao experimentPackageConnectionDao;
 
     @Required
     public void setExperimentDao(ExperimentDao<Experiment, Integer> experimentDao) {
         this.experimentDao = experimentDao;
+    }
+
+    @Required
+    public void setExperimentPackageConnectionDao(ExperimentPackageConnectionDao experimentPackageConnectionDao) {
+	this.experimentPackageConnectionDao = experimentPackageConnectionDao;
     }
 
     @Override
@@ -153,6 +160,12 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Transactional(readOnly = true)
     public List<Experiment> getUnique(Experiment example) {
         return experimentDao.findByExample(example);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Experiment> getExperimentsByPackage(int packageId) {
+	return this.experimentPackageConnectionDao.listExperimentsByPackage(packageId);
     }
 
 }

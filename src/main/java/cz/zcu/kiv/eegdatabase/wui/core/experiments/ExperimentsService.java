@@ -35,4 +35,11 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
     List<Experiment> getRecordsNewerThan(long oracleScn, int personId);
 
     List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId);
+
+    /**
+     * Returns list of experiments belonging to the package.
+     * @param packageId id of the package
+     * @return list of experiments or empty list
+     */
+    public List<Experiment> getExperimentsByPackage(int packageId);
 }

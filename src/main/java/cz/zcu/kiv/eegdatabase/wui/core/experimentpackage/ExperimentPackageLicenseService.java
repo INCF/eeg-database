@@ -1,15 +1,12 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
 /**
+ * Services related to connections between experiment packages and licenses.
  *
- * @author veveri
+ * @author Jakub Danek
  */
 public interface ExperimentPackageLicenseService extends GenericService<ExperimentPackageLicense, Integer> {
 

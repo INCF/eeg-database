@@ -535,6 +535,15 @@ li.comment li li li {
     background: #f0f3f3;
 }
 
+.packageList li {
+    list-style: none;
+}
+
+.packageList h2 a {
+    font-size: 0.7em;
+    margin-left: 5px;
+}
+
 @media print {
     .leftMenu {
         display: none;

@@ -17,6 +17,7 @@ import org.apache.wicket.model.PropertyModel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import java.util.ArrayList;
 
 /**
  * Dataprovider implementation used in table on ListExperimentPage.
@@ -36,6 +37,13 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
 
     private int size;
 
+    /**
+     * Specialized constructor which loads experiments based on given properties
+     * @param facade ExperimentsFacade which will be used to load experiments
+     * @param person person object used for filtering
+     * @param owner search by isOwner (related to the person parameter)
+     * @param subject  search by isSubject (related to the person parameter)
+     */
     public ListExperimentsDataProvider(ExperimentsFacade facade, Person person, boolean owner, boolean subject) {
 
         this.facade = facade;
@@ -52,6 +60,16 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
             list = facade.getAllExperimentsForUser(person, (int) 0, (int) size());
         }
 
+    }
+
+    /**
+     * Constructor which wraps a list of experiments.
+     * @param experiments
+     */
+    public ListExperimentsDataProvider(List<Experiment> experiments) {
+	setSort("experimentId", SortOrder.ASCENDING);
+	this.size = experiments.size();
+	this.list = new ArrayList<Experiment>(experiments);
     }
 
     @Override

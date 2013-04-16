@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
@@ -11,7 +7,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicens
 
 /**
  *
- * @author veveri
+ * @author Jakub Danek
  */
 public class ExperimentPackageLicenseServiceImpl extends GenericServiceImpl<ExperimentPackageLicense, Integer> implements ExperimentPackageLicenseService{
 

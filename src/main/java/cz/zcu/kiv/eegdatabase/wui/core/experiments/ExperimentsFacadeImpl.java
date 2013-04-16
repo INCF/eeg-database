@@ -130,4 +130,9 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     public List<Experiment> getUnique(Experiment example) {
         return service.getUnique(example);
     }
+
+    @Override
+    public List<Experiment> getExperimentsByPackage(int packageId) {
+	return service.getExperimentsByPackage(packageId);
+    }
 }
