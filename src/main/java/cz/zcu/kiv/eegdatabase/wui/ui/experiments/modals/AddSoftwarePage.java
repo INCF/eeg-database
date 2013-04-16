@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -19,6 +20,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 /**
@@ -43,6 +45,8 @@ public class AddSoftwarePage extends WebPage {
     }
 
     private class AddSoftwareForm extends Form<Software>{
+        @SpringBean
+        SoftwareFacade facade;
 
         public AddSoftwareForm(String id, final ModalWindow window) {
             super(id, new CompoundPropertyModel<Software>(new Software()));
@@ -51,7 +55,7 @@ public class AddSoftwarePage extends WebPage {
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addSWHeader", "Add new software"));
+            add(new Label("addSWHeader", "Add software"));
 
             add(new TextField<String>("title").setRequired(true));
             add(new TextArea<String>("description").setRequired(true));
@@ -71,9 +75,14 @@ public class AddSoftwarePage extends WebPage {
                     protected void onEvent(AjaxRequestTarget target) {
                         Software newSw = getModelObject();
                         System.out.println("---- HW-B "+newSw.getTitle()+" "+newSw.getDescription());
+                        if (!facade.canSaveDefaultTitle(newSw.getTitle(), newSw.getSoftwareId())) {
+                            feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
+                            return;
+                        }
                         validate();
                         target.add(feedback);
                         if(!hasError()){
+                            //facade.create(newSw);
                             window.close(target);
                         }
                     }

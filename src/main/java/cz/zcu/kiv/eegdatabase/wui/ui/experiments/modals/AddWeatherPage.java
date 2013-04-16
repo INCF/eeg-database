@@ -56,7 +56,7 @@ public class AddWeatherPage extends WebPage {
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addWeatherHeader", "Add new weather"));
+            add(new Label("addWeatherHeader", ResourceUtils.getModel("pageTitle.addWeatherDefinition")));
             add(new TextField<String>("title").setRequired(true));
             add(new TextArea<String>("description").setRequired(true));
 

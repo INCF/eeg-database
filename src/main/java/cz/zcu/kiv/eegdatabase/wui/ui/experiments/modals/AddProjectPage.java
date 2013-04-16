@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -21,6 +22,7 @@ import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 
 /**
@@ -44,6 +46,8 @@ public class AddProjectPage extends WebPage {
     }
 
     private class AddProjectForm extends Form<ProjectType>{
+        @SpringBean
+        ProjectTypeFacade facade;
 
         public AddProjectForm(String id, final ModalWindow window) {
             super(id, new CompoundPropertyModel<ProjectType>(new ProjectType()));
@@ -52,7 +56,7 @@ public class AddProjectPage extends WebPage {
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addProjectHeader", "Create project type"));
+            add(new Label("addProjectHeader", "Add project type"));
 
             add(new TextField<String>("title").setRequired(true));
             add(new TextArea<String>("description").setRequired(true));
@@ -71,9 +75,14 @@ public class AddProjectPage extends WebPage {
                     protected void onEvent(AjaxRequestTarget target) {
                         ProjectType newPT = getModelObject();
                         System.out.println("---- HW-B "+newPT.getTitle()+" "+newPT.getDescription());
+                        if (!facade.canSaveTitle(newPT.getTitle())) {
+                            feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
+                            return;
+                        }
                         validate();
                         target.add(feedback);
                         if(!hasError()){
+                            facade.create(newPT);
                             window.close(target);
                         }
                     }

@@ -82,4 +82,13 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
         }
         return (list.get(0) == 1);
     }
+
+    public boolean canSaveDefaultTitle(String title, int swId) {
+        String hqlQuery = "from Software s where s.title = :title and s.defaultNumber = 1 and s.softwareId <> :swId";
+        List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("title", title)
+                .setParameter("swId", swId)
+                .list();
+        return (list.size() == 0);
+    }
 }

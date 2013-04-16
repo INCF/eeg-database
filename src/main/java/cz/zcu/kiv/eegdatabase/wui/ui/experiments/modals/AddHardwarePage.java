@@ -56,7 +56,7 @@ public class AddHardwarePage extends WebPage {
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addHWHeader", "Add new hardware"));
+            add(new Label("addHWHeader", ResourceUtils.getModel("pageTitle.addHardwareDefinition")));
             add(new TextField<String>("title").setRequired(true));
             add(new TextArea<String>("description").setRequired(true));
             add(new CheckBox("defaultNumber"));
@@ -82,8 +82,7 @@ public class AddHardwarePage extends WebPage {
                         validate();
                         target.add(feedback);
                         if(!hasError()){
-                            //TODO save object into database
-                            //facade.create(newHw);
+                            facade.create(newHw);
                             window.close(target);
                         }
                     }
