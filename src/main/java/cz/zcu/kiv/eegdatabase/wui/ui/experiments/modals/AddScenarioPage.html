@@ -9,6 +9,8 @@
 
             <h1 wicket:id="addScenarioHeader"></h1>
 
+            <div class="error" wicket:id="feedback"></div>
+
             <div class="form-sub-item added">
                 <label for="group">Education level</label>
                 <select wicket:id="group"></select>
@@ -20,8 +22,8 @@
             </div>
 
             <div class="form-sub-item">
-                <label for="length">Length</label>
-                <input type="text" wicket:id="length"/>
+                <label for="scenarioLength">Length</label>
+                <input type="text" wicket:id="scenarioLength"/>
             </div>
 
             <div class="form-sub-item">
@@ -35,36 +37,8 @@
             </div>
 
             <div class="form-sub-item">
-                <label for="fileAsXML">Scenario as XML</label>
-                <input type="checkbox" wicket:id="isFileAsXML"/>
-            </div>
-
-
-            <div class="form-sub-item">
                 <label for="dataFile">Data file</label>
                 <input type="file" wicket:id="dataFile"/>
-            </div>
-
-            <div class="form-sub-item">
-                <label for="dataFileXml">XML Data file</label>
-                <input type="file" wicket:id="fileAsXML" />
-            </div>
-
-            <!-- transform to Wicket -->
-            <div class="form-sub-item">
-                <label for="schema">Schema</label>
-                <ol class="radio-group">
-                    <li>
-                        <input name="schema" type="radio" value="noSchema" checked="checked">
-                        <label for="noSchema">None</label>
-                    </li>
-                    <li>
-                        <input name="schema" type="radio" value="fromList">
-                        <label for="fromList">From list</label>
-                    </li>
-                </ol>
-                <select wicket:id="schemaSelect"></select>
-                <div class="close"></div>
             </div>
 
             <div class="close"></div>

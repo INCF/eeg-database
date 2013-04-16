@@ -1,11 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+
+import java.util.List;
 
 public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
 
@@ -22,4 +22,6 @@ public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
     List<Scenario> getScenariosForList(Person person, int start, int count);
 
     int getScenarioCountForList(Person person);
+
+    boolean existsScenario(String title);
 }
