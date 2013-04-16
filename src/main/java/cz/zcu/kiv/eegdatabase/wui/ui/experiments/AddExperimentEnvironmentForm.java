@@ -52,6 +52,9 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         addModalWindowAndButton(this, "addSWModal", "add-sw",
                 "addSW", AddSoftwarePage.class.getName());
 
+        addModalWindowAndButton(this, "addWeatherModal", "add-weather",
+                "addWeather", AddWeatherPage.class.getName());
+
         List<Hardware> hardwares = hardwareFacade.getAllRecords();
         ArrayList<String> hardwareTitles = new ArrayList<String>();
         for (Hardware hw : hardwares){
