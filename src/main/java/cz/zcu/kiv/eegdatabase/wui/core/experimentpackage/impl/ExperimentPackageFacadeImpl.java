@@ -57,4 +57,20 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 	return i;
     }
 
+    @Override
+    public boolean removeExperimentFromPackage(Experiment exp, ExperimentPackage pckg) {
+	return experimentPackageConnectionService.removeExperimentFromPackage(exp, pckg);
+    }
+
+    @Override
+    public int removeExperimentsFromPackage(List<Experiment> exp, ExperimentPackage pckg) {
+	int i = 0;
+	for(Experiment e : exp) {
+	    if(this.removeExperimentFromPackage(e, pckg)) {
+		i++;
+	    }
+	}
+	return i;
+    }
+
 }

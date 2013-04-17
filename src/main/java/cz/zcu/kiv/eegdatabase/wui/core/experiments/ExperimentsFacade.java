@@ -4,6 +4,7 @@ import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
@@ -42,4 +43,11 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
      * @return list of experiments or empty list
      */
     List<Experiment> getExperimentsByPackage(int packageId);
+
+    /**
+     * Returns list of experiments that are not members of the given package.
+     * @param packageId id of the package
+     * @return list of experiments or empty list
+     */
+    List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg);
 }

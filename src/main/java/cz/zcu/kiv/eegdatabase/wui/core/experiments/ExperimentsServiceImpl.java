@@ -168,4 +168,10 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 	return this.experimentPackageConnectionDao.listExperimentsByPackage(packageId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Experiment> getExperimentsWithoutPackage(int researchGroupId, int packageId) {
+	return this.experimentPackageConnectionDao.listExperimentsWithoutPackage(researchGroupId ,packageId);
+    }
+
 }

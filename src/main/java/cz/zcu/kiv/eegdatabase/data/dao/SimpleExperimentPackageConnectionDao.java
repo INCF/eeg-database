@@ -32,6 +32,20 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 	return query.list();
     }
     @Override
+    public List<Experiment> listExperimentsWithoutPackage(int researchGroupId, int packageId) {
+	String HQL = "SELECT e FROM Experiment e "
+		+ "LEFT JOIN fetch e.scenario "
+		+ "WHERE e.experimentId NOT IN "
+		+ "(SELECT epc.experiment.experimentId FROM ExperimentPackageConnection epc "
+		+ "   WHERE epc.experimentPackage.experimentPackageId = :packageId) "
+		+ "AND e.researchGroup.researchGroupId = :researchGroupId";
+	Query query = getSessionFactory().getCurrentSession().createQuery(HQL);
+	query.setParameter("packageId", packageId);
+	query.setParameter("researchGroupId", researchGroupId);
+	return query.list();
+    }
+
+    @Override
     public boolean isExperimentInPackage(int experimentId, int packageId) {
 	Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
         criteria.add(Restrictions.eq("experiment.experimentId", experimentId));
@@ -41,10 +55,11 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 	return count > 0;
     }
 
-	@Override
-	public void removeExperimentFromPackage(int experimentId, int packageId) {
-		String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experiment = :experiment and epc.experimentPackage = :package";
-        this.getSession().createQuery(hqlQuery).setInteger("experiment", experimentId).setInteger("package", packageId).executeUpdate();
+    @Override
+    public boolean removeExperimentFromPackage(int experimentId, int packageId) {
+	String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experiment = :experiment and epc.experimentPackage = :package";
+	int i = this.getSession().createQuery(hqlQuery).setInteger("experiment", experimentId).setInteger("package", packageId).executeUpdate();
+	return i > 0;
     }
     
     @Override

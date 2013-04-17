@@ -35,4 +35,20 @@ public interface ExperimentPackageFacade extends GenericFacade<ExperimentPackage
      */
     public int addExperimentsToPackage(List<Experiment> exp, ExperimentPackage pckg);
 
+    /**
+     * Removes an experiment from the package
+     * @param exp experiment to be removed
+     * @param pckg package to remove from
+     * @return true if success, false otherwise (e.g. package is not there)
+     */
+    public boolean removeExperimentFromPackage(Experiment exp, ExperimentPackage pckg);
+
+    /**
+     * Removes multiple experiments from the package
+     * @param exp experiments to be removed
+     * @param pckg package to remove from
+     * @return number of experiments removed
+     */
+    public int removeExperimentsFromPackage(List<Experiment> exp, ExperimentPackage pckg);
+
 }

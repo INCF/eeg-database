@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.commons.logging.Log;
@@ -134,5 +135,10 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     @Override
     public List<Experiment> getExperimentsByPackage(int packageId) {
 	return service.getExperimentsByPackage(packageId);
+    }
+
+    @Override
+    public List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg) {
+	return service.getExperimentsWithoutPackage(pckg.getResearchGroup().getResearchGroupId(), pckg.getExperimentPackageId());
     }
 }

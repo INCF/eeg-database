@@ -42,4 +42,11 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
      * @return list of experiments or empty list
      */
     public List<Experiment> getExperimentsByPackage(int packageId);
+
+    /**
+     * Returns list of experiments that are not members of the given package.
+     * @param packageId id of the package
+     * @return list of experiments or empty list
+     */
+    List<Experiment> getExperimentsWithoutPackage(int researchGroupId, int packageId);
 }

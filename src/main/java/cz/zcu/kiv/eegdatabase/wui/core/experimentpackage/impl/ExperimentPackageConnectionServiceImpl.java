@@ -41,4 +41,10 @@ public class ExperimentPackageConnectionServiceImpl extends GenericServiceImpl<E
 
 	return id > 0;
     }
+
+    @Override
+    @Transactional
+    public boolean removeExperimentFromPackage(Experiment exp, ExperimentPackage pckg) {
+	return experimentPackageConnectionDao.removeExperimentFromPackage(exp.getExperimentId(), pckg.getExperimentPackageId());
+    }
 }

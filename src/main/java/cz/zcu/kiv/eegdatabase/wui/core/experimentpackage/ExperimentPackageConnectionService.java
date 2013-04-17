@@ -20,4 +20,12 @@ public interface ExperimentPackageConnectionService  extends GenericService<Expe
      * @return true if success, false if not (e.g. experiment already in the package)
      */
     public boolean addExperimentToPackage(Experiment exp, ExperimentPackage pckg);
+
+    /**
+     * Removes an experiment from the package
+     * @param exp experiment to be removed
+     * @param pckg package to remove from
+     * @return true if success, false otherwise (e.g. package is not there)
+     */
+    public boolean removeExperimentFromPackage(Experiment exp, ExperimentPackage pckg);
 }
