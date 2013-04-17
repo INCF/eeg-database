@@ -33,9 +33,7 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
 
     ExperimentsFacade facade;
 
-    private List<Experiment> list;
-
-    private int size;
+    private IModel<List<Experiment>> listModel = new Model(new ArrayList());
 
     /**
      * Specialized constructor which loads experiments based on given properties
@@ -46,19 +44,23 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
      */
     public ListExperimentsDataProvider(ExperimentsFacade facade, Person person, boolean owner, boolean subject) {
 
+	List<Experiment> list;
         this.facade = facade;
         setSort("experimentId", SortOrder.ASCENDING);
 
+	int size;
         if (owner) {
             size = facade.getCountForExperimentsWhereOwner(person);
-            list = facade.getExperimentsWhereOwner(person, (int) 0, (int) size());
+            list = facade.getExperimentsWhereOwner(person, (int) 0, size);
         } else if (subject) {
             size = facade.getCountForExperimentsWhereSubject(person);
-            list = facade.getExperimentsWhereSubject(person, (int) 0, (int) size());
+            list = facade.getExperimentsWhereSubject(person, (int) 0, size);
         } else {
             size = facade.getCountForAllExperimentsForUser(person);
-            list = facade.getAllExperimentsForUser(person, (int) 0, (int) size());
+            list = facade.getAllExperimentsForUser(person, (int) 0, size);
         }
+
+	listModel.setObject(list);
 
     }
 
@@ -68,25 +70,35 @@ public class ListExperimentsDataProvider extends SortableDataProvider<Experiment
      */
     public ListExperimentsDataProvider(List<Experiment> experiments) {
 	setSort("experimentId", SortOrder.ASCENDING);
-	this.size = experiments.size();
-	this.list = new ArrayList<Experiment>(experiments);
+	this.listModel.setObject(experiments);
+    }
+
+    /**
+     * Constructor which allows user to provide his own list model. Suitable
+     * when you need to update the model from the outside (e.g. with ajax and
+     * LoadableDetachableModel).
+     * @param listModel
+     */
+    public ListExperimentsDataProvider(IModel<List<Experiment>> listModel) {
+	setSort("experimentId", SortOrder.ASCENDING);
+	this.listModel = listModel;
     }
 
     @Override
     public Iterator<? extends Experiment> iterator(long first, long count) {
 
         if (getSort() != null)
-            Collections.sort(list, new ExperimentsDataProviderComparator());
+            Collections.sort(listModel.getObject(), new ExperimentsDataProviderComparator());
 
         if (size() < first + count)
-            list.subList((int) first, (int) (first + size() - first)).iterator();
+            listModel.getObject().subList((int) first, (int) (first + size() - first)).iterator();
 
-        return list.subList((int) first, (int) (first + count)).iterator();
+        return listModel.getObject().subList((int) first, (int) (first + count)).iterator();
     }
 
     @Override
     public long size() {
-        return size;
+        return listModel.getObject().size();
     }
 
     @Override

@@ -27,10 +27,14 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import java.util.HashSet;
 import java.util.Set;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.model.AbstractCheckBoxModel;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
  * Panel which displays list of experiments inside a package.
@@ -43,6 +47,8 @@ public class ExperimentPackageContentPanel extends Panel {
 
     @SpringBean
     private ExperimentsFacade experimentsFacade;
+    @SpringBean
+    private ExperimentPackageFacade experimentPackageFacade;
 
     /**
      * Main model of the component - experiment package
@@ -52,10 +58,13 @@ public class ExperimentPackageContentPanel extends Panel {
      * Set of selected experiments.
      */
     private Set<Experiment> selectedExperiments;
+
+    private IModel<List<Experiment>> experimentsModel;
     
     //containers
     private WebMarkupContainer experimentListCont;
     private WebMarkupContainer header;
+    private ModalWindow window;
 
     /**
      *
@@ -74,6 +83,48 @@ public class ExperimentPackageContentPanel extends Panel {
 
 	this.addHeader();
 	this.addExperimentListToCont(experimentListCont);
+	this.addExperimentsAddWindow();
+    }
+
+    /**
+     * Add window which allows to add experiments to the package.
+     */
+    private void addExperimentsAddWindow() {
+	window = new ModalWindow("addExperimentsWindow");
+	window.setAutoSize(true);
+	window.setResizable(false);
+	window.setMinimalWidth(600);
+	window.setWidthUnit("px");
+
+	List<Experiment> exps = this.listExperimentsToAdd();
+
+	Panel content = new ExperimentListForm(window.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
+
+	    @Override
+	    protected void onSubmitAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
+		experimentPackageFacade.addExperimentsToPackage(selectedExperiments, epModel.getObject());
+		ModalWindow.closeCurrent(target);
+		experimentsModel.detach();
+		target.add(experimentListCont);
+	    }
+
+	    @Override
+	    protected void onCancelAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
+		ModalWindow.closeCurrent(target);
+		target.add(experimentListCont);
+	    }
+	    
+	};
+	window.setContent(content);
+	this.add(window);
+    }
+
+    /**
+     *
+     * @return list of experiments that can be added to the package
+     */
+    private List<Experiment> listExperimentsToAdd() {
+	return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
     }
 
     /**
@@ -89,7 +140,29 @@ public class ExperimentPackageContentPanel extends Panel {
 	header.add(createVisibilityLink("showListLink", true));
 	header.add(createVisibilityLink("hideListLink", false));
 	header.add(createRemoveSelectedLink("removeSelectedLink"));
+	header.add(createAddExperimentsLink("addExperimentsLink"));
     }
+
+    /**
+     * returns link which initializes the action of
+     * adding experiments to package
+     *
+     * @param id component id
+     * @return the link
+     */
+    private AjaxLink createAddExperimentsLink(String id) {
+	AjaxLink link = new AjaxLink(id) {
+
+	    @Override
+	    public void onClick(AjaxRequestTarget target) {
+		window.show(target);
+	    }
+	};
+
+	link.add(new Label("label", new StringResourceModel("button.add", this, null)));
+	return link;
+    }
+
 
     /**
      * Creates link which provides action for removing selected experiments
@@ -102,8 +175,7 @@ public class ExperimentPackageContentPanel extends Panel {
 
 	    @Override
 	    public void onClick() {
-		//TODO implement facade call
-		System.out.println(selectedExperiments.size());
+		experimentPackageFacade.removeExperimentsFromPackage(new ArrayList(selectedExperiments), epModel.getObject());
 	    }
 	};
 
@@ -155,21 +227,21 @@ public class ExperimentPackageContentPanel extends Panel {
      * @param cont the container
      */
     private void addExperimentListToCont(WebMarkupContainer cont) {
-	List<Experiment> experiments = this.loadExperiments();
 	List<? extends IColumn<Experiment, String>> columns = this.createListColumns();
 
+	experimentsModel = new LoadableDetachableModel<List<Experiment>>() {
+
+	    @Override
+	    protected List<Experiment> load() {
+		return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
+	    }
+	    
+	};
+
 	DataTable<Experiment, String> list = new AjaxFallbackDefaultDataTable<Experiment, String>("list", columns,
-						    new ListExperimentsDataProvider(experiments), EXPERIMENTS_PER_PAGE);
+						    new ListExperimentsDataProvider(experimentsModel), EXPERIMENTS_PER_PAGE);
 
 	cont.add(list);
-    }
-
-    /**
-     *
-     * @return list of experiments to be displayed
-     */
-    private List<Experiment> loadExperiments() {
-	return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
     }
 
     /**
