@@ -141,5 +141,12 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult"/>
         </set>
+
+	<set inverse="true" name="personalLicenses">
+            <key>
+                <column name="PERSON" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+        </set>
     </class>
 </hibernate-mapping>

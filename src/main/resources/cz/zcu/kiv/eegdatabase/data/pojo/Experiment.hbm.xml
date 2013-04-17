@@ -128,5 +128,11 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal"/>
         </set>
+	<set inverse="true" name="experimentPackageConnections" batch-size="20">
+            <key>
+                <column name="EXPERIMENT" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
+        </set>
     </class>
 </hibernate-mapping>

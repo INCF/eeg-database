@@ -29,9 +29,14 @@ public class License implements Serializable{
 	
     @Column(name = "DESCRIPTION")
     private String description;
-	
-	@Column(name = "LICENSE_TYPE" )
-	private LicenseType licenseType;
+    @OneToMany(mappedBy = "license")
+    private Set<PersonalLicense> personalLicenses;
+
+    @OneToMany(mappedBy = "license")
+    private Set<ExperimentPackageLicense> experimentPackageLicenses;
+
+    @Column(name = "LICENSE_TYPE" )
+    private LicenseType licenseType;
 
 	public int getLicenseId() {
 		return licenseId;
@@ -72,14 +77,28 @@ public class License implements Serializable{
 	public void setLicenseType(LicenseType licenseType) {
 		this.licenseType = licenseType;
 	}
+	public Set<PersonalLicense> getPersonalLicenses() {
+		return personalLicenses;
+    }
 	
 	public void setResearchGroup(ResearchGroup group) {
 		this.researchGroup = group;
 	}
+
+	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
+		this.personalLicenses = personalLicenses;
+    }
 	
 	public ResearchGroup getResearchGroup() {
 		return this.researchGroup;
 	}
-	
+
+	public Set<ExperimentPackageLicense> getExperimentPackageLicenses() {
+		return experimentPackageLicenses;
+	}
+
+	public void setExperimentPackageLicenses(Set<ExperimentPackageLicense> experimentPackageLicenses) {
+		this.experimentPackageLicenses = experimentPackageLicenses;
+	}
 
 }
