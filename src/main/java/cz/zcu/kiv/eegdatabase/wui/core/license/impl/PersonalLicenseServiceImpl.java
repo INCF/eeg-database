@@ -23,27 +23,30 @@ import org.springframework.transaction.annotation.Transactional;
  */
 public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicense, Integer> implements PersonalLicenseService {
 
-	public PersonalLicenseServiceImpl() {
-	}
-	PersonalLicenseDao personalLicenseDao;
+	private PersonalLicenseDao personalLicenseDao;
+	
+    public PersonalLicenseServiceImpl() {
+    }
 
+    public PersonalLicenseServiceImpl(GenericDao<PersonalLicense, Integer> dao) {
+	super(dao);
+    }
+	
 	@Required
-	public void setPersonalLicenseDao(PersonalLicenseDao personalLicenseDao) {
+    public void setPersonalLicenseDao(PersonalLicenseDao personalLicenseDao) {
 		this.personalLicenseDao = personalLicenseDao;
-	}
-
-	public PersonalLicenseServiceImpl(GenericDao<PersonalLicense, Integer> dao) {
-		super(dao);
-	}
+    }
 
 	@Override
 	@Transactional
-	public void addLicenseToPerson(Person p, License license) {
+	public boolean addLicenseToPerson(Person person, License licence) {
 		PersonalLicense personalLicense = new PersonalLicense();
-		personalLicense.setLicense(license);
-		personalLicense.setPerson(p);
+		personalLicense.setLicense(licence);
+		personalLicense.setPerson(person);
 		personalLicense.setRequestedDate(new Date());
-		this.personalLicenseDao.create(personalLicense);
+		int id = personalLicenseDao.create(personalLicense);
+		
+		return id > 0;
 	}
 
 	@Override

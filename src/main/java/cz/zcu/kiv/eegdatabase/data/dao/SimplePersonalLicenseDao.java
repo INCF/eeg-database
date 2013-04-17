@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import java.util.List;
 import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 
 /**
@@ -40,4 +41,25 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 		}
         return criteria.list();
 	}
+
+	@Override
+	public boolean personHasLicense(int personId, int licenseId) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
+        criteria.add(Restrictions.eq("person.personId", personId));
+		criteria.add(Restrictions.eq("license.licenseId", licenseId));
+        criteria.setProjection(Projections.rowCount());
+		int count = ((Number) criteria.uniqueResult()).intValue();
+	return count > 0;
+	}
+
+	@Override
+    public Integer create(PersonalLicense newInstance){
+		boolean present = this.personHasLicense(newInstance.getPerson().getPersonId(),
+				newInstance.getLicense().getLicenseId());
+		if(present) {
+			//already there
+			return -1;
+		}
+		return super.create(newInstance);
+    }
 }

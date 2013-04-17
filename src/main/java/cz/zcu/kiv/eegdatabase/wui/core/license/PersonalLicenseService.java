@@ -17,8 +17,6 @@ import java.util.List;
  */
 public interface PersonalLicenseService extends GenericService<PersonalLicense, Integer> {
 	
-	public void addLicenseToPerson(Person p, License license);
-	
 	public void createRequestForLicense(PersonalLicense personalLicense);
 	
 	public void confirmRequestForLicense(PersonalLicense personalLicense);
@@ -28,4 +26,12 @@ public interface PersonalLicenseService extends GenericService<PersonalLicense, 
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted); 
 			
 
+	/**
+     * Adds a single license to the person.
+     * @param license license to be added
+     * @param person person
+     * @return true if success, false if not (e.g. person already has the license)
+     */
+    public boolean addLicenseToPerson(Person person, License license);
+	
 }

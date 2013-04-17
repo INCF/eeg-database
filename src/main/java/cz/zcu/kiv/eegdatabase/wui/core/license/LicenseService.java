@@ -27,4 +27,5 @@ public interface LicenseService extends GenericService<License, Integer> {
 	
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
 		
+	public License getPublicLicense();
 }

@@ -30,5 +30,9 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
 	
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
+
+	public boolean addLicenseToPerson(License license, Person person);
+
+	public boolean addPublicLicenseToPerson(Person person);
 	
 }

@@ -12,6 +12,7 @@ import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import org.apache.commons.logging.Log;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -32,6 +33,7 @@ public class PersonServiceImpl implements PersonService {
     PersonDao personDAO;
     EducationLevelDao educationLevelDao;
     MailService mailService;
+	LicenseFacade licenseFacade;
 
     @Required
     public void setPersonDAO(PersonDao personDAO) {
@@ -46,6 +48,11 @@ public class PersonServiceImpl implements PersonService {
     @Required
     public void setMailService(MailService mailService) {
         this.mailService = mailService;
+    }
+	
+	@Required
+    public void setLicenseFacade(LicenseFacade licenseFacade) {
+        this.licenseFacade = licenseFacade;
     }
 
     @Override
@@ -148,7 +155,11 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Authority = " + person.getAuthority());
         log.debug("Laterality = " + person.getLaterality());
 
-        personDAO.create(person);
+        int id = personDAO.create(person);
+		
+		person.setPersonId(id);
+		licenseFacade.addPublicLicenseToPerson(person);
+		
         return person;
     }
 

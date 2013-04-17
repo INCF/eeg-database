@@ -25,7 +25,7 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 
 	
 	private LicenseService licenseService;
-	
+
 	private PersonalLicenseService personalLicenseService;
 	
     public LicenseFacadeImpl() {
@@ -42,7 +42,7 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 	
 	@Required
-	public void setPPersonalLicenseService(PersonalLicenseService personalLicenseService)
+	public void setPersonalLicenseService(PersonalLicenseService personalLicenseService)
 	{
 		this.personalLicenseService = personalLicenseService;
 	}
@@ -75,6 +75,17 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	@Override
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
 		return this.personalLicenseService.getLicenseRequests(applicant, accepted);
+	}
+
+	@Override
+	public boolean addLicenseToPerson(License licence, Person person) {
+		return this.personalLicenseService.addLicenseToPerson(person, licence);
+	}
+
+	@Override
+	public boolean addPublicLicenseToPerson(Person person) {
+		License license = licenseService.getPublicLicense();
+		return this.personalLicenseService.addLicenseToPerson(person, license);
 	}
 	
 }

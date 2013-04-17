@@ -16,4 +16,6 @@ import java.util.List;
 public interface LicenseDao extends GenericDao<License, Integer> {
 	
 	public List<License> getLicensesByType(int reseachGroupId, LicenseType licenseType);
+	
+	public License getPublicLicense();
 }

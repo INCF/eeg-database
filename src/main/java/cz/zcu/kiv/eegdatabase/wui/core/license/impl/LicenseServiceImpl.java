@@ -54,4 +54,9 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 	public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
 		this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
 	}
+
+	@Override
+	public License getPublicLicense() {
+		return this.licenseDao.getPublicLicense();
+	}
 }
