@@ -23,6 +23,15 @@
 	    </div>
 
 	    <div class="itemBox">
+		<label class="textFieldLabel" wicket:id="licenseType.label"/>
+		<span wicket:id="licenseType">
+		    <input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+		    <input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+		</span>
+		<div wicket:id="licenseType.feedback"/>
+	    </div>
+
+	    <div class="itemBox">
 		<label class="textFieldLabel" wicket:id="description.label"/>
 		<textarea class="textareaField" wicket:id="description"/>
 		<div wicket:id="description.feedback"/>

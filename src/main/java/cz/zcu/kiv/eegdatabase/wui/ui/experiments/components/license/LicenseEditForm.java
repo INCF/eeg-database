@@ -1,24 +1,24 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.NumberTextField;
+import org.apache.wicket.markup.html.form.Radio;
+import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 /**
@@ -30,7 +30,7 @@ public class LicenseEditForm extends Panel {
     private IModel<List<License>> blueprintsModel;
     private IModel<License> licenseModel;
 
-    private StatelessForm form;
+    private Form form;
 
     public LicenseEditForm(String id, IModel<License> model) {
 	this(id, model, null);
@@ -42,7 +42,7 @@ public class LicenseEditForm extends Panel {
 	this.licenseModel = model;
 	this.blueprintsModel = blueprints;
 
-	this.form = new StatelessForm("form");
+	this.form = new Form("form");
 	this.add(form);
 	
 	this.addFormFields();
@@ -57,10 +57,18 @@ public class LicenseEditForm extends Panel {
 
 	c = new TextArea("description", new PropertyModel(licenseModel, "description"));
 	c.setLabel(ResourceUtils.getModel("label.license.description"));
+	c.setRequired(true);
 	form.add(c);
 
 	c = new NumberTextField("price", new PropertyModel(licenseModel, "price"), Float.class);
 	c.setLabel(ResourceUtils.getModel("label.license.price"));
+	form.add(c);
+
+	c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
+	c.setLabel(ResourceUtils.getModel("label.license.type"));
+	c.setRequired(true);
+	c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
+	c.add(new Radio("business", new Model(LicenseType.BUSINESS)));
 	form.add(c);
 
 	WicketUtils.addLabelsAndFeedback(form);
