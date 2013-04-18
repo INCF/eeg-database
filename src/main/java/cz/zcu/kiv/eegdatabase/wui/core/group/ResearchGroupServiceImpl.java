@@ -42,6 +42,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
 import java.util.Date;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
@@ -63,6 +64,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 	
 	LicenseDao licenseDao;
 	PersonalLicenseDao personalLicenseDao;
+	PersonalLicenseService personalLicenseService;
 
     @Required
     public void setLicenseDao(LicenseDao licenseDao) {
@@ -72,6 +74,10 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 	@Required
     public void setPersonalLicenseDao(PersonalLicenseDao personalLicenseDao) {
         this.personalLicenseDao = personalLicenseDao;
+    }
+	@Required
+    public void setPersonalLicenseService(PersonalLicenseService personalLicenseService) {
+        this.personalLicenseService = personalLicenseService;
     }
 	
 	@Required
@@ -424,11 +430,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 		List<License> licenses = this.licenseDao.getLicensesByType(request.getResearchGroup().getResearchGroupId(), LicenseType.OWNER);
 		if (licenses.size() == 1) {
 			License ownerLicense = licenses.get(0);
-			PersonalLicense personalLicense = new PersonalLicense();
-			personalLicense.setLicense(ownerLicense);
-			personalLicense.setPerson(person);
-			personalLicense.setDateFrom(new Date());
-			this.personalLicenseDao.create(personalLicense);
+			this.personalLicenseService.addLicenseToPerson(person, ownerLicense);
 		} else {
 			throw new RuntimeException("Group " + request.getResearchGroup().getResearchGroupId() + " has more than one owner license!");
 		}
