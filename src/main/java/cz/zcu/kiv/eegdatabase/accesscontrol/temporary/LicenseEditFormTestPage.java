@@ -5,6 +5,7 @@
 package cz.zcu.kiv.eegdatabase.accesscontrol.temporary;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license.LicenseEditForm;
 import java.util.ArrayList;
@@ -28,6 +29,7 @@ public class LicenseEditFormTestPage extends BasePage {
 	tmp.setTitle("Ahoj1");
 	tmp.setDescription("ehfiuwefhwiuf hweiu fhiuwe hfuihf iuwehf iuwehfiuweh fiuhfiu whefiu hwef wiufh wiehfwiehf ");
 	tmp.setPrice(100);
+	tmp.setLicenseType(LicenseType.ACADEMIC);
 
 	list.add(tmp);
 
@@ -35,9 +37,17 @@ public class LicenseEditFormTestPage extends BasePage {
 	tmp.setTitle("Ahoj2");
 	tmp.setDescription("");
 	tmp.setPrice(600);
+	tmp.setLicenseType(LicenseType.BUSINESS);
 
 	list.add(tmp);
 
+	tmp = new License();
+	tmp.setTitle("Ahoj3");
+	tmp.setDescription("asdasd ad a");
+	tmp.setPrice(0);
+	tmp.setLicenseType(LicenseType.OPEN_DOMAIN);
+
+	list.add(tmp);
 
 	blueprints.setObject(list);
 
