@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import java.util.List;
 
@@ -50,5 +51,12 @@ public interface ExperimentPackageFacade extends GenericFacade<ExperimentPackage
      * @return number of experiments removed
      */
     public int removeExperimentsFromPackage(List<Experiment> exp, ExperimentPackage pckg);
+	
+	/**
+     * Creates new package
+     * @param pckg package 
+	 * @param license license
+     */
+    public void createExperimentPackage(ExperimentPackage pckg, License license);
 
 }
