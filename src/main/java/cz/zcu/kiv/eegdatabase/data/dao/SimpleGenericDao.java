@@ -67,11 +67,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
         try {
             indexer.index(newInstance);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         return primaryKey;
@@ -127,11 +127,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
         try {
             indexer.index(transientObject);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -143,15 +143,13 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public void delete(T persistentObject) {
         getHibernateTemplate().delete(persistentObject);
-        // currently DISABLED, because when the solr server is down,
-        // an exception is thrown
 
         try {
             indexer.unindex(persistentObject);
         } catch (IOException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error(e);
         } catch (SolrServerException e) {
-            e.printStackTrace();  //To change body of catch statement use File | Settings | File Templates.
+            log.error(e);
         }
     }
 
@@ -174,11 +172,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
                     try {
                         initializeProperty(method.invoke(record));
                     } catch (IllegalAccessException e) {
-                        e.printStackTrace();
+                        log.error(e);
                     } catch (InvocationTargetException e) {
-                        e.printStackTrace();
+                        log.error(e);
                     } catch (Exception e) {
-                        e.printStackTrace();
+                        log.error(e);
                     }
                 }
             }

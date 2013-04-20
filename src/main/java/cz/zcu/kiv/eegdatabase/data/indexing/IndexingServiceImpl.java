@@ -153,7 +153,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
         }  catch (NoSuchMethodException e) {
             log.error(e);
         } catch (InstantiationException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         log.info("Indexing finished");
     }

@@ -65,9 +65,9 @@ public class PojoIndexer extends Indexer {
         try {
             documentFields = getDocumentFromAnnotatedFields(instance, LEVEL_PARENT);
         } catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (InvocationTargetException e) {
-            e.printStackTrace();
+            log.error(e);
         }
 
         for(String key : documentFields.keySet()) {
@@ -92,9 +92,9 @@ public class PojoIndexer extends Indexer {
                 try {
                     id = (Integer) field.get(instance);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 } catch (IllegalArgumentException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
                 log.debug("ID: " + id);
                 return id;
@@ -123,7 +123,7 @@ public class PojoIndexer extends Indexer {
                 try {
                     id = (Integer) field.get(instance);
                 } catch (IllegalAccessException e) {
-                    e.printStackTrace();
+                    log.error(e);
                 }
             }
         }

@@ -48,7 +48,6 @@ public class FulltextSearchService {
         try {
             response = solrServer.query(query);
         } catch (SolrServerException e) {
-            //e.printStackTrace();
             return new ArrayList<FullTextResult>();
         }
         List<SolrDocument> foundDocuments = response.getResults();
@@ -228,7 +227,7 @@ public class FulltextSearchService {
         try {
             return (int) solrServer.query(q).getResults().getNumFound();
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         return 0;
     }
@@ -276,7 +275,7 @@ public class FulltextSearchService {
         try {
             response = solrServer.query(query);
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
         long totalCount = 0;
         List<FacetField> facets = response.getFacetFields();

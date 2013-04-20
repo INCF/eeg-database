@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.search;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
@@ -31,6 +33,8 @@ public abstract class SearchPanel extends Panel {
 
     @SpringBean
     private FulltextSearchService searchService;
+
+    private Log log = LogFactory.getLog(getClass());
 
     public SearchPanel(String id, StringValue searchString) {
         super(id);
@@ -92,7 +96,7 @@ public abstract class SearchPanel extends Panel {
             try {
                 autocompletePhrases = searchService.getTextToAutocomplete(input);
             } catch (SolrServerException e) {
-                e.printStackTrace();
+                log.error(e);
             }
             return autocompletePhrases.iterator();
         }
