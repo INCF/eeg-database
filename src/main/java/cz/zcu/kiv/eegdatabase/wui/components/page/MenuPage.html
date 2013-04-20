@@ -12,10 +12,19 @@
         </div>
 
         <div class="loggedUserBox">
-          <span wicket:id="userLogStatusLabel"></span> <span class="borderDecoration"><a
-            href="#" wicket:id="userHeaderLink"><span wicket:id="linkLabel"></span></a> <a
-            href="#" wicket:id="cart"><span wicket:id="cartLabel"></span> <span wicket:id="cartSizeLabel"></span></a> <a
-            href="#" wicket:id="logout"><wicket:message key="action.logout">[logout]</wicket:message></a></span>
+          <span wicket:id="userLogStatusLabel"></span> <span class="borderDecoration">
+            <a href="#" wicket:id="userHeaderLink">
+                <span wicket:id="linkLabel"></span>
+            </a>
+            <a href="#" wicket:id="cart">
+                <span wicket:id="cartLabel"></span>
+                <span wicket:id="cartSizeLabel"></span>
+            </a>
+            <a href="#" wicket:id="logout">
+                <wicket:message key="action.logout">[logout]</wicket:message>
+            </a>
+          </span>
+          <wicket:container wicket:id="menuSearchPanel"></wicket:container>
         </div>
         <ul wicket:id="mainMenu" class="mainMenu"></ul>
         <div class="cleaner"></div>

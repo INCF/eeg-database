@@ -17,7 +17,7 @@ public class SearchPage extends MenuPage {
     private boolean isSearchStringEmpty = false;
 
     public SearchPage(PageParameters params) {
-        
+
         setPageTitle(ResourceUtils.getModel("title.page.search"));
 
         StringValue searchString = params.get("searchString");
@@ -26,7 +26,7 @@ public class SearchPage extends MenuPage {
         }
         ResultCategory category = ResultCategory.getCategory(params.get("category").toString());
 
-        SearchPanel searchPanel = new SearchPanel("searchPanel", searchString);
+        SearchPanel searchPanel = new PageSearchPanel("searchPanel", searchString);
         SearchResultPanel searchResultPanel = new SearchResultPanel("resultPanel", searchString, category) {
 
             @Override
