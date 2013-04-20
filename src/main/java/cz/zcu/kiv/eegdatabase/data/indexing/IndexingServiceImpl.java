@@ -14,6 +14,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import javax.annotation.PostConstruct;
 import java.io.IOException;
@@ -60,6 +61,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws SolrServerException
      */
     @Async
+    @Transactional
     public void indexDatabase() throws IllegalAccessException, SolrServerException, IOException, NoSuchMethodException, InstantiationException {
 
         // get required dao beans
@@ -81,6 +83,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws IOException
      */
     @Async
+    @Transactional
     public void indexLinkedIn() throws IllegalAccessException, SolrServerException, IOException {
 
         int startIndex = 0;
@@ -101,11 +104,11 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
         try {
             autocompleteIndexer.index(phrase);
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         }
     }
 
@@ -142,13 +145,13 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
             long end = System.currentTimeMillis();
             log.info("Optimalization ended, duration " + (end - start) + "ms");
         } catch (IllegalAccessException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (SolrServerException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (IOException e) {
-            e.printStackTrace();
+            log.error(e);
         }  catch (NoSuchMethodException e) {
-            e.printStackTrace();
+            log.error(e);
         } catch (InstantiationException e) {
             e.printStackTrace();
         }

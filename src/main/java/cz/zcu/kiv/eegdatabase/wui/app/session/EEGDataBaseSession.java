@@ -8,6 +8,7 @@ import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -42,6 +43,8 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     private final String SOCIAL_PASSWD = "#SOCIAL#";
 
     private ShoppingCart shoppingCart;
+
+    private StringValue searchString;
 
     public static EEGDataBaseSession get()
     {
@@ -153,5 +156,16 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     public ShoppingCart getShoppingCart() {
         return shoppingCart;
+    }
+
+    public StringValue getSearchString() {
+        if (searchString == null || searchString.isNull()) {
+            return StringValue.valueOf("");
+        }
+        return searchString;
+    }
+
+    public void setSearchString(StringValue searchString) {
+        this.searchString = searchString;
     }
 }

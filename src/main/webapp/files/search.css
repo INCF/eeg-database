@@ -6,17 +6,35 @@
         Purpose of the stylesheet follows.
 */
 
-/*
-   TODO customize this sample style
-   Syntax recommendation http://www.w3.org/TR/REC-CSS2/
-*/
-.resultf {
-  border:white;
+/* Wicket autocomplete */
+div.wicket-aa {
+    font-family: "Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana;
+    font-size: 12px;
+    background-color: white;
+    border-width: 1px;
+    border-color: #cccccc;
+    border-style: solid;
+    padding: 2px;
+    margin: 1px 0 0 0;
+    text-align:left;
 }
 
-.highlightText {
-  font-weight:bolder;
-  font-size:1.15em;
+div.wicket-aa ul {
+    list-style:none;
+    padding: 2px;
+    margin:0;
+}
+
+div.wicket-aa ul li.selected {
+    background-color: #FFFF00;
+    padding: 2px;
+    margin:0;
+}
+
+/* highlighting of search results */
+.hilite {
+    font-weight: bold;
+    background-color: yellow;
 }
 
 

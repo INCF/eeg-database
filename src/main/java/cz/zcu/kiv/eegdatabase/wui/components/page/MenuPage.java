@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -14,6 +15,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.util.string.StringValue;
 
 import java.io.Serializable;
 
@@ -85,6 +88,9 @@ public class MenuPage extends BasePage {
         };
         link.setVisibilityAllowed(signedIn);
         add(link);
+
+        StringValue searchString = EEGDataBaseSession.get().getSearchString();
+        add(new MenuSearchPanel("menuSearchPanel", searchString));
 
         add(new Label("userLogStatusLabel", labelMessage));
 

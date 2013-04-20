@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxFallbackButton;
@@ -9,6 +10,8 @@ import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTe
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -24,7 +27,7 @@ import java.util.*;
  * Time: 1:49
  * To change this template use File | Settings | File Templates.
  */
-public class SearchPanel extends Panel {
+public abstract class SearchPanel extends Panel {
 
     @SpringBean
     private FulltextSearchService searchService;
@@ -40,6 +43,7 @@ public class SearchPanel extends Panel {
 
         public SearchForm(String id, StringValue searchString) {
             super(id);
+
             if(!searchString.isNull() && !searchString.isEmpty()) {
                 this.searchString = searchString.toString();
             }
@@ -60,17 +64,22 @@ public class SearchPanel extends Panel {
         }
 
         private Button createSearchButton(String id) {
-            return new AjaxFallbackButton(id, this) {
+            Button ajaxButton =  new AjaxFallbackButton(id, this) {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
                     PageParameters pageParameters = new PageParameters();
                     if(getSearchString() != null) {
                         pageParameters.add("searchString", getSearchString());
+                        EEGDataBaseSession.get().setSearchString(StringValue.valueOf(getSearchString()));
                         setResponsePage(SearchPage.class, pageParameters);
                     }
                 }
             };
+            IModel<String> labelModel = new Model<String>();
+            labelModel.setObject("Hledej, trhaci");
+            ajaxButton.setLabel(labelModel);
+            return ajaxButton;
         }
 
         private Iterator<String> getAutoCompleteChoices(String input) {
