@@ -2,9 +2,11 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
@@ -38,6 +40,8 @@ public class ScenarioForm extends Form<Scenario> {
     @SpringBean
     private EducationLevelFacade educationLevelFacade;
 
+    @SpringBean
+    private ScenarioTypeFacade scenarioTypeFacade;
 
     public ScenarioForm(String id, final ModalWindow window) {
         super(id, new CompoundPropertyModel<Scenario>(new Scenario()));
@@ -74,19 +78,25 @@ public class ScenarioForm extends Form<Scenario> {
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                         Scenario scenario = (Scenario) form.getModelObject();
 
-                        final FileUpload upload = fileUpload.getFileUpload();
-                        scenario.setScenarioName(upload.getClientFileName());
-                        scenario.setMimetype(upload.getContentType());
-                        if(upload == null) {
-                            info("No file uploaded");
-                        } else {
-                            info("Uploaded");
-                        }
-
                         validate();
                         target.add(feedback);
 
                         if(!hasError()){
+                            final FileUpload upload = fileUpload.getFileUpload();
+                            scenario.setScenarioName(upload.getClientFileName());
+                            scenario.setMimetype(upload.getContentType());
+
+                            ScenarioTypeNonSchema scenarioTypeNonSchema = new ScenarioTypeNonSchema();
+                            scenarioTypeNonSchema.setScenario(scenario);
+                            //scenarioTypeNonSchema.setScenarioXml();
+                            scenario.setScenarioType(scenarioTypeNonSchema);
+                            if(upload == null) {
+                                info("No file uploaded");
+                            } else {
+                                info("Uploaded");
+                            }
+
+                            scenarioTypeFacade.create(scenarioTypeNonSchema);
                             scenario.setPerson(EEGDataBaseSession.get().getLoggedUser());
                             scenariosFacade.create(scenario);
                             window.close(target);
