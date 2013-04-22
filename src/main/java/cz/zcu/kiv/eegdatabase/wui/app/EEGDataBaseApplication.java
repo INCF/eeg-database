@@ -61,6 +61,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.workflow.WorkflowPage;
 
 /**
  * Main class for wicket core. Initialization of wicket core, mounter pages on specific url,
@@ -162,6 +163,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("lists-artifact-form", ArtifactFormPage.class);
 
         mountPage("history-page", HistoryPage.class);
+        mountPage("workflow-page", WorkflowPage.class);
         mountPage("home-page", HomePage.class);
         mountPage("scenarios-page", ListScenariosPage.class);
         mountPage("scenarios-detail", ScenarioDetailPage.class);

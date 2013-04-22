@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.workflow.WorkflowPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
@@ -29,9 +30,10 @@ public enum EEGDatabaseMainMenu implements MenuDefinition {
     PeoplePage(ListPersonPage.class, "menuItem.people"),
     ListsPage(ListListsPage.class, "menuItem.lists"),
     HistoryPage(HistoryPage.class, "menuItem.history"),
+    WorkflowPage(WorkflowPage.class, "menuItem.workflow"),
     Administration(ChangeUserRolePage.class, "menuItem.administration"),
 
-    Main(new EEGDatabaseMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage,
+    Main(new EEGDatabaseMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, WorkflowPage, GroupsPage,
     PeoplePage, ListsPage, HistoryPage, Administration }, ""),
 
     ;
