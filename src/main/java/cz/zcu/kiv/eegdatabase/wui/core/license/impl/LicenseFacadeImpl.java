@@ -7,11 +7,14 @@ package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
+import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -22,6 +25,8 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 
 	
 	private LicenseService licenseService;
+	
+	private PersonalLicenseService personalLicenseService;
 	
     public LicenseFacadeImpl() {
     }
@@ -35,6 +40,12 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	{
 		this.licenseService = licenseRervice;
 	}
+	
+	@Required
+	public void setPPersonalLicenseService(PersonalLicenseService personalLicenseService)
+	{
+		this.personalLicenseService = personalLicenseService;
+	}
 
 	@Override
 	public void addLicenseForPackage(License license, ExperimentPackage pack) {
@@ -44,6 +55,26 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	@Override
 	public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
 		this.licenseService.removeLicenseFromPackage(license, pack);
+	}
+
+	@Override
+	public void createRequestForLicense(PersonalLicense personalLicense) {
+		this.personalLicenseService.createRequestForLicense(personalLicense);
+	}
+
+	@Override
+	public void confirmRequestForLicense(PersonalLicense personalLicense) {
+		this.personalLicenseService.confirmRequestForLicense(personalLicense);
+	}
+
+	@Override
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
+		return this.personalLicenseService.getLicenseRequests(group);
+	}
+
+	@Override
+	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
+		return this.personalLicenseService.getLicenseRequests(applicant, accepted);
 	}
 	
 }

@@ -38,9 +38,67 @@ public class PersonalLicense implements Serializable{
     @JoinColumn(name = "LICENSE")
     private License license;
 
-    @Column(name = "DATE_FROM")
+    @Column(name = "REQUESTED_DATE")
     @Temporal(javax.persistence.TemporalType.DATE)
-    private Date dateFrom;
+    private Date requestedDate;
+	
+	@Column(name = "CONFIRMED_DATE")
+    @Temporal(javax.persistence.TemporalType.DATE)
+    private Date confirmedDate;
+	
+	@Column(name = "FIRST_NAME")
+	private String firstName;
+	
+	@Column(name = "LAST_NAME")
+	private String lastName;
+
+	public Date getRequestedDate() {
+		return requestedDate;
+	}
+
+	public void setRequestedDate(Date requestedDate) {
+		this.requestedDate = requestedDate;
+	}
+
+	public Date getConfirmedDate() {
+		return confirmedDate;
+	}
+
+	public void setConfirmedDate(Date confirmedDate) {
+		this.confirmedDate = confirmedDate;
+	}
+	
+	public boolean isConfirmed()
+	{
+		return this.confirmedDate != null;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
+	}
+
+	public String getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(String organization) {
+		this.organization = organization;
+	}
+	
+	@Column(name = "CONFIRMED_DATE")
+	private String organization;
 
     public int getPersonalLicenseId() {
 	    return personalLicenseId;
@@ -64,13 +122,5 @@ public class PersonalLicense implements Serializable{
 
     public void setLicense(License license) {
 	    this.license = license;
-    }
-
-    public Date getDateFrom() {
-	return dateFrom;
-    }
-
-    public void setDateFrom(Date dateFrom) {
-	this.dateFrom = dateFrom;
     }
 }

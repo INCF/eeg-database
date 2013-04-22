@@ -4,7 +4,10 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 /**
  *
@@ -12,4 +15,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
  */
 public interface PersonalLicenseDao extends GenericDao<PersonalLicense, Integer> {
 	
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
+	
+	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);  
 }
