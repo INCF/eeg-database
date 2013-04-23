@@ -2,8 +2,10 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
@@ -33,6 +35,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private WeatherFacade weatherFacade;
     @SpringBean
     private HardwareFacade hardwareFacade;
+    @SpringBean
+    private SoftwareFacade softwareFacade;
 
     private Experiment experiment = new Experiment();
     final int AUTOCOMPLETE_ROWS = 10;
@@ -52,23 +56,35 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         addModalWindowAndButton(this, "addSWModal", "add-sw",
                 "addSW", AddSoftwarePage.class.getName());
 
+        addModalWindowAndButton(this, "addWeatherModal", "add-weather",
+                "addWeather", AddWeatherPage.class.getName());
+
         List<Hardware> hardwares = hardwareFacade.getAllRecords();
         ArrayList<String> hardwareTitles = new ArrayList<String>();
-        for (Hardware hw : hardwares){
-            hardwareTitles.add(hw.getTitle());
+        if (hardwares != null){
+            for (Hardware hw : hardwares){
+                hardwareTitles.add(hw.getTitle());
+            }
         }
         ListMultipleChoice hw = new ListMultipleChoice("hardware", new PropertyModel(experiment, "hardwares"), hardwareTitles).setMaxRows(5);
         add(hw);
 
-        List values = Arrays.asList(new String[] {"Value 1", "Value 2", "Value 3", "Value 4", "Value 5", "Value 6" });
-        //TODO create SoftwareFacade
-        ListMultipleChoice sw = new ListMultipleChoice("software", values).setMaxRows(5);
+        List<Software> softwares = softwareFacade.getAllRecords();
+        ArrayList<String> softwareTitles = new ArrayList<String>();
+        if (softwares != null){
+            for (Software sw : softwares){
+                softwareTitles.add(sw.getTitle());
+            }
+        }
+        ListMultipleChoice sw = new ListMultipleChoice("software", new PropertyModel(experiment, "softwares"), softwareTitles).setMaxRows(5);
         add(sw);
 
         List<Weather> weathers = weatherFacade.getAllRecords();
         ArrayList<String> weatherTitles = new ArrayList<String>();
-        for (Weather w : weathers){
-            weatherTitles.add(w.getTitle());
+        if (weathers != null){
+            for (Weather w : weathers){
+                weatherTitles.add(w.getTitle());
+            }
         }
         add(new DropDownChoice<String>("weather",
                 new PropertyModel(experiment, "weather"), weatherTitles).setRequired(true));

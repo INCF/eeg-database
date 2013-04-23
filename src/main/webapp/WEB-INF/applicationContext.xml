@@ -98,11 +98,21 @@
     
     <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
     <bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
-    
+
+    <bean name="softwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareServiceImpl" autowire="byType" >
+        <property name="softwareDao" ref="softwareDao"/>
+    </bean>
+    <bean name="softwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacadeImpl" autowire="byType" />
+
     <bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
         <property name="artifactDao" ref="artifactDao"/>
     </bean>
     <bean name="artifactFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacadeImpl" autowire="byType" />
+
+    <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
+        <property name="projectTypeDao" ref="projectTypeDao"/>
+    </bean>
+    <bean name="projectTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacadeImpl" autowire="byType" />
     
     <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" />
     <bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
@@ -202,5 +212,4 @@
         <property name="defaultMaxConnectionsPerHost" value="${solr.defaultMaxConnectionsPerHost}"/>
         <property name="maxTotalConnections" value="${solr.maxTotalConnections}"/>
     </bean>
-
 </beans>

@@ -1,9 +1,9 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
-import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -25,17 +25,17 @@ import org.apache.wicket.util.time.Duration;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Matheo
- * Date: 9.4.13
- * Time: 19:54
+ * User: Prasek
+ * Date: 16.4.13
+ * Time: 11:51
  * To change this template use File | Settings | File Templates.
  */
-public class AddHardwarePage extends WebPage {
+public class AddWeatherPage extends WebPage {
 
-    public AddHardwarePage(final PageReference modalWindowPage,
+    public AddWeatherPage(final PageReference modalWindowPage,
                                 final ModalWindow window){
 
-        AddHardwareForm form = new AddHardwareForm("addForm", window);
+        AddWeatherForm form = new AddWeatherForm("addForm", window);
         add(form);
     }
 
@@ -45,21 +45,20 @@ public class AddHardwarePage extends WebPage {
         super.renderHead(response);
     }
 
-    private class AddHardwareForm extends Form<Hardware>{
+    private class AddWeatherForm extends Form<Weather> {
         @SpringBean
-        HardwareFacade facade;
+        WeatherFacade facade;
 
-        public AddHardwareForm(String id, final ModalWindow window) {
-            super(id, new CompoundPropertyModel<Hardware>(new Hardware()));
+        public AddWeatherForm(String id, final ModalWindow window) {
+            super(id, new CompoundPropertyModel<Weather>(new Weather()));
 
             final FeedbackPanel feedback = new FeedbackPanel("feedback");
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addHWHeader", ResourceUtils.getModel("pageTitle.addHardwareDefinition")));
+            add(new Label("addWeatherHeader", ResourceUtils.getModel("pageTitle.addWeatherDefinition")));
             add(new TextField<String>("title").setRequired(true));
             add(new TextArea<String>("description").setRequired(true));
-            add(new CheckBox("defaultNumber"));
 
             add(
                 new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
@@ -73,16 +72,17 @@ public class AddHardwarePage extends WebPage {
                 }.add(new AjaxEventBehavior("onclick") {
                     @Override
                     protected void onEvent(AjaxRequestTarget target) {
-                        Hardware newHw = getModelObject();
-                        System.out.println("---- HW-B "+newHw.getHardwareId()+" "+newHw.getTitle()+" "+newHw.getDescription());
-                        if (!facade.canSaveDefaultTitle(newHw.getTitle(), newHw.getHardwareId())) {
+                        Weather newW = getModelObject();
+                        System.out.println("---- HW-B "+newW.getTitle()+" "+newW.getDescription());
+                        if (!facade.canSaveDefaultTitle(newW.getTitle(), newW.getWeatherId())) {
                             feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
                             return;
                         }
                         validate();
                         target.add(feedback);
                         if(!hasError()){
-                            facade.create(newHw);
+                            //TODO create object in database
+                            //facade.createDefaultRecord(newW);
                             window.close(target);
                         }
                     }
