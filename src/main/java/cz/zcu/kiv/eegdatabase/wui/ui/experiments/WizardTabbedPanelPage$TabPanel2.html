@@ -46,8 +46,10 @@
         </div>
 
         <div class="form-item">
-            <label for="pharmaceutical">* Pharmaceuticals</label>
-            <input type="text" name="pharmaceutical" wicket:id="pharmaceutical" class="required autocomplete multiple" autosrc="/get-json-append">
+            <label for="pharmaceutical" wicket:id="pharmaceuticalLb">
+                <wicket:message key="label.pharmaceutical">[pharmaceutical]</wicket:message>
+            </label>
+            <input type="text" name="pharmaceutical" wicket:id="pharmaceutical">
             <input type="button" wicket:id="addPharma" value="Add">
         </div>
 
