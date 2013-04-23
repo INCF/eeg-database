@@ -1,17 +1,12 @@
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.mail.MailException;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
+import java.util.List;
 
 public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
 
@@ -222,6 +217,12 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     @Override
     public void grantGroupPermisson(GroupPermissionRequest request) {
         service.grantGroupPermisson(request);
+    }
+
+    @Override
+    public boolean existsGroup(String title){
+        List<ResearchGroup> groups = service.readByParameter("title", title);
+        return groups != null && groups.size() > 0;
     }
 
 }

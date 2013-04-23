@@ -77,6 +77,13 @@ public class Scenario implements Serializable, Comparable<Scenario> {
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
     private long scn;
 
+    @Transient
+    private String group;
+    @Transient
+    private Boolean availableFile;
+    @Transient
+    private Object dataFile;
+
     public Scenario() {
     }
 
@@ -217,6 +224,30 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 
     public int compareTo(Scenario scen) {
         return this.title.compareTo(scen.getTitle());
+    }
+
+    public String getGroup() {
+        return group;
+    }
+
+    public void setGroup(String group) {
+        this.group = group;
+    }
+
+    public Boolean getAvailableFile() {
+        return availableFile;
+    }
+
+    public void setAvailableFile(Boolean availableFile) {
+        this.availableFile = availableFile;
+    }
+
+    public Object getDataFile() {
+        return dataFile;
+    }
+
+    public void setDataFile(Object dataFile) {
+        this.dataFile = dataFile;
     }
 }
 

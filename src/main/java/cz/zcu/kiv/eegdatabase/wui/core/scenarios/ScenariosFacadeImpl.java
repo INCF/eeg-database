@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.List;
 
 public class ScenariosFacadeImpl implements ScenariosFacade {
 
@@ -99,5 +98,11 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     @Override
     public int getScenarioCountForList(Person person) {
         return service.getScenarioCountForList(person);
+    }
+
+    @Override
+    public boolean existsScenario(String title) {
+        List<Scenario> scenarios = service.readByParameter("title",title);
+        return scenarios != null && scenarios.size() > 0;
     }
 }

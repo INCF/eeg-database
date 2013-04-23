@@ -1,15 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import org.springframework.mail.MailException;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import java.util.List;
 
 public interface ResearchGroupFacade extends GenericFacade<ResearchGroup, Integer> {
 
@@ -80,4 +75,6 @@ public interface ResearchGroupFacade extends GenericFacade<ResearchGroup, Intege
     int getCountPermissionRequestRecords();
 
     void grantGroupPermisson(GroupPermissionRequest request);
+
+    public boolean existsGroup(String title);
 }

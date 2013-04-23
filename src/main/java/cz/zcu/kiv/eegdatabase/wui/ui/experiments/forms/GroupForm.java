@@ -1,7 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
@@ -21,21 +22,21 @@ import org.apache.wicket.validation.IValidator;
 /**
  * Created by IntelliJ IDEA.
  * User: Jakub Balhar
- * Date: 11.4.13
- * Time: 12:46
+ * Date: 16.4.13
+ * Time: 13:53
  */
-public class DiseaseForm extends Form<Disease> {
+public class GroupForm extends Form<ResearchGroup> {
     @SpringBean
-    DiseaseFacade diseaseFacade;
+    ResearchGroupFacade researchGroupFacade;
 
 
-    public DiseaseForm(String id, final ModalWindow window) {
-        super(id, new CompoundPropertyModel<Disease>(new Disease()));
+    public GroupForm(String id, final ModalWindow window) {
+        super(id, new CompoundPropertyModel<ResearchGroup>(new ResearchGroup()));
 
         final FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
-        add(new Label("addDiseaseHeader", "Add new disease"));
+        add(new Label("addGroupHeader", "Create group"));
 
         add(
                 new RequiredTextField<String>("title").
@@ -47,13 +48,14 @@ public class DiseaseForm extends Form<Disease> {
                 new AjaxButton("submitForm", this) {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                        Disease disease = (Disease) form.getModelObject();
+                        ResearchGroup researchGroup = (ResearchGroup) form.getModelObject();
 
                         validate();
                         target.add(feedback);
 
                         if(!hasError()){
-                            diseaseFacade.create(disease);
+                            researchGroup.setPerson(EEGDataBaseSession.get().getLoggedUser());
+                            researchGroupFacade.create(researchGroup);
                             window.close(target);
                         }
                     }
@@ -67,25 +69,25 @@ public class DiseaseForm extends Form<Disease> {
         add(
                 new AjaxButton("closeForm", this) {}.
                         add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        window.close(target);
-                    }
-                })
+                            @Override
+                            protected void onEvent(AjaxRequestTarget target) {
+                                window.close(target);
+                            }
+                        })
         );
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "focus", Duration.ONE_SECOND);
     }
 
-    private class TitleExistsValidator implements IValidator<String>{
+    private class TitleExistsValidator implements IValidator<String> {
 
         @Override
         public void validate(IValidatable<String> validatable) {
             final String title = validatable.getValue();
 
-            if(diseaseFacade.existsDisease(title)){
-                error("Disease with given name already exists.");
+            if(researchGroupFacade.existsGroup(title)){
+                error("Research group with given name already exists.");
             }
         }
     }
