@@ -200,11 +200,11 @@ function drawGraph(place, headline, channel) {
     plots[place] = $.jqplot (place, [signalData[channel]], {
         title: headline,
         animate: true,
-        animateReplot: true,
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },
         seriesDefaults: {
+            showMarker: false,
             rendererOptions: {
                 smooth: true
             }
