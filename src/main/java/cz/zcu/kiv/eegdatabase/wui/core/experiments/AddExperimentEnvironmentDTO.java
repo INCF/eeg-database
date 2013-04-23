@@ -13,7 +13,7 @@ import java.io.Serializable;
  */
 public class AddExperimentEnvironmentDTO extends IdentifiDTO implements Serializable {
     private String weatherNote;
-    private Integer temperature;
+    private Double temperature;
     private String disease;
     private String pharmaceutical;
     private String privateNote;
@@ -54,11 +54,11 @@ public class AddExperimentEnvironmentDTO extends IdentifiDTO implements Serializ
         this.weatherNote = weatherNote;
     }
 
-    public Integer getTemperature() {
+    public Double getTemperature() {
         return temperature;
     }
 
-    public void setTemperature(Integer temperature) {
+    public void setTemperature(Double temperature) {
         this.temperature = temperature;
     }
 

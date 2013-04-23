@@ -1,16 +1,24 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
+import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 
+import javax.xml.stream.events.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,6 +31,7 @@ import java.util.List;
 public class WizardTabbedPanelPage extends MenuPage {
     public WizardTabbedPanelPage() {
 
+
         // create a list of ITab objects used to feed the tabbed panel
         List<ITab> tabs = new ArrayList<ITab>();
         tabs.add(new AbstractTab(new Model<String>("Scenario"))
@@ -34,14 +43,18 @@ public class WizardTabbedPanelPage extends MenuPage {
             }
         });
 
-        tabs.add(new AbstractTab(new Model<String>("Environment"))
+        final Model environmentModel = new Model("Environment");
+        AbstractTab environmentTab = new AbstractTab(environmentModel)
         {
             @Override
             public Panel getPanel(String panelId)
             {
                 return new TabPanel2(panelId);
             }
-        });
+        };
+        tabs.add(environmentTab);
+
+
 
         tabs.add(new AbstractTab(new Model<String>("Result"))
         {
@@ -55,7 +68,20 @@ public class WizardTabbedPanelPage extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        add(new AjaxTabbedPanel("steps", tabs));
+        AjaxTabbedPanel atp = new AjaxTabbedPanel("steps", tabs){
+            @Override
+            protected WebMarkupContainer newLink(String linkId, int index) {
+                int selectedTab = getSelectedTab();
+                if (selectedTab == 1){
+                    environmentModel.setObject("New name :)");
+                }
+                else {
+                    environmentModel.setObject("Environment");
+                }
+                return super.newLink(linkId, index);
+            }
+        };
+        add(atp);
 
     }
 
@@ -97,8 +123,11 @@ public class WizardTabbedPanelPage extends MenuPage {
         public TabPanel2(String id)
         {
             super(id);
-            add(new AddExperimentEnvironmentForm("environmentTab"));
+            add(new AttributeModifier("class", "white"));
+            AddExperimentEnvironmentForm form = new AddExperimentEnvironmentForm("environmentTab");
+            add(form);
         }
+
     };
 
     /**
