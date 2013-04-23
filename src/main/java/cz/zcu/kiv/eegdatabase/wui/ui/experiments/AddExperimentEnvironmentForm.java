@@ -1,23 +1,26 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.Strings;
 import org.springframework.jmx.access.InvocationFailureException;
 
 import java.lang.reflect.Constructor;
@@ -25,9 +28,7 @@ import java.lang.reflect.InvocationTargetException;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
 
@@ -37,6 +38,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private HardwareFacade hardwareFacade;
     @SpringBean
     private SoftwareFacade softwareFacade;
+    @SpringBean
+    private PharmaceuticalFacade pharmaceuticalFacade;
 
     private Experiment experiment = new Experiment();
     final int AUTOCOMPLETE_ROWS = 10;
@@ -94,10 +97,37 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         //TODO autocomplete and create DiseaseFacade
         add(new TextField<String>("disease").setRequired(true));
         
+        final AutoCompleteTextField<String> pharmaceutical = new AutoCompleteTextField<String>("pharmaceutical",
+                new Model<String>(""))
+        {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Pharmaceutical> pharmaceuticals = pharmaceuticalFacade.getAllRecords();
+                for (final Pharmaceutical s : pharmaceuticals)
+                {
+                    final String data = s.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
+        pharmaceutical.setRequired(true);
+        pharmaceutical.setLabel(ResourceUtils.getModel("label.pharmaceutical"));
 
-        //TODO autocomplete and create PharmaceuticalFacade
-        /* TODO check if this attribute is required as stated in prototype*/
-        add(new TextField<String>("pharmaceutical").setRequired(true));
+        FormComponentLabel pharmaceuticalLabel = new FormComponentLabel("pharmaceuticalLb", pharmaceutical);
+        pharmaceuticalLabel.add(AttributeModifier.append("class", "required-item"));
+        this.add(pharmaceutical, pharmaceuticalLabel);
 
         add(new TextField<String>("privateNote"));
     }

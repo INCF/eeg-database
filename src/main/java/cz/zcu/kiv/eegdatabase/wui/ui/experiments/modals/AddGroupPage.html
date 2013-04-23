@@ -9,14 +9,17 @@
 
             <h1 wicket:id="addGroupHeader"></h1>
 
-            <div class="form-sub-item">
-                <label for="groupTitle">Group name</label>
-                <input type="text" wicket:id="groupName"/>
+            <div class="error" wicket:id="feedback">
             </div>
 
             <div class="form-sub-item">
-                <label for="groupDescr">Description</label>
-                <textarea wicket:id="groupDesc" rows="3" cols="40"></textarea>
+                <label for="title">Group name</label>
+                <input type="text" wicket:id="title"/>
+            </div>
+
+            <div class="form-sub-item">
+                <label for="description">Description</label>
+                <textarea wicket:id="description" rows="3" cols="40"></textarea>
             </div>
 
             <div class="close"></div>

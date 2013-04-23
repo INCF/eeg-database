@@ -2,7 +2,9 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import org.apache.cxf.service.invoker.SessionFactory;
 
+import javax.mail.Session;
 import java.util.List;
 
 /**
@@ -59,5 +61,14 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
     public void deleteGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().remove(researchGroup);
         researchGroup.getPharmaceuticals().remove(persistent);
+    }
+
+
+    public boolean canSaveTitle(String title) {
+        String hqlQuery = "from Pharmaceutical p where p.title = :title";
+        List<Pharmaceutical> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("title", title)
+                .list();
+        return (list.size() == 0);
     }
 }
