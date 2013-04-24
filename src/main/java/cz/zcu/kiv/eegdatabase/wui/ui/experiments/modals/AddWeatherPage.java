@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.WeatherForm;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,7 +36,7 @@ public class AddWeatherPage extends WebPage {
     public AddWeatherPage(final PageReference modalWindowPage,
                                 final ModalWindow window){
 
-        AddWeatherForm form = new AddWeatherForm("addForm", window);
+        WeatherForm form = new WeatherForm("addForm", window);
         add(form);
     }
 
@@ -43,67 +44,5 @@ public class AddWeatherPage extends WebPage {
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
         super.renderHead(response);
-    }
-
-    private class AddWeatherForm extends Form<Weather> {
-        @SpringBean
-        WeatherFacade facade;
-
-        public AddWeatherForm(String id, final ModalWindow window) {
-            super(id, new CompoundPropertyModel<Weather>(new Weather()));
-
-            final FeedbackPanel feedback = new FeedbackPanel("feedback");
-            feedback.setOutputMarkupId(true);
-            add(feedback);
-
-            add(new Label("addWeatherHeader", ResourceUtils.getModel("pageTitle.addWeatherDefinition")));
-            add(new TextField<String>("title").setRequired(true));
-            add(new TextArea<String>("description").setRequired(true));
-
-            add(
-                new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    window.close(target);
-                    }
-                }.add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        Weather newW = getModelObject();
-                        System.out.println("---- HW-B "+newW.getTitle()+" "+newW.getDescription());
-                        if (!facade.canSaveDefaultTitle(newW.getTitle(), newW.getWeatherId())) {
-                            feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-                            return;
-                        }
-                        validate();
-                        target.add(feedback);
-                        if(!hasError()){
-                            //TODO create object in database
-                            //facade.createDefaultRecord(newW);
-                            window.close(target);
-                        }
-                    }
-                })
-            );
-            add(
-                new AjaxButton("closeForm", this) {
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                        window.close(target);
-                    }
-                }.add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        window.close(target);
-                    }
-                })
-            );
-
-            setOutputMarkupId(true);
-            AjaxFormValidatingBehavior.addToAllFormComponents(this, "focus", Duration.ONE_SECOND);
-        }
     }
 }

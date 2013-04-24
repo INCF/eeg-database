@@ -112,6 +112,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
@@ -178,12 +182,14 @@
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    <!--
     <bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Stimulus</value>
         </constructor-arg>
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    -->
     <bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>

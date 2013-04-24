@@ -119,10 +119,20 @@
     
     <bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />
     <bean name="scenarioTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacadeImpl" autowire="byType" />
-    
+
     <bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
     <bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
-    
+
+    <bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
+        <property name="stimulusDao" ref="stimulusDao"/>
+    </bean>
+    <bean name="stimulusFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacadeImpl" autowire="byType" />
+
+    <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
+        <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
+    </bean>
+    <bean name="pharmaceuticalFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacadeImpl" autowire="byType" />
+
     <bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
 
     <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />

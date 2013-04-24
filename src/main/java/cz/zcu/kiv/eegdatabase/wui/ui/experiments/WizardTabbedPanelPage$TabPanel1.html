@@ -46,8 +46,10 @@
         </div>
 
         <div class="form-item">
-            <label for="stimulus">Stimulus</label>
-            <input type="text" name="stimulus" wicket:id="stimulus" class="required autocomplete multiple"  autosrc="/get-json-append"/>
+            <label for="stimulus" wicket:id="stimulusLb">
+                <wicket:message key="label.stimulus">[stimulus]</wicket:message>
+            </label>
+            <input type="text" name="stimulus" wicket:id="stimulus"/>
             <input type="button" wicket:id="newStimulus" value="Add">
         </div>
 

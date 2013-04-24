@@ -4,6 +4,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
@@ -17,9 +19,8 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -45,8 +46,12 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     private ScenariosFacade scenariosFacade;
     @SpringBean
     private PersonFacade personFacade;
+    @SpringBean
+    private StimulusFacade stimulusFacade;
 
     private Experiment experiment = new Experiment();
+    private Scenario scenario = new Scenario();
+
     final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentScenarioForm(String id){
@@ -176,10 +181,34 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         //testSubjects autocomplete
 
 
-        TextField<String> stimulus = new TextField<String>("stimulus");
-        //TODO set autocomplete for stimulus, create StimulusFacade
+        //stimulus autocomplete
+        final AutoCompleteTextField<String> stimulus = new AutoCompleteTextField<String>("stimulus",
+                new Model<String>(""))
+        {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Stimulus> stimuli = stimulusFacade.getAllRecords();
+                for (final Stimulus s : stimuli)
+                {
+                    final String data = s.getDescription();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
         stimulus.setRequired(true);
-        add(stimulus);
+        this.add(stimulus);
 
         //coExperimenters autocomplete
         final AutoCompleteTextField<String> coExperimenters = new AutoCompleteTextField<String>("coExperimenters",
@@ -302,7 +331,11 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                 addTested.show(target);
             }
         });
-        add(addTestedAjax);
+        addTestedAjax.setLabel(ResourceUtils.getModel("label.subjectPerson"));
+
+        FormComponentLabel testedLabel = new FormComponentLabel("subjectsLb", addTestedAjax);
+        add(addTestedAjax, testedLabel);
+
 
         final ModalWindow newStimulus;
         add(newStimulus = new ModalWindow("newStimulusModal"));
@@ -324,6 +357,9 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                 newStimulus.show(target);
             }
         });
-        add(newStimulusAjax);
+        newStimulusAjax.setLabel(ResourceUtils.getModel("label.stimulus"));
+
+        FormComponentLabel stimulusLabel = new FormComponentLabel("stimulusLb", newStimulusAjax);
+        add(newStimulusAjax, stimulusLabel);
     }
 }

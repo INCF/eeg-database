@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.SoftwareForm;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -34,7 +35,7 @@ public class AddSoftwarePage extends WebPage {
     public AddSoftwarePage(final PageReference modalWindowPage,
                                 final ModalWindow window){
 
-        AddSoftwareForm form = new AddSoftwareForm("addForm", window);
+        SoftwareForm form = new SoftwareForm("addForm", window);
         add(form);
     }
 
@@ -42,68 +43,5 @@ public class AddSoftwarePage extends WebPage {
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
         super.renderHead(response);
-    }
-
-    private class AddSoftwareForm extends Form<Software>{
-        @SpringBean
-        SoftwareFacade facade;
-
-        public AddSoftwareForm(String id, final ModalWindow window) {
-            super(id, new CompoundPropertyModel<Software>(new Software()));
-
-            final FeedbackPanel feedback = new FeedbackPanel("feedback");
-            feedback.setOutputMarkupId(true);
-            add(feedback);
-
-            add(new Label("addSWHeader", "Add software"));
-
-            add(new TextField<String>("title").setRequired(true));
-            add(new TextArea<String>("description").setRequired(true));
-            add(new CheckBox("defaultNumber"));
-
-            add(
-                new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    window.close(target);
-                    }
-                }.add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        Software newSw = getModelObject();
-                        System.out.println("---- HW-B "+newSw.getTitle()+" "+newSw.getDescription());
-                        if (!facade.canSaveDefaultTitle(newSw.getTitle(), newSw.getSoftwareId())) {
-                            feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-                            return;
-                        }
-                        validate();
-                        target.add(feedback);
-                        if(!hasError()){
-                            //facade.create(newSw);
-                            window.close(target);
-                        }
-                    }
-                })
-            );
-            add(
-                new AjaxButton("closeForm", this) {
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                        window.close(target);
-                    }
-                }.add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        window.close(target);
-                    }
-                })
-            );
-
-            setOutputMarkupId(true);
-            AjaxFormValidatingBehavior.addToAllFormComponents(this, "focus", Duration.ONE_SECOND);
-        }
     }
 }

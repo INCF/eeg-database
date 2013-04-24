@@ -13,11 +13,15 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.util.time.Duration;
 import org.springframework.jmx.access.InvocationFailureException;
 
 import java.lang.reflect.Constructor;
@@ -44,6 +48,10 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
 
+        final FeedbackPanel feedback = new FeedbackPanel("environmentFeedback");
+        feedback.setOutputMarkupId(true);
+        add(feedback);
+
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
 
@@ -67,6 +75,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             }
         }
         ListMultipleChoice hw = new ListMultipleChoice("hardware", new PropertyModel(experiment, "hardwares"), hardwareTitles).setMaxRows(5);
+        hw.setRequired(true);
         add(hw);
 
         List<Software> softwares = softwareFacade.getAllRecords();
@@ -77,6 +86,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             }
         }
         ListMultipleChoice sw = new ListMultipleChoice("software", new PropertyModel(experiment, "softwares"), softwareTitles).setMaxRows(5);
+        sw.setRequired(true);
         add(sw);
 
         List<Weather> weathers = weatherFacade.getAllRecords();
@@ -100,6 +110,14 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         add(new TextField<String>("pharmaceutical").setRequired(true));
 
         add(new TextField<String>("privateNote"));
+
+        setOutputMarkupId(true);
+        AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
+
+    }
+
+    public boolean isValid(){
+        return !hasError();
     }
 
 
