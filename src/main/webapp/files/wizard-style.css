@@ -427,3 +427,13 @@ html, body {
 .test{
     color: red;
 }
+
+.wizard span span input[name="startDate:date"],
+.wizard span span input[name="startDate:hours"],
+.wizard span span input[name="startDate:minutes"],
+.wizard span span input[name="finishDate:date"],
+.wizard span span input[name="finishDate:hours"],
+.wizard span span input[name="finishDate:minutes"]
+{
+    width: auto;
+}

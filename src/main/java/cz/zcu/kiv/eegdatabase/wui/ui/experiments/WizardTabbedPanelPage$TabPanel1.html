@@ -27,25 +27,21 @@
             <input type="button" wicket:id="newProject" name="newProject" value="Add">
         </div>
 
-        <div class="form-item">
-
-            <label for="startDate">Start time</label>
-            <input type="text" name="startDay" class="date" wicket:id="startDate"/>
-
-            <input type="text" name="startTime" class="time" wicket:id="startTime"/>
+        <div class="form-item start-date">
+            <label for="startDate">Start Date</label>
+            <span wicket:id="startDate"></span>
         </div>
 
         <div class="form-item">
-
-            <label for="finishDate">Finish time</label>
-            <input type="text" name="finishDate" class="date" wicket:id="finishDate"/>
-
-            <input type="text" name="finishTime" class="time" wicket:id="finishTime"/>
+            <label for="finishDate">Finish date</label>
+            <span wicket:id="finishDate"></span>
         </div>
 
         <div class="form-item">
             <label for="subjects">Tested subject</label>
-            <input type="text" class="autocomplete" wicket:id="subjects" autosrc="/get-json-append"/>
+            <span wicket:id="addTestedInput">
+                <input type="text" wicket:id="subjects"/>
+            </span>
             <input type="button" wicket:id="addTested" value="Add">
         </div>
 
