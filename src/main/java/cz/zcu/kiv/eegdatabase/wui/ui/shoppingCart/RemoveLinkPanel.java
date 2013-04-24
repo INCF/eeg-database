@@ -9,14 +9,16 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Created with IntelliJ IDEA.
+ * A Panel with a link to remove Experiment for shopping cart.
  * User: jfronek
- * Date: 4.3.13
- * Time: 18:07
- * To change this template use File | Settings | File Templates.
+ * Date: 4.3.2013
  */
 public class RemoveLinkPanel extends Panel {
-
+    /**
+     * Constructor
+     * @param id component id
+     * @param model datamodel of related experiment
+     */
     public RemoveLinkPanel(String id, IModel<Experiment> model) {
         super(id);
         final Experiment experiment = model.getObject();

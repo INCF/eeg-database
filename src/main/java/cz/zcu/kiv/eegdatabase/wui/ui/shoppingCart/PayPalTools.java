@@ -12,23 +12,28 @@ import java.util.List;
 import java.util.Properties;
 
 /**
- * Created with IntelliJ IDEA.
+ * PayPal tools to set and execute user's payment via PayPal service.
  * User: jfronek
- * Date: 21.3.13
- * Time: 19:34
- * To change this template use File | Settings | File Templates.
+ * Date: 21.3.2013
  */
 public class PayPalTools {
-
-    //In future extension might have an input parameter - Currency
+    /**
+     * Method for registering a payment on PayPal server. Needs to specify requested information.
+     * In future extension might have an input parameter - Currency
+     * @return PayPal's URL including token value identifying the payment. (Or ErrorPage URL in case an error occurs).
+     */
     public static String setExpressCheckout(){
+        // PayPal requires URL to redirect user upon successful payment authorization.
         String confirmURL = PageParametersUtils.getUrlForPage(PayPalConfirmPaymentPage.class, null);
+        // PayPal requires URL to redirect user upon canceling the payment authorization.
         String cancelURL = PageParametersUtils.getUrlForPage(ShoppingCartPage.class, null);
 
         try{
+            // PayPal SDK requires property object as a constructor parameter.
             Properties PayPalProperties =  new Properties();
             PayPalProperties.load(WebApplication.get().getServletContext().getResourceAsStream("/WEB-INF/PayPal.properties"));
             PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(PayPalProperties);
+            // Generation of setExpressCheckout request.
             SetExpressCheckoutRequestType setExpressCheckoutReq = new SetExpressCheckoutRequestType();
             SetExpressCheckoutRequestDetailsType details = new SetExpressCheckoutRequestDetailsType();
 
@@ -37,20 +42,22 @@ public class PayPalTools {
 
             List<PaymentDetailsType> payDetails = new ArrayList<PaymentDetailsType>();
             PaymentDetailsType paydtl = new PaymentDetailsType();
-            paydtl.setPaymentAction(PaymentActionCodeType.SALE);
+            paydtl.setPaymentAction(PaymentActionCodeType.SALE);  // Type needs to be set as SALE
             payDetails.add(paydtl);
 
             BasicAmountType totalAmount = new BasicAmountType();
+            // Currency code
+            // For developing purposes set to GBP, might be changes to EUR or an input param in case of multi-currency store
             totalAmount.setCurrencyID(CurrencyCodeType.GBP);
             totalAmount.setValue(Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()));
 
             details.setOrderTotal(totalAmount);
             details.setPaymentDetails(payDetails);
 
-            details.setNoShipping("1");
-            details.setAllowNote("0");
+            details.setNoShipping("1");  //No shipping detail to be filled
+            details.setAllowNote("0");   //No notes to be accepted
 
-            //HardCoded String. Will be replaced when eshop goes live and Experiments are replaced with prepared packages.
+            // HardCoded Strings. Will be replaced when eshop goes live and Experiments are replaced with prepared packages.
             details.setOrderDescription("Experiments for total of: " + Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()) + " GBP.");
 
             setExpressCheckoutReq.setSetExpressCheckoutRequestDetails(details);
@@ -71,10 +78,19 @@ public class PayPalTools {
         return PageParametersUtils.getUrlForPage(PaymentErrorPage.class, null);
     }
 
-    //In future extension might have an input parameter - Currency
+    /**
+     * Gets Payer's ID from authorized payment and requests PayPal service to bill user's account.
+     * In future extension might have an input parameter - Currency
+     * @param token Token identifying payment.
+     * @return true in case of successful transaction. false otherwise.
+     */
     public static boolean doExpressCheckout(String token){
         try{
-            PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(WebApplication.get().getServletContext().getResourceAsStream("/WEB-INF/PayPal.properties"));
+            // PayPal SDK requires property object as a constructor parameter.
+            Properties PayPalProperties =  new Properties();
+            PayPalProperties.load(WebApplication.get().getServletContext().getResourceAsStream("/WEB-INF/PayPal.properties"));
+            PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(PayPalProperties);
+            // Generation of getExpressCheckout request.
             GetExpressCheckoutDetailsReq req = new GetExpressCheckoutDetailsReq();
             GetExpressCheckoutDetailsRequestType reqType = new GetExpressCheckoutDetailsRequestType(token);
             req.setGetExpressCheckoutDetailsRequest(reqType);
@@ -83,20 +99,23 @@ public class PayPalTools {
             if(resp == null || resp.getAck() != AckCodeType.SUCCESS){
                 return false;
             }
-
+            // Reads Payer's ID from getExpressCheckout response
             String payerID = resp.getGetExpressCheckoutDetailsResponseDetails().getPayerInfo().getPayerID();
 
+            // Generating doExpressCheckout request to actually bill user's account
             DoExpressCheckoutPaymentRequestType doCheckoutPaymentRequestType = new DoExpressCheckoutPaymentRequestType();
             DoExpressCheckoutPaymentRequestDetailsType details = new DoExpressCheckoutPaymentRequestDetailsType();
 
             details.setToken(token);
             details.setPayerID(payerID);
-            details.setPaymentAction(PaymentActionCodeType.SALE);
+            details.setPaymentAction(PaymentActionCodeType.SALE); //Type need to be set as SALE
 
             List<PaymentDetailsType> payDetails = new ArrayList<PaymentDetailsType>();
             PaymentDetailsType paydtl = new PaymentDetailsType();
-            paydtl.setPaymentAction(PaymentActionCodeType.SALE);
+            paydtl.setPaymentAction(PaymentActionCodeType.SALE);  //Type need to be set as SALE
             BasicAmountType totalAmount = new BasicAmountType();
+            // Currency code
+            // For developing purposes set to GBP, might be changes to EUR or an input param in case of multi-currency store
             totalAmount.setCurrencyID(CurrencyCodeType.GBP);
             totalAmount.setValue(Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()));
             paydtl.setOrderTotal(totalAmount);

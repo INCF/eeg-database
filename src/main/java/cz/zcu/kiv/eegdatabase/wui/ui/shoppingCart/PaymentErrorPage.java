@@ -10,11 +10,11 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
- * Created with IntelliJ IDEA.
+ * Error page for capturing any error that occurs during the payment processing.
+ * For security reasons, it doesn't reveal any error description, only suggests the user to continue either
+ * to Homepage or My Cart page.
  * User: jfronek
- * Date: 21.3.13
- * Time: 22:38
- * To change this template use File | Settings | File Templates.
+ * Date: 21.3.2013
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PaymentErrorPage extends MenuPage{

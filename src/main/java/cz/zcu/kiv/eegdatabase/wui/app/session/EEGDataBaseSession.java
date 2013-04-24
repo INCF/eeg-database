@@ -149,6 +149,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
     private void createShoppingCart() {
+        // There can be only one Shopping cart per Session.
         if (this.shoppingCart == null) {
             this.shoppingCart = new ShoppingCart();
         }
