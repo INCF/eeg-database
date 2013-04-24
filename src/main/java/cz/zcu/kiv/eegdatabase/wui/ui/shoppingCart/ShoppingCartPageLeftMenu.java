@@ -5,11 +5,9 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
- * Created with IntelliJ IDEA.
+ * LeftMenu definition for ShoppingCart Page
  * User: jfronek
- * Date: 21.3.13
- * Time: 18:21
- * To change this template use File | Settings | File Templates.
+ * Date: 21.3.2013
  */
 public enum ShoppingCartPageLeftMenu implements IButtonPageMenu {
 

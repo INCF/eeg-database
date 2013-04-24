@@ -20,15 +20,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * My downloads page. Currently serves only to show confirmation upon successful purchase. In the future should also
+ * show user's purchase history and allow him to re-download purchased experiments.
  * User: jfronek
- * Date: 21.3.13
- * Time: 18:13
- * To change this template use File | Settings | File Templates.
+ * Date: 21.3.2013
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class MyDownloadsPage  extends MenuPage {
     private static final int ITEMS_PER_PAGE = 20;
+    /* List of purchased items. */
     private List<Experiment> order;
 
     public MyDownloadsPage(){

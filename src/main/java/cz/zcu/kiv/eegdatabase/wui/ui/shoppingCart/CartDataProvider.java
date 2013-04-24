@@ -15,14 +15,12 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * SortableDataProvider implementation for listing shopping cart's content.
  * User: jfronek
- * Date: 4.3.13
- * Time: 18:13
- * To change this template use File | Settings | File Templates.
+ * Date: 4.3.2013
  */
 public class CartDataProvider extends SortableDataProvider<Experiment, String> {
-
+    /* List of shopping cart's current content. */
     private List<Experiment> list;
 
     public CartDataProvider(){
