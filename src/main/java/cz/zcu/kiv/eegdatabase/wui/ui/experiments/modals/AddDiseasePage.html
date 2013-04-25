@@ -12,12 +12,16 @@
             <div class="error" wicket:id="feedback"></div>
 
             <div class="form-sub-item">
-                <label for="title">Disease name</label>
+                <label for="title">
+                    <wicket:message key="label.disease">[disease]</wicket:message>
+                </label>
                 <input type="text" wicket:id="title"/>
             </div>
 
             <div class="form-sub-item">
-                <label for="description">Description</label>
+                <label for="description">
+                    <wicket:message key="label.description">[description]</wicket:message>
+                </label>
                 <textarea wicket:id="description" rows="3" cols="40"></textarea>
             </div>
 

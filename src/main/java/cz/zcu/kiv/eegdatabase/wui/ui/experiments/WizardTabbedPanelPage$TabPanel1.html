@@ -9,31 +9,41 @@
         <div wicket:id="newStimulusModal"></div>
 
         <div class="form-item">
-            <label for="scenario">Scenario</label>
+            <label for="scenario">
+                <wicket:message key="label.scenario">Scenario</wicket:message>
+            </label>
             <input type="text" wicket:id="scenario"/>
             <input type="button" wicket:id="newScenario" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="group">Group</label>
+            <label for="group">
+                <wicket:message key="label.group">Group</wicket:message>
+            </label>
             <input type="text" wicket:id="group">
             <input type="button" wicket:id="addGroup" value="Add" />
             <input type="checkbox" name="defaultGroup" wicket:id="isDefaultGroup" value="isDefault">Set as default
         </div>
 
         <div class="form-item">
-            <label for="project">Project type</label>
+            <label for="project">
+                <wicket:message key="label.projectType">Project type</wicket:message>
+            </label>
             <input type="text" wicket:id="project"/>
             <input type="button" wicket:id="newProject" name="newProject" value="Add">
         </div>
 
         <div class="form-item start-date">
-            <label for="start">Start Date</label>
+            <label for="start">
+                <wicket:message key="label.startDate">Start Date</wicket:message>
+            </label>
             <span wicket:id="start"></span>
         </div>
 
         <div class="form-item">
-            <label for="finish">Finish date</label>
+            <label for="finish">
+                <wicket:message key="label.finishDate">Finish date</wicket:message>
+            </label>
             <span wicket:id="finish"></span>
         </div>
 
@@ -56,7 +66,9 @@
         </div>
 
         <div class="form-item">
-            <label for="coExperimenters">Co - experimenters</label>
+            <label for="coExperimenters">
+                <wicket:message key="label.coExperimenters">Co - experimenters</wicket:message>
+            </label>
             <input type="text" class="autocomplete multiple" wicket:id="coExperimenters" autosrc="/get-json-append"/>
         </div>
     </form>

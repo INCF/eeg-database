@@ -12,32 +12,44 @@
             <div class="error" wicket:id="feedback"></div>
 
             <div class="form-sub-item added">
-                <label for="researchGroup">Group</label>
+                <label for="researchGroup">
+                    <wicket:message key="label.description">[description]</wicket:message>
+                </label>
                 <input type="text" wicket:id="researchGroup"></input>
             </div>
 
             <div class="form-sub-item">
-                <label for="title">Scenario title</label>
+                <label for="title">
+                    <wicket:message key="label.scenarioTitle">Scenario title</wicket:message>
+                </label>
                 <input type="text" wicket:id="title"/>
             </div>
 
             <div class="form-sub-item">
-                <label for="scenarioLength">Length</label>
+                <label for="scenarioLength">
+                    <wicket:message key="label.length">Length</wicket:message>
+                </label>
                 <input type="text" wicket:id="scenarioLength"/>
             </div>
 
             <div class="form-sub-item">
-                 <label for="description">Description</label>
+                 <label for="description">
+                     <wicket:message key="label.description">Description</wicket:message>
+                 </label>
                  <textarea wicket:id="description" rows="3" cols="40"></textarea>
             </div>
 
             <div class="form-sub-item">
-                <label for="availableFile">Available data file</label>
+                <label for="availableFile">
+                    <wicket:message key="label.availableDataFile">Available data file</wicket:message>
+                </label>
                 <input type="checkbox" wicket:id="availableFile"/>
             </div>
 
             <div class="form-sub-item">
-                <label for="dataFile">Data file</label>
+                <label for="dataFile">
+                    <wicket:message key="label.data">Data file</wicket:message>
+                </label>
                 <input type="file" wicket:id="dataFile"/>
             </div>
 
