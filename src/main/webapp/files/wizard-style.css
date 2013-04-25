@@ -428,12 +428,12 @@ html, body {
     color: red;
 }
 
-.wizard span span input[name="startDate:date"],
-.wizard span span input[name="startDate:hours"],
-.wizard span span input[name="startDate:minutes"],
-.wizard span span input[name="finishDate:date"],
-.wizard span span input[name="finishDate:hours"],
-.wizard span span input[name="finishDate:minutes"]
+.wizard span span input[name="start:date"],
+.wizard span span input[name="start:hours"],
+.wizard span span input[name="start:minutes"],
+.wizard span span input[name="finish:date"],
+.wizard span span input[name="finish:hours"],
+.wizard span span input[name="finish:minutes"]
 {
     width: auto;
 }

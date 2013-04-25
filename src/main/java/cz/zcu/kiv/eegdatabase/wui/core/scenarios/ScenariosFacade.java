@@ -26,4 +26,6 @@ public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
     boolean existsScenario(String title);
 
     void flush();
+
+    Scenario getScenarioByTitle(String input);
 }

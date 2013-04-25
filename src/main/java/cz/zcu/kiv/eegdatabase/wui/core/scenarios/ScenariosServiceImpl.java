@@ -122,4 +122,14 @@ public class ScenariosServiceImpl implements ScenariosService {
         scenarioDAO.flush();
     }
 
+    @Override
+    public Scenario getScenarioByTitle(String title) {
+        List<Scenario> scenarios = scenarioDAO.readByParameter("title", title);
+        if(scenarios.size() > 0){
+            return scenarios.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -26,6 +26,8 @@ public class AddExperimentScenarioDTO extends IdentifiDTO implements Serializabl
     private String subjects;
     private String stimulus;
     private List<String> coExperimenters;
+    private Date start;
+    private Date finish;
 
     public String getScenario() {
         return scenario;
@@ -113,5 +115,21 @@ public class AddExperimentScenarioDTO extends IdentifiDTO implements Serializabl
 
     public void setDefaultGroup(boolean defaultGroup) {
         isDefaultGroup = defaultGroup;
+    }
+
+    public Date getStart() {
+        return start;
+    }
+
+    public void setStart(Date start) {
+        this.start = start;
+    }
+
+    public Date getFinish() {
+        return finish;
+    }
+
+    public void setFinish(Date finish) {
+        this.finish = finish;
     }
 }

@@ -24,4 +24,6 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
     int getScenarioCountForList(Person person);
 
     void flush();
+
+    Scenario getScenarioByTitle(String title);
 }

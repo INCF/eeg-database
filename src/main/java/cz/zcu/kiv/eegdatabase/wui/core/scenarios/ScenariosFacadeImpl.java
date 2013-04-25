@@ -110,4 +110,9 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     public void flush() {
         service.flush();
     }
+
+    @Override
+    public Scenario getScenarioByTitle(String title) {
+        return service.getScenarioByTitle(title);  //To change body of implemented methods use File | Settings | File Templates.
+    }
 }

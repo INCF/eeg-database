@@ -26,10 +26,7 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 
 /**
@@ -50,7 +47,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     private StimulusFacade stimulusFacade;
 
     private Experiment experiment = new Experiment();
-    private Scenario scenario = new Scenario();
+    private Scenario scenarioEntity = new Scenario();
 
     final int AUTOCOMPLETE_ROWS = 10;
 
@@ -84,6 +81,12 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
             }
         };
         scenario.setRequired(true);
+        scenario.add(new AjaxEventBehavior("onblur") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                scenarioEntity = scenariosFacade.getScenarioByTitle(scenario.getInput());
+            }
+        });
         this.add(scenario);
 
         //research group autocomplete
@@ -124,11 +127,20 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         project.setRequired(true);
         add(project);
 
-        DateTimeField startDate = new DateTimeField("startDate");
+        Date now = new Date();
+        getModelObject().setStart(now);
+        DateTimeField startDate = new DateTimeField("start");
         startDate.setRequired(true);
         add(startDate);
 
-        DateTimeField finishDate = new DateTimeField("finishDate");
+        if(scenarioEntity != null){
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(now);
+            cal.add(Calendar.MINUTE, scenarioEntity.getScenarioLength());
+            now = cal.getTime();
+        }
+        getModelObject().setFinish(now);
+        DateTimeField finishDate = new DateTimeField("finish");
         finishDate.setRequired(true);
         add(finishDate);
 
