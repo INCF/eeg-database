@@ -1,13 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
@@ -15,22 +13,21 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
-import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
-import org.springframework.jmx.access.InvocationFailureException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
+import java.util.Iterator;
 import java.util.List;
 
 public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
@@ -41,6 +38,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private HardwareFacade hardwareFacade;
     @SpringBean
     private SoftwareFacade softwareFacade;
+    @SpringBean
+    private DiseaseFacade diseaseFacade;
 
     private Experiment experiment = new Experiment();
     final int AUTOCOMPLETE_ROWS = 10;
@@ -102,8 +101,34 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         add(new TextArea<String>("weatherNote"));
         add(new NumberTextField<Integer>("temperature").setRequired(true));
         //TODO autocomplete and create DiseaseFacade
-        add(new TextField<String>("disease").setRequired(true));
-        
+
+        final AutoCompleteTextField<String> disease = new AutoCompleteTextField<String>("disease")
+        {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<Disease> diseases = diseaseFacade.getAllRecords();
+                for (final Disease disease : diseases)
+                {
+                    final String data = disease.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
+        disease.setRequired(true);
+        disease.setOutputMarkupId(true);
+        add(disease);
 
         //TODO autocomplete and create PharmaceuticalFacade
         /* TODO check if this attribute is required as stated in prototype*/

@@ -113,6 +113,11 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         }
     }
 
+    @Override
+    public void flush() {
+        getHibernateTemplate().flush();
+    }
+
     private String getCondition(String choice) {
         if (choice.equals("minScenarioLength")) {
             return ">=";

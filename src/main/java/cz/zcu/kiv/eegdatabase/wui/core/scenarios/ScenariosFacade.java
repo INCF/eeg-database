@@ -24,4 +24,6 @@ public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
     int getScenarioCountForList(Person person);
 
     boolean existsScenario(String title);
+
+    void flush();
 }

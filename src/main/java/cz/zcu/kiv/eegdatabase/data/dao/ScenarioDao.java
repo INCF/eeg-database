@@ -26,4 +26,6 @@ public interface ScenarioDao extends GenericDao<Scenario, Integer> {
     public List<Scenario> getScenariosForList(Person person, int start, int count);
 
     public int getScenarioCountForList(Person person);
+
+    public void flush();
 }

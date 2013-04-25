@@ -1,11 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+
+import java.util.List;
 
 public interface ScenariosService extends GenericService<Scenario, Integer> {
 
@@ -22,4 +22,6 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
     List<Scenario> getScenariosForList(Person person, int start, int count);
 
     int getScenarioCountForList(Person person);
+
+    void flush();
 }

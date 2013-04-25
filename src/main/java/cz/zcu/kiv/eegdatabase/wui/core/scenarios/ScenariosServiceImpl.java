@@ -1,16 +1,15 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.List;
 
 public class ScenariosServiceImpl implements ScenariosService {
 
@@ -116,6 +115,11 @@ public class ScenariosServiceImpl implements ScenariosService {
     @Transactional(readOnly = true)
     public int getScenarioCountForList(Person person) {
         return scenarioDAO.getScenarioCountForList(person);
+    }
+
+    @Override
+    public void flush() {
+        scenarioDAO.flush();
     }
 
 }

@@ -28,6 +28,46 @@ public class DiseaseServiceImpl implements DiseaseService {
     }
 
     @Override
+    public Disease read(Integer id) {
+        return diseaseDao.read(id);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Disease> readByParameter(String parameterName, int parameterValue) {
+        return diseaseDao.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Disease> readByParameter(String parameterName, String parameterValue) {
+        return diseaseDao.readByParameter(parameterName,parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void update(Disease transientObject) {
+        diseaseDao.update(transientObject);//To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public void delete(Disease persistentObject) {
+        diseaseDao.delete(persistentObject);//To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Disease> getAllRecords() {
+        return diseaseDao.getAllRecords();  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public List<Disease> getRecordsAtSides(int first, int max) {
+        return diseaseDao.getRecordsAtSides(first, max);  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
+    public int getCountRecords() {
+        return diseaseDao.getCountRecords();  //To change body of implemented methods use File | Settings | File Templates.
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public boolean existsDisease(String name) {
         List<Disease> existingDisease = diseaseDao.readByParameter("title", name);

@@ -105,4 +105,9 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
         List<Scenario> scenarios = service.readByParameter("title",title);
         return scenarios != null && scenarios.size() > 0;
     }
+
+    @Override
+    public void flush() {
+        service.flush();
+    }
 }
