@@ -225,4 +225,14 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
         return groups != null && groups.size() > 0;
     }
 
+    @Override
+    public ResearchGroup getGroupByTitle(String title) {
+        List<ResearchGroup> groups = service.readByParameter("title", title);
+        if(groups.size() > 0){
+            return groups.get(0);
+        } else {
+            return null;
+        }
+    }
+
 }

@@ -1,9 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
@@ -21,7 +18,10 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
@@ -59,7 +59,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
         //scenario autocomplete
         final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
-                new PropertyModel(experiment, "scenario.scenarioName"))
+                new PropertyModel<String>(experiment, "scenario.scenarioName"))
         {
             @Override
             protected Iterator<String> getChoices(String input)
@@ -88,7 +88,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
         //research group autocomplete
         final AutoCompleteTextField<String> group = new AutoCompleteTextField<String>("group",
-                new PropertyModel(experiment, "researchGroup.title"))
+                new PropertyModel<String>(experiment, "researchGroup.title"))
         {
             @Override
             protected Iterator<String> getChoices(String input)
@@ -132,14 +132,14 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         finishDate.setRequired(true);
         add(finishDate);
 
-        final List actualAmount = new ArrayList<Integer>();
+        final List<Integer> actualAmount = new ArrayList<Integer>();
         actualAmount.add(1);
         actualAmount.add(2);
         final ListView propertyList = new ListView("addTestedInput",actualAmount) {
             @Override
             protected void populateItem(ListItem item) {
                 final AutoCompleteTextField<String> testSubject = new AutoCompleteTextField<String>("subjects",
-                        new PropertyModel(experiment, "persons"))
+                        new PropertyModel<String>(experiment, "persons"))
                 {
                     //TODO which persons are co-experimenters and which are test subjects?
                     @Override
@@ -212,7 +212,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
         //coExperimenters autocomplete
         final AutoCompleteTextField<String> coExperimenters = new AutoCompleteTextField<String>("coExperimenters",
-                new PropertyModel(experiment, "persons"))
+                new PropertyModel<String>(experiment, "persons"))
         {
             //TODO which persons are co-experimenters and which are test subjects?
             @Override
