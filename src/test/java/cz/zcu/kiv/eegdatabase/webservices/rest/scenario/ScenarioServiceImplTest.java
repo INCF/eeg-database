@@ -52,8 +52,9 @@ public class ScenarioServiceImplTest {
     }
 
     @Test
+    @Transactional(readOnly = true)
     public void testGetAllScenarios() throws Exception {
-        Collection<Scenario> scenariosOriginal = scenarioDao.getAllRecords();
+        Collection<Scenario> scenariosOriginal = scenarioDao.getAvailableScenarios(personDao.getLoggedPerson());
         Collection<ScenarioData> scenariosObtained = service.getAllScenarios();
 
         Assert.assertNotNull(scenariosObtained);
