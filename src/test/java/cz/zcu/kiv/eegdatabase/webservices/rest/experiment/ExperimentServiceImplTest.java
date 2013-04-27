@@ -243,8 +243,7 @@ public class ExperimentServiceImplTest {
 
         //default weather
         WeatherData weather = new WeatherData();
-        weather.setTitle("junit");
-        weather.setDescription("junit");
+        weather.setWeatherId(1);
         exp.setWeather(weather);
 
         ElectrodeConfData conf = new ElectrodeConfData();
