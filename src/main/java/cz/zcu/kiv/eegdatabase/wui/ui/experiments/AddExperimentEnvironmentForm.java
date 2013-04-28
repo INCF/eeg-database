@@ -48,10 +48,6 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
 
-        final FeedbackPanel feedback = new FeedbackPanel("environmentFeedback");
-        feedback.setOutputMarkupId(true);
-        add(feedback);
-
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
 
@@ -96,8 +92,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 weatherTitles.add(w.getTitle());
             }
         }
-        add(new DropDownChoice<String>("weather",
-                new PropertyModel(experiment, "weather"), weatherTitles).setRequired(true));
+        add(new DropDownChoice<String>("weather", weatherTitles).setRequired(true));
 
         add(new TextArea<String>("weatherNote"));
         add(new NumberTextField<Integer>("temperature").setRequired(true));
@@ -113,13 +108,13 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
-
     }
 
     public boolean isValid(){
+        validate();
+        System.out.println("VALIDUJI ENVI S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
-
 
     private void addModalWindowAndButton(Form form, String modalWindowName, String cookieName,
                                          String buttonName, final String targetClass){
@@ -168,4 +163,5 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         });
         form.add(ajaxButton);
     }
+
 }
