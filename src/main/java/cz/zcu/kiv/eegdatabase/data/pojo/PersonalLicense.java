@@ -52,6 +52,9 @@ public class PersonalLicense implements Serializable{
 	@Column(name = "LAST_NAME")
 	private String lastName;
 
+	@Column(name = "ORGANISATION")
+	private String organization;
+
 	public Date getRequestedDate() {
 		return requestedDate;
 	}
@@ -96,9 +99,6 @@ public class PersonalLicense implements Serializable{
 	public void setOrganization(String organization) {
 		this.organization = organization;
 	}
-	
-	@Column(name = "CONFIRMED_DATE")
-	private String organization;
 
     public int getPersonalLicenseId() {
 	    return personalLicenseId;

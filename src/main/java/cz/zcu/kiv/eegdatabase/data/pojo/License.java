@@ -20,8 +20,9 @@ public class License implements Serializable{
 	
     @Column(name = "PRICE")
     private float price;
-    
-	@Column(name = "RESEARCH_GROUP_ID")
+
+	@ManyToOne
+	@JoinColumn(name = "RESEARCH_GROUP_ID")
     private ResearchGroup researchGroup;
 	
     @Column(name = "TITLE")

@@ -102,6 +102,16 @@ public class DbMigrationPage extends BasePage {
 			id = experimentPackageFacade.create(publicExperimentPackage);
 			publicExperimentPackage = experimentPackageFacade.read(id);
 
+			//create owner license for the package
+			License privateLicense = new License();
+			privateLicense.setDescription("Default generated owner license");
+			privateLicense.setTitle("Owner License");
+			privateLicense.setLicenseType(LicenseType.OWNER);
+			privateLicense.setPrice(0);
+			privateLicense.setResearchGroup(group);
+			id = this.licenseFacade.create(privateLicense);
+			privateLicense = licenseFacade.read(id);
+
 			for (Experiment ex : publicExperiments) {
 			    if(ex.getExperimentId() == 0) { //avoid invalid db state
 				continue;
@@ -155,16 +165,6 @@ public class DbMigrationPage extends BasePage {
 
 				    }
 				}
-
-				//create private license for the package
-				License privateLicense = new License();
-				privateLicense.setDescription("Default generated owner license");
-				privateLicense.setTitle("Owner License");
-				privateLicense.setLicenseType(LicenseType.OWNER);
-				privateLicense.setPrice(0);
-				privateLicense.setResearchGroup(group);
-				id = this.licenseFacade.create(privateLicense);
-				privateLicense = licenseFacade.read(id);
 
 				//bind the package to the license
 				experimentPackageLicense = new ExperimentPackageLicense();
