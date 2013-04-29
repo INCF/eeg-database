@@ -10,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
 import java.util.Date;
@@ -24,6 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicense, Integer> implements PersonalLicenseService {
 
 	private PersonalLicenseDao personalLicenseDao;
+	private MailService mailService;
 	
     public PersonalLicenseServiceImpl() {
     }
@@ -35,6 +37,11 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Required
     public void setPersonalLicenseDao(PersonalLicenseDao personalLicenseDao) {
 		this.personalLicenseDao = personalLicenseDao;
+    }
+	
+	@Required
+    public void setMailService(MailService mailService) {
+		this.mailService = mailService;
     }
 
 	@Override
@@ -52,8 +59,14 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Override
 	@Transactional
 	public void createRequestForLicense(PersonalLicense personalLicense) {
-		personalLicense.setConfirmedDate(null);
 		this.personalLicenseDao.create(personalLicense);
+		personalLicense.setConfirmedDate(null);
+		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
+		this.mailService.sendLicenseRequestToGroupEmail(
+				personalLicense.getLicense().getResearchGroup().getPerson().getEmail(),
+				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
+				personalLicense.getPerson().getEmail(),
+				personalLicense.getLicense().getTitle());
 	}
 
 	@Override
@@ -61,6 +74,8 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	public void confirmRequestForLicense(PersonalLicense personalLicense) {
 		personalLicense.setConfirmedDate(new Date());
 		this.personalLicenseDao.update(personalLicense);
+		personalLicense.setConfirmedDate(null);		
+		this.mailService.sendLicenseRequestConfirmationEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
 	}
 
 	@Override

@@ -22,6 +22,38 @@ public interface MailService {
      * @throws MailException when mail sending fails
      */
     boolean sendEmail(String toEmail, String subject, String emailBody) throws MailException;
+    
+	/**
+     * Sends License request notification email to the Person who requests the license.
+     *
+     * @param toEmail User email that is requesting access for a license.
+     * @throws MailException when mail sending fails
+     */
+	boolean sendLicenseRequestToApplicantEmail(String toEmail, String licenseDescription) throws MailException;
+	
+	/**
+     * Sends License request notification email to the Group holding the license.
+     *
+     * @param toEmail Email the of group's owner that will be notified of the request.
+     * @throws MailException when mail sending fails
+     */
+	boolean sendLicenseRequestToGroupEmail(String toEmail, String applicantName, String applicantEmail, String licenseDescription) throws MailException;
+	
+	/**
+     * Sends notification email upon successful confirmation of a license request.
+     *
+     * @param toEmail Email the user whose license request has been approved.
+     * @throws MailException when mail sending fails
+     */
+	boolean sendLicenseRequestConfirmationEmail(String toEmail, String licenseDescription) throws MailException;
+	
+	/**
+     * Sends notification email upon denial of a license request.
+     *
+     * @param toEmail Email the user whose license request has been approved.
+     * @throws MailException when mail sending fails
+     */
+	boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription) throws MailException;
 
     /**
      * Sends activation link to confirm user registration

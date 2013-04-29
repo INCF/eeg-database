@@ -18,6 +18,7 @@ import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
@@ -165,4 +166,40 @@ public class SpringJavaMailService implements MailService {
             throw new MailPreparationException(e.getMessage(), e);
         }
     }
+
+	@Override
+	public boolean sendLicenseRequestToApplicantEmail(String toEmail, String licenseDescription) throws MailException {
+		Locale locale = EEGDataBaseSession.get().getLocale();
+		String subject = messageSource.getMessage("licenserequest.applicant.subject", null, locale);
+		String msg = messageSource.getMessage("licenserequest.applicant.body",
+				new String[]{ licenseDescription }, locale);
+		return this.sendEmail(toEmail, subject, msg);
+	}
+
+	@Override
+	public boolean sendLicenseRequestToGroupEmail(String toEmail, String applicantName, String applicantEmail, String licenseDescription) throws MailException {
+		Locale locale = EEGDataBaseSession.get().getLocale();
+		String subject = messageSource.getMessage("licenserequest.group.subject", null, locale);
+		String msg = messageSource.getMessage("licenserequest.group.body",
+				new String[]{applicantName, applicantEmail, licenseDescription}, locale);
+		return this.sendEmail(toEmail, subject, msg);
+	}
+
+	@Override
+	public boolean sendLicenseRequestConfirmationEmail(String toEmail, String licenseDescription) throws MailException {
+		Locale locale = EEGDataBaseSession.get().getLocale();
+		String subject = messageSource.getMessage("licenserequest.confirmation.confirmed.subject", null, locale);
+		String msg = messageSource.getMessage("licenserequest.confirmation.confirmed.body",
+				new String[]{licenseDescription}, locale);
+		return this.sendEmail(toEmail, subject, msg);
+	}
+	
+	@Override
+	public boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription) throws MailException {
+		Locale locale = EEGDataBaseSession.get().getLocale();
+		String subject = messageSource.getMessage("licenserequest.confirmation.rejected.subject", null, locale);
+		String msg = messageSource.getMessage("licenserequest.confirmation.rejected.body",
+				new String[]{licenseDescription}, locale);
+		return this.sendEmail(toEmail, subject, msg);
+	}
 }
