@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.license;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -34,5 +35,13 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public boolean addLicenseToPerson(License license, Person person);
 
 	public boolean addPublicLicenseToPerson(Person person);
+
+	public License getPublicLicense();
+
+	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
+
+	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
+
+	public License getOwnerLicense(ResearchGroup group);
 	
 }

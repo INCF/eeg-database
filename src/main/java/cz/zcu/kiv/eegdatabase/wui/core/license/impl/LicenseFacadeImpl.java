@@ -6,6 +6,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -86,6 +87,26 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	public boolean addPublicLicenseToPerson(Person person) {
 		License license = licenseService.getPublicLicense();
 		return this.personalLicenseService.addLicenseToPerson(person, license);
+	}
+
+	@Override
+	public License getPublicLicense() {
+		return licenseService.getPublicLicense();
+	}
+
+	@Override
+	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
+		return licenseService.getLicensesForGroup(group, type);
+	}
+
+	@Override
+	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
+		return licenseService.getLicensesForGroup(group, type);
+	}
+
+	@Override
+	public License getOwnerLicense(ResearchGroup group) {
+		return licenseService.getOwnerLicense(group);
 	}
 	
 }

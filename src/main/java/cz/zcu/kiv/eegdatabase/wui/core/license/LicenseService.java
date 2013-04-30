@@ -6,10 +6,10 @@ package cz.zcu.kiv.eegdatabase.wui.core.license;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
-import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -28,4 +28,10 @@ public interface LicenseService extends GenericService<License, Integer> {
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
 		
 	public License getPublicLicense();
+
+	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
+
+	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
+
+	public License getOwnerLicense(ResearchGroup group);
 }
