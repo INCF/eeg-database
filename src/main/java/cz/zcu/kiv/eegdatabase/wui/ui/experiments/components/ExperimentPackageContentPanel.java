@@ -141,7 +141,22 @@ public class ExperimentPackageContentPanel extends Panel {
 		header.add(createVisibilityLink("hideListLink", false));
 		header.add(createRemoveSelectedLink("removeSelectedLink"));
 		header.add(createAddExperimentsLink("addExperimentsLink"));
+		header.add(createRemovePackageLink("removePackageLink"));
     }
+
+	private Link createRemovePackageLink(String id) {
+		Link removeLink = new Link(id) {
+
+			@Override
+			public void onClick() {
+				experimentPackageFacade.removeExperimentPackage(epModel.getObject());
+			}
+		};
+		
+		removeLink.add(new Label("label", ResourceUtils.getModel("button.remove.package")));
+
+		return removeLink;
+	}
 
     /**
      * returns link which initializes the action of
@@ -159,7 +174,7 @@ public class ExperimentPackageContentPanel extends Panel {
 	    }
 	};
 
-	link.add(new Label("label", new StringResourceModel("button.add", this, null)));
+	link.add(new Label("label", new StringResourceModel("button.add.experiment", this, null)));
 	return link;
     }
 
