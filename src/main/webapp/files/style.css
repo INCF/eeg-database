@@ -539,10 +539,11 @@ li.comment li li li {
     list-style: none;
 }
 
-.packageList h2 a {
-    font-size: 0.7em;
+.headerWithLinks a {
+	font-size: 0.7em;
     margin-left: 5px;
 }
+
 
 @media print {
     .leftMenu {

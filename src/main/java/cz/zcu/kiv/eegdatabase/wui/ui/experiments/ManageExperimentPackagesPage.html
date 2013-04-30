@@ -8,7 +8,7 @@
 
 	    <div class="mainContentWithMenu">
 
-	      <h1>
+			<h1 class="headerWithLinks">
 				<wicket:message key="pageTitle.manageExperimentPackages" />
 				<a wicket:id="addLink"><wicket:message key="button.add"/></a>
 				<a wicket:id="listLink"><wicket:message key="button.cancel"/></a>
@@ -20,7 +20,7 @@
 	      </form>
 		<div wicket:id="packages">
 		    <wicket:container wicket:id="packageList"/>
-			<div wicket:id="packageDetail"/>
+			<div wicket:id="packageDetail"></div>
 		</div>
 	    </div>
 	</wicket:extend>

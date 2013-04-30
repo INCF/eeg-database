@@ -16,6 +16,8 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -33,7 +35,7 @@ public class ManageExperimentPackagesPage extends MenuPage {
     @SpringBean
     private ExperimentPackageFacade experimentPackageFacade;
 
-	private boolean editMode = true;
+	private boolean editMode = false;
 	private WebMarkupContainer container;
 
     /**
@@ -88,6 +90,13 @@ public class ManageExperimentPackagesPage extends MenuPage {
 		container.add(new ExperimentPackageDetailPanel("packageDetail", packagesModel.getCriteriaModel()){
 
 			@Override
+			protected void onSubmitAction(AjaxRequestTarget target, Form<?> form) {
+				super.onSubmitAction(target, form);
+				ManageExperimentPackagesPage.this.editMode = false;
+				setResponsePage(ManageExperimentPackagesPage.this);
+			}
+
+			@Override
 			protected void onConfigure() {
 				super.onConfigure();
 				this.setVisible(editMode);
@@ -97,12 +106,11 @@ public class ManageExperimentPackagesPage extends MenuPage {
     }
 
 	private void addControls() {
-		AjaxLink addLink = new AjaxLink("addLink") {
+		Link addLink = new Link("addLink") {
 
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick() {
 				ManageExperimentPackagesPage.this.editMode = true;
-				target.add(container);
 			}
 
 			@Override
@@ -114,12 +122,11 @@ public class ManageExperimentPackagesPage extends MenuPage {
 		};
 		this.add(addLink);
 
-		AjaxLink listLink = new AjaxLink("listLink") {
+		Link listLink = new Link("listLink") {
 
 			@Override
-			public void onClick(AjaxRequestTarget target) {
+			public void onClick() {
 				ManageExperimentPackagesPage.this.editMode = false;
-				target.add(container);
 			}
 
 			@Override

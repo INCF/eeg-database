@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
-import com.yoso.dev.yosocommon.wicket.components.form.input.SafeIndicatingAjaxButton;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
@@ -57,7 +56,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 
 	public ExperimentPackageDetailPanel(String id, IModel<ResearchGroup> resGroup) {
 		super(id);
-		this.packageModel = new Model<ExperimentPackage>();
+		this.packageModel = new Model<ExperimentPackage>(new ExperimentPackage());
 		this.licenseModel = new Model<License>();
 		policy = new Model<LicensePolicy>();
 		
@@ -129,7 +128,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 	}
 
 	private void addControls() {
-		AjaxButton b = new SafeIndicatingAjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
+		AjaxButton b = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
 
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
@@ -153,6 +152,8 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
+
+		packageModel.setObject(new ExperimentPackage());
 
 		licenseModel.setObject(licenseFacade.getPublicLicense());
 		policy.setObject(LicensePolicy.PUBLIC);

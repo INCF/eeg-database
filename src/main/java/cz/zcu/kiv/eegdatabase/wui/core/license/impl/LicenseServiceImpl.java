@@ -48,6 +48,7 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 	@Transactional
 	public void addLicenseForPackage(License license, ExperimentPackage pack) {
 		if(license.getLicenseId() == 0) {
+			license.setResearchGroup(pack.getResearchGroup());
 			int res = this.licenseDao.create(license);
 			license.setLicenseId(res);
 		}
