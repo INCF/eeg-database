@@ -219,9 +219,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("search-page", SearchPage.class);
         mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);
 
-
 		//TODO remove before production deployment
 		mountPage("migrateDb", DbMigrationPage.class);
+
 
     }
 
