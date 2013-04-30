@@ -9,7 +9,9 @@
 	    <div class="mainContentWithMenu">
 
 	      <h1>
-		<wicket:message key="pageTitle.manageExperimentPackages" />
+				<wicket:message key="pageTitle.manageExperimentPackages" />
+				<a wicket:id="addLink"><wicket:message key="button.add"/></a>
+				<a wicket:id="listLink"><wicket:message key="button.cancel"/></a>
 	      </h1>
 
 	      <form class="standardInputForm" wicket:id="rgSelect">
@@ -18,6 +20,7 @@
 	      </form>
 		<div wicket:id="packages">
 		    <wicket:container wicket:id="packageList"/>
+			<div wicket:id="packageDetail"/>
 		</div>
 	    </div>
 	</wicket:extend>

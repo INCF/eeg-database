@@ -72,51 +72,51 @@ public class ExperimentPackageContentPanel extends Panel {
      * @param model model with the experiment package for which the info shall be displayed
      */
     public ExperimentPackageContentPanel(String id, IModel<ExperimentPackage> model) {
-	super(id);
+		super(id);
 
-	this.epModel = model;
-	this.selectedExperiments = new HashSet<Experiment>();
-	
-	experimentListCont = new WebMarkupContainer("experimentListCont");
-	experimentListCont.setOutputMarkupPlaceholderTag(true);
-	this.add(experimentListCont);
+		this.epModel = model;
+		this.selectedExperiments = new HashSet<Experiment>();
 
-	this.addHeader();
-	this.addExperimentListToCont(experimentListCont);
-	this.addExperimentsAddWindow();
+		experimentListCont = new WebMarkupContainer("experimentListCont");
+		experimentListCont.setOutputMarkupPlaceholderTag(true);
+		this.add(experimentListCont);
+
+		this.addHeader();
+		this.addExperimentListToCont(experimentListCont);
+		this.addExperimentsAddWindow();
     }
 
     /**
      * Add window which allows to add experiments to the package.
      */
     private void addExperimentsAddWindow() {
-	window = new ModalWindow("addExperimentsWindow");
-	window.setAutoSize(true);
-	window.setResizable(false);
-	window.setMinimalWidth(600);
-	window.setWidthUnit("px");
+		window = new ModalWindow("addExperimentsWindow");
+		window.setAutoSize(true);
+		window.setResizable(false);
+		window.setMinimalWidth(600);
+		window.setWidthUnit("px");
 
-	List<Experiment> exps = this.listExperimentsToAdd();
+		List<Experiment> exps = this.listExperimentsToAdd();
 
-	Panel content = new ExperimentListForm(window.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
+		Panel content = new ExperimentListForm(window.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
 
-	    @Override
-	    protected void onSubmitAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
-		experimentPackageFacade.addExperimentsToPackage(selectedExperiments, epModel.getObject());
-		ModalWindow.closeCurrent(target);
-		experimentsModel.detach();
-		target.add(experimentListCont);
-	    }
+			@Override
+			protected void onSubmitAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
+			experimentPackageFacade.addExperimentsToPackage(selectedExperiments, epModel.getObject());
+			ModalWindow.closeCurrent(target);
+			experimentsModel.detach();
+			target.add(experimentListCont);
+			}
 
-	    @Override
-	    protected void onCancelAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
-		ModalWindow.closeCurrent(target);
-		target.add(experimentListCont);
-	    }
-	    
-	};
-	window.setContent(content);
-	this.add(window);
+			@Override
+			protected void onCancelAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
+			ModalWindow.closeCurrent(target);
+			target.add(experimentListCont);
+			}
+
+		};
+		window.setContent(content);
+		this.add(window);
     }
 
     /**
@@ -124,23 +124,23 @@ public class ExperimentPackageContentPanel extends Panel {
      * @return list of experiments that can be added to the package
      */
     private List<Experiment> listExperimentsToAdd() {
-	return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
+		return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
     }
 
     /**
      * Add components header - title, controls
      */
     private void addHeader() {
-	header = new WebMarkupContainer("header");
-	header.setOutputMarkupId(true);
-	this.add(header);
+		header = new WebMarkupContainer("header");
+		header.setOutputMarkupId(true);
+		this.add(header);
 
-	header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
-	
-	header.add(createVisibilityLink("showListLink", true));
-	header.add(createVisibilityLink("hideListLink", false));
-	header.add(createRemoveSelectedLink("removeSelectedLink"));
-	header.add(createAddExperimentsLink("addExperimentsLink"));
+		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
+
+		header.add(createVisibilityLink("showListLink", true));
+		header.add(createVisibilityLink("hideListLink", false));
+		header.add(createRemoveSelectedLink("removeSelectedLink"));
+		header.add(createAddExperimentsLink("addExperimentsLink"));
     }
 
     /**

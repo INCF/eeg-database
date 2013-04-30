@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -32,46 +33,48 @@ public class LicenseEditForm extends Panel {
 
     private Form form;
 
+	private boolean displayControls = true;
+
     public LicenseEditForm(String id, IModel<License> model) {
-	this(id, model, null);
+		this(id, model, null);
     }
 
-    public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints) {
-	super(id);
+    public LicenseEditForm(String id, IModel<License> model, List<License> blueprints) {
+		super(id);
 
-	this.licenseModel = model;
-	this.blueprintsModel = blueprints;
+		this.licenseModel = model;
+		this.setBlueprints(blueprints);
 
-	this.form = new Form("form");
-	this.add(form);
-	
-	this.addFormFields();
-	this.addBlueprintSelect();
-	this.addControls();
+		this.form = new Form("form");
+		this.add(form);
+
+		this.addFormFields();
+		this.addBlueprintSelect();
+		this.addControls();
     }
 
     private void addFormFields() {
-	FormComponent c = new RequiredTextField("title", new PropertyModel(licenseModel, "title"));
-	c.setLabel(ResourceUtils.getModel("label.license.title"));
-	form.add(c);
+		FormComponent c = new RequiredTextField("title", new PropertyModel(licenseModel, "title"));
+		c.setLabel(ResourceUtils.getModel("label.license.title"));
+		form.add(c);
 
-	c = new TextArea("description", new PropertyModel(licenseModel, "description"));
-	c.setLabel(ResourceUtils.getModel("label.license.description"));
-	c.setRequired(true);
-	form.add(c);
+		c = new TextArea("description", new PropertyModel(licenseModel, "description"));
+		c.setLabel(ResourceUtils.getModel("label.license.description"));
+		c.setRequired(true);
+		form.add(c);
 
-	c = new NumberTextField("price", new PropertyModel(licenseModel, "price"), Float.class);
-	c.setLabel(ResourceUtils.getModel("label.license.price"));
-	form.add(c);
+		c = new NumberTextField("price", new PropertyModel(licenseModel, "price"), Float.class);
+		c.setLabel(ResourceUtils.getModel("label.license.price"));
+		form.add(c);
 
-	c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
-	c.setLabel(ResourceUtils.getModel("label.license.type"));
-	c.setRequired(true);
-	c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
-	c.add(new Radio("business", new Model(LicenseType.BUSINESS)));
-	form.add(c);
+		c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
+		c.setLabel(ResourceUtils.getModel("label.license.type"));
+		c.setRequired(true);
+		c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
+		c.add(new Radio("business", new Model(LicenseType.BUSINESS)));
+		form.add(c);
 
-	WicketUtils.addLabelsAndFeedback(form);
+		WicketUtils.addLabelsAndFeedback(form);
     }
 
     /**
@@ -79,48 +82,92 @@ public class LicenseEditForm extends Panel {
      * @param cont
      */
     private void addControls() {
-	AjaxButton button = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
+		AjaxButton button = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
 
-	    @Override
-	    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-		onSubmitAction(licenseModel, target, form);
-	    }
-	};
-	form.add(button);
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				onSubmitAction(licenseModel, target, form);
+			}
 
-	button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				this.setVisible(displayControls);
+			}
 
-	    @Override
-	    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-		onCancelAction(licenseModel, target, form);
-	    }
+		};
+		form.add(button);
 
-	};
-	form.add(button);
+		button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
+
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				onCancelAction(licenseModel, target, form);
+			}
+
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				this.setVisible(displayControls);
+			}
+
+		};
+		form.add(button);
     }
     private void addBlueprintSelect() {
-	AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", blueprintsModel, new ChoiceRenderer<License>("title")) {
+		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", blueprintsModel, new ChoiceRenderer<License>("title")) {
 
-	    @Override
-	    protected void onConfigure() {
-		super.onConfigure();
-		boolean viz = false;
-		if (blueprintsModel != null) {
-		    viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
-		}
-		this.setVisible(viz);
-	    }
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				boolean viz = false;
+				if (blueprintsModel != null) {
+					viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
+				}
+				this.setVisible(viz);
+			}
 
-	    @Override
-	    protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
-		licenseModel.setObject(option);
-		target.add(form);
-	    }
-	    
-	};
+			@Override
+			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+				if(option.getLicenseId() == 0) {
+					licenseModel.setObject(new License());
+				} else {
+					licenseModel.setObject(option);
+				}
+				target.add(form);
+			}
 
-	form.add(ddc);
+		};
+
+		ddc.setNullValid(false);
+		form.add(ddc);
     }
+
+	public boolean isDisplayControls() {
+		return displayControls;
+	}
+
+	public void setDisplayControls(boolean displayControls) {
+		this.displayControls = displayControls;
+	}
+
+	public final void setBlueprints(List<License> licenses) {
+		List<License> newBlueprints;
+		if(licenses == null || licenses.isEmpty()) {
+			newBlueprints = new ArrayList<License>();
+		} else {
+			newBlueprints = new ArrayList<License>(licenses);
+		}
+		License t = new License();
+		t.setTitle("New");
+		newBlueprints.add(0, t);
+
+		if(this.blueprintsModel == null) {
+			this.blueprintsModel = new Model();
+		}
+
+		this.blueprintsModel.setObject(newBlueprints);
+	}
 
     /**
      * Override this method to provide onSubmit action
