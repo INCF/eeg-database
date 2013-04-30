@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.license;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
@@ -43,5 +39,13 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
 	public License getOwnerLicense(ResearchGroup group);
+
+	/**
+	 * List all licenses the package has been published under.
+	 *
+	 * @param pckg the package
+	 * @return list of licenses
+	 */
+	public List<License> getLicensesForPackage(ExperimentPackage pckg);
 	
 }

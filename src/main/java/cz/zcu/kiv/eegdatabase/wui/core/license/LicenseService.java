@@ -34,4 +34,12 @@ public interface LicenseService extends GenericService<License, Integer> {
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
 	public License getOwnerLicense(ResearchGroup group);
+	
+	/**
+	 * List all licenses the package has been published under.
+	 *
+	 * @param pckg the package
+	 * @return list of licenses
+	 */
+	public List<License> getLicensesForPackage(ExperimentPackage pckg);
 }

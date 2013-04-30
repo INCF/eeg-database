@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
@@ -107,6 +103,11 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	@Override
 	public License getOwnerLicense(ResearchGroup group) {
 		return licenseService.getOwnerLicense(group);
+	}
+
+	@Override
+	public List<License> getLicensesForPackage(ExperimentPackage pckg) {
+		return licenseService.getLicensesForPackage(pckg);
 	}
 	
 }

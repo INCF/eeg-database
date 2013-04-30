@@ -14,6 +14,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
@@ -86,6 +87,19 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 	@Transactional(readOnly=true)
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
 		return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<License> getLicensesForPackage(ExperimentPackage pckg) {
+		List<ExperimentPackageLicense> connections = experimentPackageLicenseDao.readByParameter("experimentPackage.experimentPackageId", pckg.getExperimentPackageId());
+
+		List<License> ret = new ArrayList<License>(connections.size());
+		for(ExperimentPackageLicense epl : connections) {
+			ret.add(epl.getLicense());
+		}
+		
+		return ret;
 	}
 
 }

@@ -157,7 +157,40 @@ public class ExperimentPackageContentPanel extends Panel {
 
 		return removeLink;
 	}
+	/**
+     * Add window which allows to add new license to the package.
+     */
+    private void addLicenseAddWindow() {
+		addLicenseWindow = new ModalWindow("addLicenseWindow");
+		addLicenseWindow.setAutoSize(true);
+		addLicenseWindow.setResizable(false);
+		addLicenseWindow.setMinimalWidth(600);
+		addLicenseWindow.setWidthUnit("px");
 
+		List<LicenseType> typo = new ArrayList<LicenseType>(2);
+		typo.add(LicenseType.ACADEMIC);
+		typo.add(LicenseType.BUSINESS);
+
+		List<License> blps = licenseFacade.getLicensesForGroup(epModel.getObject().getResearchGroup(), typo);
+
+		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), new Model(), blps) {
+
+			@Override
+			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+				ModalWindow.closeCurrent(target);
+				target.add(experimentListCont);
+			}
+
+			@Override
+			protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+				ModalWindow.closeCurrent(target);
+				target.add(experimentListCont);
+			}
+
+		};
+		addLicenseWindow.setContent(content);
+		this.add(addLicenseWindow);
+    }
     /**
      * returns link which initializes the action of
      * adding experiments to package
@@ -170,7 +203,7 @@ public class ExperimentPackageContentPanel extends Panel {
 
 	    @Override
 	    public void onClick(AjaxRequestTarget target) {
-		window.show(target);
+			addExperimentsWindow.show(target);
 	    }
 	};
 
@@ -205,36 +238,36 @@ public class ExperimentPackageContentPanel extends Panel {
      * @return ajax link
      */
     private AjaxLink createVisibilityLink(String id, boolean makeVisible) {
-	AjaxLink link = new AjaxLink<Boolean>(id, new Model<Boolean>(makeVisible)) {
+		AjaxLink link = new AjaxLink<Boolean>(id, new Model<Boolean>(makeVisible)) {
 
-	    @Override
-	    public void onClick(AjaxRequestTarget target) {
-		ExperimentPackageContentPanel.this.experimentListCont.setVisible(this.getModelObject());
-		target.add(ExperimentPackageContentPanel.this.experimentListCont);
-		target.add(header);
-	    }
+			@Override
+				public void onClick(AjaxRequestTarget target) {
+				ExperimentPackageContentPanel.this.experimentListCont.setVisible(this.getModelObject());
+				target.add(ExperimentPackageContentPanel.this.experimentListCont);
+				target.add(header);
+			}
 
-	    @Override
-	    protected void onConfigure() {
-		super.onConfigure();
-		
-		boolean contVisible = ExperimentPackageContentPanel.this.experimentListCont.isVisible();
-		if(this.getModelObject()) {
-		    //link for making cont visible is accessible only if the cont
-		    //is currently invisible
-		    this.setVisible(!contVisible);
-		} else {
-		    //and vice versa
-		    this.setVisible(contVisible);
-		}
-	    }
-	};
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
 
-	String resourceKey = makeVisible ? "button.show" : "button.hide";
+				boolean contVisible = ExperimentPackageContentPanel.this.experimentListCont.isVisible();
+				if(this.getModelObject()) {
+					//link for making cont visible is accessible only if the cont
+					//is currently invisible
+					this.setVisible(!contVisible);
+				} else {
+					//and vice versa
+					this.setVisible(contVisible);
+				}
+			}
+		};
 
-	link.add(new Label("linkLabel", new StringResourceModel(resourceKey, this, null)));
+		String resourceKey = makeVisible ? "button.show" : "button.hide";
 
-	return link;
+		link.add(new Label("linkLabel", new StringResourceModel(resourceKey, this, null)));
+
+		return link;
     }
 
     /**
@@ -242,21 +275,21 @@ public class ExperimentPackageContentPanel extends Panel {
      * @param cont the container
      */
     private void addExperimentListToCont(WebMarkupContainer cont) {
-	List<? extends IColumn<Experiment, String>> columns = this.createListColumns();
+		List<? extends IColumn<Experiment, String>> columns = this.createListColumns();
 
-	experimentsModel = new LoadableDetachableModel<List<Experiment>>() {
+		experimentsModel = new LoadableDetachableModel<List<Experiment>>() {
 
-	    @Override
-	    protected List<Experiment> load() {
-		return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
-	    }
-	    
-	};
+			@Override
+				protected List<Experiment> load() {
+				return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
+			}
 
-	DataTable<Experiment, String> list = new AjaxFallbackDefaultDataTable<Experiment, String>("list", columns,
-						    new ListExperimentsDataProvider(experimentsModel), EXPERIMENTS_PER_PAGE);
+		};
 
-	cont.add(list);
+		DataTable<Experiment, String> list = new AjaxFallbackDefaultDataTable<Experiment, String>("list", columns,
+								new ListExperimentsDataProvider(experimentsModel), EXPERIMENTS_PER_PAGE);
+
+		cont.add(list);
     }
 
     /**
@@ -264,52 +297,52 @@ public class ExperimentPackageContentPanel extends Panel {
      * @return list of columns the table of experiments shall display
      */
     private List<? extends IColumn<Experiment, String>> createListColumns() {
-	List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
+		List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
 
-	columns.add(new CheckBoxColumn<Experiment, String> (Model.of("")) {
+		columns.add(new CheckBoxColumn<Experiment, String> (Model.of("")) {
 
-	    @Override
-	    protected IModel<Boolean> newCheckBoxModel(final IModel<Experiment> rowModel) {
-		return new AbstractCheckBoxModel() {
+			@Override
+			protected IModel<Boolean> newCheckBoxModel(final IModel<Experiment> rowModel) {
+				return new AbstractCheckBoxModel() {
 
-		    @Override
-		    public boolean isSelected() {
-			return selectedExperiments.contains(rowModel.getObject());
-		    }
+					@Override
+					public boolean isSelected() {
+						return selectedExperiments.contains(rowModel.getObject());
+					}
 
-		    @Override
-		    public void select() {
-			selectedExperiments.add(rowModel.getObject());
-		    }
+					@Override
+						public void select() {
+						selectedExperiments.add(rowModel.getObject());
+					}
 
-		    @Override
-		    public void unselect() {
-			selectedExperiments.add(rowModel.getObject());
-		    }
+					@Override
+						public void unselect() {
+						selectedExperiments.add(rowModel.getObject());
+					}
 
-		    @Override
-		    public void detach() {
-			rowModel.detach();
-		    }
+					@Override
+						public void detach() {
+						rowModel.detach();
+					}
 
-		};
+				};
 
-	    }
-	});
+			}
+		});
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.date"), "startTime", "startTime"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
                 "personBySubjectPersonId.dateOfBirth", "yyyy"));
-	columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
+		columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                 item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
 
-	return columns;
+		return columns;
     }
 
 }
