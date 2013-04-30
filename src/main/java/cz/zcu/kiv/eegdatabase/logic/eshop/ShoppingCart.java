@@ -1,4 +1,6 @@
-package cz.zcu.kiv.eegdatabase.data.pojo;
+package cz.zcu.kiv.eegdatabase.logic.eshop;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 
 import java.io.Serializable;
 import java.util.ArrayList;

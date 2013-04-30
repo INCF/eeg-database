@@ -18,7 +18,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.User;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ShoppingCart;
+import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 /**

@@ -1,7 +1,10 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
+package cz.zcu.kiv.eegdatabase.logic.eshop;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.PayPalConfirmPaymentPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.PaymentErrorPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import org.apache.wicket.protocol.http.WebApplication;
 import urn.ebay.api.PayPalAPI.*;
 import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
