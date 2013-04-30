@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -28,12 +30,16 @@ import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license.LicenseEditForm;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.model.AbstractCheckBoxModel;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
@@ -49,6 +55,8 @@ public class ExperimentPackageContentPanel extends Panel {
     private ExperimentsFacade experimentsFacade;
     @SpringBean
     private ExperimentPackageFacade experimentPackageFacade;
+	@SpringBean
+	private LicenseFacade licenseFacade;
 
     /**
      * Main model of the component - experiment package
@@ -60,11 +68,19 @@ public class ExperimentPackageContentPanel extends Panel {
     private Set<Experiment> selectedExperiments;
 
     private IModel<List<Experiment>> experimentsModel;
+
+	private IModel<List<License>> licenses;
+
+	/**
+	 * Model of the addLicenseWindow
+	 */
+	private IModel<License> licenseModel;
     
     //containers
     private WebMarkupContainer experimentListCont;
     private WebMarkupContainer header;
-    private ModalWindow window;
+    private ModalWindow addExperimentsWindow;
+	private ModalWindow addLicenseWindow;
 
     /**
      *
@@ -75,6 +91,7 @@ public class ExperimentPackageContentPanel extends Panel {
 		super(id);
 
 		this.epModel = model;
+		this.licenseModel = new Model();
 		this.selectedExperiments = new HashSet<Experiment>();
 
 		experimentListCont = new WebMarkupContainer("experimentListCont");
@@ -84,21 +101,22 @@ public class ExperimentPackageContentPanel extends Panel {
 		this.addHeader();
 		this.addExperimentListToCont(experimentListCont);
 		this.addExperimentsAddWindow();
+		this.addLicenseAddWindow();
     }
 
     /**
      * Add window which allows to add experiments to the package.
      */
     private void addExperimentsAddWindow() {
-		window = new ModalWindow("addExperimentsWindow");
-		window.setAutoSize(true);
-		window.setResizable(false);
-		window.setMinimalWidth(600);
-		window.setWidthUnit("px");
+		addExperimentsWindow = new ModalWindow("addExperimentsWindow");
+		addExperimentsWindow.setAutoSize(true);
+		addExperimentsWindow.setResizable(false);
+		addExperimentsWindow.setMinimalWidth(600);
+		addExperimentsWindow.setWidthUnit("px");
 
 		List<Experiment> exps = this.listExperimentsToAdd();
 
-		Panel content = new ExperimentListForm(window.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
+		Panel content = new ExperimentListForm(addExperimentsWindow.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
 
 			@Override
 			protected void onSubmitAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
@@ -115,8 +133,8 @@ public class ExperimentPackageContentPanel extends Panel {
 			}
 
 		};
-		window.setContent(content);
-		this.add(window);
+		addExperimentsWindow.setContent(content);
+		this.add(addExperimentsWindow);
     }
 
     /**
@@ -142,6 +160,8 @@ public class ExperimentPackageContentPanel extends Panel {
 		header.add(createRemoveSelectedLink("removeSelectedLink"));
 		header.add(createAddExperimentsLink("addExperimentsLink"));
 		header.add(createRemovePackageLink("removePackageLink"));
+
+		this.addLicenseList(header);
     }
 
 	private Link createRemovePackageLink(String id) {
@@ -157,6 +177,47 @@ public class ExperimentPackageContentPanel extends Panel {
 
 		return removeLink;
 	}
+
+	private void addLicenseList(WebMarkupContainer cont ) {
+		licenses = new LoadableDetachableModel<List<License>>() {
+
+			@Override
+			protected List<License> load() {
+				return licenseFacade.getLicensesForPackage(epModel.getObject());
+			}
+		};
+
+		ListView<License> view = new ListView<License>("licenseView", licenses) {
+
+			@Override
+			protected void populateItem(ListItem<License> item) {
+				AjaxLink<License> link = new AjaxLink<License>("licenseItem", item.getModel()) {
+
+					@Override
+					public void onClick(AjaxRequestTarget target) {
+						licenseModel.setObject(this.getModelObject());
+						addLicenseWindow.show(target);
+					}
+				};
+
+				link.add(new Label("licenseItemLabel", new PropertyModel(item.getModel(), "title")));
+
+				item.add(link);
+			}
+		};
+
+		AjaxLink link = new AjaxLink("addLicenseLink") {
+
+			@Override
+			public void onClick(AjaxRequestTarget target) {
+				licenseModel.setObject(new License());
+				addLicenseWindow.show(target);
+			}
+		};
+
+		cont.add(link);
+		cont.add(view);
+	}
 	/**
      * Add window which allows to add new license to the package.
      */
@@ -167,24 +228,36 @@ public class ExperimentPackageContentPanel extends Panel {
 		addLicenseWindow.setMinimalWidth(600);
 		addLicenseWindow.setWidthUnit("px");
 
-		List<LicenseType> typo = new ArrayList<LicenseType>(2);
-		typo.add(LicenseType.ACADEMIC);
-		typo.add(LicenseType.BUSINESS);
+		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
 
-		List<License> blps = licenseFacade.getLicensesForGroup(epModel.getObject().getResearchGroup(), typo);
+			@Override
+			protected List<License> load() {
+				List<LicenseType> typs = new ArrayList<LicenseType>();
+				typs.add(LicenseType.ACADEMIC);
+				typs.add(LicenseType.BUSINESS);
+				return licenseFacade.getLicensesForGroup(epModel.getObject().getResearchGroup(), typs);
+			}
 
-		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), new Model(), blps) {
+		};
+
+		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel) {
 
 			@Override
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+				License obj = model.getObject();
+				if(obj.getLicenseId() == 0) {
+					licenseFacade.addLicenseForPackage(model.getObject(), epModel.getObject());
+				} else {
+					licenseFacade.update(obj);
+				}
 				ModalWindow.closeCurrent(target);
-				target.add(experimentListCont);
+				target.add(header);
 			}
 
 			@Override
 			protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				ModalWindow.closeCurrent(target);
-				target.add(experimentListCont);
+				target.add(header);
 			}
 
 		};

@@ -39,11 +39,11 @@ public class LicenseEditForm extends Panel {
 		this(id, model, null);
     }
 
-    public LicenseEditForm(String id, IModel<License> model, List<License> blueprints) {
+    public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints) {
 		super(id);
 
 		this.licenseModel = model;
-		this.setBlueprints(blueprints);
+		blueprintsModel = blueprints;
 
 		this.form = new Form("form");
 		this.add(form);
@@ -124,6 +124,9 @@ public class LicenseEditForm extends Panel {
 				if (blueprintsModel != null) {
 					viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
 				}
+				if(licenseModel.getObject().getLicenseId() != 0) {
+					viz = false;
+				}
 				this.setVisible(viz);
 			}
 
@@ -132,7 +135,12 @@ public class LicenseEditForm extends Panel {
 				if(option.getLicenseId() == 0) {
 					licenseModel.setObject(new License());
 				} else {
-					licenseModel.setObject(option);
+					License l = new License();
+					l.setTitle(option.getTitle());
+					l.setDescription(option.getDescription());
+					l.setLicenseType(option.getLicenseType());
+					l.setPrice(option.getPrice());
+					licenseModel.setObject(l);
 				}
 				target.add(form);
 			}
@@ -149,24 +157,6 @@ public class LicenseEditForm extends Panel {
 
 	public void setDisplayControls(boolean displayControls) {
 		this.displayControls = displayControls;
-	}
-
-	public final void setBlueprints(List<License> licenses) {
-		List<License> newBlueprints;
-		if(licenses == null || licenses.isEmpty()) {
-			newBlueprints = new ArrayList<License>();
-		} else {
-			newBlueprints = new ArrayList<License>(licenses);
-		}
-		License t = new License();
-		t.setTitle("New");
-		newBlueprints.add(0, t);
-
-		if(this.blueprintsModel == null) {
-			this.blueprintsModel = new Model();
-		}
-
-		this.blueprintsModel.setObject(newBlueprints);
 	}
 
     /**

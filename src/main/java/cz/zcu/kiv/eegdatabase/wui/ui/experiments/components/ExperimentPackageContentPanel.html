@@ -13,18 +13,23 @@
 		|
 		<a wicket:id="removePackageLink"><wicket:container wicket:id="label"/></a>
 		<div>
-			<ul>
-				<li wicket:id="licenseView">
+			<span style="font-size: 0.8em; font-weight: bold; display: inline"><wicket:message key="heading.license.list"/></span>
+			<ul style="display: inline">
+				<li wicket:id="licenseView" style="display: inline">
 					<a wicket:id="licenseItem"><wicket:container wicket:id="licenseItemLabel"/></a>
 				</li>
+				<li style="display: inline">
+					<a style="font-weight: bold" wicket:id="addLicenseLink"><wicket:message key="button.add.license"/></a>
+				</li>
 			</ul>
-			<a wicket:id="addLicenseLink"><wicket:message key="button.add"/></a>
+			
 		</div>
       </h2>
       <div wicket:id="experimentListCont">
 	  <table class="dataTable measurationListDataTable" wicket:id="list"></table>
       </div>
       <div wicket:id="addExperimentsWindow"/>
+	  <div wicket:id="addLicenseWindow"/>
   </wicket:panel>
 </body>
 </html>

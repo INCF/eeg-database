@@ -23,6 +23,7 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -113,7 +114,18 @@ public class ExperimentPackageDetailPanel extends Panel {
 	}
 
 	private void addLicenseForm() {
-		licenseForm = new LicenseEditForm("licenseForm", licenseModel) {
+		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
+
+			@Override
+			protected List<License> load() {
+				List<LicenseType> typs = new ArrayList<LicenseType>();
+				typs.add(LicenseType.ACADEMIC);
+				typs.add(LicenseType.BUSINESS);
+				return licenseFacade.getLicensesForGroup(resGroupModel.getObject(), typs);
+			}
+			
+		};
+		licenseForm = new LicenseEditForm("licenseForm", licenseModel, blpModel) {
 
 			@Override
 			protected void onConfigure() {
@@ -158,11 +170,6 @@ public class ExperimentPackageDetailPanel extends Panel {
 		licenseModel.setObject(licenseFacade.getPublicLicense());
 		policy.setObject(LicensePolicy.PUBLIC);
 
-		List<LicenseType> typs = new ArrayList<LicenseType>();
-		typs.add(LicenseType.ACADEMIC);
-		typs.add(LicenseType.BUSINESS);
-		List<License> blp = licenseFacade.getLicensesForGroup(resGroupModel.getObject(), typs);
-		licenseForm.setBlueprints(blp);
 		this.licenseFormVisible = false;
 	}
 
