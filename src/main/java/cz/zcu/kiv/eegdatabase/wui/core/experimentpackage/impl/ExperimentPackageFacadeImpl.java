@@ -88,4 +88,10 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 		licenseServise.addLicenseForPackage(license, pckg);
 	}
 
+	@Override
+	public void removeExperimentPackage(ExperimentPackage pckg) {
+		//TODO implement this, #2096
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

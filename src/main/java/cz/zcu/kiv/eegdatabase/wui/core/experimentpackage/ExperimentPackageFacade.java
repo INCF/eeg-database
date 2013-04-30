@@ -59,4 +59,11 @@ public interface ExperimentPackageFacade extends GenericFacade<ExperimentPackage
      */
     public void createExperimentPackage(ExperimentPackage pckg, License license);
 
+	/**
+	 * Removes experiment package from research group. Erases all experiment and
+	 * license connections bound to the package
+	 * @param pckg the package to be removed
+	 */
+	public void removeExperimentPackage(ExperimentPackage pckg);
+
 }
