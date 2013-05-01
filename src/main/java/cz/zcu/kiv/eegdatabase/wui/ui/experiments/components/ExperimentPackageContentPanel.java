@@ -31,7 +31,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license.LicenseEditForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
 import java.util.HashSet;
 import java.util.Set;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;

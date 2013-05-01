@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license;
+package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;

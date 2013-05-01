@@ -9,7 +9,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.license.LicenseEditForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
