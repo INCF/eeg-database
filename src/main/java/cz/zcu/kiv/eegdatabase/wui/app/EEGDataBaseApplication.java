@@ -21,6 +21,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
+import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.LicenseRequestFormTestPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.core.common.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
@@ -221,6 +222,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
 		//TODO remove before production deployment
 		mountPage("migrateDb", DbMigrationPage.class);
+		mountPage("licenseRequest", LicenseRequestFormTestPage.class);
 
 
     }
