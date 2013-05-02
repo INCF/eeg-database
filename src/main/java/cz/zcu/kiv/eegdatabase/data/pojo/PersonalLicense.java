@@ -53,7 +53,7 @@ public class PersonalLicense implements Serializable{
 	private String lastName;
 
 	@Column(name = "ORGANISATION")
-	private String organization;
+	private String organisation;
 
 	public Date getRequestedDate() {
 		return requestedDate;
@@ -92,12 +92,12 @@ public class PersonalLicense implements Serializable{
 		this.lastName = lastName;
 	}
 
-	public String getOrganization() {
-		return organization;
+	public String getOrganisation() {
+		return organisation;
 	}
 
-	public void setOrganization(String organization) {
-		this.organization = organization;
+	public void setOrganisation(String organization) {
+		this.organisation = organization;
 	}
 
     public int getPersonalLicenseId() {
@@ -123,4 +123,10 @@ public class PersonalLicense implements Serializable{
     public void setLicense(License license) {
 	    this.license = license;
     }
+	
+	public String getFullName() {
+		String tmp = this.getFirstName();
+		tmp = tmp.equals("") ? this.getLastName() : tmp + " " + this.getLastName();
+		return tmp;
+	}
 }

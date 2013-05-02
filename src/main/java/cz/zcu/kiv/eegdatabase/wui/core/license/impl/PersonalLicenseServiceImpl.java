@@ -13,6 +13,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
@@ -80,11 +81,33 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 
 	@Override
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		//TODO implement!
+		ArrayList<PersonalLicense> pp = new ArrayList<PersonalLicense>();
+		PersonalLicense ll = new PersonalLicense();
+		ll.setRequestedDate(new Date());
+		ll.setFirstName("John");
+		ll.setLastName("Doe");
+		ll.setOrganisation("INCF");
+		License l = new License();
+		l.setTitle("My First Academic License");
+		ll.setLicense(l);
+		pp.add(ll);
+		return pp;
 	}
 
 	@Override
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
-		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+		//TODO implement!
+		ArrayList<PersonalLicense> pp = new ArrayList<PersonalLicense>();
+		PersonalLicense ll = new PersonalLicense();
+		ll.setRequestedDate(new Date());
+		ll.setFirstName("John");
+		ll.setLastName("Doe");
+		ll.setOrganisation("INCF");
+		License l = new License();
+		l.setTitle("My First Academic License");
+		ll.setLicense(l);
+		pp.add(ll);
+		return pp;
 	}
 }
