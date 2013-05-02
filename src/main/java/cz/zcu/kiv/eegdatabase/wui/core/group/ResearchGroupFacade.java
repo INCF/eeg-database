@@ -79,4 +79,18 @@ public interface ResearchGroupFacade extends GenericFacade<ResearchGroup, Intege
     public boolean existsGroup(String title);
 
     ResearchGroup getGroupByTitle(String title);
+
+	/**
+	 * Changes paidStatus of a research group to "paid".
+	 * Paid groups can have private packages and business licenses.
+	 * @param group
+	 */
+	void markAsPaid (ResearchGroup group);
+
+	/**
+	 * Changes paidStatus of a research group to "unpaid".
+	 * Unpaid groups cannot have private packages and business licenses.
+	 * @param group
+	 */
+    void markAsUnpaid(ResearchGroup group);
 }

@@ -436,6 +436,13 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 		}
 		
     }
+
+	@Override
+	@Transactional
+    public void changeStatus(ResearchGroup group, boolean status){
+      group.setPaidAccount(status);
+      researchGroupDAO.update(group);
+    }
     
     /**
      * Prepare default list values if the new group is created.
