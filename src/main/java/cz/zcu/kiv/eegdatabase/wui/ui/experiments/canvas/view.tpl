@@ -1,4 +1,5 @@
 <div id="wrapper"></div>
+<img alt="Add another canvas" title="Add another canvas" id="add_canvas" src="files/images/add.png" />
 <div id="tree"></div>
 
 <script type="text/javascript">

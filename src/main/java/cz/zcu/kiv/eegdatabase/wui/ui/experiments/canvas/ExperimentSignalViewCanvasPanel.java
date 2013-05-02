@@ -85,9 +85,6 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
                 for (DataFile file2 : experiment.getDataFiles()) {
                     if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
                         filesIn = true;
-
-                        // v controlleru se v tehle fazi cetl misto file2 ten
-                        // file ktery je z horniho cyklu. Coz bude asi bug.
                         DataFileDTO fileDto2 = fileFacade.getFile(file2.getDataFileId());
                         data = fileDto2.getFileContent();
                         EegReader eeg = new EegReader(vhdr);
