@@ -23,6 +23,15 @@
     height: 700px;
 }
 
+#add_canvas {
+    position: absolute;
+    float: right;
+    z-index: 2;
+    top: 60px;
+    left: 20px;
+    display: none;
+}
+
 #wrapper{
     display:none;
     position:absolute;

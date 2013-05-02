@@ -5,8 +5,6 @@ var active = 0;
 var id = 0;
 var activeID;
 var context;
-var run=true;
-var x,y;
 var signalData = new Array();
 var plots = new Array();
 
@@ -29,6 +27,7 @@ function loadPopup(){
         });
         $("#backgroundPopup").fadeIn("slow");
         $("#wrapper").fadeIn("slow");
+        $("#add_canvas").fadeIn("slow");
         $("#panel").slideDown();
         popupStatus = 1;
     }
@@ -40,6 +39,7 @@ function disablePopup(){
     if(popupStatus==1){
         $("#backgroundPopup").fadeOut("slow");
         $("#wrapper").fadeOut("slow");
+        $("#add_canvas").fadeOut("slow");
         $("#panel").slideUp();
         popupStatus = 0;
     }
@@ -204,6 +204,8 @@ function drawGraph(place, headline, channel) {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },
         seriesDefaults: {
+            color: $("#color1").val(),
+            lineWidth: 1,
             showMarker: false,
             rendererOptions: {
                 smooth: true
@@ -211,11 +213,11 @@ function drawGraph(place, headline, channel) {
         },
         axes: {
             xaxis: {
-                label: "X Axis",
+                label: "Time [ms]",
                 pad: 0
             },
             yaxis: {
-                label: "Y Axis"
+                label: "Voltage [µV]"
             }
         },
         cursor: {
@@ -223,6 +225,7 @@ function drawGraph(place, headline, channel) {
             show: true
         }
     });
+    $('#zoom').click(function() { plot1.resetZoom() });
 }
 
 $(document).ready(function() {
@@ -234,6 +237,7 @@ $(document).ready(function() {
     });
 
     $("#popupContactClose").click(function(){
+        $("#tree").hide();
         disablePopup();
     });
     $(document).keypress(function(e){
