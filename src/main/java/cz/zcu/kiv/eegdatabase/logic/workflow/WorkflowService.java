@@ -7,14 +7,10 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
-import cz.zcu.kiv.eegdatabase.webservices.processor.EEGprocessor;
+
 import cz.zcu.kiv.eegdatabase.webservices.processor.generated.DataFile;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
@@ -30,14 +26,14 @@ public class WorkflowService {
 	public void runService(final int[] pole, final FileFacade fileFacade){
 		
 		
-		final Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
+	//	final Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
 		
-		ServiceResult serviceRes = new ServiceResult();
-        serviceRes.setOwner(loggedUser);
-        serviceRes.setStatus("running");
-        serviceRes.setTitle("test");
-        serviceRes.setFilename("test.xml");
-        resultDao.create(serviceRes);
+	//	ServiceResult serviceRes = new ServiceResult();
+    //    serviceRes.setOwner(loggedUser);
+    //    serviceRes.setStatus("running");
+    //    serviceRes.setTitle("test");
+    //    serviceRes.setFilename("test.xml");
+    //    resultDao.create(serviceRes);
 //		
 		Thread thread = new Thread(new Runnable()
 		{
@@ -50,8 +46,8 @@ public class WorkflowService {
 				file.setFile(content.getFileContent());
 				data.add(file);
 			}
-			EEGprocessor proc = new EEGprocessor();
-			List<byte[]> result = proc.invokeService(data, workflow);
+//			EEGprocessor proc = new EEGprocessor();
+	//		List<byte[]> result = proc.invokeService(data, workflow);
 	}
 		});
 		thread.start();
