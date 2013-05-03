@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
-import cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.webservices.processor.EEGprocessor;
@@ -23,8 +22,7 @@ public class WorkflowService {
 	private List<DataFile> data = new ArrayList<DataFile>();
 	private String workflow;
 	
-	@Autowired
-	private SimpleServiceResultDao resultDao;
+	private ServiceResultDao resultDao;
 	
 	
 	public void runService(final int[] pole, final FileFacade fileFacade){
@@ -32,12 +30,12 @@ public class WorkflowService {
 		
 		final Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
 		
-		ServiceResult serviceRes = new ServiceResult();
-        serviceRes.setOwner(loggedUser);
-        serviceRes.setStatus("running");
-        serviceRes.setTitle("test");
-        serviceRes.setFilename("test.xml");
-        resultDao.create(serviceRes);
+//		ServiceResult serviceRes = new ServiceResult();
+//        serviceRes.setOwner(loggedUser);
+//        serviceRes.setStatus("running");
+//        serviceRes.setTitle("test");
+//        serviceRes.setFilename("test.xml");
+//        resultDao.create(serviceRes);
 //		
 		Thread thread = new Thread(new Runnable()
 		{
