@@ -49,12 +49,15 @@ public class DataProcessor {
 				in = new ObjectInputStream(bis);
 				finalOutput = (List<byte[]>) in.readObject();
 			} catch (Exception e) {
+				//TODO
+				e.printStackTrace();
 			} finally {
 				bis.close();
 				in.close();
 			}
 		} catch (Exception e) {
-
+			//TODO
+			e.printStackTrace();
 		}
 		return finalOutput;
 	}

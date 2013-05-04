@@ -661,7 +661,17 @@
     "services":"Services",
     "visualImpairments":"Visual impairments",
     "weatherDefinitions":"Weather definitions",
-    "workflow":"Workflow",
+    "workflow":
+    {
+      "add":
+      {
+        "new":"Create workflow"
+      },
+      "result":
+      {
+        "list":"List of results"
+      }
+    },
     "writeRequests":"Write requests"
   },
   "option":
@@ -778,6 +788,7 @@
     "listOfGroupMembers":"List of group members",
     "listOfGroups":"List of groups",
     "listOfPeople":"List of people",
+    "listOfResults":"List of results",
     "listOfScenarios":"List of scenarios",
     "listOfVisualImpairments":"List of visual impairments",
     "listsIndex":"Lists",
@@ -815,6 +826,7 @@
     "userNotExperimenter":"Experimenter role needed",
     "weatherDefinitionsList":"List of weather definitions",
     "weeklyDownloadHistory":"Weekly download history",
+    "workflowForm":"Create new workflow",
     "writeRequestsList":"Write requests",
     "youDontHavePermission":"You don't have permission"
   },
