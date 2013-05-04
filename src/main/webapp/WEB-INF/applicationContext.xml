@@ -117,7 +117,7 @@
 
     <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />
 
-    <bean name="workflowService" class="cz.zcu.kiv.eegdatabase.logic.workflow.WorkflowService" autowire="byType" />
+    <bean name="workflowService" class="cz.zcu.kiv.eegdatabase.logic.workflow.WorkflowServiceImpl" autowire="byType" />
     
     <!-- MAIL -->
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />

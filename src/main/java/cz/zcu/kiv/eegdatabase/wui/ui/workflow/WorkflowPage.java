@@ -27,14 +27,15 @@ public class WorkflowPage extends MenuPage {
 	@SpringBean
 	FileFacade fileFacade;
 	
-	WorkflowService service = new WorkflowService();
+	@SpringBean
+	WorkflowService workflowService;
 
 	public WorkflowPage() {
-
-		service.storeWorkflow();
-		setFiles(134);
-
 		setPageTitle(ResourceUtils.getModel("title.page.workflow"));
+		
+		workflowService.storeWorkflow();
+		
+		setFiles(134);
 
 		throw new RestartResponseAtInterceptPageException(
 				UnderConstructPage.class);
@@ -50,7 +51,7 @@ public class WorkflowPage extends MenuPage {
 				pole[a] = data.get(a).getDataFileId();
 			}
 		}
-		service.runService(pole, fileFacade);
+		workflowService.runService(pole, fileFacade);
 
 	}
 }

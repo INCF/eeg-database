@@ -16,12 +16,12 @@ import org.apache.cxf.transport.http.HTTPConduit;
 import cz.zcu.kiv.eegdatabase.webservices.processor.generated.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.processor.generated.ProcessService;
 
-public class EEGprocessor {
+public class DataProcessor {
 
 	Map<String, Object> properties = new HashMap<String, Object>();
 	JaxWsProxyFactoryBean factory = new JaxWsProxyFactoryBean();
 
-	public EEGprocessor() {
+	public DataProcessor() {
 		properties.put("mtom-enabled", Boolean.TRUE);
 		factory.setServiceClass(ProcessService.class);
 		factory.setAddress(PropertiesLoader.getKey("endpoint"));
