@@ -51,6 +51,15 @@ function centerPopup(){
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
     //centering
+    $("#sliderWidth").slider({
+        value:1,
+        min: 1,
+        max: 5,
+        slide: function( event, ui ) {
+            $("#lineWidth").val(ui.value);
+        }
+    });
+
     $("#panel").css({
         "left": windowWidth/2-$("#panel").width()/2
     });
@@ -68,6 +77,7 @@ function centerPopup(){
     $("#backgroundPopup").css({
         "height": windowHeight
     });
+
     $("#add").click(function() {
         var wraID = 'canwrapper' + id;
         var spaID = 'label' + id;
@@ -109,7 +119,8 @@ function centerPopup(){
                         $("#"+activeID).css({
                             "position" : "relative",
                             top : "auto",
-                            left : "auto"
+                            left : "auto",
+                            "z-index" : 2,
                         });
                         $("#"+activeID).removeClass("active");
                         $("#"+activeID).addClass("canvasbox");
@@ -153,15 +164,6 @@ function centerPopup(){
             });
         });
 
-        $("#clear").click(function() {
-            if (active != 0) {
-                ctx.clearRect(0, 0, getWidth(), getHeight());
-                x = 0;
-                y = 0;
-            }
-            canvasClear();
-        });
-
         $("#zoom").click(function() {
             if (active != 0) {
                 plots[activeID].resetZoom();
@@ -193,6 +195,7 @@ getHeight = function () {
 };
 
 function _click(id) {
+    $("#"+activeID).empty();
     drawGraph(activeID, tree.getSelectedItemText(), id);
 }
 
@@ -205,7 +208,7 @@ function drawGraph(place, headline, channel) {
         },
         seriesDefaults: {
             color: $("#color1").val(),
-            lineWidth: 1,
+            lineWidth: $("#lineWidth").val(),
             showMarker: false,
             rendererOptions: {
                 smooth: true
@@ -220,7 +223,12 @@ function drawGraph(place, headline, channel) {
                 label: "Voltage [µV]"
             }
         },
+        highlighter: {
+            show: true,
+            sizeAdjust: 7.5
+        },
         cursor: {
+            tooltipLocation: 'n',
             zoom: true,
             show: true
         }

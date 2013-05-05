@@ -23,6 +23,12 @@
     height: 700px;
 }
 
+#slider {
+    width: 120px;
+    display: inline-block;
+    margin: 0 0 20px 5px;
+}
+
 #add {
     z-index: 2;
     display: inline-block;
