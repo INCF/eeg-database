@@ -424,6 +424,18 @@ html, body {
     background-color: #fcefa1;
 }
 
+.wizard .whiteTab {
+    color: black;
+}
+
+.wizard .greenTab {
+    color: green;
+}
+
+.wizard .redTab {
+    color: red;
+}
+
 .test{
     color: red;
 }

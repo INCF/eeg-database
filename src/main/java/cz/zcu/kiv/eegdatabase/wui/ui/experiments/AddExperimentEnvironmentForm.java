@@ -1,11 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Software;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
@@ -13,21 +15,22 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
+import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
+import org.springframework.jmx.access.InvocationFailureException;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.Arrays;
 import java.util.List;
 
 public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
@@ -42,14 +45,16 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private DiseaseFacade diseaseFacade;
 
     private Experiment experiment = new Experiment();
+    private ListMultipleChoice hw = null;
+    private ListMultipleChoice sw = null;
+    private DropDownChoice<String> weather = null;
+    private NumberTextField<Integer> temperature = null;
+    private TextField<String> disease = null;
+    private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
-
-        final FeedbackPanel feedback = new FeedbackPanel("environmentFeedback");
-        feedback.setOutputMarkupId(true);
-        add(feedback);
 
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
@@ -73,7 +78,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 hardwareTitles.add(hw.getTitle());
             }
         }
-        ListMultipleChoice hw = new ListMultipleChoice("hardware", new PropertyModel(experiment, "hardwares"), hardwareTitles).setMaxRows(5);
+        hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
         add(hw);
 
@@ -84,7 +89,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 softwareTitles.add(sw.getTitle());
             }
         }
-        ListMultipleChoice sw = new ListMultipleChoice("software", new PropertyModel(experiment, "softwares"), softwareTitles).setMaxRows(5);
+        sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
         add(sw);
 
@@ -95,11 +100,14 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 weatherTitles.add(w.getTitle());
             }
         }
-        add(new DropDownChoice<String>("weather",
-                new PropertyModel(experiment, "weather"), weatherTitles).setRequired(true));
+        weather = new DropDownChoice<String>("weather", weatherTitles);
+        weather.setRequired(true);
+        add(weather);
 
         add(new TextArea<String>("weatherNote"));
-        add(new NumberTextField<Integer>("temperature").setRequired(true));
+        temperature = new NumberTextField<Integer>("temperature");
+        temperature.setRequired(true);
+        add(temperature);
         //TODO autocomplete and create DiseaseFacade
 
         final AutoCompleteTextField<String> disease = new AutoCompleteTextField<String>("disease")
@@ -132,19 +140,34 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
 
         //TODO autocomplete and create PharmaceuticalFacade
         /* TODO check if this attribute is required as stated in prototype*/
-        add(new TextField<String>("pharmaceutical").setRequired(true));
+        pharmaceutical = new TextField<String>("pharmaceutical");
+        pharmaceutical.setRequired(true);
+        add(pharmaceutical);
 
         add(new TextField<String>("privateNote"));
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
-
     }
 
     public boolean isValid(){
+        if (hw.getValue().isEmpty()) error("Hardware is required!");
+        if (sw.getValue().isEmpty()) error("Software is required!");
+        if (weather.getValue().isEmpty()) error("Weather is required!");
+        if (temperature.getValue().isEmpty()) error("Temperature is required!");
+        else {
+            try {
+                 Float.parseFloat(temperature.getValue());
+            }
+            catch (NumberFormatException e){
+                error("Temperature must be a number!");
+            }
+        }
+        if (disease.getValue().isEmpty()) error("Disease is required!");
+        if (pharmaceutical.getValue().isEmpty()) error("Pharmaceutical is required!");
+        System.out.println("VALIDUJI ENVI S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
-
 
     private void addModalWindowAndButton(Form form, String modalWindowName, String cookieName,
                                          String buttonName, final String targetClass){

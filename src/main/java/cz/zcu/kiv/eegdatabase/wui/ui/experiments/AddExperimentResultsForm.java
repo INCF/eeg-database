@@ -23,4 +23,10 @@ public class AddExperimentResultsForm extends Form<AddExperimentResultsDTO> {
 
         /* TODO add submit button for the wizard */
     }
+
+    public boolean isValid(){
+        validate();
+        System.out.println("VALIDUJI RES S VYSLEDKEM: "+!hasError());
+        return !hasError();
+    }
 }

@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.wicket.AttributeModifier;
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
@@ -14,6 +15,7 @@ import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
@@ -30,16 +32,20 @@ import java.util.List;
  */
 public class WizardTabbedPanelPage extends MenuPage {
     public WizardTabbedPanelPage() {
-
+        final AddExperimentScenarioForm scenarioForm = new AddExperimentScenarioForm("scenarioTab");
+        final AddExperimentEnvironmentForm environmentForm = new AddExperimentEnvironmentForm("environmentTab");
+        final AddExperimentResultsForm resultForm = new AddExperimentResultsForm("resultTab");
+        final int TAB_COUNT = 2;
+        final int[] formsVisited = {0, 0, 0};
 
         // create a list of ITab objects used to feed the tabbed panel
-        List<ITab> tabs = new ArrayList<ITab>();
+        final List<ITab> tabs = new ArrayList<ITab>();
         tabs.add(new AbstractTab(new Model<String>("Scenario"))
         {
             @Override
             public Panel getPanel(String panelId)
             {
-                return new TabPanel1(panelId);
+                return new TabPanel1(panelId, scenarioForm);
             }
         });
 
@@ -49,7 +55,7 @@ public class WizardTabbedPanelPage extends MenuPage {
             @Override
             public Panel getPanel(String panelId)
             {
-                return new TabPanel2(panelId);
+                return new TabPanel2(panelId, environmentForm);
             }
         };
         tabs.add(environmentTab);
@@ -61,27 +67,66 @@ public class WizardTabbedPanelPage extends MenuPage {
             @Override
             public Panel getPanel(String panelId)
             {
-                return new TabPanel3(panelId);
+                return new TabPanel3(panelId, resultForm);
             }
         });
 
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        AjaxTabbedPanel atp = new AjaxTabbedPanel("steps", tabs){
+
+        ExperimentTabbedPanel etp = new ExperimentTabbedPanel("steps", tabs){
             @Override
-            protected WebMarkupContainer newLink(String linkId, int index) {
-                int selectedTab = getSelectedTab();
-                if (selectedTab == 1){
-                    environmentModel.setObject("New name :)");
+            protected WebMarkupContainer newLink(String linkId, final int index) {
+                final int selectedTab = getSelectedTab();
+
+                if (formsVisited[selectedTab]<TAB_COUNT) {
+                    setTabClassWhite(selectedTab);
+                    formsVisited[selectedTab]++;
                 }
-                else {
-                    environmentModel.setObject("Environment");
-                }
-                return super.newLink(linkId, index);
+
+                return new Link(linkId)
+                {
+                  private static final long serialVersionUID = 1L;
+
+                  public void onClick()
+                  {
+                    if (selectedTab == 0) {
+                         if (scenarioForm.isValid()){
+                            System.out.println("SCE NA GREEN");
+                            setTabClassGreen(selectedTab);
+                        }
+                        else {
+                            System.out.println("SCE NA RED");
+                            setTabClassRed(selectedTab);
+                        }
+                    }
+                    if (selectedTab == 1) {
+                        if (environmentForm.isValid()){
+                            System.out.println("ENVI NA GREEN");
+                            setTabClassGreen(selectedTab);
+                        }
+                        else {
+                            System.out.println("ENVI NA RED");
+                            setTabClassRed(selectedTab);
+                        }
+                    }
+                    if (selectedTab == 2) {
+                        if (resultForm.isValid()){
+                            System.out.println("RES NA GREEN");
+                            setTabClassGreen(selectedTab);
+                        }
+                        else {
+                            System.out.println("RES NA RED");
+                            setTabClassRed(selectedTab);
+                        }
+                    }
+                    setSelectedTab(index);
+                  }
+                };
             }
         };
-        add(atp);
+        add(etp);
 
     }
 
@@ -102,10 +147,10 @@ public class WizardTabbedPanelPage extends MenuPage {
          * @param id
          *            component id
          */
-        public TabPanel1(String id)
+        public TabPanel1(String id, AddExperimentScenarioForm scenarioForm)
         {
             super(id);
-            add(new AddExperimentScenarioForm("scenarioTab"));
+            add(scenarioForm);
         }
     };
 
@@ -120,12 +165,10 @@ public class WizardTabbedPanelPage extends MenuPage {
          * @param id
          *            component id
          */
-        public TabPanel2(String id)
+        public TabPanel2(String id, AddExperimentEnvironmentForm environmentForm)
         {
             super(id);
-            add(new AttributeModifier("class", "white"));
-            AddExperimentEnvironmentForm form = new AddExperimentEnvironmentForm("environmentTab");
-            add(form);
+            add(environmentForm);
         }
 
     };
@@ -141,10 +184,10 @@ public class WizardTabbedPanelPage extends MenuPage {
          * @param id
          *            component id
          */
-        public TabPanel3(String id)
+        public TabPanel3(String id, AddExperimentResultsForm resultForm)
         {
             super(id);
-            add(new AddExperimentResultsForm("resultTab"));
+            add(resultForm);
         }
     };
 }

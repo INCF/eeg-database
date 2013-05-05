@@ -353,4 +353,11 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         FormComponentLabel stimulusLabel = new FormComponentLabel("stimulusLb", newStimulusAjax);
         add(newStimulusAjax, stimulusLabel);
     }
+
+    public boolean isValid(){
+        this.validate();
+        System.out.println("VALIDUJI SCE S VYSLEDKEM: "+!hasError());
+        return !hasError();
+    }
+
 }

@@ -36,6 +36,7 @@ public class HardwareForm extends Form<Hardware> {
 
         add(new Label("addHWHeader", ResourceUtils.getModel("pageTitle.addHardwareDefinition")));
         add(new TextField<String>("title").setRequired(true));
+        add(new TextField<String>("type").setRequired(true));
         add(new TextArea<String>("description").setRequired(true));
         add(new CheckBox("defaultNumber"));
 
@@ -51,7 +52,6 @@ public class HardwareForm extends Form<Hardware> {
                         validate();
                         target.add(feedback);
                         if(!hasError()){
-                            newHw.setType("none");
                             if (newHw.getDefaultNumber() == 0){
                                 hardwareFacade.create(newHw);
                             }

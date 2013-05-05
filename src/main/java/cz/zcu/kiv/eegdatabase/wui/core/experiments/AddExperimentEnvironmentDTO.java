@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.IdentifiDTO;
 
 import java.io.Serializable;
+import java.util.Collection;
 
 /**
  * Created by IntelliJ IDEA.
@@ -17,15 +18,15 @@ public class AddExperimentEnvironmentDTO extends IdentifiDTO implements Serializ
     private String disease;
     private String pharmaceutical;
     private String privateNote;
-    private String hardware;
+    private Collection<String> hardware;
     private String weather;
-    private String software;
+    private Collection<String> software;
 
-    public String getSoftware() {
+    public Collection<String> getSoftware() {
         return software;
     }
 
-    public void setSoftware(String software) {
+    public void setSoftware(Collection<String> software) {
         this.software = software;
     }
 
@@ -37,11 +38,11 @@ public class AddExperimentEnvironmentDTO extends IdentifiDTO implements Serializ
         this.weather = weather;
     }
 
-    public String getHardware() {
+    public Collection<String> getHardware() {
         return hardware;
     }
 
-    public void setHardware(String hardware) {
+    public void setHardware(Collection<String> hardware) {
         this.hardware = hardware;
     }
 
