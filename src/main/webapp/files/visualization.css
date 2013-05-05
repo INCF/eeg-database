@@ -23,13 +23,11 @@
     height: 700px;
 }
 
-#add_canvas {
-    position: absolute;
-    float: right;
+#add {
     z-index: 2;
-    top: 60px;
-    left: 20px;
-    display: none;
+    display: inline-block;
+    padding: 81px 0px 76px;
+    cursor: pointer;
 }
 
 #wrapper{

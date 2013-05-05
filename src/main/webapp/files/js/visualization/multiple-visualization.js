@@ -76,7 +76,7 @@ function centerPopup(){
             id: wraID,
             "class": "canvasbox"
         }).css({
-            }).appendTo('#wrapper');
+            }).prependTo('#wrapper');
 
         $(".del").click(function(){
             $(this).parent().remove();
