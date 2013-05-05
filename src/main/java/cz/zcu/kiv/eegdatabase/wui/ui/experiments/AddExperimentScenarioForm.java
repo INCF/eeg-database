@@ -22,6 +22,7 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -49,12 +50,14 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
     private Experiment experiment = new Experiment();
     private Scenario scenarioEntity = new Scenario();
+    private List<IModel<Person>> persons;
 
     final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentScenarioForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentScenarioDTO>(new AddExperimentScenarioDTO()));
 
+        persons = new ArrayList<IModel<Person>>();
         //scenario autocomplete
         final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
                 new PropertyModel<String>(experiment, "scenario.scenarioName"))
@@ -145,18 +148,18 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         finishDate.setRequired(true);
         add(finishDate);
 
-        final List<Integer> actualAmount = new ArrayList<Integer>();
-        actualAmount.add(1);
-        actualAmount.add(2);
+        final List<Person> actualAmount = new ArrayList<Person>();
+        actualAmount.add(new Person());
         final WebMarkupContainer propertyContainer = new WebMarkupContainer("addTestedInputContainer");
 
         final ListView propertyList = new ListView("addTestedInput",actualAmount) {
             @Override
             protected void populateItem(ListItem item) {
+                final Person person = (Person) item.getModelObject();
                 final AutoCompleteTextField<String> testSubject =
                         new AddingItemsView<String>(
                                 "subjects",
-                                new PropertyModel<String>(experiment, "persons"),
+                                new PropertyModel<Model<Person>>(new Model<Person>(person), "surname"),
                                 this,
                                 propertyContainer
                         );

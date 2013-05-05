@@ -37,7 +37,8 @@ public class AddingItemsView<T> extends AutoCompleteTextField {
         add(new AjaxEventBehavior("onblur") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
-                listView.getModelObject().add(1);
+                Person person = (Person) getModelObject();
+                listView.getModelObject().add(new Person());
                 target.add(container);
             }
         });
