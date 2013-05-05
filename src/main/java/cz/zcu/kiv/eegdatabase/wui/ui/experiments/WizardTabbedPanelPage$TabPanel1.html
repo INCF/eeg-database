@@ -48,11 +48,13 @@
         </div>
 
         <div class="form-item">
-            <label for="stimulus" wicket:id="subjectsLb">
+            <label for="subjects" wicket:id="subjectsLb">
                 <wicket:message key="label.subjectPerson">[subjects]</wicket:message>
             </label>
-            <span wicket:id="addTestedInput">
-                <input type="text" wicket:id="subjects"/>
+            <span wicket:id="addTestedInputContainer">
+                <span wicket:id="addTestedInput">
+                    <input type="text" wicket:id="subjects"/>
+                </span>
             </span>
             <input type="button" wicket:id="addTested" value="Add">
         </div>

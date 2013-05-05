@@ -14,6 +14,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
@@ -147,49 +148,27 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         final List<Integer> actualAmount = new ArrayList<Integer>();
         actualAmount.add(1);
         actualAmount.add(2);
+        final WebMarkupContainer propertyContainer = new WebMarkupContainer("addTestedInputContainer");
+
         final ListView propertyList = new ListView("addTestedInput",actualAmount) {
             @Override
             protected void populateItem(ListItem item) {
-                final AutoCompleteTextField<String> testSubject = new AutoCompleteTextField<String>("subjects",
-                        new PropertyModel<String>(experiment, "persons"))
-                {
-                    //TODO which persons are co-experimenters and which are test subjects?
-                    @Override
-                    protected Iterator<String> getChoices(String input)
-                    {
-                        if (Strings.isEmpty(input))
-                        {
-                            List<String> emptyList = Collections.emptyList();
-                            return emptyList.iterator();
-                        }
-                        List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                        List<Person> persons = personFacade.getAllRecords();
-                        for (final Person p : persons)
-                        {
-                            final String data = p.getGivenname() +" "+ p.getSurname();
-                            if (data.toUpperCase().startsWith(input.toUpperCase()))
-                            {
-                                choices.add(data);
-                                if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                            }
-                        }
-                        return choices.iterator();
-                    }
-                };
-                testSubject.setRequired(true);
-                testSubject.setOutputMarkupId(true);
-                testSubject.add(new AjaxEventBehavior("onkeyup") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        actualAmount.add(1);
-                        modelChanged();
-                    }
-                });
+                final AutoCompleteTextField<String> testSubject =
+                        new AddingItemsView<String>(
+                                "subjects",
+                                new PropertyModel<String>(experiment, "persons"),
+                                this,
+                                propertyContainer
+                        );
                 item.add(testSubject);
             }
         };
         propertyList.setOutputMarkupId(true);
-        add(propertyList);
+        propertyList.setReuseItems(true);
+
+        propertyContainer.add(propertyList);
+        propertyContainer.setOutputMarkupId(true);
+        add(propertyContainer);
         //testSubjects autocomplete
 
 
