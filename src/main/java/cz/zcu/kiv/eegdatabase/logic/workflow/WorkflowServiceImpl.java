@@ -5,19 +5,24 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.TreeSet;
+import java.util.Collections;
 
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
-import org.hibernate.SessionFactory;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
+
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.webservices.processor.DataProcessor;
 import cz.zcu.kiv.eegdatabase.webservices.processor.generated.DataFile;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
@@ -26,6 +31,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 	private List<DataFile> data = new ArrayList<DataFile>();
 	private List<String> stepDef = new ArrayList<String>();
 	private List<String> resultNames = new ArrayList<String>();
+	
+	@Override
+	public List<String> getResultNames() {
+		return resultNames;
+	}
+
 	private Set<Integer> fileIds = new TreeSet<Integer>();
 	private String workflow;
 
@@ -43,8 +54,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 	FileFacade fileFacade;
 
 	@Autowired
-	SessionFactory sessionFactory;
-
+	ExperimentsFacade facade;
+	
 	@Override
 	public void runService() {
 		Person owner = personDao.getLoggedPerson();
@@ -93,6 +104,32 @@ public class WorkflowServiceImpl implements WorkflowService {
 	@Override
 	public void endExperiment() {
 		stepDef.add("</workunit>");
+	}
+	
+	@Override
+	public List<String> getExperiments(){
+		List<String> output = new ArrayList<String>();
+		List<Experiment> experiments = facade.getAllRecords();
+		for(Experiment e : experiments){
+			int exId = e.getExperimentId();
+			String nameId = "";
+			if(exId < 100){
+				nameId = "0" +exId;
+			}
+			else{
+				nameId = "" +exId;
+			}
+			String name = nameId +":" +e.getEnvironmentNote();
+			output.add(name);
+		}
+		Collections.sort(output);
+		return output;
+	}
+	
+	@Override
+	public List<String> getMethods(){
+		DataProcessor proc = new DataProcessor();
+		return proc.getMethods();
 	}
 
 	private class InvokeProcessor extends Thread {

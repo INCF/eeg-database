@@ -6,19 +6,74 @@
 	<wicket:extend>
 
 		<div class="leftMenu" wicket:id="leftMenu"></div>
-		
+
 		<div class="mainContentWithMenu">
-		
-		<select wicket:id="site">
-                <option>site 1</option>
-                <option>site 2</option>
-        </select>
-		
-		
-		
-		
+
+			<h1>
+				<wicket:message key="pageTitle.createWorkflow" />
+			</h1>
+
+			<form class="standardInputForm" wicket:id="form">
+				<div>
+					<label class="selectBoxLabel"><wicket:message
+							key="label.inputType" /></label> <select class="selectBox"
+						wicket:id="inputType">
+					</select>
+				</div>
+				<div>
+					<label class="selectBoxLabel"><wicket:message
+							key="label.inputData" /></label> <select class="selectBox"
+						wicket:id="inputData">
+					</select>
+				</div>
+				<div>
+					<label class="selectBoxLabel"><wicket:message
+							key="label.methodName" /></label> <select class="selectBox"
+						wicket:id="methodName">
+					</select>
+				</div>
+				<div>
+					<label class="selectBoxLabel"><wicket:message
+							key="label.storeResult" /></label> <select class="selectBox"
+						wicket:id="storeResult">
+					</select>
+				</div>
+
+				<fieldset>
+					<table>
+						<tr>
+							<td>
+								<div class="itemBox">
+									<label class="selectBoxLabel"><wicket:message
+											key="label.stepName" /></label> <input wicket:id="stepName"
+										class="textField" type="text" />
+								</div>
+							</td>
+							<td>
+								<div class="itemBox">
+									<label class="selectBoxLabel"><wicket:message
+											key="label.methodParam" /></label> <input wicket:id="methodParams"
+										class="textField" type="text" size="40" />
+								</div>
+							</td>
+						</tr>
+					</table>
+
+					<input wicket:id="addButton" class="submitButton2 lightButtonLink"
+						type="submit" /> 
+					<input wicket:id="submitButton"
+						class="submitButton2 lightButtonLink" type="submit" />
+				
+				</fieldset>
+			</form>
+			
+			<div wicket:id="outputContainer">
+                <p><span wicket:id="message"></span></p>
+            </div>
+			
+			
 		</div>
-	
+
 	</wicket:extend>
 </body>
 </html>

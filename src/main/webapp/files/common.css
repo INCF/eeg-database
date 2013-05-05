@@ -1,398 +1,308 @@
 @charset "utf-8";
 
 /** This file contains common definitions used in most of CSS styled pages **/
-
-@media screen, projection {
-  body {
-    font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
-    font-size: .75em;
-    margin: 0;
-    padding: 0;
-    background: #fff;
-    color: #000;
-  }
-
-  .cleaner {
-    clear: both;
-    width: 1px;
-    height: 1px;
-  }
-
-  a {
-    color: #597000;
-    text-decoration: underline;
-  }
-
-  a:hover {
-    color: #3a4900;
-    text-decoration: underline;
-  }
-
-
-  h1, h2, h3, h4 {
-    color: #597000;
-    font-weight: normal;
-
-  }
-
-  .multiple {
-    color: #597000;
-    font-weight: normal;
-  }
-
-  h1 {
-    font-size: 2em;
-    margin: 0;
-    padding: 10px 0 20px;
-
-  }
-  a {
-    cursor:pointer;
-  }
-
-  h2 {
-    font-size: 1.6em;
-    margin: 0;
-    padding: 10px 0 0;
-  }
-
-
-
-  .preH1 {
-    color: #333;
-    font-size: 1.2em;
-    margin-top: 10px;
-  }
-
-
-
-
-
-
-  ul.commonButtonMenu {
-    list-style: none;
-    margin: 10px 0;
-    padding: 0;
-    padding-top: 5px;
-    border: solid 1px #bbb;
-  }
-  ul.commonButtonMenu li {
-    display: inline;
-  }
-  ul.commonButtonMenu li a {
-    display: block;
-    color: #000;
-    text-decoration: none;
-    padding: 5px 8px;
-    border-top: solid 1px #e5e5e5;
-    background: url(images/menu-item-bg.gif) 0 0 repeat-x;
-  }
-  ul.commonButtonMenu li a:hover {
-    background-position: 0 -80px;
-  }
-
-
-
-  form.standardInputForm {
-    margin: 0;
-    padding: 0;
-  }
-
-
-  form.standardInputForm fieldset {
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
-
-
-
-  form.standardInputForm .itemBox {
-    margin: 10px 0;
-  }
-
-  form.standardInputForm .chooseBox {
-    margin: 10px 0;
-  }
-  form.standardInputForm .buttonBox {
-    margin-left: 300px;
-  }
-
-  form.standardInputForm .comboLeftSideBox {
-    float: left;
-    margin-left: 10px;
-    width: 200px;
-  }
-  form.standardInputForm .itemRightSideBox {
-    float: left;
-    margin-left: 50px;
-    width: 600px;
-  }
-  form.standardInputForm .itemSearchBox {
-    margin: 10px 0;
-    float: right;
-  }
-
-  form.standardInputForm .textAreaBig {
-    width: 650px;
-    height: 300px;
-  }
-  form.standardInputForm .textAreaSmall {
-    width: 650px;
-    height: 150px;
-  }
-
-
-
-  form.standardInputForm .textField,
-  form.standardInputForm .fileField,
-  form.standardInputForm .textareaField
-  {
-    border: solid 1px #bababa;
-    color: #000;
-    padding: 3px 5px;
-    background: #fff url(images/input-field-bg.gif) left center repeat-x;
-    width: 200px;
-  }
-  form.standardInputForm .textareaField {
-    width: 250px;
-    height: 100px;
-    background-position: left bottom;
-  }
-  form.standardInputForm .selectBox {
-    width: 220px;
-  }
-  form.standardInputForm .selectOptionBox {
-    width: 70px;
-  }
-  form.standardInputForm .multipleSelectBox {
-    width: 220px;
-    height: 140px;
-  }
-
-
-
-  form.standardInputForm .textFieldLabel,
-  form.standardInputForm .fileFieldLabel,
-  form.standardInputForm .textareaFieldLabel,
-  form.standardInputForm .selectBoxLabel,
-  form.standardInputForm .multipleSelectBoxLabel,
-  form.standardInputForm .radio2ButtonsLabel {
-    display: block;
-    float: left;
-    width: 200px;
-    text-align: right;
-    margin: 4px 20px 0 0;
-  }
-  form.standardInputForm .selectBoxLabel,
-  form.standardInputForm .multipleSelectBoxLabel {
-    margin-top: 2px;
-  }
-  form.standardInputForm .radio2ButtonsLabel {
-    margin-top: 0;
-  }
-
-
-  form.standardInputForm .submitButton {
-    margin-left: 220px;
-  }
-
-  form.standardInputForm .dateField {
-    width: 100px;
-    margin-right: 2px;  /* because of calendar picture */
-  }
-
-  form.standardInputForm .timePartField {
-    width: 20px;
-  }
-
-  form.standardInputForm .timeField {
-    width: 80px;
-  }
-
-  form.standardInputForm .errorField {
-    border-color: #c00;
-  }
-
-  form.standardInputForm .errorBox {
-    display: block;
-    margin-left: 220px;
-    color: #c00;
-  }
-
-  form.standardInputForm .errorLabel {
-    color: #c00;
-  }
-
-
-  form.standardInputForm .note {
-    font-size: .75em;
-    color: #666;
-  }
-
-
-
-  .lightButtonLinkBox {
-    margin: 20px 0;
-  }
-
-  .lightButtonLink, .lightButtonLinkSmall {
-    color: #000;
-    text-decoration: none;
-    padding: 5px 8px;
-    margin-right: 3px;
-    border: solid 1px #888;
-    background: url(images/light-button-bg.gif) 0 0 repeat-x;
-    text-decoration: none;
-    color: #000;
-  }
-  .lightButtonLink:hover, .lightButtonLinkSmall:hover {
-    background-position: 0 -35px;
-    text-decoration: none;
-    color: #000;
-  }
-
-  .lightButtonLinkSmall {
-    padding: 1px 5px;
-  }
-
-
-  .actionBox,
-  .actionBoxNoAction {
-    margin-top: 20px;
-    padding: 20px 10px;
-    background: url(images/action-box-bg.gif) left top repeat-x;
-  }
-  .actionBoxNoAction {
-    text-align: center;
-  }
-
-
-  table.standardValueTable {
-    border-collapse: collapse;
-    width: 400px;
-    margin: 10px 0;
-  }
-
-  table.standardValueTable tr {
-  }
-
-  table.standardValueTable td {
-    background: url(images/value-table-bg.gif) left top repeat-x;
-    padding: 3px 5px 1px;
-    border: solid 1px #d5d5d5;
-  }
-
-  table.standardValueTable th {
-    border: solid 1px #d5d5d5;
-    background: url(images/value-table-title-bg.gif) left top repeat-x;
-    padding: 3px 5px 1px;
-    font-weight: bold;
-    text-align: left;
-    width: 150px;
-  }
-
-
-
-  ul.standardValueList {
-    list-style: none;
-    margin: 10px 0;
-    padding: 0;
-    border-top: solid 3px #597000;
-  }
-  ul.standardValueList li {
-    margin: 0;
-    padding: 0;
-    border-bottom: solid 1px #ebebeb;
-    background-color: #fafafa;
-  }
-  ul.standardValueList li:hover {
-    background-color: #f3f3f3;
-  }
-  ul.standardValueList li strong {
-    display: block;
-    float: left;
-    width: 200px;
-
-  }
-
-
-
-
-
-
-  /** New version of standard form styling - it is easier to create forms without
+@media screen , projection {
+	body {
+		font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+		font-size: .75em;
+		margin: 0;
+		padding: 0;
+		background: #fff;
+		color: #000;
+	}
+	.cleaner {
+		clear: both;
+		width: 1px;
+		height: 1px;
+	}
+	a {
+		color: #597000;
+		text-decoration: underline;
+	}
+	a:hover {
+		color: #3a4900;
+		text-decoration: underline;
+	}
+	h1,h2,h3,h4 {
+		color: #597000;
+		font-weight: normal;
+	}
+	.multiple {
+		color: #597000;
+		font-weight: normal;
+	}
+	h1 {
+		font-size: 2em;
+		margin: 0;
+		padding: 10px 0 20px;
+	}
+	a {
+		cursor: pointer;
+	}
+	h2 {
+		font-size: 1.6em;
+		margin: 0;
+		padding: 10px 0 0;
+	}
+	.preH1 {
+		color: #333;
+		font-size: 1.2em;
+		margin-top: 10px;
+	}
+	ul.commonButtonMenu {
+		list-style: none;
+		margin: 10px 0;
+		padding: 0;
+		padding-top: 5px;
+		border: solid 1px #bbb;
+	}
+	ul.commonButtonMenu li {
+		display: inline;
+	}
+	ul.commonButtonMenu li a {
+		display: block;
+		color: #000;
+		text-decoration: none;
+		padding: 5px 8px;
+		border-top: solid 1px #e5e5e5;
+		background: url(images/menu-item-bg.gif) 0 0 repeat-x;
+	}
+	ul.commonButtonMenu li a:hover {
+		background-position: 0 -80px;
+	}
+	form.standardInputForm {
+		margin: 0;
+		padding: 0;
+	}
+	form.standardInputForm fieldset {
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	form.standardInputForm .itemBox {
+		margin: 10px 0;
+	}
+	form.standardInputForm .chooseBox {
+		margin: 10px 0;
+	}
+	form.standardInputForm .buttonBox {
+		margin-left: 300px;
+	}
+	form.standardInputForm .comboLeftSideBox {
+		float: left;
+		margin-left: 10px;
+		width: 200px;
+	}
+	form.standardInputForm .itemRightSideBox {
+		float: left;
+		margin-left: 50px;
+		width: 600px;
+	}
+	form.standardInputForm .itemSearchBox {
+		margin: 10px 0;
+		float: right;
+	}
+	form.standardInputForm .textAreaBig {
+		width: 650px;
+		height: 300px;
+	}
+	form.standardInputForm .textAreaSmall {
+		width: 650px;
+		height: 150px;
+	}
+	form.standardInputForm .textField,form.standardInputForm .fileField,form.standardInputForm .textareaField
+		{
+		border: solid 1px #bababa;
+		color: #000;
+		padding: 3px 5px;
+		background: #fff url(images/input-field-bg.gif) left center repeat-x;
+		width: 200px;
+	}
+	form.standardInputForm .textareaField {
+		width: 250px;
+		height: 100px;
+		background-position: left bottom;
+	}
+	form.standardInputForm .selectBox {
+		width: 220px;
+	}
+	form.standardInputForm .selectOptionBox {
+		width: 70px;
+	}
+	form.standardInputForm .multipleSelectBox {
+		width: 220px;
+		height: 140px;
+	}
+	form.standardInputForm .textFieldLabel,form.standardInputForm .fileFieldLabel,form.standardInputForm .textareaFieldLabel,form.standardInputForm .selectBoxLabel,form.standardInputForm .multipleSelectBoxLabel,form.standardInputForm .radio2ButtonsLabel
+		{
+		display: block;
+		float: left;
+		width: 200px;
+		text-align: right;
+		margin: 4px 20px 0 0;
+	}
+	form.standardInputForm .selectBoxLabel,form.standardInputForm .multipleSelectBoxLabel
+		{
+		margin-top: 2px;
+	}
+	form.standardInputForm .radio2ButtonsLabel {
+		margin-top: 0;
+	}
+	form.standardInputForm .submitButton {
+		margin-left: 220px;
+	}
+	form.standartInputForm .submitButton2 {
+		margin-left: 10px;
+	}
+	form.standardInputForm .dateField {
+		width: 100px;
+		margin-right: 2px; /* because of calendar picture */
+	}
+	form.standardInputForm .timePartField {
+		width: 20px;
+	}
+	form.standardInputForm .timeField {
+		width: 80px;
+	}
+	form.standardInputForm .errorField {
+		border-color: #c00;
+	}
+	form.standardInputForm .errorBox {
+		display: block;
+		margin-left: 220px;
+		color: #c00;
+	}
+	form.standardInputForm .errorLabel {
+		color: #c00;
+	}
+	form.standardInputForm .note {
+		font-size: .75em;
+		color: #666;
+	}
+	.lightButtonLinkBox {
+		margin: 20px 0;
+	}
+	.lightButtonLink,.lightButtonLinkSmall {
+		color: #000;
+		text-decoration: none;
+		padding: 5px 8px;
+		margin-right: 3px;
+		border: solid 1px #888;
+		background: url(images/light-button-bg.gif) 0 0 repeat-x;
+		text-decoration: none;
+		color: #000;
+	}
+	.lightButtonLink:hover,.lightButtonLinkSmall:hover {
+		background-position: 0 -35px;
+		text-decoration: none;
+		color: #000;
+	}
+	.lightButtonLinkSmall {
+		padding: 1px 5px;
+	}
+	.actionBox,.actionBoxNoAction {
+		margin-top: 20px;
+		padding: 20px 10px;
+		background: url(images/action-box-bg.gif) left top repeat-x;
+	}
+	.actionBoxNoAction {
+		text-align: center;
+	}
+	table.standardValueTable {
+		border-collapse: collapse;
+		width: 400px;
+		margin: 10px 0;
+	}
+	table.standardValueTable tr {
+		
+	}
+	table.standardValueTable td {
+		background: url(images/value-table-bg.gif) left top repeat-x;
+		padding: 3px 5px 1px;
+		border: solid 1px #d5d5d5;
+	}
+	table.standardValueTable th {
+		border: solid 1px #d5d5d5;
+		background: url(images/value-table-title-bg.gif) left top repeat-x;
+		padding: 3px 5px 1px;
+		font-weight: bold;
+		text-align: left;
+		width: 150px;
+	}
+	ul.standardValueList {
+		list-style: none;
+		margin: 10px 0;
+		padding: 0;
+		border-top: solid 3px #597000;
+	}
+	ul.standardValueList li {
+		margin: 0;
+		padding: 0;
+		border-bottom: solid 1px #ebebeb;
+		background-color: #fafafa;
+	}
+	ul.standardValueList li:hover {
+		background-color: #f3f3f3;
+	}
+	ul.standardValueList li strong {
+		display: block;
+		float: left;
+		width: 200px;
+	}
+
+	/** New version of standard form styling - it is easier to create forms without
      unnecessary markup **/
-  form.standardForm {
-    margin: 0;
-    padding: 0;
-  }
-
-
-  form.standardForm fieldset {
-    border: none;
-    margin: 0;
-    padding: 0;
-  }
-
-
-
-  form.standardForm .textBox,
-  form.standardForm .fileBox,
-  form.standardForm .selectBox,
-  form.standardForm .multipleSelectBox,
-  form.standardForm .textareaBox {
-    margin: 10px 0;
-  }
-
-
-
-  form.standardForm .textBox input,
-  form.standardForm .fileBox input,
-  form.standardForm .textareaBox textarea
-  {
-    border: solid 1px #bababa;
-    color: #000;
-    padding: 3px 5px;
-    background: #fff url(images/input-field-bg.gif) left center repeat-x;
-    width: 200px;
-  }
-  form.standardForm .textareaBox textarea {
-    width: 250px;
-    height: 100px;
-    background-position: left bottom;
-  }
-  form.standardForm .selectBox select {
-    width: 220px;
-  }
-  form.standardForm .multipleSelectBox select {
-    width: 220px;
-    height: 140px;
-  }
-
-
-
-  form.standardForm .textBox label,
-  form.standardForm .fileBox label,
-  form.standardForm .textareaBox label,
-  form.standardForm .selectBox label,
-  form.standardForm .multipleSelectBox label/*,
+	form.standardForm {
+		margin: 0;
+		padding: 0;
+	}
+	form.standardForm fieldset {
+		border: none;
+		margin: 0;
+		padding: 0;
+	}
+	form.standardForm .textBox,form.standardForm .fileBox,form.standardForm .selectBox,form.standardForm .multipleSelectBox,form.standardForm .textareaBox
+		{
+		margin: 10px 0;
+	}
+	form.standardForm .textBox input,form.standardForm .fileBox input,form.standardForm .textareaBox textarea
+		{
+		border: solid 1px #bababa;
+		color: #000;
+		padding: 3px 5px;
+		background: #fff url(images/input-field-bg.gif) left center repeat-x;
+		width: 200px;
+	}
+	form.standardForm .textareaBox textarea {
+		width: 250px;
+		height: 100px;
+		background-position: left bottom;
+	}
+	form.standardForm .selectBox select {
+		width: 220px;
+	}
+	form.standardForm .multipleSelectBox select {
+		width: 220px;
+		height: 140px;
+	}
+	form.standardForm .textBox label,form.standardForm .fileBox label,form.standardForm .textareaBox label,form.standardForm .selectBox label,form.standardForm .multipleSelectBox label
+		/*,
   form.standardForm .radio2ButtonsLabel*/ {
-    display: block;
-    float: left;
-    width: 200px;
-    text-align: right;
-    margin: 4px 20px 0 0;
-  }
-  form.standardForm .selectBox label,
-  form.standardForm .multipleSelectBox label {
-    margin-top: 2px;
-  }
-  /*    form.standardForm .radio2ButtonsLabel {
+		display: block;
+		float: left;
+		width: 200px;
+		text-align: right;
+		margin: 4px 20px 0 0;
+	}
+	form.standardForm .selectBox label,form.standardForm .multipleSelectBox label
+		{
+		margin-top: 2px;
+	}
+	/*    form.standardForm .radio2ButtonsLabel {
           margin-top: 0;
       }
   */
-  /*
+	/*
       form.standardForm .submitButton {
           margin-left: 220px;
       }
@@ -410,133 +320,96 @@
           width: 80px;
       }
   */
-  form.standardForm .textBox input.error,
-  form.standardForm .fileBox input.error,
-  form.standardForm .textareaBox textarea.error,
-  form.standardForm .selectBox select.error,
-  form.standardForm .multipleSelectBox select.error {
-    border-color: #c00;
-  }
+	form.standardForm .textBox input.error,form.standardForm .fileBox input.error,form.standardForm .textareaBox textarea.error,form.standardForm .selectBox select.error,form.standardForm .multipleSelectBox select.error
+		{
+		border-color: #c00;
+	}
+	form.standardForm .textBox span.error,form.standardForm .fileBox span.error,form.standardForm .textareaBox span.error,form.standardForm .selectBox span.error,form.standardForm .multipleSelectBox span.error
+		{
+		display: block;
+		margin-left: 220px;
+		color: #c00;
+	}
+	form.standardForm .textBox label.error,form.standardForm .fileBox label.error,form.standardForm .textareaBox label.error,form.standardForm .selectBox label.error,form.standardForm .multipleSelectBox label.error
+		{
+		color: #c00;
+	}
+	form.standardForm .submitBox {
+		margin-left: 220px;
+	}
 
-  form.standardForm .textBox span.error,
-  form.standardForm .fileBox span.error,
-  form.standardForm .textareaBox span.error,
-  form.standardForm .selectBox span.error,
-  form.standardForm .multipleSelectBox span.error {
-    display: block;
-    margin-left: 220px;
-    color: #c00;
-  }
-
-  form.standardForm .textBox label.error,
-  form.standardForm .fileBox label.error,
-  form.standardForm .textareaBox label.error,
-  form.standardForm .selectBox label.error,
-  form.standardForm .multipleSelectBox label.error {
-    color: #c00;
-  }
-
-  form.standardForm .submitBox {
-    margin-left: 220px;
-  }
-
-
-
-  /*
+	/*
       form.standardForm .note {
           font-size: .75em;
           color: #666;
       }
   */
-
-
-  .globalErrorBox {
-    border: solid 1px #c00;
-    padding: 5px 8px;
-    background: #f33 url(images/global-error-bg.gif) left top repeat-x;
-    color: #fff;
-    font-weight: bold;
-    font-size: 1.2em;
-    text-align: center;
-  }
+	.globalErrorBox {
+		border: solid 1px #c00;
+		padding: 5px 8px;
+		background: #f33 url(images/global-error-bg.gif) left top repeat-x;
+		color: #fff;
+		font-weight: bold;
+		font-size: 1.2em;
+		text-align: center;
+	}
 }
 
 @media print {
-  body {
-    font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
-    font-size: .75em;
-    background: #fff;
-    color: #000;
-    padding: 30px;
-  }
+	body {
+		font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+		font-size: .75em;
+		background: #fff;
+		color: #000;
+		padding: 30px;
+	}
+	.cleaner {
+		clear: both;
+		width: 1px;
+		height: 1px;
+	}
+	a {
+		color: #000;
+		text-decoration: underline;
+	}
+	h1,h2,h3,h4 {
+		color: #000;
+		font-weight: normal;
+	}
+	h1 {
+		font-size: 2em;
+		margin: 40px 0 20px;
+		padding: 0;
+	}
+	h2 {
+		font-size: 1.6em;
+		margin: 10px 0 0;
+		padding: 0;
+	}
+	input,textarea,select {
+		font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+		font-size: 1em;
+	}
+	.pageTitle {
+		color: #000;
+		font-size: 2em;
+		font-weight: bold;
+		border-bottom: solid 1px #000;
+	}
+	.loggedUserBox,.mainMenu {
+		display: none;
+	}
+	.homepageLeftColumn h2 a,.homepageRightColumn h2 a {
+		display: none;
+	}
 
-  .cleaner {
-    clear: both;
-    width: 1px;
-    height: 1px;
-  }
-
-  a {
-    color: #000;
-    text-decoration: underline;
-  }
-
-  h1, h2, h3, h4 {
-    color: #000;
-    font-weight: normal;
-  }
-
-  h1 {
-    font-size: 2em;
-    margin: 40px 0 20px;
-    padding: 0;
-  }
-
-  h2 {
-    font-size: 1.6em;
-    margin: 10px 0 0;
-    padding: 0;
-  }
-
-  input, textarea, select {
-    font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
-    font-size: 1em;
-  }
-
-  .pageTitle {
-    color: #000;
-    font-size: 2em;
-    font-weight: bold;
-    border-bottom: solid 1px #000;
-  }
-
-  .loggedUserBox, .mainMenu {
-    display: none;
-  }
-
-
-  .homepageLeftColumn h2 a,
-  .homepageRightColumn h2 a {
-    display: none;
-  }
-
-
-
-
-
-
-  /* Changes in print style for standard forms */
-
-  form.standardInputForm .textField,
-  form.standardInputForm .fileField,
-  form.standardInputForm .textareaField
-  {
-    border-color: #000;
-    background: #fff;
-  }
-
-  form.standardInputForm .note {
-    color: #000;
-  }
-
+	/* Changes in print style for standard forms */
+	form.standardInputForm .textField,form.standardInputForm .fileField,form.standardInputForm .textareaField
+		{
+		border-color: #000;
+		background: #fff;
+	}
+	form.standardInputForm .note {
+		color: #000;
+	}
 }

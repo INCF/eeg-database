@@ -13,4 +13,10 @@ public interface WorkflowService {
 	public abstract void beginExperiment(String name);
 	
 	public abstract void endExperiment();
+	
+	public abstract List<String> getExperiments();
+	
+	public abstract List<String> getResultNames();
+	
+	public abstract List<String> getMethods();
 }

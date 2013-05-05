@@ -190,6 +190,7 @@
     "addPerson":"Add person",
     "addPersonOptionalParameter":"Add optional parameter",
     "addScenario":"Add scenario",
+    "addToWorkflow":"Add step to workflow",
     "addVisualImpairment":"Add visual impairment",
     "addWeatherDefinition":"Add weather definition",
     "advancedSearch":"Search",
@@ -220,6 +221,7 @@
     "show":"Show",
     "showArticles":"Show articles",
     "submitDisable":"Submitting, please wait...",
+    "submitWorkflow":"Submit workflow",
     "visualization":"Visualization"
   },
   "currency":
@@ -492,12 +494,16 @@
     "header":"Select a filename",
     "hearingDefect":"Hearing defect",
     "in":"in",
+    "inputDdata":"Input data",
+    "inputType":"Input type",
     "laterality":"Laterality",
     "left":"Left",
     "lenght":"Lenght",
     "linkedin":"Publish article on LinkedIn",
     "measuration":"Experiment",
     "measurationId":"Experiment ID",
+    "methodName":"Method name",
+    "methodParam":"Method parameters",
     "minutes":"minutes",
     "name":"Name",
     "notAvailable":"Not Available",
@@ -517,6 +523,7 @@
     "researchGroup":"Research group",
     "researchGroupDescription":"Group description",
     "researchGroupTitle":"Group title",
+    "resultFile":"Result file",
     "right":"Right",
     "samplingRate":"Sampling Rate",
     "scenario":"Scenario",
@@ -531,6 +538,8 @@
     "service":"Select a service",
     "startDate":"Start date",
     "startDateTime":"Start date and time",
+    "stepName":"Step name",
+    "storeResult":"Store result",
     "subjectPerson":"Subject person",
     "subscribe":"Subscribe",
     "surname":"Surname",
@@ -674,6 +683,14 @@
     },
     "writeRequests":"Write requests"
   },
+  "message":
+  {
+    "workflow":
+    {
+      "added":"Step has been added.",
+      "submited":"Workflow has been submited."
+    }
+  },
   "option":
   {
     "And":"AND",
@@ -756,6 +773,7 @@
     "confirmationSuccessfull":"Confirmation successfull",
     "createEditGroup":"Create/edit group",
     "createGroup":"Create group",
+    "createWorkflow":"Create workflow",
     "dailyDownloadHistory":"Daily download history",
     "dataFileDetail":"Data file detail",
     "editArticle":"Edit article",
