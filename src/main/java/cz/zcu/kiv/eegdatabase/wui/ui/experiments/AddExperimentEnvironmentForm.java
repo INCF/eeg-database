@@ -22,6 +22,9 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.util.time.Duration;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.ValidationError;
 import org.springframework.jmx.access.InvocationFailureException;
 
 import java.lang.reflect.Constructor;
@@ -43,6 +46,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private SoftwareFacade softwareFacade;
 
     private Experiment experiment = new Experiment();
+    private ListMultipleChoice hw = null;
+    private ListMultipleChoice sw = null;
+    private DropDownChoice<String> weather = null;
+    private NumberTextField<Integer> temperature = null;
+    private TextField<String> disease = null;
+    private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentEnvironmentForm(String id){
@@ -70,7 +79,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 hardwareTitles.add(hw.getTitle());
             }
         }
-        ListMultipleChoice hw = new ListMultipleChoice("hardware", new PropertyModel(experiment, "hardwares"), hardwareTitles).setMaxRows(5);
+        hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
         add(hw);
 
@@ -81,7 +90,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 softwareTitles.add(sw.getTitle());
             }
         }
-        ListMultipleChoice sw = new ListMultipleChoice("software", new PropertyModel(experiment, "softwares"), softwareTitles).setMaxRows(5);
+        sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
         add(sw);
 
@@ -92,17 +101,25 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 weatherTitles.add(w.getTitle());
             }
         }
-        add(new DropDownChoice<String>("weather", weatherTitles).setRequired(true));
+        weather = new DropDownChoice<String>("weather", weatherTitles);
+        weather.setRequired(true);
+        add(weather);
 
         add(new TextArea<String>("weatherNote"));
-        add(new NumberTextField<Integer>("temperature").setRequired(true));
+        temperature = new NumberTextField<Integer>("temperature");
+        temperature.setRequired(true);
+        add(temperature);
         //TODO autocomplete and create DiseaseFacade
-        add(new TextField<String>("disease").setRequired(true));
+        disease = new TextField<String>("disease");
+        disease.setRequired(true);
+        add(disease);
         
 
         //TODO autocomplete and create PharmaceuticalFacade
         /* TODO check if this attribute is required as stated in prototype*/
-        add(new TextField<String>("pharmaceutical").setRequired(true));
+        pharmaceutical = new TextField<String>("pharmaceutical");
+        pharmaceutical.setRequired(true);
+        add(pharmaceutical);
 
         add(new TextField<String>("privateNote"));
 
@@ -111,7 +128,20 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     }
 
     public boolean isValid(){
-        validate();
+        if (hw.getValue().isEmpty()) error("Hardware is required!");
+        if (sw.getValue().isEmpty()) error("Software is required!");
+        if (weather.getValue().isEmpty()) error("Weather is required!");
+        if (temperature.getValue().isEmpty()) error("Temperature is required!");
+        else {
+            try {
+                 Float.parseFloat(temperature.getValue());
+            }
+            catch (NumberFormatException e){
+                error("Temperature must be a number!");
+            }
+        }
+        if (disease.getValue().isEmpty()) error("Disease is required!");
+        if (pharmaceutical.getValue().isEmpty()) error("Pharmaceutical is required!");
         System.out.println("VALIDUJI ENVI S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
@@ -163,5 +193,5 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         });
         form.add(ajaxButton);
     }
-
 }
+
