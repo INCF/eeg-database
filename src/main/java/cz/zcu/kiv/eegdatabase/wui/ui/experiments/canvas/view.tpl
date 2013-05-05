@@ -17,9 +17,13 @@
 
 <div id="panel">
     <img title="Show info about the experiment" id="info" src="files/images/panel_detail.png" />
-    <img id="clear" title="Clear the canvas" src="files/images/panel_config.png" />
     <img id="zoom" title="Reset zoom" src="files/images/panel_zoom.png" />
+    <!--<img id="setWidth" title="Set width" src="files/images/panel_config.png" />-->
     <input id="color1" type="text" name="color1" value="#333399" />
+    <div id="slider">
+        <div id="sliderWidth"></div>
+        <input id="lineWidth" type="hidden" />
+    </div>
 </div>
 <div id="backgroundPopup">
     <a id="popupContactClose" title="Close"><img style="float: right;" src="files/images/close.png"></a>
