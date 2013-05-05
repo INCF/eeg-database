@@ -1,5 +1,6 @@
-<div id="wrapper"></div>
-<img alt="Add another canvas" title="Add another canvas" id="add_canvas" src="files/images/add.png" />
+<div id="wrapper">
+    <img alt="Add another canvas" title="Add another canvas" id="add" src="files/images/add.png" />
+</div>
 <div id="tree"></div>
 
 <script type="text/javascript">
@@ -17,7 +18,6 @@
 <div id="panel">
     <img title="Show info about the experiment" id="info" src="files/images/panel_detail.png" />
     <img id="clear" title="Clear the canvas" src="files/images/panel_config.png" />
-    <img alt="Add another canvas" title="Add another canvas" id="add" src="files/images/panel_run.png" />
     <img id="zoom" title="Reset zoom" src="files/images/panel_zoom.png" />
     <input id="color1" type="text" name="color1" value="#333399" />
 </div>
