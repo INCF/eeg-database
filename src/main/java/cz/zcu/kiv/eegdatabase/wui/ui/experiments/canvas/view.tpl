@@ -2,6 +2,10 @@
     <img alt="Add another canvas" title="Add another canvas" id="add" src="files/images/add.png" />
 </div>
 <div id="tree"></div>
+<div id="dataRange">
+    <span id="labelDataRange">1 - 200</span>
+    <div id="sliderDataRange"></div>
+</div>
 
 <script type="text/javascript">
     tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);
