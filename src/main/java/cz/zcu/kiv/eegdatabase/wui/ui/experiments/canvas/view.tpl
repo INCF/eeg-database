@@ -6,6 +6,7 @@
     <span id="labelDataRange">1 - 200</span>
     <div id="sliderDataRange"></div>
 </div>
+<img alt="Close this canvas" title="Close this canvas" id="close_canvas" src="files/images/close_canvas.png" />
 
 <script type="text/javascript">
     tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);

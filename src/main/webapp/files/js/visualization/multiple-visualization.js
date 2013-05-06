@@ -65,6 +65,15 @@ function dataRange(index) {
     $("#dataRange").show(250);
 }
 
+function showCloseButton() {
+    $("#close_canvas").css({
+        "position" : "absolute",
+        "left" : getWindowWidth()/2-500 + getWidth() - $("#close_canvas").width()/2 + 20,
+        "top" : 0
+    });
+    $("#close_canvas").show();
+}
+
 function centerPopup(){
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
@@ -76,6 +85,8 @@ function centerPopup(){
             $("#lineWidth").val(ui.value);
         }
     });
+
+
 
     $("#panel").css({
         "left": windowWidth/2-$("#panel").width()/2
@@ -95,6 +106,33 @@ function centerPopup(){
 
     $("#backgroundPopup").css({
         "height": windowHeight
+    });
+
+    $("#close_canvas").click(function() {
+        $("#"+activeID).stop().animate({
+            top : "auto",
+            left : "auto",
+            width : 1000+"px",
+            height : 450+"px",
+            background : "#cecece",
+            border : "1px solid #e6e6e6"
+        }, 250);
+        $("#"+activeID).css({
+            "position" : "relative",
+            top : "auto",
+            left : "auto",
+            "z-index" : 2
+        });
+        $("#"+activeID).removeClass("active");
+        $("#"+activeID).addClass("canvasbox");
+        $("#tree").hide();
+        $("#dataRange").hide();
+        $("#"+activeID+"_zoom").hide();
+        $("#close_canvas").hide();
+        active = 0;
+        if (typeof plots[activeID] != 'undefined') {
+            plots[activeID].replot();
+        }
     });
 
     $("#add").click(function() {
@@ -138,31 +176,7 @@ function centerPopup(){
                         height : 250 + "px"
                     });
                     $("#"+activeID+"_zoom").show(250);
-                    $(this).click(function(){
-                        $("#"+activeID).stop().animate({
-                            top : "auto",
-                            left : "auto",
-                            width : 1000+"px",
-                            height : 450+"px",
-                            background : "#cecece",
-                            border : "1px solid #e6e6e6"
-                        }, 250);
-                        $("#"+activeID).css({
-                            "position" : "relative",
-                            top : "auto",
-                            left : "auto",
-                            "z-index" : 2
-                        });
-                        $("#"+activeID).removeClass("active");
-                        $("#"+activeID).addClass("canvasbox");
-                        $("#tree").hide();
-                        $("#dataRange").hide();
-                        $("#"+activeID+"_zoom").hide();
-                        active = 0;
-                        if (typeof plots[activeID] != 'undefined') {
-                            plots[activeID].replot();
-                        }
-                    });
+                    showCloseButton();
                     if (typeof plots[activeID] != 'undefined') {
                         plots[activeID].replot();
                     }
