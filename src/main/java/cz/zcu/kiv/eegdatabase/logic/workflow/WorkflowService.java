@@ -16,7 +16,9 @@ public interface WorkflowService {
 	
 	public abstract List<String> getExperiments();
 	
-	public abstract List<String> getResultNames();
-	
 	public abstract List<String> getMethods();
+	
+	public List<String> getStepNames();
+	
+	public void clearWorkflow();
 }

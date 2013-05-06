@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -56,11 +57,24 @@ public class WorkflowFormPage extends MenuPage {
 	public WorkflowFormPage() {
 		setPageTitle(ResourceUtils.getModel("pageTitle.workflowForm"));
 		exps = workflowService.getExperiments();
-		results = workflowService.getResultNames();
+		results = workflowService.getStepNames();
 		methods = workflowService.getMethods();
-		workflowService.beginExperiment("Experiment1"); //Natvrdo přidaný název. Není implementována volba
+		workflowService.beginExperiment("Experiment1"); // Natvrdo pridany
+														// nazev. Neni
+														// implementovana volba
 		add(new ButtonPageMenu("leftMenu", WorkflowPageLeftMenu.values()));
-		add(new MyForm("form"));
+		Form<?> form = new MyForm("form");
+		form.add(new AjaxEventBehavior("onclick") {
+			@Override
+			protected void onEvent(AjaxRequestTarget target) {
+				outputContainer.setVisible(false);
+				if (target != null) {
+					target.add(outputContainer);
+				}
+			}
+		});
+		form.setOutputMarkupId(true);
+		add(form);
 		outputContainer = new WebMarkupContainer("outputContainer");
 		outputContainer.setOutputMarkupPlaceholderTag(true);
 		outputContainer.setOutputMarkupId(true);
@@ -166,24 +180,6 @@ public class WorkflowFormPage extends MenuPage {
 					"methodParams", new Model<String>());
 			methodParams.setOutputMarkupId(true);
 
-			stepName.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
-
-				/**
-				 * Dismissing last message
-				 */
-				private static final long serialVersionUID = -2505171599693180817L;
-
-				@Override
-				protected void onUpdate(AjaxRequestTarget target) {
-					if (target != null) {
-						outputContainer.setVisible(false);
-						if (target != null) {
-							target.add(outputContainer);
-						}
-					}
-				}
-			});
-
 			add(stepName);
 			add(methodParams);
 
@@ -194,7 +190,6 @@ public class WorkflowFormPage extends MenuPage {
 
 				@Override
 				protected void onError(AjaxRequestTarget target, Form<?> form) {
-
 				}
 
 				/**
@@ -207,39 +202,54 @@ public class WorkflowFormPage extends MenuPage {
 
 				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+
 					String sName = stepName.getModelObject();
 					String mParams = methodParams.getModelObject();
-					if (data.contains(":")) {
-						int expId = Integer.parseInt(data.split(":")[0]);
-						int[] fileIds = setFiles(expId);
-						workflowService.addFileIds(fileIds);
+
+					if (data != null && method != null && sName != null
+							&& mParams != null) {
+
+						if (data.contains(":")) {
+							int expId = Integer.parseInt(data.split(":")[0]);
+							int[] fileIds = setFiles(expId);
+							workflowService.addFileIds(fileIds);
+						} else {
+							fileNames.add(data);
+						}
+						workflowService.addToWorkflow(sName, category, store,
+								method, mParams, fileNames);
+						results = workflowService.getStepNames();
+						fileNames.clear();
+						stepName.setModelValue(null);
+						methodParams.setModelValue(null);
+						inputData.setModelValue(null);
+						methodName.setModelValue(null);
+						store = storeValueList.get(0);
+						category = categoryList.get(0);
+						dataList = exps;
+						target.add(stepName);
+						target.add(methodParams);
+						target.add(inputData);
+						target.add(methodName);
+						target.add(storeResult);
+						target.add(inputType);
+						message = ResourceUtils
+								.getString("message.workflow.added");
+						outputContainer.setVisible(true);
+						if (target != null) {
+							target.add(outputContainer);
+						}
 					} else {
-						fileNames.add(data);
+						message = ResourceUtils
+								.getString("message.workflow.errorFields");
+						outputContainer.setVisible(true);
+						if (target != null) {
+							target.add(outputContainer);
+						}
 					}
-					workflowService.addToWorkflow(sName, category, store,
-							method, mParams, fileNames);
-					results = workflowService.getResultNames();
-					fileNames.clear();
-					stepName.setModelValue(null);
-					methodParams.setModelValue(null);
-					inputData.setModelValue(null);
-					methodName.setModelValue(null);
-					store = storeValueList.get(0);
-					category = categoryList.get(0);
-					target.add(stepName);
-					target.add(methodParams);
-					target.add(inputData);
-					target.add(methodName);
-					target.add(storeResult);
-					target.add(inputType);
-					message = ResourceUtils.getString("message.workflow.added");
-					outputContainer.setVisible(true);
-					if (target != null) {
-						target.add(outputContainer);
-					}
-					// TODO dodělat kontrolu zda jsou všechny fieldy korektně
-					// vyplněné. Případně zda daný experiment obsahuje všechny
-					// potřebné data.
+					// TODO dodelat kontrolu zda jsou vsechny fieldy korektne�
+					// vyplneny. Pripadne zda dany experiment obsahuje vsechny
+					// pottrebne data.
 				}
 			};
 			add(addButton);
@@ -262,33 +272,61 @@ public class WorkflowFormPage extends MenuPage {
 
 				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-					workflowService.endExperiment();
-					workflowService.runService();
-					message = ResourceUtils
-							.getString("message.workflow.submited");
-					outputContainer.setVisible(true);
-					if (target != null) {
-						target.add(outputContainer);
+
+					String sName = stepName.getModelObject();
+					String mParams = methodParams.getModelObject();
+
+					if (data != null && method != null && sName != null
+							&& mParams != null) {
+
+						if (data.contains(":")) {
+							int expId = Integer.parseInt(data.split(":")[0]);
+							int[] fileIds = setFiles(expId);
+							workflowService.addFileIds(fileIds);
+						} else {
+							fileNames.add(data);
+						}
+						workflowService.addToWorkflow(sName, category, store,
+								method, mParams, fileNames);
+						results = workflowService.getStepNames();
+						fileNames.clear();
+
+						workflowService.endExperiment();
+						workflowService.runService();
+						message = ResourceUtils
+								.getString("message.workflow.submited");
+						outputContainer.setVisible(true);
+						if (target != null) {
+							target.add(outputContainer);
+						}
+						stepName.setModelValue(null);
+						methodParams.setModelValue(null);
+						inputData.setModelValue(null);
+						methodName.setModelValue(null);
+						store = storeValueList.get(0);
+						category = categoryList.get(0);
+						dataList = exps;
+						target.add(stepName);
+						target.add(methodParams);
+						target.add(inputData);
+						target.add(methodName);
+						target.add(storeResult);
+						target.add(inputType);
+						workflowService.clearWorkflow();
+					} else {
+						message = ResourceUtils
+								.getString("message.workflow.errorFields");
+						outputContainer.setVisible(true);
+						if (target != null) {
+							target.add(outputContainer);
+						}
 					}
-					stepName.setModelValue(null);
-					methodParams.setModelValue(null);
-					inputData.setModelValue(null);
-					methodName.setModelValue(null);
-					store = storeValueList.get(0);
-					category = categoryList.get(0);
-					target.add(stepName);
-					target.add(methodParams);
-					target.add(inputData);
-					target.add(methodName);
-					target.add(storeResult);
-					target.add(inputType);
 				}
-				// TODO případně dodělat přesměrování na jinou stránku. Např.
-				// stránku se seznamem výsledků
+				// TODO pripadne dodelat presmrovni na jinou stranku. Napr.
+				// stranku se seznamem vysledku
 			};
 			add(submitButton);
 		}
-
 	}
 
 	public String getMessage() {

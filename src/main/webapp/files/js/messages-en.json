@@ -688,7 +688,8 @@
     "workflow":
     {
       "added":"Step has been added.",
-      "submited":"Workflow has been submited."
+      "errorFields":"All fields are required",
+      "submited":"Step added and workflow has been submited."
     }
   },
   "option":

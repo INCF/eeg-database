@@ -35,9 +35,11 @@ public class WorkflowServiceImpl implements WorkflowService {
 	private List<DataFile> data = new ArrayList<DataFile>();
 	private List<String> stepDef = new ArrayList<String>();
 	private List<String> resultNames = new ArrayList<String>();
+	private List<String> stepNames = new ArrayList<String>();
 	private Set<Integer> fileIds = new TreeSet<Integer>();
 
 	private String workflow;
+	private String experimentName; //Natvrdo prirazene, neimplementovano
 
 	Log log = LogFactory.getLog(getClass());
 
@@ -82,6 +84,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 		if (store.equalsIgnoreCase("true")) {
 			resultNames.add(name);
 		}
+		stepNames.add(experimentName +"_" +name); 
 		StringBuilder workstep = new StringBuilder();
 		String line1 = "<workstep name=\"" + name + "\" format=\"" + format
 				+ "\" store=\"" + store + "\">";
@@ -95,6 +98,15 @@ public class WorkflowServiceImpl implements WorkflowService {
 		workstep.append(line2);
 		stepDef.add(workstep.toString());
 	}
+	
+	/**
+	 * Clearing defined workflow
+	 */
+	
+	@Override
+	public void clearWorkflow(){
+		stepDef.clear();
+	}
 
 	/**
 	 * Adding fileIds to list of fileIds. Each id can be in list only once.
@@ -107,11 +119,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 		}
 	}
 
-	// TODO následující metody jsou z důvodu popisného souboru pro více
-	// workunit. V klientu není podpora implementována.
+	// TODO nasledujici metody jsou z duvodu popisneho souboru pro vice
+	// workunit. V klientu neni podpora implementovana.
 
 	@Override
 	public void beginExperiment(String name) {
+		experimentName = name;
 		stepDef.add("<workunit name=\"" + name + "\">");
 	}
 
@@ -142,8 +155,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 		}
 		Collections.sort(output);
 		return output;
-		// TODO možno rozšířit pouze o experimenty podporující možnost
-		// zpracování
+		// TODO mozno rozsirit pouze o experimenty podporujici moznost
+		// zpracovani
 	}
 
 	/**
@@ -157,8 +170,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 	}
 
 	@Override
-	public List<String> getResultNames() {
-		return resultNames;
+	public List<String> getStepNames() {
+		return stepNames;
 	}
 
 	public void setWorkflow(String workflow) {
@@ -199,6 +212,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 			}
 			DataProcessor proc = new DataProcessor();
 			List<byte[]> result = proc.invokeService(data, workflow);
+			workflow = "";
 			storeResults(result);
 		}
 
