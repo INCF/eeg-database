@@ -1,11 +1,9 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
+package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -22,11 +20,13 @@ import java.util.List;
  * Date: 5.5.13
  * Time: 20:40
  */
-public class AddingItemsView<T> extends AutoCompleteTextField {
+public class AddingItemsView<T> extends AutoCompleteTextField<T> {
     @SpringBean
     private PersonFacade personFacade;
 
     private Integer AUTOCOMPLETE_ROWS = 10;
+    private ListView listView;
+    private MarkupContainer container;
 
     public AddingItemsView(String id, IModel model,
                            final ListView listView, final MarkupContainer container) {
@@ -34,22 +34,8 @@ public class AddingItemsView<T> extends AutoCompleteTextField {
 
         setRequired(true);
         setOutputMarkupId(true);
-        add(new AjaxFormComponentUpdatingBehavior("onblur") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                List<Person> persons = listView.getList();
-                boolean add = true;
-                for(Person person: persons) {
-                    if(person.getSurname().equals("")){
-                        add = false;
-                    }
-                }
-                if(add){
-                    listView.getModelObject().add(new Person());
-                    target.add(container);
-                }
-            }
-        });
+        this.listView = listView;
+        this.container = container;
     }
 
     @Override
@@ -71,5 +57,39 @@ public class AddingItemsView<T> extends AutoCompleteTextField {
             }
         }
         return choices.iterator();
+    }
+
+    protected void onSelectionChange(AjaxRequestTarget target, String newValue){
+        getModel().setObject((T) newValue);
+        List<Person> persons = listView.getList();
+        boolean add = true;
+        for(Person person: persons) {
+            if(person.getSurname().equals("")){
+                add = false;
+            }
+        }
+        if(add){
+            listView.getModelObject().add(new Person());
+            target.add(container);
+        }
+    }
+
+    @Override
+    protected AutoCompleteBehavior<T> newAutoCompleteBehavior(
+            final IAutoCompleteRenderer<T> renderer, final AutoCompleteSettings settings) {
+        return new AddingItemBehavior<T>(renderer, settings) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected Iterator<T> getChoices(String input) {
+                return AddingItemsView.this.getChoices(input);
+            }
+
+            @Override
+            protected void onSelectionChange(AjaxRequestTarget target, String newValue) {
+                AddingItemsView.this.onSelectionChange(target, newValue);
+            }
+        };
     }
 }
