@@ -7,6 +7,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -152,14 +153,14 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         actualAmount.add(new Person());
         final WebMarkupContainer propertyContainer = new WebMarkupContainer("addTestedInputContainer");
 
-        final ListView propertyList = new ListView("addTestedInput",actualAmount) {
+        final ListView<Person> propertyList = new ListView<Person>("addTestedInput",actualAmount) {
             @Override
             protected void populateItem(ListItem item) {
                 final Person person = (Person) item.getModelObject();
-                final AutoCompleteTextField<String> testSubject =
+                final AddingItemsView<String> testSubject =
                         new AddingItemsView<String>(
                                 "subjects",
-                                new PropertyModel<Model<Person>>(new Model<Person>(person), "surname"),
+                                new PersonNameModel(person),
                                 this,
                                 propertyContainer
                         );

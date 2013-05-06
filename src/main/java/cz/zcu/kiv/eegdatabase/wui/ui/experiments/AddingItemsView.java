@@ -3,8 +3,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.wicket.MarkupContainer;
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -34,12 +34,20 @@ public class AddingItemsView<T> extends AutoCompleteTextField {
 
         setRequired(true);
         setOutputMarkupId(true);
-        add(new AjaxEventBehavior("onblur") {
+        add(new AjaxFormComponentUpdatingBehavior("onblur") {
             @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                Person person = (Person) getModelObject();
-                listView.getModelObject().add(new Person());
-                target.add(container);
+            protected void onUpdate(AjaxRequestTarget target) {
+                List<Person> persons = listView.getList();
+                boolean add = true;
+                for(Person person: persons) {
+                    if(person.getSurname().equals("")){
+                        add = false;
+                    }
+                }
+                if(add){
+                    listView.getModelObject().add(new Person());
+                    target.add(container);
+                }
             }
         });
     }
