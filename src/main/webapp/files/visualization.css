@@ -48,6 +48,12 @@
     display: block;
 }
 
+#close_canvas {
+    z-index: 4;
+    cursor: pointer;
+    display: none;
+}
+
 #add {
     z-index: 2;
     display: inline-block;
