@@ -20,7 +20,12 @@
     border: 1px solid #C5F44C;
     background-color: #eeeeee;
     width: 1000px;
-    height: 700px;
+    height: 450px;
+}
+
+.zoomControl {
+    border: 1px solid #C5F44C;
+    background-color: #fefefe;
 }
 
 #slider {

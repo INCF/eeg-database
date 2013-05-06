@@ -7,6 +7,7 @@ var activeID;
 var context;
 var signalData = new Array();
 var plots = new Array();
+var zoomControl = new Array();
 
 createArray = function (index) {
     signalData[index] = new Array();
@@ -33,9 +34,7 @@ function loadPopup(){
     }
 }
 
-//disabling popup with jQuery magic!
 function disablePopup(){
-    //disables popup only if it is enabled
     if(popupStatus==1){
         $("#backgroundPopup").fadeOut("slow");
         $("#wrapper").fadeOut("slow");
@@ -45,12 +44,9 @@ function disablePopup(){
     }
 }
 
-//centering popup
 function centerPopup(){
-    //request data for centering
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
-    //centering
     $("#sliderWidth").slider({
         value:1,
         min: 1,
@@ -63,11 +59,13 @@ function centerPopup(){
     $("#panel").css({
         "left": windowWidth/2-$("#panel").width()/2
     });
+
     $("#panel img").hover(function() {
         $(this).stop().animate({ marginBottom: "25px" }, 250);
     },function(){
         $(this).stop().animate({ marginBottom: "0px" }, 450);
     });
+
     $("#wrapper").css({
         "position" : "absolute",
         "top" : "20px",
@@ -87,10 +85,13 @@ function centerPopup(){
             "class": "canvasbox"
         }).css({
             }).prependTo('#wrapper');
+        $('<div>').attr({
+            id: wraID+"_zoom",
+            "class": "zoomControl"
+        }).css({
+            "display" : "none"
+        }).prependTo('#wrapper');
 
-        $(".del").click(function(){
-            $(this).parent().remove();
-        });
         $(".canvasbox").mousedown(function(event) {
             if(active == 0) {
                 if (event.which == 1) {
@@ -100,19 +101,28 @@ function centerPopup(){
                     var windowHeight = document.documentElement.clientHeight;
                     $(this).css({
                         "z-index" : "3",
-                        "top" : "200px",
+                        "top" : "0px",
                         "position" : "absolute"
                     });
-                    $(this).stop().animate({ top: windowHeight/2-350, position: "absolute", left: windowWidth/2-500}, 250);
+                    $(this).stop().animate({ top: 0, position: "absolute", left: windowWidth/2-500}, 250);
                     $(this).removeClass("canvasbox");
                     active = 1;
                     $("#tree").toggle();
+                    $("#"+activeID+"_zoom").css({
+                        "position" : "absolute",
+                        top : 470+"px",
+                        left : windowWidth/2-500,
+                        "z-index" : 3,
+                        width : 1000+"px",
+                        height : 250 + "px"
+                    });
+                    $("#"+activeID+"_zoom").show(250);
                     $(this).click(function(){
                         $("#"+activeID).stop().animate({
                             top : "auto",
                             left : "auto",
                             width : 1000+"px",
-                            height : 700+"px",
+                            height : 450+"px",
                             background : "#cecece",
                             border : "1px solid #e6e6e6"
                         }, 250);
@@ -120,11 +130,12 @@ function centerPopup(){
                             "position" : "relative",
                             top : "auto",
                             left : "auto",
-                            "z-index" : 2,
+                            "z-index" : 2
                         });
                         $("#"+activeID).removeClass("active");
                         $("#"+activeID).addClass("canvasbox");
                         $("#tree").hide();
+                        $("#"+activeID+"_zoom").hide();
                         active = 0;
                         if (typeof plots[activeID] != 'undefined') {
                             plots[activeID].replot();
@@ -180,12 +191,6 @@ function centerPopup(){
     });
 }
 
-canvasClear = function () {
-    ctx.clearRect(0, 0, getWidth(), getHeight());
-    x = 0;
-    y = 0;
-};
-
 getWidth = function () {
     return $("#"+activeID).width();
 };
@@ -200,6 +205,7 @@ function _click(id) {
 }
 
 function drawGraph(place, headline, channel) {
+
     plots[place] = $.jqplot (place, [signalData[channel]], {
         title: headline,
         animate: true,
@@ -225,7 +231,8 @@ function drawGraph(place, headline, channel) {
         },
         highlighter: {
             show: true,
-            sizeAdjust: 7.5
+            sizeAdjust: 7.5,
+            formatString: '%.6f'
         },
         cursor: {
             tooltipLocation: 'n',
@@ -233,7 +240,27 @@ function drawGraph(place, headline, channel) {
             show: true
         }
     });
-    $('#zoom').click(function() { plot1.resetZoom() });
+
+    zoomControl[place] = $.jqplot (place+"_zoom", [signalData[channel]], {
+        axesDefaults: {
+            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+        },
+        seriesDefaults: {
+            color: "#000000",
+            lineWidth: 1,
+            showMarker: false,
+            rendererOptions: {
+                smooth: true
+            }
+        },
+        cursor: {
+            zoom: true,
+            show: true
+        }
+    });
+
+    $.jqplot.Cursor.zoomProxy(plots[place], zoomControl[place]);
+    $('#zoom').click(function() { plots[place].resetZoom() });
 }
 
 $(document).ready(function() {
