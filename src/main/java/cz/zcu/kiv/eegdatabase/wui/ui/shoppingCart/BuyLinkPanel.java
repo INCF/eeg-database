@@ -9,16 +9,19 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
 /**
- * Created with IntelliJ IDEA.
+ * A Panel with a link for adding an experiment into user's shopping cart.
  * User: jfronek
- * Date: 4.3.13
- * Time: 14:13
- * To change this template use File | Settings | File Templates.
+ * Date: 4.3.2013
  */
 public class BuyLinkPanel  extends Panel {
 
     private static final long serialVersionUID = 5458856518415845451L;
 
+    /**
+     * Constructor of BuyLinkPanel
+     * @param id - component id
+     * @param model - datamodel of related Experiment
+     */
     public BuyLinkPanel(String id, IModel<Experiment> model) {
         super(id);
         final Experiment experiment = model.getObject();
@@ -32,5 +35,6 @@ public class BuyLinkPanel  extends Panel {
             }
         }.add(new Label("label", ResourceUtils.getModel("link.addToCart")))
          .setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isInCart(experiment)));
+        // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
     }
 }

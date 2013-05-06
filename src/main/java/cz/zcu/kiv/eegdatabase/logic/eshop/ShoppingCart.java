@@ -1,17 +1,19 @@
-package cz.zcu.kiv.eegdatabase.data.pojo;
+package cz.zcu.kiv.eegdatabase.logic.eshop;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Object of ShoppingCart. Keeps track of experiments placed in an order, order's total price. Provides basic methods
+ * for manipulation with its content - add/remove experiment.
  * User: jfronek
- * Date: 4.3.13
- * Time: 10:06
- * To change this template use File | Settings | File Templates.
+ * Date: 4.3.2013
  */
 public class ShoppingCart implements Serializable {
+    /** Unified price of all experiments. For prototype purposes only. */
     public static double EXPERIMENT_TEST_PRICE = 5.0;
     private List<Experiment> order = new ArrayList<Experiment>();
 
@@ -28,6 +30,7 @@ public class ShoppingCart implements Serializable {
     }
 
     public void addToCart(Experiment experiment){
+        // Each experiment can be put into cart only once.
         if(!isInCart(experiment)){
             order.add(experiment);
         }

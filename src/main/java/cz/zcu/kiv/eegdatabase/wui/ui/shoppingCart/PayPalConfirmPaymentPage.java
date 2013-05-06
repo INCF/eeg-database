@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.eshop.PayPalTools;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -21,17 +22,17 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Page for order confirmation after authorizing payment on PayPal server.
+ * Part of the two-step confirmation process.
  * User: jfronek
- * Date: 21.3.13
- * Time: 22:38
- * To change this template use File | Settings | File Templates.
+ * Date: 21.3.2013
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PayPalConfirmPaymentPage extends MenuPage{
     private static final int ITEMS_PER_PAGE = 20;
 
     public PayPalConfirmPaymentPage(PageParameters parameters){
+        // Token received from PayPal server. It contains token value for current order.
         String token = parameters.get("token").toString();
         if(token == null){
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
@@ -78,6 +79,7 @@ public class PayPalConfirmPaymentPage extends MenuPage{
             public void onClick() {
                 boolean success = PayPalTools.doExpressCheckout(token);
                 if(success){
+                    // Copies current order to match the purchased items. Security measure to ensure the user is given exactly what he paid for.
                     EEGDataBaseSession.get().setAttribute("order", (ArrayList) ((ArrayList) EEGDataBaseSession.get().getShoppingCart().getOrder()).clone());
                     EEGDataBaseSession.get().getShoppingCart().getOrder().clear();
                     setResponsePage(MyDownloadsPage.class);

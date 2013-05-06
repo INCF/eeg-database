@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.eshop.PayPalTools;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -25,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Shopping cart page for displaying current order's content. Allows user to remove experiments from his order and
+ * checkout his order using PayPal ExpressCheckout services.
+ * Might be extended in the future to offer more payment methods.
  * User: jfronek
- * Date: 4.3.13
- * Time: 15:12
- * To change this template use File | Settings | File Templates.
+ * Date: 4.3.2013
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ShoppingCartPage extends MenuPage {
