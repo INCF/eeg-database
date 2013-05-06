@@ -44,6 +44,27 @@ function disablePopup(){
     }
 }
 
+function dataRange(index) {
+    $("#sliderDataRange").slider({
+        range: true,
+        values: [1,200],
+        min: 1,
+        max: signalData[index].length,
+        slide: function( event, ui ) {
+            $("#labelDataRange").text(ui.values[0] + " - " + ui.values[1]);
+        }
+    });
+    $("#dataRange").css({
+        "position" : "absolute",
+        top : 760+"px",
+        left : getWindowWidth()/2-500 + 20,
+        "z-index" : 3,
+        width : 1000+"px",
+        height : 30 + "px"
+    });
+    $("#dataRange").show(250);
+}
+
 function centerPopup(){
     var windowWidth = document.documentElement.clientWidth;
     var windowHeight = document.documentElement.clientHeight;
@@ -135,6 +156,7 @@ function centerPopup(){
                         $("#"+activeID).removeClass("active");
                         $("#"+activeID).addClass("canvasbox");
                         $("#tree").hide();
+                        $("#dataRange").hide();
                         $("#"+activeID+"_zoom").hide();
                         active = 0;
                         if (typeof plots[activeID] != 'undefined') {
@@ -191,6 +213,14 @@ function centerPopup(){
     });
 }
 
+function getWindowWidth() {
+    return document.documentElement.clientWidth;
+}
+
+function getWindowHeight() {
+    return document.documentElement.clientHeight;
+}
+
 getWidth = function () {
     return $("#"+activeID).width();
 };
@@ -201,6 +231,8 @@ getHeight = function () {
 
 function _click(id) {
     $("#"+activeID).empty();
+    $("#"+activeID+"_zoom").empty();
+    dataRange(id);
     drawGraph(activeID, tree.getSelectedItemText(), id);
 }
 
@@ -230,6 +262,7 @@ function drawGraph(place, headline, channel) {
             }
         },
         highlighter: {
+            tooltipAxes: 'y',
             show: true,
             sizeAdjust: 7.5,
             formatString: '%.6f'
