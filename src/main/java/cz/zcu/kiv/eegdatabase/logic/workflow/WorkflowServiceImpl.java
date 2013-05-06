@@ -10,10 +10,9 @@ import java.util.Collections;
 import javax.sql.rowset.serial.SerialBlob;
 import javax.sql.rowset.serial.SerialException;
 
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-
-
 
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
@@ -28,21 +27,19 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
 public class WorkflowServiceImpl implements WorkflowService {
 
+	/**
+	 * Taking all user definied values, creates workflow definition file and
+	 * creating new thread for data processing.
+	 */
+
 	private List<DataFile> data = new ArrayList<DataFile>();
 	private List<String> stepDef = new ArrayList<String>();
 	private List<String> resultNames = new ArrayList<String>();
-	
-	@Override
-	public List<String> getResultNames() {
-		return resultNames;
-	}
-
 	private Set<Integer> fileIds = new TreeSet<Integer>();
+
 	private String workflow;
 
-	public void setWorkflow(String workflow) {
-		this.workflow = workflow;
-	}
+	Log log = LogFactory.getLog(getClass());
 
 	@Autowired
 	ServiceResultDao resultDao;
@@ -55,19 +52,29 @@ public class WorkflowServiceImpl implements WorkflowService {
 
 	@Autowired
 	ExperimentsFacade facade;
-	
+
+	/**
+	 * Create workflow definition file and new thread for workflow processing
+	 */
+
 	@Override
 	public void runService() {
 		Person owner = personDao.getLoggedPerson();
 		StringBuilder createDef = new StringBuilder();
-		createDef.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><workflow name=\"Workflow\">");
-		for(String step : stepDef){
+		createDef
+				.append("<?xml version=\"1.0\" encoding=\"UTF-8\"?><workflow name=\"Workflow\">");
+		for (String step : stepDef) {
 			createDef.append(step);
 		}
 		createDef.append("</workflow>");
 		workflow = createDef.toString();
 		new InvokeProcessor(owner).start();
 	}
+
+	/**
+	 * Creating segment of workfow definition file from user defined parameters.
+	 * Adding step name to list of steps.
+	 */
 
 	@Override
 	public void addToWorkflow(String name, String format, String store,
@@ -89,12 +96,19 @@ public class WorkflowServiceImpl implements WorkflowService {
 		stepDef.add(workstep.toString());
 	}
 
+	/**
+	 * Adding fileIds to list of fileIds. Each id can be in list only once.
+	 */
+
 	@Override
 	public void addFileIds(int[] files) {
 		for (int a = 0; a < files.length; a++) {
 			fileIds.add(files[a]);
 		}
 	}
+
+	// TODO následující metody jsou z důvodu popisného souboru pro více
+	// workunit. V klientu není podpora implementována.
 
 	@Override
 	public void beginExperiment(String name) {
@@ -105,34 +119,57 @@ public class WorkflowServiceImpl implements WorkflowService {
 	public void endExperiment() {
 		stepDef.add("</workunit>");
 	}
-	
+
+	/**
+	 * Getting all experiments from database and createing name with id string
+	 * 
+	 */
+
 	@Override
-	public List<String> getExperiments(){
+	public List<String> getExperiments() {
 		List<String> output = new ArrayList<String>();
 		List<Experiment> experiments = facade.getAllRecords();
-		for(Experiment e : experiments){
+		for (Experiment e : experiments) {
 			int exId = e.getExperimentId();
 			String nameId = "";
-			if(exId < 100){
-				nameId = "0" +exId;
+			if (exId < 100) {
+				nameId = "0" + exId;
+			} else {
+				nameId = "" + exId;
 			}
-			else{
-				nameId = "" +exId;
-			}
-			String name = nameId +":" +e.getEnvironmentNote();
+			String name = nameId + ":" + e.getEnvironmentNote();
 			output.add(name);
 		}
 		Collections.sort(output);
 		return output;
+		// TODO možno rozšířit pouze o experimenty podporující možnost
+		// zpracování
 	}
-	
+
+	/**
+	 * Get available methods form workflow service
+	 */
+
 	@Override
-	public List<String> getMethods(){
+	public List<String> getMethods() {
 		DataProcessor proc = new DataProcessor();
 		return proc.getMethods();
 	}
 
+	@Override
+	public List<String> getResultNames() {
+		return resultNames;
+	}
+
+	public void setWorkflow(String workflow) {
+		this.workflow = workflow;
+	}
+
 	private class InvokeProcessor extends Thread {
+
+		/**
+		 * New thread getting files, processing them and storing results
+		 */
 
 		private Person serviceOwner;
 		private List<ServiceResult> results = new ArrayList<ServiceResult>();
@@ -142,7 +179,7 @@ public class WorkflowServiceImpl implements WorkflowService {
 		}
 
 		public void run() {
-			for(String name : resultNames){
+			for (String name : resultNames) {
 				ServiceResult service = new ServiceResult();
 				service.setOwner(serviceOwner);
 				service.setStatus("running");
@@ -150,6 +187,8 @@ public class WorkflowServiceImpl implements WorkflowService {
 				service.setFilename(name + ".xml");
 				resultDao.create(service);
 				results.add(service);
+				log.debug("Service result " + service.getTitle()
+						+ " created in database.");
 			}
 			for (Integer a : fileIds) {
 				DataFileDTO content = fileFacade.getFile(a);
@@ -163,6 +202,12 @@ public class WorkflowServiceImpl implements WorkflowService {
 			storeResults(result);
 		}
 
+		/**
+		 * Storing results with data blob to database.
+		 * 
+		 * @param data
+		 */
+
 		private void storeResults(List<byte[]> data) {
 			int index = 0;
 			for (byte[] result : data) {
@@ -170,14 +215,14 @@ public class WorkflowServiceImpl implements WorkflowService {
 				try {
 					service.setFigure(new SerialBlob(result));
 				} catch (SerialException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.error(e);
 				} catch (SQLException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
+					log.equals(e);
 				}
 				service.setStatus("finished");
 				resultDao.update(service);
+				log.debug("Service result " + service.getTitle()
+						+ " updated with blob data in database.");
 				index++;
 			}
 		}

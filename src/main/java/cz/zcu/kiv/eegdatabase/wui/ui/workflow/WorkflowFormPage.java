@@ -25,7 +25,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER",
 		"ROLE_EXPERIMENTER", "ROLE_ADMIN" })
@@ -35,9 +34,6 @@ public class WorkflowFormPage extends MenuPage {
 
 	@SpringBean
 	ExperimentsFacade facade;
-
-	@SpringBean
-	FileFacade fileFacade;
 
 	@SpringBean
 	WorkflowService workflowService;
@@ -62,7 +58,7 @@ public class WorkflowFormPage extends MenuPage {
 		exps = workflowService.getExperiments();
 		results = workflowService.getResultNames();
 		methods = workflowService.getMethods();
-		workflowService.beginExperiment("Experiment1");
+		workflowService.beginExperiment("Experiment1"); //Natvrdo přidaný název. Není implementována volba
 		add(new ButtonPageMenu("leftMenu", WorkflowPageLeftMenu.values()));
 		add(new MyForm("form"));
 		outputContainer = new WebMarkupContainer("outputContainer");
@@ -70,14 +66,13 @@ public class WorkflowFormPage extends MenuPage {
 		outputContainer.setOutputMarkupId(true);
 		outputContainer.setVisible(false);
 		add(outputContainer);
-
 		outputContainer.add(new Label("message", new PropertyModel<String>(
 				this, "message")));
 	}
 
 	/**
 	 * Method taking fileID for experiment files Checking only for eeg whdr and
-	 * wmrk files
+	 * wmrk files and returning array of these ids.
 	 * 
 	 * @param experimentID
 	 * @return
@@ -100,8 +95,8 @@ public class WorkflowFormPage extends MenuPage {
 	public class MyForm extends StatelessForm<Object> {
 
 		/**
-		 * Class working with all fields on page. Getting all values and add
-		 * step to workflow or call service
+		 * Class working with all control fields on the page. Getting all
+		 * values, add step to workflow or call workflow service.
 		 */
 		private static final long serialVersionUID = 7867439631046449269L;
 		List<String> categoryList = Arrays.asList(fooList);
@@ -133,12 +128,11 @@ public class WorkflowFormPage extends MenuPage {
 			inputData.setOutputMarkupId(true);
 			methodName.setOutputMarkupId(true);
 			storeResult.setOutputMarkupId(true);
-			
 
 			inputType.add(new AjaxFormComponentUpdatingBehavior("onchange") {
 
 				/**
-				 * Changing input data regarding to selected type
+				 * Changing input data type regarding to selected input type
 				 */
 				private static final long serialVersionUID = -2505171599693180817L;
 
@@ -189,9 +183,7 @@ public class WorkflowFormPage extends MenuPage {
 					}
 				}
 			});
-			
-			
-			
+
 			add(stepName);
 			add(methodParams);
 
@@ -204,6 +196,14 @@ public class WorkflowFormPage extends MenuPage {
 				protected void onError(AjaxRequestTarget target, Form<?> form) {
 
 				}
+
+				/**
+				 * Method invoking when add button is pressed. All values are
+				 * taken and sent to WorkflowService method to add generated
+				 * step to workflow. All fields are required. After creating
+				 * step all fields are initiated.
+				 * 
+				 */
 
 				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
@@ -237,8 +237,9 @@ public class WorkflowFormPage extends MenuPage {
 					if (target != null) {
 						target.add(outputContainer);
 					}
-					// TODO dod�lat kontrolu zda jsou v�echny fieldy korektn�
-					// vypln�n�
+					// TODO dodělat kontrolu zda jsou všechny fieldy korektně
+					// vyplněné. Případně zda daný experiment obsahuje všechny
+					// potřebné data.
 				}
 			};
 			add(addButton);
@@ -252,11 +253,19 @@ public class WorkflowFormPage extends MenuPage {
 
 				}
 
+				/**
+				 * Method is invoking WorkflowService method to invoke data
+				 * processing. First all values are added to new step and then
+				 * workflow service is started. After submiting all fields are
+				 * and step lists are cleared.
+				 */
+
 				@Override
 				protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 					workflowService.endExperiment();
 					workflowService.runService();
-					message = ResourceUtils.getString("message.workflow.submited");
+					message = ResourceUtils
+							.getString("message.workflow.submited");
 					outputContainer.setVisible(true);
 					if (target != null) {
 						target.add(outputContainer);
@@ -274,6 +283,8 @@ public class WorkflowFormPage extends MenuPage {
 					target.add(storeResult);
 					target.add(inputType);
 				}
+				// TODO případně dodělat přesměrování na jinou stránku. Např.
+				// stránku se seznamem výsledků
 			};
 			add(submitButton);
 		}
