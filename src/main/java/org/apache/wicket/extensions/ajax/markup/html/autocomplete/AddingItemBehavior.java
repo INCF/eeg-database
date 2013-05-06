@@ -1,7 +1,15 @@
 package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.head.JavaScriptHeaderItem;
+import org.apache.wicket.markup.head.OnDomReadyHeaderItem;
 import org.apache.wicket.request.cycle.RequestCycle;
+import org.apache.wicket.request.resource.JavaScriptResourceReference;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.resource.CoreLibrariesContributor;
+import org.apache.wicket.util.string.Strings;
 
 /**
  * Created by IntelliJ IDEA.
@@ -10,6 +18,9 @@ import org.apache.wicket.request.cycle.RequestCycle;
  * Time: 10:24
  */
 abstract public class AddingItemBehavior<T> extends AutoCompleteBehavior<T> {
+    private static final ResourceReference AUTOCOMPLETE_JS = new JavaScriptResourceReference(
+            AddingItemBehavior.class, "wicket-autocomplete.js");
+
     public AddingItemBehavior(IAutoCompleteRenderer<T> renderer, AutoCompleteSettings settings) {
         super(renderer, settings);
     }
@@ -20,6 +31,39 @@ abstract public class AddingItemBehavior<T> extends AutoCompleteBehavior<T> {
 
     public AddingItemBehavior(IAutoCompleteRenderer<T> renderer) {
         super(renderer);
+    }
+
+    @Override
+    public void renderHead(final Component component, final IHeaderResponse response)
+    {
+        super.renderHead(component, response);
+        CoreLibrariesContributor.contributeAjax(component.getApplication(), response);
+        renderAutocompleteHead(response);
+    }
+
+    /**
+     * Render autocomplete init javascript and other head contributions
+     *
+     * @param response
+     */
+    private void renderAutocompleteHead(final IHeaderResponse response)
+    {
+        response.render(JavaScriptHeaderItem.forReference(AUTOCOMPLETE_JS));
+        final String id = getComponent().getMarkupId();
+
+        String indicatorId = findIndicatorId();
+        if (Strings.isEmpty(indicatorId))
+        {
+            indicatorId = "null";
+        }
+        else
+        {
+            indicatorId = "'" + indicatorId + "'";
+        }
+
+        String initJS = String.format("new Wicket.AutoComplete('%s','%s',%s,%s);", id,
+                getCallbackUrl(), constructSettingsJS(), indicatorId);
+        response.render(OnDomReadyHeaderItem.forScript(initJS));
     }
 
     @Override

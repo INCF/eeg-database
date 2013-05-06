@@ -3,6 +3,7 @@ package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
@@ -27,8 +28,9 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
     private Integer AUTOCOMPLETE_ROWS = 10;
     private ListView listView;
     private MarkupContainer container;
+    private boolean newOne = false;
 
-    public AddingItemsView(String id, IModel model,
+    public AddingItemsView(String id, IModel<T> model,
                            final ListView listView, final MarkupContainer container) {
         super(id, model);
 
@@ -36,6 +38,15 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
         setOutputMarkupId(true);
         this.listView = listView;
         this.container = container;
+         add(new AjaxEventBehavior("onblur") {
+             @Override
+             protected void onEvent(AjaxRequestTarget target) {
+                 if(newOne){
+                     newOne = false;
+                     target.add(container);
+                 }
+             }
+         });
     }
 
     @Override
@@ -70,7 +81,7 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
         }
         if(add){
             listView.getModelObject().add(new Person());
-            target.add(container);
+            newOne = true;
         }
     }
 
