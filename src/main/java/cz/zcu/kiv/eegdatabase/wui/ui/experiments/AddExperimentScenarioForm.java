@@ -24,8 +24,6 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
@@ -52,14 +50,15 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
     private Experiment experiment = new Experiment();
     private Scenario scenarioEntity = new Scenario();
-    private List<IModel<Person>> persons;
+
+    private final List<Person> coExperimentersData = new ArrayList<Person>();
+    private final List<Person> testedSubjectsData = new ArrayList<Person>();
 
     final int AUTOCOMPLETE_ROWS = 10;
 
     public AddExperimentScenarioForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentScenarioDTO>(new AddExperimentScenarioDTO()));
 
-        persons = new ArrayList<IModel<Person>>();
         //scenario autocomplete
         final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
                 new PropertyModel<String>(experiment, "scenario.scenarioName"))
@@ -150,36 +149,15 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         finishDate.setRequired(true);
         add(finishDate);
 
-        final List<Person> actualAmount = new ArrayList<Person>();
-        actualAmount.add(new Person());
-        final WebMarkupContainer propertyContainer = new WebMarkupContainer("addTestedInputContainer");
+        addTestedSubject();
+        addStimulus();
+        addCoExperimenters();
 
-        final ListView<Person> propertyList = new ListView<Person>("addTestedInput",actualAmount) {
-            @Override
-            protected void populateItem(ListItem item) {
-                final Person person = (Person) item.getModelObject();
-                final AddingItemsView<String> testSubject =
-                        new AddingItemsView<String>(
-                                "subjects",
-                                new PersonNameModel(person),
-                                this,
-                                propertyContainer
-                        );
-                item.add(testSubject);
-            }
-        };
-        propertyList.setOutputMarkupId(true);
-        propertyList.setReuseItems(true);
+        createModalWindows();
+    }
 
-        propertyContainer.add(propertyList);
-        propertyContainer.setOutputMarkupId(true);
-        add(propertyContainer);
-        //testSubjects autocomplete
-
-
-        //stimulus autocomplete
-        final AutoCompleteTextField<String> stimulus = new AutoCompleteTextField<String>("stimulus",
-                new Model<String>(""))
+    private void addStimulus() {
+        final AutoCompleteTextField<String> stimulus = new AutoCompleteTextField<String>("stimulus")
         {
             @Override
             protected Iterator<String> getChoices(String input)
@@ -205,37 +183,63 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         };
         stimulus.setRequired(true);
         this.add(stimulus);
+    }
 
-        //coExperimenters autocomplete
-        final AutoCompleteTextField<String> coExperimenters = new AutoCompleteTextField<String>("coExperimenters",
-                new PropertyModel<String>(experiment, "persons"))
-        {
-            //TODO which persons are co-experimenters and which are test subjects?
+    private void addTestedSubject() {
+        testedSubjectsData.add(new Person());
+        final WebMarkupContainer testedSubjectContainer = new WebMarkupContainer("addTestedInputContainer");
+
+        final ListView<Person> testedSubjects = new ListView<Person>("addTestedInput",testedSubjectsData) {
             @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<Person> persons = personFacade.getAllRecords();
-                for (final Person p : persons)
-                {
-                    final String data = p.getGivenname() +" "+ p.getSurname();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
+            protected void populateItem(ListItem item) {
+                final Person person = (Person) item.getModelObject();
+                final AddingItemsView<String> testSubject =
+                        new AddingItemsView<String>(
+                                "subjects",
+                                new PersonNameModel(person),
+                                this,
+                                testedSubjectContainer
+                        );
+                item.add(testSubject);
             }
         };
-        coExperimenters.setRequired(true);
-        add(coExperimenters);
+        testedSubjects.setOutputMarkupId(true);
+        testedSubjects.setReuseItems(true);
 
+        testedSubjectContainer.add(testedSubjects);
+        testedSubjectContainer.setOutputMarkupId(true);
+        add(testedSubjectContainer);
+    }
+
+    private void addCoExperimenters() {
+        coExperimentersData.add(new Person());
+        final WebMarkupContainer coExperimentersContainer =
+                new WebMarkupContainer("addCoExperimentersInputContainer");
+
+        final ListView<Person> coExperimenters =
+                new ListView<Person>("addCoExperimentersInput",coExperimentersData) {
+            @Override
+            protected void populateItem(ListItem item) {
+                final Person person = (Person) item.getModelObject();
+                final AddingItemsView<String> testSubject =
+                        new AddingItemsView<String>(
+                                "coExperimenters",
+                                new PersonNameModel(person),
+                                this,
+                                coExperimentersContainer
+                        );
+                item.add(testSubject);
+            }
+        };
+        coExperimenters.setOutputMarkupId(true);
+        coExperimenters.setReuseItems(true);
+
+        coExperimentersContainer.add(coExperimenters);
+        coExperimentersContainer.setOutputMarkupId(true);
+        add(coExperimentersContainer);
+    }
+
+    private void createModalWindows() {
         final ModalWindow addGroup;
         add(addGroup = new ModalWindow("addGroupModal"));
         addGroup.setCookieName("add-group");
@@ -361,8 +365,20 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
     public boolean isValid(){
         this.validate();
-        System.out.println("VALIDUJI SCE S VYSLEDKEM: "+!hasError());
-        return !hasError();
+
+        boolean validPersons = isPersonValid(testedSubjectsData) &&
+                isPersonValid(coExperimentersData);
+        return !hasError() && validPersons;
+    }
+
+    private boolean isPersonValid(List<Person> persons) {
+        int validPersons = 0;
+        for(Person person: persons){
+            if(!person.getSurname().equals("")){
+                validPersons++;
+            }
+        }
+        return validPersons > 0;
     }
 
 }

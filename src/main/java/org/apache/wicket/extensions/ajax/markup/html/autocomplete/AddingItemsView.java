@@ -34,7 +34,6 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
                            final ListView listView, final MarkupContainer container) {
         super(id, model);
 
-        setRequired(true);
         setOutputMarkupId(true);
         this.listView = listView;
         this.container = container;

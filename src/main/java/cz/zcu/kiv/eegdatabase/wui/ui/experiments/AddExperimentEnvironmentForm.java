@@ -51,6 +51,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
 
+        getModelObject().setDisease("");
+
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
 
@@ -103,9 +105,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
         add(temperature);
-        //TODO autocomplete and create DiseaseFacade
 
-        final AutoCompleteTextField<String> disease = new AutoCompleteTextField<String>("disease")
+        disease = new AutoCompleteTextField<String>("disease")
         {
             @Override
             protected Iterator<String> getChoices(String input)

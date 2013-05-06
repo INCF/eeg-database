@@ -71,7 +71,11 @@
             <label for="coExperimenters">
                 <wicket:message key="label.coExperimenters">Co - experimenters</wicket:message>
             </label>
-            <input type="text" class="autocomplete multiple" wicket:id="coExperimenters" autosrc="/get-json-append"/>
+            <span wicket:id="addCoExperimentersInputContainer">
+                <span wicket:id="addCoExperimentersInput">
+                    <input type="text" wicket:id="coExperimenters"/>
+                </span>
+            </span>
         </div>
     </form>
 </wicket:panel>
