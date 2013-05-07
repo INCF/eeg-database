@@ -49,6 +49,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 	private IModel<ExperimentPackage> packageModel;
 	private IModel<License> licenseModel;
 	private IModel<LicensePolicy> policy;
+	private IModel<List<LicensePolicy>> availablePolicies;
 
 	private boolean  licenseFormVisible;
 
@@ -60,6 +61,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 		this.packageModel = new Model<ExperimentPackage>(new ExperimentPackage());
 		this.licenseModel = new Model<License>();
 		policy = new Model<LicensePolicy>();
+		this.availablePolicies = new Model();
 		
 		this.resGroupModel = resGroup;
 		form = new StatelessForm("form");
@@ -81,12 +83,17 @@ public class ExperimentPackageDetailPanel extends Panel {
 		WicketUtils.addLabelsAndFeedback(form);
 	}
 
-	private List<LicensePolicy> generateLicenseTypeChoices() {
-		return Arrays.asList(LicensePolicy.values());
+	private void generateLicenseTypeChoices() {
+		List<LicensePolicy> p = new ArrayList(Arrays.asList(LicensePolicy.values()));
+		if(!this.resGroupModel.getObject().isPaidAccount()) {
+			p.remove(LicensePolicy.PRIVATE);
+		}
+
+		availablePolicies.setObject(p);
 	}
 
 	private void addLicenseTypeSelect() {
-		DropDownChoice<LicensePolicy> policySelect = new AjaxDropDownChoice<LicensePolicy>("licensePolicy", policy, generateLicenseTypeChoices(), new EnumChoiceRenderer<LicensePolicy>()) {
+		DropDownChoice<LicensePolicy> policySelect = new AjaxDropDownChoice<LicensePolicy>("licensePolicy", policy, availablePolicies, new EnumChoiceRenderer<LicensePolicy>()) {
 
 			@Override
 			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, LicensePolicy option) {
@@ -96,7 +103,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 						licenseFormVisible = false;
 						break;
 					case PRIVATE:
-						licenseModel.setObject(licenseFacade.getOwnerLicense(resGroupModel.getObject()));
+						licenseModel.setObject(null);
 						licenseFormVisible = false;
 						break;
 					case LICENSED:
@@ -125,7 +132,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 			}
 			
 		};
-		licenseForm = new LicenseEditForm("licenseForm", licenseModel, blpModel) {
+		licenseForm = new LicenseEditForm("licenseForm", licenseModel, blpModel, new PropertyModel<Boolean>(resGroupModel, "paidAccount")) {
 
 			@Override
 			protected void onConfigure() {
@@ -164,7 +171,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
-
+		this.generateLicenseTypeChoices();
 		packageModel.setObject(new ExperimentPackage());
 
 		licenseModel.setObject(licenseFacade.getPublicLicense());

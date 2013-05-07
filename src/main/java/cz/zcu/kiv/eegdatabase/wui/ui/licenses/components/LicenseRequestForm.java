@@ -53,7 +53,7 @@ public class LicenseRequestForm extends Panel {
 		c.setLabel(ResourceUtils.getModel("label.license.request.lastname"));
 		form.add(c);
 		
-		c = new RequiredTextField("organisation", new PropertyModel(persLicense, "organization"));
+		c = new RequiredTextField("organisation", new PropertyModel(persLicense, "organisation"));
 		c.setLabel(ResourceUtils.getModel("label.license.request.organisation"));
 		form.add(c);
 

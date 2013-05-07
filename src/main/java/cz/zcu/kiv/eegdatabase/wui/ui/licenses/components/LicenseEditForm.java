@@ -34,13 +34,16 @@ public class LicenseEditForm extends Panel {
     private Form form;
 
 	private boolean displayControls = true;
+	private IModel<Boolean> allowBusiness;
 
-    public LicenseEditForm(String id, IModel<License> model) {
-		this(id, model, null);
+    public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
+		this(id, model, null, allowBusiness);
     }
 
-    public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints) {
+    public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints, IModel<Boolean> allowBusiness) {
 		super(id);
+
+		this.allowBusiness = allowBusiness;
 
 		this.licenseModel = model;
 		blueprintsModel = blueprints;
@@ -71,7 +74,15 @@ public class LicenseEditForm extends Panel {
 		c.setLabel(ResourceUtils.getModel("label.license.type"));
 		c.setRequired(true);
 		c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
-		c.add(new Radio("business", new Model(LicenseType.BUSINESS)));
+		c.add(new Radio("business", new Model(LicenseType.BUSINESS)) {
+
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				this.setVisible(allowBusiness.getObject());
+			}
+
+		});
 		form.add(c);
 
 		WicketUtils.addLabelsAndFeedback(form);

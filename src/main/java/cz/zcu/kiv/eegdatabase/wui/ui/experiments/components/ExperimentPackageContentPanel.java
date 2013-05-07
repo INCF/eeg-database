@@ -240,7 +240,7 @@ public class ExperimentPackageContentPanel extends Panel {
 
 		};
 
-		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel) {
+		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new PropertyModel<Boolean>(epModel, "researchGroup.paidAccount")) {
 
 			@Override
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
