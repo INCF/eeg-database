@@ -23,6 +23,8 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public void createRequestForLicense(PersonalLicense personalLicense);
 	
 	public void confirmRequestForLicense(PersonalLicense personalLicense);
+
+	public void rejectRequestForLicense(PersonalLicense personalLicense);
 	
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
 	

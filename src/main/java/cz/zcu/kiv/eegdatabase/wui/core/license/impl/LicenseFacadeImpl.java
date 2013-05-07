@@ -109,5 +109,10 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	public List<License> getLicensesForPackage(ExperimentPackage pckg) {
 		return licenseService.getLicensesForPackage(pckg);
 	}
+
+	@Override
+	public void rejectRequestForLicense(PersonalLicense personalLicense) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
 	
 }

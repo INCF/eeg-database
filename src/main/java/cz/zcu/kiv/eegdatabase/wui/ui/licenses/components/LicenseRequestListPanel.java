@@ -67,6 +67,12 @@ public class LicenseRequestListPanel extends Panel {
                 item.add(new ConfirmLicensePanel(componentId, rowModel));
             }
         });
+		columns.add(new PropertyColumn<PersonalLicense, String>(ResourceUtils.getModel("dataTable.heading.reject"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<PersonalLicense>> item, String componentId, IModel<PersonalLicense> rowModel) {
+                item.add(new RejectLicensePanel(componentId, rowModel));
+            }
+        });
 
 		return columns;
     }
