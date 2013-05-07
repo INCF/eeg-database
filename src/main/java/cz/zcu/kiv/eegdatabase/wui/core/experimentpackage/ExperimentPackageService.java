@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import java.util.List;
 
@@ -17,5 +18,7 @@ public interface ExperimentPackageService extends GenericService<ExperimentPacka
      * @return list of packages or an empty list
      */
     public List<ExperimentPackage> listExperimentPackagesByGroup(int researchGroupId);
+	
+	public Integer create(ExperimentPackage pack, License license);
 
 }

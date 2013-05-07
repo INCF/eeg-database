@@ -48,6 +48,9 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 	@Override
 	@Transactional
 	public void addLicenseForPackage(License license, ExperimentPackage pack) {
+		
+		this.checkLicenseGroupValidity(license, pack.getResearchGroup());
+		
 		if(license.getLicenseId() == 0) {
 			license.setResearchGroup(pack.getResearchGroup());
 			int res = this.licenseDao.create(license);
@@ -100,6 +103,13 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 		}
 		
 		return ret;
+	}
+	
+	private void checkLicenseGroupValidity(License license, ResearchGroup group)
+	{
+		if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.BUSINESS) {
+			throw new InvalidLicenseForPackageException("Group " + group.getTitle() + " is not a paid account and can not create bussiness licenses");
+		}
 	}
 
 }

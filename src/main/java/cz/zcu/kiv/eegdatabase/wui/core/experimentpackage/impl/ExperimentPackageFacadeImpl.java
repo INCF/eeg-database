@@ -83,9 +83,8 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 
 	@Override
 	public void createExperimentPackage(ExperimentPackage pckg, License license) {
-		int id = experimentPackageService.create(pckg);
-		pckg.setExperimentPackageId(id);
-		licenseServise.addLicenseForPackage(license, pckg);
+		experimentPackageService.create(pckg, license);
+		
 	}
 
 	@Override
