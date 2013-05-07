@@ -4,6 +4,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import org.hibernate.Session;
 
@@ -24,5 +25,11 @@ public class SimpleExperimentPackageLicenseDao extends SimpleGenericDao<Experime
 		String hqlQuery = "delete from ExperimentPackageLicense epl where epl.experimentPackage = :ep and epl.license = :l";
         Session session = getSession();
         session.createQuery(hqlQuery).setInteger("ep", packageId).setInteger("l", licenseId).executeUpdate();
+	}
+
+	@Override
+	public void removeAllConnections(ExperimentPackage pack) {
+		String hqlQuery = "delete from ExperimentPackageLicense epl where epl.experimentPackage = :ep";
+        this.getSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
 	}
 }

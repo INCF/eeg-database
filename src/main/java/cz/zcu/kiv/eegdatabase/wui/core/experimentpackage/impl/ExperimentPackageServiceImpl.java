@@ -1,8 +1,12 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
@@ -20,6 +24,8 @@ import org.springframework.transaction.annotation.Transactional;
 public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentPackage, Integer> implements ExperimentPackageService {
 
     private ExperimentPackageDao experimentPackageDao;
+    private ExperimentPackageLicenseDao experimentPackageLicenseDao;
+    private ExperimentPackageConnectionDao experimentPackageConnectionDao;
 	
     private LicenseService licenseService;
 
@@ -33,6 +39,16 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 	@Required
 	public void setExperimentPackageDao(ExperimentPackageDao experimentPackageDao) {
 		this.experimentPackageDao = experimentPackageDao;
+	}
+	
+	@Required
+	public void setExperimentPackageLicenseDao(ExperimentPackageLicenseDao experimentPackageLicenseDao) {
+		this.experimentPackageLicenseDao = experimentPackageLicenseDao;
+	}
+	
+	@Required
+	public void setExperimentPackageConnectionDao(ExperimentPackageConnectionDao experimentPackageConnectionDao) {
+		this.experimentPackageConnectionDao = experimentPackageConnectionDao;
 	}
 
 	@Required
@@ -65,5 +81,16 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 		
 		return id;
 	}
+
+	@Override
+	@Transactional
+	public void delete(ExperimentPackage persistentObject) {
+		this.experimentPackageConnectionDao.removeAllConnections(persistentObject);
+		this.experimentPackageLicenseDao.removeAllConnections(persistentObject);
+		
+		super.delete(persistentObject); 
+	}
+	
+	
 
 }

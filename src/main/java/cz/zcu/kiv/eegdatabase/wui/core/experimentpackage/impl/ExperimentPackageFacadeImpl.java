@@ -89,8 +89,7 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 
 	@Override
 	public void removeExperimentPackage(ExperimentPackage pckg) {
-		//TODO implement this, #2096
-		throw new UnsupportedOperationException("Not supported yet.");
+		this.experimentPackageService.delete(pckg);
 	}
 
 }

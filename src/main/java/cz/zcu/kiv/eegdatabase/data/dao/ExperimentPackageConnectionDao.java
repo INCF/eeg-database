@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import java.util.List;
 
@@ -33,4 +34,7 @@ public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPac
     public boolean isExperimentInPackage(int experimentId, int packageId);
 	
     public boolean removeExperimentFromPackage(int experimentId, int packageId);
+	
+	public void removeAllConnections(ExperimentPackage pack);
+
 }

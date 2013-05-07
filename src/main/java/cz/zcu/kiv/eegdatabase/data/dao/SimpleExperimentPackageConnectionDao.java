@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import java.util.List;
 import org.hibernate.Criteria;
@@ -73,4 +74,10 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
     
 	return super.create(newInstance);
     }    
+
+	@Override
+	public void removeAllConnections(ExperimentPackage pack) {
+		String hqlQuery = "delete from ExperimentPackageConnection epc where epc.experimentPackage = :ep";
+        this.getSession().createQuery(hqlQuery).setInteger("ep", pack.getExperimentPackageId()).executeUpdate();
+	}
 }
