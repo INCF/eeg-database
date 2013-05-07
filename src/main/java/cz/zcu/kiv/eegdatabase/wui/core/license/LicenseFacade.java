@@ -25,8 +25,20 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public void confirmRequestForLicense(PersonalLicense personalLicense);
 
 	public void rejectRequestForLicense(PersonalLicense personalLicense);
-	
+
+	/**
+	 *
+	 * @param group research group to search by
+	 * @return list of PersonalLicenses NOT confirmed by admin or unpaid, or empty list
+	 */
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
+
+	/**
+	 *
+	 * @param group research group to search by
+	 * @return list of PersonalLicenses confirmed by admin or paid, or empty list
+	 */
+	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group);
 	
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
 

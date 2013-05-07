@@ -114,5 +114,10 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	public void rejectRequestForLicense(PersonalLicense personalLicense) {
 		this.personalLicenseService.rejectRequestForLicense(personalLicense);
 	}
+
+	@Override
+	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group) {
+		return personalLicenseService.getGrantedLicenses(group);
+	}
 	
 }

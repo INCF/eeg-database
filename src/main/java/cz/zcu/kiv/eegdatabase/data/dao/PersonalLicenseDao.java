@@ -15,7 +15,7 @@ import java.util.List;
  */
 public interface PersonalLicenseDao extends GenericDao<PersonalLicense, Integer> {
 	
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed);
 	
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
 

@@ -23,9 +23,15 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
     }
 
 	@Override
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed) {
 		Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
-        criteria.add(Restrictions.eq("license.researchGroup", group));
+		if (!confirmed) {
+			criteria.add(Restrictions.eq("confirmedDate", null));
+		}
+		else {
+			criteria.add(Restrictions.ne("confirmedDate", null));
+		}
+		criteria.createAlias("license", "l").add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
         return criteria.list();
 	}
 

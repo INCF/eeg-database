@@ -80,35 +80,21 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
-		//TODO implement!
-		ArrayList<PersonalLicense> pp = new ArrayList<PersonalLicense>();
-		PersonalLicense ll = new PersonalLicense();
-		ll.setRequestedDate(new Date());
-		ll.setFirstName("John");
-		ll.setLastName("Doe");
-		ll.setOrganisation("INCF");
-		License l = new License();
-		l.setTitle("My First Academic License");
-		ll.setLicense(l);
-		pp.add(ll);
-		return pp;
+		return personalLicenseDao.getLicenseRequests(group, false);
 	}
 
 	@Override
+	@Transactional(readOnly=true)
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
-		//TODO implement!
-		ArrayList<PersonalLicense> pp = new ArrayList<PersonalLicense>();
-		PersonalLicense ll = new PersonalLicense();
-		ll.setRequestedDate(new Date());
-		ll.setFirstName("John");
-		ll.setLastName("Doe");
-		ll.setOrganisation("INCF");
-		License l = new License();
-		l.setTitle("My First Academic License");
-		ll.setLicense(l);
-		pp.add(ll);
-		return pp;
+		return personalLicenseDao.getLicenseRequests(applicant, accepted);
+	}
+
+	@Override
+	@Transactional(readOnly=true)
+	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group) {
+		return personalLicenseDao.getLicenseRequests(group, true);
 	}
 
 	@Override
