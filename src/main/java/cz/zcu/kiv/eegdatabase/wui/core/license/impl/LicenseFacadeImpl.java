@@ -112,7 +112,7 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 
 	@Override
 	public void rejectRequestForLicense(PersonalLicense personalLicense) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		this.personalLicenseService.rejectRequestForLicense(personalLicense);
 	}
 	
 }

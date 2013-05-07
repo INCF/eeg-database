@@ -110,4 +110,10 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 		pp.add(ll);
 		return pp;
 	}
+
+	@Override
+	public void rejectRequestForLicense(PersonalLicense personalLicense) {
+		this.personalLicenseDao.delete(personalLicense);
+		this.mailService.sendLicenseRequestRejectionEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
+	}
 }

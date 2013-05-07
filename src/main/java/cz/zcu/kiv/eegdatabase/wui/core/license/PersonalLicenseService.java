@@ -33,5 +33,7 @@ public interface PersonalLicenseService extends GenericService<PersonalLicense, 
      * @return true if success, false if not (e.g. person already has the license)
      */
     public boolean addLicenseToPerson(Person person, License license);
+
+	public void rejectRequestForLicense(PersonalLicense personalLicense);
 	
 }
