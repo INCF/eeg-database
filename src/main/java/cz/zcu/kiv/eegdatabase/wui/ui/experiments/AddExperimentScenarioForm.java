@@ -202,7 +202,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 stimulusContainer,
                                 Stimulus.class
                         );
-                stimulus.setRequired(true);
+                // stimulus.setRequired(true);  //must accept empty fields
                 item.add(stimulus);
             }
         };
@@ -230,7 +230,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 testedSubjectContainer,
                                 Person.class
                         );
-                testSubject.setRequired(true);
+                // testSubject.setRequired(true); //must accept even empty fields
                 item.add(testSubject);
             }
         };

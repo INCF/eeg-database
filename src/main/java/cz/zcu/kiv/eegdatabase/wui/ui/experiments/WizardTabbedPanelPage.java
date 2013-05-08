@@ -108,7 +108,7 @@ public class WizardTabbedPanelPage extends MenuPage {
                         }
                     }
                     if (selectedTab == 2) {
-                        if (resultForm.isValid()){
+                        if (resultsForm.isValid()){
                             setTabClassGreen(selectedTab);
                         }
                         else {
