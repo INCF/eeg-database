@@ -34,9 +34,8 @@ import org.apache.wicket.util.time.Duration;
  */
 public class AddSoftwarePage extends WebPage {
     public AddSoftwarePage(final PageReference modalWindowPage,
-                                final ModalWindow window,
-                                final AddExperimentEnvironmentForm enviform){
-        SoftwareForm form = new SoftwareForm("addForm", window, enviform);
+                                final ModalWindow window){
+        SoftwareForm form = new SoftwareForm("addForm", window);
         add(form);
     }
 

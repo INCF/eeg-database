@@ -11,6 +11,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
@@ -68,37 +69,40 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         addModalWindowAndButton(this, "addWeatherModal", "add-weather",
                 "addWeather", AddWeatherPage.class.getName());
 
-        List<Hardware> hardwares = hardwareFacade.getAllRecords();
-        ArrayList<String> hardwareTitles = new ArrayList<String>();
-        if (hardwares != null){
-            for (Hardware hw : hardwares){
-                hardwareTitles.add(hw.getTitle());
-            }
-        }
+        ArrayList<String> hardwareTitles = getHardwareTitles();
         hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
+        hw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                hw.setChoices(getHardwareTitles());
+                target.add(hw);
+            }
+        });
         add(hw);
 
-        List<Software> softwares = softwareFacade.getAllRecords();
-        ArrayList<String> softwareTitles = new ArrayList<String>();
-        if (softwares != null){
-            for (Software sw : softwares){
-                softwareTitles.add(sw.getTitle());
-            }
-        }
+        ArrayList<String> softwareTitles = getSoftwareTitles();
         sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
+        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                sw.setChoices(getSoftwareTitles());
+                target.add(sw);
+            }
+        });
         add(sw);
 
-        List<Weather> weathers = weatherFacade.getAllRecords();
-        ArrayList<String> weatherTitles = new ArrayList<String>();
-        if (weathers != null){
-            for (Weather w : weathers){
-                weatherTitles.add(w.getTitle());
-            }
-        }
+        ArrayList<String> weatherTitles = getWeatherTitles();
         weather = new DropDownChoice<String>("weather", weatherTitles);
         weather.setRequired(true);
+        weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                weather.setChoices(getWeatherTitles());
+                target.add(weather);
+            }
+        });
         add(weather);
 
         add(new TextArea<String>("weatherNote"));
@@ -144,8 +148,6 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
-
-        System.out.println("JSEM V BODE konstructor");
     }
 
     public boolean isValid(){
@@ -166,12 +168,37 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         return !hasError();
     }
 
-    public void updateSoftware(){
-        System.out.println("Updatuji software! :)");
+    private ArrayList<String> getWeatherTitles(){
+        List<Weather> weathers = weatherFacade.getAllRecords();
+        ArrayList<String> weatherTitles = new ArrayList<String>();
+        if (weathers != null){
+            for (Weather w : weathers){
+                weatherTitles.add(w.getTitle());
+            }
+        }
+        return weatherTitles;
     }
 
-    public AddExperimentEnvironmentForm getEnviForm(){
-        return this;
+    private ArrayList<String> getSoftwareTitles(){
+        List<Software> softwares = softwareFacade.getAllRecords();
+        ArrayList<String> softwareTitles = new ArrayList<String>();
+        if (softwares != null){
+            for (Software sw : softwares){
+                softwareTitles.add(sw.getTitle());
+            }
+        }
+        return softwareTitles;
+    }
+
+    private ArrayList<String> getHardwareTitles(){
+        List<Hardware> hardwares = hardwareFacade.getAllRecords();
+        ArrayList<String> hardwareTitles = new ArrayList<String>();
+        if (hardwares != null){
+            for (Hardware hw : hardwares){
+                hardwareTitles.add(hw.getTitle());
+            }
+        }
+        return hardwareTitles;
     }
 
     private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
@@ -180,13 +207,11 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         final ModalWindow addedWindow;
         form.add(addedWindow = new ModalWindow(modalWindowName));
         addedWindow.setCookieName(cookieName);
-        System.out.println("JSEM V BODE addedWindow");
         addedWindow.setPageCreator(new ModalWindow.PageCreator() {
 
             @Override
             public Page createPage() {
                 try{
-                    System.out.println("JSEM V BODE CreatePage");
                     Constructor<?> cons = null;
                     cons = Class.forName(targetClass).getConstructor(
                     PageReference.class, ModalWindow.class);
@@ -212,14 +237,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form){
-                System.out.println("JSEM V BODE onSubmit");
                 addedWindow.show(target);
             }
         };
         ajaxButton.add(new AjaxEventBehavior("onclick") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
-                System.out.println("JSEM V BODE onclick");
                 addedWindow.show(target);
             }
         });

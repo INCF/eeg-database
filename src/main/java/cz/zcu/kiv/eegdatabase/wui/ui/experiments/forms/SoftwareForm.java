@@ -30,7 +30,7 @@ public class SoftwareForm extends Form<Software> {
     @SpringBean
     SoftwareFacade facade;
 
-    public SoftwareForm(String id, final ModalWindow window, final AddExperimentEnvironmentForm enviform) {
+    public SoftwareForm(String id, final ModalWindow window) {
             super(id, new CompoundPropertyModel<Software>(new Software()));
 
             final FeedbackPanel feedback = new FeedbackPanel("feedback");
@@ -56,14 +56,12 @@ public class SoftwareForm extends Form<Software> {
                     validate();
                     target.add(feedback);
                     if(!hasError()){
-                        /*if (newSw.getDefaultNumber() == 0){
+                        if (newSw.getDefaultNumber() == 0){
                             facade.create(newSw);
                         }
                         else {
                             facade.createDefaultRecord(newSw);
-                        }*/
-                        enviform.updateSoftware();
-                        System.out.println("Zakomentovane pridani software");
+                        }
                         window.close(target);
                     }
                 }
