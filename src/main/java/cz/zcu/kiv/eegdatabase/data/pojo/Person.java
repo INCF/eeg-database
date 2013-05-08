@@ -4,6 +4,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.springframework.beans.factory.annotation.Autowired;
 import thewebsemantic.annotations.Comment;
 import thewebsemantic.annotations.Ignore;
 import thewebsemantic.annotations.Label;
@@ -25,7 +29,11 @@ import java.util.Set;
 @Label(value="Osoba", lang="cs")
 @Comment(value="Class of persons registered in the Portal.", lang="en")
 @SeeAlso("http://eegdatabase.kiv.zcu.cz")
-public class Person implements Serializable, Comparable<Person> {
+public class Person implements Serializable, Comparable<Person>, IAutocompletable {
+
+    @Autowired
+    @Transient
+    PersonFacade personFacade;
 
     //@DocumentId
     @SolrId
@@ -375,6 +383,25 @@ public class Person implements Serializable, Comparable<Person> {
 
     public void setEducationLevel(EducationLevel educationLevel) {
         this.educationLevel = educationLevel;
+    }
+
+
+    @Override
+    @Transient
+    public String getAutocompleteData() {
+        return getGivenname() + " " + getSurname();
+    }
+
+    @Override
+    @Transient
+    public GenericFacade getFacade(){
+        return personFacade;
+    }
+
+    @Override
+    @Transient
+    public boolean isValidOnChange() {
+        return !(getSurname().equals(""));
     }
 }
 

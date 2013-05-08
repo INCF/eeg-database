@@ -32,29 +32,19 @@
                 <input type="text" wicket:id="dateOfBirth"/>
             </div>
 
-        <!--
         <div class="form-sub-item">
-            <label for="gender">Gender</label>
-            <ol class="radio-group">
-                <li>
-                    <input name="gender" type="radio" value="M" checked="checked">
-                    <label for="male">Male</label>
-                </li>
-                <li>
-                    <input name="gender" type="radio" value="F">
-                    <label for="female">Female</label>
-                </li>
-            </ol>
-            <div class="close"></div>
-        </div>
-        -->
-
-        <div class="form-sub-item added">
             <label for="gender" wicket:id="genderLb">
                 <wicket:message key="general.gender">[gender]</wicket:message>
             </label>
             <span wicket:id="gender"></span>
         </div>
+
+
+        <div class="form-sub-item">
+            <label for="laterality" wicket:id="lateralityLb" class="textFieldLabel">
+              <wicket:message key="label.laterality">[laterality]</wicket:message>
+            </label> <select wicket:id="laterality" id="selectLaterality" class="selectBox"></select>
+         </div>
 
         <div class="form-sub-item added">
             <label for="educationLevel" wicket:id="educationLevelLb">
@@ -76,8 +66,6 @@
                 </label>
                 <input type="text" wicket:id="phoneNumber"/>
             </div>
-
-
 
             <div class="form-sub-item">
                 <label for="note" wicket:id="noteLb">

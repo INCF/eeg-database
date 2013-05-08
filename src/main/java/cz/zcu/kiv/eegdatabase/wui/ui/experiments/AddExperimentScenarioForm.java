@@ -8,6 +8,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptioinModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -150,6 +151,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         finishDate.setRequired(true);
         add(finishDate);
 
+
+
         final List<Person> actualAmount = new ArrayList<Person>();
         actualAmount.add(new Person());
         final WebMarkupContainer propertyContainer = new WebMarkupContainer("addTestedInputContainer");
@@ -163,7 +166,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 "subjects",
                                 new PersonNameModel(person),
                                 this,
-                                propertyContainer
+                                propertyContainer,
+                                Person.class
                         );
                 item.add(testSubject);
             }
@@ -177,64 +181,70 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         //testSubjects autocomplete
 
 
+
         //stimulus autocomplete
-        final AutoCompleteTextField<String> stimulus = new AutoCompleteTextField<String>("stimulus",
-                new Model<String>(""))
-        {
+        final List<Stimulus> stimulusList = new ArrayList<Stimulus>();
+        stimulusList.add(new Stimulus());
+        final WebMarkupContainer stimulusContainer = new WebMarkupContainer("addStimulusInputContainer");
+
+        final ListView<Stimulus> stimulusListView = new ListView<Stimulus>("addStimulusInput", stimulusList) {
             @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<Stimulus> stimuli = stimulusFacade.getAllRecords();
-                for (final Stimulus s : stimuli)
-                {
-                    final String data = s.getDescription();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
+            protected void populateItem(ListItem item) {
+                final Stimulus stimulusItem = (Stimulus) item.getModelObject();
+                final AddingItemsView<String> stimulus =
+                        new AddingItemsView<String>(
+                                "stimuli",
+                                new StimulusDescriptioinModel(stimulusItem),
+                                this,
+                                propertyContainer,
+                                Stimulus.class
+                        );
+                item.add(stimulus);
             }
         };
-        stimulus.setRequired(true);
-        this.add(stimulus);
+//        stimulusListView.setRequired(true);    //TODO figure out how to make it required
+        stimulusListView.setOutputMarkupId(true);
+        stimulusListView.setReuseItems(true);
+
+        stimulusContainer.add(stimulusListView);
+        stimulusContainer.setOutputMarkupId(true);
+        add(stimulusContainer);
+
+
+
 
         //coExperimenters autocomplete
-        final AutoCompleteTextField<String> coExperimenters = new AutoCompleteTextField<String>("coExperimenters",
-                new PropertyModel<String>(experiment, "persons"))
-        {
-            //TODO which persons are co-experimenters and which are test subjects?
+        final List<Person> coExperimentersList = new ArrayList<Person>();
+        coExperimentersList.add(new Person());
+        final WebMarkupContainer coExperimentersContainer = new WebMarkupContainer("addCoExpInputContainer");
+
+        final ListView<Person> coExpListView = new ListView<Person>("addCoExpInput", coExperimentersList) {
             @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<Person> persons = personFacade.getAllRecords();
-                for (final Person p : persons)
-                {
-                    final String data = p.getGivenname() +" "+ p.getSurname();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
+            protected void populateItem(ListItem item) {
+                final Person coExpItem = (Person) item.getModelObject();
+                final AddingItemsView<String> coExperimenter =
+                        new AddingItemsView<String>(
+                                "coExperimenters",
+                                new PersonNameModel(coExpItem),
+                                this,
+                                propertyContainer,
+                                Person.class
+                        );
+                item.add(coExperimenter);
             }
         };
-        coExperimenters.setRequired(true);
-        add(coExperimenters);
+//        coExpListView.setRequired(true);    //TODO figure out how to make it required
+        coExpListView.setOutputMarkupId(true);
+        coExpListView.setReuseItems(true);
+
+        coExperimentersContainer.add(coExpListView);
+        coExperimentersContainer.setOutputMarkupId(true);
+        add(coExperimentersContainer);
+
+
+
+
+
 
         final ModalWindow addGroup;
         add(addGroup = new ModalWindow("addGroupModal"));
@@ -334,8 +344,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
 
         final ModalWindow newStimulus;
-        add(newStimulus = new ModalWindow("newStimulusModal"));
-        newStimulus.setCookieName("new-stimulus");
+        add(newStimulus = new ModalWindow("addStimulusModal"));
+        newStimulus.setCookieName("add-stimulus");
 
         newStimulus.setPageCreator(new ModalWindow.PageCreator() {
 
@@ -345,7 +355,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
             }
         });
 
-        AjaxButton newStimulusAjax = new AjaxButton("newStimulus", this)
+        AjaxButton newStimulusAjax = new AjaxButton("addStimulus", this)
         {};
         newStimulusAjax.add(new AjaxEventBehavior("onclick") {
             @Override
@@ -357,12 +367,38 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
         FormComponentLabel stimulusLabel = new FormComponentLabel("stimulusLb", newStimulusAjax);
         add(newStimulusAjax, stimulusLabel);
+
+
+        final ModalWindow newCoExperimenter;
+        add(newCoExperimenter = new ModalWindow("addCoExperimenterModal"));
+        newCoExperimenter.setCookieName("add-co-experimenter");
+
+        newCoExperimenter.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                //TODO refactor AddTestedSubjectPage or create own class (AddCoExperimenterPage)
+                return new AddTestedSubjectPage(getPage().getPageReference(), newCoExperimenter);
+            }
+        });
+
+        AjaxButton newCoExperimenterAjax = new AjaxButton("addCoExperimenter", this)
+        {};
+        newCoExperimenterAjax.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                newCoExperimenter.show(target);
+            }
+        });
+        newCoExperimenterAjax.setLabel(ResourceUtils.getModel("label.coExperimenters"));
+
+        FormComponentLabel coExperimenterLabel = new FormComponentLabel("coExperimentersLb", newCoExperimenterAjax);
+        add(newCoExperimenterAjax, coExperimenterLabel);
     }
 
     public boolean isValid(){
         this.validate();
-        System.out.println("VALIDUJI SCE S VYSLEDKEM: "+!hasError());
+        System.out.println("VALIDUJI SE S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
-
 }

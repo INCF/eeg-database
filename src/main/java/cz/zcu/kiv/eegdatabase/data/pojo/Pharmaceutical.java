@@ -3,6 +3,10 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +22,12 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="PHARMACEUTICAL")
-public class Pharmaceutical implements Serializable {
+public class Pharmaceutical implements Serializable, IAutocompletable {
+
+    @Autowired
+    @Transient
+    PharmaceuticalFacade pharmaceuticalFacade;
+
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -81,5 +90,24 @@ public class Pharmaceutical implements Serializable {
 
     public void setResearchGroups(Set<ResearchGroup> researchGroups) {
         this.researchGroups = researchGroups;
+    }
+
+
+    @Override
+    @Transient
+    public String getAutocompleteData() {
+        return getTitle();
+    }
+
+    @Override
+    @Transient
+    public GenericFacade getFacade() {
+        return pharmaceuticalFacade;
+    }
+
+    @Override
+    @Transient
+    public boolean isValidOnChange() {
+        return !(getTitle().equals(""));
     }
 }

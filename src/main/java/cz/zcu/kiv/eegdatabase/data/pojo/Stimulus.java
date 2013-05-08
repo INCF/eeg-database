@@ -3,6 +3,11 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +23,12 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="STIMULUS")
-public class Stimulus implements Serializable {
+public class Stimulus implements Serializable, IAutocompletable {
+
+    @Autowired
+    @Transient
+    StimulusFacade stimulusFacade;
+
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -61,5 +71,24 @@ public class Stimulus implements Serializable {
 
     public void setStimulusRels(Set<StimulusRel> stimulusRels) {
         this.stimulusRels = stimulusRels;
+    }
+
+
+    @Override
+    @Transient
+    public String getAutocompleteData() {
+        return getDescription();
+    }
+
+    @Override
+    @Transient
+    public GenericFacade getFacade(){
+        return stimulusFacade;
+    }
+
+    @Override
+    @Transient
+    public boolean isValidOnChange() {
+        return !(getDescription()==null || getDescription().equals(""));
     }
 }

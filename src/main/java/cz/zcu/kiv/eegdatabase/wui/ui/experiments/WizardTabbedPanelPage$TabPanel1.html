@@ -6,7 +6,8 @@
         <div wicket:id="newScenarioModal"></div>
         <div wicket:id="newProjectModal"></div>
         <div wicket:id="addTestedModal"></div>
-        <div wicket:id="newStimulusModal"></div>
+        <div wicket:id="addStimulusModal"></div>
+        <div wicket:id="addCoExperimenterModal"></div>
 
         <div class="form-item">
             <label for="scenario">
@@ -60,18 +61,27 @@
         </div>
 
         <div class="form-item">
-            <label for="stimulus" wicket:id="stimulusLb">
+            <label for="stimuli" wicket:id="stimulusLb">
                 <wicket:message key="label.stimulus">[stimulus]</wicket:message>
             </label>
-            <input type="text" name="stimulus" wicket:id="stimulus"/>
-            <input type="button" wicket:id="newStimulus" value="Add">
+            <span wicket:id="addStimulusInputContainer">
+                <span wicket:id="addStimulusInput">
+                    <input type="text" wicket:id="stimuli"/>
+                </span>
+            </span>
+            <input type="button" wicket:id="addStimulus" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="coExperimenters">
-                <wicket:message key="label.coExperimenters">Co - experimenters</wicket:message>
+            <label for="coExperimenters" wicket:id="coExperimentersLb">
+                <wicket:message key="label.coExperimenters">[Co - experimenters]</wicket:message>
             </label>
-            <input type="text" class="autocomplete multiple" wicket:id="coExperimenters" autosrc="/get-json-append"/>
+            <span wicket:id="addCoExpInputContainer">
+                <span wicket:id="addCoExpInput">
+                    <input type="text" wicket:id="coExperimenters"/>
+                </span>
+            </span>
+            <input type="button" wicket:id="addCoExperimenter" value="Add">
         </div>
     </form>
 </wicket:panel>
