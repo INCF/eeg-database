@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
@@ -41,7 +42,7 @@ import java.util.Date;
  * Date: 3.4.13
  * Time: 19:33
  */
-public class AddTestedSubjectPage extends WebPage {
+public class AddPersonPage extends WebPage {
 
     @SpringBean
     private EducationLevelFacade educationFacade;
@@ -49,9 +50,15 @@ public class AddTestedSubjectPage extends WebPage {
     @SpringBean
     private PersonFacade personFacade;
 
-    public AddTestedSubjectPage(final PageReference modalWindowPage,
-                                final ModalWindow window) {
+    private Date date = new Date();
 
+    private String userRole;    //role of created user (cz.zcu.kiv.eegdatabase.logic.Util)
+
+    public AddPersonPage(final PageReference modalWindowPage,
+                                final ModalWindow window,
+                                final String userRole) {
+
+        this.userRole = userRole;
         AddTestedSubjectForm form = new AddTestedSubjectForm("addForm", window);
         add(form);
     }
@@ -104,6 +111,7 @@ public class AddTestedSubjectPage extends WebPage {
             add(date, dateLabel);
             */
 
+            /* TODO add dateOfBirth
             DateTextField dateOfBirth = new DateTextField("dateOfBirth", new StyleDateConverter(true));
 
             DatePicker datePicker = new DatePicker();
@@ -115,6 +123,7 @@ public class AddTestedSubjectPage extends WebPage {
             add(dateOfBirth);
             FormComponentLabel dateLabel = new FormComponentLabel("dateLb", dateOfBirth);
             add(dateOfBirth, dateLabel);
+            */
 
 
 
@@ -199,7 +208,7 @@ public class AddTestedSubjectPage extends WebPage {
                     Person user = AddTestedSubjectForm.this.getModelObject();
 
                     if (validation(user, personFacade)) {
-//                        user.setAuthority(Util.ROLE_READER);
+                        user.setAuthority(userRole);
                         personFacade.create(user);
                         window.close(target);
                     }
@@ -235,10 +244,12 @@ public class AddTestedSubjectPage extends WebPage {
                 validate = false;
             }
 
+            /*  TODO validate date
             if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
                 error(ResourceUtils.getString("invalid.dateOfBirth"));
                 validate = false;
             }
+            */
 
             if (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty()) {
                 try {
@@ -255,5 +266,13 @@ public class AddTestedSubjectPage extends WebPage {
             }
             return validate;
         }
+    }
+
+    public Date getDate(){
+        return this.date;
+    }
+
+    public void setDate(Date date){
+        this.date = date;
     }
 }

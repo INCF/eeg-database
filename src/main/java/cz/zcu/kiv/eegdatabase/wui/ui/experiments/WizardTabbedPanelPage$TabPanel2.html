@@ -41,14 +41,26 @@
         </div>
 
         <div class="form-item">
-            <label for="disease">* Diseases</label>
-            <input type="text" name="disease" wicket:id="disease" class="required autocomplete" autosrc="/get-json-append"/>
+            <label for="disease">
+                <wicket:message key="label.disease">[Disease]</wicket:message>
+            </label>
+            <span wicket:id="addDiseaseInputContainer">
+                <span wicket:id="addDiseaseInput">
+                    <input type="text" wicket:id="disease"/>
+                </span>
+            </span>
             <input type="button" wicket:id="addDisease" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="pharmaceutical">* Pharmaceuticals</label>
-            <input type="text" name="pharmaceutical" wicket:id="pharmaceutical" class="required autocomplete multiple" autosrc="/get-json-append">
+            <label for="pharmaceutical">
+                <wicket:message key="label.pharmaceutical">[Pharmaceutical]</wicket:message>
+            </label>
+            <span wicket:id="addPharmaceuticalInputContainer">
+                <span wicket:id="addPharmaceuticalInput">
+                    <input type="text" wicket:id="pharmaceutical"/>
+                </span>
+            </span>
             <input type="button" wicket:id="addPharma" value="Add">
         </div>
 

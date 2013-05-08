@@ -4,12 +4,16 @@
     <form wicket:id="resultTab" action="" method="post" autocomplete="on">
 
         <div class="form-item">
-            <label for="resultFile">Results file</label>
+            <label for="resultFile">
+                <wicket:message key="label.resultFile">[Results file]</wicket:message>
+            </label>
             <input type="file" name="resultFile" wicket:id="resultFile"/>
         </div>
         <div class="form-item">
-            <label for="submitFormButton" class="long-label">Submit new experiment</label>
-            <input type="button" name="submitFormButton" value="Submit">
+            <label for="submitFormButton" class="long-label">
+                <wicket:message key="label.submitExperiment">[Submit new experiment]</wicket:message>
+            </label>
+            <input type="button" wicket:id="submitFormButton" value="Submit">
         </div>
     </form>
 </wicket:panel>

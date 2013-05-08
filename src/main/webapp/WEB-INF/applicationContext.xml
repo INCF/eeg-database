@@ -114,7 +114,9 @@
     </bean>
     <bean name="projectTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacadeImpl" autowire="byType" />
     
-    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" />
+    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
+        <property name="scenarioDAO" ref="scenarioDao"/>
+    </bean>
     <bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
     
     <bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />

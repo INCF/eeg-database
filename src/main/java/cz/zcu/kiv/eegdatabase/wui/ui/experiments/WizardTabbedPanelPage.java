@@ -1,26 +1,19 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import org.apache.wicket.AttributeModifier;
-import org.apache.wicket.Component;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.extensions.ajax.markup.html.tabs.AjaxTabbedPanel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
-import org.apache.wicket.extensions.markup.html.tabs.TabbedPanel;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
-import javax.xml.stream.events.Attribute;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,10 +24,17 @@ import java.util.List;
  * Time: 15:45
  */
 public class WizardTabbedPanelPage extends MenuPage {
+
+    private Log log = LogFactory.getLog(getClass());
+
+    final private AddExperimentScenarioForm scenarioForm;
+    final private AddExperimentEnvironmentForm environmentForm;
+    final private AddExperimentResultsForm resultsForm;
+
     public WizardTabbedPanelPage() {
-        final AddExperimentScenarioForm scenarioForm = new AddExperimentScenarioForm("scenarioTab");
-        final AddExperimentEnvironmentForm environmentForm = new AddExperimentEnvironmentForm("environmentTab");
-        final AddExperimentResultsForm resultForm = new AddExperimentResultsForm("resultTab");
+        scenarioForm = new AddExperimentScenarioForm("scenarioTab");
+        environmentForm = new AddExperimentEnvironmentForm("environmentTab");
+        resultsForm = new AddExperimentResultsForm("resultTab", this);
         final int TAB_COUNT = 2;
         final int[] formsVisited = {0, 0, 0};
 
@@ -67,7 +67,7 @@ public class WizardTabbedPanelPage extends MenuPage {
             @Override
             public Panel getPanel(String panelId)
             {
-                return new TabPanel3(panelId, resultForm);
+                return new TabPanel3(panelId, resultsForm);
             }
         });
 
@@ -112,7 +112,7 @@ public class WizardTabbedPanelPage extends MenuPage {
                         }
                     }
                     if (selectedTab == 2) {
-                        if (resultForm.isValid()){
+                        if (resultsForm.isValid()){
                             System.out.println("RES NA GREEN");
                             setTabClassGreen(selectedTab);
                         }
@@ -129,6 +129,19 @@ public class WizardTabbedPanelPage extends MenuPage {
         add(etp);
 
     }
+
+    public AddExperimentEnvironmentForm getEnvironmentForm(){
+        return environmentForm;
+    }
+
+    public AddExperimentScenarioForm getScenarioForm(){
+        return scenarioForm;
+    }
+
+    public AddExperimentResultsForm getResultsForm(){
+        return resultsForm;
+    }
+
 
     @Override
     public void renderHead(IHeaderResponse response) {

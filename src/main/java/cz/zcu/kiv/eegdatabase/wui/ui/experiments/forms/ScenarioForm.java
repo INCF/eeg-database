@@ -116,8 +116,10 @@ public class ScenarioForm extends Form<Scenario> {
 
                         if(!hasError()){
                             final FileUpload upload = fileUpload.getFileUpload();
-                            scenario.setScenarioName(upload.getClientFileName());
-                            scenario.setMimetype(upload.getContentType());
+                            if(upload != null){
+                                scenario.setScenarioName(upload.getClientFileName());
+                                scenario.setMimetype(upload.getContentType());
+                            }
 
                             ScenarioTypeNonXml scenarioTypeNonXml = new ScenarioTypeNonXml();
                             scenarioTypeNonXml.setScenario(scenario);
@@ -127,11 +129,12 @@ public class ScenarioForm extends Form<Scenario> {
                                 info("No file uploaded");
                             } else {
                                 info("Uploaded");
-                            }
-                            try{
-                                scenarioTypeNonXml.setScenarioXml(new OracleSerialBlob(upload.getBytes()));
-                            } catch(SQLException ex) {
-                                ex.printStackTrace();
+
+                                try{
+                                    scenarioTypeNonXml.setScenarioXml(new OracleSerialBlob(upload.getBytes()));
+                                } catch(SQLException ex) {
+                                    ex.printStackTrace();
+                                }
                             }
 
                             // I need to get list of research groups and show these.

@@ -24,7 +24,7 @@ public class SimplePersonDao
     public Integer create(Person newInstance) {
         newInstance.setUsername(newInstance.getUsername().toLowerCase());
         return (Integer) getHibernateTemplate().save(newInstance);
-}
+    }
 
     @Override
     public void update(Person newInstance) {

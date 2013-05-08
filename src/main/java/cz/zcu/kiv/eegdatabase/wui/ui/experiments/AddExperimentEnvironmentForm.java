@@ -6,7 +6,10 @@ import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.DiseaseTitleModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PharmaceuticalTitleModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -14,20 +17,23 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
 
@@ -45,10 +51,10 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private ListMultipleChoice sw = null;
     private DropDownChoice<String> weather = null;
     private NumberTextField<Integer> temperature = null;
-    private TextField<String> disease = null;
-    private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
     private boolean locked = false;
+    private final List<Disease> diseaseData = new ArrayList<Disease>();
+    private final List<Pharmaceutical> pharmaceuticalData = new ArrayList<Pharmaceutical>();
 
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
@@ -138,44 +144,71 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         temperature.setRequired(true);
         add(temperature);
 
-        disease = new AutoCompleteTextField<String>("disease")
-        {
-            @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<Disease> diseases = diseaseFacade.getAllRecords();
-                for (final Disease disease : diseases)
-                {
-                    final String data = disease.getTitle();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
-            }
-        };
-        disease.setRequired(true);
-        disease.setOutputMarkupId(true);
-        add(disease);
+        addDisease();
 
-        //TODO autocomplete and create PharmaceuticalFacade
-        /* TODO check if this attribute is required as stated in prototype*/
-        pharmaceutical = new TextField<String>("pharmaceutical");
-        pharmaceutical.setRequired(true);
-        add(pharmaceutical);
+        addPharmaceutical();
 
         add(new TextField<String>("privateNote"));
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
+    }
+
+    private void addDisease() {
+        diseaseData.add(new Disease());
+        final WebMarkupContainer diseaseContainer = new WebMarkupContainer("addDiseaseInputContainer");
+
+        final ListView<Disease> diseaseListView = new ListView<Disease>("addDiseaseInput", diseaseData) {
+             @Override
+            protected void populateItem(ListItem item) {
+                final Disease diseaseItem = (Disease) item.getModelObject();
+                final AddingItemsView<String> disease =
+                        new AddingItemsView<String>(
+                                "disease",
+                                new DiseaseTitleModel(diseaseItem),
+                                this,
+                                diseaseContainer,
+                                Disease.class
+                        );
+                item.add(disease);
+            }
+        };
+        diseaseListView.setOutputMarkupId(true);
+        diseaseListView.setReuseItems(true);
+
+        diseaseContainer.add(diseaseListView);
+        diseaseContainer.setOutputMarkupId(true);
+        add(diseaseContainer);
+    }
+
+    private void addPharmaceutical() {
+        pharmaceuticalData.add(new Pharmaceutical());
+        final WebMarkupContainer pharmaceuticalContainer =
+                new WebMarkupContainer("addPharmaceuticalInputContainer");
+
+        final ListView<Pharmaceutical> pharmaceuticalListView =
+                new ListView<Pharmaceutical>("addPharmaceuticalInput", pharmaceuticalData) {
+
+            @Override
+            protected void populateItem(ListItem item) {
+                final Pharmaceutical pharmaceuticalItem = (Pharmaceutical) item.getModelObject();
+                final AddingItemsView<String> pharmaceutical =
+                        new AddingItemsView<String>(
+                                "pharmaceutical",
+                                new PharmaceuticalTitleModel(pharmaceuticalItem),
+                                this,
+                                pharmaceuticalContainer,
+                                Pharmaceutical.class
+                        );
+                item.add(pharmaceutical);
+            }
+        };
+        pharmaceuticalListView.setOutputMarkupId(true);
+        pharmaceuticalListView.setReuseItems(true);
+
+        pharmaceuticalContainer.add(pharmaceuticalListView);
+        pharmaceuticalContainer.setOutputMarkupId(true);
+        add(pharmaceuticalContainer);
     }
 
     public boolean isValid(){
@@ -191,8 +224,6 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
                 error("Temperature must be a number!");
             }
         }
-        if (disease.getValue().isEmpty()) error("Disease is required!");
-        if (pharmaceutical.getValue().isEmpty()) error("Pharmaceutical is required!");
         return !hasError();
     }
 
@@ -275,5 +306,81 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             }
         });
         form.add(ajaxButton);
+    }
+
+    public Experiment getValidExperimentPart(Experiment experiment) {
+        AddExperimentEnvironmentDTO dto = getModelObject();
+        if(dto == null) return null;
+
+        if(dto.getWeather() == null) return null;
+        if(dto.getTemperature() == null) return null;
+        if(dto.getHardware() == null || dto.getHardware().isEmpty())
+            return null;
+        if(dto.getSoftware() == null || dto.getSoftware().isEmpty())
+            return null;
+        debug("AddExperimentEnvironmentForm required attributes are set");
+
+        List<Weather> weathers = weatherFacade.getAllRecords();
+        Weather weather = null;
+        for (Weather w : weathers){
+            if(w.getTitle().equals(dto.getWeather())){
+                weather = w;
+            }
+        }
+        if(weather == null) return null;
+        experiment.setWeather(weather);
+        debug("AddExperimentEnvironmentForm.weather was valid");
+
+        // TODO change type of temperature in DTO to int
+        int temperature = dto.getTemperature().intValue();
+        experiment.setTemperature(temperature);
+        debug("AddExperimentEnvironmentForm.temperature was valid");
+
+        //TODO find more effective way
+        List<Hardware> hwList = hardwareFacade.getItemsForList();
+        Set<Hardware> hardwareSet = new HashSet<Hardware>();
+        for (Hardware hw : hwList){
+            for(String hwTitle : dto.getHardware()){
+                if(hw.getTitle().equals(hwTitle))
+                    hardwareSet.add(hw);
+            }
+        }
+        if(hardwareSet.size() != dto.getHardware().size())
+            return null;
+        experiment.setHardwares(hardwareSet);
+        debug("AddExperimentEnvironmentForm.hardware was valid");
+
+        List<Software> swList = softwareFacade.getAllRecords();
+        Set<Software> softwareSet = new HashSet<Software>();
+        for (Software sw : swList){
+            for(String swTitle : dto.getSoftware()){
+                if(sw.getTitle().equals(swTitle))
+                    softwareSet.add(sw);
+            }
+        }
+        if(softwareSet.size() != dto.getSoftware().size())
+            return null;
+        experiment.setSoftwares(softwareSet);
+        debug("AddExperimentEnvironmentForm.software was valid");
+
+        Set<Disease> diseaseSet = new HashSet<Disease>();
+        for (Disease disease : diseaseData){
+            diseaseSet.add(disease);
+        }
+        if(diseaseSet.size() != diseaseData.size()) return null;
+        experiment.setDiseases(diseaseSet);
+        debug("AddExperimentEnvironmentForm.diseases was valid");
+
+        Set<Pharmaceutical> pharmaceuticalSet = new HashSet<Pharmaceutical>();
+        for (Pharmaceutical ph : pharmaceuticalData){
+            pharmaceuticalSet.add(ph);
+        }
+        if(pharmaceuticalSet.size() != pharmaceuticalData.size())
+            return null;
+        experiment.setPharmaceuticals(pharmaceuticalSet);
+        debug("AddExperimentEnvironmentForm.pharmaceuticals was valid");
+
+        debug("AddExperimentEnvironmentForm was valid");
+        return experiment;
     }
 }

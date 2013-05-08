@@ -11,11 +11,11 @@ import java.security.PrivateKey;
  * Date: 7.5.13
  * Time: 15:27
  */
-public class StimulusDescriptioinModel implements IModel<String> {
+public class StimulusDescriptionModel implements IModel<String> {
 
     private Stimulus object;
 
-    public StimulusDescriptioinModel(Stimulus stimulus){
+    public StimulusDescriptionModel(Stimulus stimulus){
         this.object = stimulus;
     }
 

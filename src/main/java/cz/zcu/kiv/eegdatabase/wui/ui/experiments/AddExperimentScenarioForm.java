@@ -1,20 +1,23 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptioinModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptionModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -28,16 +31,17 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
+import org.springframework.beans.factory.annotation.Autowired;
 
+import java.sql.Timestamp;
 import java.util.*;
 
 
 /**
  * Created by IntelliJ IDEA.
- * User: Matheo
+ * User: Matej Sutr
  * Date: 26.3.13
  * Time: 17:43
- * To change this template use File | Settings | File Templates.
  */
 public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     @SpringBean
@@ -48,12 +52,17 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     private PersonFacade personFacade;
     @SpringBean
     private StimulusFacade stimulusFacade;
+    @SpringBean
+    private ScenariosFacade scenarioFacade;
+    @SpringBean
+    private ProjectTypeFacade projectTypeFacade;
 
     private Experiment experiment = new Experiment();
     private Scenario scenarioEntity = new Scenario();
 
     private final List<Person> coExperimentersData = new ArrayList<Person>();
     private final List<Person> testedSubjectsData = new ArrayList<Person>();
+    private final List<Stimulus> stimuliData = new ArrayList<Stimulus>();
 
     final int AUTOCOMPLETE_ROWS = 10;
 
@@ -125,13 +134,34 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         add(group);
 
         CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
-        isDefaultGroup.setRequired(true);
         add(isDefaultGroup);
 
-        TextField<String> project = new TextField<String>("project");
-        //TODO autocomplete and create ProjectTypeFacade
+        AutoCompleteTextField<String> project = new AutoCompleteTextField<String>("project") {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<ProjectType> projectTypes = projectTypeFacade.getAllRecords();
+                for (final ProjectType pt : projectTypes)
+                {
+                    final String data = pt.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
         project.setRequired(true);
         add(project);
+
 
         Date now = new Date();
         getModelObject().setStart(now);
@@ -158,18 +188,17 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     }
     
     private void addStimulus() {
-        final List<Stimulus> stimulusList = new ArrayList<Stimulus>();
-        stimulusList.add(new Stimulus());
+        stimuliData.add(new Stimulus());
         final WebMarkupContainer stimulusContainer = new WebMarkupContainer("addStimulusInputContainer");
 
-        final ListView<Stimulus> stimulusListView = new ListView<Stimulus>("addStimulusInput", stimulusList) {
+        final ListView<Stimulus> stimulusListView = new ListView<Stimulus>("addStimulusInput", stimuliData) {
              @Override
             protected void populateItem(ListItem item) {
                 final Stimulus stimulusItem = (Stimulus) item.getModelObject();
                 final AddingItemsView<String> stimulus =
                         new AddingItemsView<String>(
                                 "stimuli",
-                                new StimulusDescriptioinModel(stimulusItem),
+                                new StimulusDescriptionModel(stimulusItem),
                                 this,
                                 stimulusContainer,
                                 Stimulus.class
@@ -323,7 +352,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
             @Override
             public Page createPage() {
-                return new AddTestedSubjectPage(getPage().getPageReference(), addTested);
+                return new AddPersonPage(getPage().getPageReference(),
+                        addTested, Util.ROLE_READER);
             }
         });
 
@@ -375,8 +405,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
             @Override
             public Page createPage() {
-                //TODO refactor AddTestedSubjectPage or create own class (AddCoExperimenterPage)
-                return new AddTestedSubjectPage(getPage().getPageReference(), newCoExperimenter);
+                return new AddPersonPage(getPage().getPageReference(),
+                        newCoExperimenter, Util.GROUP_EXPERIMENTER);
             }
         });
 
@@ -399,7 +429,10 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
         boolean validPersons = isPersonValid(testedSubjectsData) &&
                 isPersonValid(coExperimentersData);
-        return !hasError() && validPersons;
+
+        boolean isStimulusValid = isAutocompletableValid(stimuliData);
+
+        return !hasError() && validPersons && isStimulusValid;
     }
 
     private boolean isPersonValid(List<Person> persons) {
@@ -412,4 +445,77 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         return validPersons > 0;
     }
 
+    private boolean isAutocompletableValid(List<? extends IAutocompletable> list){
+         for (IAutocompletable item: list){
+             if(item.isValidOnChange())
+                 return true;
+         }
+         return false;
+    }
+
+    public Experiment getValidExperimentPart(Experiment experiment){
+        AddExperimentScenarioDTO dto = getModelObject();
+
+        if(dto == null) return null;
+
+        if(dto.getScenario() == null) return null;
+        if(dto.getGroup() == null) return null;
+        if(dto.getProject() == null) return null;
+        if(dto.getStart() == null) return null;
+        if(dto.getFinish() == null) return null;
+
+        if(testedSubjectsData.isEmpty()) return null;
+        //if(coExperimentersData.isEmpty()) return null; //valid (not required)
+        if(stimuliData.isEmpty()) return null;
+        debug("AddExperimentScenarioForm required attributes are set");
+
+        Scenario scenario = scenarioFacade.getScenarioByTitle(dto.getScenario());
+        if(scenario == null) return null;
+        experiment.setScenario(scenario);
+        debug("AddExperimentScenarioForm.scenario is valid");
+
+        ResearchGroup group = researchGroupFacade.getGroupByTitle(dto.getGroup());
+        if(group == null) return null;
+        experiment.setResearchGroup(group);
+        debug("AddExperimentScenarioForm.group is valid");
+
+        //TODO check if experiment has one or more project types
+        List<ProjectType> projects = projectTypeFacade.getAllRecords();
+        ProjectType projectType = null;
+        for (ProjectType pt : projects){
+            if(pt.getTitle().equals(dto.getProject()))
+                projectType = pt;
+        }
+        if(projectType == null) return null;
+        Set<ProjectType> projectTypes = new HashSet<ProjectType>();
+        projectTypes.add(projectType);
+        experiment.setProjectTypes(projectTypes);
+        debug("AddExperimentScenarioForm.projectType is valid");
+
+        if(dto.getStart().getTime() >= System.currentTimeMillis()) return null;
+        if(dto.getStart().getTime() >= dto.getFinish().getTime()) return null;
+        if(dto.getFinish().getTime() >= System.currentTimeMillis()) return null;
+        experiment.setStartTime(new Timestamp(dto.getStart().getTime()));
+        experiment.setEndTime(new Timestamp(dto.getFinish().getTime()));
+        debug("AddExperimentScenarioForm.start,end are valid");
+
+        //TODO add tests for CoExperimenters and TestedSubjects
+        List<Person> allPersons = personFacade.getAllRecords();
+        for (Person subject : testedSubjectsData){  }
+        for (Person subject : coExperimentersData){  }
+//        experiment.setPersons(new HashSet<Person>(allPersons));
+        debug("AddExperimentScenarioForm.testedSubjects are valid");
+        debug("AddExperimentScenarioForm.coExperimenters are valid");
+
+        Set<Stimulus> stimuliSet = new HashSet<Stimulus>();
+        for (Stimulus stimulus : stimuliData){
+            stimuliSet.add(stimulus);
+        }
+        if(stimuliSet.size() != stimuliData.size()) return null;
+        //TODO add attribute stimuliSet into Experiment
+        //experiment.setStimuli(stimuliSet);
+        debug("AddExperimentScenarioForm.stimuli are valid");
+
+        return experiment;
+    }
 }

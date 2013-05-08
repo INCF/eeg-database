@@ -108,6 +108,6 @@ public class Pharmaceutical implements Serializable, IAutocompletable {
     @Override
     @Transient
     public boolean isValidOnChange() {
-        return !(getTitle().equals(""));
+        return !(getTitle()==null || getTitle().equals(""));
     }
 }

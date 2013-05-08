@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import cz.zcu.kiv.eegdatabase.wui.core.dto.IdentifiDTO;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 
 import java.io.File;
 import java.io.Serializable;
@@ -13,13 +14,13 @@ import java.io.Serializable;
  * To change this template use File | Settings | File Templates.
  */
 public class AddExperimentResultsDTO extends IdentifiDTO implements Serializable {
-    private File resultFile;
+    private FileUpload resultFile;
 
-    public File getResultFile() {
+    public FileUpload getResultFile() {
         return resultFile;
     }
 
-    public void setResultFile(File resultFile) {
+    public void setResultFile(FileUpload resultFile) {
         this.resultFile = resultFile;
     }
 
