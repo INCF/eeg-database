@@ -93,31 +93,25 @@ public class WizardTabbedPanelPage extends MenuPage {
                   {
                     if (selectedTab == 0) {
                          if (scenarioForm.isValid()){
-                            System.out.println("SCE NA GREEN");
                             setTabClassGreen(selectedTab);
                         }
                         else {
-                            System.out.println("SCE NA RED");
                             setTabClassRed(selectedTab);
                         }
                     }
                     if (selectedTab == 1) {
                         if (environmentForm.isValid()){
-                            System.out.println("ENVI NA GREEN");
                             setTabClassGreen(selectedTab);
                         }
                         else {
-                            System.out.println("ENVI NA RED");
                             setTabClassRed(selectedTab);
                         }
                     }
                     if (selectedTab == 2) {
-                        if (resultsForm.isValid()){
-                            System.out.println("RES NA GREEN");
+                        if (resultForm.isValid()){
                             setTabClassGreen(selectedTab);
                         }
                         else {
-                            System.out.println("RES NA RED");
                             setTabClassRed(selectedTab);
                         }
                     }

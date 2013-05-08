@@ -35,10 +35,16 @@ public class ProjectTypeForm extends Form<ProjectType> {
         feedback.setOutputMarkupId(true);
         add(feedback);
 
-        add(new Label("addProjectHeader", "Add project type"));
+        add(new Label("addProjectHeader", ResourceUtils.getModel("pageTitle.addProjectTypeDefinition")));
 
-        add(new TextField<String>("title").setRequired(true));
-        add(new TextArea<String>("description").setRequired(true));
+        TextField<String> title =  new TextField<String>("title");
+        title.setRequired(true);
+        title.setLabel(ResourceUtils.getModel("label.title"));
+        add(title);
+        TextArea<String> description = new TextArea<String>("description");
+        description.setRequired(true);
+        description.setLabel(ResourceUtils.getModel("label.description"));
+        add(description);
 
         add(
             new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
@@ -64,7 +70,7 @@ public class ProjectTypeForm extends Form<ProjectType> {
             })
         );
         add(
-            new AjaxButton("closeForm", this) {
+            new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     window.close(target);

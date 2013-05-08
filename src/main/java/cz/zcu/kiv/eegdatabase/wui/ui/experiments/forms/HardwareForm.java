@@ -14,6 +14,7 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
+import org.opensaml.util.resource.Resource;
 
 /**
  * Created by IntelliJ IDEA.
@@ -35,10 +36,24 @@ public class HardwareForm extends Form<Hardware> {
         add(feedback);
 
         add(new Label("addHWHeader", ResourceUtils.getModel("pageTitle.addHardwareDefinition")));
-        add(new TextField<String>("title").setRequired(true));
-        add(new TextField<String>("type").setRequired(true));
-        add(new TextArea<String>("description").setRequired(true));
-        add(new CheckBox("defaultNumber"));
+
+        TextField<String> title =  new TextField<String>("title");
+        title.setRequired(true);
+        title.setLabel(ResourceUtils.getModel("label.title"));
+        add(title);
+
+        TextField<String> type = new TextField<String>("type");
+        type.setRequired(true);
+        type.setLabel(ResourceUtils.getModel("label.type"));
+        add(type);
+
+        TextArea<String> description = new TextArea<String>("description");
+        description.setRequired(true);
+        description.setLabel(ResourceUtils.getModel("label.description"));
+        add(description);
+        CheckBox defaultNumber = new CheckBox("defaultNumber");
+        defaultNumber.setLabel(ResourceUtils.getModel("label.defaultHardware"));
+        add(defaultNumber);
 
         add(
                 new AjaxButton("submitForm", this) {
@@ -69,7 +84,7 @@ public class HardwareForm extends Form<Hardware> {
         );
 
         add(
-                new AjaxButton("closeForm", this) {}.
+                new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {}.
                         add(new AjaxEventBehavior("onclick") {
                     @Override
                     protected void onEvent(AjaxRequestTarget target) {

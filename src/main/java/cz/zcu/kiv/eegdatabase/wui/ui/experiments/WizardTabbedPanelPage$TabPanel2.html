@@ -10,33 +10,33 @@
         <div wicket:id="addPharmaModal"></div>
 
         <div class="form-item">
-            <label for="hardware">* Hardware</label>
+            <label for="hardware"><wicket:message key="label.hardware" /></label>
             <select name="hardware" wicket:id="hardware" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
             </select>
             <input type="button" wicket:id="addHW" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="software">* Software</label>
+            <label for="software"><wicket:message key="label.software" /></label>
             <select name="software" wicket:id="software" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
             </select>
             <input type="button" wicket:id="addSW" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="weather">* Weather</label>
+            <label for="weather"><wicket:message key="label.weather" /></label>
             <select name="weather" wicket:id="weather">
             </select>
             <input type="button" wicket:id="addWeather" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="weatherNote">Weather note</label>
+            <label for="weatherNote"><wicket:message key="label.weatherNote" /></label>
             <textarea wicket:id="weatherNote"></textarea>
         </div>
 
         <div class="form-item">
-            <label for="temperature">* Temperature</label>
+            <label for="temperature"><wicket:message key="label.temperature" /></label>
             <input type="number" wicket:id="temperature" name="temperature"/>
         </div>
 
@@ -65,7 +65,7 @@
         </div>
 
         <div class="form-item">
-            <label for="privateNote">Private note</label>
+            <label for="privateNote"><wicket:message key="label.private" /></label>
             <input type="text" wicket:id="privateNote" name="privateNote"/>
         </div>
     </form>

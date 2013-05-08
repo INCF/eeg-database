@@ -162,7 +162,6 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         project.setRequired(true);
         add(project);
 
-
         Date now = new Date();
         getModelObject().setStart(now);
         DateTimeField startDate = new DateTimeField("start");
