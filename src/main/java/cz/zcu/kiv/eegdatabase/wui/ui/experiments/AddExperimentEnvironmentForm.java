@@ -144,6 +144,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
+
+        System.out.println("JSEM V BODE konstructor");
     }
 
     public boolean isValid(){
@@ -161,24 +163,33 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         }
         if (disease.getValue().isEmpty()) error("Disease is required!");
         if (pharmaceutical.getValue().isEmpty()) error("Pharmaceutical is required!");
-        System.out.println("VALIDUJI ENVI S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
 
-    private void addModalWindowAndButton(Form form, String modalWindowName, String cookieName,
-                                         String buttonName, final String targetClass){
+    public void updateSoftware(){
+        System.out.println("Updatuji software! :)");
+    }
+
+    public AddExperimentEnvironmentForm getEnviForm(){
+        return this;
+    }
+
+    private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
+                                         final String buttonName, final String targetClass){
 
         final ModalWindow addedWindow;
         form.add(addedWindow = new ModalWindow(modalWindowName));
         addedWindow.setCookieName(cookieName);
-
+        System.out.println("JSEM V BODE addedWindow");
         addedWindow.setPageCreator(new ModalWindow.PageCreator() {
 
             @Override
             public Page createPage() {
                 try{
-                    Constructor<?> cons = Class.forName(targetClass).getConstructor(
-                            PageReference.class, ModalWindow.class);
+                    System.out.println("JSEM V BODE CreatePage");
+                    Constructor<?> cons = null;
+                    cons = Class.forName(targetClass).getConstructor(
+                    PageReference.class, ModalWindow.class);
 
                     return (Page) cons.newInstance(
                             getPage().getPageReference(), addedWindow);
@@ -201,12 +212,14 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form){
+                System.out.println("JSEM V BODE onSubmit");
                 addedWindow.show(target);
             }
         };
         ajaxButton.add(new AjaxEventBehavior("onclick") {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
+                System.out.println("JSEM V BODE onclick");
                 addedWindow.show(target);
             }
         });
