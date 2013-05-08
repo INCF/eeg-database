@@ -48,6 +48,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private TextField<String> disease = null;
     private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
+    private boolean locked = false;
 
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
@@ -75,8 +76,17 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         hw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                hw.setChoices(getHardwareTitles());
-                target.add(hw);
+                if (!locked) {
+                    locked = true;
+                    hw.setChoices(getHardwareTitles());
+                    target.add(hw);
+                }
+            }
+        });
+        hw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
             }
         });
         add(hw);
@@ -84,11 +94,20 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         ArrayList<String> softwareTitles = getSoftwareTitles();
         sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
-        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+        sw.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                sw.setChoices(getSoftwareTitles());
-                target.add(sw);
+                if (!locked) {
+                    locked = true;
+                    sw.setChoices(getSoftwareTitles());
+                    target.add(sw);
+                }
+            }
+        });
+        sw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
             }
         });
         add(sw);
@@ -96,11 +115,20 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         ArrayList<String> weatherTitles = getWeatherTitles();
         weather = new DropDownChoice<String>("weather", weatherTitles);
         weather.setRequired(true);
-        weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+        weather.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                weather.setChoices(getWeatherTitles());
-                target.add(weather);
+                if (!locked) {
+                    locked = true;
+                    weather.setChoices(getWeatherTitles());
+                    target.add(weather);
+                }
+            }
+        });
+        weather.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
             }
         });
         add(weather);
