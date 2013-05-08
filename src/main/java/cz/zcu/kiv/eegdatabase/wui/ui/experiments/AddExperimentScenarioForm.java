@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
@@ -48,6 +49,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
     private PersonFacade personFacade;
     @SpringBean
     private StimulusFacade stimulusFacade;
+    @SpringBean
+    private ProjectTypeFacade projectTypeFacade;
 
     private Experiment experiment = new Experiment();
     private Scenario scenarioEntity = new Scenario();
@@ -128,8 +131,29 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         isDefaultGroup.setRequired(true);
         add(isDefaultGroup);
 
-        TextField<String> project = new TextField<String>("project");
-        //TODO autocomplete and create ProjectTypeFacade
+        TextField<String> project = new AutoCompleteTextField<String>("project") {
+            @Override
+            protected Iterator<String> getChoices(String input)
+            {
+                if (Strings.isEmpty(input))
+                {
+                    List<String> emptyList = Collections.emptyList();
+                    return emptyList.iterator();
+                }
+                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
+                List<ProjectType> projectTypes = projectTypeFacade.getAllRecords();
+                for (final ProjectType pt : projectTypes)
+                {
+                    final String data = pt.getTitle();
+                    if (data.toUpperCase().startsWith(input.toUpperCase()))
+                    {
+                        choices.add(data);
+                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
+                    }
+                }
+                return choices.iterator();
+            }
+        };
         project.setRequired(true);
         add(project);
 
