@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentEnvironmentForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.SoftwareForm;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -34,7 +35,6 @@ import org.apache.wicket.util.time.Duration;
 public class AddSoftwarePage extends WebPage {
     public AddSoftwarePage(final PageReference modalWindowPage,
                                 final ModalWindow window){
-
         SoftwareForm form = new SoftwareForm("addForm", window);
         add(form);
     }

@@ -14,10 +14,11 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
-import org.opensaml.saml2.metadata.GivenName;
-import sun.rmi.runtime.Log;
 
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
+import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -46,7 +47,6 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
         super(id, model);
 
         this.modelClass = modelClass;
-        System.out.println("Model class: " + this.modelClass);
 
         setRequired(true);
         setOutputMarkupId(true);

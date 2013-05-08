@@ -11,6 +11,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
@@ -47,9 +48,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private TextField<String> disease = null;
     private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
+    private boolean locked = false;
 
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
+
+        getModelObject().setDisease("");
 
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
@@ -66,46 +70,75 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         addModalWindowAndButton(this, "addWeatherModal", "add-weather",
                 "addWeather", AddWeatherPage.class.getName());
 
-        List<Hardware> hardwares = hardwareFacade.getAllRecords();
-        ArrayList<String> hardwareTitles = new ArrayList<String>();
-        if (hardwares != null){
-            for (Hardware hw : hardwares){
-                hardwareTitles.add(hw.getTitle());
-            }
-        }
+        ArrayList<String> hardwareTitles = getHardwareTitles();
         hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
+        hw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (!locked) {
+                    locked = true;
+                    hw.setChoices(getHardwareTitles());
+                    target.add(hw);
+                }
+            }
+        });
+        hw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
+            }
+        });
         add(hw);
 
-        List<Software> softwares = softwareFacade.getAllRecords();
-        ArrayList<String> softwareTitles = new ArrayList<String>();
-        if (softwares != null){
-            for (Software sw : softwares){
-                softwareTitles.add(sw.getTitle());
-            }
-        }
+        ArrayList<String> softwareTitles = getSoftwareTitles();
         sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
+        sw.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (!locked) {
+                    locked = true;
+                    sw.setChoices(getSoftwareTitles());
+                    target.add(sw);
+                }
+            }
+        });
+        sw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
+            }
+        });
         add(sw);
 
-        List<Weather> weathers = weatherFacade.getAllRecords();
-        ArrayList<String> weatherTitles = new ArrayList<String>();
-        if (weathers != null){
-            for (Weather w : weathers){
-                weatherTitles.add(w.getTitle());
-            }
-        }
+        ArrayList<String> weatherTitles = getWeatherTitles();
         weather = new DropDownChoice<String>("weather", weatherTitles);
         weather.setRequired(true);
+        weather.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (!locked) {
+                    locked = true;
+                    weather.setChoices(getWeatherTitles());
+                    target.add(weather);
+                }
+            }
+        });
+        weather.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                locked = false;
+            }
+        });
         add(weather);
 
         add(new TextArea<String>("weatherNote"));
         temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
         add(temperature);
-        //TODO autocomplete and create DiseaseFacade
 
-        final AutoCompleteTextField<String> disease = new AutoCompleteTextField<String>("disease")
+        disease = new AutoCompleteTextField<String>("disease")
         {
             @Override
             protected Iterator<String> getChoices(String input)
@@ -160,24 +193,56 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         }
         if (disease.getValue().isEmpty()) error("Disease is required!");
         if (pharmaceutical.getValue().isEmpty()) error("Pharmaceutical is required!");
-        System.out.println("VALIDUJI ENVI S VYSLEDKEM: "+!hasError());
         return !hasError();
     }
 
-    private void addModalWindowAndButton(Form form, String modalWindowName, String cookieName,
-                                         String buttonName, final String targetClass){
+    private ArrayList<String> getWeatherTitles(){
+        List<Weather> weathers = weatherFacade.getAllRecords();
+        ArrayList<String> weatherTitles = new ArrayList<String>();
+        if (weathers != null){
+            for (Weather w : weathers){
+                weatherTitles.add(w.getTitle());
+            }
+        }
+        return weatherTitles;
+    }
+
+    private ArrayList<String> getSoftwareTitles(){
+        List<Software> softwares = softwareFacade.getAllRecords();
+        ArrayList<String> softwareTitles = new ArrayList<String>();
+        if (softwares != null){
+            for (Software sw : softwares){
+                softwareTitles.add(sw.getTitle());
+            }
+        }
+        return softwareTitles;
+    }
+
+    private ArrayList<String> getHardwareTitles(){
+        List<Hardware> hardwares = hardwareFacade.getAllRecords();
+        ArrayList<String> hardwareTitles = new ArrayList<String>();
+        if (hardwares != null){
+            for (Hardware hw : hardwares){
+                hardwareTitles.add(hw.getTitle());
+            }
+        }
+        return hardwareTitles;
+    }
+
+    private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
+                                         final String buttonName, final String targetClass){
 
         final ModalWindow addedWindow;
         form.add(addedWindow = new ModalWindow(modalWindowName));
         addedWindow.setCookieName(cookieName);
-
         addedWindow.setPageCreator(new ModalWindow.PageCreator() {
 
             @Override
             public Page createPage() {
                 try{
-                    Constructor<?> cons = Class.forName(targetClass).getConstructor(
-                            PageReference.class, ModalWindow.class);
+                    Constructor<?> cons = null;
+                    cons = Class.forName(targetClass).getConstructor(
+                    PageReference.class, ModalWindow.class);
 
                     return (Page) cons.newInstance(
                             getPage().getPageReference(), addedWindow);
