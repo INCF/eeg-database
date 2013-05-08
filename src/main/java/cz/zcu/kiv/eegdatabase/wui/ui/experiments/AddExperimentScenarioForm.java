@@ -171,14 +171,13 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 "stimuli",
                                 new StimulusDescriptioinModel(stimulusItem),
                                 this,
-                                propertyContainer,
+                                stimulusContainer,
                                 Stimulus.class
                         );
+                stimulus.setRequired(true);
                 item.add(stimulus);
             }
         };
-
-//        stimulusListView.setRequired(true);    //TODO figure out how to make it required
         stimulusListView.setOutputMarkupId(true);
         stimulusListView.setReuseItems(true);
 
@@ -200,8 +199,10 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 "subjects",
                                 new PersonNameModel(person),
                                 this,
-                                testedSubjectContainer
+                                testedSubjectContainer,
+                                Person.class
                         );
+                testSubject.setRequired(true);
                 item.add(testSubject);
             }
         };
@@ -228,7 +229,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
                                 "coExperimenters",
                                 new PersonNameModel(person),
                                 this,
-                                coExperimentersContainer
+                                coExperimentersContainer,
+                                Person.class
                         );
                 item.add(testSubject);
             }
