@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
@@ -22,6 +23,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
+import javax.annotation.Resource;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -48,7 +50,6 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private TextField<String> disease = null;
     private TextField<String> pharmaceutical = null;
     final int AUTOCOMPLETE_ROWS = 10;
-    private boolean locked = false;
 
     public AddExperimentEnvironmentForm(String id){
         super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
@@ -73,20 +74,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         ArrayList<String> hardwareTitles = getHardwareTitles();
         hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
+        hw.setLabel(ResourceUtils.getModel("label.hardware"));
         hw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (!locked) {
-                    locked = true;
-                    hw.setChoices(getHardwareTitles());
-                    target.add(hw);
-                }
-            }
-        });
-        hw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
-                locked = false;
+                hw.setChoices(getHardwareTitles());
+                target.add(hw);
             }
         });
         add(hw);
@@ -94,20 +87,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         ArrayList<String> softwareTitles = getSoftwareTitles();
         sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
         sw.setRequired(true);
-        sw.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
+        sw.setLabel(ResourceUtils.getModel("label.software"));
+        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (!locked) {
-                    locked = true;
-                    sw.setChoices(getSoftwareTitles());
-                    target.add(sw);
-                }
-            }
-        });
-        sw.add(new AjaxFormComponentUpdatingBehavior("onblur") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
-                locked = false;
+                sw.setChoices(getSoftwareTitles());
+                target.add(sw);
             }
         });
         add(sw);
@@ -115,27 +100,22 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         ArrayList<String> weatherTitles = getWeatherTitles();
         weather = new DropDownChoice<String>("weather", weatherTitles);
         weather.setRequired(true);
-        weather.add(new AjaxFormComponentUpdatingBehavior("onfocus") {
+        weather.setLabel(ResourceUtils.getModel("label.weather"));
+        weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (!locked) {
-                    locked = true;
-                    weather.setChoices(getWeatherTitles());
-                    target.add(weather);
-                }
-            }
-        });
-        weather.add(new AjaxFormComponentUpdatingBehavior("onblur") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
-                locked = false;
+                weather.setChoices(getWeatherTitles());
+                target.add(weather);
             }
         });
         add(weather);
 
-        add(new TextArea<String>("weatherNote"));
+        TextArea<String> weatherNote = new TextArea<String>("weatherNote");
+        weatherNote.setLabel(ResourceUtils.getModel("label.weatherNote"));
+        add(weatherNote);
         temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
+        temperature.setLabel(ResourceUtils.getModel("label.temperature"));
         add(temperature);
 
         disease = new AutoCompleteTextField<String>("disease")
@@ -163,6 +143,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             }
         };
         disease.setRequired(true);
+        disease.setLabel(ResourceUtils.getModel("label.disease"));
         disease.setOutputMarkupId(true);
         add(disease);
 
@@ -170,9 +151,12 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         /* TODO check if this attribute is required as stated in prototype*/
         pharmaceutical = new TextField<String>("pharmaceutical");
         pharmaceutical.setRequired(true);
+        pharmaceutical.setLabel(ResourceUtils.getModel("label.pharmaceutical"));
         add(pharmaceutical);
 
-        add(new TextField<String>("privateNote"));
+        TextField<String> privateNote = new TextField<String>("privateNote");
+        privateNote.setLabel(ResourceUtils.getModel("label.private"));
+        add(privateNote);
 
         setOutputMarkupId(true);
         AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
