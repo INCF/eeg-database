@@ -8,7 +8,10 @@ import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptionModel;
 import org.apache.wicket.Page;
@@ -24,14 +27,12 @@ import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -180,7 +181,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         add(finishDate);
 
         addTestedSubject();
-        addStimulus();
+        //addStimulus();
         addCoExperimenters();
 
         createModalWindows();
@@ -369,31 +370,6 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         FormComponentLabel testedLabel = new FormComponentLabel("subjectsLb", addTestedAjax);
         add(addTestedAjax, testedLabel);
 
-
-        final ModalWindow newStimulus;
-        add(newStimulus = new ModalWindow("addStimulusModal"));
-        newStimulus.setCookieName("add-stimulus");
-
-        newStimulus.setPageCreator(new ModalWindow.PageCreator() {
-
-            @Override
-            public Page createPage() {
-                return new AddStimulusPage(getPage().getPageReference(), newStimulus);
-            }
-        });
-
-        AjaxButton newStimulusAjax = new AjaxButton("addStimulus", this)
-        {};
-        newStimulusAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                newStimulus.show(target);
-            }
-        });
-        newStimulusAjax.setLabel(ResourceUtils.getModel("label.stimulus"));
-
-        FormComponentLabel stimulusLabel = new FormComponentLabel("stimulusLb", newStimulusAjax);
-        add(newStimulusAjax, stimulusLabel);
 
 
         final ModalWindow newCoExperimenter;

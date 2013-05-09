@@ -389,7 +389,7 @@ public class Person implements Serializable, Comparable<Person>, IAutocompletabl
     @Override
     @Transient
     public String getAutocompleteData() {
-        return getGivenname() + " " + getSurname();
+        return getGivenname() + " " + getSurname() + ", " + getEmail();
     }
 
     @Override
