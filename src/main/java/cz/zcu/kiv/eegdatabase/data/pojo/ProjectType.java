@@ -3,6 +3,11 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +23,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="PROJECT_TYPE")
-public class ProjectType implements Serializable {
+public class ProjectType implements Serializable, IAutocompletable {
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +38,9 @@ public class ProjectType implements Serializable {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    @Autowired
+    @Transient
+    private ProjectTypeFacade projectTypeFacade;
 
     public ProjectType() {
 
@@ -83,5 +91,20 @@ public class ProjectType implements Serializable {
 
     public void setResearchGroups(Set<ResearchGroup> researchGroups) {
         this.researchGroups = researchGroups;
+    }
+
+    @Override
+    public String getAutocompleteData() {
+        return getTitle();
+    }
+
+    @Override
+    public GenericFacade getFacade() {
+        return projectTypeFacade;
+    }
+
+    @Override
+    public boolean isValidOnChange() {
+        return !(getTitle()==null || getTitle().equals(""));
     }
 }

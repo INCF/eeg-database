@@ -13,6 +13,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.ProjectTypeTitleModel;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptionModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -63,6 +64,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
 
     private final List<Person> coExperimentersData = new ArrayList<Person>();
     private final List<Person> testedSubjectsData = new ArrayList<Person>();
+    private final List<ProjectType> projectTypeData = new ArrayList<ProjectType>();
     private final List<Stimulus> stimuliData = new ArrayList<Stimulus>();
 
     final int AUTOCOMPLETE_ROWS = 10;
@@ -137,7 +139,7 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
         add(isDefaultGroup);
 
-        AutoCompleteTextField<String> project = new AutoCompleteTextField<String>("project") {
+        /*AutoCompleteTextField<String> project = new AutoCompleteTextField<String>("project") {
             @Override
             protected Iterator<String> getChoices(String input)
             {
@@ -161,7 +163,8 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
             }
         };
         project.setRequired(true);
-        add(project);
+        add(project); */
+        addProjectType();
 
         Date now = new Date();
         getModelObject().setStart(now);
@@ -213,6 +216,34 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         stimulusContainer.add(stimulusListView);
         stimulusContainer.setOutputMarkupId(true);
         add(stimulusContainer);
+    }
+
+    private void addProjectType() {
+        projectTypeData.add(new ProjectType());
+        final WebMarkupContainer projectTypeContainer = new WebMarkupContainer("addProjectInputContainer");
+
+        final ListView<ProjectType> projectTypes = new ListView<ProjectType>("addProjectInput",projectTypeData) {
+            @Override
+            protected void populateItem(ListItem item) {
+                final ProjectType pt = (ProjectType) item.getModelObject();
+                final AddingItemsView<String> projectT =
+                        new AddingItemsView<String>(
+                                "project",
+                                new ProjectTypeTitleModel(pt),
+                                this,
+                                projectTypeContainer,
+                                ProjectType.class
+                        );
+                projectT.setRequired(true);
+                item.add(projectT);
+            }
+        };
+        projectTypes.setOutputMarkupId(true);
+        projectTypes.setReuseItems(true);
+
+        projectTypeContainer.add(projectTypes);
+        projectTypeContainer.setOutputMarkupId(true);
+        add(projectTypeContainer);
     }
 
     private void addTestedSubject() {

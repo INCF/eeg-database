@@ -1,11 +1,9 @@
 package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
-import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
@@ -38,6 +36,8 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
     private PharmaceuticalFacade pharmaceuticalFacade;
     @SpringBean
     private DiseaseFacade diseaseFacade;
+    @SpringBean
+    private ProjectTypeFacade projectTypeFacade;
 
     private Integer AUTOCOMPLETE_ROWS = 10;
     private ListView listView;
@@ -145,6 +145,8 @@ public class AddingItemsView<T> extends AutoCompleteTextField<T> {
             return pharmaceuticalFacade;
         if(c.equals(Disease.class))
             return diseaseFacade;
+        if(c.equals(ProjectType.class))
+            return projectTypeFacade;
         return null;
     }
 }

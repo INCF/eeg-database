@@ -21,10 +21,12 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.Strings;
@@ -117,6 +119,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         TextArea<String> weatherNote = new TextArea<String>("weatherNote");
         weatherNote.setLabel(ResourceUtils.getModel("label.weatherNote"));
         add(weatherNote);
+
         temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
         temperature.setLabel(ResourceUtils.getModel("label.temperature"));

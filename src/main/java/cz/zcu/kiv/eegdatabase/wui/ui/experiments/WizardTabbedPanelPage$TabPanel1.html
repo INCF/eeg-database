@@ -29,7 +29,11 @@
             <label for="project">
                 <wicket:message key="label.projectType">Project type</wicket:message>
             </label>
-            <input type="text" wicket:id="project"/>
+            <span wicket:id="addProjectInputContainer">
+                <span wicket:id="addProjectInput">
+                    <input type="text" wicket:id="project"/>
+                </span>
+            </span>
             <input type="button" wicket:id="newProject" name="newProject" value="Add">
         </div>
 
