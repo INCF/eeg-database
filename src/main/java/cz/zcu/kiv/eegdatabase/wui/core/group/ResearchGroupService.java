@@ -77,12 +77,4 @@ public interface ResearchGroupService extends GenericService<ResearchGroup, Inte
 
     void grantGroupPermisson(GroupPermissionRequest request);
 
-	/**
-     * Changer of the research group status paid/unpaid
-     * @param group the given research group
-     * @param paid true/false
-     */
-
-    public void changeStatus(ResearchGroup group, boolean paid);
-
 }

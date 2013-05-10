@@ -1,0 +1,17 @@
+<wicket:panel>
+	<form class="standardForm" wicket:id="form">
+        <fieldset>
+
+          <div class="checkBox">
+            <label wicket:id="paidAccount.label"/>
+            <input type="checkbox" class="checkBoxBox" wicket:id="paidAccount"/>
+			<div wicket:id="paidAccount.feedback"></div>
+          </div>
+
+          <div class="itemBox">
+            <input type="submit" wicket:id="submitButton" class="submitButton lightButtonLink" />
+			<input type="submit" wicket:id="cancelButton" class="submitButton lightButtonLink" />
+          </div>
+        </fieldset>
+      </form>
+</wicket:panel>
