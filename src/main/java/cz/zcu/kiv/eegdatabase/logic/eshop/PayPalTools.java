@@ -51,7 +51,7 @@ public class PayPalTools {
             BasicAmountType totalAmount = new BasicAmountType();
             // Currency code
             // For developing purposes set to GBP, might be changes to EUR or an input param in case of multi-currency store
-            totalAmount.setCurrencyID(CurrencyCodeType.GBP);
+            totalAmount.setCurrencyID(CurrencyCodeType.EUR);
             totalAmount.setValue(Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()));
 
             details.setOrderTotal(totalAmount);
@@ -61,7 +61,7 @@ public class PayPalTools {
             details.setAllowNote("0");   //No notes to be accepted
 
             // HardCoded Strings. Will be replaced when eshop goes live and Experiments are replaced with prepared packages.
-            details.setOrderDescription("Experiments for total of: " + Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()) + " GBP.");
+            details.setOrderDescription("Experiments for total of: " + Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()) + " EUR.");
 
             setExpressCheckoutReq.setSetExpressCheckoutRequestDetails(details);
 
@@ -119,7 +119,7 @@ public class PayPalTools {
             BasicAmountType totalAmount = new BasicAmountType();
             // Currency code
             // For developing purposes set to GBP, might be changes to EUR or an input param in case of multi-currency store
-            totalAmount.setCurrencyID(CurrencyCodeType.GBP);
+            totalAmount.setCurrencyID(CurrencyCodeType.EUR);
             totalAmount.setValue(Double.toString(EEGDataBaseSession.get().getShoppingCart().getTotalPrice()));
             paydtl.setOrderTotal(totalAmount);
             payDetails.add(paydtl);
