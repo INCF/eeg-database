@@ -16,36 +16,65 @@ import java.util.List;
  * @author veveri
  */
 public interface PersonalLicenseService extends GenericService<PersonalLicense, Integer> {
-	
+
+	/**
+	 * Saves into database new PersonalLicense (only yet inactive request).
+	 *
+	 * @param personalLicense The object to be saved.
+	 */
 	public void createRequestForLicense(PersonalLicense personalLicense);
-	
+
+	/**
+	 * Accepts Lincese request (specified by PersonalLicense object). Sets acceptedDate flag and the license will become active.
+	 * Also sends info email to the applicant.
+	 *
+	 * @param personalLicense License to be rejected.
+	 */
 	public void confirmRequestForLicense(PersonalLicense personalLicense);
+
+	/**
+	 * Rejects Lincese request (specified by PersonalLicense object). Deletes it
+	 * from database and sends info email to the applicant.
+	 *
+	 * @param personalLicense License to be rejected.
+	 */
+	public void rejectRequestForLicense(PersonalLicense personalLicense);
 
 	/**
 	 *
 	 * @param group research group to search by
-	 * @return list of PersonalLicenses NOT confirmed by admin or unpaid, or empty list
+	 * @return list of PersonalLicenses NOT confirmed by admin or unpaid, or
+	 * empty list
 	 */
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
 
 	/**
 	 *
 	 * @param group research group to search by
-	 * @return list of PersonalLicenses confirmed by admin or paid, or empty list
+	 * @return list of PersonalLicenses confirmed by admin or paid, or empty
+	 * list
 	 */
 	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group);
-	
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted); 
-			
 
 	/**
-     * Adds a single license to the person.
-     * @param license license to be added
-     * @param person person
-     * @return true if success, false if not (e.g. person already has the license)
-     */
-    public boolean addLicenseToPerson(Person person, License license);
+	 * Returns list of license requests requested by specified person or empty
+	 * list.
+	 *
+	 * @param applicant Person whose requests will be returned.
+	 * @param accepted Flag determining, what kind of requests should be
+	 * fetched. True means only accepted (active) PersonalLicenses will be
+	 * returned. False means only pending licenses will be returned.
+	 * @return
+	 */
+	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
 
-	public void rejectRequestForLicense(PersonalLicense personalLicense);
-	
+	/**
+	 * Adds a single license to the person.
+	 *
+	 * @param license license to be added
+	 * @param person person
+	 * @return true if success, false if not (e.g. person already has the
+	 * license)
+	 */
+	public boolean addLicenseToPerson(Person person, License license);
 }

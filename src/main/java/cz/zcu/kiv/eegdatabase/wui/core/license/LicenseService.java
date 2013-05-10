@@ -25,14 +25,40 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 */
 	public void addLicenseForPackage(License license, ExperimentPackage group);
 	
+	/**
+	 * Detaches License object from given ExperimentPackage. Deletes from database only the connection, both objects remain stored.
+	 * @param license
+	 * @param group 
+	 */
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
 		
+	/**
+	 * Returns the one global public License object.
+	 * @return global shared public license.
+	 */
 	public License getPublicLicense();
 
+	/**
+	 * Returns all licenses of a given type for specified group.
+	 * @param group Group to get licenses for
+	 * @param type Fetch only licenses of this type.
+	 * @return list of licenses that match the given criteria.
+	 */
 	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
 
+	/**
+	 * Returns all licenses of a given types for specified group.
+	 * @param group Group to get licenses for
+	 * @param type Fetch only licenses of specified types
+	 * @return list of licenses that match the given criteria.
+	 */
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
+	/**
+	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
+	 * @param group Whose license to fetch.
+	 * @return Group's owner license.
+	 */
 	public License getOwnerLicense(ResearchGroup group);
 	
 	/**

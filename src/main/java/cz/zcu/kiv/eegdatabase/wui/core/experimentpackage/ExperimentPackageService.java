@@ -13,12 +13,19 @@ import java.util.List;
 public interface ExperimentPackageService extends GenericService<ExperimentPackage, Integer> {
 
     /**
-     * Returns list of packages belonging to the research groub
+     * Returns list of packages belonging to the research group
      * @param researchGroupId id of the research group
      * @return list of packages or an empty list
      */
     public List<ExperimentPackage> listExperimentPackagesByGroup(int researchGroupId);
 	
+	/**
+	 * Saves into database new ExperimentPackage. 
+	 * @param pack Package that should be stored into database.
+	 * @param license Default license the specified pack will be published under. Can be null in case of private licenses.
+	 * If the group doens't have rights to create private packages, exception will be thrown.
+	 * @return 
+	 */
 	public Integer create(ExperimentPackage pack, License license);
 
 }

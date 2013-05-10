@@ -16,14 +16,41 @@ import java.util.List;
  */
 public interface LicenseFacade extends GenericFacade<License, Integer> {
 	
+	/**
+	 * Adds specified license to the ExperimentPackage. Saves the license into database and creates the necessary connection.
+	 * @param license New License object to be attached to the ExperimentPackage.
+	 * @param group 
+	 */
 	public void addLicenseForPackage(License license, ExperimentPackage group);
 	
+	/**
+	 * Detaches License object from given ExperimentPackage. Deletes from database only the connection, both objects remain stored.
+	 * @param license
+	 * @param group 
+	 */
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
 	
+	/**
+	 * Saves into database new PersonalLicense (only yet inactive request).
+	 *
+	 * @param personalLicense The object to be saved.
+	 */
 	public void createRequestForLicense(PersonalLicense personalLicense);
 	
+	/**
+	 * Accepts Lincese request (specified by PersonalLicense object). Sets acceptedDate flag and the license will become active.
+	 * Also sends info email to the applicant.
+	 *
+	 * @param personalLicense License to be rejected.
+	 */
 	public void confirmRequestForLicense(PersonalLicense personalLicense);
 
+	/**
+	 * Rejects Lincese request (specified by PersonalLicense object). Deletes it
+	 * from database and sends info email to the applicant.
+	 *
+	 * @param personalLicense License to be rejected.
+	 */
 	public void rejectRequestForLicense(PersonalLicense personalLicense);
 
 	/**
@@ -40,18 +67,64 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 */
 	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group);
 	
+	/**
+	 * Returns list of license requests requested by specified person or empty
+	 * list.
+	 *
+	 * @param applicant Person whose requests will be returned.
+	 * @param accepted Flag determining, what kind of requests should be
+	 * fetched. True means only accepted (active) PersonalLicenses will be
+	 * returned. False means only pending licenses will be returned.
+	 * @return
+	 */
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
 
+	/**
+	 * Adds a single license to the person.
+	 *
+	 * @param license license to be added
+	 * @param person person
+	 * @return true if success, false if not (e.g. person already has the
+	 * license)
+	 */
 	public boolean addLicenseToPerson(License license, Person person);
 
+	/**
+	 * Adds a public license to the person.
+	 *
+	 * @param person person
+	 * @return true if success, false if not (e.g. person already has the
+	 * license)
+	 */
 	public boolean addPublicLicenseToPerson(Person person);
 
+	/**
+	 * Returns the one global public License object.
+	 * @return global shared public license.
+	 */
 	public License getPublicLicense();
 
+	/**
+	 * Returns all licenses of a given type for specified group.
+	 * @param group Group to get licenses for
+	 * @param type Fetch only licenses of this type.
+	 * @return list of licenses that match the given criteria.
+	 */
 	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
 
+	/**
+	 * Returns all licenses of a given types for specified group.
+	 * @param group Group to get licenses for
+	 * @param type Fetch only licenses of specified types.
+	 * @return list of licenses that match the given criteria.
+	 */
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
+	/**
+	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
+	 * @param group Whose license to fetch.
+	 * @return Group's owner license.
+	 */
 	public License getOwnerLicense(ResearchGroup group);
 
 	/**

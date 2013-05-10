@@ -75,7 +75,7 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 		if (license != null) {
 			licenseService.addLicenseForPackage(license, pack);
 		}
-		else if (!pack.getResearchGroup().isPaidAccount()) {
+		else if (!pack.getResearchGroup().isPaidAccount()) { //specifying that only private will be available but group doesn't have rights to do this
 			throw new InvalidLicenseForPackageException("Group " + pack.getResearchGroup().getTitle() + " cannot have private packages");
 		}
 		
