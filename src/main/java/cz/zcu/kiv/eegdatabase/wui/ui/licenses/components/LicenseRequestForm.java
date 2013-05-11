@@ -57,6 +57,10 @@ public class LicenseRequestForm extends Panel {
 		c.setLabel(ResourceUtils.getModel("label.license.request.organisation"));
 		form.add(c);
 
+		c = new RequiredTextField("email", new PropertyModel(persLicense, "email"));
+		c.setLabel(ResourceUtils.getModel("label.license.request.email"));
+		form.add(c);
+
 		WicketUtils.addLabelsAndFeedback(form);
 	}
 

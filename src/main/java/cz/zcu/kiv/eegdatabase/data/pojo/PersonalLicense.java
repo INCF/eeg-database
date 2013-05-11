@@ -55,6 +55,9 @@ public class PersonalLicense implements Serializable{
 	@Column(name = "ORGANISATION")
 	private String organisation;
 
+	@Column(name = "EMAIL")
+	private String email;
+
 	public Date getRequestedDate() {
 		return requestedDate;
 	}
@@ -123,6 +126,14 @@ public class PersonalLicense implements Serializable{
     public void setLicense(License license) {
 	    this.license = license;
     }
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	public String getFullName() {
 		String tmp = this.getFirstName();
