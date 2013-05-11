@@ -68,7 +68,14 @@ public class ExperimentPackageContentPanel extends Panel {
      */
     private Set<Experiment> selectedExperiments;
 
+	/**
+	 * List of experiments attached to the package
+	 */
     private IModel<List<Experiment>> experimentsModel;
+	/**
+	 * List of experiments which can be added to the package
+	 */
+	private IModel<List<Experiment>> experimentsToAddModel;
 
 	private IModel<List<License>> licenses;
 
@@ -115,22 +122,23 @@ public class ExperimentPackageContentPanel extends Panel {
 		addExperimentsWindow.setMinimalWidth(600);
 		addExperimentsWindow.setWidthUnit("px");
 
-		List<Experiment> exps = this.listExperimentsToAdd();
+		experimentsToAddModel = this.listExperimentsToAdd();
 
-		Panel content = new ExperimentListForm(addExperimentsWindow.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), exps) {
+		Panel content = new ExperimentListForm(addExperimentsWindow.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), experimentsToAddModel) {
 
 			@Override
 			protected void onSubmitAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
-			experimentPackageFacade.addExperimentsToPackage(selectedExperiments, epModel.getObject());
-			ModalWindow.closeCurrent(target);
-			experimentsModel.detach();
-			target.add(experimentListCont);
+				experimentPackageFacade.addExperimentsToPackage(selectedExperiments, epModel.getObject());
+				ModalWindow.closeCurrent(target);
+				experimentsModel.detach();
+				experimentsToAddModel.detach();
+				target.add(experimentListCont);
 			}
 
 			@Override
 			protected void onCancelAction(List<Experiment> selectedExperiments, AjaxRequestTarget target, Form<?> form) {
-			ModalWindow.closeCurrent(target);
-			target.add(experimentListCont);
+				ModalWindow.closeCurrent(target);
+				target.add(experimentListCont);
 			}
 
 		};
@@ -142,8 +150,14 @@ public class ExperimentPackageContentPanel extends Panel {
      *
      * @return list of experiments that can be added to the package
      */
-    private List<Experiment> listExperimentsToAdd() {
-		return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
+    private IModel<List<Experiment>> listExperimentsToAdd() {
+		return new LoadableDetachableModel<List<Experiment>>() {
+
+			@Override
+			protected List<Experiment> load() {
+				return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
+			}
+		};
     }
 
     /**
@@ -326,7 +340,7 @@ public class ExperimentPackageContentPanel extends Panel {
 
 	    @Override
 	    public void onClick() {
-		experimentPackageFacade.removeExperimentsFromPackage(new ArrayList(selectedExperiments), epModel.getObject());
+			experimentPackageFacade.removeExperimentsFromPackage(new ArrayList(selectedExperiments), epModel.getObject());
 	    }
 	};
 
