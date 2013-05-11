@@ -544,6 +544,12 @@ li.comment li li li {
     margin-left: 5px;
 }
 
+.headerWithLinks em {
+	font-size: 0.7em;
+    margin-left: 5px;
+	font-style: normal;
+}
+
 
 @media print {
     .leftMenu {

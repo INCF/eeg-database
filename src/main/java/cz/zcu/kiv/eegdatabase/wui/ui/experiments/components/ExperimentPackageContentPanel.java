@@ -33,6 +33,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
 import java.util.HashSet;
+import java.util.Iterator;
 import java.util.Set;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.model.AbstractCheckBoxModel;
@@ -178,12 +179,29 @@ public class ExperimentPackageContentPanel extends Panel {
 		return removeLink;
 	}
 
+	/**
+	 * Adds list of licenses attached to the package.
+	 *
+	 * @param cont container to add the list to
+	 */
 	private void addLicenseList(WebMarkupContainer cont ) {
 		licenses = new LoadableDetachableModel<List<License>>() {
 
 			@Override
 			protected List<License> load() {
-				return licenseFacade.getLicensesForPackage(epModel.getObject());
+				List<License> l = licenseFacade.getLicensesForPackage(epModel.getObject());
+
+				if(l.size() > 1) { //do not display owner license if there are others as well
+					Iterator<License> it = l.iterator();
+					while(it.hasNext()) {
+						if(it.next().getLicenseType() == LicenseType.OWNER) {
+							it.remove();
+							break;
+						}
+					}
+				}
+
+				return l;
 			}
 		};
 
@@ -200,7 +218,19 @@ public class ExperimentPackageContentPanel extends Panel {
 					}
 				};
 
-				link.add(new Label("licenseItemLabel", new PropertyModel(item.getModel(), "title")));
+				switch(item.getModelObject().getLicenseType()) {
+					case OPEN_DOMAIN://public license not editable, fixed name
+						link.setEnabled(false);//public domain
+						link.add(new Label("licenseItemLabel", ResourceUtils.getString("LicenseType.PUBLIC")));
+						break;
+					case OWNER://OWNER license not editable, fixed name
+						link.setEnabled(false);
+						link.add(new Label("licenseItemLabel", ResourceUtils.getString("LicenseType.OWNER")));
+						break;
+					default:
+						link.add(new Label("licenseItemLabel", new PropertyModel(item.getModel(), "title")));
+						break;
+				}
 
 				item.add(link);
 			}
