@@ -63,7 +63,7 @@ public class ManageExperimentPackagesPage extends MenuPage {
 
 			@Override
 			protected List<ExperimentPackage> loadList(ResearchGroup group) {
-			return experimentPackageFacade.listExperimentPackagesByGroup(group.getResearchGroupId());
+				return experimentPackageFacade.listExperimentPackagesByGroup(group);
 			}
 		};
     }
@@ -116,7 +116,7 @@ public class ManageExperimentPackagesPage extends MenuPage {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
-				this.setVisible(!editMode);
+				this.setVisible(!editMode && packagesModel.getCriteriaModel().getObject() != null);
 			}
 
 		};

@@ -3,12 +3,14 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageConnectionService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
+import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
 
@@ -45,25 +47,29 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
     }
 
     @Override
-    public List<ExperimentPackage> listExperimentPackagesByGroup(int researchGroupId) {
-	return experimentPackageService.listExperimentPackagesByGroup(researchGroupId);
+    public List<ExperimentPackage> listExperimentPackagesByGroup(ResearchGroup researchGroup) {
+		if(researchGroup != null) {
+			return experimentPackageService.listExperimentPackagesByGroup(researchGroup.getResearchGroupId());
+		} else {
+			return new ArrayList<ExperimentPackage>();
+		}
     }
 
     @Override
     public boolean addExperimentToPackage(Experiment exp, ExperimentPackage pckg) {
-	return this.experimentPackageConnectionService.addExperimentToPackage(exp, pckg);
+		return this.experimentPackageConnectionService.addExperimentToPackage(exp, pckg);
     }
 
     @Override
     public int addExperimentsToPackage(List<Experiment> exp, ExperimentPackage pckg) {
-	int i = 0;
-	for(Experiment e : exp) {
-	    if(this.addExperimentToPackage(e, pckg)) {
-		i++;
-	    }
-	}
-	return i;
-    }
+		int i = 0;
+		for(Experiment e : exp) {
+			if(this.addExperimentToPackage(e, pckg)) {
+			i++;
+			}
+		}
+			return i;
+		}
 
     @Override
     public boolean removeExperimentFromPackage(Experiment exp, ExperimentPackage pckg) {

@@ -7,6 +7,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
@@ -24,15 +25,19 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 
 	@Override
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed) {
-		Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
-		if (!confirmed) {
-			criteria.add(Restrictions.eq("confirmedDate", null));
+		if(group != null) {
+			Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
+			if (!confirmed) {
+				criteria.add(Restrictions.eq("confirmedDate", null));
+			}
+			else {
+				criteria.add(Restrictions.ne("confirmedDate", null));
+			}
+			criteria.createAlias("license", "l").add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
+			return criteria.list();
+		} else {
+			return new ArrayList<PersonalLicense>();
 		}
-		else {
-			criteria.add(Restrictions.ne("confirmedDate", null));
-		}
-		criteria.createAlias("license", "l").add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
-        return criteria.list();
 	}
 
 	@Override

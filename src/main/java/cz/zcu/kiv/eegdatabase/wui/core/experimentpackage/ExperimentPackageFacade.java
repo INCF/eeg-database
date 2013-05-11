@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import java.util.List;
 
@@ -18,7 +19,7 @@ public interface ExperimentPackageFacade extends GenericFacade<ExperimentPackage
      * @param researchGroupId id of the research group
      * @return list of packages or an empty list
      */
-    public List<ExperimentPackage> listExperimentPackagesByGroup(int researchGroupId);
+    public List<ExperimentPackage> listExperimentPackagesByGroup(ResearchGroup researchGroup);
 
     /**
      * Adds a single experiment to the package.

@@ -171,13 +171,15 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
-		this.generateLicenseTypeChoices();
-		packageModel.setObject(new ExperimentPackage());
+		if(this.resGroupModel.getObject() != null) {
+			this.generateLicenseTypeChoices();
+			packageModel.setObject(new ExperimentPackage());
 
-		licenseModel.setObject(licenseFacade.getPublicLicense());
-		policy.setObject(LicensePolicy.PUBLIC);
+			licenseModel.setObject(licenseFacade.getPublicLicense());
+			policy.setObject(LicensePolicy.PUBLIC);
 
-		this.licenseFormVisible = false;
+			this.licenseFormVisible = false;
+		}
 	}
 
 }
