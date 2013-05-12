@@ -1,121 +1,64 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
 /**
+ * Class for gathering important information about data file. Meant to be sent
+ * between eegclient and portal's client service.
+ * 
  * @author František Liška
  */
 public class DataFileInfo {
+	private int dataFileId;
+	private String filename;
+	private long fileLength;
+	private int experimentId;
+	private String mimetype;
+	private String description;
 
-    private int fileId;
-    private String fileName;
-    private long fileLength;
-    private int experimentId;
-    private String mimeType;
-    private String description;
+	public int getExperimentId() {
+		return experimentId;
+	}
 
-    /**
-     * Getter of experiment identifier.
-     *
-     * @return experiment identifier
-     */
-    public int getExperimentId() {
-        return experimentId;
-    }
+	public int getDataFileId() {
+		return dataFileId;
+	}
 
-    /**
-     * Getter file identifier.
-     *
-     * @return file identifier
-     */
-    public int getFileId() {
-        return fileId;
-    }
+	public String getFilename() {
+		return filename;
+	}
 
-    /**
-     * Getter of file's name.
-     *
-     * @return file's name
-     */
-    public String getFileName() {
-        return fileName;
-    }
+	public long getFileLength() {
+		return fileLength;
+	}
 
-    /**
-     * Getter of file's size in bytes.
-     *
-     * @return file's size in bytes
-     */
-    public long getFileLength() {
-        return fileLength;
-    }
+	public String getMimetype() {
+		return mimetype;
+	}
 
-    /**
-     * Getter of MIME type String.
-     *
-     * @return MIME type
-     */
-    public String getMimeType() {
-        return mimeType;
-    }
+	public void setExperimentId(int experimentId) {
+		this.experimentId = experimentId;
+	}
 
-    /**
-     * Setter of experiment identifier.
-     *
-     * @param experimentId experiment identifier
-     */
-    public void setExperimentId(int experimentId) {
-        this.experimentId = experimentId;
-    }
+	public void setDataFileId(int fileId) {
+		this.dataFileId = fileId;
+	}
 
-    /**
-     * Setter of file's identifier.
-     *
-     * @param fileId file's identifier
-     */
-    public void setFileId(int fileId) {
-        this.fileId = fileId;
-    }
+	public void setFilename(String filename) {
+		this.filename = filename;
+	}
 
-    /**
-     * Setter of file's name.
-     *
-     * @param fileName file name String
-     */
-    public void setFileName(String fileName) {
-        this.fileName = fileName;
-    }
+	public void setFileLength(long fileLength) {
+		this.fileLength = fileLength;
+	}
 
-    /**
-     * Setter of file's size in bytes.
-     *
-     * @param fileLength file's size in bytes
-     */
-    public void setFileLength(long fileLength) {
-        this.fileLength = fileLength;
-    }
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
+	}
 
-    /**
-     * Setter of file's sampling rate.
-     *
-     * @param samplingRate file's sampling rate
-     */
-   // public void setSamplingRate(double samplingRate) {
-   //     this.samplingRate = samplingRate;
-   // }
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Setter of file's MIME type.
-     *
-     * @param mimeType file's MIME type
-     */
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 }

@@ -1,158 +1,100 @@
 package cz.zcu.kiv.eegdatabase.webservices.client.wrappers;
 
 /**
+ * Class for gathering important information about scenario. Meant to be sent
+ * between eegclient and portal's client service.
+ * 
  * @author František Liška
  */
 public class ScenarioInfo {
+	private int scenarioId;
+	private int ownerPersonId;
+	private String title;
+	private int scenarioLength;
+	private long fileLength;
+	private boolean privateScenario;
+	private int researchGroupId;
+	private String description;
+	private String scenarioName;
+	private String mimetype;
 
-    private int scenarioId;
-    private int personOwner;
-    private String title;
-    private int scenarioLength;
-    private long fileLength;
-    private boolean privateScenario;
-    private int researchGroupId;
-    private String description;
-    private String scenarioName;
-    private String mimeType;
+	public int getScenarioId() {
+		return scenarioId;
+	}
 
-    /**
-     * Getter of scenario identifier.
-     *
-     * @return scenario identifier
-     */
-    public int getScenarioId() {
-        return scenarioId;
-    }
+	public void setScenarioId(int scenarioId) {
+		this.scenarioId = scenarioId;
+	}
 
-    /**
-     * Setter of scenario identifier.
-     *
-     * @param scenarioId scenario identifier
-     */
-    public void setScenarioId(int scenarioId) {
-        this.scenarioId = scenarioId;
-    }
+	public String getTitle() {
+		return title;
+	}
 
-    /**
-     * Getter of scenario's title.
-     *
-     * @return scenario's title
-     */
-    public String getTitle() {
-        return title;
-    }
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    /**
-     * Setter of scenario's title.
-     *
-     * @param title scenario's title
-     */
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public int getScenarioLength() {
+		return scenarioLength;
+	}
 
-    /**
-     * Getter of scenario's length.
-     *
-     * @return scenario's length
-     */
-    public int getScenarioLength() {
-        return scenarioLength;
-    }
+	public void setScenarioLength(int scenarioLength) {
+		this.scenarioLength = scenarioLength;
+	}
 
-    /**
-     * Setter of scenario's length.
-     *
-     * @param scenarioLength scenario's length
-     */
-    public void setScenarioLength(int scenarioLength) {
-        this.scenarioLength = scenarioLength;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    /**
-     * Getter of scenario's closer description.
-     *
-     * @return scenario's description
-     */
-    public String getDescription() {
-        return description;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    /**
-     * Setter of closer scenario's description.
-     *
-     * @param description scenario's description
-     */
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public String getScenarioName() {
+		return scenarioName;
+	}
 
-    /**
-     * Getter of scenario's name.
-     *
-     * @return scenario name
-     */
-    public String getScenarioName() {
-        return scenarioName;
-    }
+	public void setScenarioName(String scenarioName) {
+		this.scenarioName = scenarioName;
+	}
 
-    /**
-     * Setter of scenario's name.
-     *
-     * @param scenarioName scenario name
-     */
-    public void setScenarioName(String scenarioName) {
-        this.scenarioName = scenarioName;
-    }
+	public String getMimetype() {
+		return mimetype;
+	}
 
-    /**
-     * Getter of MIME type.
-     *
-     * @return String of MIME type
-     */
-    public String getMimeType() {
-        return mimeType;
-    }
+	public long getFileLength() {
+		return fileLength;
+	}
 
-    public long getFileLength() {
-        return fileLength;
-    }
+	public void setFileLength(long fileLength) {
+		this.fileLength = fileLength;
+	}
 
-    public void setFileLength(long fileLength) {
-        this.fileLength = fileLength;
-    }
+	public void setMimetype(String mimetype) {
+		this.mimetype = mimetype;
+	}
 
-    /**
-     * Setter of MIME type.
-     *
-     * @param mimeType String of MIME type
-     */
-    public void setMimeType(String mimeType) {
-        this.mimeType = mimeType;
-    }
+	public boolean isPrivateScenario() {
+		return privateScenario;
+	}
 
-    public boolean isPrivateScenario() {
-        return privateScenario;
-    }
+	public void setPrivateScenario(boolean privateScenario) {
+		this.privateScenario = privateScenario;
+	}
 
-    public void setPrivateScenario(boolean privateScenario) {
-        this.privateScenario = privateScenario;
-    }
+	public int getResearchGroupId() {
+		return researchGroupId;
+	}
 
-    public int getResearchGroupId() {
-        return researchGroupId;
-    }
+	public void setResearchGroupId(int researchGroupId) {
+		this.researchGroupId = researchGroupId;
+	}
 
-    public void setResearchGroupId(int researchGroupId) {
-        this.researchGroupId = researchGroupId;
-    }
+	public int getOwnerPersonId() {
+		return ownerPersonId;
+	}
 
-    public int getPersonOwner() {
-        return personOwner;
-    }
-
-    public void setPersonOwner(int personOwner) {
-        this.personOwner = personOwner;
-    }
+	public void setOwnerPersonId(int ownerPersonId) {
+		this.ownerPersonId = ownerPersonId;
+	}
 }

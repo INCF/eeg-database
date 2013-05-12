@@ -4,99 +4,100 @@ import java.util.LinkedList;
 import java.util.List;
 
 /**
+ * Class for gathering important information about research group. Meant to be
+ * sent between eegclient and portal's client service.
+ * 
  * @author František Liška
  */
 public class ResearchGroupInfo {
-    private int researchGroupId;
-    private int personOwner;
-    private String title;
-    private String description;
-    private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
-    private List<WeatherInfo> weathers = new LinkedList<WeatherInfo>();
-    private List<PersonOptParamDefInfo> personOptParamDefInfos = new LinkedList<PersonOptParamDefInfo>();
-    private List<ExperimentOptParamDefInfo> experimentOptParamDefInfos = new LinkedList<ExperimentOptParamDefInfo>();
-    private List<FileMetadataParamDefInfo> fileMetadataParamDefInfos = new LinkedList<FileMetadataParamDefInfo>();
-    private List<ResearchGroupMembershipInfo> researchGroupMembershipInfos = new LinkedList<ResearchGroupMembershipInfo>();
+	private int researchGroupId;
+	private int personOwner;
+	private String title;
+	private String description;
+	private List<HardwareInfo> hardwares = new LinkedList<HardwareInfo>();
+	private List<WeatherInfo> weathers = new LinkedList<WeatherInfo>();
+	private List<PersonOptParamDefInfo> personOptParamDefInfos = new LinkedList<PersonOptParamDefInfo>();
+	private List<ExperimentOptParamDefInfo> experimentOptParamDefInfos = new LinkedList<ExperimentOptParamDefInfo>();
+	private List<FileMetadataParamDefInfo> fileMetadataParamDefInfos = new LinkedList<FileMetadataParamDefInfo>();
+	private List<ResearchGroupMembershipInfo> researchGroupMembershipInfos = new LinkedList<ResearchGroupMembershipInfo>();
 
-    public int getResearchGroupId() {
-        return researchGroupId;
-    }
+	public int getResearchGroupId() {
+		return researchGroupId;
+	}
 
-    public void setResearchGroupId(int researchGroupId) {
-        this.researchGroupId = researchGroupId;
-    }
+	public void setResearchGroupId(int researchGroupId) {
+		this.researchGroupId = researchGroupId;
+	}
 
+	public String getTitle() {
+		return title;
+	}
 
+	public void setTitle(String title) {
+		this.title = title;
+	}
 
-    public String getTitle() {
-        return title;
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public void setTitle(String title) {
-        this.title = title;
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public String getDescription() {
-        return description;
-    }
+	public List<HardwareInfo> getHardwares() {
+		return hardwares;
+	}
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setHardwares(List<HardwareInfo> hardwares) {
+		this.hardwares = hardwares;
+	}
 
-    public List<HardwareInfo> getHardwares() {
-        return hardwares;
-    }
+	public List<WeatherInfo> getWeathers() {
+		return weathers;
+	}
 
-    public void setHardwares(List<HardwareInfo> hardwares) {
-        this.hardwares = hardwares;
-    }
+	public void setWeathers(List<WeatherInfo> weathers) {
+		this.weathers = weathers;
+	}
 
-    public List<WeatherInfo> getWeathers() {
-        return weathers;
-    }
+	public List<PersonOptParamDefInfo> getPersonOptParamDefInfos() {
+		return personOptParamDefInfos;
+	}
 
-    public void setWeathers(List<WeatherInfo> weathers) {
-        this.weathers = weathers;
-    }
+	public void setPersonOptParamDefInfos(List<PersonOptParamDefInfo> personOptParamDefInfos) {
+		this.personOptParamDefInfos = personOptParamDefInfos;
+	}
 
-    public List<PersonOptParamDefInfo> getPersonOptParamDefInfos() {
-        return personOptParamDefInfos;
-    }
+	public List<ExperimentOptParamDefInfo> getExperimentOptParamDefInfos() {
+		return experimentOptParamDefInfos;
+	}
 
-    public void setPersonOptParamDefInfos(List<PersonOptParamDefInfo> personOptParamDefInfos) {
-        this.personOptParamDefInfos = personOptParamDefInfos;
-    }
+	public void setExperimentOptParamDefInfos(List<ExperimentOptParamDefInfo> experimentOptParamDefInfos) {
+		this.experimentOptParamDefInfos = experimentOptParamDefInfos;
+	}
 
-    public List<ExperimentOptParamDefInfo> getExperimentOptParamDefInfos() {
-        return experimentOptParamDefInfos;
-    }
+	public List<FileMetadataParamDefInfo> getFileMetadataParamDefInfos() {
+		return fileMetadataParamDefInfos;
+	}
 
-    public void setExperimentOptParamDefInfos(List<ExperimentOptParamDefInfo> experimentOptParamDefInfos) {
-        this.experimentOptParamDefInfos = experimentOptParamDefInfos;
-    }
+	public void setFileMetadataParamDefInfos(List<FileMetadataParamDefInfo> fileMetadataParamDefInfos) {
+		this.fileMetadataParamDefInfos = fileMetadataParamDefInfos;
+	}
 
-    public List<FileMetadataParamDefInfo> getFileMetadataParamDefInfos() {
-        return fileMetadataParamDefInfos;
-    }
+	public int getPersonOwner() {
+		return personOwner;
+	}
 
-    public void setFileMetadataParamDefInfos(List<FileMetadataParamDefInfo> fileMetadataParamDefInfos) {
-        this.fileMetadataParamDefInfos = fileMetadataParamDefInfos;
-    }
+	public void setPersonOwner(int personOwner) {
+		this.personOwner = personOwner;
+	}
 
-    public int getPersonOwner() {
-        return personOwner;
-    }
+	public List<ResearchGroupMembershipInfo> getResearchGroupMembershipInfos() {
+		return researchGroupMembershipInfos;
+	}
 
-    public void setPersonOwner(int personOwner) {
-        this.personOwner = personOwner;
-    }
-
-    public List<ResearchGroupMembershipInfo> getResearchGroupMembershipInfos() {
-        return researchGroupMembershipInfos;
-    }
-
-    public void setResearchGroupMembershipInfos(List<ResearchGroupMembershipInfo> researchGroupMembershipInfos) {
-        this.researchGroupMembershipInfos = researchGroupMembershipInfos;
-    }
+	public void setResearchGroupMembershipInfos(List<ResearchGroupMembershipInfo> researchGroupMembershipInfos) {
+		this.researchGroupMembershipInfos = researchGroupMembershipInfos;
+	}
 }
