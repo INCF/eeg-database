@@ -27,7 +27,7 @@ public class ScenarioConverter implements IConverter<Scenario> {
             return null;
         }
 
-        List<Scenario> scenarios = scenariosFacade.readByParameter("scenarioName", s);
+        List<Scenario> scenarios = scenariosFacade.readByParameter("title", s);
         return (scenarios != null && scenarios.size() > 0) ? scenarios.get(0) : null;
     }
 

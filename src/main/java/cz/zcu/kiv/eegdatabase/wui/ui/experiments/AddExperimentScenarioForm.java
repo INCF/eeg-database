@@ -57,7 +57,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     private GenericModel<Person> testedSubject;
     private List<GenericModel<Person>> coExperimenters;
 
-    public AddExperimentScenarioForm(String id, Experiment experiment){
+    public AddExperimentScenarioForm(String id, Experiment experiment) {
         super(id);
         this.experiment = experiment;
 

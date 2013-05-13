@@ -254,7 +254,7 @@ public class Scenario implements Serializable, Comparable<Scenario>, IAutoComple
     @Override
     @Transient
     public String getAutoCompleteData() {
-        return getScenarioName();
+        return getTitle();
     }
 }
 
