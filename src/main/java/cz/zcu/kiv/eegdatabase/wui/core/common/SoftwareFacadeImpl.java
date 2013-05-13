@@ -84,4 +84,9 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     public int getCountRecords() {
         return service.getCountRecords();
     }
+
+    @Override
+    public List<Software> getUnique(Software example) {
+        return service.getUnique(example);
+    }
 }

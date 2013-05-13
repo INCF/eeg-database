@@ -65,6 +65,11 @@ public class DiseaseFacadeImpl implements DiseaseFacade {
     }
 
     @Override
+    public List<Disease> getUnique(Disease example) {
+        return diseaseService.getUnique(example);
+    }
+
+    @Override
     public boolean existsDisease(String name) {
         return diseaseService.existsDisease(name);
     }

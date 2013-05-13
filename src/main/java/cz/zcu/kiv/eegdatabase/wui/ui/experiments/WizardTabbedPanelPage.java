@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -30,11 +31,13 @@ public class WizardTabbedPanelPage extends MenuPage {
     final private AddExperimentScenarioForm scenarioForm;
     final private AddExperimentEnvironmentForm environmentForm;
     final private AddExperimentResultsForm resultsForm;
+    final private Experiment experiment;
 
     public WizardTabbedPanelPage() {
-        scenarioForm = new AddExperimentScenarioForm("scenarioTab");
-        environmentForm = new AddExperimentEnvironmentForm("environmentTab");
-        resultsForm = new AddExperimentResultsForm("resultTab", this);
+        experiment = new Experiment();
+        scenarioForm = new AddExperimentScenarioForm("scenarioTab", experiment);
+        environmentForm = new AddExperimentEnvironmentForm("environmentTab", experiment);
+        resultsForm = new AddExperimentResultsForm("resultTab", this, experiment);
         final int TAB_COUNT = 2;
         final int[] formsVisited = {0, 0, 0};
 

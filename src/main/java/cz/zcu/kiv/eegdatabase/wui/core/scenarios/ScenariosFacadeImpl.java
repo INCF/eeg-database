@@ -66,6 +66,11 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     }
 
     @Override
+    public List<Scenario> getUnique(Scenario example) {
+        return service.getUnique(example);
+    }
+
+    @Override
     public List<Scenario> getScenariosWhereOwner(Person owner) {
         return service.getScenariosWhereOwner(owner);
     }

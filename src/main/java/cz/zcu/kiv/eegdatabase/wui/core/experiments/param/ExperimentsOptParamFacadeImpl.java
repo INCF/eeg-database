@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.param;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class ExperimentsOptParamFacadeImpl implements ExperimentsOptParamFacade {
     
@@ -64,6 +63,11 @@ public class ExperimentsOptParamFacadeImpl implements ExperimentsOptParamFacade 
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<ExperimentOptParamDef> getUnique(ExperimentOptParamDef example) {
+        return service.getUnique(example);
     }
 
     @Override

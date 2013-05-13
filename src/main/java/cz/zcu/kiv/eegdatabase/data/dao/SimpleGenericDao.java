@@ -247,6 +247,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
         return null;
     }
 
+    @Override
+    public List<T> findByExample(T example) {
+        return getHibernateTemplate().findByExample(example);
+    }
+
 
     protected String getHighlightedText(String[] fields, T t, Highlighter ht, Analyzer analyzer) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException, InvalidTokenOffsetsException {
         Field[] field = new Field[fields.length];

@@ -125,6 +125,11 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
+    public List<ResearchGroup> getUnique(ResearchGroup example) {
+        return service.getUnique(example);
+    }
+
+    @Override
     public ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance) {
         return service.createMemberhip(newInstance);
     }

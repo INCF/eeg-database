@@ -1,16 +1,15 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
+import java.util.List;
 
 public class WeatherServiceImpl implements WeatherService {
 
@@ -75,6 +74,11 @@ public class WeatherServiceImpl implements WeatherService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return weatherDAO.getCountRecords();
+    }
+
+    @Override
+    public List<Weather> getUnique(Weather example) {
+        return weatherDAO.findByExample(example);
     }
 
     @Override

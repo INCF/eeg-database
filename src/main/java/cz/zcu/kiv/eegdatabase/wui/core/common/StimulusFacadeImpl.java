@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -69,6 +68,11 @@ public class StimulusFacadeImpl implements StimulusFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<Stimulus> getUnique(Stimulus example) {
+        return service.getUnique(example);
     }
 
     @Override

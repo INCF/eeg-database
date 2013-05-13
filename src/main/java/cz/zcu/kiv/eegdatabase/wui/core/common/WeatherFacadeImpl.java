@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
+import java.util.List;
 
 public class WeatherFacadeImpl implements WeatherFacade {
 
@@ -64,6 +63,11 @@ public class WeatherFacadeImpl implements WeatherFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<Weather> getUnique(Weather example) {
+        return service.getUnique(example);
     }
 
     @Override

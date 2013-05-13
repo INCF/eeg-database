@@ -14,22 +14,22 @@ import org.apache.wicket.util.string.Strings;
 /**
  * Created by IntelliJ IDEA.
  * User: Jakub Balhar
- * Date: 6.5.13
- * Time: 10:24
+ * Date: 11.5.13
+ * Time: 9:37
  */
-abstract public class AddingItemBehavior<T> extends AutoCompleteBehavior<T> {
+abstract public class RepeatableBehavior<T> extends AutoCompleteBehavior<T> {
     private static final ResourceReference AUTOCOMPLETE_JS = new JavaScriptResourceReference(
-            AddingItemBehavior.class, "wicket-autocomplete.js");
+            RepeatableBehavior.class, "wicket-autocomplete.js");
 
-    public AddingItemBehavior(IAutoCompleteRenderer<T> renderer, AutoCompleteSettings settings) {
+    public RepeatableBehavior(IAutoCompleteRenderer<T> renderer, AutoCompleteSettings settings) {
         super(renderer, settings);
     }
 
-    public AddingItemBehavior(IAutoCompleteRenderer<T> renderer, boolean preselect) {
+    public RepeatableBehavior(IAutoCompleteRenderer<T> renderer, boolean preselect) {
         super(renderer, preselect);
     }
 
-    public AddingItemBehavior(IAutoCompleteRenderer<T> renderer) {
+    public RepeatableBehavior(IAutoCompleteRenderer<T> renderer) {
         super(renderer);
     }
 

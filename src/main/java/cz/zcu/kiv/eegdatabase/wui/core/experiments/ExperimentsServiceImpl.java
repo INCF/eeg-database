@@ -1,17 +1,16 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.transaction.annotation.Transactional;
-
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public class ExperimentsServiceImpl implements ExperimentsService {
     
@@ -154,6 +153,11 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return experimentDao.getCountRecords();
+    }
+
+    @Override
+    public List<Experiment> getUnique(Experiment example) {
+        return experimentDao.findByExample(example);
     }
 
 }

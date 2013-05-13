@@ -1,13 +1,12 @@
 package cz.zcu.kiv.eegdatabase.wui.core.history;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Required;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import org.springframework.beans.factory.annotation.Required;
+
+import java.util.List;
 
 public class HistoryFacadeImpl implements HistoryFacade {
 
@@ -61,6 +60,11 @@ public class HistoryFacadeImpl implements HistoryFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<History> getUnique(History example) {
+        return service.getUnique(example);
     }
 
     @Override

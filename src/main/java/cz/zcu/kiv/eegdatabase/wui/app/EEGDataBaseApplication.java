@@ -1,13 +1,24 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentPageJson;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -41,12 +52,26 @@ import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
     private ApplicationContext appCtx;
+
+    @Autowired
+    private DiseaseFacade diseaseFacade;
+    @Autowired
+    private PersonFacade personFacade;
+    @Autowired
+    private PharmaceuticalFacade pharmaceuticalFacade;
+    @Autowired
+    private ProjectTypeFacade projectTypeFacade;
+    @Autowired
+    private ResearchGroupFacade researchGroupFacade;
+    @Autowired
+    private ScenariosFacade scenariosFacade;
 
     public java.lang.Class<? extends Page> getHomePage() {
 
@@ -142,6 +167,14 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     protected IConverterLocator newConverterLocator() {
         ConverterLocator locator = (ConverterLocator) super.newConverterLocator();
+
+        locator.set(Disease.class, new DiseaseConverter(diseaseFacade));
+        locator.set(Person.class, new PersonConverter(personFacade));
+        locator.set(Pharmaceutical.class, new PharmaceuticalConverter(pharmaceuticalFacade));
+        locator.set(ProjectType.class, new ProjectTypeConverter(projectTypeFacade));
+        locator.set(ResearchGroup.class, new ResearchGroupConverter(researchGroupFacade));
+        locator.set(Scenario.class, new ScenarioConverter(scenariosFacade));
+
 
         return locator;
     }

@@ -1,16 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
-import java.sql.Timestamp;
-import java.text.ParseException;
-import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.transaction.annotation.Transactional;
-
 import cz.zcu.kiv.eegdatabase.data.dao.EducationLevelDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
@@ -22,6 +11,16 @@ import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.util.List;
+import java.util.Map;
 
 public class PersonServiceImpl implements PersonService {
 
@@ -268,6 +267,11 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public int getCountRecords() {
         return personDAO.getCountRecords();
+    }
+
+    @Override
+    public List<Person> getUnique(Person example) {
+        return personDAO.findByExample(example);
     }
 
     @Override

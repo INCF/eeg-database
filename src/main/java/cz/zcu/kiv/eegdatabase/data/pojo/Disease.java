@@ -3,9 +3,8 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -22,7 +21,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="DISEASE")
-public class Disease implements Serializable, IAutocompletable{
+public class Disease implements Serializable, IAutoCompletable {
 
     @Autowired
     @Transient
@@ -95,19 +94,7 @@ public class Disease implements Serializable, IAutocompletable{
 
     @Override
     @Transient
-    public String getAutocompleteData() {
+    public String getAutoCompleteData() {
         return getTitle();
-    }
-
-    @Override
-    @Transient
-    public GenericFacade getFacade() {
-        return diseaseFacade;
-    }
-
-    @Override
-    @Transient
-    public boolean isValidOnChange() {
-        return !(getTitle() == null || getTitle().equals(""));
     }
 }

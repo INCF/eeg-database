@@ -3,14 +3,11 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.AddExperimentEnvironmentDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.DiseaseTitleModel;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PharmaceuticalTitleModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -18,24 +15,22 @@ import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericFactory;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericModel;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericValidator;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.RepeatableInputPanel;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.util.time.Duration;
 
-import javax.annotation.Resource;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
-public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentDTO> {
+public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     @SpringBean
     private WeatherFacade weatherFacade;
@@ -45,6 +40,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private SoftwareFacade softwareFacade;
     @SpringBean
     private DiseaseFacade diseaseFacade;
+    @SpringBean
+    private PharmaceuticalFacade pharmaceuticalFacade;
 
     private Experiment experiment = new Experiment();
     private ListMultipleChoice hw = null;
@@ -55,10 +52,13 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     private final List<Disease> diseaseData = new ArrayList<Disease>();
     private final List<Pharmaceutical> pharmaceuticalData = new ArrayList<Pharmaceutical>();
 
-    public AddExperimentEnvironmentForm(String id){
-        super(id, new CompoundPropertyModel<AddExperimentEnvironmentDTO>(new AddExperimentEnvironmentDTO()));
+    private List<GenericModel<Disease>> diseases;
+    private List<GenericModel<Pharmaceutical>> pharmaceuticals;
 
-        getModelObject().setDisease("");
+    public AddExperimentEnvironmentForm(String id, Experiment experiment){
+        super(id, new CompoundPropertyModel<Experiment>(experiment));
+
+        getModelObject().setDiseases(null);
 
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
@@ -135,60 +135,25 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
     }
 
     private void addDisease() {
-        diseaseData.add(new Disease());
-        final WebMarkupContainer diseaseContainer = new WebMarkupContainer("addDiseaseInputContainer");
+        GenericFactory<Disease> factory = new GenericFactory<Disease>(Disease.class);
+        GenericValidator<Disease> validator = new GenericValidator<Disease>(diseaseFacade);
 
-        final ListView<Disease> diseaseListView = new ListView<Disease>("addDiseaseInput", diseaseData) {
-             @Override
-            protected void populateItem(ListItem item) {
-                final Disease diseaseItem = (Disease) item.getModelObject();
-                final AddingItemsView<String> disease =
-                        new AddingItemsView<String>(
-                                "disease",
-                                new DiseaseTitleModel(diseaseItem),
-                                this,
-                                diseaseContainer,
-                                Disease.class
-                        );
-                item.add(disease);
-            }
-        };
-        diseaseListView.setOutputMarkupId(true);
-        diseaseListView.setReuseItems(true);
-
-        diseaseContainer.add(diseaseListView);
-        diseaseContainer.setOutputMarkupId(true);
-        add(diseaseContainer);
+        RepeatableInputPanel<Disease> repeatable =
+                new RepeatableInputPanel<Disease>("disease", factory,
+                        validator, diseaseFacade);
+        diseases = repeatable.getData();
+        add(repeatable);
     }
 
     private void addPharmaceutical() {
-        pharmaceuticalData.add(new Pharmaceutical());
-        final WebMarkupContainer pharmaceuticalContainer =
-                new WebMarkupContainer("addPharmaceuticalInputContainer");
+        GenericFactory<Pharmaceutical> factory = new GenericFactory<Pharmaceutical>(Pharmaceutical.class);
+        GenericValidator<Pharmaceutical> validator = new GenericValidator<Pharmaceutical>(pharmaceuticalFacade);
 
-        final ListView<Pharmaceutical> pharmaceuticalListView =
-                new ListView<Pharmaceutical>("addPharmaceuticalInput", pharmaceuticalData) {
-
-            @Override
-            protected void populateItem(ListItem item) {
-                final Pharmaceutical pharmaceuticalItem = (Pharmaceutical) item.getModelObject();
-                final AddingItemsView<String> pharmaceutical =
-                        new AddingItemsView<String>(
-                                "pharmaceutical",
-                                new PharmaceuticalTitleModel(pharmaceuticalItem),
-                                this,
-                                pharmaceuticalContainer,
-                                Pharmaceutical.class
-                        );
-                item.add(pharmaceutical);
-            }
-        };
-        pharmaceuticalListView.setOutputMarkupId(true);
-        pharmaceuticalListView.setReuseItems(true);
-
-        pharmaceuticalContainer.add(pharmaceuticalListView);
-        pharmaceuticalContainer.setOutputMarkupId(true);
-        add(pharmaceuticalContainer);
+        RepeatableInputPanel<Pharmaceutical> repeatable =
+                new RepeatableInputPanel<Pharmaceutical>("pharmaceutical", factory,
+                        validator, pharmaceuticalFacade);
+        pharmaceuticals = repeatable.getData();
+        add(repeatable);
     }
 
     public boolean isValid(){
@@ -288,6 +253,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         form.add(ajaxButton);
     }
 
+    /*
     public Experiment getValidExperimentPart(Experiment experiment) {
         AddExperimentEnvironmentDTO dto = getModelObject();
         if(dto == null) return null;
@@ -362,5 +328,13 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
 
         debug("AddExperimentEnvironmentForm was valid");
         return experiment;
+    }
+    */
+
+    /**
+     *
+     */
+    public void save() {
+        //To change body of created methods use File | Settings | File Templates.
     }
 }

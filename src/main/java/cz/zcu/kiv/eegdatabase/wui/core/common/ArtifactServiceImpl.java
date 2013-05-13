@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class ArtifactServiceImpl implements ArtifactService {
 
@@ -72,6 +71,11 @@ public class ArtifactServiceImpl implements ArtifactService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return artifactDao.getCountRecords();
+    }
+
+    @Override
+    public List<Artifact> getUnique(Artifact example) {
+        return artifactDao.findByExample(example);
     }
 
     @Override

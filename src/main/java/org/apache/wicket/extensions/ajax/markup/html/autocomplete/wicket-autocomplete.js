@@ -642,7 +642,7 @@
 					}
                     if (value) {
                         input.value = value;
-                        var paramName = cfg.parameterName;
+                        /*var paramName = cfg.parameterName;
                         var attrs = {
                             u: callbackUrl,
                             dt: 'html',
@@ -652,9 +652,10 @@
                         };
                         attrs.ep[paramName] = '';
                         attrs.ep['sv'] = value;
-                        Wicket.Ajax.ajax(attrs);
+                        Wicket.Ajax.ajax(attrs);*/
                         jQuery(input).triggerHandler('change');
                         jQuery(input).triggerHandler('blur');
+                        // TODO make sure that update event happens
                     }
 					return true;
 				};

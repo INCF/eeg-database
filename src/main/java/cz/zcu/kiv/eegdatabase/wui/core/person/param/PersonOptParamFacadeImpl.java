@@ -1,16 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person.param;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamValId;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class PersonOptParamFacadeImpl implements PersonOptParamFacade {
     
@@ -66,6 +61,11 @@ public class PersonOptParamFacadeImpl implements PersonOptParamFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<PersonOptParamDef> getUnique(PersonOptParamDef example) {
+        return service.getUnique(example);
     }
 
     @Override
