@@ -21,6 +21,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.feedback.FeedbackMessage;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.*;
@@ -77,6 +78,8 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         addModalWindowAndButton(this, "addWeatherModal", "add-weather",
                 "addWeather", AddWeatherPage.class.getName());
 
+        ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(this);
+
         ArrayList<String> hardwareTitles = getHardwareTitles();
         hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
         hw.setRequired(true);
@@ -86,9 +89,13 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             protected void onUpdate(AjaxRequestTarget target) {
                 hw.setChoices(getHardwareTitles());
                 target.add(hw);
+                validate();
             }
         });
         add(hw);
+        FeedbackPanel hwFeedback = new FeedbackPanel("hwFeedback", new ComponentFeedbackMessageFilter(hw));
+        hwFeedback.setOutputMarkupId(true);
+        add(hwFeedback);
 
         ArrayList<String> softwareTitles = getSoftwareTitles();
         sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
@@ -99,9 +106,14 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             protected void onUpdate(AjaxRequestTarget target) {
                 sw.setChoices(getSoftwareTitles());
                 target.add(sw);
+                validate();
             }
         });
         add(sw);
+        FeedbackPanel swFeedback = new FeedbackPanel("swFeedback", new ComponentFeedbackMessageFilter(sw));
+        swFeedback.setOutputMarkupId(true);
+        add(swFeedback);
+
 
         ArrayList<String> weatherTitles = getWeatherTitles();
         weather = new DropDownChoice<String>("weather", weatherTitles);
@@ -111,10 +123,14 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
                 weather.setChoices(getWeatherTitles());
+                validate();
                 target.add(weather);
             }
         });
         add(weather);
+        FeedbackPanel weatherFeedback = new FeedbackPanel("weatherFeedback", new ComponentFeedbackMessageFilter(weather));
+        weatherFeedback.setOutputMarkupId(true);
+        add(weatherFeedback);
 
         TextArea<String> weatherNote = new TextArea<String>("weatherNote");
         weatherNote.setLabel(ResourceUtils.getModel("label.weatherNote"));
@@ -123,7 +139,17 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         temperature = new NumberTextField<Integer>("temperature");
         temperature.setRequired(true);
         temperature.setLabel(ResourceUtils.getModel("label.temperature"));
+        temperature.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                validate();
+                temperature.isValid();
+            }
+        });
         add(temperature);
+        FeedbackPanel temperatureFeedback = new FeedbackPanel("temperatureFeedback", new ComponentFeedbackMessageFilter(temperature));
+        temperatureFeedback.setOutputMarkupId(true);
+        add(temperatureFeedback);
 
         addDisease();
 
@@ -134,7 +160,7 @@ public class AddExperimentEnvironmentForm extends Form<AddExperimentEnvironmentD
         add(privateNote);
 
         setOutputMarkupId(true);
-        AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
+        AjaxFormValidatingBehavior.addToAllFormComponents(this, "onchange", Duration.ONE_SECOND);
     }
 
     private void addDisease() {

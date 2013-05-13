@@ -14,6 +14,7 @@
             <select name="hardware" wicket:id="hardware" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
             </select>
             <input type="button" wicket:id="addHW" value="Add">
+            <div wicket:id="hwFeedback" type="text" size="30" />
         </div>
 
         <div class="form-item">
@@ -21,6 +22,7 @@
             <select name="software" wicket:id="software" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
             </select>
             <input type="button" wicket:id="addSW" value="Add">
+            <div wicket:id="swFeedback" type="text" size="30" />
         </div>
 
         <div class="form-item">
@@ -28,6 +30,7 @@
             <select name="weather" wicket:id="weather">
             </select>
             <input type="button" wicket:id="addWeather" value="Add">
+            <div wicket:id="weatherFeedback" type="text" size="30" />
         </div>
 
         <div class="form-item">
@@ -38,6 +41,7 @@
         <div class="form-item">
             <label for="temperature"><wicket:message key="label.temperature" /></label>
             <input type="number" wicket:id="temperature" name="temperature"/>
+            <div wicket:id="temperatureFeedback" type="text" size="30" />
         </div>
 
         <div class="form-item">
