@@ -1,16 +1,15 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.param;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class ExperimentsOptParamServiceImpl implements ExperimentsOptParamService {
 
@@ -75,6 +74,11 @@ public class ExperimentsOptParamServiceImpl implements ExperimentsOptParamServic
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return dao.getCountRecords();
+    }
+
+    @Override
+    public List<ExperimentOptParamDef> getUnique(ExperimentOptParamDef example) {
+        return dao.findByExample(example);
     }
 
     @Override

@@ -4,7 +4,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
@@ -12,28 +11,20 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.PersonNameModel;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.ProjectTypeTitleModel;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.models.StimulusDescriptionModel;
 import org.apache.wicket.Page;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AddingItemsView;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.*;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
-import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
 
 import java.sql.Timestamp;
 import java.util.*;
@@ -45,262 +36,165 @@ import java.util.*;
  * Date: 26.3.13
  * Time: 17:43
  */
-public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
+public class AddExperimentScenarioForm extends Form<Experiment> {
     @SpringBean
     private ResearchGroupFacade researchGroupFacade;
     @SpringBean
-    private ScenariosFacade scenariosFacade;
-    @SpringBean
     private PersonFacade personFacade;
-    @SpringBean
-    private StimulusFacade stimulusFacade;
     @SpringBean
     private ScenariosFacade scenarioFacade;
     @SpringBean
     private ProjectTypeFacade projectTypeFacade;
 
-    private Experiment experiment = new Experiment();
+    private Experiment experiment;
     private Scenario scenarioEntity = new Scenario();
 
-    private final List<Person> coExperimentersData = new ArrayList<Person>();
-    private final List<Person> testedSubjectsData = new ArrayList<Person>();
-    private final List<ProjectType> projectTypeData = new ArrayList<ProjectType>();
-    private final List<Stimulus> stimuliData = new ArrayList<Stimulus>();
+    private GenericModel<Date> startDate;
+    private GenericModel<Date> endDate;
+    private List<GenericModel<ProjectType>> projectType;
+    private GenericModel<ResearchGroup> researchGroup;
+    private GenericModel<Scenario> scenario;
+    private GenericModel<Person> testedSubject;
+    private List<GenericModel<Person>> coExperimenters;
 
-    final int AUTOCOMPLETE_ROWS = 10;
+    public AddExperimentScenarioForm(String id, Experiment experiment) {
+        super(id);
+        this.experiment = experiment;
 
-    public AddExperimentScenarioForm(String id){
-        super(id, new CompoundPropertyModel<AddExperimentScenarioDTO>(new AddExperimentScenarioDTO()));
+        addScenario();
+        addResearchGroup();
+        addProject();
+        addStartDate();
+        addEndDate();
+        addTestedSubject();
+        addCoExperimenters();
 
-        //scenario autocomplete
-        final AutoCompleteTextField<String> scenario = new AutoCompleteTextField<String>("scenario",
-                new PropertyModel<String>(experiment, "scenario.scenarioName"))
-        {
-            @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<Scenario> scenarios = scenariosFacade.getAllRecords();
-                for (final Scenario s : scenarios)
-                {
-                    final String data = s.getTitle();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
-            }
-        };
-        scenario.setRequired(true);
-        scenario.add(new AjaxEventBehavior("onblur") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                scenarioEntity = scenariosFacade.getScenarioByTitle(scenario.getInput());
-            }
-        });
-        this.add(scenario);
+        createModalWindows();
+    }
 
-        //research group autocomplete
-        final AutoCompleteTextField<String> group = new AutoCompleteTextField<String>("group",
-                new PropertyModel<String>(experiment, "researchGroup.title"))
-        {
-            @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<ResearchGroup> groups = researchGroupFacade.getAllRecords();
-                for (final ResearchGroup rg : groups)
-                {
-                    final String data = rg.getTitle();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
-            }
-        };
-        group.setRequired(true);
-        add(group);
-
-        CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
-        add(isDefaultGroup);
-
-        /*AutoCompleteTextField<String> project = new AutoCompleteTextField<String>("project") {
-            @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(AUTOCOMPLETE_ROWS);
-                List<ProjectType> projectTypes = projectTypeFacade.getAllRecords();
-                for (final ProjectType pt : projectTypes)
-                {
-                    final String data = pt.getTitle();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == AUTOCOMPLETE_ROWS) break;
-                    }
-                }
-                return choices.iterator();
-            }
-        };
-        project.setRequired(true);
-        add(project); */
-        addProjectType();
-
+    private void addEndDate() {
         Date now = new Date();
-        getModelObject().setStart(now);
-        DateTimeField startDate = new DateTimeField("start");
-        startDate.setRequired(true);
-        add(startDate);
-
         if(scenarioEntity != null){
             Calendar cal = Calendar.getInstance();
             cal.setTime(now);
             cal.add(Calendar.MINUTE, scenarioEntity.getScenarioLength());
             now = cal.getTime();
         }
-        getModelObject().setFinish(now);
-        DateTimeField finishDate = new DateTimeField("finish");
+        DateTimeField finishDate = new DateTimeField("finish", endDate = new GenericModel<Date>(now));
         finishDate.setRequired(true);
+
+        ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(finishDate);
+        final FeedbackPanel repeatableFeedback = new FeedbackPanel("finishFeedback", repeatableFilter);
+        repeatableFeedback.setOutputMarkupId(true);
+        finishDate.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
         add(finishDate);
-
-        addTestedSubject();
-        //addStimulus();
-        addCoExperimenters();
-
-        createModalWindows();
-    }
-    
-    private void addStimulus() {
-        stimuliData.add(new Stimulus());
-        final WebMarkupContainer stimulusContainer = new WebMarkupContainer("addStimulusInputContainer");
-
-        final ListView<Stimulus> stimulusListView = new ListView<Stimulus>("addStimulusInput", stimuliData) {
-             @Override
-            protected void populateItem(ListItem item) {
-                final Stimulus stimulusItem = (Stimulus) item.getModelObject();
-                final AddingItemsView<String> stimulus =
-                        new AddingItemsView<String>(
-                                "stimuli",
-                                new StimulusDescriptionModel(stimulusItem),
-                                this,
-                                stimulusContainer,
-                                Stimulus.class
-                        );
-                // stimulus.setRequired(true);  //must accept empty fields
-                item.add(stimulus);
-            }
-        };
-        stimulusListView.setOutputMarkupId(true);
-        stimulusListView.setReuseItems(true);
-
-        stimulusContainer.add(stimulusListView);
-        stimulusContainer.setOutputMarkupId(true);
-        add(stimulusContainer);
+        add(repeatableFeedback);
     }
 
-    private void addProjectType() {
-        projectTypeData.add(new ProjectType());
-        final WebMarkupContainer projectTypeContainer = new WebMarkupContainer("addProjectInputContainer");
+    private void addStartDate() {
+        DateTimeField startDate = new DateTimeField("start", this.startDate = new GenericModel<Date>(new Date()));
+        startDate.setRequired(true);
 
-        final ListView<ProjectType> projectTypes = new ListView<ProjectType>("addProjectInput",projectTypeData) {
+        ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(startDate);
+        final FeedbackPanel repeatableFeedback = new FeedbackPanel("startFeedback", repeatableFilter);
+        repeatableFeedback.setOutputMarkupId(true);
+        startDate.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
+        add(startDate);
+        add(repeatableFeedback);
+    }
+
+    private void addProject() {
+        GenericFactory<ProjectType> factory = new GenericFactory<ProjectType>(ProjectType.class);
+        GenericValidator<ProjectType> validator = new GenericValidator<ProjectType>(projectTypeFacade);
+
+        RepeatableInputPanel repeatable =
+                new RepeatableInputPanel<ProjectType>("project", factory,
+                        validator, projectTypeFacade);
+        projectType = repeatable.getData();
+        add(repeatable);
+    }
+
+    private void addResearchGroup() {
+        ResearchGroup group = new ResearchGroup();
+        this.researchGroup = new GenericModel<ResearchGroup>(group);
+        GenericValidator<ResearchGroup> validator = new GenericValidator<ResearchGroup>(researchGroupFacade);
+
+        final RepeatableInput<ResearchGroup> researchGroup =
+                new RepeatableInput<ResearchGroup>("group", this.researchGroup, ResearchGroup.class,
+                        researchGroupFacade);
+        researchGroup.add(validator);
+        researchGroup.setRequired(true);
+
+        ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(researchGroup);
+        final FeedbackPanel repeatableFeedback = new FeedbackPanel("groupFeedback", repeatableFilter);
+        repeatableFeedback.setOutputMarkupId(true);
+        researchGroup.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
+        add(researchGroup);
+        add(repeatableFeedback);
+
+        CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
+        add(isDefaultGroup);
+    }
+
+    private void addScenario() {
+        Scenario scenario = new Scenario();
+        this.scenario = new GenericModel<Scenario>(scenario);
+        GenericValidator<Scenario> validator = new GenericValidator<Scenario>(scenarioFacade);
+
+        final RepeatableInput<Scenario> scenarioField =
+                new RepeatableInput<Scenario>("scenario", this.scenario, Scenario.class,
+                        scenarioFacade);
+        scenarioField.setRequired(true);
+        scenarioField.add(validator);
+        scenarioField.add(new AjaxFormComponentUpdatingBehavior("onblur") {
             @Override
-            protected void populateItem(ListItem item) {
-                final ProjectType pt = (ProjectType) item.getModelObject();
-                final AddingItemsView<String> projectT =
-                        new AddingItemsView<String>(
-                                "project",
-                                new ProjectTypeTitleModel(pt),
-                                this,
-                                projectTypeContainer,
-                                ProjectType.class
-                        );
-                projectT.setRequired(true);
-                item.add(projectT);
+            protected void onUpdate(AjaxRequestTarget target) {
+                scenarioEntity = (Scenario) getDefaultModelObject();
+                // setEndTime if it was not already set.
             }
-        };
-        projectTypes.setOutputMarkupId(true);
-        projectTypes.setReuseItems(true);
+        });
 
-        projectTypeContainer.add(projectTypes);
-        projectTypeContainer.setOutputMarkupId(true);
-        add(projectTypeContainer);
+
+        ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(scenarioField);
+        final FeedbackPanel repeatableFeedback = new FeedbackPanel("scenarioFeedback", repeatableFilter);
+        repeatableFeedback.setOutputMarkupId(true);
+        scenarioField.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
+        add(scenarioField);
+        add(repeatableFeedback);
     }
 
     private void addTestedSubject() {
-        testedSubjectsData.add(new Person());
-        final WebMarkupContainer testedSubjectContainer = new WebMarkupContainer("addTestedInputContainer");
+        Person person = new Person();
+        this.testedSubject = new GenericModel<Person>(person);
+        GenericValidator<Person> validator = new GenericValidator<Person>(personFacade);
+        final RepeatableInput<Person> testedSubject =
+                new RepeatableInput<Person>("testedSubject", this.testedSubject, Person.class,
+                        personFacade);
+        testedSubject.add(validator);
+        testedSubject.setRequired(true);
 
-        final ListView<Person> testedSubjects = new ListView<Person>("addTestedInput",testedSubjectsData) {
-            @Override
-            protected void populateItem(ListItem item) {
-                final Person person = (Person) item.getModelObject();
-                final AddingItemsView<String> testSubject =
-                        new AddingItemsView<String>(
-                                "subjects",
-                                new PersonNameModel(person),
-                                this,
-                                testedSubjectContainer,
-                                Person.class
-                        );
-                // testSubject.setRequired(true); //must accept even empty fields
-                item.add(testSubject);
-            }
-        };
-        testedSubjects.setOutputMarkupId(true);
-        testedSubjects.setReuseItems(true);
+        ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(testedSubject);
+        final FeedbackPanel repeatableFeedback = new FeedbackPanel("testedSubjectFeedback", repeatableFilter);
+        repeatableFeedback.setOutputMarkupId(true);
+        testedSubject.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
 
-        testedSubjectContainer.add(testedSubjects);
-        testedSubjectContainer.setOutputMarkupId(true);
-        add(testedSubjectContainer);
+        add(testedSubject);
+        add(repeatableFeedback);
     }
     
     private void addCoExperimenters() {
-        coExperimentersData.add(new Person());
-        final WebMarkupContainer coExperimentersContainer =
-                new WebMarkupContainer("addCoExperimentersInputContainer");
+        GenericFactory<Person> factory = new GenericFactory<Person>(Person.class);
+        GenericValidator<Person> validator = new GenericValidator<Person>(personFacade);
 
-        final ListView<Person> coExperimenters =
-                new ListView<Person>("addCoExperimentersInput",coExperimentersData) {
-            @Override
-            protected void populateItem(ListItem item) {
-                final Person person = (Person) item.getModelObject();
-                final AddingItemsView<String> testSubject =
-                        new AddingItemsView<String>(
-                                "coExperimenters",
-                                new PersonNameModel(person),
-                                this,
-                                coExperimentersContainer,
-                                Person.class
-                        );
-                item.add(testSubject);
-            }
-        };
-        coExperimenters.setOutputMarkupId(true);
-        coExperimenters.setReuseItems(true);
-
-        coExperimentersContainer.add(coExperimenters);
-        coExperimentersContainer.setOutputMarkupId(true);
-        add(coExperimentersContainer);
+        RepeatableInputPanel repeatable =
+                new RepeatableInputPanel<Person>("coExperimenters", factory,
+                        validator, personFacade);
+        coExperimenters = repeatable.getData();
+        add(repeatable);
     }
 
     private void createModalWindows() {
@@ -430,98 +324,37 @@ public class AddExperimentScenarioForm extends Form<AddExperimentScenarioDTO> {
         add(newCoExperimenterAjax, coExperimenterLabel);
     }
 
+    /**
+     * It takes data from the model and based on them get valid data.
+     */
+    public void save() {
+        validate();
+        if(!hasError()) {
+            experiment.setEndTime(new Timestamp(this.endDate.getObject().getTime()));
+            experiment.setStartTime(new Timestamp(this.startDate.getObject().getTime()));
+            experiment.setProjectTypes(getSet(this.projectType));
+            experiment.setResearchGroup(this.researchGroup.getObject());
+            experiment.setScenario(this.scenario.getObject());
+            experiment.setPersonBySubjectPersonId(this.testedSubject.getObject());
+            experiment.setPersons(getSet(this.coExperimenters));
+        }
+    }
+
+    private Set getSet(List objects) {
+        Set result = new HashSet();
+        for(Object object: objects) {
+            result.add(((GenericModel) object).getObject());
+        }
+        return result;
+    }
+
+    /**
+     * It returns whether the form is valid.
+     *
+     * @return
+     */
     public boolean isValid(){
-        this.validate();
-
-        boolean validPersons = isPersonValid(testedSubjectsData) &&
-                isPersonValid(coExperimentersData);
-
-        boolean isStimulusValid = isAutocompletableValid(stimuliData);
-
-        return !hasError() && validPersons && isStimulusValid;
-    }
-
-    private boolean isPersonValid(List<Person> persons) {
-        int validPersons = 0;
-        for(Person person: persons){
-            if(!person.getSurname().equals("")){
-                validPersons++;
-            }
-        }
-        return validPersons > 0;
-    }
-
-    private boolean isAutocompletableValid(List<? extends IAutocompletable> list){
-         for (IAutocompletable item: list){
-             if(item.isValidOnChange())
-                 return true;
-         }
-         return false;
-    }
-
-    public Experiment getValidExperimentPart(Experiment experiment){
-        AddExperimentScenarioDTO dto = getModelObject();
-
-        if(dto == null) return null;
-
-        if(dto.getScenario() == null) return null;
-        if(dto.getGroup() == null) return null;
-        if(dto.getProject() == null) return null;
-        if(dto.getStart() == null) return null;
-        if(dto.getFinish() == null) return null;
-
-        if(testedSubjectsData.isEmpty()) return null;
-        //if(coExperimentersData.isEmpty()) return null; //valid (not required)
-        if(stimuliData.isEmpty()) return null;
-        debug("AddExperimentScenarioForm required attributes are set");
-
-        Scenario scenario = scenarioFacade.getScenarioByTitle(dto.getScenario());
-        if(scenario == null) return null;
-        experiment.setScenario(scenario);
-        debug("AddExperimentScenarioForm.scenario is valid");
-
-        ResearchGroup group = researchGroupFacade.getGroupByTitle(dto.getGroup());
-        if(group == null) return null;
-        experiment.setResearchGroup(group);
-        debug("AddExperimentScenarioForm.group is valid");
-
-        //TODO check if experiment has one or more project types
-        List<ProjectType> projects = projectTypeFacade.getAllRecords();
-        ProjectType projectType = null;
-        for (ProjectType pt : projects){
-            if(pt.getTitle().equals(dto.getProject()))
-                projectType = pt;
-        }
-        if(projectType == null) return null;
-        Set<ProjectType> projectTypes = new HashSet<ProjectType>();
-        projectTypes.add(projectType);
-        experiment.setProjectTypes(projectTypes);
-        debug("AddExperimentScenarioForm.projectType is valid");
-
-        if(dto.getStart().getTime() >= System.currentTimeMillis()) return null;
-        if(dto.getStart().getTime() >= dto.getFinish().getTime()) return null;
-        if(dto.getFinish().getTime() >= System.currentTimeMillis()) return null;
-        experiment.setStartTime(new Timestamp(dto.getStart().getTime()));
-        experiment.setEndTime(new Timestamp(dto.getFinish().getTime()));
-        debug("AddExperimentScenarioForm.start,end are valid");
-
-        //TODO add tests for CoExperimenters and TestedSubjects
-        List<Person> allPersons = personFacade.getAllRecords();
-        for (Person subject : testedSubjectsData){  }
-        for (Person subject : coExperimentersData){  }
-//        experiment.setPersons(new HashSet<Person>(allPersons));
-        debug("AddExperimentScenarioForm.testedSubjects are valid");
-        debug("AddExperimentScenarioForm.coExperimenters are valid");
-
-        Set<Stimulus> stimuliSet = new HashSet<Stimulus>();
-        for (Stimulus stimulus : stimuliData){
-            stimuliSet.add(stimulus);
-        }
-        if(stimuliSet.size() != stimuliData.size()) return null;
-        //TODO add attribute stimuliSet into Experiment
-        //experiment.setStimuli(stimuliSet);
-        debug("AddExperimentScenarioForm.stimuli are valid");
-
-        return experiment;
+        validate();
+        return !hasError();
     }
 }

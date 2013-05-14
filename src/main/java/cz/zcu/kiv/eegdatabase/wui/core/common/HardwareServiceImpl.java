@@ -1,16 +1,15 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class HardwareServiceImpl implements HardwareService {
 
@@ -75,6 +74,11 @@ public class HardwareServiceImpl implements HardwareService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return hardwareDao.getCountRecords();
+    }
+
+    @Override
+    public List<Hardware> getUnique(Hardware example) {
+        return hardwareDao.findByExample(example);
     }
 
     @Override

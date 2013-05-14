@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
-import java.util.List;
-import java.util.Map;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.List;
+import java.util.Map;
 
 public class PersonFacadeImpl implements PersonFacade {
 
@@ -94,6 +93,11 @@ public class PersonFacadeImpl implements PersonFacade {
     @Override
     public int getCountRecords() {
         return personService.getCountRecords();
+    }
+
+    @Override
+    public List<Person> getUnique(Person example) {
+        return personService.getUnique(example);
     }
 
     @Override

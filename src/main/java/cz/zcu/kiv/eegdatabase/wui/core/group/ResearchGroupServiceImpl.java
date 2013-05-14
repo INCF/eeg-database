@@ -1,38 +1,19 @@
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
-
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.service.MailService;
+import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.mail.MailException;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
-import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonOptParamDefDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.dao.WeatherDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import cz.zcu.kiv.eegdatabase.data.service.MailService;
-import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
 
@@ -246,6 +227,11 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return researchGroupDAO.getCountRecords();
+    }
+
+    @Override
+    public List<ResearchGroup> getUnique(ResearchGroup example) {
+        return researchGroupDAO.findByExample(example);
     }
 
     @Override

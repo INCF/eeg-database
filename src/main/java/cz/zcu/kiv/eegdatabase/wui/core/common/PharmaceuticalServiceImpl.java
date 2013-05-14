@@ -1,8 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao;
-import cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao;
-import cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -72,6 +70,11 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
     @Override
     public int getCountRecords() {
         return pharmaceuticalDao.getCountRecords();
+    }
+
+    @Override
+    public List<Pharmaceutical> getUnique(Pharmaceutical example) {
+        return pharmaceuticalDao.findByExample(example);
     }
 
     @Override

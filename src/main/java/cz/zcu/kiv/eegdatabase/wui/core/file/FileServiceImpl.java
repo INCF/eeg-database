@@ -1,17 +1,16 @@
 package cz.zcu.kiv.eegdatabase.wui.core.file;
 
-import java.io.InputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.List;
 
 public class FileServiceImpl implements FileService {
 
@@ -75,6 +74,11 @@ public class FileServiceImpl implements FileService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return fileDAO.getCountRecords();
+    }
+
+    @Override
+    public List<DataFile> getUnique(DataFile example) {
+        return fileDAO.findByExample(example);
     }
 
     @Override

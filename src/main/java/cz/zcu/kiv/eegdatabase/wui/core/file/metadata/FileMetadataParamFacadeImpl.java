@@ -1,16 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.file.metadata;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class FileMetadataParamFacadeImpl implements FileMetadataParamFacade {
 
@@ -66,6 +61,11 @@ public class FileMetadataParamFacadeImpl implements FileMetadataParamFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<FileMetadataParamDef> getUnique(FileMetadataParamDef example) {
+        return service.getUnique(example);
     }
 
     @Override

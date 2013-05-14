@@ -68,6 +68,11 @@ public class DiseaseServiceImpl implements DiseaseService {
     }
 
     @Override
+    public List<Disease> getUnique(Disease example) {
+        return diseaseDao.findByExample(example);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public boolean existsDisease(String name) {
         List<Disease> existingDisease = diseaseDao.readByParameter("title", name);

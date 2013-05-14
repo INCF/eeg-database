@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.article;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
-import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.List;
 
 public class ArticleFacadeImpl implements ArticleFacade {
     
@@ -64,6 +63,11 @@ public class ArticleFacadeImpl implements ArticleFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<Article> getUnique(Article example) {
+        return service.getUnique(example);
     }
 
     @Override

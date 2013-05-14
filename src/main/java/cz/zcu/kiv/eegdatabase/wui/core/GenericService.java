@@ -22,4 +22,6 @@ public interface GenericService<T, PK extends Serializable> {
     List<T> getRecordsAtSides(int first, int max);
 
     int getCountRecords();
+
+    List<T> getUnique(T example);
 }

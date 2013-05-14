@@ -1,15 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.history;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.transaction.annotation.Transactional;
-
 import cz.zcu.kiv.eegdatabase.data.dao.HistoryDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public class HistoryServiceImpl implements HistoryService {
 
@@ -72,6 +71,11 @@ public class HistoryServiceImpl implements HistoryService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return dao.getCountRecords();
+    }
+
+    @Override
+    public List<History> getUnique(History example) {
+        return dao.findByExample(example);
     }
 
     @Override

@@ -76,6 +76,11 @@ public class ScenariosServiceImpl implements ScenariosService {
     }
 
     @Override
+    public List<Scenario> getUnique(Scenario example) {
+        return scenarioDAO.findByExample(example);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public List<Scenario> getScenariosWhereOwner(Person owner) {
         return scenarioDAO.getScenariosWhereOwner(owner);

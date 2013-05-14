@@ -3,11 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutocompletable;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -23,7 +19,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="PROJECT_TYPE")
-public class ProjectType implements Serializable, IAutocompletable {
+public class ProjectType implements Serializable, IAutoCompletable {
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -94,17 +90,8 @@ public class ProjectType implements Serializable, IAutocompletable {
     }
 
     @Override
-    public String getAutocompleteData() {
+    @Transient
+    public String getAutoCompleteData() {
         return getTitle();
-    }
-
-    @Override
-    public GenericFacade getFacade() {
-        return projectTypeFacade;
-    }
-
-    @Override
-    public boolean isValidOnChange() {
-        return !(getTitle()==null || getTitle().equals(""));
     }
 }

@@ -4,6 +4,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
@@ -18,7 +19,7 @@ import java.util.Set;
 //@Indexed
 @javax.persistence.Table(name = "SCENARIO")
 //@Analyzer(impl = StandardAnalyzer.class)
-public class Scenario implements Serializable, Comparable<Scenario> {
+public class Scenario implements Serializable, Comparable<Scenario>, IAutoCompletable {
 
     //@DocumentId
     @SolrId
@@ -248,6 +249,12 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 
     public void setDataFile(Object dataFile) {
         this.dataFile = dataFile;
+    }
+
+    @Override
+    @Transient
+    public String getAutoCompleteData() {
+        return getTitle();
     }
 }
 
