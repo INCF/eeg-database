@@ -22,10 +22,6 @@ import java.util.Set;
 @javax.persistence.Table(name="STIMULUS")
 public class Stimulus implements Serializable {
 
-    @Autowired
-    @Transient
-    StimulusFacade stimulusFacade;
-
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)

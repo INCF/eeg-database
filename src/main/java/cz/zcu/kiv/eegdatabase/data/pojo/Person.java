@@ -30,10 +30,6 @@ import java.util.Set;
 @SeeAlso("http://eegdatabase.kiv.zcu.cz")
 public class Person implements Serializable, Comparable<Person>, IAutoCompletable {
 
-    @Autowired
-    @Transient
-    PersonFacade personFacade;
-
     //@DocumentId
     @SolrId
     @Id

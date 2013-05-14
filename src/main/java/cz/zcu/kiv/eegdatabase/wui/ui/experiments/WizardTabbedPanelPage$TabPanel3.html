@@ -2,11 +2,13 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="resultTab" action="" method="post" autocomplete="on">
+        <span wicket:id="formFeedback">[no errors]</span>
         <div class="form-item">
             <label for="resultFile">
                 <wicket:message key="label.resultFile">[Results file]</wicket:message>
             </label>
             <input type="file" name="resultFile" wicket:id="resultFile"/>
+            <span wicket:id="fileFeedback"></span>
         </div>
         <div class="form-item">
             <label for="submitFormButton" class="long-label">

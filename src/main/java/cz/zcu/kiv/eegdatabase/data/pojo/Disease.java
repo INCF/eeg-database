@@ -22,11 +22,6 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="DISEASE")
 public class Disease implements Serializable, IAutoCompletable {
-
-    @Autowired
-    @Transient
-    DiseaseFacade diseaseFacade;
-
     @Id
     @SolrId
     @GeneratedValue(strategy = GenerationType.AUTO)

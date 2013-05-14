@@ -33,8 +33,9 @@ import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import java.util.Date;
+
+import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
 /**
  * Created by IntelliJ IDEA.
@@ -94,37 +95,15 @@ public class AddPersonPage extends WebPage {
             FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
             add(surname, surnameLabel);
 
-            /*
-            DatePicker date = new DatePicker("dateOfBirth") {
 
-                private static final long serialVersionUID = 1L;
-
+            DateTextField dateOfBirth = new DateTextField("dateOfBirth", new StyleDateConverter(true)){
                 @Override
                 public <C> IConverter<C> getConverter(Class<C> type) {
                     return (IConverter<C>) new TimestampConverter();
                 }
             };
-
-            date.setLabel(ResourceUtils.getModel("label.dateOfBirth"));
-            date.setRequired(true);
-            FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
-            add(date, dateLabel);
-            */
-
-            /* TODO add dateOfBirth
-            DateTextField dateOfBirth = new DateTextField("dateOfBirth", new StyleDateConverter(true));
-
-            DatePicker datePicker = new DatePicker();
-            datePicker.setShowOnFieldClick(true);
-            datePicker.setAutoHide(true);
-            dateOfBirth.add(datePicker);
-
             dateOfBirth.setRequired(true);
             add(dateOfBirth);
-            FormComponentLabel dateLabel = new FormComponentLabel("dateLb", dateOfBirth);
-            add(dateOfBirth, dateLabel);
-            */
-
 
 
             EmailTextField email = new EmailTextField("username");
@@ -244,12 +223,13 @@ public class AddPersonPage extends WebPage {
                 validate = false;
             }
 
-            /*  TODO validate date
-            if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
+            try{
+                if (user.getDateOfBirth().getTime() >= System.currentTimeMillis())
+                    throw new Exception();
+            }catch (Exception e){
                 error(ResourceUtils.getString("invalid.dateOfBirth"));
                 validate = false;
             }
-            */
 
             if (user.getPhoneNumber() != null && !user.getPhoneNumber().isEmpty()) {
                 try {

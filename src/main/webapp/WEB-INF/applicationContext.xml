@@ -143,14 +143,21 @@
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
 
     <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${email.smtp}" />
+        <!-- original settings -->
+        <!--<property name="host" value="${email.smtp}" />-->
+
+        <!-- for testing of mail sending after registration of new person -->
+        <property name="host" value="smtp.gmail.com"/>
+        <property name="port" value="25" />
+        <property name="username" value="sutr.matej@gmail.com" />
+        <property name="password" value="TESTeegPORTAL" />
+        <!-- test properties over -->
     </bean>
 
     <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
         <property name="from" value="${email.from}" />
         <property name="subject" value="${email.subject}" />
     </bean>
-
 
     <!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
 

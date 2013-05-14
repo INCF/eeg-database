@@ -22,11 +22,6 @@ import java.util.Set;
 @Entity
 @javax.persistence.Table(name="PHARMACEUTICAL")
 public class Pharmaceutical implements Serializable, IAutoCompletable {
-
-    @Autowired
-    @Transient
-    PharmaceuticalFacade pharmaceuticalFacade;
-
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
