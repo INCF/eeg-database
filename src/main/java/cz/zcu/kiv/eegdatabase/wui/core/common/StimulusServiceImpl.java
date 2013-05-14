@@ -74,6 +74,11 @@ public class StimulusServiceImpl implements StimulusService {
     }
 
     @Override
+    public List<Stimulus> getUnique(Stimulus example) {
+        return stimulusDao.findByExample(example);
+    }
+
+    @Override
     @Transactional(readOnly = true)
     public boolean canSaveDescription(String description) {
         return stimulusDao.canSaveDescription(description);

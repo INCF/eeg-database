@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -18,7 +19,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="PROJECT_TYPE")
-public class ProjectType implements Serializable {
+public class ProjectType implements Serializable, IAutoCompletable {
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -33,6 +34,9 @@ public class ProjectType implements Serializable {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
+    @Autowired
+    @Transient
+    private ProjectTypeFacade projectTypeFacade;
 
     public ProjectType() {
 
@@ -83,5 +87,11 @@ public class ProjectType implements Serializable {
 
     public void setResearchGroups(Set<ResearchGroup> researchGroups) {
         this.researchGroups = researchGroups;
+    }
+
+    @Override
+    @Transient
+    public String getAutoCompleteData() {
+        return getTitle();
     }
 }

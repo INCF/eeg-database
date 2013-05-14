@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
 import org.apache.commons.logging.Log;
@@ -78,6 +77,11 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return projectTypeDao.getCountRecords();
+    }
+
+    @Override
+    public List<ProjectType> getUnique(ProjectType example) {
+        return projectTypeDao.findByExample(example);
     }
 
     @Override

@@ -4,6 +4,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -15,7 +16,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="RESEARCH_GROUP")
-public class ResearchGroup implements Serializable {
+public class ResearchGroup implements Serializable, IAutoCompletable {
     @SolrId
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -387,6 +388,12 @@ public class ResearchGroup implements Serializable {
 
     public void setStimulusTypes(Set<StimulusType> stimulusTypes) {
         this.stimulusTypes = stimulusTypes;
+    }
+
+    @Override
+    @Transient
+    public String getAutoCompleteData() {
+        return getTitle();
     }
 }
 

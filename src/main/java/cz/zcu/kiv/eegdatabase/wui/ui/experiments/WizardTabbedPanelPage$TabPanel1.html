@@ -6,7 +6,6 @@
         <div wicket:id="newScenarioModal"></div>
         <div wicket:id="newProjectModal"></div>
         <div wicket:id="addTestedModal"></div>
-        <div wicket:id="addStimulusModal"></div>
         <div wicket:id="addCoExperimenterModal"></div>
 
         <div class="form-item">
@@ -14,6 +13,7 @@
                 <wicket:message key="label.scenario">Scenario</wicket:message>
             </label>
             <input type="text" wicket:id="scenario"/>
+            <span wicket:id="scenarioFeedback"></span>
             <input type="button" wicket:id="newScenario" value="Add">
         </div>
 
@@ -22,7 +22,8 @@
                 <wicket:message key="label.group">Group</wicket:message>
             </label>
             <input type="text" wicket:id="group">
-            <input type="button" wicket:id="addGroup" value="Add" />
+            <span wicket:id="groupFeedback"></span>
+            <input type="button" wicket:id="addGroup" value="Add"/>
             <input type="checkbox" name="defaultGroup" wicket:id="isDefaultGroup" value="isDefault">Set as default
         </div>
 
@@ -30,7 +31,7 @@
             <label for="project">
                 <wicket:message key="label.projectType">Project type</wicket:message>
             </label>
-            <input type="text" wicket:id="project"/>
+            <div wicket:id="project"></div>
             <input type="button" wicket:id="newProject" name="newProject" value="Add">
         </div>
 
@@ -39,12 +40,14 @@
                 <wicket:message key="label.startDate">Start Date</wicket:message>
             </label>
             <span wicket:id="start"></span>
+            <span wicket:id="startFeedback"></span>
         </div>
 
         <div class="form-item">
             <label for="finish">
                 <wicket:message key="label.finishDate">Finish date</wicket:message>
             </label>
+            <span wicket:id="finishFeedback"></span>
             <span wicket:id="finish"></span>
         </div>
 
@@ -52,35 +55,16 @@
             <label for="subjects" wicket:id="subjectsLb">
                 <wicket:message key="label.subjectPerson">[subjects]</wicket:message>
             </label>
-            <span wicket:id="addTestedInputContainer">
-                <span wicket:id="addTestedInput">
-                    <input type="text" wicket:id="subjects"/>
-                </span>
-            </span>
+            <input type="text" wicket:id="testedSubject"/>
+            <span wicket:id="testedSubjectFeedback"></span>
             <input type="button" wicket:id="addTested" value="Add">
-        </div>
-
-        <div class="form-item">
-            <label for="stimuli" wicket:id="stimulusLb">
-                <wicket:message key="label.stimulus">[stimulus]</wicket:message>
-            </label>
-            <span wicket:id="addStimulusInputContainer">
-                <span wicket:id="addStimulusInput">
-                    <input type="text" wicket:id="stimuli"/>
-                </span>
-            </span>
-            <input type="button" wicket:id="addStimulus" value="Add">
         </div>
 
         <div class="form-item">
             <label for="coExperimenters" wicket:id="coExperimentersLb">
                 <wicket:message key="label.coExperimenters">[Co - experimenters]</wicket:message>
             </label>
-            <span wicket:id="addCoExperimentersInputContainer">
-                <span wicket:id="addCoExperimentersInput">
-                    <input type="text" wicket:id="coExperimenters"/>
-                </span>
-            </span>
+            <div wicket:id="coExperimenters"></div>
             <input type="button" wicket:id="addCoExperimenter" value="Add">
         </div>
     </form>

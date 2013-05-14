@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.file;
 
-import java.io.InputStream;
-import java.sql.Blob;
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import java.io.InputStream;
+import java.sql.Blob;
+import java.util.List;
 
 public class FileFacadeImpl implements FileFacade {
     
@@ -64,6 +63,11 @@ public class FileFacadeImpl implements FileFacade {
     @Override
     public int getCountRecords() {
         return fileService.getCountRecords();
+    }
+
+    @Override
+    public List<DataFile> getUnique(DataFile example) {
+        return fileService.getUnique(example);
     }
 
     @Override

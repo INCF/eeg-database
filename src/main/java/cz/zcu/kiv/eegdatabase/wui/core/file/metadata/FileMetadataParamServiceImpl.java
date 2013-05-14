@@ -1,19 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.file.metadata;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class FileMetadataParamServiceImpl implements FileMetadataParamService {
 
@@ -84,6 +79,11 @@ public class FileMetadataParamServiceImpl implements FileMetadataParamService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return dao.getCountRecords();
+    }
+
+    @Override
+    public List<FileMetadataParamDef> getUnique(FileMetadataParamDef example) {
+        return dao.findByExample(example);
     }
 
     @Override

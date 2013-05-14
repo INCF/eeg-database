@@ -71,6 +71,11 @@ public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
     }
 
     @Override
+    public List<Pharmaceutical> getUnique(Pharmaceutical example) {
+        return service.getUnique(example);
+    }
+
+    @Override
     public boolean canSaveTitle(String title){
         return service.canSaveTitle(title);
     }

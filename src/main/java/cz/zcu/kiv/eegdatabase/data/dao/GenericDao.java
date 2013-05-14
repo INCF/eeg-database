@@ -1,12 +1,10 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import org.apache.lucene.queryparser.classic.ParseException;
+
 import java.io.Serializable;
 import java.util.List;
 import java.util.Map;
-
-import org.apache.lucene.queryparser.classic.ParseException;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
 
 /**
  * Interface for connecting logic and data layer.
@@ -82,4 +80,6 @@ public interface GenericDao <T, PK extends Serializable>{
     int getCountRecords();
 
     public Map<T, String> getFulltextResults(String fullTextQuery) throws ParseException;
+
+    List<T> findByExample(T example);
 }

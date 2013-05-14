@@ -1,12 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios.type;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
+import java.util.List;
 
 public class ScenarioTypeFacadeImpl implements ScenarioTypeFacade {
     
@@ -62,6 +61,11 @@ public class ScenarioTypeFacadeImpl implements ScenarioTypeFacade {
     @Override
     public int getCountRecords() {
         return service.getCountRecords();
+    }
+
+    @Override
+    public List<ScenarioType> getUnique(ScenarioType example) {
+        return service.getUnique(example);
     }
 
 }

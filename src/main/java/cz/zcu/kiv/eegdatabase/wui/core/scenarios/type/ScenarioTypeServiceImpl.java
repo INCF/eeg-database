@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios.type;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.ScenarioTypeDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioTypeDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
+import java.util.List;
 
 public class ScenarioTypeServiceImpl implements ScenarioTypeService {
 
@@ -73,5 +72,10 @@ public class ScenarioTypeServiceImpl implements ScenarioTypeService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return dao.getCountRecords();
+    }
+
+    @Override
+    public List<ScenarioType> getUnique(ScenarioType example) {
+        return dao.findByExample(example);
     }
 }

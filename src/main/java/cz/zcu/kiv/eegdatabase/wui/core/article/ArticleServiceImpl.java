@@ -1,17 +1,16 @@
 package cz.zcu.kiv.eegdatabase.wui.core.article;
 
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.transaction.annotation.Transactional;
-
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
+
+import java.util.List;
 
 public class ArticleServiceImpl implements ArticleService {
 
@@ -82,6 +81,11 @@ public class ArticleServiceImpl implements ArticleService {
     @Transactional(readOnly = true)
     public int getCountRecords() {
         return dao.getCountRecords();
+    }
+
+    @Override
+    public List<Article> getUnique(Article example) {
+        return dao.findByExample(example);
     }
 
     @Override

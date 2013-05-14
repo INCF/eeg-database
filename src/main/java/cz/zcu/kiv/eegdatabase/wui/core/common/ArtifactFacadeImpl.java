@@ -1,14 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import java.util.List;
 
 public class ArtifactFacadeImpl implements ArtifactFacade {
 
@@ -65,7 +64,12 @@ public class ArtifactFacadeImpl implements ArtifactFacade {
     public int getCountRecords() {
         return service.getCountRecords();
     }
-    
+
+    @Override
+    public List<Artifact> getUnique(Artifact example) {
+        return service.getUnique(example);
+    }
+
     @Override
     public void createGroupRel(Artifact persistent, ResearchGroup researchGroup) {
         service.createGroupRel(persistent, researchGroup);

@@ -71,6 +71,11 @@ public class ProjectTypeFacadeImpl implements ProjectTypeFacade{
     }
 
     @Override
+    public List<ProjectType> getUnique(ProjectType example) {
+        return service.getUnique(example);
+    }
+
+    @Override
     public boolean canSaveTitle(String title) {
         return service.canSaveTitle(title);
     }

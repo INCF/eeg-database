@@ -98,4 +98,9 @@ public class SoftwareServiceImpl implements SoftwareService{
     public int getCountRecords() {
         return softwareDao.getCountRecords();
     }
+
+    @Override
+    public List<Software> getUnique(Software example) {
+        return softwareDao.findByExample(example);
+    }
 }

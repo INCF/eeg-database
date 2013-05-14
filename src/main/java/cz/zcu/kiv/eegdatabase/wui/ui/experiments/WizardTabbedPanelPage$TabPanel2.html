@@ -11,16 +11,18 @@
 
         <div class="form-item">
             <label for="hardware"><wicket:message key="label.hardware" /></label>
-            <select name="hardware" wicket:id="hardware" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
+            <select name="hardware" wicket:id="hardwares" class="multiple required" multiple="multiple" autosrc="/experiments/wizard/json/hardware">
             </select>
             <input type="button" wicket:id="addHW" value="Add">
+            <span wicket:id="hwFeedback"></span>
         </div>
 
         <div class="form-item">
             <label for="software"><wicket:message key="label.software" /></label>
-            <select name="software" wicket:id="software" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
+            <select name="software" wicket:id="softwares" class="multiple" multiple="multiple" autosrc="/experiments/wizard/json/software">
             </select>
             <input type="button" wicket:id="addSW" value="Add">
+            <span wicket:id="swFeedback"></span>
         </div>
 
         <div class="form-item">
@@ -28,27 +30,20 @@
             <select name="weather" wicket:id="weather">
             </select>
             <input type="button" wicket:id="addWeather" value="Add">
-        </div>
-
-        <div class="form-item">
-            <label for="weatherNote"><wicket:message key="label.weatherNote" /></label>
-            <textarea wicket:id="weatherNote"></textarea>
+            <span wicket:id="weatherFeedback"></span>
         </div>
 
         <div class="form-item">
             <label for="temperature"><wicket:message key="label.temperature" /></label>
-            <input type="number" wicket:id="temperature" name="temperature"/>
+            <input type="text" wicket:id="temperature" name="temperature"/>
+            <span wicket:id="temperatureFeedback"></span>
         </div>
 
         <div class="form-item">
             <label for="disease">
                 <wicket:message key="label.disease">[Disease]</wicket:message>
             </label>
-            <span wicket:id="addDiseaseInputContainer">
-                <span wicket:id="addDiseaseInput">
-                    <input type="text" wicket:id="disease"/>
-                </span>
-            </span>
+            <div wicket:id="diseases"></div>
             <input type="button" wicket:id="addDisease" value="Add">
         </div>
 
@@ -56,17 +51,13 @@
             <label for="pharmaceutical">
                 <wicket:message key="label.pharmaceutical">[Pharmaceutical]</wicket:message>
             </label>
-            <span wicket:id="addPharmaceuticalInputContainer">
-                <span wicket:id="addPharmaceuticalInput">
-                    <input type="text" wicket:id="pharmaceutical"/>
-                </span>
-            </span>
+            <div wicket:id="pharmaceuticals"></div>
             <input type="button" wicket:id="addPharma" value="Add">
         </div>
 
         <div class="form-item">
-            <label for="privateNote"><wicket:message key="label.private" /></label>
-            <input type="text" wicket:id="privateNote" name="privateNote"/>
+            <label for="environmentNote"><wicket:message key="label.private" /></label>
+            <input type="text" wicket:id="environmentNote" name="environmentNote"/>
         </div>
     </form>
 </wicket:panel>
