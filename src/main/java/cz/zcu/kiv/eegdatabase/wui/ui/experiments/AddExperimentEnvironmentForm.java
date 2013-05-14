@@ -53,7 +53,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     private PharmaceuticalFacade pharmaceuticalFacade;
 
     private Experiment experiment;
-    private ListMultipleChoice hw = null;
+    public ListMultipleChoice hw = null;
     private ListMultipleChoice sw = null;
     private DropDownChoice<String> weather = null;
     private TextField temperature = null;
@@ -201,6 +201,10 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
         addModalWindowAndButton(this, "addWeatherModal", "add-weather",
                 "addWeather", AddWeatherPage.class.getName());
+    }
+
+    public void validateForm(){
+        validate();
     }
 
     public boolean isValid(){

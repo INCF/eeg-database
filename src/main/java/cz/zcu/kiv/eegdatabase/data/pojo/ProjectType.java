@@ -34,9 +34,6 @@ public class ProjectType implements Serializable, IAutoCompletable {
     @ManyToMany(cascade = {CascadeType.PERSIST, CascadeType.MERGE})
     private Set<Experiment> experiments = new HashSet<Experiment>(0);
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
-    @Autowired
-    @Transient
-    private ProjectTypeFacade projectTypeFacade;
 
     public ProjectType() {
 

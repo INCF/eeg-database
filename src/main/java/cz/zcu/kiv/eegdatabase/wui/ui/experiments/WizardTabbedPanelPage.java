@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
 import org.apache.wicket.markup.head.CssHeaderItem;
@@ -41,6 +42,8 @@ public class WizardTabbedPanelPage extends MenuPage {
         scenarioForm = new AddExperimentScenarioForm("scenarioTab", experiment);
         environmentForm = new AddExperimentEnvironmentForm("environmentTab", experiment);
         resultsForm = new AddExperimentResultsForm("resultTab", this, experiment);
+        AjaxFormValidatingBehavior behavS = new AjaxFormValidatingBehavior(scenarioForm, "onblur");
+        AjaxFormValidatingBehavior.addToAllFormComponents(environmentForm, "onblur");
         final int TAB_COUNT = 2;
         final int[] formsVisited = {0, 0, 0};
 
