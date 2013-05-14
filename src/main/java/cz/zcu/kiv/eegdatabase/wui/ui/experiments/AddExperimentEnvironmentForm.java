@@ -14,21 +14,30 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericFactory;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericModel;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericValidator;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.RepeatableInputPanel;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
+import org.hibernate.sql.Select;
+import sun.net.www.content.text.Generic;
 
+import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
@@ -43,23 +52,141 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     @SpringBean
     private PharmaceuticalFacade pharmaceuticalFacade;
 
-    private Experiment experiment = new Experiment();
+    private Experiment experiment;
     private ListMultipleChoice hw = null;
     private ListMultipleChoice sw = null;
     private DropDownChoice<String> weather = null;
-    private NumberTextField<Integer> temperature = null;
-    final int AUTOCOMPLETE_ROWS = 10;
-    private final List<Disease> diseaseData = new ArrayList<Disease>();
-    private final List<Pharmaceutical> pharmaceuticalData = new ArrayList<Pharmaceutical>();
+    private TextField temperature = null;
+    private TextField<String> environmentNote;
+    final int SELECT_ROWS = 5;
 
+    private List<Hardware> hwListForModel;
+    private List<Software> swListForModel;
+    private Weather weatherForModel;
+    private Integer integerForModel;
+    private String environmentNoteForModel;
+    private GenericModel<Weather> weatherModel;
     private List<GenericModel<Disease>> diseases;
     private List<GenericModel<Pharmaceutical>> pharmaceuticals;
 
     public AddExperimentEnvironmentForm(String id, Experiment experiment){
-        super(id, new CompoundPropertyModel<Experiment>(experiment));
+        super(id);
+        this.experiment = experiment;
 
-        getModelObject().setDiseases(null);
+        addHardware();
+        addSoftware();
+        addWeather();
+        addTemperature();
+        addEnvironmentNote();
+        addDisease();
+        addPharmaceutical();
 
+        createModalWindows();
+    }
+
+    private void addHardware(){
+        hwListForModel = new ArrayList<Hardware>();
+        hw = new ListMultipleChoice("hardwares", new GenericModel(hwListForModel), getHardwares()).setMaxRows(SELECT_ROWS);
+        hw.setLabel(ResourceUtils.getModel("label.hardware"));
+        hw.setRequired(true);
+
+        ComponentFeedbackMessageFilter hwFilter = new ComponentFeedbackMessageFilter(hw);
+        final FeedbackPanel hwFeedback = new FeedbackPanel("hwFeedback", hwFilter);
+        hwFeedback.setOutputMarkupId(true);
+        hw.add(new AjaxFeedbackUpdatingBehavior("blur", hwFeedback));
+
+        add(hw);
+        add(hwFeedback);
+    }
+
+    private void addSoftware(){
+        swListForModel = new ArrayList<Software>();
+        sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), getSoftwares()).setMaxRows(SELECT_ROWS);
+        sw.setLabel(ResourceUtils.getModel("label.software"));
+        sw.setRequired(true);
+
+        ComponentFeedbackMessageFilter swFilter = new ComponentFeedbackMessageFilter(sw);
+        final FeedbackPanel swFeedback = new FeedbackPanel("swFeedback", swFilter);
+        swFeedback.setOutputMarkupId(true);
+        sw.add(new AjaxFeedbackUpdatingBehavior("blur", swFeedback));
+
+        add(sw);
+        add(swFeedback);
+    }
+
+    private void addWeather(){
+        weatherForModel = new Weather();
+        weatherModel = new GenericModel<Weather>(weatherForModel);
+        weather = new DropDownChoice("weather", weatherModel, getWeathers());
+        weather.setRequired(true);
+        weather.setLabel(ResourceUtils.getModel("label.weather"));
+        weather.setNullValid(true);
+        weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                weatherForModel = weatherModel.getObject();
+            }
+        });
+
+        ComponentFeedbackMessageFilter weatherFilter = new ComponentFeedbackMessageFilter(weather);
+        final FeedbackPanel weatherFeedback = new FeedbackPanel("weatherFeedback", weatherFilter);
+        weatherFeedback.setOutputMarkupId(true);
+        weather.add(new AjaxFeedbackUpdatingBehavior("blur", weatherFeedback));
+
+        add(weather);
+        add(weatherFeedback);
+    }
+
+    private void addTemperature(){
+        temperature = new TextField("temperature", new Model(integerForModel), Integer.class);
+        temperature.setRequired(true);
+        temperature.setLabel(ResourceUtils.getModel("label.temperature"));
+
+        ComponentFeedbackMessageFilter temperatureFilter = new ComponentFeedbackMessageFilter(temperature);
+        final FeedbackPanel temperatureFeedback = new FeedbackPanel("temperatureFeedback", temperatureFilter);
+        temperatureFeedback.setOutputMarkupId(true);
+        temperature.add(new AjaxFeedbackUpdatingBehavior("blur", temperatureFeedback));
+
+        add(temperature);
+        add(temperatureFeedback);
+    }
+
+    private void addEnvironmentNote(){
+        final Model environmentNoteModel = new Model(environmentNoteForModel);
+        environmentNote = new TextField<String>("environmentNote", environmentNoteModel, String.class);
+        environmentNote.setLabel(ResourceUtils.getModel("label.environmentNote"));
+        environmentNote.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                environmentNoteForModel = environmentNoteModel.getObject().toString();
+            }
+        });
+        add(environmentNote);
+    }
+
+    private void addDisease() {
+        GenericFactory<Disease> factory = new GenericFactory<Disease>(Disease.class);
+        GenericValidator<Disease> validator = new GenericValidator<Disease>(diseaseFacade);
+
+        RepeatableInputPanel<Disease> repeatable =
+                new RepeatableInputPanel<Disease>("diseases", factory,
+                        validator, diseaseFacade);
+        diseases = repeatable.getData();
+        add(repeatable);
+    }
+
+    private void addPharmaceutical() {
+        GenericFactory<Pharmaceutical> factory = new GenericFactory<Pharmaceutical>(Pharmaceutical.class);
+        GenericValidator<Pharmaceutical> validator = new GenericValidator<Pharmaceutical>(pharmaceuticalFacade);
+
+        RepeatableInputPanel<Pharmaceutical> repeatable =
+                new RepeatableInputPanel<Pharmaceutical>("pharmaceuticals", factory,
+                        validator, pharmaceuticalFacade);
+        pharmaceuticals = repeatable.getData();
+        add(repeatable);
+    }
+
+    private void createModalWindows(){
         addModalWindowAndButton(this, "addDiseaseModal", "add-disease",
                 "addDisease", AddDiseasePage.class.getName());
 
@@ -74,135 +201,23 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
         addModalWindowAndButton(this, "addWeatherModal", "add-weather",
                 "addWeather", AddWeatherPage.class.getName());
-
-        ArrayList<String> hardwareTitles = getHardwareTitles();
-        hw = new ListMultipleChoice("hardware", hardwareTitles).setMaxRows(5);
-        hw.setRequired(true);
-        hw.setLabel(ResourceUtils.getModel("label.hardware"));
-        hw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                hw.setChoices(getHardwareTitles());
-                target.add(hw);
-            }
-        });
-        add(hw);
-
-        ArrayList<String> softwareTitles = getSoftwareTitles();
-        sw = new ListMultipleChoice("software", softwareTitles).setMaxRows(5);
-        sw.setRequired(true);
-        sw.setLabel(ResourceUtils.getModel("label.software"));
-        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                sw.setChoices(getSoftwareTitles());
-                target.add(sw);
-            }
-        });
-        add(sw);
-
-        ArrayList<String> weatherTitles = getWeatherTitles();
-        weather = new DropDownChoice<String>("weather", weatherTitles);
-        weather.setRequired(true);
-        weather.setLabel(ResourceUtils.getModel("label.weather"));
-        weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                weather.setChoices(getWeatherTitles());
-                target.add(weather);
-            }
-        });
-        add(weather);
-
-        TextArea<String> weatherNote = new TextArea<String>("weatherNote");
-        weatherNote.setLabel(ResourceUtils.getModel("label.weatherNote"));
-        add(weatherNote);
-        temperature = new NumberTextField<Integer>("temperature");
-        temperature.setRequired(true);
-        temperature.setLabel(ResourceUtils.getModel("label.temperature"));
-        add(temperature);
-
-        addDisease();
-
-        addPharmaceutical();
-
-        TextField<String> privateNote = new TextField<String>("privateNote");
-        privateNote.setLabel(ResourceUtils.getModel("label.private"));
-        add(privateNote);
-
-        setOutputMarkupId(true);
-        AjaxFormValidatingBehavior.addToAllFormComponents(this, "onblur", Duration.ONE_SECOND);
-    }
-
-    private void addDisease() {
-        GenericFactory<Disease> factory = new GenericFactory<Disease>(Disease.class);
-        GenericValidator<Disease> validator = new GenericValidator<Disease>(diseaseFacade);
-
-        RepeatableInputPanel<Disease> repeatable =
-                new RepeatableInputPanel<Disease>("disease", factory,
-                        validator, diseaseFacade);
-        diseases = repeatable.getData();
-        add(repeatable);
-    }
-
-    private void addPharmaceutical() {
-        GenericFactory<Pharmaceutical> factory = new GenericFactory<Pharmaceutical>(Pharmaceutical.class);
-        GenericValidator<Pharmaceutical> validator = new GenericValidator<Pharmaceutical>(pharmaceuticalFacade);
-
-        RepeatableInputPanel<Pharmaceutical> repeatable =
-                new RepeatableInputPanel<Pharmaceutical>("pharmaceutical", factory,
-                        validator, pharmaceuticalFacade);
-        pharmaceuticals = repeatable.getData();
-        add(repeatable);
     }
 
     public boolean isValid(){
-        if (hw.getValue().isEmpty()) error("Hardware is required!");
-        if (sw.getValue().isEmpty()) error("Software is required!");
-        if (weather.getValue().isEmpty()) error("Weather is required!");
-        if (temperature.getValue().isEmpty()) error("Temperature is required!");
-        else {
-            try {
-                 Float.parseFloat(temperature.getValue());
-            }
-            catch (NumberFormatException e){
-                error("Temperature must be a number!");
-            }
-        }
+        validate();
         return !hasError();
     }
 
-    private ArrayList<String> getWeatherTitles(){
-        List<Weather> weathers = weatherFacade.getAllRecords();
-        ArrayList<String> weatherTitles = new ArrayList<String>();
-        if (weathers != null){
-            for (Weather w : weathers){
-                weatherTitles.add(w.getTitle());
-            }
-        }
-        return weatherTitles;
+    private List<Weather> getWeathers(){
+        return weatherFacade.getAllRecords();
     }
 
-    private ArrayList<String> getSoftwareTitles(){
-        List<Software> softwares = softwareFacade.getAllRecords();
-        ArrayList<String> softwareTitles = new ArrayList<String>();
-        if (softwares != null){
-            for (Software sw : softwares){
-                softwareTitles.add(sw.getTitle());
-            }
-        }
-        return softwareTitles;
+    private List<Software> getSoftwares(){
+        return softwareFacade.getAllRecords();
     }
 
-    private ArrayList<String> getHardwareTitles(){
-        List<Hardware> hardwares = hardwareFacade.getAllRecords();
-        ArrayList<String> hardwareTitles = new ArrayList<String>();
-        if (hardwares != null){
-            for (Hardware hw : hardwares){
-                hardwareTitles.add(hw.getTitle());
-            }
-        }
-        return hardwareTitles;
+    private List<Hardware> getHardwares(){
+        return hardwareFacade.getAllRecords();
     }
 
     private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
@@ -253,88 +268,27 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         form.add(ajaxButton);
     }
 
-    /*
-    public Experiment getValidExperimentPart(Experiment experiment) {
-        AddExperimentEnvironmentDTO dto = getModelObject();
-        if(dto == null) return null;
-
-        if(dto.getWeather() == null) return null;
-        if(dto.getTemperature() == null) return null;
-        if(dto.getHardware() == null || dto.getHardware().isEmpty())
-            return null;
-        if(dto.getSoftware() == null || dto.getSoftware().isEmpty())
-            return null;
-        debug("AddExperimentEnvironmentForm required attributes are set");
-
-        List<Weather> weathers = weatherFacade.getAllRecords();
-        Weather weather = null;
-        for (Weather w : weathers){
-            if(w.getTitle().equals(dto.getWeather())){
-                weather = w;
-            }
-        }
-        if(weather == null) return null;
-        experiment.setWeather(weather);
-        debug("AddExperimentEnvironmentForm.weather was valid");
-
-        // TODO change type of temperature in DTO to int
-        int temperature = dto.getTemperature().intValue();
-        experiment.setTemperature(temperature);
-        debug("AddExperimentEnvironmentForm.temperature was valid");
-
-        //TODO find more effective way
-        List<Hardware> hwList = hardwareFacade.getItemsForList();
-        Set<Hardware> hardwareSet = new HashSet<Hardware>();
-        for (Hardware hw : hwList){
-            for(String hwTitle : dto.getHardware()){
-                if(hw.getTitle().equals(hwTitle))
-                    hardwareSet.add(hw);
-            }
-        }
-        if(hardwareSet.size() != dto.getHardware().size())
-            return null;
-        experiment.setHardwares(hardwareSet);
-        debug("AddExperimentEnvironmentForm.hardware was valid");
-
-        List<Software> swList = softwareFacade.getAllRecords();
-        Set<Software> softwareSet = new HashSet<Software>();
-        for (Software sw : swList){
-            for(String swTitle : dto.getSoftware()){
-                if(sw.getTitle().equals(swTitle))
-                    softwareSet.add(sw);
-            }
-        }
-        if(softwareSet.size() != dto.getSoftware().size())
-            return null;
-        experiment.setSoftwares(softwareSet);
-        debug("AddExperimentEnvironmentForm.software was valid");
-
-        Set<Disease> diseaseSet = new HashSet<Disease>();
-        for (Disease disease : diseaseData){
-            diseaseSet.add(disease);
-        }
-        if(diseaseSet.size() != diseaseData.size()) return null;
-        experiment.setDiseases(diseaseSet);
-        debug("AddExperimentEnvironmentForm.diseases was valid");
-
-        Set<Pharmaceutical> pharmaceuticalSet = new HashSet<Pharmaceutical>();
-        for (Pharmaceutical ph : pharmaceuticalData){
-            pharmaceuticalSet.add(ph);
-        }
-        if(pharmaceuticalSet.size() != pharmaceuticalData.size())
-            return null;
-        experiment.setPharmaceuticals(pharmaceuticalSet);
-        debug("AddExperimentEnvironmentForm.pharmaceuticals was valid");
-
-        debug("AddExperimentEnvironmentForm was valid");
-        return experiment;
-    }
-    */
-
     /**
-     *
+     * It takes data from the model and based on them get valid data.
      */
     public void save() {
-        //To change body of created methods use File | Settings | File Templates.
+        validate();
+        if(!hasError()) {
+            experiment.setHardwares(getSet(this.hwListForModel));
+            experiment.setSoftwares(getSet(this.swListForModel));
+            experiment.setWeather(this.weatherForModel);
+            experiment.setTemperature(Integer.parseInt(this.temperature.getModelObject().toString()));
+            experiment.setEnvironmentNote(this.environmentNote.getModelObject());
+            experiment.setDiseases(getSet(this.diseases));
+            experiment.setPharmaceuticals(getSet(this.pharmaceuticals));
+        }
+    }
+
+    private Set getSet(List objects) {
+        Set result = new HashSet();
+        for(Object object: objects) {
+            result.add(((GenericModel) object).getObject());
+        }
+        return result;
     }
 }

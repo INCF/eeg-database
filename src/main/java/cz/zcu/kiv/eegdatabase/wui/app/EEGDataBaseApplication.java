@@ -4,8 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
-import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
@@ -72,6 +71,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private ResearchGroupFacade researchGroupFacade;
     @Autowired
     private ScenariosFacade scenariosFacade;
+    @Autowired
+    private HardwareFacade hardwareFacade;
+    @Autowired
+    private SoftwareFacade softwareFacade;
+    @Autowired
+    private WeatherFacade weatherFacade;
 
     public java.lang.Class<? extends Page> getHomePage() {
 
@@ -174,7 +179,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         locator.set(ProjectType.class, new ProjectTypeConverter(projectTypeFacade));
         locator.set(ResearchGroup.class, new ResearchGroupConverter(researchGroupFacade));
         locator.set(Scenario.class, new ScenarioConverter(scenariosFacade));
-
+        locator.set(Hardware.class, new HardwareConverter(hardwareFacade));
+        locator.set(Software.class, new SoftwareConverter(softwareFacade));
+        locator.set(Weather.class, new WeatherConverter(weatherFacade));
 
         return locator;
     }
