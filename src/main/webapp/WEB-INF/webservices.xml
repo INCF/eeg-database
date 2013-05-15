@@ -18,7 +18,7 @@ http://www.springframework.org/schema/security
 http://www.springframework.org/schema/security/spring-security-3.1.xsd">
 
     <import resource="classpath:META-INF/cxf/cxf.xml"/>
-    <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>
+    <!--<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>    DEPRECATED -->
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
@@ -84,6 +84,11 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
         <property name="experimentOptParamDefDao" ref="experimentOptParamDefDao"/>
         <property name="fileMetadataParamDefDao" ref="fileMetadataParamDefDao"/>
         <property name="researchGroupMembershipDao" ref="researchGroupMembershipDao"/>
+        <property name="digitizationDao" ref="digitizationDao"/>
+        <property name="subjectGroupDao" ref="subjectGroupDao"/>
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="electrodeConfDao" ref="electrodeConfDao"/>
+        <property name="electrodeSystemDao" ref="electrodeSystemDao"/>
     </bean>
 
     <cxf:bus>

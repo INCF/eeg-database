@@ -692,10 +692,6 @@ public class ClientServiceImpl implements ClientService {
 		this.personOptParamDefDao = personOptParamDefDao;
 	}
 
-	public void setPersonOptParamValDao(SimpleGenericDao<PersonOptParamVal, PersonOptParamValId> personOptParamValDao) {
-		this.personOptParamValDao = personOptParamValDao;
-	}
-
 	public void setExperimentOptParamDefDao(ExperimentOptParamDefDao experimentOptParamDefDao) {
 		this.experimentOptParamDefDao = experimentOptParamDefDao;
 	}
@@ -712,16 +708,8 @@ public class ClientServiceImpl implements ClientService {
 		this.experimentDao = experimentDao;
 	}
 
-	public void setArtifactDao(SimpleGenericDao<Artifact, Integer> artifactDao) {
-		this.artifactDao = artifactDao;
-	}
-
-	public void setElectrodeConfDao(SimpleGenericDao<ElectrodeConf, Integer> electrodeConfDao) {
+	public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
 		this.electrodeConfDao = electrodeConfDao;
-	}
-
-	public void setSubjectGroupDao(SimpleGenericDao<SubjectGroup, Integer> subjectGroupDao) {
-		this.subjectGroupDao = subjectGroupDao;
 	}
 
 	public void setDigitizationDao(DigitizationDao digitizationDao) {
@@ -732,20 +720,12 @@ public class ClientServiceImpl implements ClientService {
 		this.personOptParamValDao = personOptParamValDao;
 	}
 
-	public void setExperimentOptParamValDao(GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao) {
-		this.experimentOptParamValDao = experimentOptParamValDao;
-	}
-
 	public void setFileMetadataParamValDao(GenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao) {
 		this.fileMetadataParamValDao = fileMetadataParamValDao;
 	}
 
-	public void setExperimentOptParamValDao(SimpleGenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao) {
+	public void setExperimentOptParamValDao(GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao) {
 		this.experimentOptParamValDao = experimentOptParamValDao;
-	}
-
-	public void setFileMetadataParamValDao(SimpleGenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao) {
-		this.fileMetadataParamValDao = fileMetadataParamValDao;
 	}
 
 	public void setResearchGroupMembershipDao(GenericDao<ResearchGroupMembership, ResearchGroupMembershipId> researchGroupMembershipDao) {
@@ -754,10 +734,6 @@ public class ClientServiceImpl implements ClientService {
 
 	public void setArtifactDao(GenericDao<Artifact, Integer> artifactDao) {
 		this.artifactDao = artifactDao;
-	}
-
-	public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
-		this.electrodeConfDao = electrodeConfDao;
 	}
 
 	public void setElectrodeSystemDao(GenericDao<ElectrodeSystem, Integer> electrodeSystemDao) {
