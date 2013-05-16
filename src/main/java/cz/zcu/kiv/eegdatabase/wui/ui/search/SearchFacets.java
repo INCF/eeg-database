@@ -1,19 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListItemModel;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;

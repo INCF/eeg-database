@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexingUtils;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexingUtils;
+import cz.zcu.kiv.eegdatabase.logic.search.FullTextResult;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;

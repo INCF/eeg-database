@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -9,7 +9,6 @@ import org.apache.solr.common.SolrInputDocument;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.List;
 
 /**

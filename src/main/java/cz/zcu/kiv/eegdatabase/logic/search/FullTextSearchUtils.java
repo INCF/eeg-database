@@ -1,8 +1,7 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
+package cz.zcu.kiv.eegdatabase.logic.search;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;

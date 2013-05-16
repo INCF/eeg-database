@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
+package cz.zcu.kiv.eegdatabase.logic.search;
 
 /**
  * Enumeration type for the categories of full text search results.

@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer;
+import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.analysis.Analyzer;
@@ -10,15 +10,10 @@ import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
 import org.apache.lucene.util.Version;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.hibernate.*;
-import org.hibernate.classic.Session;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.metadata.ClassMetadata;
-import org.hibernate.type.Type;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.transaction.annotation.Propagation;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.io.Serializable;

@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.search;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexingService;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexingService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;

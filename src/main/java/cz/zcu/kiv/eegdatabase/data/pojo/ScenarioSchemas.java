@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 
 import javax.persistence.*;
 import java.sql.Clob;

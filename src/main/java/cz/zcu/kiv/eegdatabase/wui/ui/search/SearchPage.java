@@ -1,9 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;

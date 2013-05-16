@@ -141,7 +141,7 @@
 
     <bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
 
-    <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />
+    <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
 
     <!-- MAIL -->
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
@@ -216,16 +216,16 @@
     <bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
     <!-- Solr POJO indexer -->
-    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
+    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
 
     <!-- Solr indexer for LinkedIn articles -->
-    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
+    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
 
     <!-- Solr autocomplete indexer -->
-    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.AutocompleteIndexer" />
+    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
 
     <!-- Solr indexing service -->
-    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingServiceImpl" />
+    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
 
     <!-- Solr Server instance (production server) -->
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">

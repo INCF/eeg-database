@@ -1,12 +1,10 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.reflections.Reflections;
 
-import javax.persistence.Entity;
 import java.lang.reflect.Field;
 import java.util.*;
 
