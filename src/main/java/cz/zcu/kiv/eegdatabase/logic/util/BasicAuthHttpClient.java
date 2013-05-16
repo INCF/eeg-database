@@ -24,11 +24,9 @@ import java.io.IOException;
 import java.net.URL;
 
 /**
- * Created with IntelliJ IDEA.
+ * HttpClient with the Basic Authentication support.
  * User: Jan Koren
  * Date: 13.5.13
- * Time: 2:47
- * To change this template use File | Settings | File Templates.
  */
 class BasicAuthHttpClient extends DefaultHttpClient {
 
@@ -44,7 +42,6 @@ class BasicAuthHttpClient extends DefaultHttpClient {
         setCredentialsProvider(credsProvider);
     }
 
-    /*
     @Override
     protected HttpContext createHttpContext() {
         HttpContext context = super.createHttpContext();
@@ -59,5 +56,4 @@ class BasicAuthHttpClient extends DefaultHttpClient {
 
         return context;
     }
-    */
 }
