@@ -342,19 +342,19 @@
     </bean>
 
     <!-- POJO indexer for Solr -->
-    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer" />
+    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
 
     <!-- LinkedIn indexer for Solr -->
-    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer" />
+    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
 
     <!-- LinkedIn indexer for Solr -->
-    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.data.indexing.AutocompleteIndexer" />
+    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
 
     <!-- indexing service for database and LinkedIn indexing -->
-    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingServiceImpl" />
+    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
 
     <bean name="fulltextSearchService"
-          class="cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService" />
+          class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
 
     <!--==================  LinkedIn template ==================-->
 

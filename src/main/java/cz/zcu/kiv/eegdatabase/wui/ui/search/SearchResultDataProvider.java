@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
+import cz.zcu.kiv.eegdatabase.logic.search.FullTextResult;
+import cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import org.apache.wicket.injection.Injector;
 import org.apache.wicket.markup.repeater.data.ListDataProvider;
 import org.apache.wicket.model.IModel;

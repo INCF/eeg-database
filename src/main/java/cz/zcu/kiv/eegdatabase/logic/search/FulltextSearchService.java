@@ -1,10 +1,6 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
+package cz.zcu.kiv.eegdatabase.logic.search;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexingUtils;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrQuery;
@@ -13,11 +9,9 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.client.solrj.response.FacetField;
 import org.apache.solr.client.solrj.response.QueryResponse;
 import org.apache.solr.common.SolrDocument;
-import org.apache.wicket.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import javax.swing.*;
 import java.io.IOException;
 import java.util.*;
 

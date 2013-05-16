@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import org.apache.solr.client.solrj.SolrQuery;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -7,7 +7,6 @@ import org.apache.solr.common.SolrInputDocument;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * The indexer of autocomplete text.
@@ -19,7 +18,7 @@ public class AutocompleteIndexer extends Indexer<String> {
 
 
     /**
-     * @see cz.zcu.kiv.eegdatabase.data.indexing.Indexer#unindex(Object)
+     * @see cz.zcu.kiv.eegdatabase.logic.indexing.Indexer#unindex(Object)
      * @param instance The autocomplete phrase that should be removed from index.
      * @throws IOException
      * @throws SolrServerException

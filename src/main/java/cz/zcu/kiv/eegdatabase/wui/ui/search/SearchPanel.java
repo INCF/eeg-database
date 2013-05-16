@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexingService;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexingService;
+import cz.zcu.kiv.eegdatabase.logic.search.FullTextSearchUtils;
+import cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;

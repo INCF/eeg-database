@@ -2,8 +2,8 @@ package cz.zcu.kiv.eegdatabase.search;
 
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexingUtils;
-import cz.zcu.kiv.eegdatabase.data.indexing.PojoIndexer;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexingUtils;
+import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;

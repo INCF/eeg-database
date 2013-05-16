@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 /**
  * Created with IntelliJ IDEA.

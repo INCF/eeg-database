@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.data.annotation;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;

@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
-import cz.zcu.kiv.eegdatabase.data.indexing.LinkedInIndexer;
+import cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;

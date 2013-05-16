@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.search;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
+import cz.zcu.kiv.eegdatabase.logic.search.FullTextResult;
+import cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServer;

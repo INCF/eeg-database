@@ -1,15 +1,11 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
+import cz.zcu.kiv.eegdatabase.logic.search.ResultCategory;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.apache.solr.client.solrj.response.UpdateResponse;
 import org.apache.solr.common.SolrInputDocument;
 import org.springframework.social.linkedin.api.Post;
 
 import java.io.IOException;
-import java.util.List;
 
 /**
  * LinkedIn indexer.

@@ -1,7 +1,5 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
-
 import java.io.Serializable;
 
 /**

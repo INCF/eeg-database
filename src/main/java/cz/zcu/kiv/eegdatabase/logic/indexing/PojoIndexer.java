@@ -1,21 +1,13 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
-import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
-import javassist.util.proxy.MethodFilter;
+import cz.zcu.kiv.eegdatabase.logic.search.FullTextSearchUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.cxf.jaxrs.ext.search.SearchUtils;
-import org.apache.solr.client.solrj.SolrRequest;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.apache.solr.common.SolrInputDocument;
-import org.apache.solr.common.SolrInputField;
-import org.hibernate.Hibernate;
-import org.omg.CORBA.PRIVATE_MEMBER;
-import org.reflections.Reflections;
-import org.springframework.util.ReflectionUtils;
 
 import java.io.IOException;
 import java.lang.reflect.*;

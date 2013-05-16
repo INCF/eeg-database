@@ -2,10 +2,6 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
-import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
-
 import javax.persistence.*;
 
 /**

@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.data.indexing;
+package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import org.apache.solr.client.solrj.SolrServerException;
 import org.springframework.social.linkedin.api.Post;

@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
+package cz.zcu.kiv.eegdatabase.logic.search;
 
 import org.apache.wicket.Page;
 
