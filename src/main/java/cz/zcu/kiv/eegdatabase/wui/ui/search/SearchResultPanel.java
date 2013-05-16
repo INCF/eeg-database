@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexingUtils;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextResult;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
@@ -89,13 +90,29 @@ public class SearchResultPanel extends Panel {
         public void populateItem(Item<FullTextResult> item) {
             item.setModel(new CompoundPropertyModel<FullTextResult>(item.getModel()));
 
-            item.add(new Label("uuid"));
+            //item.add(new Label("uuid"));
             String title = item.getModelObject().getTitle();
             if(title.isEmpty()) {
                 title = ResourceUtils.getString("text.search.results.title.empty");
             }
+
+            final String source = item.getModelObject().getSource();
+            String sourceString = "";
+            if(source.equals(IndexingUtils.SOURCE_LINKEDIN)) {
+                sourceString = ResourceUtils.getString("text.search.source.linkedin");
+            }
+            else {
+                sourceString = ResourceUtils.getString("text.search.source.database");
+            }
+
             item.add(new Label("title", title).setEscapeModelStrings(false));
             item.add(new Label("type"));
+            item.add(new Label("source", sourceString) {
+                @Override
+                public boolean isVisible() {
+                    return source.equals(IndexingUtils.SOURCE_LINKEDIN);
+                }
+            });
             item.add(new ListView<String>("textFragments") {
                 @Override
                 protected void populateItem(ListItem<String> item) {

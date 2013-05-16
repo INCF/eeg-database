@@ -7,18 +7,21 @@
     <label wicket:id="numberOfResults">12 results found.</label>
     <wicket:container wicket:id="categories"></wicket:container>
 
-    <div wicket:id="results">
+    <ul wicket:id="results" class="searchResults">
+        <li class="searchResult">
         <h2 wicket:id="type">Type of the result (article, experiment, ...)</h2>
         <h3 wicket:id="title">First result</h3>
-        <span wicket:id="uuid">its uuid</span>
-        <ul wicket:id="textFragments">
+        <span wicket:id="source">LinkedIn</span>
+        <!-- <span wicket:id="uuid">its uuid</span> -->
+        <ul wicket:id="textFragments" class="searchTextFragments">
             <li wicket:id="textFragment">result text</li>
         </ul>
+        <span wicket:id="timestamp" class="timestamp">14 7 2013 13:59</span>
         <a href="#" wicket:id="link">Details</a>
-        <p wicket:id="timestamp">14 7 2013 13:59</p>
-    </div>
+        </li>
+    </ul>
 
-    <div wicket:id="navigator">navigator aligator</div>
+    <div wicket:id="navigator" class="searchNavigator">navigator aligator</div>
     <wicket:enclosure>
         <label wicket:id="noResultsFound">no results</label>
     </wicket:enclosure>
