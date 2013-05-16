@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.indexing;
+package cz.zcu.kiv.eegdatabase.search;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.Indexer;
 import org.apache.commons.logging.Log;
@@ -54,6 +54,12 @@ public class LinkedInIndexingTest {
 
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
+    /**
+     *
+     * @throws IllegalAccessException
+     * @throws SolrServerException
+     * @throws IOException
+     */
     //@Ignore
     @Test
     public void indexLastSavedLinkedInPost() throws IllegalAccessException, SolrServerException, IOException {
@@ -72,6 +78,23 @@ public class LinkedInIndexingTest {
         indexer.index(lastPost);
     }
 
+    @Ignore
+    @Test
+    public void ttt() throws IllegalAccessException, SolrServerException, IOException {
+        List<Post> posts = new ArrayList<Post>();
+        createPost("LinkedIn pokusny prispevek", "stul plakal sluchatka propiska kanoj papir tvaroh");
+        Post firstPost = getLastPost();
+        log.info(firstPost.getTitle() + " - " + firstPost.getSummary());
+        posts.add(firstPost);
+        indexer.indexAll(posts);
+    }
+
+    /**
+     *
+     * @throws IllegalAccessException
+     * @throws SolrServerException
+     * @throws IOException
+     */
     //@Ignore
     @Test
     public void indexSampleLinkedInPosts() throws IllegalAccessException, SolrServerException, IOException {
@@ -93,6 +116,12 @@ public class LinkedInIndexingTest {
         deletePost(thirdPost.getId());
     }
 
+    /**
+     *
+     * @throws IllegalAccessException
+     * @throws SolrServerException
+     * @throws IOException
+     */
     //@Ignore
     @Test
     public void indexAllLinkedInPosts() throws IllegalAccessException, SolrServerException, IOException {
@@ -132,6 +161,9 @@ public class LinkedInIndexingTest {
         //linkedInTemplate.restOperations().put();
     }
 
+    /**
+     *
+     */
     //@Ignore
     @Test
     public void deletePostsTest() {

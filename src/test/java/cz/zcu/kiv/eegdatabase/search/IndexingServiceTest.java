@@ -1,10 +1,9 @@
-package cz.zcu.kiv.eegdatabase.indexing;
+package cz.zcu.kiv.eegdatabase.search;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexingService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -44,7 +43,7 @@ public class IndexingServiceTest {
 
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
-    @Ignore
+    //@Ignore
     @Test
     public void testDatabaseIndexing() throws ClassNotFoundException, InvocationTargetException, InstantiationException, NoSuchMethodException, IllegalAccessException, IOException, SolrServerException {
         indexingService.indexDatabase();
