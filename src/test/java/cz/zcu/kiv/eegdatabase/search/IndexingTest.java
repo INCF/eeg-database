@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.indexing;
+package cz.zcu.kiv.eegdatabase.search;
 
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
