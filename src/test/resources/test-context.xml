@@ -324,9 +324,18 @@
     <!-- Remote Solr test server -->
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
+        <constructor-arg name="client" ref="httpClient"/>
+        <constructor-arg name="parser">
+            <bean class="org.apache.solr.client.solrj.impl.XMLResponseParser"/>
+        </constructor-arg>
         <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
-        <property name="defaultMaxConnectionsPerHost" value="${solr.defaultMaxConnectionsPerHost}"/>
-        <property name="maxTotalConnections" value="${solr.maxTotalConnections}"/>
+    </bean>
+
+    <!-- HttpClient Factory -->
+    <bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
+        <constructor-arg index="0"  value="${solr.serverUrl}"/>
+        <constructor-arg index="1"  value="${solr.username}"/>
+        <constructor-arg index="2" value="${solr.password}"/>
     </bean>
 
     <!-- POJO indexer for Solr -->
