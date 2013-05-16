@@ -20,11 +20,11 @@ import java.util.Set;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created with IntelliJ IDEA.
+ * FullTextSearchService tests.
+ *
  * User: Jan Koren
  * Date: 19.3.13
  * Time: 1:15
- * To change this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/test-context.xml"})
@@ -38,6 +38,10 @@ public class FulltextSearchServiceTest {
 
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
+    /**
+     * Tests that for a given string, any phrases will be suggested by autocomplete.
+     * @throws SolrServerException
+     */
     //@Ignore
     @Test
     public void getAutocompleteResultsSuccess() throws SolrServerException {
@@ -51,6 +55,11 @@ public class FulltextSearchServiceTest {
         assertTrue(results.size() > 0);
     }
 
+    /**
+     * Tests that no results are return by the autocomplete if the input query string
+     * does not match any of the stored autocomplete values.
+     * @throws SolrServerException
+     */
     @Test
     public void getAutocompleteResultsFail() throws SolrServerException {
         String input = "arrrxc";
@@ -59,6 +68,9 @@ public class FulltextSearchServiceTest {
         assertTrue(results.size() == 0);
     }
 
+    /**
+     * Tests that if the empty query is searched, no results are returned.
+     */
     //@Ignore
     @Test
     public void getDocumentCountForEmptyQuery() {
@@ -68,7 +80,8 @@ public class FulltextSearchServiceTest {
     }
 
     /**
-     *
+     * It searches everything (by using the * character) and tests that the categories for faceted search are made
+     * and that each of them contains at least one document.
      * @throws SolrServerException
      */
     @Test
@@ -86,7 +99,7 @@ public class FulltextSearchServiceTest {
     }
 
     /**
-     *
+     * Tests that having the empty query as the input, no faceting categories will b ecreated.
      */
     @Test
     public void facetNoneTest() {
@@ -101,16 +114,21 @@ public class FulltextSearchServiceTest {
         assertTrue(categoryFacets.size() == 6);
     }
 
+    /**
+     * Tests executing two queries and expects that both will output any search results.
+     */
     @Test
     public void searchQuery() {
         List<FullTextResult> results = fulltextSearchService.getResultsForQuery("cha* this", ResultCategory.ALL, 0, 20);
         for(FullTextResult result : results) {
             System.out.println(result.getTitle());
         }
+        assertTrue(results.size() > 0);
 
         results = fulltextSearchService.getResultsForQuery("doma is", ResultCategory.ALL, 0, 20);
         for(FullTextResult result : results) {
             System.out.println(result.getTitle());
         }
+        assertTrue(results.size() > 0);
     }
 }

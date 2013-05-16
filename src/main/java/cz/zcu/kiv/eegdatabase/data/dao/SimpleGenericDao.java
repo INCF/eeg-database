@@ -56,9 +56,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
         // first save the instance
         PK primaryKey = (PK) getHibernateTemplate().save(newInstance);
         // then add marked fields to the solr index
-        // currently DISABLED, because when the solr server is down,
-        // an exception is thrown
-
         try {
             indexer.index(newInstance);
         } catch (IOException e) {
@@ -117,8 +114,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
      */
     public void update(T transientObject) {
         getHibernateTemplate().update(transientObject);
-        // currently DISABLED, because when the solr server is down,
-        // an exception is thrown
         try {
             indexer.index(transientObject);
         } catch (IllegalAccessException e) {
@@ -158,6 +153,11 @@ public class SimpleGenericDao<T, PK extends Serializable>
         //return getHibernateTemplate().loadAll(type);
     }
 
+    /**
+     * Gets all records with all of their properties set.
+     * The method enforces eager loading of all properties that have their getter methods.
+     * @return List of records with eagerly loaded properties.
+     */
     public List<T> getAllRecordsFull() {
         List<T> records = getAllRecords();
         for(T record : records) {
@@ -205,84 +205,9 @@ public class SimpleGenericDao<T, PK extends Serializable>
     }
 
     public Map<T, String> getFulltextResults(String fullTextQuery) throws ParseException {
-        /*
-        List<String> fieldsList = new ArrayList<String>();
-        Field[] an = type.getDeclaredFields();
-        for (int i = 0; i < an.length; i++) {
-            if (an[i].isAnnotationPresent(Fields.class)) {
-                fieldsList.add(an[i].getName());
-            }
-        }
-        String[] fields = new String[fieldsList.size()];
-        fields = fieldsList.toArray(fields);
-
-        MultiFieldQueryParser parser = new MultiFieldQueryParser(LUCENE_COMPATIBILITY_VERSION, fields, new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION));
-        Session session = getHibernateTemplate().getSessionFactory().getCurrentSession();
-        FullTextSession fts = org.hibernate.search.Search.getFullTextSession(session);
-
-        DirectoryProvider[] providers = fts.getSearchFactory().getDirectoryProviders(type);
-
-        Directory d = providers[0].getDirectory();
-        Query luceneQuery;
-        try {
-            luceneQuery = parser.parse(fullTextQuery);
-        } catch (ParseException e) {
-            throw new RuntimeException("Unable to parse query: " + fullTextQuery, e);
-        }
-        FullTextQuery fQuery = fts.createFullTextQuery(luceneQuery, type);
-        IndexSearcher searcher;
-        Map<T, String> map = new HashMap<T, String>();
-        try {
-            searcher = new IndexSearcher(d);
-            Analyzer analyzer = new StandardAnalyzer(LUCENE_COMPATIBILITY_VERSION);
-            Encoder encoder = new SimpleHTMLEncoder();
-            Formatter formatter = new SimpleHTMLFormatter("<span class=\"highlightText\">", "</span>");
-            Fragmenter fragmenter = new SimpleFragmenter(150);
-            luceneQuery = searcher.rewrite(luceneQuery);
-            QueryScorer scorer = new QueryScorer(luceneQuery);
-            Highlighter ht = new Highlighter(formatter, encoder, scorer);
-            ht.setTextFragmenter(fragmenter);
-
-            List<T> list = fQuery.list();
-            for (T t : list) {
-                try {
-                    map.put(t, getHighlightedText(fields, t, ht, analyzer));
-                } catch (NoSuchFieldException e) {
-
-                }
-            }
-        } catch (CorruptIndexException ex) {
-            throw new RuntimeException("Unable to index.");
-        } catch (IOException ex) {
-            throw new RuntimeException("Unable to read index directory");
-        } catch (Exception ex) {
-            Logger.getLogger(SimpleGenericDao.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return map;
-        */
-
         return null;
     }
 
-
-    protected String getHighlightedText(String[] fields, T t, Highlighter ht, Analyzer analyzer) throws NoSuchFieldException, IllegalArgumentException, IllegalAccessException, IOException, InvalidTokenOffsetsException {
-        Field[] field = new Field[fields.length];
-        String text = "";
-        for (int i = 0; i < field.length; i++) {
-            field[i] = t.getClass().getDeclaredField(fields[i]);
-
-            field[i].setAccessible(true);
-            if (field[i].get(t) != null) {
-                String fragment = ht.getBestFragment(analyzer, field[i].getName(), "" + field[i].get(t));
-                if (fragment == null) {
-                    text += field[i].get(t) + " ";
-                } else {
-                    text += fragment + " ";
-                }
-            }
-        }
-        return text;
-    }
 
     protected void initializeProperty(Object property) {
         if(!Hibernate.isInitialized(property)) {

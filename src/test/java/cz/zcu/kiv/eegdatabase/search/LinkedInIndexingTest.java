@@ -27,11 +27,10 @@ import java.util.List;
 import static org.junit.Assert.assertTrue;
 
 /**
- * Created with IntelliJ IDEA.
+ * This class contains tests concerning LinkedIn indexing by using LinkedIn REST API.
  * User: Jan Koren
  * Date: 8.3.13
  * Time: 19:50
- * To change this template use File | Settings | File Templates.
  */
 //@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -55,7 +54,7 @@ public class LinkedInIndexingTest {
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
     /**
-     *
+     * Tests indexing of the last saved LinkedIn Post.
      * @throws IllegalAccessException
      * @throws SolrServerException
      * @throws IOException
@@ -78,19 +77,8 @@ public class LinkedInIndexingTest {
         indexer.index(lastPost);
     }
 
-    @Ignore
-    @Test
-    public void ttt() throws IllegalAccessException, SolrServerException, IOException {
-        List<Post> posts = new ArrayList<Post>();
-        createPost("LinkedIn pokusny prispevek", "stul plakal sluchatka propiska kanoj papir tvaroh");
-        Post firstPost = getLastPost();
-        log.info(firstPost.getTitle() + " - " + firstPost.getSummary());
-        posts.add(firstPost);
-        indexer.indexAll(posts);
-    }
-
     /**
-     *
+     * Tests indexing sample LinkedIn posts. The posts are deleted afterwards.
      * @throws IllegalAccessException
      * @throws SolrServerException
      * @throws IOException
@@ -117,7 +105,8 @@ public class LinkedInIndexingTest {
     }
 
     /**
-     *
+     * Tests the LinkedIn indexer by indexing and unindexing sample test LinkedIn posts.
+     * The posts are queried after indexing as well.
      * @throws IllegalAccessException
      * @throws SolrServerException
      * @throws IOException
@@ -154,7 +143,9 @@ public class LinkedInIndexingTest {
         assertTrue(foundPosts == 0);
     }
 
-
+    /**
+     *
+     */
     @Ignore
     @Test
     public void editTestPost() {

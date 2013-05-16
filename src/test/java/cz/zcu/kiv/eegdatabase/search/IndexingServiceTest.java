@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.logic.indexing.IndexingService;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
+import org.junit.Ignore;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,11 +22,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Tests of the IndexingService class.
  * User: Jan Koren
  * Date: 13.3.13
  * Time: 19:05
- * To change this template use File | Settings | File Templates.
  */
 //@Ignore
 @RunWith(SpringJUnit4ClassRunner.class)
@@ -43,12 +43,29 @@ public class IndexingServiceTest {
 
     private Log log = LogFactory.getLog("cz.zcu.kiv.eegdatabase.Tests");
 
-    //@Ignore
+    /**
+     * Tests database indexing.
+     * @throws ClassNotFoundException
+     * @throws InvocationTargetException
+     * @throws InstantiationException
+     * @throws NoSuchMethodException
+     * @throws IllegalAccessException
+     * @throws IOException
+     * @throws SolrServerException
+     */
+    @Ignore
     @Test
     public void testDatabaseIndexing() throws ClassNotFoundException, InvocationTargetException, InstantiationException, NoSuchMethodException, IllegalAccessException, IOException, SolrServerException {
         indexingService.indexDatabase();
+
     }
 
+    /**
+     * Tests LinkedIn indexing.
+     * @throws IllegalAccessException
+     * @throws SolrServerException
+     * @throws IOException
+     */
     //@Ignore
     @Test
     public void testLinkedInIndexing() throws IllegalAccessException, SolrServerException, IOException {
