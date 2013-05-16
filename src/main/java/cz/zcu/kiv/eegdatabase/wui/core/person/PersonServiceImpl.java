@@ -265,11 +265,13 @@ public class PersonServiceImpl implements PersonService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getCountRecords() {
         return personDAO.getCountRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Person> getUnique(Person example) {
         return personDAO.findByExample(example);
     }

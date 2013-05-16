@@ -24,6 +24,7 @@ public class FileServiceImpl implements FileService {
     }
 
     @Override
+    @Transactional
     public Integer create(DataFile newInstance) {
         return fileDAO.create(newInstance);
     }

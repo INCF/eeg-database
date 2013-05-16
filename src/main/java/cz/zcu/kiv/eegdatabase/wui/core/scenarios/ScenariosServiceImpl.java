@@ -59,6 +59,7 @@ public class ScenariosServiceImpl implements ScenariosService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getAllRecords() {
         return scenarioDAO.getAllRecords();
     }
@@ -76,6 +77,7 @@ public class ScenariosServiceImpl implements ScenariosService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Scenario> getUnique(Scenario example) {
         return scenarioDAO.findByExample(example);
     }
@@ -128,6 +130,7 @@ public class ScenariosServiceImpl implements ScenariosService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Scenario getScenarioByTitle(String title) {
         List<Scenario> scenarios = scenarioDAO.readByParameter("title", title);
         if(scenarios.size() > 0){

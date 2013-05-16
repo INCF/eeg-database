@@ -100,6 +100,7 @@ public class SoftwareServiceImpl implements SoftwareService{
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Software> getUnique(Software example) {
         return softwareDao.findByExample(example);
     }

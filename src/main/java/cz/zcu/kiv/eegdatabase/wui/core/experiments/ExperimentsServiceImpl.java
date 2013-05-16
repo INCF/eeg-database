@@ -156,6 +156,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Experiment> getUnique(Experiment example) {
         return experimentDao.findByExample(example);
     }

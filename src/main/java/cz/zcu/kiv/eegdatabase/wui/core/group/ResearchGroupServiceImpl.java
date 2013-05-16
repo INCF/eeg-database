@@ -230,6 +230,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ResearchGroup> getUnique(ResearchGroup example) {
         return researchGroupDAO.findByExample(example);
     }

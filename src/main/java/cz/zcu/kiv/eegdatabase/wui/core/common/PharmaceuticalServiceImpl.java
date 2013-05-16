@@ -28,51 +28,61 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
     }
 
     @Override
+    @Transactional
     public Integer create(Pharmaceutical newInstance) {
         return pharmaceuticalDao.create(newInstance);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Pharmaceutical read(Integer id) {
         return pharmaceuticalDao.read(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pharmaceutical> readByParameter(String parameterName, int parameterValue) {
         return pharmaceuticalDao.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pharmaceutical> readByParameter(String parameterName, String parameterValue) {
         return pharmaceuticalDao.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional
     public void update(Pharmaceutical transientObject) {
         pharmaceuticalDao.update(transientObject);
     }
 
     @Override
+    @Transactional
     public void delete(Pharmaceutical persistentObject) {
         pharmaceuticalDao.delete(persistentObject);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pharmaceutical> getAllRecords() {
         return pharmaceuticalDao.getAllRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pharmaceutical> getRecordsAtSides(int first, int max) {
         return pharmaceuticalDao.getRecordsAtSides(first, max);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getCountRecords() {
         return pharmaceuticalDao.getCountRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Pharmaceutical> getUnique(Pharmaceutical example) {
         return pharmaceuticalDao.findByExample(example);
     }

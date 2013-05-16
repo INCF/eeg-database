@@ -80,6 +80,7 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ProjectType> getUnique(ProjectType example) {
         return projectTypeDao.findByExample(example);
     }

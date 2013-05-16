@@ -29,51 +29,61 @@ public class StimulusServiceImpl implements StimulusService {
 
 
     @Override
+    @Transactional
     public Integer create(Stimulus newInstance) {
         return stimulusDao.create(newInstance);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public Stimulus read(Integer id) {
         return stimulusDao.read(id);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Stimulus> readByParameter(String parameterName, int parameterValue) {
         return stimulusDao.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Stimulus> readByParameter(String parameterName, String parameterValue) {
         return stimulusDao.readByParameter(parameterName, parameterValue);
     }
 
     @Override
+    @Transactional
     public void update(Stimulus transientObject) {
          stimulusDao.update(transientObject);
     }
 
     @Override
+    @Transactional
     public void delete(Stimulus persistentObject) {
          stimulusDao.delete(persistentObject);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Stimulus> getAllRecords() {
         return stimulusDao.getAllRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Stimulus> getRecordsAtSides(int first, int max) {
         return stimulusDao.getRecordsAtSides(first, max);
     }
 
     @Override
+    @Transactional(readOnly = true)
     public int getCountRecords() {
         return stimulusDao.getCountRecords();
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<Stimulus> getUnique(Stimulus example) {
         return stimulusDao.findByExample(example);
     }
