@@ -22,6 +22,7 @@ public class FullTextResult implements Serializable {
     private Class<? extends Page> targetPage;
     private int id;
     private Date timestamp;
+    private String source;
 
     private static final long serialVersionUID = 5458851218415845861L;
 
@@ -79,5 +80,13 @@ public class FullTextResult implements Serializable {
 
     public void setTimestamp(Date timestamp) {
         this.timestamp = timestamp;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

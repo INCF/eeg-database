@@ -20,8 +20,6 @@ import java.util.List;
  */
 public class LinkedInIndexer extends Indexer<Post> {
 
-    private final static String SOURCE_LINKEDIN = "linkedin";
-
     @Override
     public void unindex(Post post) throws IOException, SolrServerException {
         solrServer.deleteById(post.getId());
@@ -41,7 +39,7 @@ public class LinkedInIndexer extends Indexer<Post> {
         document.addField(IndexField.TITLE.getValue(), post.getTitle());
         document.addField(IndexField.TEXT.getValue(), post.getSummary());
         document.addField(IndexField.CLASS.getValue(), ResultCategory.ARTICLE.getValue());
-        document.addField(IndexField.SOURCE.getValue(), SOURCE_LINKEDIN);
+        document.addField(IndexField.SOURCE.getValue(), IndexingUtils.SOURCE_LINKEDIN);
         return document;
     }
 

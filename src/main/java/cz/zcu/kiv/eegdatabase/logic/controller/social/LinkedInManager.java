@@ -212,6 +212,7 @@ public class LinkedInManager {
             this.connect();
             linkedin.restOperations().delete(
                     "http://api.linkedin.com/v1/posts/{post-id}", id);
+            indexer.unindex(getPostById(id));
         } catch (Exception e) {
             log.debug("An exception occured when deleting a post with id " + id +" from group: " + groupId);
         }
