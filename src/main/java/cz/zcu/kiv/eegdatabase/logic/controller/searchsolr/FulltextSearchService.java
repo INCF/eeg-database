@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
 
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexingUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
@@ -58,6 +59,10 @@ public class FulltextSearchService {
             int id = (Integer) document.getFieldValue(IndexField.ID.getValue());
             String type = (String) document.getFieldValue(IndexField.CLASS.getValue());
             Date timestamp = (Date) document.getFieldValue(IndexField.TIMESTAMP.getValue());
+            String source = (String) document.getFieldValue(IndexField.SOURCE.getValue());
+            if(source == null) {
+                source = "";
+            }
 
             //String title = (String) document.getFieldValue(IndexField.TITLE.getValue());
             //String description = (String) document.getFieldValue(IndexField.TEXT.getValue());
@@ -67,6 +72,8 @@ public class FulltextSearchService {
             List<String> textFragments = new ArrayList<String>();
             String description = getHighlightedText(response, uuid, IndexField.TEXT);
             addNotEmpty(description, textFragments);
+            String name = getHighlightedText(response, uuid, IndexField.NAME);
+            addNotEmpty(name, textFragments);
             addNotEmpty(getHighlightedText(response, uuid, IndexField.CHILD_TITLE), textFragments);
             addNotEmpty(getHighlightedText(response, uuid, IndexField.CHILD_TEXT), textFragments);
 
@@ -75,6 +82,7 @@ public class FulltextSearchService {
             result.setTargetPage(FullTextSearchUtils.getTargetPage(type));
             result.setTimestamp(timestamp);
             result.setType(type);
+            result.setSource(source);
 
             result.setTitle(title);
             result.setTextFragments(textFragments);
@@ -165,8 +173,6 @@ public class FulltextSearchService {
         query.setHighlightSimplePost("");
         query.setRows(FullTextSearchUtils.AUTOCOMPLETE_ROWS);
 
-
-        Set<String> autocompleteSet = new HashSet<String>();
         Map<String, Integer> map = new TreeMap<String, Integer>();
         QueryResponse response = solrServer.query(query);
 

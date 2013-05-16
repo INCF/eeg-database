@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
+import cz.zcu.kiv.eegdatabase.data.indexing.IndexingService;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FullTextSearchUtils;
 import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.FulltextSearchService;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -33,6 +34,9 @@ public abstract class SearchPanel extends Panel {
 
     @SpringBean
     private FulltextSearchService searchService;
+
+    @SpringBean
+    private IndexingService indexingService;
 
     private Log log = LogFactory.getLog(getClass());
 
@@ -72,6 +76,8 @@ public abstract class SearchPanel extends Panel {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
+                    indexingService.addToAutocomplete(getSearchString());
+
                     PageParameters pageParameters = new PageParameters();
                     if(getSearchString() != null) {
                         pageParameters.add("searchString", getSearchString());
@@ -81,7 +87,7 @@ public abstract class SearchPanel extends Panel {
                 }
             };
             IModel<String> labelModel = new Model<String>();
-            labelModel.setObject("Hledej, trhaci");
+            labelModel.setObject("Search");
             ajaxButton.setLabel(labelModel);
             return ajaxButton;
         }
@@ -110,5 +116,11 @@ public abstract class SearchPanel extends Panel {
         }
     }
 
+    public FulltextSearchService getSearchService() {
+        return searchService;
+    }
 
+    public void setSearchService(FulltextSearchService searchService) {
+        this.searchService = searchService;
+    }
 }

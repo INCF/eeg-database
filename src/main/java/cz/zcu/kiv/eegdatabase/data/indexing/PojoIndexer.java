@@ -58,6 +58,7 @@ public class PojoIndexer extends Indexer {
         document.addField(IndexField.UUID.getValue(), className + id);
         document.addField(IndexField.ID.getValue(), id);
         document.addField(IndexField.CLASS.getValue(), FullTextSearchUtils.getDocumentType(clazz));
+        document.addField(IndexField.SOURCE.getValue(), IndexingUtils.SOURCE_DATABASE);
 
         // pak vytazeni hodnot fieldu, ktere maji anotaci @SolrField
         //SolrInputDocument document = getDocumentFromAnnotatedFields(instance);
@@ -234,17 +235,5 @@ public class PojoIndexer extends Indexer {
 
         //return document;
         return solrFields;
-    }
-
-    /**
-     * Writes field-value pairs for a given solr document.
-     * @param document The input solr document.
-     */
-    public void getDocumentFieldValuePairs(SolrInputDocument document) {
-        Iterator<String> nameIterator = document.getFieldNames().iterator();
-        while (nameIterator.hasNext()) {
-            String name = nameIterator.next();
-            log.info(name + ": " + document.getFieldValue(name));
-        }
     }
 }

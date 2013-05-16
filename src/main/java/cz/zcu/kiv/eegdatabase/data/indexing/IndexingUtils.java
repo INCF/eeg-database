@@ -19,6 +19,9 @@ public class IndexingUtils {
 
     private static final String POJO_BASE="cz.zcu.kiv.eegdatabase.data.pojo";
 
+    public static final String SOURCE_DATABASE = "database";
+    public static final String SOURCE_LINKEDIN = "linkedin";
+
     /**
      * Picks the classes that use the @SolrId annotation.
      * @return The classes annotated by the @SolrId annotation.
