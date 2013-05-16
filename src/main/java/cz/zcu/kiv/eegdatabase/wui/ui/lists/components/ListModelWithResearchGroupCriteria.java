@@ -21,7 +21,16 @@ public abstract class ListModelWithResearchGroupCriteria<T> extends LoadableDeta
     private static final long serialVersionUID = -8410077884285556462L;
     protected Log log = LogFactory.getLog(getClass());
 
-    private Model<ResearchGroup> criteriaModel = new Model<ResearchGroup>(null);
+    private Model<ResearchGroup> criteriaModel = new Model<ResearchGroup>(null) {
+
+		@Override
+		public void setObject(ResearchGroup object) {
+			super.setObject(object);
+			//reload model when research group changes
+			ListModelWithResearchGroupCriteria.this.detach();
+		}
+
+	};
 
     protected abstract List<T> loadList(ResearchGroup group);
 
