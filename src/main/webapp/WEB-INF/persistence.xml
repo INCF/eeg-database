@@ -54,14 +54,6 @@
 
     <bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
           factory-method="noOpText" />
-          
-
-    <!--
-    <bean id="indexingBean" class="cz.zcu.kiv.eegdatabase.data.indexing.IndexingData" init-method="init">
-        <property name="sessionFactory" ref="sessionFactory"/>
-    </bean>
-    -->
-
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="${jdbc.driverClassName}"/>

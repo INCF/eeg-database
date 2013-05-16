@@ -7,11 +7,10 @@ import java.io.IOException;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Defines methods for the indexing service
  * User: Jan Koren
  * Date: 7.4.13
  * Time: 15:02
- * To change this template use File | Settings | File Templates.
  */
 public interface IndexingService {
 

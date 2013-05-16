@@ -39,7 +39,8 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
     private Indexer<String> autocompleteIndexer;
 
 
-    // if required, the tests would fail because the bean is not wired in the test context
+    // if required, the tests would fail because the bean is not wired in
+    // the test context due to its complex configuration
     @Autowired(required = false)
     private LinkedInManager linkedin;
 
@@ -99,6 +100,11 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
         linkedInIndexer.indexAll(posts);
     }
 
+    /**
+     * Indexer wrapper which indexes the input query string for autocomplete
+     * suggestions.
+     * @param phrase The searched phrase.
+     */
     @Async
     public void addToAutocomplete(String phrase) {
         try {

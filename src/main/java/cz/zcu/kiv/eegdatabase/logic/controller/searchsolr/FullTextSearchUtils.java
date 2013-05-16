@@ -14,11 +14,9 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * Created with IntelliJ IDEA.
- * User: Jan Koren
+ * Utility class containing a set of useful methods and constants related to full-text search.
  * Date: 25.3.13
  * Time: 23:00
- * To change this template use File | Settings | File Templates.
  */
 public class FullTextSearchUtils {
 

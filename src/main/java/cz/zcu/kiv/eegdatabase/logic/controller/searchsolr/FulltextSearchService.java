@@ -64,9 +64,6 @@ public class FulltextSearchService {
                 source = "";
             }
 
-            //String title = (String) document.getFieldValue(IndexField.TITLE.getValue());
-            //String description = (String) document.getFieldValue(IndexField.TEXT.getValue());
-
             // return text with highlighted words.
             String title = getHighlightedText(response, uuid, IndexField.TITLE);
             List<String> textFragments = new ArrayList<String>();
@@ -234,15 +231,16 @@ public class FulltextSearchService {
             return (int) solrServer.query(q).getResults().getNumFound();
         } catch (SolrServerException e) {
             log.error(e);
+            e.getCause().printStackTrace();
         }
         return 0;
     }
 
     /**
      * Helper method for sorting a map by its map values.
-     * @param map
-     * @param <K>
-     * @param <V>
+     * @param map The map to be sorted.
+     * @param <K> the map key type
+     * @param <V> the map value type
      * @return
      */
     public static <K, V extends Comparable<? super V>> Map<K, V>

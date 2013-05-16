@@ -1,7 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.searchsolr;
 
 /**
- * Enum for the categories of full text search results.
+ * Enumeration type for the categories of full text search results.
  * User: Jan Koren
  * Date: 8.4.13
  */

@@ -325,17 +325,20 @@
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
         <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
         <constructor-arg name="client" ref="httpClient"/>
-        <constructor-arg name="parser">
-            <bean class="org.apache.solr.client.solrj.impl.XMLResponseParser"/>
-        </constructor-arg>
         <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
     </bean>
 
     <!-- HttpClient Factory -->
     <bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
-        <constructor-arg index="0"  value="${solr.serverUrl}"/>
-        <constructor-arg index="1"  value="${solr.username}"/>
-        <constructor-arg index="2" value="${solr.password}"/>
+        <constructor-arg name="url"  value="${solr.serverUrl}"/>
+        <constructor-arg name="username"  value="${solr.username}"/>
+        <constructor-arg name="password" value="${solr.password}"/>
+        <constructor-arg name="connManager">
+            <bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
+                <property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
+                <property name="maxTotal" value="${solr.maxTotalConnections}" />
+            </bean>
+        </constructor-arg>
     </bean>
 
     <!-- POJO indexer for Solr -->

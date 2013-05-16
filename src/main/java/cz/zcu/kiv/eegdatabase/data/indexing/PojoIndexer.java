@@ -39,6 +39,14 @@ public class PojoIndexer extends Indexer {
     public PojoIndexer() {
     }
 
+    /**
+     * Creates a document from the input POJO object.
+     * @param instance The input object.
+     * @return The created Lucene/Solr document.
+     * @throws IOException
+     * @throws SolrServerException
+     * @throws IllegalAccessException
+     */
     @Override
     public SolrInputDocument prepareForIndexing(Object instance) throws IOException, SolrServerException, IllegalAccessException {
 
@@ -51,17 +59,16 @@ public class PojoIndexer extends Indexer {
         String className = instance.getClass().getName();
         Field[] fields = clazz.getDeclaredFields();
 
-        // pak zjisteni, jestli nektery jeji field ma anotaci @SolrId
+        // then find out if any of its field has the @SolrId annotation
         int id = getId(fields, instance);
-        // a z id vytvorit nasledujici fieldy Solr dokumentu
+        // based on the id, add uuid, class name and id of the document
         SolrInputDocument document = new SolrInputDocument();
         document.addField(IndexField.UUID.getValue(), className + id);
         document.addField(IndexField.ID.getValue(), id);
         document.addField(IndexField.CLASS.getValue(), FullTextSearchUtils.getDocumentType(clazz));
         document.addField(IndexField.SOURCE.getValue(), IndexingUtils.SOURCE_DATABASE);
 
-        // pak vytazeni hodnot fieldu, ktere maji anotaci @SolrField
-        //SolrInputDocument document = getDocumentFromAnnotatedFields(instance);
+        // extract values of those fields that have the @SolrField annotation
         Map<String, Object> documentFields = null;
         try {
             documentFields = getDocumentFromAnnotatedFields(instance, LEVEL_PARENT);
@@ -80,13 +87,17 @@ public class PojoIndexer extends Indexer {
         // a jeho @SolrId pro sparovani polozek v multivalued listu rodicovskeho dokumentu
 
 
-        //document = createDocumentId(instance, document);
         return document;
     }
 
+    /**
+     * Finds a value of a field with the @SolrId annotation (if exists).
+     * @param fields
+     * @param instance
+     * @return
+     */
     private int getId(Field[] fields, Object instance) {
         for (Field field : fields) {
-            // add uuid, class name and id of the instance to the solr index
             if (field.isAnnotationPresent(SolrId.class)) {
                 field.setAccessible(true); // necessary since the id field is private
                 int id = 0;
@@ -107,7 +118,6 @@ public class PojoIndexer extends Indexer {
 
     /**
      * Removes the indexed POJO values from the Solr index.
-     *
      * @param instance POJO whose document in the index should be removed.
      * @throws IOException
      * @throws SolrServerException
@@ -134,9 +144,14 @@ public class PojoIndexer extends Indexer {
         solrServer.commit();
     }
 
+    /**
+     * Removes all POJO documents from the Solr index.
+     * @throws IOException
+     * @throws SolrServerException
+     */
     @Override
     public void unindexAll() throws IOException, SolrServerException {
-        solrServer.deleteByQuery("!source:linkedin");
+        solrServer.deleteByQuery("source:" + IndexingUtils.SOURCE_DATABASE);
         solrServer.commit();
     }
 
@@ -155,7 +170,6 @@ public class PojoIndexer extends Indexer {
      */
     private Map<String, Object> getDocumentFromAnnotatedFields(Object instance, int level) throws IllegalAccessException, NoSuchMethodException, InvocationTargetException {
         Map<String, Object> solrFields = new HashMap<String, Object>();
-        //SolrInputDocument document = new SolrInputDocument();
         Field[] fields = instance.getClass().getDeclaredFields();
         for (Field field : fields) {
             // check presence of the SolrField annotation for each field
@@ -233,7 +247,6 @@ public class PojoIndexer extends Indexer {
             }
         }
 
-        //return document;
         return solrFields;
     }
 }
