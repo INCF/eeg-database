@@ -6,6 +6,83 @@
         Purpose of the stylesheet follows.
 */
 
+/* Search Results */
+
+.searchResults {
+    list-style-type: none;
+    margin: 0px;
+    padding: 0px;
+    width: 60%;
+}
+
+.searchResult {
+    margin-top: 2px;
+    padding-top: 2px;
+    border-bottom: 2px solid #ede;
+}
+
+.searchResult:hover {
+    background-color: #efe;
+}
+
+.searchResult h2 {
+    float:left;
+    margin-right: 20px;
+}
+
+.searchResult h3 {
+}
+
+.searchResult a {
+}
+
+.searchResult > span {
+    background-color: #cbff80;
+    float: right;
+    border: 1px solid #ddd;
+    border-bottom: 0px;
+    padding:2px;
+    padding-bottom:0px;
+    margin: 0px;
+}
+
+.timestamp {
+    background-color: #eee !important;
+    float:left;
+    margin: 0px;
+    padding-bottom: 2px !important;
+    border-bottom: 1px solid #ddd !important;
+}
+
+/* Found text fragments belonging to search results */
+
+
+.searchTextFragments {
+    list-style-type: none;
+    padding: 0px;
+    margin: 0px;
+    margin-bottom:3px
+}
+/* categories (faceting) */
+.facetCategories {
+    margin: 0;
+    padding: 0;
+    overflow: auto;
+    list-style-type: none;
+}
+
+.facetCategories li {
+    float: left;
+    margin: 0;
+    border-right: 1px solid #aaa;
+    padding: 0 5px;
+
+}
+
+.facetCategories li:last-child {
+    border-right: none;
+}
+
 /* Wicket autocomplete */
 div.wicket-aa {
     font-family: "Lucida Grande","Lucida Sans Unicode",Tahoma,Verdana;
@@ -37,6 +114,10 @@ div.wicket-aa ul li.selected {
     background-color: yellow;
 }
 
-
-
-
+/* Menu search panel style */
+.menuSearchPanel {
+    margin-top: 10px;
+    margin-right: 10px;
+    float:right;
+    clear: right;
+}
