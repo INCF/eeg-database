@@ -24,11 +24,10 @@ import org.apache.wicket.util.string.Strings;
 import java.util.*;
 
 /**
- * Created with IntelliJ IDEA.
+ * Abstract search panel. Contains all necessary logic.
  * User: Jan Koren
  * Date: 26.3.13
  * Time: 1:49
- * To change this template use File | Settings | File Templates.
  */
 public abstract class SearchPanel extends Panel {
 
@@ -45,6 +44,9 @@ public abstract class SearchPanel extends Panel {
         add(new SearchForm("searchForm", searchString));
     }
 
+    /**
+     * Search form component.
+     */
     private class SearchForm extends Form {
 
         private String searchString;
@@ -61,6 +63,11 @@ public abstract class SearchPanel extends Panel {
             add(searchButton);
         }
 
+        /**
+         * Creates the text field with autocomplete support.
+         * @param id
+         * @return
+         */
         private AutoCompleteTextField<String> createTextField(String id) {
             return new AutoCompleteTextField<String>(
                     id, new PropertyModel<String>(this, "searchString")) {
@@ -71,6 +78,11 @@ public abstract class SearchPanel extends Panel {
             };
         }
 
+        /**
+         * Creates the search button.
+         * @param id
+         * @return
+         */
         private Button createSearchButton(String id) {
             Button ajaxButton =  new AjaxFallbackButton(id, this) {
                 @Override
@@ -81,6 +93,8 @@ public abstract class SearchPanel extends Panel {
                     PageParameters pageParameters = new PageParameters();
                     if(getSearchString() != null) {
                         pageParameters.add("searchString", getSearchString());
+                        // the search string is kept in a session due to the need to keep it displayed
+                        // in the menu search text field independently on the performed requests.
                         EEGDataBaseSession.get().setSearchString(StringValue.valueOf(getSearchString()));
                         setResponsePage(SearchPage.class, pageParameters);
                     }
@@ -92,6 +106,12 @@ public abstract class SearchPanel extends Panel {
             return ajaxButton;
         }
 
+        /**
+         * Given the input string, all indexed "autocomplete" phrases, whose first
+         * characters match the input string, are returned
+         * @param input The query string (or its part).
+         * @return The list of found phrases for autocomplete suggestion.
+         */
         private Iterator<String> getAutoCompleteChoices(String input) {
             if(Strings.isEmpty(input)) {
                 List<String> emptyList = Collections.emptyList();

@@ -22,12 +22,9 @@ import java.util.*;
 
 /**
  * Faceted navigation for fulltext search results.
- *
- * Created with IntelliJ IDEA.
  * User: Jan Koren
  * Date: 8.4.13
  * Time: 5:03
- * To change this template use File | Settings | File Templates.
  */
 public class SearchFacets extends Panel {
 

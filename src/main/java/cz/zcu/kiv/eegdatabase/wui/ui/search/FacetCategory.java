@@ -5,11 +5,10 @@ import cz.zcu.kiv.eegdatabase.logic.controller.searchsolr.ResultCategory;
 import java.io.Serializable;
 
 /**
- * Created with IntelliJ IDEA.
+ * Represents a category of faceted search. Each category maintains its name and a number of documents in it.
  * User: Jan Koren
  * Date: 8.4.13
  * Time: 16:54
- * To change this template use File | Settings | File Templates.
  */
 public class FacetCategory implements Serializable, Comparable<FacetCategory> {
 
@@ -39,6 +38,11 @@ public class FacetCategory implements Serializable, Comparable<FacetCategory> {
         this.count = count;
     }
 
+    /**
+     * @see Comparable#compareTo(Object)
+     * @param anotherCategory another facet category for comparison.
+     * @return
+     */
     @Override
     public int compareTo(FacetCategory anotherCategory) {
 

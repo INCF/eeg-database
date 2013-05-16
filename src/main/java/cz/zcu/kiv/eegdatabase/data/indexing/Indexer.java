@@ -47,11 +47,11 @@ public abstract class Indexer<T> {
         UpdateResponse response = solrServer.commit();
         log.debug("Document " + document.get("uuid").getValue().toString() + " added to the solr index.");
         logCommitResponse(response);
-    } // TODO specify (custom) exceptions
+    }
 
     /**
      * Performs indexing of a list of objects.
-     * @param instanceList
+     * @param instanceList The list of all objects to be indexed.
      * @throws IllegalAccessException
      * @throws SolrServerException
      * @throws IOException
@@ -81,14 +81,35 @@ public abstract class Indexer<T> {
         }
     }
 
-    public abstract void unindex(T instance) throws IOException, SolrServerException; // TODO specify (custom) exceptions
+    /**
+     * Removes an index document that corresponds to a given object.
+     * @param instance the instance whose document representation should be removed from index.
+     * @throws IOException
+     * @throws SolrServerException
+     */
+    public abstract void unindex(T instance) throws IOException, SolrServerException;
 
+    /**
+     * Unindexes all documents from a specific subset of the whole index.
+     * The document subset is determined by the type of the indexer
+     * and its actual implementation of this method.
+     * @throws IOException
+     * @throws SolrServerException
+     */
     public abstract void unindexAll() throws IOException, SolrServerException;
 
+    /**
+     * Transforms the input instance (the method parameter) to a Solr document.
+     * @param instance The input object.
+     * @return The Solr document representing the input object.
+     * @throws IllegalAccessException
+     * @throws IOException
+     * @throws SolrServerException
+     */
     public abstract SolrInputDocument prepareForIndexing(T instance) throws IllegalAccessException, IOException, SolrServerException;
 
     /**
-     *
+     * Logs information from the response obtained from the Solr server.
      * @param response
      * @throws IOException
      * @throws SolrServerException

@@ -13,6 +13,7 @@ import org.apache.wicket.util.string.StringValue;
 import java.util.Iterator;
 
 /**
+ * Holds search result data.
  * User: Jan Koren
  * Date: 27.3.13
  */

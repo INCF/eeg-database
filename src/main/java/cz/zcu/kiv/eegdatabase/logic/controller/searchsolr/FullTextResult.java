@@ -7,11 +7,10 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created with IntelliJ IDEA.
+ * Representation of a full-text result.
  * User: Jan Koren
  * Date: 22.3.13
  * Time: 0:59
- * To change this template use File | Settings | File Templates.
  */
 public class FullTextResult implements Serializable {
 

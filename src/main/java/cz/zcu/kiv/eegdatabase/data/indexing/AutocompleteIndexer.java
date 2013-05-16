@@ -10,24 +10,43 @@ import java.util.List;
 import java.util.UUID;
 
 /**
- * Created with IntelliJ IDEA.
+ * The indexer of autocomplete text.
  * User: Jan Koren
  * Date: 6.4.13
  * Time: 20:32
- * To change this template use File | Settings | File Templates.
  */
 public class AutocompleteIndexer extends Indexer<String> {
 
+
+    /**
+     * @see cz.zcu.kiv.eegdatabase.data.indexing.Indexer#unindex(Object)
+     * @param instance The autocomplete phrase that should be removed from index.
+     * @throws IOException
+     * @throws SolrServerException
+     */
     @Override
     public void unindex(String instance) throws IOException, SolrServerException {
-
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Removes all autocomplete phrases from the Solr index.
+     * @throws IOException
+     * @throws SolrServerException
+     */
     @Override
     public void unindexAll() throws IOException, SolrServerException {
-
+        throw new UnsupportedOperationException();
     }
 
+    /**
+     * Transforms the searched phrase to a Solr document.
+     * @param phrase The input searched phrase.
+     * @return The Solr document representing the searched phrase.
+     * @throws IllegalAccessException
+     * @throws IOException
+     * @throws SolrServerException
+     */
     @Override
     public SolrInputDocument prepareForIndexing(String phrase) throws IllegalAccessException, IOException, SolrServerException {
 
@@ -40,15 +59,19 @@ public class AutocompleteIndexer extends Indexer<String> {
         QueryResponse response = solrServer.query(query);
 
         int count;
+        // the phrase is not indexed yet
         if(response.getResults().size() == 0) {
             count = 0;
         }
+        // already indexed
         else {
             String foundPhrase = ((List<String>) response.getResults().get(0).getFieldValue(IndexField.AUTOCOMPLETE.getValue())).get(0);
             int delimiterPosition = foundPhrase.lastIndexOf('#');
+            // the phrase was originally retrieved by indexing a document
             if (delimiterPosition == -1) {
                 count = 0;
             }
+            // the phrase was indexed after performing a search query
             else {
                 count = Integer.valueOf(foundPhrase.substring(foundPhrase.lastIndexOf('#') + 1, foundPhrase.length()));
             }

@@ -26,7 +26,6 @@ import java.io.Serializable;
 /**
  * This component is responsible for displaying full text search results.
  *
- * Created with IntelliJ IDEA.
  * User: Jan Koren
  * Date: 26.3.13
  * Time: 1:13
@@ -54,14 +53,14 @@ public class SearchResultPanel extends Panel {
                 new Model<Serializable>(foundResults))) {
             @Override
             public boolean isVisible() {
-                return !isModelEmpty;
+                return !isModelEmpty; // visible if any documents are found
             }
         });
 
         add(new Label("noResultsFound", ResourceUtils.getString("text.search.noResults")) {
             @Override
             public boolean isVisible() {
-                return isModelEmpty;
+                return isModelEmpty; // visible if no documents are found
             }
         });
 
@@ -78,7 +77,7 @@ public class SearchResultPanel extends Panel {
     }
 
     /**
-     * List that renders full text results.
+     * List that renders full-text results.
      */
     private class SearchResultList extends DataView<FullTextResult> {
 
@@ -90,7 +89,6 @@ public class SearchResultPanel extends Panel {
         public void populateItem(Item<FullTextResult> item) {
             item.setModel(new CompoundPropertyModel<FullTextResult>(item.getModel()));
 
-            //item.add(new Label("uuid"));
             String title = item.getModelObject().getTitle();
             if(title.isEmpty()) {
                 title = ResourceUtils.getString("text.search.results.title.empty");
