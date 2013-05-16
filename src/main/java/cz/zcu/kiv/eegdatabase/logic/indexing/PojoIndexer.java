@@ -84,9 +84,9 @@ public class PojoIndexer extends Indexer {
 
     /**
      * Finds a value of a field with the @SolrId annotation (if exists).
-     * @param fields
-     * @param instance
-     * @return
+     * @param fields  Available class fields.
+     * @param instance The class instance.
+     * @return The id value.
      */
     private int getId(Field[] fields, Object instance) {
         for (Field field : fields) {

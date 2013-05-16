@@ -100,7 +100,7 @@ public class FulltextSearchService {
      * @param inputQuery The query string.
      * @param start Index of the first returned result.
      * @param count Number of results we wish to display.
-     * @return
+     * @return Configured query.
      */
     private SolrQuery configureQuery(String inputQuery, ResultCategory category, int start, int count) {
         SolrQuery query = new SolrQuery();
@@ -151,7 +151,7 @@ public class FulltextSearchService {
      * The autocomplete feature works for multivalued fields and is based on a highlighting trick.
      * See http://solr.pl/en/2013/02/25/autocomplete-on-multivalued-fields-using-highlighting/
      * @param keywordStart
-     * @return
+     * @return Autocomplete values.
      * @throws SolrServerException
      */
     public Set<String> getTextToAutocomplete(String keywordStart) throws SolrServerException {
@@ -235,7 +235,7 @@ public class FulltextSearchService {
      * @param map The map to be sorted.
      * @param <K> the map key type
      * @param <V> the map value type
-     * @return
+     * @return Sorted map.
      */
     public static <K, V extends Comparable<? super V>> Map<K, V>
     sortByValue( Map<K, V> map )
