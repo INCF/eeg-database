@@ -32,11 +32,10 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * Created with IntelliJ IDEA.
+ * This test suite contains tests that check the correctness of the created POJO indexer.
  * User: Jan Koren
  * Date: 19.2.13
  * Time: 0:21
- * To change this template use File | Settings | File Templates.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration(locations = {"classpath:/test-context.xml"})
@@ -60,6 +59,10 @@ public class IndexingTest {
     public static void tearDownTestSuite() {
     }
 
+    /**
+     * Tests indexing sample article comments.
+     * @throws Exception
+     */
     //@Ignore
     @Test
     public void indexArticleComments() throws Exception {
@@ -76,6 +79,10 @@ public class IndexingTest {
         }
     }
 
+    /**
+     * Tests indexing sample articles.
+     * @throws Exception
+     */
     //@Ignore
     @Test
     public void indexArticles() throws Exception {
@@ -87,6 +94,10 @@ public class IndexingTest {
         }
     }
 
+    /**
+     * Tests indexing sample experiments.
+     * @throws Exception
+     */
     //@Ignore
     @Test
     public void indexExperiments() throws Exception {
@@ -98,6 +109,12 @@ public class IndexingTest {
         }
     }
 
+    /**
+     * Tests deletion of sample experiment documents from index after indexing them.
+     * @throws SolrServerException
+     * @throws IllegalAccessException
+     * @throws IOException
+     */
     //@Ignore
     @Test
     public void deleteExperimentsFromIndex() throws SolrServerException, IllegalAccessException, IOException {

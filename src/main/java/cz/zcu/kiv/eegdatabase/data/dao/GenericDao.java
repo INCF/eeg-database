@@ -83,5 +83,10 @@ public interface GenericDao <T, PK extends Serializable>{
 
     public Map<T, String>  getFulltextResults(String fullTextQuery) throws ParseException;
 
+    /**
+     * Gets all records with all of their properties set.
+     * The method enforces eager loading of all properties that have their getter methods.
+     * @return List of records with eagerly loaded properties.
+     */
     public List<T> getAllRecordsFull();
 }
