@@ -165,7 +165,7 @@ public class PersonalLicense implements Serializable{
 	
 	public String getFullName() {
 		String tmp = this.getFirstName();
-		tmp = tmp.equals("") ? this.getLastName() : tmp + " " + this.getLastName();
+		tmp = (tmp == null || tmp.equals("")) ? this.getLastName() : tmp + " " + this.getLastName();
 		return tmp;
 	}
 }

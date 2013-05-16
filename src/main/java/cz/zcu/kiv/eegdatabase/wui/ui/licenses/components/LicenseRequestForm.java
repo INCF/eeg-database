@@ -6,12 +6,15 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import java.io.File;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -29,6 +32,8 @@ public class LicenseRequestForm extends Panel {
 	private IModel<License> licenseModel;
 	private PersonalLicense persLicense;
 	private boolean displayControls = true;
+
+	private FileUploadField uploadField;
 
 	private Form form;
 
@@ -60,6 +65,10 @@ public class LicenseRequestForm extends Panel {
 		c = new RequiredTextField("email", new PropertyModel(persLicense, "email"));
 		c.setLabel(ResourceUtils.getModel("label.license.request.email"));
 		form.add(c);
+
+		uploadField = new FileUploadField("attachement");
+		uploadField.setLabel(ResourceUtils.getModel("label.license.request.attachement"));
+		form.add(uploadField);
 
 		WicketUtils.addLabelsAndFeedback(form);
 	}
@@ -96,6 +105,9 @@ public class LicenseRequestForm extends Panel {
 	 * Override to provide additional actions.
 	 */
 	protected void onSubmitAction() {
+		FileUpload f = uploadField.getFileUpload();
+		persLicense.setAttachmentFileName(f.getClientFileName());
+		persLicense.setAttachmentContent(f.getBytes());
 		persLicense.setLicense(licenseModel.getObject());
 		persLicense.setPerson(EEGDataBaseSession.get().getLoggedUser());
 		licenseFacade.createRequestForLicense(persLicense);

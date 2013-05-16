@@ -31,11 +31,13 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 		if (group != null) {
 			Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
 			if (!confirmed) {
-				criteria.add(Restrictions.eq("confirmedDate", null));
+				criteria.add(Restrictions.isNull("confirmedDate"));
 			} else {
-				criteria.add(Restrictions.ne("confirmedDate", null));
+				criteria.add(Restrictions.isNotNull("confirmedDate"));
 			}
-			criteria.createAlias("license", "l").add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
+			criteria.createAlias("license", "l");
+			criteria.add(Restrictions.ne("l.licenseType", LicenseType.OWNER));
+			criteria.add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
 			return criteria.list();
 		} else {
 			return new ArrayList<PersonalLicense>();

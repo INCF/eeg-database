@@ -60,14 +60,16 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Override
 	@Transactional
 	public void createRequestForLicense(PersonalLicense personalLicense) {
-		this.personalLicenseDao.create(personalLicense);
 		personalLicense.setConfirmedDate(null);
-		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
-		this.mailService.sendLicenseRequestToGroupEmail(
-				personalLicense.getLicense().getResearchGroup().getPerson().getEmail(),
-				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
-				personalLicense.getPerson().getEmail(),
-				personalLicense.getLicense().getTitle());
+		personalLicense.setRequestedDate(new Date());
+		this.personalLicenseDao.create(personalLicense);
+		
+//		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
+//		this.mailService.sendLicenseRequestToGroupEmail(
+//				personalLicense.getLicense().getResearchGroup().getPerson().getEmail(),
+//				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
+//				personalLicense.getPerson().getEmail(),
+//				personalLicense.getLicense().getTitle());
 	}
 
 	@Override

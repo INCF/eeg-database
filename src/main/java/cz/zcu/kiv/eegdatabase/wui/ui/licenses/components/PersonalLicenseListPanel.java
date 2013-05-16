@@ -35,6 +35,7 @@ public class PersonalLicenseListPanel extends Panel {
 		cont.setOutputMarkupId(true);
 		this.add(cont);
 		this.addPersonalLicenseListToCont(cont);
+		this.setOutputMarkupId(true);
 	}
 
 	/**

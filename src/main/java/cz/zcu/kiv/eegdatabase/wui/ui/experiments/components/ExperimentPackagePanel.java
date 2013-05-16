@@ -34,11 +34,13 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseRequestPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.BuyLinkPanel;
 import java.util.Iterator;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Panel for experiment package management. Adding/removing experiments and
@@ -164,7 +166,12 @@ public class ExperimentPackagePanel extends Panel {
 
 			@Override
 			public void onClick() {
-				//TODO
+				License l = this.getModelObject();
+				if(l != null) {
+					PageParameters params = new PageParameters();
+					params.set(LicenseRequestPage.PARAM_LICENSE_ID, l.getLicenseId());
+					setResponsePage(LicenseRequestPage.class, params);
+				}
 			}
 
 			@Override
