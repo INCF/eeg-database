@@ -44,11 +44,12 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.LoadableDetachableModel;
 
 /**
- * Panel which displays list of experiments inside a package.
+ * Panel for experiment package management. Adding/removing experiments and
+ * licenses.
  *
  * @author Jakub Danek
  */
-public class ExperimentPackageContentPanel extends Panel {
+public class ExperimentPackageManagePanel extends Panel {
 
     private static final int EXPERIMENTS_PER_PAGE = 10;
 
@@ -95,7 +96,7 @@ public class ExperimentPackageContentPanel extends Panel {
      * @param id component id
      * @param model model with the experiment package for which the info shall be displayed
      */
-    public ExperimentPackageContentPanel(String id, IModel<ExperimentPackage> model) {
+    public ExperimentPackageManagePanel(String id, IModel<ExperimentPackage> model) {
 		super(id);
 
 		this.epModel = model;
@@ -359,8 +360,8 @@ public class ExperimentPackageContentPanel extends Panel {
 
 			@Override
 				public void onClick(AjaxRequestTarget target) {
-				ExperimentPackageContentPanel.this.experimentListCont.setVisible(this.getModelObject());
-				target.add(ExperimentPackageContentPanel.this.experimentListCont);
+				ExperimentPackageManagePanel.this.experimentListCont.setVisible(this.getModelObject());
+				target.add(ExperimentPackageManagePanel.this.experimentListCont);
 				target.add(header);
 			}
 
@@ -368,7 +369,7 @@ public class ExperimentPackageContentPanel extends Panel {
 			protected void onConfigure() {
 				super.onConfigure();
 
-				boolean contVisible = ExperimentPackageContentPanel.this.experimentListCont.isVisible();
+				boolean contVisible = ExperimentPackageManagePanel.this.experimentListCont.isVisible();
 				if(this.getModelObject()) {
 					//link for making cont visible is accessible only if the cont
 					//is currently invisible
@@ -397,7 +398,7 @@ public class ExperimentPackageContentPanel extends Panel {
 		experimentsModel = new LoadableDetachableModel<List<Experiment>>() {
 
 			@Override
-				protected List<Experiment> load() {
+			protected List<Experiment> load() {
 				return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
 			}
 

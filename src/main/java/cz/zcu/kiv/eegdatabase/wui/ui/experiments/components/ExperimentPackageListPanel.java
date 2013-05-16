@@ -30,27 +30,27 @@ public class ExperimentPackageListPanel extends Panel {
      * @param model model with packages that shall be displayed
      */
     public ExperimentPackageListPanel(String id, IModel<List<ExperimentPackage>> model) {
-	super(id);
+		super(id);
 
-	this.epListModel = model;
-	this.addPackageList();
+		this.epListModel = model;
+		this.addPackageList();
     }
 
     /**
      * Add view for the list of packages.
      */
     private void addPackageList() {
-	PageableListView<ExperimentPackage> listView = new PageableListView<ExperimentPackage>("packageList", epListModel, ITEMS_PER_PAGE) {
+		PageableListView<ExperimentPackage> listView = new PageableListView<ExperimentPackage>("packageList", epListModel, ITEMS_PER_PAGE) {
 
-	    @Override
-	    protected void populateItem(ListItem<ExperimentPackage> item) {
-		item.add(new ExperimentPackageContentPanel("item", item.getModel()));
-	    }
-	};
+			@Override
+			protected void populateItem(ListItem<ExperimentPackage> item) {
+				item.add(new ExperimentPackageManagePanel("item", item.getModel()));
+			}
+		};
 
-	add(listView);
-	PagingNavigator navig = new CustomAjaxPagingNavigator("navigation", listView);
-	add(navig);
+		add(listView);
+		PagingNavigator navig = new CustomAjaxPagingNavigator("navigation", listView);
+		add(navig);
     }
 
 }
