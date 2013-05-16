@@ -77,6 +77,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private SoftwareFacade softwareFacade;
     @Autowired
     private WeatherFacade weatherFacade;
+    @Autowired
+    private StimulusFacade stimulusFacade;
+
 
     public java.lang.Class<? extends Page> getHomePage() {
 
@@ -182,6 +185,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         locator.set(Hardware.class, new HardwareConverter(hardwareFacade));
         locator.set(Software.class, new SoftwareConverter(softwareFacade));
         locator.set(Weather.class, new WeatherConverter(weatherFacade));
+        locator.set(Stimulus.class, new StimulusConverter(stimulusFacade));
 
         return locator;
     }

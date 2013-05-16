@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
@@ -62,6 +63,10 @@ public class WeatherForm extends Form<Weather> {
                     target.add(feedback);
                     if(!hasError()){
                         facade.create(newW);
+                        WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
+                        if (parent != null){
+                            parent.updateWeather();
+                        }
                         window.close(target);
                     }
                 }

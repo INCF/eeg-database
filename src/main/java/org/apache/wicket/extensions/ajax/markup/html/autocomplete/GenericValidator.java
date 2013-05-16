@@ -1,5 +1,6 @@
 package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import org.apache.wicket.validation.INullAcceptingValidator;
 import org.apache.wicket.validation.IValidatable;
@@ -25,16 +26,16 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
     public void validate(IValidatable<T> validatable) {
         T validatableEntity = validatable.getValue();
         if(validatableEntity == null) {
-            error(validatable, "You are trying to add nonexisting Entity.");
+            error(validatable, ResourceUtils.getString("error.YouAreTryingToAddNonexistingEntity"));
             return;
         }
         List<T> resultEntitites = service.getUnique(validatableEntity);
         if(resultEntitites.size() == 1) {
             // It is valid
         } else if(resultEntitites.size() > 1) {
-            error(validatable, "There are more entities with same name.");
+            error(validatable, ResourceUtils.getString("error.ThereAreMoreEntitiesWithSameName"));
         } else {
-            error(validatable, "You are trying to add nonexisting Entity.");
+            error(validatable, ResourceUtils.getString("error.YouAreTryingToAddNonexistingEntity"));
         }
     }
 

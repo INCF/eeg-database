@@ -145,6 +145,18 @@ public class WizardTabbedPanelPage extends MenuPage {
         return resultsForm;
     }
 
+    public void updateSw(){
+        this.environmentForm.updateSoftwares();
+    }
+
+    public void updateHw(){
+        this.environmentForm.updateHardwares();
+    }
+
+    public void updateWeather(){
+        this.environmentForm.updateWeathers();
+    }
+
 
     @Override
     public void renderHead(IHeaderResponse response) {

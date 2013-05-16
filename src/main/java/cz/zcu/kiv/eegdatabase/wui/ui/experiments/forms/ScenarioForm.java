@@ -1,9 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
@@ -12,7 +11,7 @@ import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.AutoCompleteTextField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.*;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -32,10 +31,7 @@ import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.Iterator;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by IntelliJ IDEA.
@@ -52,6 +48,12 @@ public class ScenarioForm extends Form<Scenario> {
 
     @SpringBean
     private ResearchGroupFacade researchGroupFacade;
+
+    @SpringBean
+    private StimulusFacade stimulusFacade;
+
+    private List<GenericModel<Stimulus>> stimuluses;
+
 
 
     public ScenarioForm(String id, final ModalWindow window) {
@@ -101,6 +103,15 @@ public class ScenarioForm extends Form<Scenario> {
         add(new TextArea<String>("description").setRequired(true));
         add(new CheckBox("availableFile"));
 
+        GenericFactory<Stimulus> factory = new GenericFactory<Stimulus>(Stimulus.class);
+        GenericValidator<Stimulus> validator = new GenericValidator<Stimulus>(stimulusFacade);
+
+        RepeatableInputPanel repeatable =
+                new RepeatableInputPanel<Stimulus>("stimuluses", factory,
+                        validator, stimulusFacade);
+        stimuluses = repeatable.getData();
+        add(repeatable);
+
         setMultiPart(true);
         final FileUploadField fileUpload = new FileUploadField("dataFile");
         add(fileUpload);
@@ -144,10 +155,27 @@ public class ScenarioForm extends Form<Scenario> {
                             scenario.setPerson(EEGDataBaseSession.get().getLoggedUser());
                             Integer scenarioID = scenariosFacade.create(scenario);
                             scenario.setScenarioId(scenarioID);
-
+                            Set<Stimulus> ss = getSet(stimuluses);
+                            Set<StimulusRel> sr = new HashSet<StimulusRel>(ss.size());
+                            for (Stimulus s : ss){
+                                StimulusRel str = new StimulusRel();
+                                str.setScenario(scenario);
+                                str.setStimulus(s);
+                                sr.add(str);
+                            }
+                            scenario.setStimulusRels(sr);
+                            scenariosFacade.update(scenario);
                             scenarioTypeFacade.create(scenarioTypeNonXml);
                             window.close(target);
                         }
+                    }
+
+                    private Set getSet(List objects) {
+                        Set result = new HashSet();
+                        for(Object object: objects) {
+                            result.add(((GenericModel) object).getObject());
+                        }
+                        return result;
                     }
                 }.add(new AjaxEventBehavior("onclick") {
                     @Override

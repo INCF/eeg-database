@@ -12,6 +12,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
@@ -34,10 +35,7 @@ import sun.net.www.content.text.Generic;
 import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.util.*;
 
 public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
@@ -62,12 +60,16 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private List<Hardware> hwListForModel;
     private List<Software> swListForModel;
+    private List<Hardware> hwChoices;
+    private List<Software> swChoices;
+    private List<Weather> weatherChoices;
     private Weather weatherForModel;
     private Integer integerForModel;
     private String environmentNoteForModel;
     private GenericModel<Weather> weatherModel;
     private List<GenericModel<Disease>> diseases;
     private List<GenericModel<Pharmaceutical>> pharmaceuticals;
+    RepeatableInputPanel<Disease> repeatableD;
 
     public AddExperimentEnvironmentForm(String id, Experiment experiment){
         super(id);
@@ -86,7 +88,8 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private void addHardware(){
         hwListForModel = new ArrayList<Hardware>();
-        hw = new ListMultipleChoice("hardwares", new GenericModel(hwListForModel), getHardwares()).setMaxRows(SELECT_ROWS);
+        hwChoices = getHardwares();
+        hw = new ListMultipleChoice("hardwares", new GenericModel(hwListForModel), hwChoices).setMaxRows(SELECT_ROWS);
         hw.setLabel(ResourceUtils.getModel("label.hardware"));
         hw.setRequired(true);
 
@@ -101,7 +104,8 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private void addSoftware(){
         swListForModel = new ArrayList<Software>();
-        sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), getSoftwares()).setMaxRows(SELECT_ROWS);
+        swChoices = getSoftwares();
+        sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), swChoices).setMaxRows(SELECT_ROWS);
         sw.setLabel(ResourceUtils.getModel("label.software"));
         sw.setRequired(true);
 
@@ -116,8 +120,9 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private void addWeather(){
         weatherForModel = new Weather();
+        weatherChoices = getWeathers();
         weatherModel = new GenericModel<Weather>(weatherForModel);
-        weather = new DropDownChoice("weather", weatherModel, getWeathers());
+        weather = new DropDownChoice("weather", weatherModel, weatherChoices);
         weather.setRequired(true);
         weather.setLabel(ResourceUtils.getModel("label.weather"));
         weather.setNullValid(true);
@@ -168,11 +173,11 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         GenericFactory<Disease> factory = new GenericFactory<Disease>(Disease.class);
         GenericValidator<Disease> validator = new GenericValidator<Disease>(diseaseFacade);
 
-        RepeatableInputPanel<Disease> repeatable =
+        repeatableD =
                 new RepeatableInputPanel<Disease>("diseases", factory,
                         validator, diseaseFacade);
-        diseases = repeatable.getData();
-        add(repeatable);
+        diseases = repeatableD.getData();
+        add(repeatableD);
     }
 
     private void addPharmaceutical() {
@@ -203,6 +208,11 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
                 "addWeather", AddWeatherPage.class.getName());
     }
 
+    public void resetComponentModels(){
+        this.sw.setEnabled(false);
+        this.sw.setEnabled(true);
+    }
+
     public void validateForm(){
         validate();
     }
@@ -218,6 +228,19 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private List<Software> getSoftwares(){
         return softwareFacade.getAllRecords();
+    }
+
+    public void updateSoftwares(){
+        this.sw.updateModel();
+        this.add(sw);
+    }
+
+    public void updateHardwares(){
+        hw.setChoices(getHardwares());
+    }
+
+    public void updateWeathers(){
+        //weather.setChoices(getWeathers());
     }
 
     private List<Hardware> getHardwares(){

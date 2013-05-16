@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.AddExperimentEnvironmentForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
@@ -67,10 +68,14 @@ public class SoftwareForm extends Form<Software> {
                     target.add(feedback);
                     if(!hasError()){
                         if (newSw.getDefaultNumber() == 0){
-                            facade.create(newSw);
+                            //facade.create(newSw);
                         }
                         else {
-                            facade.createDefaultRecord(newSw);
+                            //facade.createDefaultRecord(newSw);
+                        }
+                        WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
+                        if (parent != null){
+                            parent.updateSw();
                         }
                         window.close(target);
                     }

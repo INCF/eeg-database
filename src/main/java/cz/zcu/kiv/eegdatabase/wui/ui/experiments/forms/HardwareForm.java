@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
@@ -72,6 +73,10 @@ public class HardwareForm extends Form<Hardware> {
                             }
                             else {
                                 hardwareFacade.createDefaultRecord(newHw);
+                            }
+                            WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
+                            if (parent != null){
+                                parent.updateHw();
                             }
                             window.close(target);
                         }

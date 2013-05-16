@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.data.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;
@@ -20,7 +21,7 @@ import java.util.Set;
  */
 @Entity
 @javax.persistence.Table(name="STIMULUS")
-public class Stimulus implements Serializable {
+public class Stimulus implements Serializable, IAutoCompletable {
 
     @SolrId
     @Id
@@ -64,5 +65,10 @@ public class Stimulus implements Serializable {
 
     public void setStimulusRels(Set<StimulusRel> stimulusRels) {
         this.stimulusRels = stimulusRels;
+    }
+
+    @Override
+    public String getAutoCompleteData() {
+        return description;
     }
 }

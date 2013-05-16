@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
@@ -25,6 +26,8 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.sql.Timestamp;
@@ -58,19 +61,39 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     private GenericModel<Person> testedSubject;
     private List<GenericModel<Person>> coExperimenters;
 
+    private CheckBox isPrivateExperiment;
+    private boolean privateExperiment = false;
+
+    private CheckBox isDefaultGroup;
+    private boolean defaultGroup = false;
+
     public AddExperimentScenarioForm(String id, Experiment experiment) {
         super(id);
         this.experiment = experiment;
 
         addScenario();
         addResearchGroup();
+        addPrivateExperimentCheckBox();
         addProject();
         addStartDate();
         addEndDate();
         addTestedSubject();
         addCoExperimenters();
-
         createModalWindows();
+    }
+
+    private void addPrivateExperimentCheckBox() {
+        isPrivateExperiment = new CheckBox("isPrivateExperiment", new Model(privateExperiment));
+        isPrivateExperiment.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (privateExperiment) privateExperiment = false;
+                else privateExperiment = true;
+                isPrivateExperiment.setModelObject(privateExperiment);
+                target.add(isPrivateExperiment);
+            }
+        });
+        add(isPrivateExperiment);
     }
 
     private void addEndDate() {
@@ -136,7 +159,16 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         add(researchGroup);
         add(repeatableFeedback);
 
-        CheckBox isDefaultGroup = new CheckBox("isDefaultGroup");
+        isDefaultGroup = new CheckBox("isDefaultGroup", new Model(defaultGroup));
+        isDefaultGroup.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if (defaultGroup) defaultGroup = false;
+                else defaultGroup = true;
+                isDefaultGroup.setModelObject(defaultGroup);
+                target.add(isDefaultGroup);
+            }
+        });
         add(isDefaultGroup);
     }
 
@@ -334,10 +366,17 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
             experiment.setEndTime(new Timestamp(this.endDate.getObject().getTime()));
             experiment.setStartTime(new Timestamp(this.startDate.getObject().getTime()));
             experiment.setProjectTypes(getSet(this.projectType));
-            experiment.setResearchGroup(this.researchGroup.getObject());
+            ResearchGroup group = this.researchGroup.getObject();
+            if (this.isDefaultGroup.getModelObject()){
+                Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
+                loggedUser.setDefaultGroup(group);
+                personFacade.update(loggedUser);
+            }
+            experiment.setResearchGroup(group);
             experiment.setScenario(this.scenario.getObject());
             experiment.setPersonBySubjectPersonId(this.testedSubject.getObject());
             experiment.setPersons(getSet(this.coExperimenters));
+            experiment.setPrivateExperiment(this.isPrivateExperiment.getModelObject());
         }
     }
 
