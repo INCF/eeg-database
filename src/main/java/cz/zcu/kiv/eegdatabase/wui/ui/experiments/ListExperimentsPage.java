@@ -30,6 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import org.apache.wicket.util.lang.Args;
 
 /**
  * Page with list of experiments
@@ -52,11 +53,6 @@ public class ListExperimentsPage extends MenuPage {
     @SpringBean
     ResearchGroupFacade researchFacade;
 
-    public ListExperimentsPage() {
-
-        setupComponents(null);
-    }
-
     public ListExperimentsPage(PageParameters parameters) {
 
         String param = parseParameters(parameters);
@@ -68,10 +64,7 @@ public class ListExperimentsPage extends MenuPage {
         boolean subject = false;
 
         IModel<String> title = null;
-        if (param == null) {
-            title = ResourceUtils.getModel("pageTitle.allExperiments");
-            add(new Label("title", title));
-        } else if (param.equals(PARAM_OWNER)) {
+		 if (param.equals(PARAM_OWNER)) {
             owner = true;
             title = ResourceUtils.getModel("pageTitle.myExperiments");
             add(new Label("title", title));
@@ -79,7 +72,9 @@ public class ListExperimentsPage extends MenuPage {
             subject = true;
             title = ResourceUtils.getModel("pageTitle.myExperiments");
             add(new Label("title", title));
-        }
+        } else {
+			Args.notNull(param, "Either OWNER or SUBJECT param must be passed as page parameter!");
+		}
         setPageTitle(title);
 
         Person loggedUser = EEGDataBaseSession.get().getLoggedUser();

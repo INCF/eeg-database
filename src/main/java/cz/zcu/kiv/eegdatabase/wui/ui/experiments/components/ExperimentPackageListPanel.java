@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.wui.components.repeater.CustomAjaxPagingNavigator;
 import java.util.List;
+import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
@@ -24,17 +25,32 @@ public class ExperimentPackageListPanel extends Panel {
      */
     private IModel<List<ExperimentPackage>> epListModel;
 
+	private final boolean managedMode;
+
     /**
+	 * Constructor for displaying list of packages in view mode.
      *
      * @param id components id
      * @param model model with packages that shall be displayed
      */
     public ExperimentPackageListPanel(String id, IModel<List<ExperimentPackage>> model) {
+		this(id, model, false);
+    }
+
+	/**
+	 * 
+	 * @param id
+	 * @param model
+	 * @param manageMode
+	 */
+	public ExperimentPackageListPanel(String id, IModel<List<ExperimentPackage>> model, boolean manageMode) {
 		super(id);
 
+		this.setOutputMarkupId(true);
+		this.managedMode = manageMode;
 		this.epListModel = model;
 		this.addPackageList();
-    }
+	}
 
     /**
      * Add view for the list of packages.
@@ -44,12 +60,18 @@ public class ExperimentPackageListPanel extends Panel {
 
 			@Override
 			protected void populateItem(ListItem<ExperimentPackage> item) {
-				item.add(new ExperimentPackageManagePanel("item", item.getModel()));
+				if(managedMode) {
+					item.add(new ExperimentPackageManagePanel("item", item.getModel()));
+				} else {
+					item.add(new ExperimentPackagePanel("item", item.getModel()));
+				}
 			}
 		};
 
+		listView.setOutputMarkupId(true);
+
 		add(listView);
-		PagingNavigator navig = new CustomAjaxPagingNavigator("navigation", listView);
+		PagingNavigator navig = new PagingNavigator("navigation", listView);
 		add(navig);
     }
 

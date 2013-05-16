@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
@@ -96,6 +97,11 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 	@Override
 	public void removeExperimentPackage(ExperimentPackage pckg) {
 		this.experimentPackageService.delete(pckg);
+	}
+
+	@Override
+	public List<ExperimentPackage> listVisiblePackages(Person person) {
+		return this.experimentPackageService.listVisiblePackages(person);
 	}
 
 }

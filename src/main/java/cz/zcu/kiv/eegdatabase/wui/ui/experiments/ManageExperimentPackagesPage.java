@@ -77,7 +77,7 @@ public class ManageExperimentPackagesPage extends MenuPage {
 		this.add(container);
 
 		this.addResearchGroupSelector(container);
-		container.add(new ExperimentPackageListPanel("packageList", packagesModel) {
+		container.add(new ExperimentPackageListPanel("packageList", packagesModel, true) {
 
 			@Override
 			protected void onConfigure() {

@@ -49,4 +49,10 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
      * @return list of experiments or empty list
      */
     List<Experiment> getExperimentsWithoutPackage(int researchGroupId, int packageId);
+
+	/**
+	 * List all experiments that arent in any package.
+	 * @return 
+	 */
+	List<Experiment> getExperimentsWithoutPackage();
 }

@@ -141,4 +141,9 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     public List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg) {
 	return service.getExperimentsWithoutPackage(pckg.getResearchGroup().getResearchGroupId(), pckg.getExperimentPackageId());
     }
+
+	@Override
+	public List<Experiment> getExperimentsWithoutPackage() {
+		return service.getExperimentsWithoutPackage();
+	}
 }

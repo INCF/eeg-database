@@ -37,4 +37,10 @@ public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPac
 	
 	public void removeAllConnections(ExperimentPackage pack);
 
+	/**
+	 * List all experiments that arent in any package.
+	 * @return
+	 */
+	public List<Experiment> listExperimentsWithoutPackage();
+
 }

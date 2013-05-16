@@ -50,4 +50,10 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
      * @return list of experiments or empty list
      */
     List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg);
+
+	/**
+	 * List all experiments that arent in any package.
+	 * @return 
+	 */
+	List<Experiment> getExperimentsWithoutPackage();
 }

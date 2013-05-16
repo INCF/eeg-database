@@ -77,4 +77,11 @@ public interface PersonalLicenseService extends GenericService<PersonalLicense, 
 	 * license)
 	 */
 	public boolean addLicenseToPerson(Person person, License license);
+
+	/**
+	 * Returns list of all user's licenses (both accepted and awaiting confirmation).
+	 * @param person
+	 * @return
+	 */
+	public List<License> getUsersLicenses(Person person);
 }

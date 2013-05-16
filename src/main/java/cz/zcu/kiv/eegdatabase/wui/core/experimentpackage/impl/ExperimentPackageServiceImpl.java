@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
@@ -90,7 +91,11 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 		
 		super.delete(persistentObject); 
 	}
-	
-	
 
+	@Override
+	@Transactional
+	public List<ExperimentPackage> listVisiblePackages(Person person) {
+		return this.experimentPackageDao.listVisiblePackages(person);
+	}
+	
 }

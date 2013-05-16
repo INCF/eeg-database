@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import java.util.List;
@@ -20,6 +21,14 @@ public interface ExperimentPackageFacade extends GenericFacade<ExperimentPackage
      * @return list of packages or an empty list
      */
     public List<ExperimentPackage> listExperimentPackagesByGroup(ResearchGroup researchGroup);
+
+	/**
+	 * Returns list of visible packages for a person.
+	 *
+	 * That is all but private (except the user has owner license).
+	 * @return
+	 */
+	public List<ExperimentPackage> listVisiblePackages(Person person);
 
     /**
      * Adds a single experiment to the package.

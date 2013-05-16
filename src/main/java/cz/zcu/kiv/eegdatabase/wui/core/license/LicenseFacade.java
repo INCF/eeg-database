@@ -134,5 +134,12 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return list of licenses
 	 */
 	public List<License> getLicensesForPackage(ExperimentPackage pckg);
+
+	/**
+	 * Returns list of all user's licenses (both accepted and awaiting confirmation).
+	 * @param person
+	 * @return
+	 */
+	public List<License> getUsersLicenses(Person person);
 	
 }

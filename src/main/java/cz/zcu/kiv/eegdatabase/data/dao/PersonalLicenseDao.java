@@ -4,6 +4,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -28,4 +29,11 @@ public interface PersonalLicenseDao extends GenericDao<PersonalLicense, Integer>
      * @return true if person has the license
      */
     public boolean personHasLicense(int personId, int licenseId);
+
+	/**
+	 * Returns list of all user's licenses (both accepted and awaiting confirmation).
+	 * @param person
+	 * @return
+	 */
+	public List<License> getUsersLicenses(Person person);
 }

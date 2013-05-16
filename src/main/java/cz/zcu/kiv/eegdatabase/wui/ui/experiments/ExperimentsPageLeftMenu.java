@@ -17,7 +17,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ManageLicenseRequestsPage;
  */
 public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
 
-    LIST_OF_EXPERIMENTS(ListExperimentsPage.class, "menuItem.experiments.allExperiments", null),
+    LIST_OF_EXPERIMENTS(ListExperimentsByPackagePage.class, "menuItem.experiments.allExperiments", null),
     LIST_OF_EXPERIMENTS_AS_OWNER(ListExperimentsPage.class, "menuItem.experiments.myExperiments", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_OWNER)),
     LIST_OF_EXPERIMENTS_AS_SUBJECT(ListExperimentsPage.class, "menuItem.experiments.meAsSubject", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_SUBJECT)),
     MANAGE_EXPERIMENT_PACKAGES(ManageExperimentPackagesPage.class, "menuItem.experiments.packages", null),
