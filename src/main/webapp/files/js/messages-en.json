@@ -219,7 +219,8 @@
     "sendRequest":"Send request",
     "show":"Show",
     "showArticles":"Show articles",
-    "submitDisable":"Submitting, please wait..."
+    "submitDisable":"Submitting, please wait...",
+    "visualization":"Visualization"
   },
   "currency":
   {
