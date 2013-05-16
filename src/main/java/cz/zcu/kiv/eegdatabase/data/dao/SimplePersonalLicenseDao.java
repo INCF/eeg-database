@@ -12,6 +12,7 @@ import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
+import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -73,4 +74,11 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 		}
 		return super.create(newInstance);
     }
+
+	@Override
+	public byte[] getAttachmentContent(int personalLicenseId) {
+		String query = "select attachmentContent from PersonalLicense pl where pl.personalLicenseId = :id";
+        List<byte[]> result =  this.getSession().createQuery(query).setInteger("id", personalLicenseId).list();
+        return result.isEmpty() ? null : result.get(0);
+	}
 }

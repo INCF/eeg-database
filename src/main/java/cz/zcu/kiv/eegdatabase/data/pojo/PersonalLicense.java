@@ -5,13 +5,17 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -57,7 +61,31 @@ public class PersonalLicense implements Serializable{
 
 	@Column(name = "EMAIL")
 	private String email;
+	
+	@Column(name = "ATTACHMENT_FILE_NAME")
+	private String attachmentFileName;
+	
+	@Basic(fetch = FetchType.LAZY)
+	@Column(name = "ATTACHMENT_CONTENT")
+	@Lob
+	private byte[] attachmentContent;
 
+	public String getAttachmentFileName() {
+		return attachmentFileName;
+	}
+
+	public void setAttachmentFileName(String attachmentFileName) {
+		this.attachmentFileName = attachmentFileName;
+	}
+	
+	public byte[] getAttachmentContent() {
+		return attachmentContent;
+	}
+
+	public void setAttachmentContent(byte[] attachmentContent) {
+		this.attachmentContent = attachmentContent;
+	}
+	
 	public Date getRequestedDate() {
 		return requestedDate;
 	}

@@ -18,6 +18,8 @@ public interface PersonalLicenseDao extends GenericDao<PersonalLicense, Integer>
 	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed);
 	
 	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
+	
+	public byte[] getAttachmentContent(int personalLicenseId);
 
     /**
      * Checks whether the person has already a license.
