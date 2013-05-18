@@ -1,6 +1,8 @@
 package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
@@ -28,7 +30,6 @@ public class RepeatableInput<T extends IAutoCompletable> extends AutoCompleteTex
                 return object.getAutoCompleteData();
             }
         }, new AutoCompleteSettings());
-
         this.service = service;
 
         setOutputMarkupId(true);

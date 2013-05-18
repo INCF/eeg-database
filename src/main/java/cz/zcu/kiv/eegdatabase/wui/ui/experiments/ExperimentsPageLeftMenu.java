@@ -13,7 +13,7 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
     LIST_OF_EXPERIMENTS_AS_OWNER(ListExperimentsPage.class, "menuItem.experiments.myExperiments", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_OWNER)),
     LIST_OF_EXPERIMENTS_AS_SUBJECT(ListExperimentsPage.class, "menuItem.experiments.meAsSubject", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_SUBJECT)),
     SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
-    ADD_EXPERIMENTS(UnderConstructPage.class, "menuItem.experiments.addExperiment", null),
+    ADD_EXPERIMENTS(WizardTabbedPanelPage.class, "menuItem.experiments.addExperiment", null),
     RESULT(UnderConstructPage.class, "menuItem.serviceResult", null),
 
     ;

@@ -24,14 +24,14 @@
             <input type="text" wicket:id="group">
             <span wicket:id="groupFeedback"></span>
             <input type="button" wicket:id="addGroup" value="Add"/>
-            <input type="checkbox" name="defaultGroup" wicket:id="isDefaultGroup" value="isDefault">Set as default
+            <input type="checkbox" wicket:id="isDefaultGroup" value="isDefault">Set as default
         </div>
 
         <div class="form-item">
             <label for="isPrivateExperiment">
                 <wicket:message key="label.private">Private</wicket:message>
             </label>
-            <input type="checkbox" name="isPrivateExperiment" wicket:id="isPrivateExperiment" value="isPrivate">Set as private
+            <input type="checkbox" wicket:id="isPrivateExperiment" value="isPrivate">Set as private
         </div>
 
         <div class="form-item">
@@ -39,7 +39,7 @@
                 <wicket:message key="label.projectType">Project type</wicket:message>
             </label>
             <div wicket:id="project"></div>
-            <input type="button" wicket:id="newProject" name="newProject" value="Add">
+            <input type="button" wicket:id="newProject" value="Add">
         </div>
 
         <div class="form-item start-date">
@@ -59,7 +59,7 @@
         </div>
 
         <div class="form-item">
-            <label for="subjects" wicket:id="subjectsLb">
+            <label for="subjects">
                 <wicket:message key="label.subjectPerson">[subjects]</wicket:message>
             </label>
             <input type="text" wicket:id="testedSubject"/>
@@ -68,7 +68,7 @@
         </div>
 
         <div class="form-item">
-            <label for="coExperimenters" wicket:id="coExperimentersLb">
+            <label for="coExperimenters">
                 <wicket:message key="label.coExperimenters">[Co - experimenters]</wicket:message>
             </label>
             <div wicket:id="coExperimenters"></div>

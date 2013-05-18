@@ -13,10 +13,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
 import org.apache.wicket.Page;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.*;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -27,9 +27,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.sql.Timestamp;
 import java.util.*;
 
@@ -55,7 +56,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
 
     private GenericModel<Date> startDate;
     private GenericModel<Date> endDate;
-    private List<GenericModel<ProjectType>> projectType;
+    private List<GenericModel<ProjectType>> projectTypes;
     private GenericModel<ResearchGroup> researchGroup;
     private GenericModel<Scenario> scenario;
     private GenericModel<Person> testedSubject;
@@ -87,8 +88,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         isPrivateExperiment.add(new AjaxFormComponentUpdatingBehavior("onchange") {
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (privateExperiment) privateExperiment = false;
-                else privateExperiment = true;
+                privateExperiment = !privateExperiment;
                 isPrivateExperiment.setModelObject(privateExperiment);
                 target.add(isPrivateExperiment);
             }
@@ -132,11 +132,13 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     private void addProject() {
         GenericFactory<ProjectType> factory = new GenericFactory<ProjectType>(ProjectType.class);
         GenericValidator<ProjectType> validator = new GenericValidator<ProjectType>(projectTypeFacade);
+        validator.setRequired(true);
 
         RepeatableInputPanel repeatable =
                 new RepeatableInputPanel<ProjectType>("project", factory,
                         validator, projectTypeFacade);
-        projectType = repeatable.getData();
+        projectTypes = repeatable.getData();
+        validator.setList(projectTypes);
         add(repeatable);
     }
 
@@ -144,12 +146,12 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         ResearchGroup group = new ResearchGroup();
         this.researchGroup = new GenericModel<ResearchGroup>(group);
         GenericValidator<ResearchGroup> validator = new GenericValidator<ResearchGroup>(researchGroupFacade);
+        validator.setRequired(true);
 
         final RepeatableInput<ResearchGroup> researchGroup =
                 new RepeatableInput<ResearchGroup>("group", this.researchGroup, ResearchGroup.class,
                         researchGroupFacade);
         researchGroup.add(validator);
-        researchGroup.setRequired(true);
 
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(researchGroup);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("groupFeedback", repeatableFilter);
@@ -160,11 +162,14 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         add(repeatableFeedback);
 
         isDefaultGroup = new CheckBox("isDefaultGroup", new Model(defaultGroup));
-        isDefaultGroup.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+
+        isDefaultGroup.add(new AjaxAutoCompletableUpdatingBehavior("onchange",
+                repeatableFeedback, validator, this.researchGroup) {
+
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
-                if (defaultGroup) defaultGroup = false;
-                else defaultGroup = true;
+                super.onUpdate(target);
+                defaultGroup = !defaultGroup;
                 isDefaultGroup.setModelObject(defaultGroup);
                 target.add(isDefaultGroup);
             }
@@ -176,25 +181,28 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         Scenario scenario = new Scenario();
         this.scenario = new GenericModel<Scenario>(scenario);
         GenericValidator<Scenario> validator = new GenericValidator<Scenario>(scenarioFacade);
+        validator.setRequired(true);
 
         final RepeatableInput<Scenario> scenarioField =
                 new RepeatableInput<Scenario>("scenario", this.scenario, Scenario.class,
                         scenarioFacade);
-        scenarioField.setRequired(true);
+
         scenarioField.add(validator);
-        scenarioField.add(new AjaxFormComponentUpdatingBehavior("onblur") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                scenarioEntity = (Scenario) getDefaultModelObject();
-                // setEndTime if it was not already set.
-            }
-        });
 
 
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(scenarioField);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("scenarioFeedback", repeatableFilter);
         repeatableFeedback.setOutputMarkupId(true);
-        scenarioField.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
+        scenarioField.add(new AjaxAutoCompletableUpdatingBehavior("onblur",
+                repeatableFeedback, validator, this.scenario) {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                super.onUpdate(target);
+                scenarioEntity = (Scenario) getDefaultModelObject();
+                // setEndTime if it was not already set.
+            }
+        });
 
         add(scenarioField);
         add(repeatableFeedback);
@@ -203,22 +211,26 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     private void addTestedSubject() {
         Person person = new Person();
         this.testedSubject = new GenericModel<Person>(person);
-        GenericValidator<Person> validator = new GenericValidator<Person>(personFacade);
+        final GenericValidator<Person> validator = new GenericValidator<Person>(personFacade);
+        validator.setRequired(true);
+
         final RepeatableInput<Person> testedSubject =
                 new RepeatableInput<Person>("testedSubject", this.testedSubject, Person.class,
                         personFacade);
+
         testedSubject.add(validator);
-        testedSubject.setRequired(true);
 
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(testedSubject);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("testedSubjectFeedback", repeatableFilter);
         repeatableFeedback.setOutputMarkupId(true);
-        testedSubject.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
 
         add(testedSubject);
         add(repeatableFeedback);
+
+        testedSubject.add(new AjaxAutoCompletableUpdatingBehavior("onblur",
+                repeatableFeedback, validator, this.testedSubject));
     }
-    
+
     private void addCoExperimenters() {
         GenericFactory<Person> factory = new GenericFactory<Person>(Person.class);
         GenericValidator<Person> validator = new GenericValidator<Person>(personFacade);
@@ -227,134 +239,27 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
                 new RepeatableInputPanel<Person>("coExperimenters", factory,
                         validator, personFacade);
         coExperimenters = repeatable.getData();
+        validator.setList(coExperimenters);
+
         add(repeatable);
     }
 
     private void createModalWindows() {
-        final ModalWindow addGroup;
-        add(addGroup = new ModalWindow("addGroupModal"));
-        addGroup.setCookieName("add-group");
 
-        addGroup.setPageCreator(new ModalWindow.PageCreator() {
+        addModalWindowAndButton(this, "addGroupModal", "add-group",
+                "addGroup", AddGroupPage.class.getName());
 
-            @Override
-            public Page createPage() {
-                return new AddGroupPage(getPage().getPageReference(), addGroup);
-            }
-        });
+        addModalWindowAndButton(this, "newProjectModal", "new-project",
+                "newProject", AddProjectPage.class.getName());
 
-        AjaxButton addGroupAjax = new AjaxButton("addGroup", this)
-        {
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form){
-                addGroup.show(target);
-            }
-        };
-        addGroupAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                addGroup.show(target);
-            }
-        });
-        add(addGroupAjax);
+        addModalWindowAndButton(this, "newScenarioModal", "new-scenario",
+                "newScenario", AddScenarioPage.class.getName());
 
-        final ModalWindow newProject;
-        add(newProject = new ModalWindow("newProjectModal"));
-        newProject.setCookieName("new-project");
+        addModalWindowAndButton(this, "addTestedModal", "add-tested",
+                "addTested", AddPersonPage.class.getName());
 
-        newProject.setPageCreator(new ModalWindow.PageCreator() {
-
-            @Override
-            public Page createPage() {
-                return new AddProjectPage(getPage().getPageReference(), newProject);
-            }
-        });
-
-        AjaxButton newProjectAjax = new AjaxButton("newProject", this)
-        {};
-        newProjectAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                newProject.show(target);
-            }
-        });
-        add(newProjectAjax);
-
-        final ModalWindow newScenario;
-        add(newScenario = new ModalWindow("newScenarioModal"));
-        newScenario.setCookieName("new-scenario");
-
-        newScenario.setPageCreator(new ModalWindow.PageCreator() {
-
-            @Override
-            public Page createPage() {
-                return new AddScenarioPage(getPage().getPageReference(), newScenario);
-            }
-        });
-
-        AjaxButton newScenarioAjax = new AjaxButton("newScenario", this)
-        {};
-        newScenarioAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                newScenario.show(target);
-            }
-        });
-        add(newScenarioAjax);
-
-        final ModalWindow addTested;
-        add(addTested = new ModalWindow("addTestedModal"));
-        addTested.setCookieName("add-tested");
-
-        addTested.setPageCreator(new ModalWindow.PageCreator() {
-
-            @Override
-            public Page createPage() {
-                return new AddPersonPage(getPage().getPageReference(),
-                        addTested, Util.ROLE_READER);
-            }
-        });
-
-        AjaxButton addTestedAjax = new AjaxButton("addTested", this)
-        {};
-        addTestedAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                addTested.show(target);
-            }
-        });
-        addTestedAjax.setLabel(ResourceUtils.getModel("label.subjectPerson"));
-
-        FormComponentLabel testedLabel = new FormComponentLabel("subjectsLb", addTestedAjax);
-        add(addTestedAjax, testedLabel);
-
-
-
-        final ModalWindow newCoExperimenter;
-        add(newCoExperimenter = new ModalWindow("addCoExperimenterModal"));
-        newCoExperimenter.setCookieName("add-co-experimenter");
-
-        newCoExperimenter.setPageCreator(new ModalWindow.PageCreator() {
-
-            @Override
-            public Page createPage() {
-                return new AddPersonPage(getPage().getPageReference(),
-                        newCoExperimenter, Util.GROUP_EXPERIMENTER);
-            }
-        });
-
-        AjaxButton newCoExperimenterAjax = new AjaxButton("addCoExperimenter", this)
-        {};
-        newCoExperimenterAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-                newCoExperimenter.show(target);
-            }
-        });
-        newCoExperimenterAjax.setLabel(ResourceUtils.getModel("label.coExperimenters"));
-
-        FormComponentLabel coExperimenterLabel = new FormComponentLabel("coExperimentersLb", newCoExperimenterAjax);
-        add(newCoExperimenterAjax, coExperimenterLabel);
+        addModalWindowAndButton(this, "addCoExperimenterModal", "add-co-experimenter",
+                "addCoExperimenter", AddPersonPage.class.getName());
     }
 
     /**
@@ -365,7 +270,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         if(!hasError()) {
             experiment.setEndTime(new Timestamp(this.endDate.getObject().getTime()));
             experiment.setStartTime(new Timestamp(this.startDate.getObject().getTime()));
-            experiment.setProjectTypes(getSet(this.projectType));
+            experiment.setProjectTypes(getSet(this.projectTypes));
             ResearchGroup group = this.researchGroup.getObject();
             if (this.isDefaultGroup.getModelObject()){
                 Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
@@ -382,9 +287,13 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
 
     private Set getSet(List objects) {
         Set result = new HashSet();
+        Object last = null;
         for(Object object: objects) {
-            result.add(((GenericModel) object).getObject());
+            if(object != null)
+                last = ((GenericModel) object).getObject();
+                result.add(last);
         }
+        result.remove(last);    // empty field for next item
         return result;
     }
 
@@ -396,5 +305,56 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     public boolean isValid(){
         validate();
         return !hasError();
+    }
+
+
+
+
+    private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
+                                         final String buttonName, final String targetClass){
+
+        final ModalWindow addedWindow;
+        form.add(addedWindow = new ModalWindow(modalWindowName));
+        addedWindow.setCookieName(cookieName);
+        addedWindow.setPageCreator(new ModalWindow.PageCreator() {
+
+            @Override
+            public Page createPage() {
+                try{
+                    Constructor<?> cons = null;
+                    cons = Class.forName(targetClass).getConstructor(
+                    PageReference.class, ModalWindow.class);
+
+                    return (Page) cons.newInstance(
+                            getPage().getPageReference(), addedWindow);
+                }catch (NoSuchMethodException e){
+                    e.printStackTrace();
+                }catch (IllegalAccessException e){
+                    e.printStackTrace();
+                }catch (InstantiationException e){
+                    e.printStackTrace();
+                }catch (InvocationTargetException e){
+                    e.printStackTrace();
+                }catch (ClassNotFoundException e){
+                    e.printStackTrace();
+                }
+                return null;
+            }
+        });
+
+        AjaxButton ajaxButton = new AjaxButton(buttonName, this)
+        {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form){
+                addedWindow.show(target);
+            }
+        };
+        ajaxButton.add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+                addedWindow.show(target);
+            }
+        });
+        form.add(ajaxButton);
     }
 }

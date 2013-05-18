@@ -37,6 +37,8 @@ import java.util.Date;
 
 import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 
+import javax.management.relation.Role;
+
 /**
  * Created by IntelliJ IDEA.
  * User: Jakub Balhar
@@ -53,13 +55,9 @@ public class AddPersonPage extends WebPage {
 
     private Date date = new Date();
 
-    private String userRole;    //role of created user (cz.zcu.kiv.eegdatabase.logic.Util)
-
     public AddPersonPage(final PageReference modalWindowPage,
-                                final ModalWindow window,
-                                final String userRole) {
+                                final ModalWindow window) {
 
-        this.userRole = userRole;
         AddTestedSubjectForm form = new AddTestedSubjectForm("addForm", window);
         add(form);
     }
@@ -187,7 +185,7 @@ public class AddPersonPage extends WebPage {
                     Person user = AddTestedSubjectForm.this.getModelObject();
 
                     if (validation(user, personFacade)) {
-                        user.setAuthority(userRole);
+                        user.setAuthority(Util.ROLE_READER);
                         personFacade.create(user);
                         window.close(target);
                     }

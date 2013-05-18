@@ -12,10 +12,7 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericFactory;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericModel;
@@ -25,14 +22,10 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
-import org.hibernate.sql.Select;
-import sun.net.www.content.text.Generic;
 
-import java.io.Serializable;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.*;
@@ -89,14 +82,15 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     private void addHardware(){
         hwListForModel = new ArrayList<Hardware>();
         hwChoices = getHardwares();
-        hw = new ListMultipleChoice("hardwares", new GenericModel(hwListForModel), hwChoices).setMaxRows(SELECT_ROWS);
+        hw = new ListMultipleChoice("hardwares", new ListModel(hwListForModel), hwChoices).setMaxRows(SELECT_ROWS);
         hw.setLabel(ResourceUtils.getModel("label.hardware"));
-        hw.setRequired(true);
 
         ComponentFeedbackMessageFilter hwFilter = new ComponentFeedbackMessageFilter(hw);
         final FeedbackPanel hwFeedback = new FeedbackPanel("hwFeedback", hwFilter);
         hwFeedback.setOutputMarkupId(true);
         hw.add(new AjaxFeedbackUpdatingBehavior("blur", hwFeedback));
+
+
 
         add(hw);
         add(hwFeedback);
@@ -107,7 +101,6 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         swChoices = getSoftwares();
         sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), swChoices).setMaxRows(SELECT_ROWS);
         sw.setLabel(ResourceUtils.getModel("label.software"));
-        sw.setRequired(true);
 
         ComponentFeedbackMessageFilter swFilter = new ComponentFeedbackMessageFilter(sw);
         final FeedbackPanel swFeedback = new FeedbackPanel("swFeedback", swFilter);
@@ -116,6 +109,23 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
         add(sw);
         add(swFeedback);
+    }
+
+    private void validateRequiredEntities(){
+
+        if (hwListForModel.isEmpty())
+            hw.error(ResourceUtils.getString("required.hardware"));
+
+        if (swListForModel.isEmpty())
+            sw.error(ResourceUtils.getString("required.software"));
+
+        if (weatherForModel == null)
+            weather.error(ResourceUtils.getString("required.weather"));
+
+        if (integerForModel == null)
+            temperature.error(ResourceUtils.getString("required.field"));
+        else if(integerForModel < (-273))
+            temperature.error(ResourceUtils.getString("invalid.minTemp"));
     }
 
     private void addWeather(){
@@ -144,7 +154,6 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
     private void addTemperature(){
         temperature = new TextField("temperature", new Model(integerForModel), Integer.class);
-        temperature.setRequired(true);
         temperature.setLabel(ResourceUtils.getModel("label.temperature"));
 
         ComponentFeedbackMessageFilter temperatureFilter = new ComponentFeedbackMessageFilter(temperature);
@@ -177,6 +186,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
                 new RepeatableInputPanel<Disease>("diseases", factory,
                         validator, diseaseFacade);
         diseases = repeatableD.getData();
+        validator.setList(diseases);
         add(repeatableD);
     }
 
@@ -188,6 +198,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
                 new RepeatableInputPanel<Pharmaceutical>("pharmaceuticals", factory,
                         validator, pharmaceuticalFacade);
         pharmaceuticals = repeatable.getData();
+        validator.setList(pharmaceuticals);
         add(repeatable);
     }
 
@@ -208,17 +219,9 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
                 "addWeather", AddWeatherPage.class.getName());
     }
 
-    public void resetComponentModels(){
-        this.sw.setEnabled(false);
-        this.sw.setEnabled(true);
-    }
-
-    public void validateForm(){
-        validate();
-    }
-
     public boolean isValid(){
         validate();
+        validateRequiredEntities();
         return !hasError();
     }
 

@@ -110,7 +110,9 @@ public class ScenarioForm extends Form<Scenario> {
                 new RepeatableInputPanel<Stimulus>("stimuluses", factory,
                         validator, stimulusFacade);
         stimuluses = repeatable.getData();
+        validator.setList(stimuluses);
         add(repeatable);
+
 
         setMultiPart(true);
         final FileUploadField fileUpload = new FileUploadField("dataFile");

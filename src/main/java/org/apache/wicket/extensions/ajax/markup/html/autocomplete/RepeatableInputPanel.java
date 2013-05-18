@@ -1,6 +1,7 @@
 package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+import org.apache.commons.validator.*;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
@@ -120,6 +121,13 @@ public class RepeatableInputPanel<T extends IAutoCompletable> extends Panel {
                 protected void onError(AjaxRequestTarget target, RuntimeException e){
                     super.onError(target, e);
                     target.add(repeatableFeedback);
+                }
+            });
+
+            repeatable.add(new AjaxFormComponentUpdatingBehavior("onblur") {
+                @Override
+                protected void onUpdate(AjaxRequestTarget target) {
+                    ((GenericValidator<T>)validator).setList(getList());
                 }
             });
             item.add(repeatableFeedback);
