@@ -119,7 +119,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         if (swListForModel.isEmpty())
             sw.error(ResourceUtils.getString("required.software"));
 
-        if (weatherForModel == null)
+        if (weatherForModel == null || weatherForModel.getTitle() == null)
             weather.error(ResourceUtils.getString("required.weather"));
 
         if (integerForModel == null)
@@ -133,7 +133,6 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         weatherChoices = getWeathers();
         weatherModel = new GenericModel<Weather>(weatherForModel);
         weather = new DropDownChoice("weather", weatherModel, weatherChoices);
-        weather.setRequired(true);
         weather.setLabel(ResourceUtils.getModel("label.weather"));
         weather.setNullValid(true);
         weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
@@ -160,6 +159,14 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         final FeedbackPanel temperatureFeedback = new FeedbackPanel("temperatureFeedback", temperatureFilter);
         temperatureFeedback.setOutputMarkupId(true);
         temperature.add(new AjaxFeedbackUpdatingBehavior("blur", temperatureFeedback));
+        final Integer[] temp = null;
+        temperature.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+               integerForModel = (Integer)temperature.getModel().getObject();
+            }
+        });
+
 
         add(temperature);
         add(temperatureFeedback);
