@@ -305,6 +305,13 @@ public class ExperimentPackageManagePanel extends Panel {
 				target.add(header);
 			}
 
+			@Override
+			protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+				licenseFacade.removeLicenseFromPackage(model.getObject(), epModel.getObject());
+				ModalWindow.closeCurrent(target);
+				target.add(header);
+			}
+
 		};
 		addLicenseWindow.setContent(content);
 		this.add(addLicenseWindow);

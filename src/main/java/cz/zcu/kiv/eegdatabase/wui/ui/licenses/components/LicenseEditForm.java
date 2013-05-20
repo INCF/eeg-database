@@ -5,7 +5,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
-import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -28,19 +27,17 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class LicenseEditForm extends Panel {
 
-    private IModel<List<License>> blueprintsModel;
-    private IModel<License> licenseModel;
-
-    private Form form;
-
+	private IModel<List<License>> blueprintsModel;
+	private IModel<License> licenseModel;
+	private Form form;
 	private boolean displayControls = true;
 	private IModel<Boolean> allowBusiness;
 
-    public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
+	public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
 		this(id, model, null, allowBusiness);
-    }
+	}
 
-    public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints, IModel<Boolean> allowBusiness) {
+	public LicenseEditForm(String id, IModel<License> model, IModel<List<License>> blueprints, IModel<Boolean> allowBusiness) {
 		super(id);
 
 		this.allowBusiness = allowBusiness;
@@ -54,9 +51,9 @@ public class LicenseEditForm extends Panel {
 		this.addFormFields();
 		this.addBlueprintSelect();
 		this.addControls();
-    }
+	}
 
-    private void addFormFields() {
+	private void addFormFields() {
 		FormComponent c = new RequiredTextField("title", new PropertyModel(licenseModel, "title"));
 		c.setLabel(ResourceUtils.getModel("label.license.title"));
 		form.add(c);
@@ -75,26 +72,24 @@ public class LicenseEditForm extends Panel {
 		c.setRequired(true);
 		c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
 		c.add(new Radio("business", new Model(LicenseType.BUSINESS)) {
-
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
 				this.setVisible(allowBusiness.getObject());
 			}
-
 		});
 		form.add(c);
 
 		WicketUtils.addLabelsAndFeedback(form);
-    }
+	}
 
-    /**
-     * Add window controls - buttons, etc
-     * @param cont
-     */
-    private void addControls() {
+	/**
+	 * Add window controls - buttons, etc
+	 *
+	 * @param cont
+	 */
+	private void addControls() {
 		AjaxButton button = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
-
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onSubmitAction(licenseModel, target, form);
@@ -105,12 +100,10 @@ public class LicenseEditForm extends Panel {
 				super.onConfigure();
 				this.setVisible(displayControls);
 			}
-
 		};
 		form.add(button);
 
 		button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
-
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onCancelAction(licenseModel, target, form);
@@ -121,13 +114,26 @@ public class LicenseEditForm extends Panel {
 				super.onConfigure();
 				this.setVisible(displayControls);
 			}
-
 		};
 		form.add(button);
-    }
-    private void addBlueprintSelect() {
-		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", blueprintsModel, new ChoiceRenderer<License>("title")) {
 
+		button = new AjaxButton("removeButton", ResourceUtils.getModel("button.remove")) {
+			@Override
+			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+				onRemoveAction(licenseModel, target, form);
+			}
+
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				this.setVisible(displayControls);
+			}
+		};
+		form.add(button);
+	}
+
+	private void addBlueprintSelect() {
+		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", blueprintsModel, new ChoiceRenderer<License>("title")) {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
@@ -135,7 +141,7 @@ public class LicenseEditForm extends Panel {
 				if (blueprintsModel != null) {
 					viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
 				}
-				if(licenseModel.getObject().getLicenseId() != 0) {
+				if (licenseModel.getObject().getLicenseId() != 0) {
 					viz = false;
 				}
 				this.setVisible(viz);
@@ -143,7 +149,7 @@ public class LicenseEditForm extends Panel {
 
 			@Override
 			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
-				if(option.getLicenseId() == 0) {
+				if (option.getLicenseId() == 0) {
 					licenseModel.setObject(new License());
 				} else {
 					License l = new License();
@@ -155,12 +161,11 @@ public class LicenseEditForm extends Panel {
 				}
 				target.add(form);
 			}
-
 		};
 
 		ddc.setNullValid(false);
 		form.add(ddc);
-    }
+	}
 
 	public boolean isDisplayControls() {
 		return displayControls;
@@ -170,23 +175,33 @@ public class LicenseEditForm extends Panel {
 		this.displayControls = displayControls;
 	}
 
-    /**
-     * Override this method to provide onSubmit action
-     * @param model license model
-     * @param target ajax target
-     * @param form form of the window
-     */
-    protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+	/**
+	 * Override this method to provide onSubmit action
+	 *
+	 * @param model license model
+	 * @param target ajax target
+	 * @param form form of the window
+	 */
+	protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+	}
 
-    }
+	/**
+	 * Override this method to provide onCancel action
+	 *
+	 * @param model license model
+	 * @param target ajax target
+	 * @param form form of the window
+	 */
+	protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+	}
 
-    /**
-     * Override this method to provide onCancel action
-     * @param model license model
-     * @param target ajax target
-     * @param form form of the window
-     */
-    protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
-
-    }
+	/**
+	 * Override this method to provide onRemove action
+	 *
+	 * @param model license model
+	 * @param target ajax target
+	 * @param form form of the window
+	 */
+	protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+	}
 }

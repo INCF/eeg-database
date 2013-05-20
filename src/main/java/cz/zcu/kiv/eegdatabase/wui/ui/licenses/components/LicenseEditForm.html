@@ -1,49 +1,50 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
-  lang="en">
-<body>
-  <wicket:panel>
-	<form wicket:id="form" class="standardInputForm">
-	    <wicket:enclosure>
-		<label class="selectBoxLabel"><wicket:message key="label.license.blueprint" /></label>
-		<select class="selectBox" wicket:id="blueprintSelect"></select>
-	    </wicket:enclosure>
-
-	    <div class="itemBox">
-		<label class="textFieldLabel" wicket:id="title.label"/>
-		<input class="textField" wicket:id="title"/>
-		<div wicket:id="title.feedback"/>
-	    </div>
-
-	    <div class="itemBox">
-		<label class="textFieldLabel" wicket:id="price.label"/>
-		<input type="number" class="textField" wicket:id="price"/>
-		<div wicket:id="price.feedback"/>
-	    </div>
-
-	    <div class="itemBox">
-		<label class="textFieldLabel" wicket:id="licenseType.label"/>
-		<span wicket:id="licenseType">
-		    <input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+	  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+	  lang="en">
+	<body>
+	<wicket:panel>
+		<form wicket:id="form" class="standardInputForm">
 			<wicket:enclosure>
-				<input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+				<label class="selectBoxLabel"><wicket:message key="label.license.blueprint" /></label>
+				<select class="selectBox" wicket:id="blueprintSelect"></select>
 			</wicket:enclosure>
-		</span>
-		<div wicket:id="licenseType.feedback"/>
-	    </div>
 
-	    <div class="itemBox">
-		<label class="textFieldLabel" wicket:id="description.label"/>
-		<textarea class="textareaField" wicket:id="description"/>
-		<div wicket:id="description.feedback"/>
-	    </div>
+			<div class="itemBox">
+				<label class="textFieldLabel" wicket:id="title.label"/>
+				<input class="textField" wicket:id="title"/>
+				<div wicket:id="title.feedback"/>
+			</div>
 
-	    <div class="itemBox">
-		<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
-		<input type="submit" wicket:id="cancelButton" class="lightButtonLink" />
-	    </div>
-      </form>
-  </wicket:panel>
+			<div class="itemBox">
+				<label class="textFieldLabel" wicket:id="price.label"/>
+				<input type="number" class="textField" wicket:id="price"/>
+				<div wicket:id="price.feedback"/>
+			</div>
+
+			<div class="itemBox">
+				<label class="textFieldLabel" wicket:id="licenseType.label"/>
+				<span wicket:id="licenseType">
+					<input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+					<wicket:enclosure>
+						<input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+					</wicket:enclosure>
+				</span>
+				<div wicket:id="licenseType.feedback"/>
+			</div>
+
+			<div class="itemBox">
+				<label class="textFieldLabel" wicket:id="description.label"/>
+				<textarea class="textareaField" wicket:id="description"/>
+				<div wicket:id="description.feedback"/>
+			</div>
+
+			<div class="itemBox">
+				<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
+				<input type="submit" wicket:id="cancelButton" class="lightButtonLink" />
+				<input type="submit" wicket:id="removeButton" class="lightButtonLink" />
+			</div>
+		</form>
+	</wicket:panel>
 </body>
 </html>
