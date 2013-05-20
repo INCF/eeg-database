@@ -37,8 +37,8 @@ public class WizardTabbedPanelPage extends MenuPage {
     final private Experiment experiment;
 
     public WizardTabbedPanelPage() {
-        getFeedback().setVisibilityAllowed(true);
-        getFeedback().setVisible(false);
+        //getFeedback().setVisibilityAllowed(true);
+        //getFeedback().setVisible(false);
 
         experiment = new Experiment();
         scenarioForm = new AddExperimentScenarioForm("scenarioTab", experiment);
@@ -107,6 +107,7 @@ public class WizardTabbedPanelPage extends MenuPage {
                         else {
                             setTabClassRed(selectedTab);
                         }
+                        scenarioForm.refreshDateModelObjects();
                     }
                     if (selectedTab == 1) {
                         if (environmentForm.isValid()){

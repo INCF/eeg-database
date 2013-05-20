@@ -16,8 +16,11 @@ import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.datetime.StyleDateConverter;
+import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.*;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
@@ -27,7 +30,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.time.Duration;
+import org.joda.time.DateTime;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -53,9 +59,14 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
 
     private Experiment experiment;
     private Scenario scenarioEntity = new Scenario();
+    private ResearchGroup researchGroupEntity = new ResearchGroup();
+    private DateTimeField finishDate;
+    private Date finishDateForModel = new Date();
+    private DateTimeField startDate;
+    private Date startDateForModel = new Date();
 
-    private GenericModel<Date> startDate;
     private GenericModel<Date> endDate;
+    private GenericModel<Date> beginDate;
     private List<GenericModel<ProjectType>> projectTypes;
     private GenericModel<ResearchGroup> researchGroup;
     private GenericModel<Scenario> scenario;
@@ -102,28 +113,91 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
             Calendar cal = Calendar.getInstance();
             cal.setTime(now);
             cal.add(Calendar.MINUTE, scenarioEntity.getScenarioLength());
-            now = cal.getTime();
+            finishDateForModel = cal.getTime();
         }
-        DateTimeField finishDate = new DateTimeField("finish", endDate = new GenericModel<Date>(now));
-        finishDate.setRequired(true);
+        finishDate = new DateTimeField("finish", endDate = new GenericModel<Date>(finishDateForModel)){
+             @Override
+             protected DateTextField newDateTextField(String id,  PropertyModel dateFieldModel) {
+                DateTextField f = super.newDateTextField(id, dateFieldModel);
+                f.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        finishDateForModel = getDateFromDateTimeField(finishDate);
+                        finishDate.setModelObject(finishDateForModel);
+                    }
+                });
+                return f;
+             }
+        };
+        finishDate.get("hours").add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                finishDateForModel = getDateFromDateTimeField(finishDate);
+                finishDate.setModelObject(finishDateForModel);
+            }
+        });
+        finishDate.get("minutes").add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                finishDateForModel = getDateFromDateTimeField(finishDate);
+                finishDate.setModelObject(finishDateForModel);
+            }
+        });
 
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(finishDate);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("finishFeedback", repeatableFilter);
         repeatableFeedback.setOutputMarkupId(true);
-        finishDate.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
 
         add(finishDate);
         add(repeatableFeedback);
     }
 
+    public Date getDateFromDateTimeField(DateTimeField dtf){
+            try {
+                Calendar newOne = Calendar.getInstance();
+                Calendar oldOne = Calendar.getInstance();
+                oldOne.setTime(dtf.getDate());
+                newOne.set(oldOne.get(Calendar.YEAR), oldOne.get(Calendar.MONTH), oldOne.get(Calendar.DAY_OF_MONTH), dtf.getHours(), dtf.getMinutes());
+                return newOne.getTime();
+            }
+            catch (Exception e) {
+                return null;
+            }
+    }
+
     private void addStartDate() {
-        DateTimeField startDate = new DateTimeField("start", this.startDate = new GenericModel<Date>(new Date()));
-        startDate.setRequired(true);
+             startDate = new DateTimeField("start", beginDate = new GenericModel<Date>(startDateForModel)){
+             @Override
+             protected DateTextField newDateTextField(String id,  PropertyModel dateFieldModel) {
+                DateTextField f = super.newDateTextField(id, dateFieldModel);
+                f.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+                        startDateForModel = getDateFromDateTimeField(startDate);
+                        startDate.setModelObject(startDateForModel);
+                    }
+                });
+                return f;
+             }
+        };
+        startDate.get("hours").add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                startDateForModel = getDateFromDateTimeField(startDate);
+                startDate.setModelObject(startDateForModel);
+            }
+        });
+        startDate.get("minutes").add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                startDateForModel = getDateFromDateTimeField(startDate);
+                startDate.setModelObject(startDateForModel);
+            }
+        });
 
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(startDate);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("startFeedback", repeatableFilter);
         repeatableFeedback.setOutputMarkupId(true);
-        startDate.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
 
         add(startDate);
         add(repeatableFeedback);
@@ -156,7 +230,15 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         ComponentFeedbackMessageFilter repeatableFilter = new ComponentFeedbackMessageFilter(researchGroup);
         final FeedbackPanel repeatableFeedback = new FeedbackPanel("groupFeedback", repeatableFilter);
         repeatableFeedback.setOutputMarkupId(true);
-        researchGroup.add(new AjaxFeedbackUpdatingBehavior("blur", repeatableFeedback));
+
+        researchGroup.add(new AjaxAutoCompletableUpdatingBehavior("onblur",
+                repeatableFeedback, validator, this.researchGroup) {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                super.onUpdate(target);
+                researchGroupEntity = (ResearchGroup) getDefaultModelObject();
+            }
+        });
 
         add(researchGroup);
         add(repeatableFeedback);
@@ -268,8 +350,8 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     public void save() {
         validate();
         if(!hasError()) {
-            experiment.setEndTime(new Timestamp(this.endDate.getObject().getTime()));
-            experiment.setStartTime(new Timestamp(this.startDate.getObject().getTime()));
+            experiment.setEndTime(new Timestamp(this.finishDateForModel.getTime()));
+            experiment.setStartTime(new Timestamp(this.startDateForModel.getTime()));
             experiment.setProjectTypes(getSet(this.projectTypes));
             ResearchGroup group = this.researchGroup.getObject();
             if (this.isDefaultGroup.getModelObject()){
@@ -297,6 +379,20 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         return result;
     }
 
+    private void validateDates(){
+        if (finishDateForModel == null) {
+            finishDate.error(ResourceUtils.getString("required.date"));
+        }
+        if (startDateForModel == null) {
+            startDate.error(ResourceUtils.getString("required.date"));
+        }
+    }
+
+    public void refreshDateModelObjects(){
+        this.finishDate.setModelObject(this.finishDateForModel);
+        this.startDate.setModelObject(this.startDateForModel);
+    }
+
     /**
      * It returns whether the form is valid.
      *
@@ -304,6 +400,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
      */
     public boolean isValid(){
         validate();
+        validateDates();
         return !hasError();
     }
 
