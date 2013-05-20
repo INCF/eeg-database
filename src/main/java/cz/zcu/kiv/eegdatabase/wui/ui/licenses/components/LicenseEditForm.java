@@ -32,6 +32,7 @@ public class LicenseEditForm extends Panel {
 	private Form form;
 	private boolean displayControls = true;
 	private IModel<Boolean> allowBusiness;
+	private boolean displayRemoveButton = true;
 
 	public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
 		this(id, model, null, allowBusiness);
@@ -126,7 +127,7 @@ public class LicenseEditForm extends Panel {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
-				this.setVisible(displayControls);
+				this.setVisible(displayControls && displayRemoveButton);
 			}
 		};
 		form.add(button);
@@ -173,6 +174,14 @@ public class LicenseEditForm extends Panel {
 
 	public void setDisplayControls(boolean displayControls) {
 		this.displayControls = displayControls;
+	}
+
+	public boolean isDisplayRemoveButton() {
+		return displayRemoveButton;
+	}
+
+	public void setDisplayRemoveButton(boolean displayRemoveButton) {
+		this.displayRemoveButton = displayRemoveButton;
 	}
 
 	/**
