@@ -550,6 +550,12 @@ li.comment li li li {
 	font-style: normal;
 }
 
+.subtitle {
+	font-size: 0.8em;
+	font-weight: bold;
+	display: inline;
+}
+
 
 @media print {
     .leftMenu {

@@ -115,11 +115,23 @@ public class ExperimentPackagePanel extends Panel {
 		this.add(header);
 
 		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
+		header.add(new Label("researchGroupTitle", new PropertyModel(epModel, "researchGroup.title")));
 
 		header.add(createVisibilityLink("showListLink", true));
 		header.add(createVisibilityLink("hideListLink", false));
 
-		this.addLicenseList(header);
+		WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {
+
+			@Override
+			protected void onConfigure() {
+				super.onConfigure();
+				boolean vis = licenses.getObject() != null ? licenses.getObject().size() > 0 : false;
+				this.setVisible(vis);
+			}
+
+		};
+		this.addLicenseList(licenseCont);
+		header.add(licenseCont);
     }
 
 	/**
@@ -177,11 +189,11 @@ public class ExperimentPackagePanel extends Panel {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
-				this.setEnabled(!hasLicense);
+				this.setVisible(!hasLicense);
 			}
 
 		};
-		licenseBuyLink.setOutputMarkupId(true);
+		licenseBuyLink.setOutputMarkupPlaceholderTag(true);
 
 		cont.add(ddc);
 		cont.add(licenseBuyLink);

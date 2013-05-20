@@ -7,9 +7,10 @@
       <h2 wicket:id="header" class="headerWithLinks">
 		<wicket:container wicket:id="packageTitle"/>
 		<a wicket:id="showListLink"><wicket:container wicket:id="linkLabel"/></a>
-		<a wicket:id="hideListLink"><wicket:container wicket:id="linkLabel"/></a>
-		<div>
-			<span style="font-size: 0.8em; font-weight: bold; display: inline"><wicket:message key="heading.license.list"/></span>
+		<a wicket:id="hideListLink"><wicket:container wicket:id="linkLabel"/></a><br/>
+		<span class="subtitle" wicket:id="researchGroupTitle"/>
+		<div wicket:id="licensesCont">
+			<span class="subtitle"><wicket:message key="heading.license.list"/></span>
 			<select wicket:id="licenses"/>
 			<a href="#" wicket:id="buyLicense"><wicket:message key="link.license.buy"/></a>
 			
