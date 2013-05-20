@@ -9,13 +9,14 @@
 
             <h1 wicket:id="addScenarioHeader"></h1>
 
-            <div class="error" wicket:id="feedback"></div>
+            <!--<div class="error" wicket:id="feedback"></div>-->
 
-            <div class="form-sub-item added">
+            <div class="form-sub-item">
                 <label for="researchGroup">
                     <wicket:message key="label.researchGroup">[Research group]</wicket:message>
                 </label>
                 <input type="text" wicket:id="researchGroup"/>
+                <span wicket:id="researchGroupFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -23,6 +24,7 @@
                     <wicket:message key="label.scenarioTitle">[Scenario title]</wicket:message>
                 </label>
                 <input type="text" wicket:id="title"/>
+                <span wicket:id="titleFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -30,32 +32,34 @@
                     <wicket:message key="label.durationInMinutes">[Duration (minutes)]</wicket:message>
                 </label>
                 <input type="text" wicket:id="scenarioLength"/>
+                <span wicket:id="scenarioLengthFeedback"></span>
             </div>
 
             <div class="form-sub-item">
                  <label for="description">
-                     <wicket:message key="label.description">Description</wicket:message>
+                     <wicket:message key="label.description">[Description]</wicket:message>
                  </label>
                  <textarea wicket:id="description" rows="3" cols="40"></textarea>
+                 <span wicket:id="descriptionFeedback"></span>
             </div>
 
             <div class="form-sub-item">
                 <label for="stimulusesLabel">
-                    <wicket:message key="label.stimuluses">Stimuluses</wicket:message>
+                    <wicket:message key="label.stimulus">[Stimulus]</wicket:message>
                 </label>
                 <div wicket:id="stimuluses"></div>
             </div>
 
             <div class="form-sub-item">
                 <label for="availableFile">
-                    <wicket:message key="label.availableDataFile">Available data file</wicket:message>
+                    <wicket:message key="label.availableDataFile">[Available data file]</wicket:message>
                 </label>
                 <input type="checkbox" wicket:id="availableFile"/>
             </div>
 
             <div class="form-sub-item">
                 <label for="dataFile">
-                    <wicket:message key="label.data">Data file</wicket:message>
+                    <wicket:message key="label.data">[Data file]</wicket:message>
                 </label>
                 <input type="file" wicket:id="dataFile"/>
             </div>
