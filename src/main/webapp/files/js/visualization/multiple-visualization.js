@@ -44,7 +44,12 @@ function disablePopup(){
     }
 }
 
-function dataRange(index) {
+function dataRange(index,headline) {
+    $("#draw").button();
+    $("#draw").css({
+        "float" : "right",
+        "margin-top" : "10px"
+    });
     $("#sliderDataRange").slider({
         range: true,
         values: [1,200],
@@ -52,7 +57,14 @@ function dataRange(index) {
         max: signalData[index].length,
         slide: function( event, ui ) {
             $("#labelDataRange").text(ui.values[0] + " - " + ui.values[1]);
+            $("#startSlide").val(ui.values[0]);
+            $("#endSlide").val(ui.values[1]);
         }
+    });
+    $("#draw").click(function(){
+        $("#"+activeID).empty();
+        $("#"+activeID+"_zoom").empty();
+        drawGraph(activeID, headline, index, $("#endSlide").val());
     });
     $("#dataRange").css({
         "position" : "absolute",
@@ -85,8 +97,6 @@ function centerPopup(){
             $("#lineWidth").val(ui.value);
         }
     });
-
-
 
     $("#panel").css({
         "left": windowWidth/2-$("#panel").width()/2
@@ -246,13 +256,13 @@ getHeight = function () {
 function _click(id) {
     $("#"+activeID).empty();
     $("#"+activeID+"_zoom").empty();
-    dataRange(id);
-    drawGraph(activeID, tree.getSelectedItemText(), id);
+    dataRange(id, tree.getSelectedItemText());
+    drawGraph(activeID, tree.getSelectedItemText(), id, 200);
 }
 
-function drawGraph(place, headline, channel) {
-
-    plots[place] = $.jqplot (place, [signalData[channel]], {
+function drawGraph(place, headline, channel, end) {
+    var cut = signalData[channel].slice(0,end);
+    plots[place] = $.jqplot (place, [cut], {
         title: headline,
         animate: true,
         axesDefaults: {
@@ -288,7 +298,7 @@ function drawGraph(place, headline, channel) {
         }
     });
 
-    zoomControl[place] = $.jqplot (place+"_zoom", [signalData[channel]], {
+    zoomControl[place] = $.jqplot (place+"_zoom", [cut], {
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },

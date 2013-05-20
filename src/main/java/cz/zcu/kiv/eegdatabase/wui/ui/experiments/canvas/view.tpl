@@ -5,6 +5,9 @@
 <div id="dataRange">
     <span id="labelDataRange">1 - 200</span>
     <div id="sliderDataRange"></div>
+    <input type="hidden" id="startSlide" />
+    <input type="hidden" id="endSlide" />
+    <button id="draw">Draw</button>
 </div>
 <img alt="Close this canvas" title="Close this canvas" id="close_canvas" src="files/images/close_canvas.png" />
 
