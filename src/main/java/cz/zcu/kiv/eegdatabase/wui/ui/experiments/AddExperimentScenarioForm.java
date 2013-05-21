@@ -70,9 +70,6 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     private CheckBox isPrivateExperiment;
     private boolean privateExperiment = false;
 
-    private CheckBox isDefaultGroup;
-    private boolean defaultGroup = false;
-
     public AddExperimentScenarioForm(String id, Experiment experiment) {
         super(id);
         this.experiment = experiment;
@@ -333,11 +330,6 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
             experiment.setStartTime(new Timestamp(this.startDateForModel.getTime()));
             experiment.setProjectTypes(getProjectTypesSet());
             ResearchGroup group = this.researchGroup.getObject();
-            if (this.isDefaultGroup.getModelObject()){
-                Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
-                loggedUser.setDefaultGroup(group);
-                personFacade.update(loggedUser);
-            }
             experiment.setResearchGroup(group);
             experiment.setScenario(this.scenario.getObject());
             experiment.setPersonBySubjectPersonId(this.testedSubject.getObject());
