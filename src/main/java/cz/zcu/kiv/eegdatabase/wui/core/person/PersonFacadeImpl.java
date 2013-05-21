@@ -160,4 +160,8 @@ public class PersonFacadeImpl implements PersonFacade {
         return personService.getPersonForDetail(id);
     }
 
+    public void initialize(Person person){
+        personService.initialize(person);
+    }
+
 }

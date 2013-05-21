@@ -144,4 +144,9 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
     public Person getPersonForDetail(int id) {
         return (realPersonDao == null) ? null : realPersonDao.getPersonForDetail(id);
     }
+
+    @Override
+    public void initialize(Person person){
+        realPersonDao.initialize(person);
+    }
 }

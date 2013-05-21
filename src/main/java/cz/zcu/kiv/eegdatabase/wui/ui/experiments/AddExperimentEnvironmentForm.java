@@ -50,6 +50,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     private TextField temperature = null;
     private TextField<String> environmentNote;
     final int SELECT_ROWS = 5;
+    private boolean swUpdate = false;
 
     private List<Hardware> hwListForModel;
     private List<Software> swListForModel;
@@ -102,6 +103,17 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), swChoices).setMaxRows(SELECT_ROWS);
         sw.setLabel(ResourceUtils.getModel("label.software"));
 
+        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                if(swUpdate){
+                    swUpdate = false;
+                    swChoices = getSoftwares();
+                    sw.setChoices(swChoices);
+                    target.add(sw);
+                }
+            }
+        });
         ComponentFeedbackMessageFilter swFilter = new ComponentFeedbackMessageFilter(sw);
         final FeedbackPanel swFeedback = new FeedbackPanel("swFeedback", swFilter);
         swFeedback.setOutputMarkupId(true);
@@ -241,8 +253,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     }
 
     public void updateSoftwares(){
-        this.sw.updateModel();
-        this.add(sw);
+        swUpdate = true;
     }
 
     public void updateHardwares(){

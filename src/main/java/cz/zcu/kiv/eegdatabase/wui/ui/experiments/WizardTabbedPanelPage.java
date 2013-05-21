@@ -37,8 +37,8 @@ public class WizardTabbedPanelPage extends MenuPage {
     final private Experiment experiment;
 
     public WizardTabbedPanelPage() {
-        //getFeedback().setVisibilityAllowed(true);
-        //getFeedback().setVisible(false);
+        getFeedback().setVisibilityAllowed(true);
+        getFeedback().setVisible(false);
 
         experiment = new Experiment();
         scenarioForm = new AddExperimentScenarioForm("scenarioTab", experiment);

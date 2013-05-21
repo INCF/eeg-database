@@ -51,4 +51,6 @@ public interface PersonService extends GenericService<Person, Integer> {
     Person createPerson(SocialUser userFb, Integer educationLevelId);
     
     Person createPerson(AddPersonCommand apc) throws ParseException;
+
+    void initialize(Person person);
 }

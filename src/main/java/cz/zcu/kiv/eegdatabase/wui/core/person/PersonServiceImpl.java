@@ -347,4 +347,9 @@ public class PersonServiceImpl implements PersonService {
         return personDAO.getPersonForDetail(id);
     }
 
+    @Transactional(readOnly = true)
+    public void initialize(Person person){
+        personDAO.initialize(person);
+    }
+
 }

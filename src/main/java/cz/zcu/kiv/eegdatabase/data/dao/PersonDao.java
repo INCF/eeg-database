@@ -42,4 +42,6 @@ public interface PersonDao extends GenericDao<Person, Integer> {
     public int getCountForList();
 
     List<Person> getDataForList(int start, int limit);
+
+    public void initialize(Person person);
 }

@@ -33,7 +33,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
+import org.hibernate.Hibernate;
 import org.joda.time.DateTime;
+import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -239,6 +241,15 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
                 researchGroupEntity = (ResearchGroup) getDefaultModelObject();
             }
         });
+
+        Person logged = EEGDataBaseSession.get().getLoggedUser();
+        //personFacade.initialize(logged);
+        logged.setDefaultGroup(researchGroupFacade.getGroupByTitle("Group47"));
+        ResearchGroup defaultGroupForUser = logged.getDefaultGroup();
+        if (defaultGroupForUser != null && defaultGroupForUser.getTitle() != null) {
+            this.researchGroup.setObject(defaultGroupForUser);
+            validator.setAutocompleteObject(defaultGroupForUser);
+        }
 
         add(researchGroup);
         add(repeatableFeedback);

@@ -45,4 +45,6 @@ public interface PersonFacade extends GenericFacade<Person, Integer> {
 
     List<Person> getDataForList(int start, int limit);
 
+    void initialize(Person person);
+
 }
