@@ -28,8 +28,10 @@ public class HardwareConverter implements IConverter<Hardware> {
             return null;
         }
 
-        List<Hardware> hardwares = hardwareFacade.readByParameter("title", s);
-        return (hardwares != null && hardwares.size() > 0) ? hardwares.get(0) : null;
+        Hardware hardware = new Hardware();
+        hardware.setTitle(s);
+        List<Hardware> hardwares = hardwareFacade.getUnique(hardware);
+        return (hardwares != null && hardwares.size() > 0) ? hardwares.get(0) : hardware;
 
     }
 

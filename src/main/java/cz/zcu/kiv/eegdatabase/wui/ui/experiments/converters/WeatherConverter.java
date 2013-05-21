@@ -28,8 +28,10 @@ public class WeatherConverter implements IConverter<Weather> {
             return null;
         }
 
-        List<Weather> weathers = weatherFacade.readByParameter("title", s);
-        return (weathers != null && weathers.size() > 0) ? weathers.get(0) : null;
+        Weather weather = new Weather();
+        weather.setTitle(s);
+        List<Weather> weathers = weatherFacade.getUnique(weather);
+        return (weathers != null && weathers.size() > 0) ? weathers.get(0) : weather;
 
     }
 
