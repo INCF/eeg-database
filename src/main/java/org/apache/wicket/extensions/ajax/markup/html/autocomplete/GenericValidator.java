@@ -34,7 +34,8 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
 
         if(list == null){
             if(object == null && validatableEntity == null){
-                errorNonExisting(validatable);
+                if(required)
+                    errorNonExisting(validatable);
                 return;
             }
             if(validatableEntity == null) {
@@ -42,7 +43,8 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
             }
         }
         else if((list.size() < 2) && validatableEntity == null){
-            errorNonExisting(validatable);
+            if(required)
+                errorNonExisting(validatable);
             return;
         }
 
@@ -52,8 +54,10 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
                     // It is valid
             } else if(resultEntitites.size() > 1) {
                 error(validatable, ResourceUtils.getString("error.ThereAreMoreEntitiesWithSameName"));
-            }
-            else if ((list == null || list.isEmpty())) {
+            } else if(resultEntitites.size() == 0) {
+                // The entity does not exists and input object is null (not empty)
+                errorNonExisting(validatable);
+            } else if ((list == null || list.isEmpty())) {
                 errorNonExisting(validatable);
             }
         }

@@ -69,7 +69,7 @@ public class AddExperimentResultsForm extends Form<Experiment> {
         final FeedbackPanel fileFeedback = new FeedbackPanel("fileFeedback", fileFilter);
         fileFeedback.setOutputMarkupId(true);
         fileUploadField.add(new AjaxFeedbackUpdatingBehavior("blur", fileFeedback));
-        fileUploadField.setRequired(true);
+//        fileUploadField.setRequired(true);
 
         add(fileUploadField);
         add(fileFeedback);
@@ -117,7 +117,7 @@ public class AddExperimentResultsForm extends Form<Experiment> {
                 experiment.setDataFiles(files);
             }
             catch(Exception ex) {
-                error("File saving failed");
+                fileUploadField.error("File saving failed");
             }
         }
     }
