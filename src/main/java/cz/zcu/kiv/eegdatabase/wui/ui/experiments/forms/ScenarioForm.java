@@ -182,14 +182,6 @@ public class ScenarioForm extends Form<Scenario> {
                             window.close(target);
                         }
                     }
-
-                    private Set getSet(List objects) {
-                        Set result = new HashSet();
-                        for(Object object: objects) {
-                            result.add(((GenericModel) object).getObject());
-                        }
-                        return result;
-                    }
                 }.add(new AjaxEventBehavior("onclick") {
                     @Override
                     protected void onEvent(AjaxRequestTarget target) {
@@ -323,5 +315,17 @@ public class ScenarioForm extends Form<Scenario> {
                 validatable.error(error);
             }
         }
+    }
+
+    private Set getSet(List objects) {
+        Set result = new HashSet();
+        Object last = null;
+        for(Object object: objects) {
+            if(object != null)
+                last = ((GenericModel) object).getObject();
+                result.add(last);
+        }
+        result.remove(last);    // empty field for next item
+        return result;
     }
 }

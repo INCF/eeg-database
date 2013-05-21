@@ -2,15 +2,11 @@ package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
-import org.apache.bcel.generic.RETURN;
-import org.apache.wicket.PageReference;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.validation.INullAcceptingValidator;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.ValidationError;
 
 import java.io.Serializable;
-import java.lang.reflect.Constructor;
 import java.util.List;
 
 /**
@@ -41,8 +37,9 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
                 errorNonExisting(validatable);
                 return;
             }
-            if(validatableEntity == null)
+            if(validatableEntity == null) {
                 validatableEntity = object;
+            }
         }
         else if((list.size() < 2) && validatableEntity == null){
             errorNonExisting(validatable);

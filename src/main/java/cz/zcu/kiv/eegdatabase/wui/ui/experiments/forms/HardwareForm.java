@@ -74,10 +74,6 @@ public class HardwareForm extends Form<Hardware> {
                             else {
                                 hardwareFacade.createDefaultRecord(newHw);
                             }
-                            WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
-                            if (parent != null){
-                                parent.updateHw();
-                            }
                             window.close(target);
                         }
                     }

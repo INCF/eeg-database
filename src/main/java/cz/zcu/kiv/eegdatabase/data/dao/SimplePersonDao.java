@@ -238,4 +238,8 @@ public class SimplePersonDao
         Person foundUser = (Person) DataAccessUtils.uniqueResult(getHibernateTemplate().findByNamedParam(HQLselect, "id", id));
         return foundUser;
     }
+
+    public void initialize(Person person){
+        getSessionFactory().getCurrentSession().update(person);
+    }
 }

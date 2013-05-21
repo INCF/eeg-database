@@ -2,6 +2,7 @@ package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import org.apache.commons.validator.*;
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
@@ -46,6 +47,8 @@ public class RepeatableInputPanel<T extends IAutoCompletable> extends Panel {
         repeatables.setOutputMarkupId(true);
         repeatables.setReuseItems(true);
 
+        this.add(AttributeModifier.append("class", "repeatable"));
+
         add(repeatables);
     }
 
@@ -75,8 +78,6 @@ public class RepeatableInputPanel<T extends IAutoCompletable> extends Panel {
             this.factory = factory;
             this.validator = validator;
             this.service = service;
-
-
         }
 
         public List<GenericModel<T>> getData() {

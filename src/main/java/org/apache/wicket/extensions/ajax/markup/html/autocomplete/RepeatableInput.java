@@ -3,6 +3,7 @@ package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.string.Strings;
 
