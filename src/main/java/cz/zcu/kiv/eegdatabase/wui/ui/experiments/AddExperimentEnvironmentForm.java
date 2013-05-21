@@ -352,20 +352,81 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     public void save() {
         validate();
         if(!hasError()) {
-            experiment.setHardwares(getSet(this.hwListForModel));
-            experiment.setSoftwares(getSet(this.swListForModel));
+            experiment.setHardwares(getHardwaresSet());
+            experiment.setSoftwares(getSoftwaresSet());
             experiment.setWeather(this.weatherForModel);
             experiment.setTemperature(Integer.parseInt(this.temperature.getModelObject().toString()));
             experiment.setEnvironmentNote(this.environmentNote.getModelObject());
-            experiment.setDiseases(getSet(this.diseases));
-            experiment.setPharmaceuticals(getSet(this.pharmaceuticals));
+            experiment.setDiseases(getDiseasesSet());
+            experiment.setPharmaceuticals(getPharmaceuticalsSet());
         }
     }
 
-    private Set getSet(List objects) {
-        Set result = new HashSet();
-        for(Object object: objects) {
-            result.add(((GenericModel) object).getObject());
+    private Set getHardwaresSet() {
+        Set<Hardware> result = new HashSet();
+        for(int i = 0; i < this.hwListForModel.size(); i++) {
+            Hardware object = this.hwListForModel.get(i);
+            boolean stop = false;
+            if (object != null && object.getHardwareId() > 0){
+                for (Hardware resultObject : result){
+                    if (resultObject.getHardwareId() == object.getHardwareId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
+        }
+        return result;
+    }
+
+
+    private Set getSoftwaresSet() {
+        Set<Software> result = new HashSet();
+        for(int i = 0; i < this.swListForModel.size(); i++) {
+            Software object = this.swListForModel.get(i);
+            boolean stop = false;
+            if (object != null && object.getSoftwareId() > 0){
+                for (Software resultObject : result){
+                    if (resultObject.getSoftwareId() == object.getSoftwareId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
+        }
+        return result;
+    }
+
+    private Set getDiseasesSet() {
+        Set<Disease> result = new HashSet();
+        for(int i = 0; i < this.diseases.size(); i++) {
+            Disease object = this.diseases.get(i).getObject();
+            boolean stop = false;
+            if (object != null && object.getDiseaseId() > 0){
+                for (Disease resultObject : result){
+                    if (resultObject.getDiseaseId() == object.getDiseaseId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
+        }
+        return result;
+    }
+
+    private Set getPharmaceuticalsSet() {
+        Set<Pharmaceutical> result = new HashSet();
+        for(int i = 0; i < this.pharmaceuticals.size(); i++) {
+            Pharmaceutical object = this.pharmaceuticals.get(i).getObject();
+            boolean stop = false;
+            if (object != null && object.getPharmaceuticalId() > 0){
+                for (Pharmaceutical resultObject : result){
+                    if (resultObject.getPharmaceuticalId() == object.getPharmaceuticalId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
         }
         return result;
     }

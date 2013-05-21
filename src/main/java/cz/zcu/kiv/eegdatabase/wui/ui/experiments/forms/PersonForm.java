@@ -16,15 +16,19 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericModel;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Classes;
@@ -33,6 +37,7 @@ import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.openjena.atlas.test.Gen;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
@@ -60,6 +65,13 @@ public class PersonForm extends Form<Person> {
     private EmailTextField email;
     private DropDownChoice<Character> laterality;
     private DropDownChoice<EducationLevel> educationLevel;
+
+    private GenericModel<Character> lateralityModel;
+    private GenericModel<EducationLevel> educationLevelModel;
+
+    private Character genderForModel = 'M';
+    private Character lateralityForModel = 'R';
+    private EducationLevel educationLevelForModel = null;
 
     public PersonForm(String id, final ModalWindow window) {
 
@@ -117,6 +129,9 @@ public class PersonForm extends Form<Person> {
         validateRequiredEntities();
         if (!hasError()) {
             Person user = PersonForm.this.getModelObject();
+            user.setLaterality(lateralityForModel);
+            user.setGender(genderForModel);
+            user.setEducationLevel(educationLevelForModel);
             user.setAuthority(Util.ROLE_READER);
             personFacade.create(user);
             window.close(target);
@@ -144,11 +159,6 @@ public class PersonForm extends Form<Person> {
 
         if(emailData == null || emailData.isEmpty())
             email.error(ResourceUtils.getString("required.field"));
-
-        /* TODO person nor following inputs does NOT contain selected data */
-        getModelObject().setLaterality(laterality.getModelObject());
-        getModelObject().setEducationLevel(educationLevel.getModelObject());
-        getModelObject().setGender(gender.getModelObject());
     }
 
 
@@ -193,7 +203,7 @@ public class PersonForm extends Form<Person> {
     }
 
     private void addGenderRadio() {
-        gender = new RadioChoice<Character>("gender", Gender.getShortcutList(), new ChoiceRenderer<Character>() {
+        gender = new RadioChoice<Character>("gender", new Model(genderForModel), Gender.getShortcutList(), new ChoiceRenderer<Character>() {
 
             private static final long serialVersionUID = 1L;
 
@@ -205,6 +215,14 @@ public class PersonForm extends Form<Person> {
 
         });
         gender.setSuffix("\n");
+
+        gender.add(new AjaxFormChoiceComponentUpdatingBehavior() {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                genderForModel = gender.getModelObject();
+            }
+        });
+
         add(gender);
 
         ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(gender);
@@ -215,8 +233,8 @@ public class PersonForm extends Form<Person> {
     }
 
     private void addLateralitySelect() {
-
-        laterality = new DropDownChoice<Character>("laterality", Laterality.getShortcutList(),
+        lateralityModel = new GenericModel<Character>(lateralityForModel);
+        laterality = new DropDownChoice<Character>("laterality", lateralityModel, Laterality.getShortcutList(),
                 new ChoiceRenderer<Character>() {
 
                     private static final long serialVersionUID = 1L;
@@ -227,11 +245,18 @@ public class PersonForm extends Form<Person> {
                         return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
                     }
                 });
+        laterality.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget ajaxRequestTarget) {
+                lateralityForModel = lateralityModel.getObject();
+            }
+        });
         add(laterality);
     }
 
     private void addEducationSelect() {
-        educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationFacade.getAllRecords(),
+        educationLevelModel = new GenericModel<EducationLevel>(educationLevelForModel);
+        educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelModel, educationFacade.getAllRecords(),
                 new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
 
                     private static final long serialVersionUID = 1L;
@@ -242,6 +267,12 @@ public class PersonForm extends Form<Person> {
                     }
 
                 });
+        educationLevel.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                educationLevelForModel = educationLevelModel.getObject();
+            }
+        });
         add(educationLevel);
     }
 

@@ -2,7 +2,6 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
 <wicket:panel>
     <form wicket:id="resultTab" action="" method="post" autocomplete="on">
-        <span wicket:id="formFeedback">[no errors]</span>
         <div class="form-item">
             <label for="resultFile">
                 <wicket:message key="label.resultFile">[Results file]</wicket:message>
@@ -12,9 +11,10 @@
         </div>
         <div class="form-item">
             <label for="submitFormButton" class="long-label">
-                <wicket:message key="label.submitExperiment">[Submit new experiment]</wicket:message>
+                <wicket:message key="label.submitExperiment">[Submit experiment]</wicket:message>
             </label>
             <input type="button" wicket:id="submitFormButton" value="Submit">
+            <span wicket:id="formFeedback" class="after-long-label">[no errors]</span>
         </div>
     </form>
 </wicket:panel>

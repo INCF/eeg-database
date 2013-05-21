@@ -65,60 +65,17 @@ public class ScenarioForm extends Form<Scenario> {
     public ScenarioForm(String id, final ModalWindow window) {
         super(id, new CompoundPropertyModel<Scenario>(new Scenario()));
 
-//        final FeedbackPanel feedback = new FeedbackPanel("feedback");
-//        feedback.setOutputMarkupId(true);
-//        add(feedback);
-
         add(new Label("addScenarioHeader", "Create scenario"));
 
         //
         addResearchGroupField();
         //
 
-        /*
-        final AutoCompleteTextField<String> researchGroups =
-                new AutoCompleteTextField<String>("researchGroup",
-                        new PropertyModel<String>(getModel(), "researchGroup.title"))
-        {
-            @Override
-            protected Iterator<String> getChoices(String input)
-            {
-                if (Strings.isEmpty(input))
-                {
-                    List<String> emptyList = Collections.emptyList();
-                    return emptyList.iterator();
-                }
-                List<String> choices = new ArrayList<String>(10);
-                List<ResearchGroup> groups = researchGroupFacade.getAllRecords();
-                for (final ResearchGroup r : groups)
-                {
-                    final String data = r.getTitle();
-                    if (data.toUpperCase().startsWith(input.toUpperCase()))
-                    {
-                        choices.add(data);
-                        if (choices.size() == 10) break;
-                    }
-                }
-                return choices.iterator();
-            }
-        };
-        researchGroups.setRequired(true);
-        add(researchGroups);
-
-        add(
-                new RequiredTextField<String>("title").
-                        add(new TitleExistsValidator())
-        );
-        */
         addTitleField();
 
         addDurationField();
 
-//        add(new RequiredTextField<String>("scenarioLength"));
-
         addDescriptionArea();
-
-//        add(new TextArea<String>("description").setRequired(true));
 
         addStimulusField();
 
@@ -135,7 +92,6 @@ public class ScenarioForm extends Form<Scenario> {
                         Scenario scenario = (Scenario) form.getModelObject();
 
                         validate();
-//                        target.add(feedback);
 
                         if(!hasError()){
                             final FileUpload upload = fileUpload.getFileUpload();
@@ -146,7 +102,7 @@ public class ScenarioForm extends Form<Scenario> {
 
                             ScenarioTypeNonXml scenarioTypeNonXml = new ScenarioTypeNonXml();
                             scenarioTypeNonXml.setScenario(scenario);
-                            //scenarioTypeNonSchema.setScenarioXml();
+
                             scenario.setScenarioType(scenarioTypeNonXml);
                             if(upload == null) {
                                 info("No file uploaded");
@@ -168,7 +124,7 @@ public class ScenarioForm extends Form<Scenario> {
                             scenario.setPerson(EEGDataBaseSession.get().getLoggedUser());
                             Integer scenarioID = scenariosFacade.create(scenario);
                             scenario.setScenarioId(scenarioID);
-                            Set<Stimulus> ss = getSet(stimuluses);
+                            Set<Stimulus> ss = getStimulusesSet();
                             Set<StimulusRel> sr = new HashSet<StimulusRel>(ss.size());
                             for (Stimulus s : ss){
                                 StimulusRel str = new StimulusRel();
@@ -181,14 +137,6 @@ public class ScenarioForm extends Form<Scenario> {
                             scenarioTypeFacade.create(scenarioTypeNonXml);
                             window.close(target);
                         }
-                    }
-
-                    private Set getSet(List objects) {
-                        Set result = new HashSet();
-                        for(Object object: objects) {
-                            result.add(((GenericModel) object).getObject());
-                        }
-                        return result;
                     }
                 }.add(new AjaxEventBehavior("onclick") {
                     @Override
@@ -323,5 +271,22 @@ public class ScenarioForm extends Form<Scenario> {
                 validatable.error(error);
             }
         }
+    }
+
+    private Set getStimulusesSet() {
+        Set<Stimulus> result = new HashSet();
+        for(int i = 0; i < this.stimuluses.size(); i++) {
+            Stimulus object = this.stimuluses.get(i).getObject();
+            boolean stop = false;
+            if (object != null && object.getStimulusId() > 0){
+                for (Stimulus resultObject : result){
+                    if (resultObject.getStimulusId() == object.getStimulusId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
+        }
+        return result;
     }
 }
