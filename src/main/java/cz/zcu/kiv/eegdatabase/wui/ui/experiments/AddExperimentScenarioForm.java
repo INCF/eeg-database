@@ -365,7 +365,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         if(!hasError()) {
             experiment.setEndTime(new Timestamp(this.finishDateForModel.getTime()));
             experiment.setStartTime(new Timestamp(this.startDateForModel.getTime()));
-            experiment.setProjectTypes(getSet(this.projectTypes));
+            experiment.setProjectTypes(getProjectTypesSet());
             ResearchGroup group = this.researchGroup.getObject();
             if (this.isDefaultGroup.getModelObject()){
                 Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
@@ -375,20 +375,42 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
             experiment.setResearchGroup(group);
             experiment.setScenario(this.scenario.getObject());
             experiment.setPersonBySubjectPersonId(this.testedSubject.getObject());
-            experiment.setPersons(getSet(this.coExperimenters));
+            experiment.setPersons(getCoExperimentersSet());
             experiment.setPrivateExperiment(this.isPrivateExperiment.getModelObject());
         }
     }
 
-    private Set getSet(List objects) {
-        Set result = new HashSet();
-        Object last = null;
-        for(Object object: objects) {
-            if(object != null)
-                last = ((GenericModel) object).getObject();
-                result.add(last);
+    private Set getCoExperimentersSet() {
+        Set<Person> result = new HashSet();
+        for(int i = 0; i < this.coExperimenters.size(); i++) {
+            Person object = this.coExperimenters.get(i).getObject();
+            boolean stop = false;
+            if (object != null && object.getPersonId() > 0){
+                for (Person resultObject : result){
+                    if (resultObject.getPersonId() == object.getPersonId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
         }
-        result.remove(last);    // empty field for next item
+        return result;
+    }
+
+    private Set getProjectTypesSet() {
+        Set<ProjectType> result = new HashSet();
+        for(int i = 0; i < this.projectTypes.size(); i++) {
+            ProjectType object = this.projectTypes.get(i).getObject();
+            boolean stop = false;
+            if (object != null && object.getProjectTypeId() > 0){
+                for (ProjectType resultObject : result){
+                    if (resultObject.getProjectTypeId() == object.getProjectTypeId()){
+                        stop = true;
+                    }
+                }
+                if (!stop) result.add(object);
+            }
+        }
         return result;
     }
 
@@ -413,6 +435,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
      */
     public boolean isValid(){
         validate();
+        getCoExperimentersSet();
         validateDates();
         return !hasError();
     }
