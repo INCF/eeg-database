@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
@@ -12,15 +11,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
-import net.sf.ehcache.hibernate.HibernateUtil;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.AjaxSelfUpdatingTimerBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.datetime.StyleDateConverter;
 import org.apache.wicket.datetime.markup.html.form.DateTextField;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.*;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -28,15 +24,10 @@ import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
-import org.hibernate.Hibernate;
-import org.joda.time.DateTime;
-import org.springframework.orm.hibernate3.HibernateTemplate;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
@@ -243,33 +234,8 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
             }
         });
 
-        Person logged = EEGDataBaseSession.get().getLoggedUser();
-        //logged = personFacade.read(logged.getPersonId());
-        logged = HbUtils.deproxy(logged);
-        logged.setDefaultGroup(researchGroupFacade.getGroupByTitle("Group47"));
-        ResearchGroup defaultGroupForUser = logged.getDefaultGroup();
-        if (defaultGroupForUser != null && defaultGroupForUser.getTitle() != null) {
-            this.researchGroup.setObject(defaultGroupForUser);
-            validator.setAutocompleteObject(defaultGroupForUser);
-        }
-
         add(researchGroup);
         add(repeatableFeedback);
-
-        isDefaultGroup = new CheckBox("isDefaultGroup", new Model(defaultGroup));
-
-        isDefaultGroup.add(new AjaxAutoCompletableUpdatingBehavior("onchange",
-                repeatableFeedback, validator, this.researchGroup) {
-
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                super.onUpdate(target);
-                defaultGroup = !defaultGroup;
-                isDefaultGroup.setModelObject(defaultGroup);
-                target.add(isDefaultGroup);
-            }
-        });
-        add(isDefaultGroup);
     }
 
     private void addScenario() {
