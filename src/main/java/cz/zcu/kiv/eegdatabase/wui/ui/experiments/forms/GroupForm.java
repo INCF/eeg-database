@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -14,6 +15,7 @@ import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.resource.ResourceUtil;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.IValidatable;
@@ -36,13 +38,17 @@ public class GroupForm extends Form<ResearchGroup> {
         final FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
-        add(new Label("addGroupHeader", "Create group"));
+        add(new Label("addGroupHeader", ResourceUtils.getModel("pageTitle.addGroupDefinition")));
 
-        add(
-                new RequiredTextField<String>("title").
-                        add(new TitleExistsValidator())
-        );
-        add(new TextArea<String>("description").setRequired(true));
+        RequiredTextField<String> title = new RequiredTextField<String>("title");
+        title.setLabel(ResourceUtils.getModel("label.title"));
+        title.add(new TitleExistsValidator());
+        add(title);
+
+        TextArea<String> description = new TextArea<String>("description");
+        description.setRequired(true);
+        description.setLabel((ResourceUtils.getModel("label.description")));
+        add(description);
 
         add(
                 new AjaxButton("submitForm", this) {

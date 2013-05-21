@@ -77,7 +77,7 @@ public class PersonForm extends Form<Person> {
 
         super(id, new CompoundPropertyModel<Person>(new Person()));
 
-        add(new Label("addPersonHeader", "Add tested subject"));
+        add(new Label("addPersonHeader", ResourceUtils.getModel("pageTitle.addPerson")));
 
         addNameField();
         addSurnameField();

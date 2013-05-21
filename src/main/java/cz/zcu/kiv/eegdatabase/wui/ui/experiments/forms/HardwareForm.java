@@ -57,7 +57,7 @@ public class HardwareForm extends Form<Hardware> {
         add(defaultNumber);
 
         add(
-                new AjaxButton("submitForm", this) {
+                new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                         Hardware newHw = (Hardware)form.getModelObject();

@@ -24,11 +24,8 @@ import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.ValidationError;
@@ -65,7 +62,7 @@ public class ScenarioForm extends Form<Scenario> {
     public ScenarioForm(String id, final ModalWindow window) {
         super(id, new CompoundPropertyModel<Scenario>(new Scenario()));
 
-        add(new Label("addScenarioHeader", "Create scenario"));
+        add(new Label("addScenarioHeader", ResourceUtils.getModel("pageTitle.addScenario")));
 
         //
         addResearchGroupField();

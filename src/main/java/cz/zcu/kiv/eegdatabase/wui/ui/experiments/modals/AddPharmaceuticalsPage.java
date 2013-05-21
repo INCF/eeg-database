@@ -60,7 +60,7 @@ public class AddPharmaceuticalsPage extends WebPage {
             feedback.setOutputMarkupId(true);
             add(feedback);
 
-            add(new Label("addPharmaHeader", "Add new pharmaceuticals"));
+            add(new Label("addPharmaHeader", ResourceUtils.getModel("pageTitle.addPharmaceutical")));
 
             TextField<String> title = new TextField<String>("title");
             title.setLabel(ResourceUtils.getModel("label.title"));

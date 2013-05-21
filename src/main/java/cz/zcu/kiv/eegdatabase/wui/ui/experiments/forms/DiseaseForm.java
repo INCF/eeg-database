@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
 import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -35,16 +36,20 @@ public class DiseaseForm extends Form<Disease> {
         final FeedbackPanel feedback = new FeedbackPanel("feedback");
         feedback.setOutputMarkupId(true);
         add(feedback);
-        add(new Label("addDiseaseHeader", "Add new disease"));
+        add(new Label("addDiseaseHeader", ResourceUtils.getModel("pageTitle.addDisease")));
+
+        RequiredTextField<String> title = new RequiredTextField<String>("title");
+        title.setLabel(ResourceUtils.getModel("label.title"));
+        title.add(new TitleExistsValidator());
+        add(title);
+
+        TextArea<String> description = new TextArea<String>("description");
+        description.setRequired(true);
+        description.setLabel((ResourceUtils.getModel("label.description")));
+        add(description);
 
         add(
-                new RequiredTextField<String>("title").
-                        add(new TitleExistsValidator())
-        );
-        add(new TextArea<String>("description").setRequired(true));
-
-        add(
-                new AjaxButton("submitForm", this) {
+                new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
                     @Override
                     protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                         Disease disease = (Disease) form.getModelObject();
@@ -65,7 +70,7 @@ public class DiseaseForm extends Form<Disease> {
         );
 
         add(
-                new AjaxButton("closeForm", this) {}.
+                new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {}.
                         add(new AjaxEventBehavior("onclick") {
                     @Override
                     protected void onEvent(AjaxRequestTarget target) {
