@@ -51,6 +51,8 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     private TextField<String> environmentNote;
     final int SELECT_ROWS = 5;
     private boolean swUpdate = false;
+    private boolean hwUpdate = false;
+    private boolean weatherUpdate = false;
 
     private List<Hardware> hwListForModel;
     private List<Software> swListForModel;
@@ -61,6 +63,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     private Integer integerForModel;
     private String environmentNoteForModel;
     private GenericModel<Weather> weatherModel;
+    private GenericModel<List<Weather>> weatherModelForChoices;
     private List<GenericModel<Disease>> diseases;
     private List<GenericModel<Pharmaceutical>> pharmaceuticals;
     RepeatableInputPanel<Disease> repeatableD;
@@ -76,6 +79,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         addEnvironmentNote();
         addDisease();
         addPharmaceutical();
+        addUpdateBehavior();
 
         createModalWindows();
     }
@@ -103,17 +107,6 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         sw = new ListMultipleChoice("softwares", new GenericModel(swListForModel), swChoices).setMaxRows(SELECT_ROWS);
         sw.setLabel(ResourceUtils.getModel("label.software"));
 
-        sw.add(new AjaxFormComponentUpdatingBehavior("onchange") {
-            @Override
-            protected void onUpdate(AjaxRequestTarget target) {
-                if(swUpdate){
-                    swUpdate = false;
-                    swChoices = getSoftwares();
-                    sw.setChoices(swChoices);
-                    target.add(sw);
-                }
-            }
-        });
         ComponentFeedbackMessageFilter swFilter = new ComponentFeedbackMessageFilter(sw);
         final FeedbackPanel swFeedback = new FeedbackPanel("swFeedback", swFilter);
         swFeedback.setOutputMarkupId(true);
@@ -144,7 +137,8 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         weatherForModel = new Weather();
         weatherChoices = getWeathers();
         weatherModel = new GenericModel<Weather>(weatherForModel);
-        weather = new DropDownChoice("weather", weatherModel, weatherChoices);
+        weatherModelForChoices = new GenericModel(weatherChoices);
+        weather = new DropDownChoice("weather", weatherModel, weatherModelForChoices);
         weather.setLabel(ResourceUtils.getModel("label.weather"));
         weather.setNullValid(true);
         weather.add(new AjaxFormComponentUpdatingBehavior("onchange") {
@@ -209,6 +203,32 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         add(repeatableD);
     }
 
+    public void addUpdateBehavior(){
+        add(new AjaxEventBehavior("onclick") {
+            @Override
+            protected void onEvent(AjaxRequestTarget target) {
+               if (swUpdate) {
+                   swChoices = getSoftwares();
+                   sw.setChoices(swChoices);
+                   target.add(sw);
+                   swUpdate = false;
+               }
+               if (hwUpdate) {
+                   hwChoices = getHardwares();
+                   hw.setChoices(hwChoices);
+                   target.add(hw);
+                   hwUpdate = false;
+               }
+               if (weatherUpdate) {
+                   weatherChoices = getWeathers();
+                   weatherModelForChoices.setObject(weatherChoices);
+                   target.add(weather);
+                   weatherUpdate = false;
+               }
+            }
+        });
+    }
+
     private void addPharmaceutical() {
         GenericFactory<Pharmaceutical> factory = new GenericFactory<Pharmaceutical>(Pharmaceutical.class);
         GenericValidator<Pharmaceutical> validator = new GenericValidator<Pharmaceutical>(pharmaceuticalFacade);
@@ -252,20 +272,20 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
         return softwareFacade.getAllRecords();
     }
 
+    private List<Hardware> getHardwares(){
+        return hardwareFacade.getAllRecords();
+    }
+
     public void updateSoftwares(){
         swUpdate = true;
     }
 
     public void updateHardwares(){
-        hw.setChoices(getHardwares());
+        hwUpdate = true;
     }
 
     public void updateWeathers(){
-        //weather.setChoices(getWeathers());
-    }
-
-    private List<Hardware> getHardwares(){
-        return hardwareFacade.getAllRecords();
+        weatherUpdate = true;
     }
 
     private void addModalWindowAndButton(final Form form, String modalWindowName, String cookieName,
@@ -311,6 +331,16 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
             @Override
             protected void onEvent(AjaxRequestTarget target) {
                 addedWindow.show(target);
+                String id = getComponent().getId();
+                if (id.equals("addSW")){
+                    updateSoftwares();
+                }
+                else if (id.equals("addHW")){
+                    updateHardwares();
+                }
+                else if (id.equals("addWeather")){
+                    updateWeathers();
+                }
             }
         });
         form.add(ajaxButton);

@@ -68,14 +68,10 @@ public class SoftwareForm extends Form<Software> {
                     target.add(feedback);
                     if(!hasError()){
                         if (newSw.getDefaultNumber() == 0){
-                            //facade.create(newSw);
+                            facade.create(newSw);
                         }
                         else {
-                            //facade.createDefaultRecord(newSw);
-                        }
-                        WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
-                        if (parent != null){
-                            parent.updateSw();
+                            facade.createDefaultRecord(newSw);
                         }
                         window.close(target);
                     }

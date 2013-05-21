@@ -12,6 +12,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
+import net.sf.ehcache.hibernate.HibernateUtil;
 import org.apache.wicket.Page;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxEventBehavior;
@@ -243,7 +244,8 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
         });
 
         Person logged = EEGDataBaseSession.get().getLoggedUser();
-        //personFacade.initialize(logged);
+        //logged = personFacade.read(logged.getPersonId());
+        logged = HbUtils.deproxy(logged);
         logged.setDefaultGroup(researchGroupFacade.getGroupByTitle("Group47"));
         ResearchGroup defaultGroupForUser = logged.getDefaultGroup();
         if (defaultGroupForUser != null && defaultGroupForUser.getTitle() != null) {

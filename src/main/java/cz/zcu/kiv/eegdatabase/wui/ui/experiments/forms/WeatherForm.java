@@ -63,10 +63,6 @@ public class WeatherForm extends Form<Weather> {
                     target.add(feedback);
                     if(!hasError()){
                         facade.create(newW);
-                        WizardTabbedPanelPage parent = (WizardTabbedPanelPage)window.getParent().getPage();
-                        if (parent != null){
-                            parent.updateWeather();
-                        }
                         window.close(target);
                     }
                 }
