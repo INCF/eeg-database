@@ -27,10 +27,8 @@ public class ProjectTypeConverter implements IConverter<ProjectType> {
             return null;
         }
 
-        ProjectType projectType = new ProjectType();
-        projectType.setTitle(s);
-        List<ProjectType> projectTypes = projectTypeFacade.getUnique(projectType);
-        return (projectTypes != null && projectTypes.size() > 0) ? projectTypes.get(0) : projectType;
+        List<ProjectType> projectTypes = projectTypeFacade.readByParameter("title", s);
+        return (projectTypes != null && projectTypes.size() > 0) ? projectTypes.get(0) : new ProjectType();
 
     }
 

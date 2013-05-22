@@ -28,10 +28,8 @@ public class SoftwareConverter implements IConverter<Software> {
             return null;
         }
 
-        Software software = new Software();
-        software.setTitle(s);
-        List<Software> softwares = softwareFacade.getUnique(software);
-        return (softwares != null && softwares.size() > 0) ? softwares.get(0) : software;
+        List<Software> softwares = softwareFacade.readByParameter("title", s);
+        return (softwares != null && softwares.size() > 0) ? softwares.get(0) : new Software();
 
     }
 

@@ -30,9 +30,9 @@ public class PersonConverter implements IConverter<Person> {
         String[] datas = s.split(",");
         String username = datas[datas.length -1];
 
+        List<Person> persons = personFacade.readByParameter("username", username);
         Person person = new Person();
         person.setUsername(username);
-        List<Person> persons = personFacade.getUnique(person);
         return (persons != null && persons.size() > 0) ? persons.get(0) : person;
     }
 

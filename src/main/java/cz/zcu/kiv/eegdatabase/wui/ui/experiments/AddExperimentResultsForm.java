@@ -1,28 +1,27 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 import oracle.jdbc.rowset.OracleSerialBlob;
-import org.apache.wicket.ajax.AjaxEventBehavior;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericModel;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.validation.INullAcceptingValidator;
-import org.apache.wicket.validation.IValidatable;
-import org.springframework.beans.factory.annotation.Autowired;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -37,8 +36,9 @@ public class AddExperimentResultsForm extends Form<Experiment> {
 
     private FileUploadField fileUploadField;
     private Experiment experiment;
+    private GenericModel<List<FileUpload>> fileUploads;
 
-    @Autowired
+    @SpringBean
     private ExperimentsFacade experimentsFacade;
 
     public AddExperimentResultsForm(String id, WizardTabbedPanelPage parent, Experiment experiment){
@@ -63,13 +63,13 @@ public class AddExperimentResultsForm extends Form<Experiment> {
 
     private void addFileUploadField(){
 
-        fileUploadField = new FileUploadField("resultFile");
+        fileUploads = new GenericModel<List<FileUpload>>(new ArrayList<FileUpload>());
+        fileUploadField = new FileUploadField("resultFile", fileUploads);
 
         ComponentFeedbackMessageFilter fileFilter = new ComponentFeedbackMessageFilter(fileUploadField);
         final FeedbackPanel fileFeedback = new FeedbackPanel("fileFeedback", fileFilter);
         fileFeedback.setOutputMarkupId(true);
         fileUploadField.add(new AjaxFeedbackUpdatingBehavior("blur", fileFeedback));
-//        fileUploadField.setRequired(true);
 
         add(fileUploadField);
         add(fileFeedback);
@@ -78,21 +78,24 @@ public class AddExperimentResultsForm extends Form<Experiment> {
 
     private void addSubmitButton(){
 
-        AjaxButton saveAjax = new AjaxButton("submitFormButton", this)
-        {};
-        saveAjax.add(new AjaxEventBehavior("onclick") {
-            @Override
-            protected void onEvent(AjaxRequestTarget target) {
-
+        AjaxButton saveAjax = new AjaxButton("submitFormButton", this){
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form)
+            {
                 save(); //saves this tab into backing model (Experiment)
 
-                if(isValid()){
-                    saveExperiment(); // saves modelObject into database
+                if(isValid()) {
+                    if(!fileUploadField.hasErrorMessage()) {
+                        saveExperiment();
+                        setResponsePage(WelcomePage.class);
+                    } else {
+                        setResponsePage(getPage());
+                    }
                 }
-                else
+                else {
                     setResponsePage(getPage());    //refresh of the page to show errors
+                }
             }
-        });
+        };
 
         saveAjax.setLabel(ResourceUtils.getModel("button.save"));
         add(saveAjax);
@@ -106,14 +109,18 @@ public class AddExperimentResultsForm extends Form<Experiment> {
     private void save() {
         if(fileUploadField.isValid()){
             Set<DataFile> files = new HashSet<DataFile>();
-            DataFile file = new DataFile();
 
             try{
-                byte[] fileBytes = fileUploadField.getFileUpload().getBytes();
-                OracleSerialBlob blob = new OracleSerialBlob(fileBytes);
-                file.setFileContent(blob);
+                List<FileUpload> fileUploadList = fileUploads.getObject();
+                for(FileUpload fileUpload : fileUploadList) {
+                    DataFile file = new DataFile();
 
-                files.add(file);
+                    byte[] fileBytes = fileUpload.getBytes();
+                    OracleSerialBlob blob = new OracleSerialBlob(fileBytes);
+                    file.setFileContent(blob);
+
+                    files.add(file);
+                }
                 experiment.setDataFiles(files);
             }
             catch(Exception ex) {
@@ -124,6 +131,22 @@ public class AddExperimentResultsForm extends Form<Experiment> {
 
     private void saveExperiment() {
         Experiment experiment = getModelObject();
+        // TODO user must somehow insert this data instead of us.
+        Person logged = EEGDataBaseSession.get().getLoggedUser();
+        experiment.setPersonByOwnerId(logged);
+        Digitization digitization = new Digitization();
+        digitization.setDigitizationId(52);
+        experiment.setDigitization(digitization);
+        SubjectGroup subjectGroup = new SubjectGroup();
+        subjectGroup.setSubjectGroupId(11);
+        experiment.setSubjectGroup(subjectGroup);
+        Artifact artifact = new Artifact();
+        artifact.setArtifactId(5);
+        experiment.setArtifact(artifact);
+        ElectrodeConf conf = new ElectrodeConf();
+        conf.setElectrodeConfId(6);
+        experiment.setElectrodeConf(conf);
+        // TODO End of todo.
         experimentsFacade.create(experiment);
     }
 

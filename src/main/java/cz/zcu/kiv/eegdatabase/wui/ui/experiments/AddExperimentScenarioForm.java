@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
@@ -73,6 +72,8 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
     public AddExperimentScenarioForm(String id, Experiment experiment) {
         super(id);
         this.experiment = experiment;
+
+        setMultiPart(true);
 
         addScenario();
         addResearchGroup();
@@ -324,8 +325,7 @@ public class AddExperimentScenarioForm extends Form<Experiment> {
      * It takes data from the model and based on them get valid data.
      */
     public void save() {
-        validate();
-        if(!hasError()) {
+        if(isValid()) {
             experiment.setEndTime(new Timestamp(this.finishDateForModel.getTime()));
             experiment.setStartTime(new Timestamp(this.startDateForModel.getTime()));
             experiment.setProjectTypes(getProjectTypesSet());

@@ -27,10 +27,8 @@ public class DiseaseConverter implements IConverter<Disease> {
             return null;
         }
 
-        Disease disease = new Disease();
-        disease.setTitle(s);
-        List<Disease> diseases = diseaseFacade.getUnique(disease);
-        return (diseases != null && diseases.size() > 0) ? diseases.get(0) : disease;
+        List<Disease> diseases = diseaseFacade.readByParameter("title", s);
+        return (diseases != null && diseases.size() > 0) ? diseases.get(0) : new Disease();
 
     }
 

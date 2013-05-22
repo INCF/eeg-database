@@ -27,10 +27,8 @@ public class PharmaceuticalConverter implements IConverter<Pharmaceutical> {
             return null;
         }
 
-        Pharmaceutical pharmaceutical = new Pharmaceutical();
-        pharmaceutical.setTitle(s);
-        List<Pharmaceutical> pharmaceuticals = pharmaceuticalFacade.getUnique(pharmaceutical);
-        return (pharmaceuticals != null && pharmaceuticals.size() > 0) ? pharmaceuticals.get(0) : pharmaceutical;
+        List<Pharmaceutical> pharmaceuticals = pharmaceuticalFacade.readByParameter("title", s);
+        return (pharmaceuticals != null && pharmaceuticals.size() > 0) ? pharmaceuticals.get(0) : new Pharmaceutical();
     }
 
     @Override

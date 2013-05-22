@@ -35,7 +35,7 @@ public class GenericValidator<T> implements INullAcceptingValidator<T>, Serializ
         if(list == null){
             if(object == null && validatableEntity == null){
                 if(required)
-                    errorNonExisting(validatable);
+                    error(validatable, ResourceUtils.getString("error.nonexistingEntity"));
                 return;
             }
             if(validatableEntity == null) {

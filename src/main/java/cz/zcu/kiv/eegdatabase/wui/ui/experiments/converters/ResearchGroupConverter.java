@@ -27,10 +27,8 @@ public class ResearchGroupConverter implements IConverter<ResearchGroup> {
             return null;
         }
 
-        ResearchGroup researchGroup = new ResearchGroup();
-        researchGroup.setTitle(s);
-        List<ResearchGroup> researchGroups = researchGroupFacade.getUnique(researchGroup);
-        return (researchGroups != null && researchGroups.size() > 0) ? researchGroups.get(0) : researchGroup;
+        List<ResearchGroup> researchGroups = researchGroupFacade.readByParameter("title", s);
+        return (researchGroups != null && researchGroups.size() > 0) ? researchGroups.get(0) : new ResearchGroup();
     }
 
     @Override

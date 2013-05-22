@@ -20,7 +20,10 @@ import org.apache.wicket.extensions.ajax.markup.html.autocomplete.GenericValidat
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.RepeatableInputPanel;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
-import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.ListMultipleChoice;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
@@ -28,7 +31,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class AddExperimentEnvironmentForm extends Form<Experiment> {
 
@@ -71,6 +77,8 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
     public AddExperimentEnvironmentForm(String id, Experiment experiment){
         super(id);
         this.experiment = experiment;
+
+        setMultiPart(true);
 
         addHardware();
         addSoftware();
@@ -350,8 +358,7 @@ public class AddExperimentEnvironmentForm extends Form<Experiment> {
      * It takes data from the model and based on them get valid data.
      */
     public void save() {
-        validate();
-        if(!hasError()) {
+        if(isValid()) {
             experiment.setHardwares(getHardwaresSet());
             experiment.setSoftwares(getSoftwaresSet());
             experiment.setWeather(this.weatherForModel);

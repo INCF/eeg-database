@@ -6,7 +6,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.tabs.AbstractTab;
 import org.apache.wicket.extensions.markup.html.tabs.ITab;
@@ -108,6 +107,7 @@ public class WizardTabbedPanelPage extends MenuPage {
                             setTabClassRed(selectedTab);
                         }
                         scenarioForm.refreshDateModelObjects();
+                        scenarioForm.save();
                     }
                     if (selectedTab == 1) {
                         if (environmentForm.isValid()){
@@ -116,6 +116,7 @@ public class WizardTabbedPanelPage extends MenuPage {
                         else {
                             setTabClassRed(selectedTab);
                         }
+                        environmentForm.save();
                     }
                     if (selectedTab == 2) {
                         if (resultsForm.isValid()){

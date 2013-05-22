@@ -21,10 +21,8 @@ public class StimulusConverter implements IConverter<Stimulus> {
             return null;
         }
 
-        Stimulus stimulus = new Stimulus();
-        stimulus.setDescription(s);
-        List<Stimulus> stimuluses = stimulusFacade.getUnique(stimulus);
-        return (stimuluses != null && stimuluses.size() > 0) ? stimuluses.get(0) : stimulus;
+        List<Stimulus> stimuluses = stimulusFacade.readByParameter("description", s);
+        return (stimuluses != null && stimuluses.size() > 0) ? stimuluses.get(0) : new Stimulus();
     }
 
     @Override
