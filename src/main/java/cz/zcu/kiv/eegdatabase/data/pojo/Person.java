@@ -8,6 +8,7 @@ import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import thewebsemantic.annotations.Comment;
 import thewebsemantic.annotations.Ignore;
 import thewebsemantic.annotations.Label;

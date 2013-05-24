@@ -125,7 +125,7 @@
     
     <bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />
     <bean name="scenarioTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacadeImpl" autowire="byType" />
-
+    
     <bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
     <bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
 

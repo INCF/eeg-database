@@ -138,6 +138,7 @@ public class ScenariosServiceImpl implements ScenariosService {
         scenarioDAO.flush();
     }
     
+    @Override
     @Transactional
     public Integer createScenarioSchema(ScenarioSchemas newInstance) {
         return schemaDAO.create(newInstance);

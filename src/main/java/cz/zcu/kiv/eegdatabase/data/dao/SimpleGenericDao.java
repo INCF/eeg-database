@@ -212,8 +212,7 @@ public class SimpleGenericDao<T, PK extends Serializable>
     public List<T> findByExample(T example) {
         return getHibernateTemplate().findByExample(example);
     }
-
-
+    
     protected void initializeProperty(Object property) {
         if(!Hibernate.isInitialized(property)) {
             getHibernateTemplate().initialize(property);
