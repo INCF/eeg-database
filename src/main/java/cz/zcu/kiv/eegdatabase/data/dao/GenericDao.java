@@ -89,4 +89,6 @@ public interface GenericDao <T, PK extends Serializable>{
      * @return List of records with eagerly loaded properties.
      */
     public List<T> getAllRecordsFull();
+
+    List<T> findByExample(T example);
 }

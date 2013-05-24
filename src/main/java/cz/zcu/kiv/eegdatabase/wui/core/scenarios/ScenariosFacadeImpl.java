@@ -123,10 +123,10 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
         return service.getScenarioByTitle(title);
     }   
     
-    @Override
-    public Integer create(ScenarioSchemas newInstance) {
-        return service.create(newInstance);
-    }
+//    @Override
+//    public Integer create(ScenarioSchemas newInstance) {
+//        return service.create(newInstance);
+//    }
 
     @Override
     public Integer createScenarioSchema(ScenarioSchemas newInstance) {

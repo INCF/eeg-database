@@ -28,7 +28,7 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
 
     Scenario getScenarioByTitle(String title);
     
-    Integer create(ScenarioSchemas newInstance);
+//    Integer create(ScenarioSchemas newInstance);
 
     Integer createScenarioSchema(ScenarioSchemas newInstance);
 
