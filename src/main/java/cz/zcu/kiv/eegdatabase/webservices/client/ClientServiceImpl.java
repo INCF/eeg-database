@@ -138,7 +138,7 @@ public class ClientServiceImpl implements ClientService {
 	public int addResearchGroup(ResearchGroupInfo info) {
 		ResearchGroup r = new ResearchGroup();
 		r.setTitle(info.getTitle());
-		r.setDescription(info.getTitle());
+		r.setDescription(info.getDescription());
 		Person p = personDao.getLoggedPerson();
 		r.setPerson(p);
 		int newId = researchGroupDao.create(r);
