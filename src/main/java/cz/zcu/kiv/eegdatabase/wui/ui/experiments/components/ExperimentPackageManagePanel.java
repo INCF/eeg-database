@@ -210,6 +210,7 @@ public class ExperimentPackageManagePanel extends Panel {
 			@Override
 			public void onClick() {
 				experimentPackageFacade.removeExperimentPackage(epModel.getObject());
+				setResponsePage(this.getPage().getPageClass(), this.getPage().getPageParameters());
 			}
 		};
 
