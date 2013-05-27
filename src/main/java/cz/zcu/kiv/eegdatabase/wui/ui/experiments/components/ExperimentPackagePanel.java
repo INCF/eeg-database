@@ -80,7 +80,7 @@ public class ExperimentPackagePanel extends Panel {
 
     //containers
     private WebMarkupContainer experimentListCont;
-    private WebMarkupContainer header;
+    private WebMarkupContainer header, footer;
 	private Link<License> licenseBuyLink;
 	private DataTable<Experiment, String> table;
 
@@ -103,6 +103,7 @@ public class ExperimentPackagePanel extends Panel {
 		this.add(experimentListCont);
 
 		this.addHeader();
+		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
     }
 
@@ -117,9 +118,6 @@ public class ExperimentPackagePanel extends Panel {
 		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
 		header.add(new Label("researchGroupTitle", new PropertyModel(epModel, "researchGroup.title")));
 
-		header.add(createVisibilityLink("showListLink", true));
-		header.add(createVisibilityLink("hideListLink", false));
-
 		WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {
 
 			@Override
@@ -133,6 +131,15 @@ public class ExperimentPackagePanel extends Panel {
 		this.addLicenseList(licenseCont);
 		header.add(licenseCont);
     }
+
+	private void addFooter() {
+		footer = new WebMarkupContainer("footer");
+		footer.setOutputMarkupId(true);
+		this.add(footer);
+
+		footer.add(createVisibilityLink("showListLink", true));
+		footer.add(createVisibilityLink("hideListLink", false));
+	}
 
 	/**
 	 * Adds list of licenses attached to the package.
@@ -216,7 +223,7 @@ public class ExperimentPackagePanel extends Panel {
 			public void onClick(AjaxRequestTarget target) {
 				ExperimentPackagePanel.this.experimentListCont.setVisible(this.getModelObject());
 				target.add(ExperimentPackagePanel.this.experimentListCont);
-				target.add(header);
+				target.add(footer);
 			}
 
 			@Override

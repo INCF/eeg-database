@@ -5,9 +5,7 @@
 <body>
   <wicket:panel>
       <h2 wicket:id="header" class="headerWithLinks">
-		<wicket:container wicket:id="packageTitle"/>
-		<a wicket:id="showListLink"><wicket:container wicket:id="linkLabel"/></a>
-		<a wicket:id="hideListLink"><wicket:container wicket:id="linkLabel"/></a><br/>
+		<wicket:container wicket:id="packageTitle"/><br/>
 		<span class="subtitle" wicket:id="researchGroupTitle"/>
 		<div wicket:id="licensesCont">
 			<span class="subtitle"><wicket:message key="heading.license.list"/></span>
@@ -19,6 +17,10 @@
       <div wicket:id="experimentListCont">
 		<table class="dataTable measurationListDataTable" wicket:id="list"></table>
       </div>
+	  <div wicket:id="footer" class="packageListFooter">
+		<a wicket:id="showListLink"><wicket:container wicket:id="linkLabel"/></a>
+		<a wicket:id="hideListLink"><wicket:container wicket:id="linkLabel"/></a>
+	  </div>
   </wicket:panel>
 </body>
 </html>

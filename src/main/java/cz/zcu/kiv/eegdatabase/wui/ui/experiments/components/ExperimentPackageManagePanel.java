@@ -82,7 +82,7 @@ public class ExperimentPackageManagePanel extends Panel {
 	private IModel<License> licenseModel;
 	//containers
 	private WebMarkupContainer experimentListCont;
-	private WebMarkupContainer header;
+	private WebMarkupContainer header, footer;
 	private ModalWindow addExperimentsWindow;
 	private ModalWindow addLicenseWindow;
 	private ModalWindow privateLicenseWindow;
@@ -106,6 +106,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		this.add(experimentListCont);
 
 		this.addHeader();
+		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
 		this.addExperimentsAddWindow();
 		privateLicenseWindow = this.addPrivateAndPublicWindows("privateLicenseWindow", true);
@@ -196,13 +197,20 @@ public class ExperimentPackageManagePanel extends Panel {
 
 		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
 
-		header.add(createVisibilityLink("showListLink", true));
-		header.add(createVisibilityLink("hideListLink", false));
-		header.add(createRemoveSelectedLink("removeSelectedLink"));
-		header.add(createAddExperimentsLink("addExperimentsLink"));
 		header.add(createRemovePackageLink("removePackageLink"));
 
 		this.addLicenseList(header);
+	}
+
+	private void addFooter() {
+		footer = new WebMarkupContainer("footer");
+		footer.setOutputMarkupId(true);
+		this.add(footer);
+		
+		footer.add(createVisibilityLink("showListLink", true));
+		footer.add(createVisibilityLink("hideListLink", false));
+		footer.add(createRemoveSelectedLink("removeSelectedLink"));
+		footer.add(createAddExperimentsLink("addExperimentsLink"));
 	}
 
 	private Link createRemovePackageLink(String id) {
@@ -408,7 +416,7 @@ public class ExperimentPackageManagePanel extends Panel {
 			public void onClick(AjaxRequestTarget target) {
 				ExperimentPackageManagePanel.this.experimentListCont.setVisible(this.getModelObject());
 				target.add(ExperimentPackageManagePanel.this.experimentListCont);
-				target.add(header);
+				target.add(footer);
 			}
 
 			@Override
