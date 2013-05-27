@@ -58,7 +58,7 @@ public class DbMigrationPage extends BasePage {
 		License publicLicense = new License();
 		publicLicense.setDescription("All experiments published under this license are available for all purposes");
 		publicLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
-		publicLicense.setPrice(0);
+		publicLicense.setPrice(0f);
 		publicLicense.setResearchGroup(null);
 		publicLicense.setTitle("Public license");
 		int id = licenseFacade.create(publicLicense);
@@ -88,55 +88,55 @@ public class DbMigrationPage extends BasePage {
 				if (experiment.isPrivateExperiment()) {
 					privateExperiments.add(experiment);
 				} else {
-					publicExperiments.add(experiment);
+					//publicExperiments.add(experiment);
 				}
 			}
 
 			log.info("Group " + group.getTitle() + "has " + publicExperiments.size() + " public experiments");
 
 			//create group's public package
-			ExperimentPackage publicExperimentPackage = new ExperimentPackage();
-			publicExperimentPackage.setName("Default public pack");
-			publicExperimentPackage.setResearchGroup(group);
-			//get id and reload the newly created instance to ensure hibernate cache sanity
-			id = experimentPackageFacade.create(publicExperimentPackage);
-			publicExperimentPackage = experimentPackageFacade.read(id);
+//			ExperimentPackage publicExperimentPackage = new ExperimentPackage();
+//			publicExperimentPackage.setName("Default public pack");
+//			publicExperimentPackage.setResearchGroup(group);
+//			//get id and reload the newly created instance to ensure hibernate cache sanity
+//			id = experimentPackageFacade.create(publicExperimentPackage);
+//			publicExperimentPackage = experimentPackageFacade.read(id);
 
 			//create owner license for the package
 			License privateLicense = new License();
 			privateLicense.setDescription("Default generated owner license");
 			privateLicense.setTitle("Owner License");
 			privateLicense.setLicenseType(LicenseType.OWNER);
-			privateLicense.setPrice(0);
+			privateLicense.setPrice(0f);
 			privateLicense.setResearchGroup(group);
 			id = this.licenseFacade.create(privateLicense);
 			privateLicense = licenseFacade.read(id);
 
-			for (Experiment ex : publicExperiments) {
-			    if(ex.getExperimentId() == 0) { //avoid invalid db state
-				continue;
-			    }
-
-			    log.info("ResearchGRoupID: " + group.getResearchGroupId());
-			    log.info("ExperimentID: " + ex.getExperimentId());
-			    //connect the experiment to the package
-			    ExperimentPackageConnection epc = new ExperimentPackageConnection();
-			    epc.setExperiment(ex);
-			    epc.setExperimentPackage(publicExperimentPackage);
-			    experimentPackageConnectionService.create(epc);
-			    try {
-				Thread.sleep(100);
-			    } catch (Exception exc) {
-				
-			    }
-			}
-
-			//bind the package to the public license
-			ExperimentPackageLicense experimentPackageLicense = new ExperimentPackageLicense();
-			experimentPackageLicense.setExperimentPackage(publicExperimentPackage);
-			experimentPackageLicense.setLicense(publicLicense);
-			experimentPackageLicenseService.create(experimentPackageLicense);
-			log.info("Public experiments migration FINISHED");
+//			for (Experiment ex : publicExperiments) {
+//			    if(ex.getExperimentId() == 0) { //avoid invalid db state
+//				continue;
+//			    }
+//
+//			    log.info("ResearchGRoupID: " + group.getResearchGroupId());
+//			    log.info("ExperimentID: " + ex.getExperimentId());
+//			    //connect the experiment to the package
+//			    ExperimentPackageConnection epc = new ExperimentPackageConnection();
+//			    epc.setExperiment(ex);
+//			    epc.setExperimentPackage(publicExperimentPackage);
+//			    experimentPackageConnectionService.create(epc);
+//			    try {
+//				Thread.sleep(100);
+//			    } catch (Exception exc) {
+//
+//			    }
+//			}
+//
+//			//bind the package to the public license
+//			ExperimentPackageLicense experimentPackageLicense = new ExperimentPackageLicense();
+//			experimentPackageLicense.setExperimentPackage(publicExperimentPackage);
+//			experimentPackageLicense.setLicense(publicLicense);
+//			experimentPackageLicenseService.create(experimentPackageLicense);
+//			log.info("Public experiments migration FINISHED");
 
 			if (privateExperiments.size() > 0) {
 				log.info("Group " + group.getTitle() + "has " + privateExperiments.size() + " private experiments");
@@ -167,7 +167,7 @@ public class DbMigrationPage extends BasePage {
 				}
 
 				//bind the package to the license
-				experimentPackageLicense = new ExperimentPackageLicense();
+				ExperimentPackageLicense experimentPackageLicense = new ExperimentPackageLicense();
 				experimentPackageLicense.setExperimentPackage(privateExperimentPackage);
 				experimentPackageLicense.setLicense(privateLicense);
 				experimentPackageLicenseService.create(experimentPackageLicense);
@@ -186,7 +186,7 @@ public class DbMigrationPage extends BasePage {
 		List<License> publicLicences = licenseFacade.readByParameter("licenseType", LicenseType.OPEN_DOMAIN);
 		License publicLicense = publicLicences.get(0);
 		List<Person> allPersons = personFacade.getAllRecords();
-		
+
 		for(Person person : allPersons) {
 			PersonalLicense personalLicence = new PersonalLicense();
 			personalLicence.setPerson(person);
@@ -209,7 +209,7 @@ public class DbMigrationPage extends BasePage {
 			List<ExperimentPackageLicense> experimentPackageLicenses = experimentPackageLicenseService.readByParameter("license.licenseId", licence.getLicenseId());
 			
 			for( ExperimentPackageLicense epl : experimentPackageLicenses ) {
-				
+							
 				log.info("--EPL package: " + epl.getExperimentPackage().getExperimentPackageId());
 				log.info("--EPL licence: " + epl.getExperimentPackageLicenseId());
 				
@@ -238,7 +238,7 @@ public class DbMigrationPage extends BasePage {
 	}
 
 	public DbMigrationPage() {
-	    doWork();
+	    //doWork();
 	    doWork2();
 	}
 }
