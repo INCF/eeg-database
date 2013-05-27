@@ -64,7 +64,8 @@ public class LicenseEditForm extends Panel {
 		c.setRequired(true);
 		form.add(c);
 
-		c = new NumberTextField("price", new PropertyModel(licenseModel, "price"), Float.class);
+		c = new NumberTextField<Float>("price", new PropertyModel(licenseModel, "price"), Float.class).setMinimum(0f);
+		c.setRequired(true);
 		c.setLabel(ResourceUtils.getModel("label.license.price"));
 		form.add(c);
 
@@ -94,6 +95,13 @@ public class LicenseEditForm extends Panel {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onSubmitAction(licenseModel, target, form);
+				target.add(form);
+			}
+
+			@Override
+			protected void onError(AjaxRequestTarget target, Form<?> form) {
+				super.onError(target, form);
+				target.add(form);
 			}
 
 			@Override
@@ -108,6 +116,8 @@ public class LicenseEditForm extends Panel {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onCancelAction(licenseModel, target, form);
+				form.clearInput();
+				target.add(form);
 			}
 
 			@Override
@@ -116,6 +126,7 @@ public class LicenseEditForm extends Panel {
 				this.setVisible(displayControls);
 			}
 		};
+		button.setDefaultFormProcessing(false);
 		form.add(button);
 
 		button = new AjaxButton("removeButton", ResourceUtils.getModel("button.remove")) {

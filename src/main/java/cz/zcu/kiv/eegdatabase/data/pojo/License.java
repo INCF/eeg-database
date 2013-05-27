@@ -19,7 +19,7 @@ public class License implements Serializable{
     private int licenseId;
 	
     @Column(name = "PRICE")
-    private float price;
+    private Float price;
 
 	@ManyToOne
 	@JoinColumn(name = "RESEARCH_GROUP_ID")
@@ -47,11 +47,11 @@ public class License implements Serializable{
 		this.licenseId = licenseId;
 	}
 
-	public float getPrice() {
+	public Float getPrice() {
 		return price;
 	}
 
-	public void setPrice(float price) {
+	public void setPrice(Float price) {
 		this.price = price;
 	}
 
@@ -105,10 +105,10 @@ public class License implements Serializable{
 	@Override
 	public int hashCode() {
 		int hash = 7;
-		hash = 97 * hash + Float.floatToIntBits(this.price);
-		hash = 97 * hash + (this.title != null ? this.title.hashCode() : 0);
-		hash = 97 * hash + (this.description != null ? this.description.hashCode() : 0);
-		hash = 97 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
+		hash = 11 * hash + (this.price != null ? this.price.hashCode() : 0);
+		hash = 11 * hash + (this.title != null ? this.title.hashCode() : 0);
+		hash = 11 * hash + (this.description != null ? this.description.hashCode() : 0);
+		hash = 11 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
 		return hash;
 	}
 
@@ -121,7 +121,7 @@ public class License implements Serializable{
 			return false;
 		}
 		final License other = (License) obj;
-		if (Float.floatToIntBits(this.price) != Float.floatToIntBits(other.price)) {
+		if (this.price != other.price && (this.price == null || !this.price.equals(other.price))) {
 			return false;
 		}
 		if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
