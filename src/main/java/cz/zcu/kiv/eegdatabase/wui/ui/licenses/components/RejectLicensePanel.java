@@ -27,6 +27,7 @@ public class RejectLicensePanel extends Panel {
 			@Override
 			public void onClick() {
 				licenseFacade.rejectRequestForLicense(this.getModelObject());
+				setResponsePage(this.getPage().getPageClass(), this.getPage().getPageParameters());
 			}
 		});
 	}

@@ -76,9 +76,8 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Transactional
 	public void confirmRequestForLicense(PersonalLicense personalLicense) {
 		personalLicense.setConfirmedDate(new Date());
-		this.personalLicenseDao.update(personalLicense);
-		personalLicense.setConfirmedDate(null);		
-		this.mailService.sendLicenseRequestConfirmationEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
+		this.personalLicenseDao.update(personalLicense);	
+		this.mailService.sendLicenseRequestConfirmationEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
 	}
 
 	@Override
@@ -102,7 +101,7 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Override
 	public void rejectRequestForLicense(PersonalLicense personalLicense) {
 		this.personalLicenseDao.delete(personalLicense);
-		this.mailService.sendLicenseRequestRejectionEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
+		this.mailService.sendLicenseRequestRejectionEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
 	}
 
 	@Override

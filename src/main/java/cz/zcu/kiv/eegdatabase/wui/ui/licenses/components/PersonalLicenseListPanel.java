@@ -7,12 +7,14 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 
 /**
@@ -61,6 +63,12 @@ public class PersonalLicenseListPanel extends Panel {
 		columns.add(new PropertyColumn<PersonalLicense, String>(ResourceUtils.getModel("dataTable.heading.person"), "fullName", "fullName"));
 		columns.add(new PropertyColumn<PersonalLicense, String>(ResourceUtils.getModel("dataTable.heading.organisation"), "organisation", "organisation"));
         columns.add(new TimestampPropertyColumn<PersonalLicense, String>(ResourceUtils.getModel("dataTable.heading.requestedDate"), "requestedDate", "requestedDate", "dd-MM-yyyy"));
+		columns.add(new PropertyColumn<PersonalLicense, String>(ResourceUtils.getModel("dataTable.heading.downloads"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<PersonalLicense>> item, String componentId, IModel<PersonalLicense> rowModel) {
+                item.add(new DownloadRequestAttachmentPanel(componentId, rowModel));
+            }
+        });
 		this.addListColumns(columns);
 
 		return columns;

@@ -27,6 +27,7 @@ public class ConfirmLicensePanel extends Panel {
 			@Override
 			public void onClick() {
 				licenseFacade.confirmRequestForLicense(this.getModelObject());
+				setResponsePage(this.getPage().getPageClass(), this.getPage().getPageParameters());
 			}
 		});
 	}
