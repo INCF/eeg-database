@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
@@ -19,6 +20,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.EmailAddressValidator;
 
 /**
  * Form for license request.
@@ -49,6 +51,13 @@ public class LicenseRequestForm extends Panel {
 		this.addControls();
 	}
 
+	@Override
+	protected void onConfigure() {
+		super.onConfigure();
+		//ugly hack to disable stupid global feedback
+		((MenuPage)this.getPage()).getFeedback().setEnabled(false);
+	}
+
 	private void addComponents() {
 		FormComponent c = new RequiredTextField("firstName", new PropertyModel(persLicense, "firstName"));
 		c.setLabel(ResourceUtils.getModel("label.license.request.firstname"));
@@ -63,6 +72,7 @@ public class LicenseRequestForm extends Panel {
 		form.add(c);
 
 		c = new RequiredTextField("email", new PropertyModel(persLicense, "email"));
+		c.add(EmailAddressValidator.getInstance());
 		c.setLabel(ResourceUtils.getModel("label.license.request.email"));
 		form.add(c);
 
@@ -106,8 +116,10 @@ public class LicenseRequestForm extends Panel {
 	 */
 	protected void onSubmitAction() {
 		FileUpload f = uploadField.getFileUpload();
-		persLicense.setAttachmentFileName(f.getClientFileName());
-		persLicense.setAttachmentContent(f.getBytes());
+		if(f != null) {
+			persLicense.setAttachmentFileName(f.getClientFileName());
+			persLicense.setAttachmentContent(f.getBytes());
+		}
 		persLicense.setLicense(licenseModel.getObject());
 		persLicense.setPerson(EEGDataBaseSession.get().getLoggedUser());
 		licenseFacade.createRequestForLicense(persLicense);

@@ -64,12 +64,12 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 		personalLicense.setRequestedDate(new Date());
 		this.personalLicenseDao.create(personalLicense);
 		
-//		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getPerson().getEmail(), personalLicense.getLicense().getTitle());
-//		this.mailService.sendLicenseRequestToGroupEmail(
-//				personalLicense.getLicense().getResearchGroup().getPerson().getEmail(),
-//				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
-//				personalLicense.getPerson().getEmail(),
-//				personalLicense.getLicense().getTitle());
+		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
+		this.mailService.sendLicenseRequestToGroupEmail(
+				personalLicense.getLicense().getResearchGroup().getPerson().getEmail(),
+				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
+				personalLicense.getEmail(),
+				personalLicense.getLicense().getTitle());
 	}
 
 	@Override

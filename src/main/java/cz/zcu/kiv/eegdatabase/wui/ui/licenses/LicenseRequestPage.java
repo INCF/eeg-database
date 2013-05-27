@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsByPackagePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseRequestForm;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.Model;
@@ -34,7 +35,24 @@ public class LicenseRequestPage extends MenuPage {
 
 		this.add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
-		this.add(new LicenseRequestForm("form", new Model<License>(l)));
+		this.add(new LicenseRequestForm("form", new Model<License>(l)) {
+
+			@Override
+			protected void onSubmitAction() {
+				super.onSubmitAction();
+				redirect();
+			}
+
+			@Override
+			protected void onCancelAction() {
+				super.onCancelAction();
+				redirect();
+			}
+
+			private void redirect() {
+				setResponsePage(ListExperimentsByPackagePage.class);
+			}
+		});
 	}
 
 }
