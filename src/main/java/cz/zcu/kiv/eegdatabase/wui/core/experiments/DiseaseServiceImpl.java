@@ -35,15 +35,10 @@ public class DiseaseServiceImpl implements DiseaseService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Disease> readByParameter(String parameterName, int parameterValue) {
+    public List<Disease> readByParameter(String parameterName, Object parameterValue) {
         return diseaseDao.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Disease> readByParameter(String parameterName, String parameterValue) {
-        return diseaseDao.readByParameter(parameterName,parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     @Override
     @Transactional

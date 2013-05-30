@@ -30,14 +30,10 @@ public class DiseaseFacadeImpl implements DiseaseFacade {
     }
 
     @Override
-    public List<Disease> readByParameter(String parameterName, int parameterValue) {
+    public List<Disease> readByParameter(String parameterName, Object parameterValue) {
         return diseaseService.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
     }
 
-    @Override
-    public List<Disease> readByParameter(String parameterName, String parameterValue) {
-        return diseaseService.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
-    }
 
     @Override
     public void update(Disease transientObject) {

@@ -235,14 +235,6 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
         }
     }
 
-	@Override
-    public void markAsPaid(ResearchGroup user) {
-        service.changeStatus(user, true);
-    }
 
-    @Override
-    public void markAsUnpaid(ResearchGroup user) {
-        service.changeStatus(user, true);
-    }
 
 }

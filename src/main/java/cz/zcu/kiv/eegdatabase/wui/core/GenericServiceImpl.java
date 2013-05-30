@@ -69,4 +69,9 @@ public class GenericServiceImpl <T, PK extends Serializable> implements GenericS
 	return dao.getCountRecords();
     }
 
+	@Override
+	public List<T> getUnique(T example) {
+		throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+	}
+
 }

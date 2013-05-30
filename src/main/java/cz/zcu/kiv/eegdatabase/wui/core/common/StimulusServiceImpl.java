@@ -42,15 +42,10 @@ public class StimulusServiceImpl implements StimulusService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Stimulus> readByParameter(String parameterName, int parameterValue) {
+    public List<Stimulus> readByParameter(String parameterName, Object parameterValue) {
         return stimulusDao.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Stimulus> readByParameter(String parameterName, String parameterValue) {
-        return stimulusDao.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     @Transactional
