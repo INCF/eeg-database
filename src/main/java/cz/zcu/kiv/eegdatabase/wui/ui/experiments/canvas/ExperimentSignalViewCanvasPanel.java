@@ -133,7 +133,7 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
         StringBuilder output = new StringBuilder();
         int counter = 1;
         for (ChannelInfo info : channels) {
-            output.append("tree.insertNewChild(1, 10 + " + counter + ",\"" + info.getName() + "\");\n");
+            output.append("tree.insertNewChild(0, " + counter + ",\"" + info.getName() + "\");\n");
             counter++;
         }
 

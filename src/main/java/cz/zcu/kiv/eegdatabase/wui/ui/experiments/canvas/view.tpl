@@ -12,13 +12,12 @@
 <img alt="Close this canvas" title="Close this canvas" id="close_canvas" src="files/images/close_canvas.png" />
 
 <script type="text/javascript">
-    tree = new dhtmlXTreeObject("tree", "200px", "300px", 0);
+    tree = new dhtmlXTreeObject("tree", "200px", "350px", 0);
     tree.setSkin('dhx_skyblue');
     tree.setImagePath("/files/images/imgs/csh_bluebooks/");
     tree.enableDragAndDrop(false);
     tree.setOnClickHandler(_click);
     tree.deleteChildItems(0);
-    tree.insertNewChild(0, 1, "Channels");
     ${generate.tree}
     ${generate.data}
 </script>

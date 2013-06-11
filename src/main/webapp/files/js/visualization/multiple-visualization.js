@@ -40,6 +40,9 @@ function disablePopup(){
         $("#wrapper").fadeOut("slow");
         $("#add_canvas").fadeOut("slow");
         $("#panel").slideUp();
+        $("#tree").hide();
+        $("#dataRange").hide();
+        $("#close_canvas").hide();
         popupStatus = 0;
     }
 }
@@ -64,7 +67,7 @@ function dataRange(index,headline) {
     $("#draw").click(function(){
         $("#"+activeID).empty();
         $("#"+activeID+"_zoom").empty();
-        drawGraph(activeID, headline, index, $("#endSlide").val());
+        drawGraph(activeID, headline, index, $("#endSlide").val(), $("#startSlide").val());
     });
     $("#dataRange").css({
         "position" : "absolute",
@@ -229,7 +232,6 @@ function centerPopup(){
 
         $("#tree a").click(function() {
             ctx = $("#"+activeID)[0].getContext('2d');
-            //canvasClear();
             run = true;
             init();
             draw();
@@ -257,13 +259,25 @@ function _click(id) {
     $("#"+activeID).empty();
     $("#"+activeID+"_zoom").empty();
     dataRange(id, tree.getSelectedItemText());
-    drawGraph(activeID, tree.getSelectedItemText(), id, 200);
+    drawGraph(activeID, tree.getSelectedItemText(), id, 200, 0);
 }
 
-function drawGraph(place, headline, channel, end) {
-    var cut = signalData[channel].slice(0,end);
-    plots[place] = $.jqplot (place, [cut], {
+function drawGraph(place, headline, channel, end, start) {
+    var cut = signalData[channel].slice(start,end);
+
+    var signalRenderer = function() {
+        var data = [[]];
+        var index = parseInt(start);
+        for (var i = 1; i < cut.length; i++) {
+            data[0].push([index + i, cut[i]]);
+        }
+        alert(data);
+        return data;
+    };
+
+    plots[place] = $.jqplot (place, [], {
         title: headline,
+        dataRenderer: signalRenderer,
         animate: true,
         axesDefaults: {
             labelRenderer: $.jqplot.CanvasAxisLabelRenderer
@@ -298,9 +312,10 @@ function drawGraph(place, headline, channel, end) {
         }
     });
 
-    zoomControl[place] = $.jqplot (place+"_zoom", [cut], {
+    zoomControl[place] = $.jqplot (place+"_zoom", [], {
+        dataRenderer: signalRenderer,
         axesDefaults: {
-            labelRenderer: $.jqplot.CanvasAxisLabelRenderer
+            //labelRenderer: $.jqplot.CanvasAxisLabelRenderer
         },
         seriesDefaults: {
             color: "#000000",
@@ -310,6 +325,14 @@ function drawGraph(place, headline, channel, end) {
                 smooth: true
             }
         },
+        axes: {
+            xaxis: {
+                 min: start,
+                 max: end,
+                 padMax: 0,
+                 padMin: 0
+            }
+        },
         cursor: {
             zoom: true,
             show: true
@@ -317,6 +340,7 @@ function drawGraph(place, headline, channel, end) {
     });
 
     $.jqplot.Cursor.zoomProxy(plots[place], zoomControl[place]);
+    zoomControl[place].replot({ resetAxes:true });
     $('#zoom').click(function() { plots[place].resetZoom() });
 }
 
