@@ -1,15 +1,19 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class VerifyMenuItemsAdmin {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
+
+public class VerifyMenuItemsUserTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,7 +27,7 @@ public class VerifyMenuItemsAdmin {
   }
 
   @Test
-  public void testVerifyMenuItemsAdmin() throws Exception {
+  public void testVerifyMenuItemsUser() throws Exception {
     driver.get(baseUrl + "/home-page?1");
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -32,20 +36,20 @@ public class VerifyMenuItemsAdmin {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG@seznam.cz");
+    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG2@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).sendKeys("123456");
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Logged user: testaccountforeeg@seznam\\.cz[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Logged user: testaccountforeeg2@seznam\\.cz[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//span[@wicketpath='userHeaderLink_linkLabel']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*ROLE_ADMIN[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*ROLE_USER[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
@@ -98,15 +102,15 @@ public class VerifyMenuItemsAdmin {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    // Warning: verifyTextNotPresent may require manual changes
+    // Warning: verifyTextPresent may require manual changes
     try {
-      assertFalse(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*History[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*History[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    // Warning: verifyTextPresent may require manual changes
+    // Warning: verifyTextNotPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Administration[\\s\\S]*$"));
+      assertFalse(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Administration[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }

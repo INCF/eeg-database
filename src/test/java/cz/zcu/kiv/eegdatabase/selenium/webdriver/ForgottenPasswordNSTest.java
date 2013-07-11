@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class ForgottenPasswordNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class ForgottenPasswordNSTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -25,12 +30,8 @@ public class ForgottenPasswordNS {
   @Test
   public void testForgottenPasswordNS() throws Exception {
     driver.get(baseUrl + "/home-page;jsessionid=sh6apkjjtg0n?0");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     driver.findElement(By.xpath("//a[@wicketpath='forgottenPass']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -38,6 +39,9 @@ public class ForgottenPasswordNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Unfilled email
+    driver.findElement(By.xpath("//input[@wicketpath='form_username']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_username']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -45,6 +49,7 @@ public class ForgottenPasswordNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Filled incorect email format
     driver.findElement(By.xpath("//input[@wicketpath='form_username']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_username']")).sendKeys("abcd");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
@@ -54,21 +59,13 @@ public class ForgottenPasswordNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Filled email, which is not in database
     driver.findElement(By.xpath("//input[@wicketpath='form_username']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_username']")).sendKeys("bad@email.address");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Password was not sent: username isn't valid or does'nt exist\\.[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    driver.findElement(By.xpath("//input[@wicketpath='form_username']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_username']")).sendKeys("");
-    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'username' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }

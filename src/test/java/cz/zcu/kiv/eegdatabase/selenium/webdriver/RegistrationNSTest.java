@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class RegistrationNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class RegistrationNSTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -25,12 +30,8 @@ public class RegistrationNS {
   @Test
   public void testRegistrationNS() throws Exception {
     driver.get(baseUrl + "/home-page?0");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     driver.findElement(By.xpath("//span[@wicketpath='userHeaderLink_linkLabel']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {

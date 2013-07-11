@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class LoginNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class LoginNSTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -25,12 +30,13 @@ public class LoginNS {
   @Test
   public void testLoginNS() throws Exception {
     driver.get(baseUrl + "/home-page?1");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
+    // All unfilled
+    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='login_password']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -44,6 +50,7 @@ public class LoginNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Incorrect username
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("BadUser");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -61,8 +68,11 @@ public class LoginNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Unfilled password
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testaccountforeeg2@seznam.cz");
+    driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='login_password']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -70,6 +80,7 @@ public class LoginNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Unfilled username
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -81,6 +92,7 @@ public class LoginNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Inserted inforrect password
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testaccountforeeg2@seznam");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();

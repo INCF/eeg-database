@@ -1,15 +1,21 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class ChangeRoleNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class ChangeRoleNSTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -25,12 +31,8 @@ public class ChangeRoleNS {
   @Test
   public void testChangeRoleNS() throws Exception {
     driver.get(baseUrl + "/home-page?0");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -57,6 +59,7 @@ public class ChangeRoleNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Try change user role with default email
     new Select(driver.findElement(By.xpath("//select[@wicketpath='form_authority']"))).selectByVisibleText("Reader");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
@@ -65,11 +68,8 @@ public class ChangeRoleNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    // Try change user role with default email
-    new Select(driver.findElement(By.xpath("//select[@wicketpath='form_authority']"))).selectByVisibleText("Choose One");
     // Change to some role
     new Select(driver.findElement(By.xpath("//select[@wicketpath='form_username']"))).selectByVisibleText("testaccountforeeg2@seznam.cz");
-    driver.findElement(By.cssSelector("option[value=\"317\"]")).click();
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {

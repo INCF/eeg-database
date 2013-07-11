@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class CreateResearchGroupNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class CreateNewResearchGroupUserTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,14 +28,10 @@ public class CreateResearchGroupNS {
   }
 
   @Test
-  public void testCreateResearchGroupNS() throws Exception {
+  public void testCreateNewResearchGroupUser() throws Exception {
     driver.get(baseUrl + "/home-page?1");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG2@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -43,12 +44,6 @@ public class CreateResearchGroupNS {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.linkText("Groups")).click();
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*List of groups[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
     driver.findElement(By.xpath("//a[@wicketpath='leftMenu_menu_4_link']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -56,39 +51,13 @@ public class CreateResearchGroupNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Group title' is required\\.[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Group description' is required\\.[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("New unicate research group");
-    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Group description' is required\\.[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("Unique Grouú");
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("Unique Group 123");
     driver.findElement(By.xpath("//textarea[@wicketpath='form_description']")).clear();
-    driver.findElement(By.xpath("//textarea[@wicketpath='form_description']")).sendKeys("Description");
+    driver.findElement(By.xpath("//textarea[@wicketpath='form_description']")).sendKeys("description");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Group title' is required\\.[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
     driver.findElement(By.xpath("//a[@wicketpath='logout']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {

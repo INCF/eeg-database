@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.support.ui.Select;
 
-public class VerifyMenuItemsUser {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class CreateHardwareDefinitionAsUserNSTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,7 +28,7 @@ public class VerifyMenuItemsUser {
   }
 
   @Test
-  public void testVerifyMenuItemsUser() throws Exception {
+  public void testCreateHardwareDefinitionAsUserNS() throws Exception {
     driver.get(baseUrl + "/home-page?1");
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -42,71 +47,88 @@ public class VerifyMenuItemsUser {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    driver.findElement(By.xpath("//span[@wicketpath='userHeaderLink_linkLabel']")).click();
+    driver.findElement(By.linkText("Lists")).click();
+    driver.findElement(By.xpath("//a[@wicketpath='leftMenu_menu_0_link']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*ROLE_USER[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*List of hardware definitions[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    driver.findElement(By.linkText("Home")).click();
+    driver.findElement(By.xpath("//a[@wicketpath='addHardwareLink']")).click();
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Home[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Articles[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Description' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Search[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Title' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Experiments[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Type' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("NewTitle");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Description' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Scenarios[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Type' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("NewType");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Description' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Groups[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Title' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("NewDescription");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Title' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*People[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Lists[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*History[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Warning: verifyTextNotPresent may require manual changes
-    try {
-      assertFalse(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Administration[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Type' is required\\.[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }

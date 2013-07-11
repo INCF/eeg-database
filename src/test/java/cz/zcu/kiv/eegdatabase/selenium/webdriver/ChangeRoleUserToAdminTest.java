@@ -1,15 +1,20 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class ChangeRoleUserToAdmin {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.*;
+
+public class ChangeRoleUserToAdminTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -25,13 +30,9 @@ public class ChangeRoleUserToAdmin {
   @Test
   public void testChangeRoleUserToAdmin() throws Exception {
     driver.get(baseUrl + "/home-page?0");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
-    // Login as user with role USER
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
+    // Login as user with role USER and verify role
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG2@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -57,7 +58,7 @@ public class ChangeRoleUserToAdmin {
       verificationErrors.append(e.toString());
     }
     driver.findElement(By.xpath("//a[@wicketpath='logout']")).click();
-    // Login as admin
+    // Login as admin and change role
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
@@ -92,12 +93,6 @@ public class ChangeRoleUserToAdmin {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Administration[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
     driver.findElement(By.xpath("//span[@wicketpath='userHeaderLink_linkLabel']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -114,7 +109,6 @@ public class ChangeRoleUserToAdmin {
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
     driver.findElement(By.linkText("Administration")).click();
     new Select(driver.findElement(By.xpath("//select[@wicketpath='form_username']"))).selectByVisibleText("testaccountforeeg2@seznam.cz");
-    driver.findElement(By.cssSelector("option[value=\"317\"]")).click();
     new Select(driver.findElement(By.xpath("//select[@wicketpath='form_authority']"))).selectByVisibleText("User");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     driver.findElement(By.xpath("//a[@wicketpath='logout']")).click();

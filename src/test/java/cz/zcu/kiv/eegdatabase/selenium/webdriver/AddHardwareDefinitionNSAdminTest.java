@@ -1,15 +1,21 @@
 package cz.zcu.kiv.eegdatabase.selenium.webdriver;
 
-import java.util.regex.Pattern;
-import java.util.concurrent.TimeUnit;
-import org.junit.*;
-import static org.junit.Assert.*;
-import static org.hamcrest.CoreMatchers.*;
-import org.openqa.selenium.*;
+import org.junit.After;
+import org.junit.Before;
+import org.junit.Test;
+import org.openqa.selenium.Alert;
+import org.openqa.selenium.By;
+import org.openqa.selenium.NoSuchElementException;
+import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.support.ui.Select;
 
-public class CreateHardwareDefinitionAsUserNS {
+import java.util.concurrent.TimeUnit;
+
+import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
+
+public class AddHardwareDefinitionNSAdminTest {
   private WebDriver driver;
   private String baseUrl;
   private boolean acceptNextAlert = true;
@@ -23,22 +29,18 @@ public class CreateHardwareDefinitionAsUserNS {
   }
 
   @Test
-  public void testCreateHardwareDefinitionAsUserNS() throws Exception {
+  public void testAddHardwareDefinitionNSAdmin() throws Exception {
     driver.get(baseUrl + "/home-page?1");
-    // Warning: verifyTextPresent may require manual changes
-    try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-    } catch (Error e) {
-      verificationErrors.append(e.toString());
-    }
+    // Warning: assertTextPresent may require manual changes
+    assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
     driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testAccountForEEG2@seznam.cz");
+    driver.findElement(By.xpath("//input[@wicketpath='login_userName']")).sendKeys("testaccountforeeg@seznam.cz");
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='login_password']")).sendKeys("123456");
     driver.findElement(By.xpath("//input[@wicketpath='login_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Logged user: testaccountforeeg2@seznam\\.cz[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Logged user: testaccountforeeg@seznam\\.cz[\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
@@ -46,11 +48,25 @@ public class CreateHardwareDefinitionAsUserNS {
     driver.findElement(By.xpath("//a[@wicketpath='leftMenu_menu_0_link']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
-      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*List of hardware definitions[\\s\\S]*$"));
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*List of hardware definitions [\\s\\S]*$"));
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    new Select(driver.findElement(By.xpath("//select[@wicketpath='form_groups']"))).selectByVisibleText("Nová skupina_edited");
     driver.findElement(By.xpath("//a[@wicketpath='addHardwareLink']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Add hardware definition[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    // Nothing filled
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -70,8 +86,9 @@ public class CreateHardwareDefinitionAsUserNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Filled only title
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("NewTitle");
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("Title");
     driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
@@ -89,10 +106,11 @@ public class CreateHardwareDefinitionAsUserNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Filled only type
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("NewType");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("Type");
     driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
@@ -108,12 +126,13 @@ public class CreateHardwareDefinitionAsUserNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Filled only description
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
     driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
     driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
-    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("NewDescription");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("Description");
     driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
@@ -121,6 +140,49 @@ public class CreateHardwareDefinitionAsUserNS {
     } catch (Error e) {
       verificationErrors.append(e.toString());
     }
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Type' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    // Filled type and description
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("Type");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("Description");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Title' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    // Filled title and type
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("Title");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("Type");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    // Warning: verifyTextPresent may require manual changes
+    try {
+      assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Description' is required\\.[\\s\\S]*$"));
+    } catch (Error e) {
+      verificationErrors.append(e.toString());
+    }
+    // Filled title and description
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_title']")).sendKeys("Title");
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_type']")).sendKeys("");
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).clear();
+    driver.findElement(By.xpath("//input[@wicketpath='form_description']")).sendKeys("Description");
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
+    driver.findElement(By.xpath("//input[@wicketpath='form_submit']")).click();
     // Warning: verifyTextPresent may require manual changes
     try {
       assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Field 'Type' is required\\.[\\s\\S]*$"));
