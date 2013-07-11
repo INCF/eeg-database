@@ -2,15 +2,18 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertTrue;
 
-public class SimpleHardwareDaoTest extends AbstractDataAccessTest {
+/**
+ * User: Tomas Pokryvka
+ * Date: 26.4.13
+ */
+public class HardwareDaoTest extends AbstractDataAccessTest {
 
 
   @Autowired
@@ -30,6 +33,7 @@ public class SimpleHardwareDaoTest extends AbstractDataAccessTest {
 
 
   @Test
+  @Transactional
   public void testCreateHardware() {
     int hardwareCountBefore  = hardwareDao.getAllRecords().size();
     int hardwareID = hardwareDao.create(hardware);
@@ -37,20 +41,12 @@ public class SimpleHardwareDaoTest extends AbstractDataAccessTest {
     assertEquals(hardwareID, hardware.getHardwareId());
   }
 
-  @Test
-  public void testCanDelete() throws Exception {
-    assertTrue(hardwareDao.canDelete(hardware.getHardwareId()));
-  }
 
   @Test
+  @Transactional
   public void testCreateDefaultRecord() throws Exception {
     int expectedValue = hardwareDao.getDefaultRecords().size();
     hardwareDao.createDefaultRecord(hardware);
     assertEquals(expectedValue + 1, hardwareDao.getDefaultRecords().size());
-  }
-
-  @After
-  public void tearDown(){
-    hardwareDao.delete(hardware);
   }
 }

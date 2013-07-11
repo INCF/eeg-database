@@ -1,62 +1,124 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
-import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
-import org.jfree.data.time.TimeSeriesTableModel;
-import org.junit.Ignore;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
 import java.util.Calendar;
-import java.util.List;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 /**
- * Created by IntelliJ IDEA.
- * User: Jiri Vlasimsky (vlasimsky.jiri@gmail.com)
- * Date: 6.3.11
- * Time: 16:57
+ * User: Tomas Pokryvka
+ * Date: 20.4.13
  */
 public class ArticleDaoTest extends AbstractDataAccessTest {
 
-    @Autowired
-    private PersonDao personDao;
+  @Autowired
+  private PersonDao personDao;
 
-    @Autowired
-    private ArticleDao articleDao;
+  @Autowired
+  private ArticleDao articleDao;
 
-    @Test
-    @Transactional
-    public void testGetAllArticle() {
+  protected Article article;
+  protected Person person_reader;
+  protected Person person_admin;
 
-        Article article = new Article();
-        article.setTitle("prvni");
-        article.setText("text");
-        Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-        article.setTime(currentTimestamp);
-        article.setPerson(personDao.getPerson("kaby"));
+  @Before
+  public void setUp() {
+    person_admin = personDao.getPerson("testaccountforeeg@seznam.cz"); // ROLE_ADMIN
+    person_reader = personDao.getPerson("testaccountforeeg3@seznam.cz"); // ROLE_EXPERIMENTER
 
-        List<Article> initialArticleList = articleDao.getAllArticles();
-        articleDao.create(article);
-        //should contain one more article
-        List<Article> articleListAfterCreation = articleDao.getAllArticles();
-        assertEquals(initialArticleList.size()+1, articleListAfterCreation.size());
-    }
+    article = new Article();
+    article.setText("test-text");
+    article.setTitle("test-title");
+    article.setTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
+    article.setPerson(person_reader);
+  }
 
-    public ArticleDao getArticleDao() {
-        return articleDao;
-    }
+  @Test
+  @Transactional
+  public void testCteateArticleReader() {
+    int count = articleDao.getCountRecords();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getCountRecords());
+  }
 
-    public void setArticleDao(ArticleDao articleDao) {
-        this.articleDao = articleDao;
-    }
 
-    public void setPersonDao(PersonDao personDao) {
-        this.personDao = personDao;
-    }
+  @Test
+  @Transactional
+  public void testCteateArticleAdmin() {
+    article.setPerson(person_admin);
+    int count = articleDao.getCountRecords();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getCountRecords());
+  }
+
+
+  @Test
+  @Transactional
+  public void testGetAllArticleReader() {
+    int count = articleDao.getAllArticles().size();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getAllArticles().size());
+  }
+
+  @Test
+  @Transactional
+  public void testGetAllArticleAdmin() {
+    article.setPerson(person_admin);
+    int count = articleDao.getAllArticles().size();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getAllArticles().size());
+  }
+
+  @Test
+  @Transactional
+  public void testGetArticlesForUserReader() {
+    int count = articleDao.getArticlesForUser(person_reader).size();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getArticlesForUser(person_reader).size());
+  }
+
+  @Test
+  @Transactional
+  public void testGetArticlesForUserAdmin() {
+    article.setPerson(person_admin);
+    int count = articleDao.getArticlesForUser(person_admin).size();
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getArticlesForUser(person_admin).size());
+  }
+
+  @Test
+  @Transactional
+  public void testGetArticleCountForPersonAdmin() {
+    article.setPerson(person_admin);
+    int count = articleDao.getArticleCountForPerson(person_admin);
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getArticleCountForPerson(person_admin));
+  }
+
+  @Test
+  @Transactional
+  public void testGetArticleCountForPersonReader() {
+    int count = articleDao.getArticleCountForPerson(person_reader);
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getArticleCountForPerson(person_reader));
+  }
+
+  @Test
+  @Transactional
+  public void testGetArticlesForList(){
+    int count = articleDao.getArticlesForList(person_admin, 0, 200).size();
+    article.setPerson(person_admin);
+    articleDao.create(article);
+    assertEquals(count + 1, articleDao.getArticlesForList(person_admin, 0, 200).size());
+
+    assertEquals(20, articleDao.getArticlesForList(person_admin, 0, 20).size());
+  }
+
 }
