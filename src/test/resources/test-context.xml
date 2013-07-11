@@ -220,6 +220,10 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
     <bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDataFileDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
