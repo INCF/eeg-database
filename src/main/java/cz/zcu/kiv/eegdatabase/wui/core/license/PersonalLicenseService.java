@@ -1,19 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.license;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import java.util.List;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public interface PersonalLicenseService extends GenericService<PersonalLicense, Integer> {
 
@@ -43,30 +40,19 @@ public interface PersonalLicenseService extends GenericService<PersonalLicense, 
 	/**
 	 *
 	 * @param group research group to search by
-	 * @return list of PersonalLicenses NOT confirmed by admin or unpaid, or
-	 * empty list
+	 * @return list of PersonalLicenses with the state given
 	 */
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group);
-
-	/**
-	 *
-	 * @param group research group to search by
-	 * @return list of PersonalLicenses confirmed by admin or paid, or empty
-	 * list
-	 */
-	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group);
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, PersonalLicenseState state);
 
 	/**
 	 * Returns list of license requests requested by specified person or empty
 	 * list.
 	 *
 	 * @param applicant Person whose requests will be returned.
-	 * @param accepted Flag determining, what kind of requests should be
-	 * fetched. True means only accepted (active) PersonalLicenses will be
-	 * returned. False means only pending licenses will be returned.
+	 * @param state  state the requests are at
 	 * @return
 	 */
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state);
 
 	/**
 	 * Adds a single license to the person.

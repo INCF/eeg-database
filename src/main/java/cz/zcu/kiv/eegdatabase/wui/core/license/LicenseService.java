@@ -13,7 +13,7 @@ import java.util.List;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public interface LicenseService extends GenericService<License, Integer> {
 

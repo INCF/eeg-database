@@ -581,7 +581,9 @@
       },
       "rejected":
       {
-        "body":"\"Your request for license {0} has been rejected.\"",
+        "body":"\"Your request for license {0} has been rejected due to following reason:
+
+{1}\"",
         "subject":"\"License request rejected\""
       }
     },

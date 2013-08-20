@@ -11,7 +11,7 @@ import org.apache.wicket.model.Model;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public class LicenseRequestFormTestPage extends BasePage {
 

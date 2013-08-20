@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
@@ -9,11 +5,11 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonalLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
@@ -21,7 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicense, Integer> implements PersonalLicenseService {
 
@@ -76,32 +72,29 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 	@Transactional
 	public void confirmRequestForLicense(PersonalLicense personalLicense) {
 		personalLicense.setConfirmedDate(new Date());
+		personalLicense.setLicenseState(PersonalLicenseState.AUTHORIZED);
 		this.personalLicenseDao.update(personalLicense);	
 		this.mailService.sendLicenseRequestConfirmationEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
-		return personalLicenseDao.getLicenseRequests(group, false);
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, PersonalLicenseState state) {
+		return personalLicenseDao.getLicenseRequests(group, state);
 	}
 
 	@Override
 	@Transactional(readOnly=true)
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
-		return personalLicenseDao.getLicenseRequests(applicant, accepted);
-	}
-
-	@Override
-	@Transactional(readOnly=true)
-	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group) {
-		return personalLicenseDao.getLicenseRequests(group, true);
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state) {
+		return personalLicenseDao.getLicenseRequests(applicant, state);
 	}
 
 	@Override
 	public void rejectRequestForLicense(PersonalLicense personalLicense) {
-		this.personalLicenseDao.delete(personalLicense);
-		this.mailService.sendLicenseRequestRejectionEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
+		personalLicense.setLicenseState(PersonalLicenseState.REJECTED);
+		personalLicense.setConfirmedDate(new Date());
+		this.personalLicenseDao.update(personalLicense);
+		this.mailService.sendLicenseRequestRejectionEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle(), personalLicense.getResolutionComment());
 	}
 
 	@Override

@@ -49,6 +49,9 @@ public class PersonalLicense implements Serializable{
 	@Column(name = "CONFIRMED_DATE")
     @Temporal(javax.persistence.TemporalType.DATE)
     private Date confirmedDate;
+
+	@Column(name = "LICENSE_STATE")
+	private PersonalLicenseState licenseState;
 	
 	@Column(name = "FIRST_NAME")
 	private String firstName;
@@ -61,6 +64,13 @@ public class PersonalLicense implements Serializable{
 
 	@Column(name = "EMAIL")
 	private String email;
+
+	/**
+	 * Group administrator can provide explanation why the application
+	 * has been rejected (or any other comment).
+	 */
+	@Column(name = "RESOLUTION_COMMENT")
+	private String resolutionComment;
 	
 	@Column(name = "ATTACHMENT_FILE_NAME")
 	private String attachmentFileName;
@@ -101,10 +111,26 @@ public class PersonalLicense implements Serializable{
 	public void setConfirmedDate(Date confirmedDate) {
 		this.confirmedDate = confirmedDate;
 	}
+
+	public PersonalLicenseState getLicenseState() {
+		return licenseState;
+	}
+
+	public void setLicenseState(PersonalLicenseState licenseState) {
+		this.licenseState = licenseState;
+	}
 	
 	public boolean isConfirmed()
 	{
-		return this.confirmedDate != null;
+		return this.licenseState == PersonalLicenseState.AUTHORIZED;
+	}
+
+	public String getResolutionComment() {
+		return resolutionComment;
+	}
+
+	public void setResolutionComment(String resolutionComment) {
+		this.resolutionComment = resolutionComment;
 	}
 
 	public String getFirstName() {

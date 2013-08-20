@@ -5,16 +5,22 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
-import java.io.Serializable;
 import java.util.List;
 
 /**
  *
- * @author j. Danek
+ * @author J. Danek
  */
 public interface LicenseFacade extends GenericFacade<License, Integer> {
+
+	/**
+	 * Save changes of existing PersonalLicense instance
+	 * @param license
+	 */
+	public void updatePersonalLicense(PersonalLicense license);
 	
 	/**
 	 * Adds specified license to the ExperimentPackage. Saves the license into database and creates the necessary connection.
@@ -66,18 +72,23 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return list of PersonalLicenses confirmed by admin or paid, or empty list
 	 */
 	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group);
+
+	/**
+	 *
+	 * @param group
+	 * @return list of PersonalLicense requests revoked by admin
+	 */
+	public List<PersonalLicense> getRevokedRequests(ResearchGroup group);
 	
 	/**
 	 * Returns list of license requests requested by specified person or empty
 	 * list.
 	 *
 	 * @param applicant Person whose requests will be returned.
-	 * @param accepted Flag determining, what kind of requests should be
-	 * fetched. True means only accepted (active) PersonalLicenses will be
-	 * returned. False means only pending licenses will be returned.
+	 * @param state state the licenses are supposed to have
 	 * @return
 	 */
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state);
 
 	/**
 	 * Adds a single license to the person.

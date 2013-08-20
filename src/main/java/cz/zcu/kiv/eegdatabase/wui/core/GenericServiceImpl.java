@@ -7,7 +7,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public class GenericServiceImpl <T, PK extends Serializable> implements GenericService<T, PK> {
 

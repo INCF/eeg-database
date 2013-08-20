@@ -1,10 +1,13 @@
 package cz.zcu.kiv.eegdatabase.data.service;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import java.util.Locale;
-
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,12 +19,6 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 
 /**
  * Created by IntelliJ IDEA. User: Jiri Novotny Date: 11.3.12 Time: 23:57
@@ -195,11 +192,11 @@ public class SpringJavaMailService implements MailService {
 	}
 	
 	@Override
-	public boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription) throws MailException {
+	public boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription, String resolution) throws MailException {
 		Locale locale = EEGDataBaseSession.get().getLocale();
 		String subject = messageSource.getMessage("licenserequest.confirmation.rejected.subject", null, locale);
 		String msg = messageSource.getMessage("licenserequest.confirmation.rejected.body",
-				new String[]{licenseDescription}, locale);
+				new String[]{licenseDescription, resolution}, locale);
 		return this.sendEmail(toEmail, subject, msg);
 	}
 }

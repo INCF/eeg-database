@@ -21,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
- * @author veveri
+ * @author J. Danek
  */
 public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> implements LicenseService {
 

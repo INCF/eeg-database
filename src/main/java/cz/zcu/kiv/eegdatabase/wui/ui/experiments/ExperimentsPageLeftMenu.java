@@ -8,6 +8,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.GrantedLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ManageLicenseRequestsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.RevokedRequestPage;
 
 /**
  * Enumeration of left menu page for experiment section.
@@ -23,6 +24,7 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
     MANAGE_EXPERIMENT_PACKAGES(ManageExperimentPackagesPage.class, "menuItem.experiments.packages", null),
 	MANAGE_LICENSE_REQUESTS(ManageLicenseRequestsPage.class, "menuItem.experiments.licenses.requests", null),
 	LIST_GRANTED_LICENSES(GrantedLicensesPage.class, "menuItem.experiments.licenses.granted", null),
+	LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
     SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
     ADD_EXPERIMENTS(WizardTabbedPanelPage.class, "menuItem.experiments.addExperiment", null),
     RESULT(UnderConstructPage.class, "menuItem.serviceResult", null),

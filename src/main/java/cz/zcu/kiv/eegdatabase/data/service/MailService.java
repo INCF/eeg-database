@@ -1,9 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.service;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import org.springframework.mail.MailException;
-
 import java.util.Locale;
+import org.springframework.mail.MailException;
 
 /**
  * Created by IntelliJ IDEA.
@@ -53,7 +52,7 @@ public interface MailService {
      * @param toEmail Email the user whose license request has been approved.
      * @throws MailException when mail sending fails
      */
-	boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription) throws MailException;
+	boolean sendLicenseRequestRejectionEmail(String toEmail, String licenseDescription, String resolution) throws MailException;
 
     /**
      * Sends activation link to confirm user registration

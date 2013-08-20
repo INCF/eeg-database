@@ -1,20 +1,16 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import java.util.ArrayList;
 import java.util.List;
 import org.hibernate.Criteria;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.dao.support.DataAccessUtils;
 
 /**
  *
@@ -27,14 +23,10 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 	}
 
 	@Override
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed) {
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, PersonalLicenseState state) {
 		if (group != null) {
 			Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
-			if (!confirmed) {
-				criteria.add(Restrictions.isNull("confirmedDate"));
-			} else {
-				criteria.add(Restrictions.isNotNull("confirmedDate"));
-			}
+			criteria.add(Restrictions.eq("licenseState", state));
 			criteria.createAlias("license", "l");
 			criteria.add(Restrictions.ne("l.licenseType", LicenseType.OWNER));
 			criteria.add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
@@ -45,14 +37,10 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 	}
 
 	@Override
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state) {
 		Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
 		criteria.add(Restrictions.eq("person.personId", applicant.getPersonId()));
-		if (!accepted) {
-			criteria.add(Restrictions.eq("confirmedDate", null));
-		} else {
-			criteria.add(Restrictions.ne("confirmedDate", null));
-		}
+		criteria.add(Restrictions.eq("licenseState", state));
 		return criteria.list();
 	}
 

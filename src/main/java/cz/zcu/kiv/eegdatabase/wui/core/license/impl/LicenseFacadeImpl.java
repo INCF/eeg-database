@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
@@ -65,13 +66,13 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
-		return this.personalLicenseService.getLicenseRequests(group);
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state) {
+		return this.personalLicenseService.getLicenseRequests(applicant, state);
 	}
 
 	@Override
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted) {
-		return this.personalLicenseService.getLicenseRequests(applicant, accepted);
+	public List<PersonalLicense> getRevokedRequests(ResearchGroup group) {
+		return this.personalLicenseService.getLicenseRequests(group, PersonalLicenseState.REJECTED);
 	}
 
 	@Override
@@ -117,12 +118,22 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 
 	@Override
 	public List<PersonalLicense> getGrantedLicenses(ResearchGroup group) {
-		return personalLicenseService.getGrantedLicenses(group);
+		return personalLicenseService.getLicenseRequests(group, PersonalLicenseState.AUTHORIZED);
 	}
 
 	@Override
 	public List<License> getUsersLicenses(Person person) {
 		return personalLicenseService.getUsersLicenses(person);
+	}
+
+	@Override
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group) {
+		return personalLicenseService.getLicenseRequests(group, PersonalLicenseState.APPLICATION);
+	}
+
+	@Override
+	public void updatePersonalLicense(PersonalLicense license) {
+		personalLicenseService.update(license);
 	}
 	
 }

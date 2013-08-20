@@ -1,24 +1,34 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import java.util.List;
 
 /**
+ * Data-access object interface for PersonalLicense entity.
  *
  * @author bydga
  */
 public interface PersonalLicenseDao extends GenericDao<PersonalLicense, Integer> {
-	
-	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, boolean confirmed);
-	
-	public List<PersonalLicense> getLicenseRequests(Person applicant, boolean accepted);
+
+	/**
+	 * Finds license requests for research group.
+	 * @param group
+	 * @param state state the requests are at
+	 * @return
+	 */
+	public List<PersonalLicense> getLicenseRequests(ResearchGroup group, PersonalLicenseState state);
+
+	/**
+	 * Finds license requests for person.
+	 * @param group
+	 * @param state state the requests are at
+	 * @return
+	 */
+	public List<PersonalLicense> getLicenseRequests(Person applicant, PersonalLicenseState state);
 	
 	public byte[] getAttachmentContent(int personalLicenseId);
 
