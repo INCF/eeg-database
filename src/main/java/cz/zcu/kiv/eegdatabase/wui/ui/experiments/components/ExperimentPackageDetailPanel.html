@@ -5,24 +5,27 @@
 <body>
   <wicket:panel>
 	<form wicket:id="form" class="standardInputForm">
-		<h2><wicket:message key="heading.newExperimentPackage"/></h2>
+		<h2><wicket:message key="heading.newExperimentPackage"></wicket:message></h2>
 		<div class="itemBox">
-			<label class="textFieldLabel" wicket:id="name.label"/>
+			<label class="textFieldLabel" wicket:id="name.label"></label>
 			<input class="textField" wicket:id="name"/>
-			<div wicket:id="name.feedback"/>
+			<div wicket:id="name.feedback"></div>
 	    </div>
 
 		<div class="itemBox">
-			<label class="selectBoxLabel"><wicket:message key="label.licensePolicy" /></label>
+			<label class="selectBoxLabel"><wicket:message key="label.licensePolicy"></wicket:message> </label>
 			<select class="selectBox" wicket:id="licensePolicy"></select>
+			<a wicket:id="addLink" class="lightButtonLink"><wicket:message key="button.add"/></a>
 		</div>
 
-		<div wicket:id="licenseForm"/>
+		
 
 	    <div class="itemBox">
 			<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
 	    </div>
-      </form>
+	</form>
+
+	<div wicket:id="addLicenseWindow"></div>
   </wicket:panel>
 </body>
 </html>

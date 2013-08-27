@@ -15,7 +15,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,15 +52,23 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 	public void addLicenseForPackage(License license, ExperimentPackage pack) {
 		
 		this.checkLicenseGroupValidity(license, pack.getResearchGroup());
-		
-		if(license.getLicenseId() == 0) {
-			license.setResearchGroup(pack.getResearchGroup());
-			int res = this.licenseDao.create(license);
-			license.setLicenseId(res);
+
+		License tmp;
+		if(license.isTemplate()) {
+			tmp = new License();
+			tmp.copyFromTemplate(license);
+		} else {
+			tmp = license;
 		}
+		
+		if(tmp.getLicenseId() == 0) {
+			tmp.setResearchGroup(pack.getResearchGroup());
+			int res = this.licenseDao.create(tmp);
+			tmp.setLicenseId(res);
+		} 
 		ExperimentPackageLicense conn = new ExperimentPackageLicense();
 		conn.setExperimentPackage(pack);
-		conn.setLicense(license);
+		conn.setLicense(tmp);
 		this.experimentPackageLicenseDao.create(conn);
 	}
 
@@ -112,4 +122,12 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 		}
 	}
 
+	@Override
+	@Transactional(readOnly=true)
+	public List<License> getLicenseTemplates(ResearchGroup group) {
+		Map<String, Object> params = new HashMap<String, Object>();
+		params.put("template", true);
+		params.put("researchGroup.researchGroupId", group.getResearchGroupId());
+		return this.licenseDao.readByParameter(params);
+	}
 }

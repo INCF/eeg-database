@@ -5,8 +5,6 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -73,7 +71,7 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 		License ownerLicense = this.licenseService.getOwnerLicense(pack.getResearchGroup());
 		licenseService.addLicenseForPackage(ownerLicense, pack);
 		
-		if (license != null) {
+		if (license != null && license.getLicenseType() != LicenseType.OWNER) {
 			licenseService.addLicenseForPackage(license, pack);
 		}
 		else if (!pack.getResearchGroup().isPaidAccount()) { //specifying that only private will be available but group doesn't have rights to do this

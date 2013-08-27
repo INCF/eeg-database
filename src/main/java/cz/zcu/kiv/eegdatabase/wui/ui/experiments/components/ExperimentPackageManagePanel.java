@@ -317,10 +317,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
 			@Override
 			protected List<License> load() {
-				List<LicenseType> typs = new ArrayList<LicenseType>();
-				typs.add(LicenseType.ACADEMIC);
-				typs.add(LicenseType.BUSINESS);
-				return licenseFacade.getLicensesForGroup(epModel.getObject().getResearchGroup(), typs);
+				return licenseFacade.getLicenseTemplates(epModel.getObject().getResearchGroup());
 			}
 		};
 
@@ -329,6 +326,11 @@ public class ExperimentPackageManagePanel extends Panel {
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				License obj = model.getObject();
 				if (obj.getLicenseId() == 0) {
+					if(!obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
+						obj.setTemplate(true);
+						obj.setResearchGroup(epModel.getObject().getResearchGroup());
+						licenseFacade.create(obj);
+					}
 					licenseFacade.addLicenseForPackage(model.getObject(), epModel.getObject());
 				} else {
 					licenseFacade.update(obj);

@@ -28,7 +28,8 @@ import org.apache.wicket.model.PropertyModel;
 public class LicenseEditForm extends Panel {
 
 	private IModel<List<License>> blueprintsModel;
-	private IModel<License> licenseModel;
+	protected IModel<License> licenseModel;
+	protected IModel<License> selectedBlueprintModel;
 	private Form form;
 	private boolean displayControls = true;
 	private IModel<Boolean> allowBusiness;
@@ -145,7 +146,8 @@ public class LicenseEditForm extends Panel {
 	}
 
 	private void addBlueprintSelect() {
-		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", blueprintsModel, new ChoiceRenderer<License>("title")) {
+		selectedBlueprintModel = new Model<License>();
+		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
@@ -153,7 +155,7 @@ public class LicenseEditForm extends Panel {
 				if (blueprintsModel != null) {
 					viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
 				}
-				if (licenseModel.getObject().getLicenseId() != 0) {
+				if (licenseModel.getObject() != null && licenseModel.getObject().getLicenseId() != 0) {
 					viz = false;
 				}
 				this.setVisible(viz);
@@ -161,7 +163,7 @@ public class LicenseEditForm extends Panel {
 
 			@Override
 			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
-				if (option.getLicenseId() == 0) {
+				if (option == null || option.getLicenseId() == 0) {
 					licenseModel.setObject(new License());
 				} else {
 					License l = new License();
@@ -175,7 +177,7 @@ public class LicenseEditForm extends Panel {
 			}
 		};
 
-		ddc.setNullValid(false);
+		ddc.setNullValid(true);
 		form.add(ddc);
 	}
 
@@ -191,8 +193,9 @@ public class LicenseEditForm extends Panel {
 		return displayRemoveButton;
 	}
 
-	public void setDisplayRemoveButton(boolean displayRemoveButton) {
+	public LicenseEditForm setDisplayRemoveButton(boolean displayRemoveButton) {
 		this.displayRemoveButton = displayRemoveButton;
+		return this;
 	}
 
 	/**

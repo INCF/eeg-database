@@ -152,5 +152,11 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return
 	 */
 	public List<License> getUsersLicenses(Person person);
+
+	/**
+	 *
+	 * @return list of licenses saved as templates for new
+	 */
+	public List<License> getLicenseTemplates(ResearchGroup group);
 	
 }

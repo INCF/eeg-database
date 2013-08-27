@@ -135,5 +135,10 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	public void updatePersonalLicense(PersonalLicense license) {
 		personalLicenseService.update(license);
 	}
+
+	@Override
+	public List<License> getLicenseTemplates(ResearchGroup group) {
+		return this.licenseService.getLicenseTemplates(group);
+	}
 	
 }

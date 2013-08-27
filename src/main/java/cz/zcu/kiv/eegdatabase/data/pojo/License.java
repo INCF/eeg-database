@@ -39,6 +39,9 @@ public class License implements Serializable{
     @Column(name = "LICENSE_TYPE" )
     private LicenseType licenseType;
 
+	@Column(name = "IS_TEMPLATE")
+	private boolean template;
+
 	public int getLicenseId() {
 		return licenseId;
 	}
@@ -102,13 +105,29 @@ public class License implements Serializable{
 		this.experimentPackageLicenses = experimentPackageLicenses;
 	}
 
+	public boolean isTemplate() {
+		return template;
+	}
+
+	public void setTemplate(boolean template) {
+		this.template = template;
+	}
+
+	public void copyFromTemplate(License template) {
+		this.description = template.description;
+		this.title = template.title;
+		this.price = template.price;
+		this.licenseType = template.licenseType;
+	}
+
 	@Override
 	public int hashCode() {
-		int hash = 7;
-		hash = 11 * hash + (this.price != null ? this.price.hashCode() : 0);
-		hash = 11 * hash + (this.title != null ? this.title.hashCode() : 0);
-		hash = 11 * hash + (this.description != null ? this.description.hashCode() : 0);
-		hash = 11 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
+		int hash = 3;
+		hash = 79 * hash + (this.price != null ? this.price.hashCode() : 0);
+		hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
+		hash = 79 * hash + (this.description != null ? this.description.hashCode() : 0);
+		hash = 79 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
+		hash = 79 * hash + (this.template ? 1 : 0);
 		return hash;
 	}
 
@@ -133,8 +152,11 @@ public class License implements Serializable{
 		if (this.licenseType != other.licenseType) {
 			return false;
 		}
+		if (this.template != other.template) {
+			return false;
+		}
 		return true;
 	}
 
-	
+		
 }

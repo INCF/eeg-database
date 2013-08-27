@@ -5,9 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.hibernate.Criteria;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 
 /**
  * Interface for connecting logic and data layer.
@@ -43,6 +41,13 @@ public interface GenericDao <T, PK extends Serializable>{
      * @return object that was selected in database
      */
     List <T> readByParameter(String parameterName, Object parameterValue);
+
+	/**
+	 * Read records from database based on columns and values.
+	 * @param paramMap map of pairs columnName - value
+	 * @return
+	 */
+	List<T> readByParameter(Map<String, Object> paramMap);
 
     /**
      * Method update data in database.
