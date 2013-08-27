@@ -1,27 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
-import org.apache.wicket.ConverterLocator;
-import org.apache.wicket.IConverterLocator;
-import org.apache.wicket.Page;
-import org.apache.wicket.Session;
-import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
-import org.apache.wicket.core.request.mapper.CryptoMapper;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.Response;
-import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.springframework.beans.BeansException;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
+import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
-import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
-import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.LicenseRequestFormTestPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.core.common.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
@@ -36,6 +19,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
@@ -48,6 +32,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleRequestPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.GrantedLicensesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseRequestPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ManageLicenseRequestsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.RevokedRequestPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListArtifactDefinitionsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListExperimentOptParamPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListFileMetadataPage;
@@ -220,11 +208,14 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("search-page", SearchPage.class);
         mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);
 
+		mountPage("manage-packages", ManageExperimentPackagesPage.class);
+		mountPage("license-request", LicenseRequestPage.class);
+		mountPage("granted-licenses", GrantedLicensesPage.class);
+		mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
+		mountPage("revoked-licenses", RevokedRequestPage.class);
+
 		//TODO remove before production deployment
 		mountPage("migrateDb", DbMigrationPage.class);
-		mountPage("licenseRequest", LicenseRequestFormTestPage.class);
-
-
     }
 
     @Override

@@ -238,7 +238,7 @@ public class DbMigrationPage extends BasePage {
 	}
 
 	public DbMigrationPage() {
-	    //doWork();
+	    doWork();
 	    doWork2();
 	}
 }
