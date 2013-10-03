@@ -34,13 +34,7 @@ public class ScenarioTypeServiceImpl implements ScenarioTypeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ScenarioType> readByParameter(String parameterName, int parameterValue) {
-        return dao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ScenarioType> readByParameter(String parameterName, String parameterValue) {
+    public List<ScenarioType> readByParameter(String parameterName, Object parameterValue) {
         return dao.readByParameter(parameterName, parameterValue);
     }
 

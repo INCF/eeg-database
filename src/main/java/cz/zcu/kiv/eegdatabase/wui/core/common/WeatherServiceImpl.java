@@ -36,13 +36,7 @@ public class WeatherServiceImpl implements WeatherService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Weather> readByParameter(String parameterName, int parameterValue) {
-        return weatherDAO.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<Weather> readByParameter(String parameterName, String parameterValue) {
+    public List<Weather> readByParameter(String parameterName, Object parameterValue) {
         return weatherDAO.readByParameter(parameterName, parameterValue);
     }
 

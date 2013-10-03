@@ -79,4 +79,5 @@ public interface ResearchGroupFacade extends GenericFacade<ResearchGroup, Intege
     public boolean existsGroup(String title);
 
     ResearchGroup getGroupByTitle(String title);
+
 }

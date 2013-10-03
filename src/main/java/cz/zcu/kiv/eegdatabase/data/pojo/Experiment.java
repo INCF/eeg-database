@@ -110,6 +110,8 @@ public class Experiment implements Serializable {
     @JoinColumn(name = "ELECTRODE_CONF_ID")
     private ElectrodeConf electrodeConf;
 
+    @OneToMany(mappedBy="experiment")
+    private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
 
     public Experiment() {
     }
@@ -163,6 +165,14 @@ public class Experiment implements Serializable {
 
     public void setPersonBySubjectPersonId(Person personBySubjectPersonId) {
         this.personBySubjectPersonId = personBySubjectPersonId;
+    }
+
+    public Set<ExperimentPackageConnection> getExperimentPackageConnections() {
+	    return experimentPackageConnections;
+    }
+
+    public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
+	    this.experimentPackageConnections = experimentPackageConnections;
     }
 
     public Scenario getScenario() {

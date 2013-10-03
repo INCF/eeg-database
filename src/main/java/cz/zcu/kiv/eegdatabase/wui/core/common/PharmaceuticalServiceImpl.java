@@ -41,15 +41,10 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<Pharmaceutical> readByParameter(String parameterName, int parameterValue) {
+    public List<Pharmaceutical> readByParameter(String parameterName, Object parameterValue) {
         return pharmaceuticalDao.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Pharmaceutical> readByParameter(String parameterName, String parameterValue) {
-        return pharmaceuticalDao.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     @Transactional

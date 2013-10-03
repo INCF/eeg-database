@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical" schema="EEGTEST" table="PHARMACEUTICAL">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical" table="PHARMACEUTICAL">
         <id name="pharmaceuticalId" type="int">
             <column name="PHARMACEUTICAL_ID" precision="22" scale="0"/>
             <generator class="increment"/>

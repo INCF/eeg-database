@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 30.9.2010 12:53:32 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-  <class name="cz.zcu.kiv.eegdatabase.data.pojo.History" schema="EEGTEST" table="HISTORY">
+  <class name="cz.zcu.kiv.eegdatabase.data.pojo.History" table="HISTORY">
     <id name="historyId" type="int">
       <column name="HISTORY_ID" precision="22" scale="0"/>
       <generator class="increment"/>

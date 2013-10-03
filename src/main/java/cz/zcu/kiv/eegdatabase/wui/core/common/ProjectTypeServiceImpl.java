@@ -39,15 +39,10 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
 
     @Override
     @Transactional(readOnly = true)
-    public List<ProjectType> readByParameter(String parameterName, int parameterValue) {
+    public List<ProjectType> readByParameter(String parameterName, Object parameterValue) {
         return projectTypeDao.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<ProjectType> readByParameter(String parameterName, String parameterValue) {
-        return projectTypeDao.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     @Transactional

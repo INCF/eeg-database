@@ -27,6 +27,7 @@
 
         <!-- Delete this line when the project tests are ready to use -->
         <skipTests>true</skipTests>
+        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 
     <dependencies>

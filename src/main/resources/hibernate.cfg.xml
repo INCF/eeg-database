@@ -2,22 +2,28 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
   <session-factory>
-    <property name="hibernate.current_session_context_class">
+<!--    <property name="hibernate.current_session_context_class">
             org.hibernate.context.ThreadLocalSessionContext
-    </property>
+    </property>-->
     <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
     <property name="hibernate.dialect">
         cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
     </property>
     <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:EEGERP</property>
-    <property name="hibernate.connection.username">EEGTEST</property>
-    <property name="hibernate.connection.password">JPERGLER</property>
+    <property name="hibernate.connection.username">EEGTEST01</property>
+    <property name="hibernate.connection.password">eegtest</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider
     </property>
     <!--<property name="hibernate.hbm2dll.auto">create</property>-->
+
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
+   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
    
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
+<!--    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Weather.hbm.xml"/>
@@ -28,6 +34,6 @@
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
     <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/SyncChanges.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>
+    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>-->
   </session-factory>
 </hibernate-configuration>

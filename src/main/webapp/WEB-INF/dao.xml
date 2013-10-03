@@ -18,6 +18,29 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <!--BEGIN packages and license -->
+    <bean name="licenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageConnectionDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageConnectionDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentPackageLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personalLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonalLicenseDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <!-- packages and licenses END -->
+
     <bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
         <constructor-arg>
             <value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>

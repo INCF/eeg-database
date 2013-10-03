@@ -36,14 +36,10 @@ public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
     }
 
     @Override
-    public List<Pharmaceutical> readByParameter(String parameterName, int parameterValue) {
+    public List<Pharmaceutical> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    public List<Pharmaceutical> readByParameter(String parameterName, String parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     public void update(Pharmaceutical transientObject) {

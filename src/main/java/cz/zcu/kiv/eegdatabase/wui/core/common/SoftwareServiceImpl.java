@@ -59,15 +59,10 @@ public class SoftwareServiceImpl implements SoftwareService{
 
     @Override
     @Transactional(readOnly = true)
-    public List<Software> readByParameter(String parameterName, int parameterValue) {
+    public List<Software> readByParameter(String parameterName, Object parameterValue) {
         return softwareDao.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Software> readByParameter(String parameterName, String parameterValue) {
-        return softwareDao.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     @Transactional

@@ -1,0 +1,46 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:panel>
+	  <h2 wicket:id="title"></h2>
+	<form wicket:id="form" class="standardInputForm">
+	    <div class="itemBox">
+			<label class="textFieldLabel" wicket:id="firstName.label"/>
+			<input class="textField" wicket:id="firstName"/>
+			<div wicket:id="firstName.feedback"/>
+	    </div>
+
+	    <div class="itemBox">
+			<label class="textFieldLabel" wicket:id="lastName.label"/>
+			<input class="textField" wicket:id="lastName"/>
+			<div wicket:id="lastName.feedback"/>
+	    </div>
+
+	    <div class="itemBox">
+			<label class="textFieldLabel" wicket:id="organisation.label"/>
+			<input class="textField" wicket:id="organisation"/>
+			<div wicket:id="organisation.feedback"/>
+	    </div>
+
+		<div class="itemBox">
+			<label class="textFieldLabel" wicket:id="email.label"/>
+			<input class="textField" wicket:id="email"/>
+			<div wicket:id="email.feedback"/>
+	    </div>
+
+		<div class="itemBox">
+			<label class="textFieldLabel" wicket:id="attachement.label"/>
+			<input type="file" class="textField" wicket:id="attachement"/>
+			<div wicket:id="attachement.feedback"/>
+	    </div>
+
+	    <div class="itemBox">
+			<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
+			<input type="submit" wicket:id="cancelButton" class="lightButtonLink" />
+	    </div>
+      </form>
+  </wicket:panel>
+</body>
+</html>

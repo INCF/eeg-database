@@ -33,12 +33,7 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
     }
 
     @Override
-    public List<Scenario> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Scenario> readByParameter(String parameterName, String parameterValue) {
+    public List<Scenario> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 

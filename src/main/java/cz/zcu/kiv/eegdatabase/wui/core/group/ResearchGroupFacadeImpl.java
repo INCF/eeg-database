@@ -100,12 +100,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
     }
 
     @Override
-    public List<ResearchGroup> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<ResearchGroup> readByParameter(String parameterName, String parameterValue) {
+    public List<ResearchGroup> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 
@@ -239,5 +234,7 @@ public class ResearchGroupFacadeImpl implements ResearchGroupFacade {
             return null;
         }
     }
+
+
 
 }

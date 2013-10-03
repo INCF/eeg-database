@@ -143,6 +143,32 @@
 
     <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
 
+    <!-- ACCESS CONTROL -->
+    <bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
+	<constructor-arg ref="licenseDao"/>
+    </bean>
+    <bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl" autowire="byType">
+	<constructor-arg ref="personalLicenseDao"/>
+    </bean>
+    <bean name="licenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseFacadeImpl" autowire="byType">
+	<constructor-arg ref="licenseService"/>
+    </bean>
+
+    <bean name="experimentPackageConnectionService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageConnectionServiceImpl" autowire="byType">
+	<constructor-arg ref="experimentPackageConnectionDao"/>
+    </bean>
+    <bean name="experimentPackageLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseServiceImpl" autowire="byType">
+	<constructor-arg ref="experimentPackageLicenseDao"/>
+    </bean>
+    <bean name="experimentPackageService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageServiceImpl" autowire="byType">
+	<constructor-arg ref="experimentPackageDao"/>
+    </bean>
+
+    <bean name="experimentPackageFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageFacadeImpl" autowire="byType">
+	<constructor-arg ref="experimentPackageService"/>
+    </bean>
+
+
     <!-- MAIL -->
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
 

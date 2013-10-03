@@ -5,8 +5,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.SessionFactory;
 
 /**
  * Interface for connecting logic and data layer.
@@ -16,6 +15,9 @@ import org.hibernate.criterion.Restrictions;
  */
 public interface GenericDao <T, PK extends Serializable>{
 
+	
+	SessionFactory getSessionFactory();
+	
     /**
      * Create new record (row) in database.
      * @param newInstance - Object that will be created in database
@@ -38,15 +40,14 @@ public interface GenericDao <T, PK extends Serializable>{
      * @param parameterValue - value of the parameter
      * @return object that was selected in database
      */
-    List<T> readByParameter(String parameterName, int parameterValue);
+    List <T> readByParameter(String parameterName, Object parameterValue);
 
-    /**
-     * Method read record (row) in database based on column and it's value.
-     * @param parameterName - hibernate name of the parameter (column)
-     * @param parameterValue - value of the parameter
-     * @return object that was selected in database
-     */
-    List <T> readByParameter(String parameterName, String parameterValue);
+	/**
+	 * Read records from database based on columns and values.
+	 * @param paramMap map of pairs columnName - value
+	 * @return
+	 */
+	List<T> readByParameter(Map<String, Object> paramMap);
 
     /**
      * Method update data in database.

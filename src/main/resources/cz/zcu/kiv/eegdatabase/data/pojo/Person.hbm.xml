@@ -3,7 +3,7 @@
         "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
 <!-- Generated 19.1.2010 23:18:57 by Hibernate Tools 3.2.1.GA -->
 <hibernate-mapping>
-    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Person" schema="EEGTEST" table="PERSON">
+    <class name="cz.zcu.kiv.eegdatabase.data.pojo.Person" table="PERSON">
         <id name="personId" type="int">
             <column name="PERSON_ID" precision="22" scale="0"/>
             <generator class="increment"/>
@@ -140,6 +140,13 @@
                 <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult"/>
+        </set>
+
+	<set inverse="true" name="personalLicenses">
+            <key>
+                <column name="PERSON" not-null="true" precision="22" scale="0"/>
+            </key>
+            <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
         </set>
     </class>
 </hibernate-mapping>

@@ -36,14 +36,10 @@ public class ProjectTypeFacadeImpl implements ProjectTypeFacade{
     }
 
     @Override
-    public List<ProjectType> readByParameter(String parameterName, int parameterValue) {
+    public List<ProjectType> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 
-    @Override
-    public List<ProjectType> readByParameter(String parameterName, String parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
 
     @Override
     public void update(ProjectType transientObject) {

@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import org.apache.commons.logging.Log;
@@ -97,12 +98,7 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     }
 
     @Override
-    public List<Experiment> readByParameter(String parameterName, int parameterValue) {
-        return service.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    public List<Experiment> readByParameter(String parameterName, String parameterValue) {
+    public List<Experiment> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
 
@@ -135,4 +131,19 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     public List<Experiment> getUnique(Experiment example) {
         return service.getUnique(example);
     }
+
+    @Override
+    public List<Experiment> getExperimentsByPackage(int packageId) {
+	return service.getExperimentsByPackage(packageId);
+    }
+
+    @Override
+    public List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg) {
+	return service.getExperimentsWithoutPackage(pckg.getResearchGroup().getResearchGroupId(), pckg.getExperimentPackageId());
+    }
+
+	@Override
+	public List<Experiment> getExperimentsWithoutPackage() {
+		return service.getExperimentsWithoutPackage();
+	}
 }

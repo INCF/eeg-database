@@ -96,11 +96,16 @@ public class SimpleExperimentDao<T, PK extends Serializable>
                     "left join e.researchGroup.researchGroupMemberships m ";
             return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
         } else {
-            String query = "select count(distinct e) from Experiment e " +
-                    "left join e.researchGroup.researchGroupMemberships m " +
-                    "where " +
-                    "e.privateExperiment = false " +
-                    "or m.person.personId = :personId";
+//            String query = "select count(distinct e) from Experiment e " +
+//                    "left join e.researchGroup.researchGroupMemberships m " +
+//                    "where " +
+//                    "e.privateExperiment = false " +
+//                    "or m.person.personId = :personId";
+	    String query = "select count(distinct epc.experiment) from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
+		    + " PersonalLicense pl where "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = :personId";
             return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
         }
     }
@@ -112,18 +117,34 @@ public class SimpleExperimentDao<T, PK extends Serializable>
                     "left join e.researchGroup.researchGroupMemberships m ";
             return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(count).list();
         } else {
-            String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p " +
-                    "left join e.researchGroup.researchGroupMemberships m " +
-                    "where " +
-                    "e.privateExperiment = false " +
-                    "or m.person.personId = :personId " +
+//            String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p " +
+//                    "left join e.researchGroup.researchGroupMemberships m " +
+//                    "where " +
+//                    "e.privateExperiment = false " +
+//                    "or m.person.personId = :personId " +
+//                    "order by e.startTime desc";
+	    String query = "select distinct e from Experiment e, ExperimentPackageConnection epc, ExperimentPackageLicense epl, PersonalLicense pl "
+		    + " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
+		    + " where "
+		    + "e.experimentId = epc.experiment.experimentId and "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = :personId " +
                     "order by e.startTime desc";
             return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(count).list();
         }
     }
 
     public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {
-        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
+//        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
+	String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s "
+		+ "WHERE ex.experimentId IN "
+		+ "(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
+		    + " PersonalLicense pl where "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = :personId) "
+		+ "AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
         String[] stringParams = {"personId", "oracleScn"};
         Object[] objectParams = {personId, oracleScn};
         return getHibernateTemplate().findByNamedParam(HQLselect, stringParams, objectParams);
@@ -173,7 +194,12 @@ public class SimpleExperimentDao<T, PK extends Serializable>
                 }
                 ignoreChoice = false;
             }
-            hqlQuery += " and e.experimentId IN(SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = " + personId + ")";
+//            hqlQuery += " and e.experimentId IN(SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = " + personId + ")";
+	    hqlQuery += " and e.experimentId IN(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
+		    + " PersonalLicense pl where "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = " + personId + ")";
             Session ses = getSession();
             Query q = ses.createQuery(hqlQuery);
             int i = 0;
@@ -196,20 +222,37 @@ public class SimpleExperimentDao<T, PK extends Serializable>
     @Override
     public List<Experiment> getVisibleExperiments(int personId, int start, int limit) {
 
-        Criteria criteria = getSession().createCriteria(Experiment.class);
-        criteria.setMaxResults(limit);
-        criteria.add(Restrictions.ge("experimentId", start));
-        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
-       return criteria.list();
+//        Criteria criteria = getSession().createCriteria(Experiment.class);
+//        criteria.setMaxResults(limit);
+//        criteria.add(Restrictions.ge("experimentId", start));
+//        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
+//	return criteria.list();
+
+	String query = "select distinct e from Experiment e, ExperimentPackageConnection epc, ExperimentPackageLicense epl, PersonalLicense pl "
+		    + " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
+		    + " where "
+		    + "e.experimentId = epc.experiment.experimentId and "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = :personId " +
+                    "order by e.startTime desc";
+	return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", personId).setFirstResult(start).setMaxResults(limit).list();
+       
 
 
     }
 
     @Override
     public int getVisibleExperimentsCount(int personId) {
-        Criteria criteria = getSession().createCriteria(Experiment.class);
-        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
-        return criteria.list().size();
+//        Criteria criteria = getSession().createCriteria(Experiment.class);
+//        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
+//        return criteria.list().size();
+		    String query = "select count(distinct epc.experiment) from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
+		    + " PersonalLicense pl where "
+		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+		    + "epl.license.licenseId = pl.license.licenseId and "
+		    + "pl.person.personId = :personId";
+            return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", personId).uniqueResult()).intValue();
     }
 
     private String getCondition(String choice) {

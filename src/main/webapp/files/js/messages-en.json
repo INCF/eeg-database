@@ -508,6 +508,7 @@
     "parameterValue":"Value",
     "password":"Password",
     "person":"Person",
+    "pharmaceutical":"Pharmaceutical",
     "phoneNumber":"Phone number",
     "private":"Private",
     "publicArticle":"Public article",
@@ -531,6 +532,7 @@
     "service":"Select a service",
     "startDate":"Start date",
     "startDateTime":"Start date and time",
+    "stimulus":"Stimulus",
     "subjectPerson":"Subject person",
     "subscribe":"Subscribe",
     "surname":"Surname",
@@ -562,6 +564,34 @@
     "advancedSearchMeasurations":"Experiment - searcher",
     "advancedSearchPerson":"People - searcher",
     "advancedSearchScenario":"Scenario - searcher"
+  },
+  "licenserequest":
+  {
+    "applicant":
+    {
+      "body":"\"Your request for license {0} succesfully sent. Target research group has been notified of this event. You will receive confirmation email when your application has been accepted. \"",
+      "subject":"\"License request succesfully sent\""
+    },
+    "confirmation":
+    {
+      "confirmed":
+      {
+        "body":"\"Your request for license {0} has been confirmed. Data associated with this license are now available.\"",
+        "subject":"\"License request confirmed\""
+      },
+      "rejected":
+      {
+        "body":"\"Your request for license {0} has been rejected due to following reason:
+
+{1}\"",
+        "subject":"\"License request rejected\""
+      }
+    },
+    "group":
+    {
+      "body":"\"User {0} with email {1} is requesting access for license {2}. Please visit administration section of EEGPortal and accept or reject this request.\"",
+      "subject":"\"New license request\""
+    }
   },
   "link":
   {
@@ -722,8 +752,10 @@
     "addMemberToGroup":"Add member to group",
     "addPerson":"Add person",
     "addPersonOptionalParameter":"Add optional parameter for people",
+    "addProjectTypeDefinition":"Add project type",
     "addScenario":"Add scenario",
     "addScenarioSchema":"Add scenario schema",
+    "addSoftwareDefinition":"Add software definition",
     "addVisualImpairment":"Add visual impairment",
     "addWeather":"Add weather definition",
     "addWeatherDefinition":"Add weather definition",

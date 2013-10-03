@@ -88,24 +88,25 @@ public class SimpleGenericDao<T, PK extends Serializable>
      * @param parameterValue - value of the parameter
      * @return object that was selected in database
      */
-    public List<T> readByParameter(String parameterName, int parameterValue) {
-        Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
+    public List<T> readByParameter(String parameterName, Object parameterValue) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
         criteria.add(Restrictions.eq(parameterName, parameterValue));
         return criteria.list();
     }
 
-    /**
-     * Method read record (row) in database based on column and it's value.
-     *
-     * @param parameterName  - hibernate name of the parameter (column)
-     * @param parameterValue - value of the parameter
-     * @return object that was selected in database
-     */
-    public List<T> readByParameter(String parameterName, String parameterValue) {
-        Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
-        criteria.add(Restrictions.eq(parameterName, parameterValue));
+	@Override
+	public List<T> readByParameter(Map<String, Object> paramMap) {
+		Criteria criteria = getHibernateTemplate().getSessionFactory().getCurrentSession().createCriteria(type);
+        Iterator<Map.Entry<String, Object>> it = paramMap.entrySet().iterator();
+		
+		
+		Map.Entry<String, Object> tmp;
+		while(it.hasNext()) {
+			tmp = it.next();
+			criteria.add(Restrictions.eq(tmp.getKey(), tmp.getValue()));
+		}
         return criteria.list();
-    }
+	}
 
     /**
      * Method update data in database.

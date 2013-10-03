@@ -535,6 +535,28 @@ li.comment li li li {
     background: #f0f3f3;
 }
 
+.packageList li {
+    list-style: none;
+}
+
+.headerWithLinks a {
+	font-size: 0.7em;
+    margin-left: 5px;
+}
+
+.headerWithLinks em {
+	font-size: 0.7em;
+    margin-left: 5px;
+	font-style: normal;
+}
+
+.subtitle {
+	font-size: 0.8em;
+	font-weight: bold;
+	display: inline;
+}
+
+
 @media print {
     .leftMenu {
         display: none;

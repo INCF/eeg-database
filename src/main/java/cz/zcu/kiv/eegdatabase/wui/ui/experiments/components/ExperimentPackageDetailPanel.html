@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:panel>
+	<form wicket:id="form" class="standardInputForm">
+		<h2><wicket:message key="heading.newExperimentPackage"></wicket:message></h2>
+		<div class="itemBox">
+			<label class="textFieldLabel" wicket:id="name.label"></label>
+			<input class="textField" wicket:id="name"/>
+			<div wicket:id="name.feedback"></div>
+	    </div>
+
+		<div class="itemBox">
+			<label class="selectBoxLabel"><wicket:message key="label.licensePolicy"></wicket:message> </label>
+			<select class="selectBox" wicket:id="licensePolicy"></select>
+			<a wicket:id="addLink" class="lightButtonLink"><wicket:message key="button.add"/></a>
+		</div>
+
+		
+
+	    <div class="itemBox">
+			<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
+	    </div>
+	</form>
+
+	<div wicket:id="addLicenseWindow"></div>
+  </wicket:panel>
+</body>
+</html>

@@ -36,13 +36,7 @@ public class ExperimentsOptParamServiceImpl implements ExperimentsOptParamServic
 
     @Override
     @Transactional(readOnly = true)
-    public List<ExperimentOptParamDef> readByParameter(String parameterName, int parameterValue) {
-        return dao.readByParameter(parameterName, parameterValue);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<ExperimentOptParamDef> readByParameter(String parameterName, String parameterValue) {
+    public List<ExperimentOptParamDef> readByParameter(String parameterName, Object parameterValue) {
         return dao.readByParameter(parameterName, parameterValue);
     }
 
