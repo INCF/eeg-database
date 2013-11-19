@@ -239,18 +239,7 @@ public class AddScenarioController
             int schemaId = data.getScenarioSchema();
             String schemaNeeded = data.getScenarioOption();
 
-            //getting the right scenarioType bean
-            //no schema - binary storage
-            if (schemaNeeded.equals("noSchema")) {
-                scenarioType = new ScenarioTypeNonSchema();
-            }
-            //schema selected - structured storage
-            else {
-                if (schemaId > 0) {
-                    Class c = Class.forName("ScenarioTypeSchema" + schemaId);
-                    scenarioType = (ScenarioType) c.newInstance();
-                }
-            }
+            scenarioType = new ScenarioTypeNonSchema();
             if (id > 0) {
                 scenarioType = scenario.getScenarioType();
             }

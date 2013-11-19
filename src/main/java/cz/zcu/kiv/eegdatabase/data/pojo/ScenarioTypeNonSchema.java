@@ -27,11 +27,13 @@
 
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import java.sql.Blob;
 import org.hibernate.annotations.Type;
 import org.w3c.dom.Document;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.Lob;
 import javax.persistence.PrimaryKeyJoinColumn;
 
 /**
@@ -41,19 +43,19 @@ import javax.persistence.PrimaryKeyJoinColumn;
 @Entity
 @javax.persistence.Table(name="SCENARIO_TYPE_NONSCHEMA")
 @PrimaryKeyJoinColumn(name = "SCENARIO_ID", referencedColumnName = "SCENARIO_ID")
-public class ScenarioTypeNonSchema extends ScenarioType<Document> {
+public class ScenarioTypeNonSchema extends ScenarioType<Blob> {
+  @Lob
   @Column(name = "SCENARIO_XML")
-  @Type(type = "cz.zcu.kiv.eegdatabase.data.datatypes.OracleXMLType")
-  private Document scenarioXml;
+  private Blob scenarioXml;
 
   public ScenarioTypeNonSchema() {
   }
 
-  public Document getScenarioXml() {
+  public Blob getScenarioXml() {
     return scenarioXml;
   }
 
-  public void setScenarioXml(Document scenarioXml) {
+  public void setScenarioXml(Blob scenarioXml) {
     this.scenarioXml = scenarioXml;
   }
 }

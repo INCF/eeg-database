@@ -337,18 +337,6 @@
           parent="scenarioDoc">
     </bean>
 
-    <bean id="scenarioTypeSchema1" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema1"
-          parent="scenarioDoc">
-    </bean>
-
-    <bean id="scenarioTypeSchema2" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema2"
-          parent="scenarioDoc">
-    </bean>
-
-    <bean id="scenarioTypeSchema3" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema3"
-          parent="scenarioDoc">
-    </bean>
-
     <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>
 
     <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService"/>
