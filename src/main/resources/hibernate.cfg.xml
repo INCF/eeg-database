@@ -27,17 +27,18 @@
 <!--    <property name="hibernate.current_session_context_class">
             org.hibernate.context.ThreadLocalSessionContext
     </property>-->
-    <property name="hibernate.connection.driver_class">oracle.jdbc.OracleDriver</property>
-    <property name="hibernate.dialect">
-        cz.zcu.kiv.eegdatabase.data.dialect.OracleDialectWithXmlSupport
-    </property>
-    <property name="hibernate.connection.url">jdbc:oracle:thin:@students.kiv.zcu.cz:1521:EEGERP</property>
-    <property name="hibernate.connection.username">EEGTEST</property>
-    <property name="hibernate.connection.password">JPERGLER</property>
+          <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+        <property name="hibernate.connection.username">eeg</property>
+        <property name="hibernate.connection.password">eeg</property>
+        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/eeg</property>
+        <property name="connection_pool_size">1</property>
+        <property name="hbm2ddl.auto">create</property>
+
+        <property name="show_sql">true</property>
     <property name="hibernate.cache.provider_class">
             org.hibernate.cache.NoCacheProvider
     </property>
-    <!--<property name="hibernate.hbm2dll.auto">create</property>-->
 
    <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
    <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>

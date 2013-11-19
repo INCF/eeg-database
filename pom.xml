@@ -49,35 +49,20 @@
 
         <!-- Delete this line when the project tests are ready to use -->
         <skipTests>true</skipTests>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
     </properties>
 
-    <dependencies>
+		<dependencies>
+			<dependency>
+				<groupId>postgresql</groupId>
+				<artifactId>postgresql</artifactId>
+				<version>9.2-1002.jdbc4</version>
+			</dependency>
+            
         <!-- ================================ Locally stored libs ============================== -->
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>ojdbc6</artifactId>
-            <version>11.2.0.3.0</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>orai18n</artifactId>
-            <version>11.1.0</version>
-        </dependency>
         <dependency>
             <groupId>owlapi</groupId>
             <artifactId>owlapi-bin</artifactId>
             <version>3.2.4.1806</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>xdb</artifactId>
-            <version>2009_08_12</version>
-        </dependency>
-        <dependency>
-            <groupId>com.oracle</groupId>
-            <artifactId>xmlparserv</artifactId>
-            <version>2009_07_19</version>
         </dependency>
         <dependency>
             <groupId>com.jhlabs</groupId>

@@ -25,7 +25,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
-import oracle.xdb.XMLType;
 import org.hibernate.Hibernate;
 import org.junit.Before;
 import org.junit.Ignore;
@@ -57,14 +56,6 @@ public class SimpleScenarioTypeDaoTest extends AbstractDataAccessTest {
     //private Scenario scenario;
     @Autowired
     private ScenarioTypeNonXml scenarioTypeNonXml = null;
-    @Autowired
-    private ScenarioTypeNonSchema scenarioNonSchema = null;
-    @Autowired
-    private ScenarioTypeSchema1 scenarioTypeSchema1 = null;
-    @Autowired
-    private ScenarioTypeSchema2 scenarioTypeSchema2 = null;
-    @Autowired
-    private ScenarioTypeSchema3 scenarioTypeSchema3 = null;
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
@@ -101,18 +92,7 @@ public class SimpleScenarioTypeDaoTest extends AbstractDataAccessTest {
         scenario.setScenarioLength(10);
         //scenarioDao.create(scenario);
     }
-
-
-    @Test
-    @Ignore //test does not prepare its own data -> fails on new database -> marked as ignored
-    public void testGetScenarioType() throws Exception{
-        String query = "select scenario_xml from scenario_type_nonschema s where scenario_id = (\n" +
-                "       select scenario_id from scenario_type_parent p where p.scenario_id = 148)";
-        XMLType xml = (XMLType) this.jdbcTemplate.queryForObject(query, XMLType.class);
-        assertNotNull(xml);
-        Document xmlNext = (Document)scenarioTypeDao.read(148).getScenarioXml();
-        assertNotNull(xmlNext);
-    }
+		
 
     @Test
     @Transactional
@@ -126,24 +106,6 @@ public class SimpleScenarioTypeDaoTest extends AbstractDataAccessTest {
         scenarioDao.create(scenario);
     }
 
-    @Test
-    @Transactional
-    public void testCreateScenarioTypeSchema1() throws Exception {
-        ScenarioType<Document> scenarioType = scenarioTypeSchema1;
-        InputStream stream = new FileInputStream(new File(path2));
-        scenarioType.setScenarioXml(stringToDocument(stream));
-        scenarioTypeDao.create(scenarioType);
-    }
-
-    @Test
-    @Transactional
-    public void testCreateScenarioTypeSchema2() throws Exception {
-        ScenarioType<Document> scenarioType = scenarioTypeSchema2;
-        InputStream stream = new FileInputStream(new File(path3));
-        scenarioType.setScenarioXml(stringToDocument(stream));
-        scenarioTypeDao.create(scenarioType);
-    }
-
     public void setScenarioTypeDao(ScenarioTypeDao scenarioTypeDao) {
         this.scenarioTypeDao = scenarioTypeDao;
     }
@@ -154,22 +116,6 @@ public class SimpleScenarioTypeDaoTest extends AbstractDataAccessTest {
 
     public void setScenarioTypeNonXml(ScenarioTypeNonXml scenarioTypeNonXml) {
         this.scenarioTypeNonXml = scenarioTypeNonXml;
-    }
-
-    public void setScenarioNonSchema(ScenarioTypeNonSchema scenarioNonSchema) {
-        this.scenarioNonSchema = scenarioNonSchema;
-    }
-
-    public void setScenarioTypeSchema1(ScenarioTypeSchema1 scenarioTypeSchema1) {
-        this.scenarioTypeSchema1 = scenarioTypeSchema1;
-    }
-
-    public void setScenarioTypeSchema2(ScenarioTypeSchema2 scenarioTypeSchema2) {
-        scenarioTypeSchema2 = scenarioTypeSchema2;
-    }
-
-    public void setScenarioTypeSchema3(ScenarioTypeSchema3 scenarioTypeSchema3) {
-        scenarioTypeSchema3 = scenarioTypeSchema3;
     }
 
     public void setJdbcTemplate(JdbcTemplate jdbcTemplate){
