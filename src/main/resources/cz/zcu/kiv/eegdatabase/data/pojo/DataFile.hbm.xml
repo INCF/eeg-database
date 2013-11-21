@@ -36,7 +36,7 @@
         <property name="description" type="text">
             <column name="DESCRIPTION"/>
         </property>
-        <property name="fileContent" type="blob">
+        <property name="fileContent" type="binary">
             <column name="FILE_CONTENT" not-null="true"/>
         </property>
         <property name="mimetype" type="string">
@@ -60,5 +60,8 @@
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
         </set>
+				<many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Analysis" fetch="select" name="analysis">
+            <column name="ANALYSIS_ID" not-null="true" precision="22" scale="0"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

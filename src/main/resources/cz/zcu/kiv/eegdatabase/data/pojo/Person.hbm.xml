@@ -31,8 +31,13 @@
             <generator class="increment"/>
         </id>
         <property name="facebookId" type="string">
-            <column length="30" name="FB_UID"/>
+            <column length="30" name="FB_UID" unique="true"/>
         </property>
+				
+		 <property name="email" type="string">
+            <column name="EMAIL" unique="true"/>
+        </property>
+				
         <property name="givenname" type="string">
             <column length="50" name="GIVENNAME"/>
         </property>

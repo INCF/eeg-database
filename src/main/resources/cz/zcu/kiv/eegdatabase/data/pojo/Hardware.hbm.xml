@@ -31,13 +31,13 @@
             <generator class="increment"/>
         </id>
         <property name="title" type="string">
-            <column length="50" name="TITLE" not-null="true" unique="true"/>
+            <column length="50" name="TITLE" not-null="true"/>
         </property>
         <property name="type" type="string">
-            <column length="30" name="TYPE" not-null="true" unique="true"/>
+            <column length="30" name="TYPE" not-null="true" />
         </property>
         <property name="description" type="text">
-            <column length="30" name="DESCRIPTION" unique="true"/>
+            <column length="30" name="DESCRIPTION" />
         </property>
         <property name="defaultNumber" type="int">
             <column name="IS_DEFAULT" precision="1" scale="0"/>

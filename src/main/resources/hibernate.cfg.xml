@@ -19,44 +19,30 @@
    
    ***********************************************************************************************************************
    
-    hibernate.cfg.xml, 2013/10/02 00:01 Jakub Rinkes
+		hibernate.cfg.xml, 2013/10/02 00:01 Jakub Rinkes
 -->
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
-  <session-factory>
-<!--    <property name="hibernate.current_session_context_class">
-            org.hibernate.context.ThreadLocalSessionContext
-    </property>-->
-          <property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
-        <property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
-        <property name="hibernate.connection.username">eeg</property>
-        <property name="hibernate.connection.password">eeg</property>
-        <property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/eeg</property>
-        <property name="connection_pool_size">1</property>
-        <property name="hbm2ddl.auto">create</property>
+	<session-factory>
+		<!--    <property name="hibernate.current_session_context_class">
+						org.hibernate.context.ThreadLocalSessionContext
+		</property>-->
+		<property name="hibernate.dialect">org.hibernate.dialect.PostgreSQLDialect</property>
+		<property name="hibernate.connection.driver_class">org.postgresql.Driver</property>
+		<property name="hibernate.connection.username">eeg</property>
+		<property name="hibernate.connection.password">eeg</property>
+		<property name="hibernate.connection.url">jdbc:postgresql://localhost:5432/eeg</property>
+		<property name="connection_pool_size">1</property>
+		<property name="hbm2ddl.auto">create</property>
 
-        <property name="show_sql">true</property>
-    <property name="hibernate.cache.provider_class">
-            org.hibernate.cache.NoCacheProvider
-    </property>
+		<property name="show_sql">true</property>
+		<property name="hibernate.cache.provider_class">org.hibernate.cache.NoCacheProvider</property>
 
-   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
-   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
-   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage"/>
-   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
-   <mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
    
-<!--    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Hardware.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Scenario.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioType.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Weather.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Person.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/GroupPermissionRequest.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Article.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/History.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Reservation.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/ScenarioSchemas.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/SyncChanges.hbm.xml"/>
-    <mapping resource="cz/zcu/kiv/eegdatabase/data/pojo/Keywords.hbm.xml"/>-->
-  </session-factory>
+	</session-factory>
 </hibernate-configuration>

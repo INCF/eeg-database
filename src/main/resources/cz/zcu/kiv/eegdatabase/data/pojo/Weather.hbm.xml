@@ -31,7 +31,7 @@
             <generator class="increment"/>
         </id>
         <property name="description" type="string">
-            <column length="30" name="DESCRIPTION" unique="true"/>
+            <column length="30" name="DESCRIPTION" />
         </property>
         <property name="title" type="string">
             <column length="30" name="TITLE" not-null="true"/>
