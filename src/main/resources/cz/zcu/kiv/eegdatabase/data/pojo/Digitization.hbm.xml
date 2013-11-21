@@ -41,7 +41,7 @@
 
         <set inverse="true" name="experiments">
             <key>
-                <column name="DIGITALIZATION_ID" not-null="true" precision="22" scale="0"/>
+                <column name="DIGITIZATION_ID" not-null="true" precision="22" scale="0"/>
             </key>
             <one-to-many class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
         </set>

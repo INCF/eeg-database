@@ -89,6 +89,8 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
     private String authenticationHash;
     @Column(name = "CONFIRMED")
     private boolean confirmed;
+	@Column(name = "EMAIL", unique = true)	
+    private String email;
     /*
     @Fields({
             @Field(index = Index.TOKENIZED), //same property indexed multiple times
@@ -188,7 +190,10 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
     public String getGivenname() {
         return this.givenname;
     }
-
+		
+    public void setEmail(String email){
+        this.email = email;
+    }
     public void setGivenname(String givenname) {
         this.givenname = givenname;
     }

@@ -82,7 +82,6 @@ public class Scenario implements Serializable, Comparable<Scenario> {
     */
     @Column(name = "SCENARIO_LENGTH")
     private int scenarioLength;
-    //private Blob scenarioXml;
     /*
     @Fields({
             @Field(name = "description"),
