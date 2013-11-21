@@ -50,7 +50,7 @@
     <property name="bean" type="string">
         <column name="BEAN"/>
     </property>
-    <property name="description" type="string">
+    <property name="description" type="text">
         <column name="DESCRIPTION"/>
     </property>
     <property name="approved" type="char">

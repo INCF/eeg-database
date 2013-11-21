@@ -33,7 +33,7 @@
         <property name="title" type="string">
             <column name="TITLE" precision="22" scale="0"/>
         </property>
-        <property name="description" type="string">
+        <property name="description" type="text">
             <column name="DESCRIPTION" precision="22" scale="0"/>
         </property>
         <property name="defaultNumber" type="int">

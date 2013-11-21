@@ -69,7 +69,7 @@
         <property name="privateExperiment" type="boolean">
             <column name="PRIVATE" precision="1" scale="0"/>
         </property>
-        <property name="environmentNote" type="string">
+        <property name="environmentNote" type="text">
             <column name="ENVIRONMENT_NOTE"/>
         </property>
         <property name="scn" type="long" access="field" insert="false" update="false">
