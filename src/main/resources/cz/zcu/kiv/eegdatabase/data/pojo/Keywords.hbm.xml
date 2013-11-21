@@ -31,7 +31,7 @@
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup" fetch="select" name="researchGroup">
       <column name="RESEARCH_GROUP_ID" precision="22" scale="0"/>
     </many-to-one>
-    <property name="keywordsText" type="string">
+    <property name="keywordsText" type="text">
       <column name="KEYWORDS_TEXT"/>
     </property>
     </class>

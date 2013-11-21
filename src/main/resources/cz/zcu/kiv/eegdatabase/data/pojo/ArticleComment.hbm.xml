@@ -45,7 +45,7 @@
     <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Person" name="person">
       <column name="PERSON_ID" not-null="true" precision="22" scale="0"/>
     </many-to-one>
-    <property name="text" type="string">
+    <property name="text" type="text">
       <column name="TEXT"/>
     </property>
   </class>

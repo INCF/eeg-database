@@ -36,7 +36,7 @@
         <property name="type" type="string">
             <column length="30" name="TYPE" not-null="true" unique="true"/>
         </property>
-        <property name="description" type="string">
+        <property name="description" type="text">
             <column length="30" name="DESCRIPTION" unique="true"/>
         </property>
         <property name="defaultNumber" type="int">

@@ -33,7 +33,7 @@
         <many-to-one class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment" fetch="select" name="experiment">
             <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>
         </many-to-one>
-        <property name="description" type="string">
+        <property name="description" type="text">
             <column name="DESCRIPTION"/>
         </property>
         <property name="fileContent" type="blob">

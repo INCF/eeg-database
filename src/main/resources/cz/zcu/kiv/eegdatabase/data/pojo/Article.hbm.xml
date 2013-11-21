@@ -38,7 +38,7 @@
     <property name="time" type="java.sql.Timestamp">
       <column length="7" name="TIME"/>
     </property>
-    <property name="text" type="string">
+    <property name="text" type="text">
       <column name="TEXT"/>
     </property>
     <property name="title" type="string">

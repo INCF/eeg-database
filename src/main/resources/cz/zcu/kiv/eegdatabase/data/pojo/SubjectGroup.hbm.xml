@@ -32,7 +32,7 @@
         <property name="title" type="string">
             <column name="TITLE"/>
         </property>
-        <property name="description" type="string">
+        <property name="description" type="text">
             <column name="DESCRIPTION"/>
         </property>
 
