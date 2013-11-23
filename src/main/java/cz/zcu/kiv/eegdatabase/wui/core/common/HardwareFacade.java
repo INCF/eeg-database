@@ -39,8 +39,6 @@ public interface HardwareFacade extends GenericFacade<Hardware, Integer>{
 
     List<Hardware> getItemsForList();
 
-    List<Hardware> getRecordsNewerThan(long oracleScn);
-
     List<Hardware> getRecordsByGroup(int groupId);
 
     List<Hardware> getDefaultRecords();

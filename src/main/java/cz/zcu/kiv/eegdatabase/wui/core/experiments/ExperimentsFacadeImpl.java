@@ -99,10 +99,6 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
         return service.getAllExperimentsForUser(person, start, count);
     }
 
-    @Override
-    public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {
-        return service.getRecordsNewerThan(oracleScn, personId);
-    }
 
     @Override
     public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId) {

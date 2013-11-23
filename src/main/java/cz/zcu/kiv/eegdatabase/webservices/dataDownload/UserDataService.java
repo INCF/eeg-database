@@ -54,58 +54,51 @@ public interface UserDataService {
     /**
      * Method returning List of available weather information.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return weather information
      */
-    public List<WeatherInfo> getWeather(long oracleScn);
+    public List<WeatherInfo> getWeather();
 
     /**
      * Method returning List of information about available experiments.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return List of information about available experiments
      */
-    public List<ExperimentInfo> getExperiments(long oracleScn);
+    public List<ExperimentInfo> getExperiments();
 
     /**
      * Method returning List of information about available scenarios.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of scenarios
      */
-    public List<ScenarioInfo> getScenarios(long oracleScn);
+    public List<ScenarioInfo> getScenarios();
 
     /**
      * Method for obtaining list of all EEG base users.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of users
      */
-    public List<PersonInfo> getPeople(long oracleScn);
+    public List<PersonInfo> getPeople();
 
     /**
      * Method for obtaining list of all EEG base research groups.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of research groups
      */
-    public List<ResearchGroupInfo> getResearchGroups(long oracleScn);
+    public List<ResearchGroupInfo> getResearchGroups();
 
     /**
      * Method returning List of information about available data files.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of data files
      */
-    public List<DataFileInfo> getDataFiles(long oracleScn) throws UserDataServiceException;
+    public List<DataFileInfo> getDataFiles() throws UserDataServiceException;
 
     /**
      * Method returning List of information about available hardware.
      *
-     * @param oracleScn number of last revision (Oracle SCN value)
      * @return list of hardware
      */
-    public List<HardwareInfo> getHardware(long oracleScn);
+    public List<HardwareInfo> getHardware();
 
     /**
      * Method streaming desired file back to user.

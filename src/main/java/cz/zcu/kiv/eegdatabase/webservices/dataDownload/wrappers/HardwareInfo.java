@@ -34,7 +34,6 @@ public class HardwareInfo {
 
     private String description;
     private int hardwareId;
-    private long scn;
     private String title;
     private String type;
     private List<Integer> experimentIds;
@@ -75,23 +74,6 @@ public class HardwareInfo {
      */
     public void setHardwareId(int hardwareId) {
         this.hardwareId = hardwareId;
-    }
-
-    /**
-     * Getter of revision number (oracle scn).
-     * @return revision number
-     */
-    public long getScn() {
-        return scn;
-    }
-
-    /**
-     * Setter of revision number (oracle scn).
-     *
-     * @param scn revision number
-     */
-    public void setScn(long scn) {
-        this.scn = scn;
     }
 
     /**

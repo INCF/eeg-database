@@ -75,8 +75,6 @@ public class Hardware implements Serializable {
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
     @OneToMany(mappedBy = "hardware")
     private Set<HardwareGroupRel> hardwareGroupRels = new HashSet<HardwareGroupRel>(0);
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
     @Column(name = "IS_DEFAULT")
     private int defaultNumber;
 
@@ -133,10 +131,6 @@ public class Hardware implements Serializable {
 
     public String getDescription() {
         return this.description;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public void setDescription(String description) {

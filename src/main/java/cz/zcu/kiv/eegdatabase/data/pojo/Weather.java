@@ -67,8 +67,6 @@ public class Weather implements Serializable {
     private Set<ResearchGroup> researchGroups = new HashSet<ResearchGroup>(0);
     @OneToMany(mappedBy = "weather")
     private Set<WeatherGroupRel> weatherGroupRels = new HashSet<WeatherGroupRel>(0);
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
     @Column(name = "IS_DEFAULT")
     private int defaultNumber;
 
@@ -105,10 +103,6 @@ public class Weather implements Serializable {
 
     public String getTitle() {
         return this.title;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public void setTitle(String title) {

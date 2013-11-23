@@ -47,12 +47,6 @@ public class SimpleHardwareDao extends SimpleGenericDao<Hardware, Integer> imple
         return list;
     }
 
-    public List<Hardware> getRecordsNewerThan(long oracleScn) {
-        String hqlQuery = "from Hardware h where h.scn > :oracleScn";
-        List<Hardware> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
-        return list;
-    }
-
     public List<Hardware> getRecordsByGroup(int groupId) {
         String hqlQuery = "from Hardware h inner join fetch h.researchGroups as rg where rg.researchGroupId = :groupId";
         List<Hardware> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();

@@ -94,10 +94,6 @@ public class ScenariosFacadeImpl implements ScenariosFacade {
         return service.getScenariosWhereOwner(owner);
     }
 
-    @Override
-    public List<Scenario> getRecordsNewerThan(long oracleScn) {
-        return service.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     public List<Scenario> getScenariosWhereOwner(Person person, int LIMIT) {

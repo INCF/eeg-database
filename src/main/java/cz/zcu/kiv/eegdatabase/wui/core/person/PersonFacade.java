@@ -57,8 +57,6 @@ public interface PersonFacade extends GenericFacade<Person, Integer> {
 
     Map getInfoForAccountOverview(Person loggedPerson);
 
-    List<Person> getRecordsNewerThan(long oracleScn);
-
     boolean userNameInGroup(String userName, int groupId);
 
     List<Person> getPersonSearchResults(List<SearchRequest> requests);

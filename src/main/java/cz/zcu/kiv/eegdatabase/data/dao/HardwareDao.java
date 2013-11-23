@@ -37,8 +37,6 @@ public interface HardwareDao extends GenericDao<Hardware, Integer> {
 
     public List<Hardware> getItemsForList();
 
-    public List<Hardware> getRecordsNewerThan(long oracleScn);
-
     public List<Hardware> getRecordsByGroup(int groupId);
 
     public List<Hardware> getDefaultRecords();

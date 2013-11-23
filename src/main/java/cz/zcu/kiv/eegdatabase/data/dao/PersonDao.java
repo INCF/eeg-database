@@ -55,8 +55,6 @@ public interface PersonDao extends GenericDao<Person, Integer> {
 
     public Map getInfoForAccountOverview(Person loggedPerson);
 
-    public List<Person> getRecordsNewerThan(long oracleScn);
-
     public boolean userNameInGroup(String userName, int groupId);
 
     public List<Person> getPersonSearchResults(List<SearchRequest> requests);

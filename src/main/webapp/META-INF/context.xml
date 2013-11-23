@@ -21,4 +21,4 @@
    
     context.xml, 2013/10/02 00:01 Jakub Rinkes
 -->
-<Context antiJARLocking="true" path="/eegdatabase"/>
+<Context antiJARLocking="true" path=""/>

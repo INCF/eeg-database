@@ -35,7 +35,6 @@ public class ResearchGroupInfo {
     private int ownerId;
     private String title;
     private String description;
-    private long scn;
     private boolean changed;
     private boolean added;
 
@@ -108,23 +107,6 @@ public class ResearchGroupInfo {
      */
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    /**
-     * Getter of revision number (oracle scn).
-     * @return revision number
-     */
-    public long getScn() {
-        return scn;
-    }
-
-    /**
-     * Setter of revision number (oracle scn).
-     *
-     * @param scn revision number
-     */
-    public void setScn(long scn) {
-        this.scn = scn;
     }
 
     /**

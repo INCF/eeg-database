@@ -39,8 +39,6 @@ public interface GenericListDao<T> extends GenericDao<T, Integer> {
 
     public List<T> getItemsForList();
 
-  //  public List<T> getRecordsNewerThan(long oracleScn);
-
     public List<T> getRecordsByGroup(int groupId);
 
     public boolean canDelete(int id);

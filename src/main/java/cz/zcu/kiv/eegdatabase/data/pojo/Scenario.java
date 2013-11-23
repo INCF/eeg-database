@@ -108,8 +108,6 @@ public class Scenario implements Serializable, Comparable<Scenario> {
     @JoinColumn(name = "SCENARIO_ID")
     @Type(type = "cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType")
     private IScenarioType scenarioType;
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
 
     @Transient
     private String group;
@@ -186,10 +184,6 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public Set<Experiment> getExperiments() {

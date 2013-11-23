@@ -81,8 +81,6 @@ public class DataFile implements Serializable {
     @ManyToOne
     @JoinColumn(name = "ANALYSIS_ID")
     private Analysis analysis;
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
 
     public DataFile() {
     }
@@ -152,10 +150,6 @@ public class DataFile implements Serializable {
 
     public void setFilename(String filename) {
         this.filename = filename;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public Set<FileMetadataParamVal> getFileMetadataParamVals() {

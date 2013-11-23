@@ -48,11 +48,6 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
         return list;
     }
 
-    public List<Scenario> getRecordsNewerThan(long oracleScn) {
-        String hqlQuery = "from Scenario s where s.scn > :oracleScn";
-        return getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
-    }
-
     public List<Scenario> getScenariosWhereOwner(Person person, int limit) {
         getHibernateTemplate().setMaxResults(limit);
         List<Scenario> list = getScenariosWhereOwner(person);

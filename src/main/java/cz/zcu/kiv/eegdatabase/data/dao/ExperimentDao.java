@@ -55,7 +55,7 @@ public interface ExperimentDao<T, PK extends Serializable> extends GenericDao<T,
 
     public List<Experiment> getAllExperimentsForUser(Person person, int start, int count);
 
-    public List<Experiment> getRecordsNewerThan(long oracleScn, int personId);
+    public List<Experiment> getRecordsNewerThan(int personId);
 
     public List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId);
 

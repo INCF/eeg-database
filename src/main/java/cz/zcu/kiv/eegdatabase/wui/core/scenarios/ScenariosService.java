@@ -34,8 +34,6 @@ public interface ScenariosService extends GenericService<Scenario, Integer> {
 
     List<Scenario> getScenariosWhereOwner(Person owner);
 
-    List<Scenario> getRecordsNewerThan(long oracleScn);
-
     List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
 
     List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);

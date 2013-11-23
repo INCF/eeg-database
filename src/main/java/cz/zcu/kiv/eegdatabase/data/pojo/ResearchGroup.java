@@ -117,8 +117,6 @@ public class ResearchGroup implements Serializable {
     private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
     private Set<Software> softwares = new HashSet<Software>(0);
     private Set<StimulusType> stimulusTypes = new HashSet<StimulusType>(0);
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
 
     @OneToMany(mappedBy="researchGroup")
     private Set<ExperimentPackage> experimentPackages = new HashSet<ExperimentPackage>(0);
@@ -181,10 +179,6 @@ public class ResearchGroup implements Serializable {
 
     public String getDescription() {
         return this.description;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public boolean isPaidAccount() {

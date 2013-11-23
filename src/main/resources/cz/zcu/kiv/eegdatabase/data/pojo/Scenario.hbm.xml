@@ -56,9 +56,6 @@
     <property name="mimetype" type="string">
       <column name="MIMETYPE"/>
     </property>
-        <property name="scn" type="long" access="field" insert="false" update="false">
-            <column name="ORA_ROWSCN"/>
-        </property>
     <set inverse="true" name="histories">
       <key>
         <column name="SCENARIO_ID" precision="22" scale="0"/>

@@ -36,9 +36,6 @@
         <property name="title" type="string">
             <column length="30" name="TITLE" not-null="true"/>
         </property>
-        <property name="scn" type="long" access="field" insert="false" update="false">
-            <column name="ORA_ROWSCN"/>
-        </property>
         <property name="defaultNumber" type="int">
             <column name="IS_DEFAULT" precision="1" scale="0"/>
         </property>
