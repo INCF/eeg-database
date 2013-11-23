@@ -40,7 +40,6 @@ public class DataFileInfo {
     private boolean added;
     private boolean changed;
     private String description;
-    private long scn;
 
     /**
      * Getter of experiment identifier.
@@ -182,22 +181,6 @@ public class DataFileInfo {
         this.changed = changed;
     }
 
-    /**
-     * Getter of revision number (oracle scn).
-     * @return revision number
-     */
-    public long getScn() {
-        return scn;
-    }
-
-    /**
-     * Setter of revision number (oracle scn).
-     *
-     * @param scn revision number
-     */
-    public void setScn(long scn) {
-        this.scn = scn;
-    }
 
     public String getDescription() {
         return description;

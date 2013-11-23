@@ -68,13 +68,6 @@ public class SimpleWeatherDao extends SimpleGenericDao<Weather, Integer> impleme
         return (list.size() == 0);
     }
 
-    public List<Weather> getRecordsNewerThan(long oracleScn) {
-        String hqlQuery = "from Weather w where w.scn > :oracleScn";
-        String name = "oracleScn";
-        Object value = oracleScn;
-        return getHibernateTemplate().findByNamedParam(hqlQuery, name, value);
-    }
-
     public List<Weather> getRecordsByGroup(int groupId) {
         String hqlQuery = "from Weather h inner join fetch h.researchGroups as rg where rg.researchGroupId = :groupId";
         List<Weather> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("groupId", groupId).list();

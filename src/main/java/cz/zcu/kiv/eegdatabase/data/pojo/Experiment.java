@@ -74,8 +74,6 @@ public class Experiment implements Serializable {
     //@DateBridge(resolution = Resolution.DAY)//Precision stored in the index: day
     @Column(name = "END_TIME_ID")
     private Timestamp endTime;
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
     /*
     @Fields({
             @Field(index = Index.UN_TOKENIZED), // same property indexed multiple times
@@ -382,9 +380,6 @@ public class Experiment implements Serializable {
         this.artifactRemoveMethods = artifactRemoveMethods;
     }
 
-    public long getScn() {
-        return scn;
-    }
     
     public Date getFinishDate(){
         if(endTime != null)

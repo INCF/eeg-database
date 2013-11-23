@@ -32,8 +32,6 @@ public interface WeatherDao extends GenericDao<Weather, Integer> {
 
     public List<Weather> getItemsForList();
 
-    public List<Weather> getRecordsNewerThan(long oracleScn);
-
     public boolean canSaveDescription(String description, int groupId, int weatherId);
 
     public boolean canSaveDefaultDescription(String description, int weatherId);

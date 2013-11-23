@@ -158,8 +158,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
         }
     }
 
-    public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {
-//        String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s WHERE ex.experimentId IN (SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = :personId) AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
+    public List<Experiment> getRecordsNewerThan(int personId) {
 	String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s "
 		+ "WHERE ex.experimentId IN "
 		+ "(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
@@ -167,9 +166,9 @@ public class SimpleExperimentDao<T, PK extends Serializable>
 		    + "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
 		    + "epl.license.licenseId = pl.license.licenseId and "
 		    + "pl.person.personId = :personId) "
-		+ "AND ex.scn > :oracleScn ORDER BY ex.startTime DESC";
-        String[] stringParams = {"personId", "oracleScn"};
-        Object[] objectParams = {personId, oracleScn};
+		+ " ORDER BY ex.startTime DESC";
+        String[] stringParams = {"personId"};
+        Object[] objectParams = {personId};
         return getHibernateTemplate().findByNamedParam(HQLselect, stringParams, objectParams);
     }
 

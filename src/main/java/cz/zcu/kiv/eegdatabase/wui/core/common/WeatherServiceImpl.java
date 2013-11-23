@@ -103,11 +103,6 @@ public class WeatherServiceImpl implements WeatherService {
         return weatherDAO.getItemsForList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Weather> getRecordsNewerThan(long oracleScn) {
-        return weatherDAO.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     @Transactional(readOnly = true)

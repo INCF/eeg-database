@@ -166,11 +166,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         return experimentDao.getAllExperimentsForUser(person, start, count);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Experiment> getRecordsNewerThan(long oracleScn, int personId) {
-        return experimentDao.getRecordsNewerThan(oracleScn, personId);
-    }
 
     @Override
     @Transactional(readOnly = true)

@@ -169,13 +169,6 @@ public class SimplePersonDao
         return info;
     }
 
-    @Override
-    public List<Person> getRecordsNewerThan(long oracleScn) {
-        String hqlQuery = "from Person p where p.scn > :oracleScn";
-        List<Person> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
-        return list;
-    }
-
     public boolean userNameInGroup(String userName, int groupId) {
         String hqlQuery = "select p.personId from Person p left join p.researchGroupMemberships rgm where p.username = :userName and rgm.researchGroup.researchGroupId = :groupId";
         String[] paramNames = {"userName", "groupId"};

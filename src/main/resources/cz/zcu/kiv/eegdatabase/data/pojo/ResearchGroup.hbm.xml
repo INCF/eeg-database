@@ -39,9 +39,6 @@
         <property name="description" type="string">
             <column length="250" name="DESCRIPTION" not-null="true"/>
         </property>
-        <property name="scn" type="long" access="field" insert="false" update="false">
-            <column name="ORA_ROWSCN"/>
-        </property>
 		<property name="paidAccount" type="boolean">
             <column name="PAID_ACCOUNT" precision="1" scale="0"/>
         </property>

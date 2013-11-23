@@ -107,10 +107,6 @@ public class HardwareFacadeImpl implements HardwareFacade {
         return service.getItemsForList();
     }
 
-    @Override
-    public List<Hardware> getRecordsNewerThan(long oracleScn) {
-        return service.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     public List<Hardware> getRecordsByGroup(int groupId) {

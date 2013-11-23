@@ -39,8 +39,6 @@ public interface HardwareService extends GenericService<Hardware, Integer> {
 
     List<Hardware> getItemsForList();
 
-    List<Hardware> getRecordsNewerThan(long oracleScn);
-
     List<Hardware> getRecordsByGroup(int groupId);
 
     List<Hardware> getDefaultRecords();

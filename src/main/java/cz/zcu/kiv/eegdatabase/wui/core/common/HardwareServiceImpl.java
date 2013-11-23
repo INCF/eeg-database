@@ -121,11 +121,6 @@ public class HardwareServiceImpl implements HardwareService {
         return hardwareDao.getItemsForList();
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Hardware> getRecordsNewerThan(long oracleScn) {
-        return hardwareDao.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     @Transactional(readOnly = true)

@@ -33,7 +33,6 @@ public class WeatherInfo {
     private int weatherId;
     private String description;
     private String title;
-    private long scn;
     private boolean changed;
     private boolean added;
 
@@ -89,23 +88,6 @@ public class WeatherInfo {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * Getter of revision number (oracle scn).
-     * @return revision number
-     */
-    public long getScn() {
-        return scn;
-    }
-
-    /**
-     * Setter of revision number (oracle scn).
-     *
-     * @param scn revision number
-     */
-    public void setScn(long scn) {
-        this.scn = scn;
     }
 
     /**

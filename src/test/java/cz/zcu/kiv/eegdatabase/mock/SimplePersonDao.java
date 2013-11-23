@@ -97,12 +97,6 @@ public class SimplePersonDao extends SimpleGenericDao<Person, Integer> implement
         return (realPersonDao == null) ? null : realPersonDao.getInfoForAccountOverview(loggedPerson);
     }
 
-    public List<Person> getRecordsNewerThan(long oracleScn) {
-        String hqlQuery = "from Person p where p.scn > :oracleScn";
-        List<Person> list = getHibernateTemplate().findByNamedParam(hqlQuery, "oracleScn", oracleScn);
-        return list;
-    }
-
     public boolean userNameInGroup(String userName, int groupId)
     {
         return (realPersonDao == null) ? null : realPersonDao.userNameInGroup(userName, groupId);

@@ -92,10 +92,6 @@ public class WeatherFacadeImpl implements WeatherFacade {
         return service.getItemsForList();
     }
 
-    @Override
-    public List<Weather> getRecordsNewerThan(long oracleScn) {
-        return service.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     public boolean canSaveDescription(String description, int groupId, int weatherId) {

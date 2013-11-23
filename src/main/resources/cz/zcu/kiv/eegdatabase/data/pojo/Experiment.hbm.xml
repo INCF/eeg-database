@@ -72,9 +72,6 @@
         <property name="environmentNote" type="text">
             <column name="ENVIRONMENT_NOTE"/>
         </property>
-        <property name="scn" type="long" access="field" insert="false" update="false">
-            <column name="ORA_ROWSCN"/>
-        </property>
         <set inverse="true" name="persons" table="COEXPERIMENTER_REL">
             <key>
                 <column name="EXPERIMENT_ID" not-null="true" precision="22" scale="0"/>

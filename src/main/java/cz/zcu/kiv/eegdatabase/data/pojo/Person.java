@@ -141,8 +141,6 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
     @ManyToOne
     @JoinColumn(name = "EDUCATION_LEVEL_ID")
     private EducationLevel educationLevel;
-    @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
-    private long scn;
 
 
     @OneToMany(mappedBy = "person")
@@ -264,10 +262,6 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 
     public void setAuthority(String authority) {
         this.authority = authority;
-    }
-
-    public long getScn() {
-        return scn;
     }
 
     public Set<Experiment> getExperiments() {

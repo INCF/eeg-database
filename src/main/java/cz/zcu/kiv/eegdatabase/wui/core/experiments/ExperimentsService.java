@@ -54,8 +54,6 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
 
     int getCountForAllExperimentsForUser(Person person);
 
-    List<Experiment> getRecordsNewerThan(long oracleScn, int personId);
-
     List<Experiment> getExperimentSearchResults(List<SearchRequest> requests, int personId);
 
     /**

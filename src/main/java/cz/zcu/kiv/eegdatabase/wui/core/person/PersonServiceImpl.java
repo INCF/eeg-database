@@ -339,10 +339,6 @@ public class PersonServiceImpl implements PersonService {
         return personDAO.getInfoForAccountOverview(loggedPerson);
     }
 
-    @Override
-    public List<Person> getRecordsNewerThan(long oracleScn) {
-        return personDAO.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     @Transactional(readOnly = true)

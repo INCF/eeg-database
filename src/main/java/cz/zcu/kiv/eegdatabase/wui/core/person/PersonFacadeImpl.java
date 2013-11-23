@@ -147,10 +147,6 @@ public class PersonFacadeImpl implements PersonFacade {
         return personService.getInfoForAccountOverview(loggedPerson);
     }
 
-    @Override
-    public List<Person> getRecordsNewerThan(long oracleScn) {
-        return personService.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     public boolean userNameInGroup(String userName, int groupId) {

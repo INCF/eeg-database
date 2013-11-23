@@ -113,11 +113,6 @@ public class ScenariosServiceImpl implements ScenariosService {
         return scenarioDAO.getScenariosWhereOwner(owner);
     }
 
-    @Override
-    @Transactional(readOnly = true)
-    public List<Scenario> getRecordsNewerThan(long oracleScn) {
-        return scenarioDAO.getRecordsNewerThan(oracleScn);
-    }
 
     @Override
     @Transactional(readOnly = true)

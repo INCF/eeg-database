@@ -42,9 +42,6 @@
         <property name="defaultNumber" type="int">
             <column name="IS_DEFAULT" precision="1" scale="0"/>
         </property>
-        <property name="scn" type="long" access="field" insert="false" update="false">
-            <column name="ORA_ROWSCN"/>
-        </property>
         <set inverse="false" name="experiments" table="HARDWARE_USAGE_REL">
             <key>
                 <column name="HARDWARE_ID" not-null="true" precision="22" scale="0"/>

@@ -33,8 +33,6 @@ public interface WeatherFacade extends GenericFacade<Weather, Integer> {
 
     List<Weather> getItemsForList();
 
-    List<Weather> getRecordsNewerThan(long oracleScn);
-
     boolean canSaveDescription(String description, int groupId, int weatherId);
 
     boolean canSaveDefaultDescription(String description, int weatherId);

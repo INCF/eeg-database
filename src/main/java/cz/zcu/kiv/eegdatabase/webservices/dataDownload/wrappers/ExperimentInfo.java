@@ -45,7 +45,6 @@ public class ExperimentInfo {
     private int privateFlag;
     private String title;
     private List<Integer> hwIds;
-    private long scn;
     private boolean added;
     private boolean changed;
 
@@ -264,23 +263,6 @@ public class ExperimentInfo {
      */
     public void setTitle(String title) {
         this.title = title;
-    }
-
-    /**
-     * Getter of revision number (oracle scn).
-     * @return revision number
-     */
-    public long getScn() {
-        return scn;
-    }
-
-    /**
-     * Setter of revision number (oracle scn).
-     *
-     * @param scn revision number
-     */
-    public void setScn(long scn) {
-        this.scn = scn;
     }
 
     /**
