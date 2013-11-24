@@ -56,31 +56,31 @@
     </logger>
     
     <logger name="org.springframework">
-        <level value="warn" />
+        <level value="debug" />
     </logger>
     
     <logger name="org.apache.wicket">
-        <level value="warn" />
+        <level value="debug" />
     </logger>
     <logger name="org.apache.wicket.protocol.http.HttpSessionStore">
-        <level value="info" />
+        <level value="debug" />
     </logger>
     <logger name="org.apache.wicket.version">
-        <level value="info" />
+        <level value="debug" />
     </logger>
     <logger name="org.apache.wicket.RequestCycle">
-        <level value="info" />
+        <level value="debug" />
     </logger>
     <logger name="org.apache.wicket.protocol.http.WebSession=INFO">
-        <level value="info" />
+        <level value="debug" />
     </logger>
 
     <logger name="cz.zcu.kiv.eegdatabase.Tests">
-        <level value="info" />
+        <level value="debug" />
     </logger>
 
     <root>
-        <priority value="warn" />
+        <priority value="debug" />
         <appender-ref ref="logFile" />
         <appender-ref ref="console" />
     </root>
