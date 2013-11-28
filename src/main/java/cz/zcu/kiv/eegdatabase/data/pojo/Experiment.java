@@ -32,6 +32,8 @@ import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -382,6 +384,34 @@ public class Experiment implements Serializable {
 
     public long getScn() {
         return scn;
+    }
+    
+    public Date getFinishDate(){
+        if(endTime != null)
+            return new Date(endTime.getTime());
+        else {
+            Date now = new Date();
+            endTime = new Timestamp(now.getTime());
+            return now;
+        }
+    }
+    
+    public Date getStartDate(){
+        if(startTime != null)
+            return new Date(startTime.getTime());
+        else {
+            Date now = new Date();
+            startTime = new Timestamp(now.getTime());
+            return now;
+        }
+    }
+    
+    public void setFinishDate(Date date){
+        endTime = new Timestamp(date.getTime());
+    }
+    
+    public void setStartDate(Date date){
+        startTime = new Timestamp(date.getTime());
     }
 }
 

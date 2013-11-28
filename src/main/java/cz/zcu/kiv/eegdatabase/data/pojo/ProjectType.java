@@ -25,7 +25,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 
 import javax.persistence.*;
 import java.io.Serializable;

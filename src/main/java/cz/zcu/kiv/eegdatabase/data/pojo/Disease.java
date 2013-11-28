@@ -22,17 +22,23 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
-import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
-import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
+
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
+import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 
 /**
  * Created by IntelliJ IDEA.

@@ -22,17 +22,31 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Prasek
- * Date: 16.4.13
- * Time: 15:24
- * To change this template use File | Settings | File Templates.
- */
 public interface ProjectTypeService extends GenericService<ProjectType, Integer>{
 
     boolean canSaveTitle(String title);
+    
+    void createDefaultRecord(ProjectType project);
+
+    boolean isDefault(int id);
+
+    boolean canSaveDefaultTitle(String title, int projectId);
+    
+    void createGroupRel(ProjectType persistent, ResearchGroup researchGroup);
+
+    List<ProjectType> getItemsForList();
+
+    List<ProjectType> getRecordsByGroup(int groupId);
+
+    boolean canDelete(int id);
+
+    boolean hasGroupRel(int id);
+
+    void deleteGroupRel(ProjectType persistent, ResearchGroup researchGroup);
 }

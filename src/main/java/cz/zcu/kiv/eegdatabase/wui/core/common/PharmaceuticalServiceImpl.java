@@ -24,6 +24,8 @@ package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -31,13 +33,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Matheo
- * Date: 16.4.13
- * Time: 20:07
- * To change this template use File | Settings | File Templates.
- */
 public class PharmaceuticalServiceImpl implements PharmaceuticalService {
 
     protected Log log = LogFactory.getLog(getClass());
@@ -66,7 +61,6 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
     public List<Pharmaceutical> readByParameter(String parameterName, Object parameterValue) {
         return pharmaceuticalDao.readByParameter(parameterName, parameterValue);
     }
-
 
     @Override
     @Transactional
@@ -106,7 +100,43 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean canSaveTitle(String title){
+    public boolean canSaveTitle(String title) {
         return pharmaceuticalDao.canSaveTitle(title);
+    }
+
+    @Override
+    @Transactional
+    public void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
+        pharmaceuticalDao.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pharmaceutical> getItemsForList() {
+        return pharmaceuticalDao.getItemsForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Pharmaceutical> getRecordsByGroup(int groupId) {
+        return pharmaceuticalDao.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canDelete(int id) {
+        return pharmaceuticalDao.canDelete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean hasGroupRel(int id) {
+        return pharmaceuticalDao.hasGroupRel(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
+        pharmaceuticalDao.deleteGroupRel(persistent, researchGroup);
     }
 }

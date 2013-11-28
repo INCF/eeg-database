@@ -23,19 +23,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Matheo
- * Date: 16.4.13
- * Time: 20:07
- * To change this template use File | Settings | File Templates.
- */
 public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
 
     protected Log log = LogFactory.getLog(getClass());
@@ -61,7 +56,6 @@ public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
     public List<Pharmaceutical> readByParameter(String parameterName, Object parameterValue) {
         return service.readByParameter(parameterName, parameterValue);
     }
-
 
     @Override
     public void update(Pharmaceutical transientObject) {
@@ -94,7 +88,37 @@ public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
     }
 
     @Override
-    public boolean canSaveTitle(String title){
+    public boolean canSaveTitle(String title) {
         return service.canSaveTitle(title);
+    }
+
+    @Override
+    public void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
+        service.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    public List<Pharmaceutical> getItemsForList() {
+        return service.getItemsForList();
+    }
+
+    @Override
+    public List<Pharmaceutical> getRecordsByGroup(int groupId) {
+        return service.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+        return service.canDelete(id);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        return service.hasGroupRel(id);
+    }
+
+    @Override
+    public void deleteGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup) {
+        service.deleteGroupRel(persistent, researchGroup);
     }
 }

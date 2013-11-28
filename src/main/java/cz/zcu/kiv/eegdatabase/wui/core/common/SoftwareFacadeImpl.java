@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -105,5 +106,40 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     @Override
     public List<Software> getUnique(Software example) {
         return service.getUnique(example);
+    }
+
+    @Override
+    public void createGroupRel(Software persistent, ResearchGroup researchGroup) {
+        service.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    public List<Software> getItemsForList() {
+        return service.getItemsForList();
+    }
+
+    @Override
+    public List<Software> getRecordsByGroup(int groupId) {
+        return service.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+        return service.canDelete(id);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        return service.hasGroupRel(id);
+    }
+
+    @Override
+    public void deleteGroupRel(Software persistent, ResearchGroup researchGroup) {
+        service.deleteGroupRel(persistent, researchGroup);
+    }
+    
+    @Override
+    public boolean canSaveTitle(String title) {
+        return service.canSaveTitle(title);
     }
 }

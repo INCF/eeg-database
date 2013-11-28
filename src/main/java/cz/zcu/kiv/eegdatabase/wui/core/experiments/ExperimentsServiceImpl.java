@@ -22,24 +22,42 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
+import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Software;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 public class ExperimentsServiceImpl implements ExperimentsService {
     
     protected Log log = LogFactory.getLog(getClass());
 
-    ExperimentDao<Experiment, Integer> experimentDao;
+    private ExperimentDao<Experiment, Integer> experimentDao;
+    private HardwareDao hardwareDao;
+    private SimpleSoftwareDao softwareDao;
+    private PersonDao personDao;
+    private SimpleDiseaseDao diseaseDao;
+    private SimplePharmaceuticalDao pharmDao;
+    private SimpleProjectTypeDao projectTypesDao;
     private ExperimentPackageConnectionDao experimentPackageConnectionDao;
 
     @Required
@@ -49,7 +67,37 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 
     @Required
     public void setExperimentPackageConnectionDao(ExperimentPackageConnectionDao experimentPackageConnectionDao) {
-	this.experimentPackageConnectionDao = experimentPackageConnectionDao;
+        this.experimentPackageConnectionDao = experimentPackageConnectionDao;
+    }
+    
+    @Required
+    public void setHardwareDao(HardwareDao hardwareDao) {
+        this.hardwareDao = hardwareDao;
+    }
+    
+    @Required
+    public void setSoftwareDao(SimpleSoftwareDao softwareDao) {
+        this.softwareDao = softwareDao;
+    }
+    
+    @Required
+    public void setProjectTypesDao(SimpleProjectTypeDao projectTypesDao) {
+        this.projectTypesDao = projectTypesDao;
+    }
+    
+    @Required
+    public void setPharmDao(SimplePharmaceuticalDao pharmDao) {
+        this.pharmDao = pharmDao;
+    }
+    
+    @Required
+    public void setPersonDao(PersonDao personDao) {
+        this.personDao = personDao;
+    }
+    
+    @Required
+    public void setDiseaseDao(SimpleDiseaseDao diseaseDao) {
+        this.diseaseDao = diseaseDao;
     }
 
     @Override
@@ -132,8 +180,29 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 
     @Override
     @Transactional
-    public Integer create(Experiment newInstance) {
-        return experimentDao.create(newInstance);
+    public Integer create(Experiment experiment) {
+        
+        for(Hardware tmp : experiment.getHardwares()) 
+            hardwareDao.read(tmp.getHardwareId()).getExperiments().add(experiment);
+        
+        for(Disease tmp : experiment.getDiseases())
+            diseaseDao.read(tmp.getDiseaseId()).getExperiments().add(experiment);
+        
+        for(Person tmp : experiment.getPersons())
+            personDao.read(tmp.getPersonId()).getExperiments().add(experiment);
+        
+        for(Pharmaceutical tmp : experiment.getPharmaceuticals())
+            pharmDao.read(tmp.getPharmaceuticalId()).getExperiments().add(experiment);
+        
+        for(ProjectType tmp : experiment.getProjectTypes())
+            projectTypesDao.read(tmp.getProjectTypeId()).getExperiments().add(experiment);
+        
+        for(Software tmp : experiment.getSoftwares())
+            softwareDao.read(tmp.getSoftwareId()).getExperiments().add(experiment);
+        
+        experimentDao.create(experiment);
+
+        return experiment.getExperimentId();
     }
 
     @Override
@@ -150,8 +219,75 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 
     @Override
     @Transactional
-    public void update(Experiment transientObject) {
-        experimentDao.update(transientObject);
+    public void update(Experiment experiment) {
+        
+        Experiment updated = read(experiment.getExperimentId());
+        
+        // remove old objects from both side of relation
+        // first remove from side of the objects
+        for(Hardware tmp : updated.getHardwares())
+            hardwareDao.read(tmp.getHardwareId()).getExperiments().remove(updated);
+        
+        for(Disease tmp : updated.getDiseases())
+            diseaseDao.read(tmp.getDiseaseId()).getExperiments().remove(updated);
+        
+        for(Person tmp : updated.getPersons())
+            personDao.read(tmp.getPersonId()).getExperiments().remove(updated);
+        
+        for(Pharmaceutical tmp : updated.getPharmaceuticals())
+            pharmDao.read(tmp.getPharmaceuticalId()).getExperiments().remove(updated);
+        
+        for(ProjectType tmp : updated.getProjectTypes())
+            projectTypesDao.read(tmp.getProjectTypeId()).getExperiments().remove(updated);
+        
+        for(Software tmp : updated.getSoftwares())
+            softwareDao.read(tmp.getSoftwareId()).getExperiments().remove(updated);
+        // then remove from experiment sides
+        updated.getHardwares().clear();
+        updated.getSoftwares().clear();
+        updated.getDiseases().clear();
+        updated.getPersons().clear();
+        updated.getPharmaceuticals().clear();
+        updated.getProjectTypes().clear();
+        
+        // add new objects for experiments and create relation from both side
+        
+        for(Hardware tmp : experiment.getHardwares())
+            hardwareDao.read(tmp.getHardwareId()).getExperiments().add(updated);
+        
+        for(Disease tmp : experiment.getDiseases())
+            diseaseDao.read(tmp.getDiseaseId()).getExperiments().add(updated);
+        
+        for(Person tmp : experiment.getPersons())
+            personDao.read(tmp.getPersonId()).getExperiments().add(updated);
+        
+        for(Pharmaceutical tmp : experiment.getPharmaceuticals())
+            pharmDao.read(tmp.getPharmaceuticalId()).getExperiments().add(updated);
+        
+        for(ProjectType tmp : experiment.getProjectTypes())
+            projectTypesDao.read(tmp.getProjectTypeId()).getExperiments().add(updated);
+        
+        for(Software tmp : experiment.getSoftwares())
+            softwareDao.read(tmp.getSoftwareId()).getExperiments().add(updated);
+        
+        updated.setHardwares(experiment.getHardwares());
+        updated.setSoftwares(experiment.getSoftwares());
+        updated.setDiseases(experiment.getDiseases());
+        updated.setPersons(experiment.getPersons());
+        updated.setPharmaceuticals(experiment.getPharmaceuticals());
+        updated.setProjectTypes(experiment.getProjectTypes());
+        
+        updated.setScenario(experiment.getScenario());
+        updated.setPersonBySubjectPersonId(experiment.getPersonBySubjectPersonId());
+        updated.setEndTime(experiment.getEndTime());
+        updated.setStartTime(experiment.getStartTime());
+        updated.setResearchGroup(experiment.getResearchGroup());
+        updated.setPrivateExperiment(experiment.isPrivateExperiment());
+        updated.setTemperature(experiment.getTemperature());
+        updated.setWeather(experiment.getWeather());
+        updated.setEnvironmentNote(experiment.getEnvironmentNote());
+        
+        experimentDao.update(updated);
     }
 
     @Override

@@ -20,20 +20,17 @@
  *  
  *   DiseaseFacadeImpl.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.core.experiments;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import org.springframework.beans.factory.annotation.Required;
+package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 16.4.13
- * Time: 10:28
- */
+import org.springframework.beans.factory.annotation.Required;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 public class DiseaseFacadeImpl implements DiseaseFacade {
+
     DiseaseService diseaseService;
 
     @Required
@@ -53,33 +50,32 @@ public class DiseaseFacadeImpl implements DiseaseFacade {
 
     @Override
     public List<Disease> readByParameter(String parameterName, Object parameterValue) {
-        return diseaseService.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseService.readByParameter(parameterName, parameterValue);
     }
-
 
     @Override
     public void update(Disease transientObject) {
-        diseaseService.update(transientObject);//To change body of implemented methods use File | Settings | File Templates.
+        diseaseService.update(transientObject);
     }
 
     @Override
     public void delete(Disease persistentObject) {
-        diseaseService.delete(persistentObject);//To change body of implemented methods use File | Settings | File Templates.
+        diseaseService.delete(persistentObject);
     }
 
     @Override
     public List<Disease> getAllRecords() {
-        return diseaseService.getAllRecords();  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseService.getAllRecords();
     }
 
     @Override
     public List<Disease> getRecordsAtSides(int first, int max) {
-        return diseaseService.getRecordsAtSides(first, max);  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseService.getRecordsAtSides(first, max);
     }
 
     @Override
     public int getCountRecords() {
-        return diseaseService.getCountRecords();  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseService.getCountRecords();
     }
 
     @Override
@@ -90,5 +86,35 @@ public class DiseaseFacadeImpl implements DiseaseFacade {
     @Override
     public boolean existsDisease(String name) {
         return diseaseService.existsDisease(name);
+    }
+
+    @Override
+    public void createGroupRel(Disease persistent, ResearchGroup researchGroup) {
+        diseaseService.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    public List<Disease> getItemsForList() {
+        return diseaseService.getItemsForList();
+    }
+
+    @Override
+    public List<Disease> getRecordsByGroup(int groupId) {
+        return diseaseService.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+        return diseaseService.canDelete(id);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        return diseaseService.hasGroupRel(id);
+    }
+
+    @Override
+    public void deleteGroupRel(Disease persistent, ResearchGroup researchGroup) {
+        diseaseService.deleteGroupRel(persistent, researchGroup);
     }
 }

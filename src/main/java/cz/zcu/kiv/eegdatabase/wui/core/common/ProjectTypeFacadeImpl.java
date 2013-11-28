@@ -22,20 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import java.util.List;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Prasek
- * Date: 16.4.13
- * Time: 15:31
- * To change this template use File | Settings | File Templates.
- */
 public class ProjectTypeFacadeImpl implements ProjectTypeFacade{
 
     protected Log log = LogFactory.getLog(getClass());
@@ -96,5 +91,50 @@ public class ProjectTypeFacadeImpl implements ProjectTypeFacade{
     @Override
     public boolean canSaveTitle(String title) {
         return service.canSaveTitle(title);
+    }
+
+    @Override
+    public boolean isDefault(int id) {
+        return service.isDefault(id);
+    }
+
+    @Override
+    public boolean canSaveDefaultTitle(String title, int projectId) {
+        return service.canSaveDefaultTitle(title, projectId);
+    }
+
+    @Override
+    public void createGroupRel(ProjectType persistent, ResearchGroup researchGroup) {
+        service.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    public List<ProjectType> getItemsForList() {
+        return service.getItemsForList();
+    }
+
+    @Override
+    public List<ProjectType> getRecordsByGroup(int groupId) {
+        return service.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    public boolean canDelete(int id) {
+        return service.canDelete(id);
+    }
+
+    @Override
+    public boolean hasGroupRel(int id) {
+        return service.hasGroupRel(id);
+    }
+
+    @Override
+    public void deleteGroupRel(ProjectType persistent, ResearchGroup researchGroup) {
+        service.deleteGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    public void createDefaultRecord(ProjectType project) {
+        service.createDefaultRecord(project);
     }
 }

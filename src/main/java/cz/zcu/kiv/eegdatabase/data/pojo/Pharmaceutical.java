@@ -26,7 +26,8 @@ import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
-import org.apache.wicket.extensions.ajax.markup.html.autocomplete.IAutoCompletable;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
+
 import org.springframework.beans.factory.annotation.Autowired;
 
 import javax.persistence.*;

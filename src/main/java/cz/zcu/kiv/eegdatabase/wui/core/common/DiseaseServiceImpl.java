@@ -20,22 +20,19 @@
  *  
  *   DiseaseServiceImpl.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.core.experiments;
-
-import cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.transaction.annotation.Transactional;
+package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import java.util.List;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 16.4.13
- * Time: 10:27
- */
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
+
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 public class DiseaseServiceImpl implements DiseaseService {
+
     SimpleDiseaseDao diseaseDao;
 
     @Required
@@ -52,44 +49,43 @@ public class DiseaseServiceImpl implements DiseaseService {
     @Override
     @Transactional(readOnly = true)
     public Disease read(Integer id) {
-        return diseaseDao.read(id);  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseDao.read(id);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Disease> readByParameter(String parameterName, Object parameterValue) {
-        return diseaseDao.readByParameter(parameterName, parameterValue);  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseDao.readByParameter(parameterName, parameterValue);
     }
-
 
     @Override
     @Transactional
     public void update(Disease transientObject) {
-        diseaseDao.update(transientObject);//To change body of implemented methods use File | Settings | File Templates.
+        diseaseDao.update(transientObject);
     }
 
     @Override
     @Transactional
     public void delete(Disease persistentObject) {
-        diseaseDao.delete(persistentObject);//To change body of implemented methods use File | Settings | File Templates.
+        diseaseDao.delete(persistentObject);
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Disease> getAllRecords() {
-        return diseaseDao.getAllRecords();  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseDao.getAllRecords();
     }
 
     @Override
     @Transactional(readOnly = true)
     public List<Disease> getRecordsAtSides(int first, int max) {
-        return diseaseDao.getRecordsAtSides(first, max);  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseDao.getRecordsAtSides(first, max);
     }
 
     @Override
     @Transactional(readOnly = true)
     public int getCountRecords() {
-        return diseaseDao.getCountRecords();  //To change body of implemented methods use File | Settings | File Templates.
+        return diseaseDao.getCountRecords();
     }
 
     @Override
@@ -103,5 +99,41 @@ public class DiseaseServiceImpl implements DiseaseService {
     public boolean existsDisease(String name) {
         List<Disease> existingDisease = diseaseDao.readByParameter("title", name);
         return existingDisease != null && existingDisease.size() > 0;
+    }
+
+    @Override
+    @Transactional
+    public void createGroupRel(Disease persistent, ResearchGroup researchGroup) {
+        diseaseDao.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Disease> getItemsForList() {
+        return diseaseDao.getItemsForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Disease> getRecordsByGroup(int groupId) {
+        return diseaseDao.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canDelete(int id) {
+        return diseaseDao.canDelete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean hasGroupRel(int id) {
+        return diseaseDao.hasGroupRel(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteGroupRel(Disease persistent, ResearchGroup researchGroup) {
+        diseaseDao.deleteGroupRel(persistent, researchGroup);
     }
 }

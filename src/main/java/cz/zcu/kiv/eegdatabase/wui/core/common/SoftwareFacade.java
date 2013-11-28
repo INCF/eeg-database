@@ -22,6 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
+import java.util.List;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
@@ -39,4 +42,18 @@ public interface SoftwareFacade extends GenericFacade<Software, Integer>{
     boolean isDefault(int id);
 
     boolean canSaveDefaultTitle(String title, int swId);
+    
+    void createGroupRel(Software persistent, ResearchGroup researchGroup);
+
+    List<Software> getItemsForList();
+
+    List<Software> getRecordsByGroup(int groupId);
+
+    boolean canDelete(int id);
+
+    boolean hasGroupRel(int id);
+
+    void deleteGroupRel(Software persistent, ResearchGroup researchGroup);
+    
+    boolean canSaveTitle(String title);
 }

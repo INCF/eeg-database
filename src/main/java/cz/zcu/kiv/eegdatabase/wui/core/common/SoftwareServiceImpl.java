@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -120,5 +121,47 @@ public class SoftwareServiceImpl implements SoftwareService{
     @Transactional(readOnly = true)
     public List<Software> getUnique(Software example) {
         return softwareDao.findByExample(example);
+    }
+    
+    @Override
+    @Transactional
+    public void createGroupRel(Software persistent, ResearchGroup researchGroup) {
+        softwareDao.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Software> getItemsForList() {
+        return softwareDao.getItemsForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Software> getRecordsByGroup(int groupId) {
+        return softwareDao.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canDelete(int id) {
+        return softwareDao.canDelete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean hasGroupRel(int id) {
+        return softwareDao.hasGroupRel(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteGroupRel(Software persistent, ResearchGroup researchGroup) {
+        softwareDao.deleteGroupRel(persistent, researchGroup);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canSaveTitle(String title) {
+        return softwareDao.canSaveTitle(title);
     }
 }

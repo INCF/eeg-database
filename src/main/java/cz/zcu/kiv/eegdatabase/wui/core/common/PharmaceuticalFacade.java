@@ -22,17 +22,25 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Matheo
- * Date: 16.4.13
- * Time: 20:07
- * To change this template use File | Settings | File Templates.
- */
 public interface PharmaceuticalFacade extends GenericFacade<Pharmaceutical, Integer> {
 
-      public boolean canSaveTitle(String title);
+      boolean canSaveTitle(String title);
+      
+      void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup);
+
+      List<Pharmaceutical> getItemsForList();
+
+      List<Pharmaceutical> getRecordsByGroup(int groupId);
+
+      boolean canDelete(int id);
+
+      boolean hasGroupRel(int id);
+
+      void deleteGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup);
 }

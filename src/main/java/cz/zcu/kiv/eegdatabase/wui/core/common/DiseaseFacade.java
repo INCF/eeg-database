@@ -18,21 +18,29 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   DiseaseService.java, 2013/10/02 00:01 Jakub Rinkes
+ *   DiseaseFacade.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.core.experiments;
+package cz.zcu.kiv.eegdatabase.wui.core.common;
+
+import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 16.4.13
- * Time: 10:26
- */
-public interface DiseaseService extends GenericService<Disease, Integer> {
-    public Integer create(Disease newInstance);
+public interface DiseaseFacade extends GenericFacade<Disease, Integer> {
 
-    public boolean existsDisease(String name);
+    boolean existsDisease(String name);
+
+    void createGroupRel(Disease persistent, ResearchGroup researchGroup);
+
+    List<Disease> getItemsForList();
+
+    List<Disease> getRecordsByGroup(int groupId);
+
+    boolean canDelete(int id);
+
+    boolean hasGroupRel(int id);
+
+    void deleteGroupRel(Disease persistent, ResearchGroup researchGroup);
 }

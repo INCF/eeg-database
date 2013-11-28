@@ -24,6 +24,8 @@ package cz.zcu.kiv.eegdatabase.wui.core.common;
 
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
@@ -106,5 +108,59 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
     @Transactional(readOnly = true)
     public boolean canSaveTitle(String title) {
         return projectTypeDao.canSaveTitle(title);
+    }
+    
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isDefault(int id) {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canSaveDefaultTitle(String title, int projectId) {
+        throw new UnsupportedOperationException("not implemented");
+    }
+
+    @Override
+    @Transactional
+    public void createGroupRel(ProjectType persistent, ResearchGroup researchGroup) {
+        projectTypeDao.createGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProjectType> getItemsForList() {
+        return projectTypeDao.getItemsForList();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ProjectType> getRecordsByGroup(int groupId) {
+        return projectTypeDao.getRecordsByGroup(groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canDelete(int id) {
+        return projectTypeDao.canDelete(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean hasGroupRel(int id) {
+        return projectTypeDao.hasGroupRel(id);
+    }
+
+    @Override
+    @Transactional
+    public void deleteGroupRel(ProjectType persistent, ResearchGroup researchGroup) {
+        projectTypeDao.deleteGroupRel(persistent, researchGroup);
+    }
+
+    @Override
+    @Transactional
+    public void createDefaultRecord(ProjectType project) {
+        throw new UnsupportedOperationException("not implemented");
     }
 }

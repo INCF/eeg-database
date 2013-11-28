@@ -22,10 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
-
-import java.util.List;
 
 /**
  * Created by IntelliJ IDEA.
@@ -110,6 +110,14 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
         List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
                 .setParameter("title", title)
                 .setParameter("swId", swId)
+                .list();
+        return (list.size() == 0);
+    }
+    
+    public boolean canSaveTitle(String title) {
+        String hqlQuery = "from Software sw where sw.title = :title";
+        List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("title", title)
                 .list();
         return (list.size() == 0);
     }
