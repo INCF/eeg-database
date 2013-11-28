@@ -87,7 +87,7 @@
     <bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource"/>
         <property name="mappingLocations" value="classpath*:cz/zcu/kiv/eegdatabase/data/pojo/*.hbm.xml"/>
-     <!--   <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo" />-->
+				
 	<property name="configLocation">
             <value>classpath:hibernate.cfg.xml</value>
         </property>
@@ -96,14 +96,8 @@
                 <prop key="hibernate.dialect">${db.dialect}</prop>
                 <prop key="autocommmit">true</prop>
                 <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-                <!-- Hibernate Search configuration
- <prop key="hibernate.search.default.directory_provider">org.hibernate.search.store.FSDirectoryProvider</prop>
- <prop key="hibernate.search.default.indexBase">./users/application/indexes</prop>
-                <prop key="hibernate.search.default.directory_provider">
-                    org.hibernate.search.store.RAMDirectoryProvider
-                </prop>
-                -->
-
+                <prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+                <prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
                 <prop key="hibernate.cfgfile">/hibernate.cfg.xml</prop>
             </props>
        </property>
