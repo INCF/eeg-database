@@ -157,12 +157,11 @@ public class ResearchGroupFormPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     target.add(feedback);
-                    
 
                     ResearchGroup group = ResearchGroupForm.this.getModelObject();
 
                     if (group.getResearchGroupId() > 0) {
-                        if (!facade.canSaveTitle(group.getDescription(), group.getResearchGroupId())) {
+                        if (!facade.canSaveTitle(group.getTitle(), group.getResearchGroupId())) {
                             error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
                         } else {
                             facade.update(group);

@@ -30,22 +30,19 @@ import org.apache.wicket.util.string.Strings;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 12.5.13
- * Time: 15:19
- */
 public class ScenarioConverter implements IConverter<Scenario> {
+
+    private static final long serialVersionUID = 998875853995668225L;
+
     private ScenariosFacade scenariosFacade;
 
-    public ScenarioConverter(ScenariosFacade scenariosFacade){
+    public ScenarioConverter(ScenariosFacade scenariosFacade) {
         this.scenariosFacade = scenariosFacade;
     }
 
     @Override
     public Scenario convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 
@@ -55,6 +52,6 @@ public class ScenarioConverter implements IConverter<Scenario> {
 
     @Override
     public String convertToString(Scenario scenario, Locale locale) {
-        return scenario.getAutoCompleteData();
+        return scenario.getTitle();
     }
 }

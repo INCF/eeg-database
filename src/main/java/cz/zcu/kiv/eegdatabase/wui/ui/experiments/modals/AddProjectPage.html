@@ -30,8 +30,16 @@ This file is part of the EEG-database project
         <div class="form-item">
 
             <h1 wicket:id="addProjectHeader"></h1>
+            
             <div class="error" wicket:id="feedback"></div>
-
+            
+            <div class="form-sub-item">
+                <label for="group">
+                    <wicket:message key="label.group">Group</wicket:message>
+                </label>
+                <select wicket:id="researchGroup"></select>
+            </div>
+            
             <div class="form-sub-item">
                 <label for="title"><wicket:message key="label.title" /></label>
                 <input type="text" wicket:id="title"/>

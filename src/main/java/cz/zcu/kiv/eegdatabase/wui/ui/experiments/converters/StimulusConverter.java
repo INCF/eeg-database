@@ -31,15 +31,18 @@ import java.util.List;
 import java.util.Locale;
 
 public class StimulusConverter implements IConverter<Stimulus> {
+
+    private static final long serialVersionUID = -1243782944747903631L;
+
     private StimulusFacade stimulusFacade;
 
-    public StimulusConverter(StimulusFacade stimulusFacade){
+    public StimulusConverter(StimulusFacade stimulusFacade) {
         this.stimulusFacade = stimulusFacade;
     }
 
     @Override
     public Stimulus convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 

@@ -32,16 +32,23 @@ This file is part of the EEG-database project
             <h1 wicket:id="addPharmaHeader"></h1>
 
             <div class="error" wicket:id="feedback"></div>
-
+            
             <div class="form-sub-item">
-                <label for="title" wicket:id="titleLb">
+                <label for="group">
+                    <wicket:message key="label.group">Group</wicket:message>
+                </label>
+                <select wicket:id="researchGroup"></select>
+            </div>
+            
+            <div class="form-sub-item">
+                <label for="title">
                     <wicket:message key="label.title">[title]</wicket:message>
                 </label>
                 <input type="text" wicket:id="title"/>
             </div>
 
             <div class="form-sub-item">
-                <label for="description" wicket:id="descriptionLb">
+                <label for="description">
                     <wicket:message key="label.pharmaceutical.description">[description]</wicket:message>
                 </label>
                 <textarea wicket:id="description" rows="3" cols="40"></textarea>

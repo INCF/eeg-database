@@ -2,7 +2,6 @@
  * Stylesheet for wizard for adding new experiments purpose.
  */
 .wizard {
- 	float: left;
     margin-bottom: 20px;
     margin-left: 10px;
     padding: 10px;
@@ -121,6 +120,7 @@
 }
 
 .wizard input:not([type="checkbox"]),
+.wizard input:not([type="radio"]),
 .wizard textarea,
 .wizard select {
     width: 250px;
@@ -136,6 +136,15 @@
 	margin-left: 10px;
 }
 
+.wizard input[type="radio"]{
+	margin-left: 10px;
+	width: 20px;
+}
+
+.wizard span.multilabel label {
+	width: 50px;
+}
+
 .wizard form {
     height: auto;
     width: 470px;
@@ -143,17 +152,18 @@
     margin-right: 8px;
     padding: 20px;
     padding-bottom: 0px;
-    
-    background: #f6fcfd;
-    -moz-box-shadow: inset 0 0 12px 12px #caebf1;
-    -webkit-box-shadow: inset 0 0 12px 12px #caebf1;
-    box-shadow: inset 0 0 12px 12px #caebf1;
+
+/* hidded blue box on background */
+/*     background: #f6fcfd; */
+/*     -moz-box-shadow: inset 0 0 12px 12px #caebf1; */
+/*     -webkit-box-shadow: inset 0 0 12px 12px #caebf1; */
+/*     box-shadow: inset 0 0 12px 12px #caebf1; */
     
     float: left;
 }
 
 .wizard .form-item {
-    margin-bottom: 20px;
+    margin-bottom: 10px;
     padding: 10px;
     
     border: 1px solid #b4b4b4;
@@ -208,10 +218,50 @@
 	margin-right: 10px;
 }
 
-
-.wizard input[type=submit],
 .wizard input[type=button] {
     width: 60px;
+    color: #f3f3f3;
+    
+    border-radius: 6px;
+    -moz-border-radius: 6px;
+    -webkit-border-radius: 6px;
+    
+    background: #0cb114;
+    background-image: -moz-linear-gradient(top, #0cb114, #07580b); /* FF3.6 */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #07580b), color-stop(1, #0cb114)); /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #0cb114 0%, #07580b 100%);
+    background-image: -ms-linear-gradient(top, #0cb114 0%, #07580b 100%);
+    background-image: -o-linear-gradient(top, #0cb114 0%, #07580b 100%);
+    background-image: linear-gradient(to top, #0cb114 0%, #07580b 100%);
+
+    -webkit-box-shadow: #4b4b4b 0px 2px 5px;
+    -moz-box-shadow: #4e4e4e 0px 2px 5px;
+    box-shadow: #e3e3e3 0px 2px 5px;
+    cursor: pointer;
+    border: none;
+    
+    margin-left: 130px;
+    margin-right: 250px; 
+}
+
+.wizard * tr.wicketExtensionsWizardButtonBarRow * div {
+	margin-left: 100px;
+}
+
+* input[type=submit]:disabled,
+* input[type=button]:disabled {
+	color: 4b4b4b !important;
+	background: #e3e3e3 !important;
+    background-image: -moz-linear-gradient(top, #e3e3e3, #e3e3e3) !important; /* FF3.6 */
+    background-image: -webkit-gradient(linear, left bottom, left top, color-stop(0, #e3e3e3), color-stop(1, #e3e3e3)) !important; /* Saf4+, Chrome */
+    background-image: -webkit-linear-gradient(top, #e3e3e3 0%, #e3e3e3 100%) !important;
+    background-image: -ms-linear-gradient(top, #e3e3e3 0%, #e3e3e3 100%) !important;
+    background-image: -o-linear-gradient(top, #e3e3e3 0%, #e3e3e3 100%) !important;
+    background-image: linear-gradient(to top, #e3e3e3 0%, #e3e3e3 100%) !important;
+}
+
+.wizard * tr.wicketExtensionsWizardButtonBarRow * input[type=submit] {
+    width: 80px;
     color: #f3f3f3;
     
     border-radius: 6px;
@@ -232,9 +282,10 @@
     
     border: none;
     
-    margin-left: 130px;
-    margin-right: 250px; 
+    margin-left: 0px;
+    margin-right: 5px;
 }
+
 .wizard input[type=submit]:active,
 .wizard input[type=button]:active {
 	 background: #0ed119;
@@ -326,7 +377,6 @@
 
 .wizard input[type="radio"] {
     display: block;
-    width: 30px;
     float: left;
 }
 
@@ -392,12 +442,7 @@
 	border-bottom: 5px solid #ec1717;
 }
 
-.wizard span span input[name="start:date"],
-.wizard span span input[name="start:hours"],
-.wizard span span input[name="start:minutes"],
-.wizard span span input[name="finish:date"],
-.wizard span span input[name="finish:hours"],
-.wizard span span input[name="finish:minutes"]
+.wizard div.date span span input
 {
     width: auto;
 }
@@ -435,6 +480,6 @@
 	display: block;
 	padding-left: 130px;
 }
-.wizard .form-item .repeatable span.feedbackPanelERROR {
+.wizard .form-item * span.feedbackPanelERROR {
 	margin-left: 0px;
 }

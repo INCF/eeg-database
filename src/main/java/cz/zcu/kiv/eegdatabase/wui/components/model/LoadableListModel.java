@@ -18,18 +18,16 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   IFactory.java, 2013/10/02 00:01 Jakub Rinkes
+ *   LoadableListModel.java, 2013/28/11 00:01 Jakub Rinkes
  ******************************************************************************/
-package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
+package cz.zcu.kiv.eegdatabase.wui.components.model;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 11.5.13
- * Time: 9:23
- */
-public interface IFactory<T> {
-    T create();
+import java.util.List;
 
-    Class<T> getClassForConverter();
+import org.apache.wicket.model.LoadableDetachableModel;
+
+abstract public class LoadableListModel<T> extends LoadableDetachableModel<List<T>>{
+
+    private static final long serialVersionUID = 1L;
+    
 }

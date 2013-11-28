@@ -22,12 +22,16 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
-import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
+import java.io.Serializable;
+
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -35,12 +39,9 @@ import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.util.string.StringValue;
-
-import java.io.Serializable;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 
 /**
  * MenuPage for EEGDatabase portal, added header section with information about logged user,
@@ -123,5 +124,11 @@ public class MenuPage extends BasePage {
 
     public BaseFeedbackMessagePanel getFeedback() {
         return feedback;
+    }
+    
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
+        super.renderHead(response);
     }
 }

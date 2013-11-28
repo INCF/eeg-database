@@ -1,0 +1,72 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+ 
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ 
+ ***********************************************************************************************************************
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+ 
+ ***********************************************************************************************************************
+ 
+  AddExperimentEnvironmenForm.html, 2013/10/17 00:01 Jakub Rinkes
+-->
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+        <div wicket:id="modalWindow"></div>
+
+        <div class="form-item">
+            <label for="hardware"><wicket:message key="label.hardware" /></label>
+            <select wicket:id="hardwares" class="multiple required"></select>
+            <span wicket:id="hardwareFeedback"></span>
+            <input type="button" wicket:id="addHW" value="Add" />
+        </div>
+
+        <div class="form-item">
+            <label for="software"><wicket:message key="label.software" /></label>
+            <select wicket:id="softwares" class="multiple" ></select>
+            <span wicket:id="softwareFeedback"></span>
+            <input type="button" wicket:id="addSW" value="Add" />
+        </div>
+
+        <div class="form-item">
+            <label for="weather"><wicket:message key="label.weather" /></label>
+            <select wicket:id="weather"></select>
+            <span wicket:id="weatherFeedback"></span>
+            <input type="button" wicket:id="addWeather" value="Add" />
+        </div>
+
+        <div class="form-item">
+            <label for="temperature"><wicket:message key="label.temperature" /></label>
+            <input type="text" wicket:id="temperature" name="temperature"/>
+            <span wicket:id="temperatureFeedback"></span>
+        </div>
+
+        <div class="form-item">
+            <label for="disease"><wicket:message key="label.disease"></wicket:message></label>
+            <select wicket:id="diseases"></select>
+            <input type="button" wicket:id="addDisease" value="Add" />
+        </div>
+
+        <div class="form-item">
+            <label for="pharmaceutical"><wicket:message key="label.pharmaceutical"></wicket:message></label>
+            <select wicket:id="pharmaceuticals"></select>
+            <input type="button" wicket:id="addPharma" value="Add" />
+        </div>
+
+        <div class="form-item">
+            <label for="environmentNote"><wicket:message key="label.note" /></label>
+            <input type="text" wicket:id="environmentNote" name="environmentNote"/>
+        </div>
+</wicket:panel>
+</html>

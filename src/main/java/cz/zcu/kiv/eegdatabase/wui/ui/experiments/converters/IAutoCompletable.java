@@ -18,36 +18,24 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   GenericFactory.java, 2013/10/02 00:01 Jakub Rinkes
+ *   IAutoCompletable.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package org.apache.wicket.extensions.ajax.markup.html.autocomplete;
-
-import java.io.Serializable;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters;
 
 /**
  * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 11.5.13
- * Time: 10:03
+ * User: Matej Sutr
+ * Date: 6.5.13
+ * Time: 20:02
+ * To change this template use File | Settings | File Templates.
  */
-public class GenericFactory<T> implements IFactory<T>, Serializable {
-    protected Class<T> clazz;
+public interface IAutoCompletable {
 
-    public GenericFactory(Class<T> clazz) {
-        this.clazz = clazz;
-    }
-
-    @Override
-    public T create() {
-        try {
-            return clazz.newInstance();
-        } catch(Exception ex){
-            return null;
-        }
-    }
-
-    @Override
-    public Class<T> getClassForConverter() {
-        return clazz;
-    }
+    /**
+     * It must return some String by which I can get correct object from DB furthermore
+     * it has to be in human readable form, because users will need to choose among these.
+     *
+     * @return Human readable String representing the object.
+     */
+    public String getAutoCompleteData();
 }

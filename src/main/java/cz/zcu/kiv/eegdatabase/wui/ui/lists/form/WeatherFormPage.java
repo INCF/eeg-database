@@ -161,16 +161,8 @@ public class WeatherFormPage extends MenuPage {
                             getFeedback().error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
                             return;
                         }
-                        if (!facade.canSaveDefaultDescription(weather.getDescription(), weatherId)) {
-                            getFeedback().error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-                            return;
-                        }
                     } else {
                         if (!facade.canSaveTitle(weather.getTitle(), researchGroupId, weatherId)) {
-                            getFeedback().error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-                            return;
-                        }
-                        if (!facade.canSaveDescription(weather.getTitle(), researchGroupId, weatherId)) {
                             getFeedback().error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
                             return;
                         }

@@ -30,15 +30,14 @@ This file is part of the EEG-database project
         <div class="form-item">
 
             <h1 wicket:id="addScenarioHeader"></h1>
-
-            <!--<div class="error" wicket:id="feedback"></div>-->
+            
+            <div class="error" wicket:id="feedback"></div>
 
             <div class="form-sub-item">
                 <label for="researchGroup">
                     <wicket:message key="label.researchGroup">[Research group]</wicket:message>
                 </label>
-                <input type="text" wicket:id="researchGroup"/>
-                <span wicket:id="researchGroupFeedback"></span>
+                <select wicket:id="researchGroup"></select>
             </div>
 
             <div class="form-sub-item">
@@ -46,7 +45,6 @@ This file is part of the EEG-database project
                     <wicket:message key="label.scenarioTitle">[Scenario title]</wicket:message>
                 </label>
                 <input type="text" wicket:id="title"/>
-                <span wicket:id="titleFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -54,7 +52,6 @@ This file is part of the EEG-database project
                     <wicket:message key="label.durationInMinutes">[Duration (minutes)]</wicket:message>
                 </label>
                 <input type="text" wicket:id="scenarioLength"/>
-                <span wicket:id="scenarioLengthFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -62,28 +59,49 @@ This file is part of the EEG-database project
                      <wicket:message key="label.description">[Description]</wicket:message>
                  </label>
                  <textarea wicket:id="description" rows="3" cols="40"></textarea>
-                 <span wicket:id="descriptionFeedback"></span>
             </div>
 
-            <div class="form-sub-item">
-                <label for="stimulusesLabel">
-                    <wicket:message key="label.stimulus">[Stimulus]</wicket:message>
-                </label>
-                <div wicket:id="stimuluses"></div>
-            </div>
+<!--             <div class="form-sub-item"> -->
+<!--                 <label for="stimulusesLabel"> -->
+<!--                     <wicket:message key="label.stimulus">[Stimulus]</wicket:message> -->
+<!--                 </label> -->
+<!--                 <div wicket:id="stimuluses"></div> -->
+<!--             </div> -->
 
             <div class="form-sub-item">
-                <label for="availableFile">
-                    <wicket:message key="label.availableDataFile">[Available data file]</wicket:message>
-                </label>
-                <input type="checkbox" wicket:id="availableFile"/>
+                <label for="dataFileAvailable" class="fileFieldLabel"><wicket:message key="description.fileType.dataFileAvailable"/></label>
+                <input type="checkbox" wicket:id="dataAvailable" class="checkBox"/>
             </div>
+            
+            <div wicket:id="contailer">
+                <div class="form-sub-item" id="dataFile">
+                    <label for="dataFile" class="fileFieldLabel"><wicket:message key="description.fileType.dataFile" /></label> 
+                    <input type="file" wicket:id="file" class="fileField" />
+                </div>
 
+                <div class="form-sub-item" id="dataFileXml">
+<!--               <label for="dataFileXml" class="fileFieldLabel"><wicket:message key="label.xmlDataFile" /></label> -->
+                    <input type="file" wicket:id="xmlfile"class="fileField" />
+                </div>
+
+                <div class="form-sub-item">
+<!--               <label for="scenarioSchema" class="selectBoxLabel"><wicket:message key="label.scenarioSchema" /></label> -->
+              
+                    <span wicket:id="schema">
+                        <input type="radio" wicket:id="noschema" class="radioButton" />
+                        <wicket:message key="radio.noSchema" />
+              
+                        <input type="radio" wicket:id="fromschema" class="radioButton" />
+                        <wicket:message key="radio.fromSchemaList" />
+                    </span>
+              
+                    <select wicket:id="schemaList" class="selectBox"></select>
+                </div>
+            </div>
+            
             <div class="form-sub-item">
-                <label for="dataFile">
-                    <wicket:message key="label.data">[Data file]</wicket:message>
-                </label>
-                <input type="file" wicket:id="dataFile"/>
+                <label for="privateNote" class="textFieldLabel"><wicket:message key="label.private"/></label>
+                <input wicket:id="privateScenario" type="checkbox" class="checkBox"/>
             </div>
 
             <div class="close"></div>

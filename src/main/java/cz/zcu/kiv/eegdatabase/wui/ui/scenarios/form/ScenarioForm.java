@@ -18,9 +18,9 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   ScenarioForm.java, 2013/10/02 00:01 Jakub Rinkes
+ *   ScenarioForm.java, 2013/28/11 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
+package cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form;
 
 import java.io.InputStream;
 import java.util.Arrays;
@@ -32,27 +32,24 @@ import javax.xml.parsers.DocumentBuilderFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
+import org.apache.wicket.markup.html.form.SubmitLink;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.hibernate.Hibernate;
@@ -69,56 +66,49 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
-import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 
 public class ScenarioForm extends Form<Scenario> {
 
-    private static final long serialVersionUID = 4355778752386684554L;
+    private static final long serialVersionUID = 1L;
 
     @SpringBean
     private ScenariosFacade scenariosFacade;
 
     @SpringBean
     private ScenarioTypeFacade scenarioTypeFacade;
+    
+    @SpringBean
+    ScenarioXMLProvider xmlProvider;
 
     @SpringBean
     private ResearchGroupFacade researchGroupFacade;
 
-    @SpringBean
-    private StimulusFacade stimulusFacade;
-
-    public ScenarioForm(String id, final ModalWindow window) {
-        super(id, new CompoundPropertyModel<Scenario>(new Scenario()));
-
-        add(new Label("addScenarioHeader", ResourceUtils.getModel("pageTitle.addScenario")));
-        
-        final FeedbackPanel feedback = new FeedbackPanel("feedback");
-        feedback.setOutputMarkupId(true);
-        add(feedback);
+    public ScenarioForm(String id, IModel<Scenario> model, final FeedbackPanel feedback) {
+        super(id, new CompoundPropertyModel<Scenario>(model));
 
         setMultiPart(true);
 
-        Person owner = getModel().getObject().getPerson();
+        Person owner = model.getObject().getPerson();
         if (owner == null)
             owner = EEGDataBaseSession.get().getLoggedUser();
 
-        getModel().getObject().setPerson(owner);
+        model.getObject().setPerson(owner);
 
         List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(owner);
         if (choices == null || choices.isEmpty())
-            choices = Arrays.asList(getModel().getObject().getResearchGroup());
+            choices = Arrays.asList(model.getObject().getResearchGroup());
 
         DropDownChoice<ResearchGroup> groups = new DropDownChoice<ResearchGroup>("researchGroup", choices, new ChoiceRenderer<ResearchGroup>(
                 "title"));
         groups.setRequired(true);
-        
+
         TextField<String> title = new TextField<String>("title");
         title.setLabel(ResourceUtils.getModel("label.scenarioTitle"));
         title.setRequired(true);
-        title.add(new TitleExistsValidator());
 
         TextField<Integer> length = new TextField<Integer>("scenarioLength", Integer.class);
         length.setRequired(true);
@@ -191,25 +181,18 @@ public class ScenarioForm extends Form<Scenario> {
             }
         });
 
-        fileContainer.add(file, xmlfile, schema, schemaList);
-
-        add(groups, title, length, description, privateCheck, dataAvailable, fileContainer);
-
-        add(new AjaxButton("submitForm", this) {
+        SubmitLink submit = new SubmitLink("submit") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-
+            public void onSubmit() {
                 FileUpload fileUpload = file.getFileUpload();
                 FileUpload xmlfileUpload = xmlfile.getFileUpload();
 
                 Scenario scenario = ScenarioForm.this.getModelObject();
                 IScenarioType scenarioType = null;
-                
-                target.add(ScenarioForm.this);
-                
+
                 // loading non-XML
                 if ((fileUpload != null) && (!(fileUpload.getSize() == 0))) {
                     // File uploaded
@@ -242,9 +225,8 @@ public class ScenarioForm extends Form<Scenario> {
                         InputStream inputStream = xmlfileUpload.getInputStream();
                         doc = docBuilder.parse(inputStream);
                     } catch (Exception e) {
-                        feedback.error(e.getMessage());
-                        target.add(feedback);
-                        return;
+                        error(e.getMessage());
+                        setResponsePage(getPage());
                     }
 
                     // getting the right scenarioType bean
@@ -260,9 +242,8 @@ public class ScenarioForm extends Form<Scenario> {
                             c = Class.forName("cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema" + schemaList.getModelObject().getSchemaId());
                             scenarioType = (ScenarioType) c.newInstance();
                         } catch (Exception e) {
-                            feedback.error(e.getMessage());
-                            target.add(feedback);
-                            return;
+                            error(e.getMessage());
+                            setResponsePage(getPage());
                         }
                     }
 
@@ -279,41 +260,26 @@ public class ScenarioForm extends Form<Scenario> {
                 scenario.setScenarioType(scenarioType);
                 scenarioType.setScenario(scenario);
 
-                scenariosFacade.create(scenario);
-                window.close(target);
+                if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
+                    error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
+                }
+
+                if (scenario.getScenarioId() > 0) {
+                    // Editing existing
+                    // scenarioTypeDao.update(scenarioType);
+                    scenariosFacade.update(scenario);
+                } else {
+                    // Creating new
+                    scenariosFacade.create(scenario);
+                }
+
+                setResponsePage(getPage());
             }
 
-            @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form) {
+        };
 
-                target.add(feedback);
-            }
-        });
+        fileContainer.add(file, xmlfile, schema, schemaList);
 
-        add(new AjaxButton("closeForm", ResourceUtils.getModel("button.close")) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                window.close(target);
-            }
-        }.setDefaultFormProcessing(false));
-
-        setOutputMarkupId(true);
-    }
-    
-    private class TitleExistsValidator implements IValidator<String> {
-
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void validate(IValidatable<String> validatable) {
-            final String title = validatable.getValue();
-
-            if (scenariosFacade.existsScenario(title)) {
-                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
-            }
-        }
+        add(groups, title, length, description, privateCheck, dataAvailable, submit, fileContainer);
     }
 }

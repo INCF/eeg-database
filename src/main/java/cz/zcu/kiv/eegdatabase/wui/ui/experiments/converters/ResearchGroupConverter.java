@@ -30,22 +30,19 @@ import org.apache.wicket.util.string.Strings;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 12.5.13
- * Time: 15:19
- */
 public class ResearchGroupConverter implements IConverter<ResearchGroup> {
+
+    private static final long serialVersionUID = 91117331619895549L;
+
     private ResearchGroupFacade researchGroupFacade;
 
-    public ResearchGroupConverter(ResearchGroupFacade researchGroupFacade){
+    public ResearchGroupConverter(ResearchGroupFacade researchGroupFacade) {
         this.researchGroupFacade = researchGroupFacade;
     }
 
     @Override
     public ResearchGroup convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 
@@ -55,6 +52,6 @@ public class ResearchGroupConverter implements IConverter<ResearchGroup> {
 
     @Override
     public String convertToString(ResearchGroup researchGroup, Locale locale) {
-        return researchGroup.getAutoCompleteData();
+        return researchGroup.getTitle();
     }
 }

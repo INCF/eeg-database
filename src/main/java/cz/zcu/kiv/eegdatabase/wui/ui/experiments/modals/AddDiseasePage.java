@@ -22,32 +22,30 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.DiseaseForm;
 import org.apache.wicket.PageReference;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.form.Form;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Matheo
- * Date: 9.4.13
- * Time: 19:55
- * To change this template use File | Settings | File Templates.
- */
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.DiseaseForm;
+
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AddDiseasePage extends WebPage {
+
+    private static final long serialVersionUID = 5481632748362522006L;
+
     public AddDiseasePage(final PageReference modalWindowPage,
-                          final ModalWindow window){
-        Form form = new DiseaseForm("addForm", window);
+            final ModalWindow window) {
 
-        add(form);
+        add(new DiseaseForm("addForm", window));
     }
-
+    
     @Override
     public void renderHead(IHeaderResponse response) {
         response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
         super.renderHead(response);
     }
+
 }

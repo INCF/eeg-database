@@ -18,11 +18,17 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  RepeatableInputPanel.html, 2013/10/02 00:01 Jakub Rinkes
+  AddExperimentResultsForm.html, 2013/10/17 00:01 Jakub Rinkes
 -->
-<wicket:panel xmlns:wicket="http://wicket.apache.org">
-    <span wicket:id="repeatableInputList">
-        <input type="text" wicket:id="repeatableInput" />
-        <span wicket:id="repeatableFeedback"></span>
-    </span>
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
+<wicket:panel>
+        <div class="form-item">
+            <label for="resultFile">
+                <wicket:message key="label.resultFile"></wicket:message>
+            </label>
+            <input type="file" name="resultFile" wicket:id="resultFile"/>
+            <span wicket:id="fileFeedback"></span>
+        </div>
 </wicket:panel>
+</html>

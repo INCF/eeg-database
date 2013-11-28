@@ -22,12 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
+import java.awt.image.BufferedImage;
 import java.util.Arrays;
 import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.markup.html.captcha.CaptchaImageResource;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
@@ -38,6 +38,7 @@ import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -47,6 +48,7 @@ import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
 
 import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
+import com.octo.captcha.service.image.ImageCaptchaService;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -75,6 +77,9 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
     @SpringBean
     PersonFacade personFacade;
+    
+    @SpringBean
+    ImageCaptchaService captchaService;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) {
         super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
@@ -130,8 +135,10 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         String captcha = StringUtils.getCaptchaString();
         getModelObject().setCaptcha(captcha);
 
-        CaptchaImageResource imageResource = new CaptchaImageResource(captcha);
-        Image captchaImage = new Image("captchaImage", imageResource);
+        BufferedImage image = captchaService.getImageChallengeForID(captcha, getLocale());
+        BufferedDynamicImageResource res = new BufferedDynamicImageResource();
+        res.setImage(image);
+        Image captchaImage = new Image("captchaImage", res );
         add(captchaImage);
 
         TextField<String> controlText = new TextField<String>("controlText");
@@ -177,7 +184,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                 FullPersonDTO user = RegistrationForm.this.getModelObject();
-                if (user.isCaptchaValid()) {
+                if (captchaService.validateResponseForID(user.getCaptcha(), user.getControlText())) {
 
                     user.setRegistrationDate(new DateTime());
                     if (validation(user)) {

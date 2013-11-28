@@ -35,13 +35,13 @@ This file is part of the EEG-database project
       <form class="standardForm" wicket:id="form">
         <fieldset>
           <div class="textBox">
-            <label for="researchGroupTitle" cssErrorClass="error"><wicket:message key="label.researchGroupTitle" /></label>
-            <input path="researchGroupTitle" wicket:id="title"/>
+            <label for="researchGroupTitle"><wicket:message key="label.researchGroupTitle" /></label>
+            <input wicket:id="title"/>
           </div>
 
           <div class="textareaBox">
-            <label path="researchGroupDescription"> <wicket:message key="label.researchGroupDescription" /></label>
-            <textarea path="researchGroupDescription" wicket:id="description"></textarea>
+            <label for="researchGroupDescription"> <wicket:message key="label.researchGroupDescription" /></label>
+            <textarea wicket:id="description"></textarea>
           </div>
 
           <div class="submitBox">

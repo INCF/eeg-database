@@ -22,35 +22,41 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
-import org.apache.wicket.ajax.AjaxEventBehavior;
+import java.util.HashSet;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 11.4.13
- * Time: 12:46
- */
-public class DiseaseForm extends Form<Disease> {
-    @SpringBean
-    DiseaseFacade diseaseFacade;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 
+public class DiseaseForm extends Form<Disease> {
+
+    private static final long serialVersionUID = 8139819452654805631L;
+
+    @SpringBean
+    private DiseaseFacade diseaseFacade;
+
+    @SpringBean
+    private ResearchGroupFacade researchGroupFacade;
 
     public DiseaseForm(String id, final ModalWindow window) {
         super(id, new CompoundPropertyModel<Disease>(new Disease()));
@@ -59,6 +65,14 @@ public class DiseaseForm extends Form<Disease> {
         feedback.setOutputMarkupId(true);
         add(feedback);
         add(new Label("addDiseaseHeader", ResourceUtils.getModel("pageTitle.addDisease")));
+
+        ChoiceRenderer<ResearchGroup> renderer = new ChoiceRenderer<ResearchGroup>("title", "researchGroupId");
+        List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
+        final DropDownChoice<ResearchGroup> researchGroupChoice = new DropDownChoice<ResearchGroup>("researchGroup", new Model<ResearchGroup>(), choices, renderer);
+
+        researchGroupChoice.setRequired(true);
+        researchGroupChoice.setLabel(ResourceUtils.getModel("label.group"));
+        add(researchGroupChoice);
 
         RequiredTextField<String> title = new RequiredTextField<String>("title");
         title.setLabel(ResourceUtils.getModel("label.title"));
@@ -70,49 +84,52 @@ public class DiseaseForm extends Form<Disease> {
         description.setLabel((ResourceUtils.getModel("label.description")));
         add(description);
 
-        add(
-                new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
-                    @Override
-                    protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                        Disease disease = (Disease) form.getModelObject();
+        add(new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
 
-                        validate();
-                        target.add(feedback);
+            private static final long serialVersionUID = -975100666951875819L;
 
-                        if(!hasError()){
-                            diseaseFacade.create(disease);
-                            window.close(target);
-                        }
-                    }
-                }.add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                    }
-                })
-        );
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-        add(
-                new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {}.
-                        add(new AjaxEventBehavior("onclick") {
-                    @Override
-                    protected void onEvent(AjaxRequestTarget target) {
-                        window.close(target);
-                    }
-                })
-        );
+                Disease disease = (Disease) form.getModelObject();
+                ResearchGroup group = researchGroupChoice.getModelObject();
+                HashSet<ResearchGroup> groups = new HashSet<ResearchGroup>();
+                groups.add(group);
+                disease.setResearchGroups(groups);
+                diseaseFacade.create(disease);
+                window.close(target);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(feedback);
+            }
+
+        });
+
+        add(new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                window.close(target);
+            }
+        }.setDefaultFormProcessing(false));
 
         setOutputMarkupId(true);
-        AjaxFormValidatingBehavior.addToAllFormComponents(this, "focus", Duration.ONE_SECOND);
     }
 
-    private class TitleExistsValidator implements IValidator<String>{
+    private class TitleExistsValidator implements IValidator<String> {
+
+        private static final long serialVersionUID = 1L;
 
         @Override
         public void validate(IValidatable<String> validatable) {
             final String title = validatable.getValue();
 
-            if(diseaseFacade.existsDisease(title)){
-                error("Disease with given name already exists.");
+            if (diseaseFacade.existsDisease(title)) {
+                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
             }
         }
     }

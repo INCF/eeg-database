@@ -23,13 +23,44 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
 
+import org.apache.wicket.ConverterLocator;
+import org.apache.wicket.IConverterLocator;
+import org.apache.wicket.Page;
+import org.apache.wicket.Session;
+import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
+import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
+import org.apache.wicket.core.request.mapper.CryptoMapper;
+import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.request.Request;
+import org.apache.wicket.request.Response;
+import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
+import org.springframework.beans.BeansException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
+
 import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.pojo.Software;
+import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
+import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
-import cz.zcu.kiv.eegdatabase.wui.core.common.*;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
@@ -38,12 +69,21 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WizardTabbedPanelPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.HardwareConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PersonConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PharmaceuticalConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ProjectTypeConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ResearchGroupConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ScenarioConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.SoftwareConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.StimulusConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.WeatherConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -82,22 +122,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
-import org.apache.wicket.ConverterLocator;
-import org.apache.wicket.IConverterLocator;
-import org.apache.wicket.Page;
-import org.apache.wicket.Session;
-import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
-import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
-import org.apache.wicket.core.request.mapper.CryptoMapper;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.request.Request;
-import org.apache.wicket.request.Response;
-import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
-import org.springframework.beans.BeansException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.ApplicationContext;
-import org.springframework.context.ApplicationContextAware;
 
 /**
  * Main class for wicket core. Initialization of wicket core, mounter pages on specific url,
@@ -190,6 +214,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("experiments-list", ListExperimentsPage.class);
         mountPage("experiments-detail", ExperimentsDetailPage.class);
+        mountPage("experiments-form", ExperimentFormPage.class);
         mountPage("experiments-download", ExperimentsDownloadPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
@@ -228,7 +253,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("scenarios-form", ScenarioFormPage.class);
         mountPage("scenarios-schema-form", ScenarioSchemaFormPage.class);
         mountPage("search-page", SearchPage.class);
-        mountPage("add-experiment-wizard-page", WizardTabbedPanelPage.class);
+        mountPage("add-experiment-wizard-page", ExperimentFormPage.class);
 
 		mountPage("manage-packages", ManageExperimentPackagesPage.class);
 		mountPage("license-request", LicenseRequestPage.class);

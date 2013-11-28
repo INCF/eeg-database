@@ -30,7 +30,15 @@ This file is part of the EEG-database project
         <div class="form-item">
 
             <h1 wicket:id="addSWHeader"></h1>
+            
             <div class="error" wicket:id="feedback"></div>
+
+            <div class="form-sub-item">
+                <label for="group">
+                    <wicket:message key="label.group">Group</wicket:message>
+                </label>
+                <select wicket:id="researchGroup"></select>
+            </div>
 
             <div class="form-sub-item">
                 <label for="title"><wicket:message key="label.title" /></label>
@@ -40,11 +48,6 @@ This file is part of the EEG-database project
             <div class="form-sub-item">
                 <label for="description"><wicket:message key="label.description" /></label>
                 <textarea wicket:id="description" rows="3" cols="40"></textarea>
-            </div>
-
-            <div class="form-sub-item">
-                <label for="defaultNumber">Default</label>
-                <input type="checkBox" wicket:id="defaultNumber"/>
             </div>
 
             <div class="close"></div>

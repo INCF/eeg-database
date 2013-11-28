@@ -30,14 +30,10 @@ import org.apache.wicket.util.string.Strings;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Prasek
- * Date: 14.5.13
- * Time: 11:25
- * To change this template use File | Settings | File Templates.
- */
 public class HardwareConverter implements IConverter<Hardware> {
+
+    private static final long serialVersionUID = -8141616050930046147L;
+    
     private HardwareFacade hardwareFacade;
 
     public HardwareConverter(HardwareFacade hardwareFacade) {
@@ -46,7 +42,7 @@ public class HardwareConverter implements IConverter<Hardware> {
 
     @Override
     public Hardware convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 

@@ -22,33 +22,41 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
-import org.apache.wicket.ajax.AjaxEventBehavior;
+import java.util.HashSet;
+import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormValidatingBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.time.Duration;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Prasek
- * Date: 23.4.13
- * Time: 15:21
- * To change this template use File | Settings | File Templates.
- */
+import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+
 public class ProjectTypeForm extends Form<ProjectType> {
+
+    private static final long serialVersionUID = 8447097149378561245L;
+
     @SpringBean
-    ProjectTypeFacade facade;
+    private ProjectTypeFacade facade;
+
+    @SpringBean
+    private ResearchGroupFacade researchGroupFacade;
 
     public ProjectTypeForm(String id, final ModalWindow window) {
         super(id, new CompoundPropertyModel<ProjectType>(new ProjectType()));
@@ -59,54 +67,73 @@ public class ProjectTypeForm extends Form<ProjectType> {
 
         add(new Label("addProjectHeader", ResourceUtils.getModel("pageTitle.addProjectTypeDefinition")));
 
-        TextField<String> title =  new TextField<String>("title");
+        ChoiceRenderer<ResearchGroup> renderer = new ChoiceRenderer<ResearchGroup>("title", "researchGroupId");
+        List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
+        final DropDownChoice<ResearchGroup> researchGroupChoice = new DropDownChoice<ResearchGroup>("researchGroup", new Model<ResearchGroup>(), choices, renderer);
+
+        researchGroupChoice.setRequired(true);
+        researchGroupChoice.setLabel(ResourceUtils.getModel("label.group"));
+        add(researchGroupChoice);
+
+        TextField<String> title = new TextField<String>("title");
         title.setRequired(true);
         title.setLabel(ResourceUtils.getModel("label.title"));
+        title.add(new TitleExistsValidator());
         add(title);
+
         TextArea<String> description = new TextArea<String>("description");
         description.setRequired(true);
         description.setLabel(ResourceUtils.getModel("label.description"));
         add(description);
 
-        add(
-            new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
+        add(new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
+
+            private static final long serialVersionUID = 1L;
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                ProjectType newPT = (ProjectType)form.getModelObject();
-                if (!facade.canSaveTitle(newPT.getTitle())) {
-                    feedback.error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-                    return;
-                }
-                validate();
-                target.add(feedback);
-                if(!hasError()){
-                    facade.create(newPT);
-                    window.close(target);
-                }
+
+                ProjectType person = (ProjectType) form.getModelObject();
+                ResearchGroup group = researchGroupChoice.getModelObject();
+                HashSet<ResearchGroup> groups = new HashSet<ResearchGroup>();
+                groups.add(group);
+                person.setResearchGroups(groups);
+
+                facade.create(person);
+                window.close(target);
             }
-            }.add(new AjaxEventBehavior("onclick") {
-                @Override
-                protected void onEvent(AjaxRequestTarget target) {
-                }
-            })
-        );
-        add(
-            new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {
-                @Override
-                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    window.close(target);
-                }
-            }.add(new AjaxEventBehavior("onclick") {
-                @Override
-                protected void onEvent(AjaxRequestTarget target) {
-                    window.close(target);
-                }
-            })
-        );
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(feedback);
+            }
+
+        });
+
+        add(new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                window.close(target);
+            }
+        }.setDefaultFormProcessing(false));
 
         setOutputMarkupId(true);
-        AjaxFormValidatingBehavior.addToAllFormComponents(this, "focus", Duration.ONE_SECOND);
     }
 
+    private class TitleExistsValidator implements IValidator<String> {
+
+        private static final long serialVersionUID = 1L;
+
+        @Override
+        public void validate(IValidatable<String> validatable) {
+            final String title = validatable.getValue();
+
+            if (!facade.canSaveTitle(title)) {
+                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+            }
+        }
+    }
 }

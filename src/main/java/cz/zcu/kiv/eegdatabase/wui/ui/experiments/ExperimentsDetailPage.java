@@ -115,7 +115,7 @@ public class ExperimentsDetailPage extends MenuPage {
         boolean coexperiment = security.userIsOwnerOrCoexperimenter(experimentId);
         BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
-        BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+        BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> downloadExpLink = new BookmarkablePageLink<Void>("downloadExpLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), downloadExpLink);
 

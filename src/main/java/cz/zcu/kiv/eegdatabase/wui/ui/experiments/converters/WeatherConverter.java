@@ -30,14 +30,10 @@ import org.apache.wicket.util.string.Strings;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Prasek
- * Date: 14.5.13
- * Time: 11:25
- * To change this template use File | Settings | File Templates.
- */
 public class WeatherConverter implements IConverter<Weather> {
+
+    private static final long serialVersionUID = -8541071825587161874L;
+
     private WeatherFacade weatherFacade;
 
     public WeatherConverter(WeatherFacade weatherFacade) {
@@ -46,7 +42,7 @@ public class WeatherConverter implements IConverter<Weather> {
 
     @Override
     public Weather convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 

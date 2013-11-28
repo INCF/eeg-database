@@ -30,13 +30,14 @@ This file is part of the EEG-database project
         <div class="form-item">
 
             <h1 wicket:id="addPersonHeader"></h1>
-
+            
+            <div class="error" wicket:id="feedback"></div>
+            
             <div class="form-sub-item">
                 <label for="givenname">
                     <wicket:message key="label.name">[name]</wicket:message>
                 </label>
                 <input wicket:id="givenname"/>
-                 <span wicket:id="nameFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -44,7 +45,6 @@ This file is part of the EEG-database project
                     <wicket:message key="label.surname">[surname]</wicket:message>
                 </label>
                 <input wicket:id="surname"/>
-                 <span wicket:id="surnameFeedback"></span>
             </div>
             
             <div class="form-sub-item">
@@ -52,17 +52,14 @@ This file is part of the EEG-database project
                     <wicket:message key="label.dateOfBirth">[dateOfBirth]</wicket:message>
                 </label>
                 <input wicket:id="dateOfBirth"/>
-                <span wicket:id="dateOfBirthFeedback"></span>
             </div>
 
         <div class="form-sub-item">
             <label for="gender">
                 <wicket:message key="general.gender">[gender]</wicket:message>
             </label>
-            <span wicket:id="gender"></span>
-            <span wicket:id="genderFeedback"></span>
+            <span wicket:id="gender" class="multilabel"></span>
         </div>
-
 
         <div class="form-sub-item">
             <label for="laterality">
@@ -82,7 +79,6 @@ This file is part of the EEG-database project
                     <wicket:message key="general.email">[email]</wicket:message>
                 </label>
                 <input type="email" wicket:id="username"/>
-                 <span wicket:id="emailFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -90,7 +86,6 @@ This file is part of the EEG-database project
                     <wicket:message key="label.phoneNumber">[phone number]</wicket:message>
                 </label>
                 <input type="text" wicket:id="phoneNumber"/>
-                 <span wicket:id="phoneFeedback"></span>
             </div>
 
             <div class="form-sub-item">
@@ -98,7 +93,6 @@ This file is part of the EEG-database project
                     <wicket:message key="label.note">[note]</wicket:message>
                 </label>
                 <textarea wicket:id="note" rows="3" cols="40"></textarea>
-                 <span wicket:id="noteFeedback"></span>
             </div>
 
             <div class="close"></div>

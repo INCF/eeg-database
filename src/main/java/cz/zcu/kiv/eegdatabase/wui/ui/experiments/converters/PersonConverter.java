@@ -22,21 +22,18 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.string.Strings;
-
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 12.5.13
- * Time: 12:14
- */
+import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.string.Strings;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+
 public class PersonConverter implements IConverter<Person> {
+    
+    private static final long serialVersionUID = -6158291362415634010L;
     private PersonFacade personFacade;
 
     public PersonConverter(PersonFacade personFacade) {
@@ -49,12 +46,13 @@ public class PersonConverter implements IConverter<Person> {
             return null;
         }
 
-        String[] datas = s.split(",");
-        String username = datas[datas.length -1];
+        String[] datas = s.split(" ");
+        String name = datas[datas.length -1];
 
-        List<Person> persons = personFacade.readByParameter("username", username);
+        List<Person> persons = personFacade.readByParameter("username", name);
         Person person = new Person();
-        person.setUsername(username);
+        person.setUsername(name);
+        
         return (persons != null && persons.size() > 0) ? persons.get(0) : person;
     }
 

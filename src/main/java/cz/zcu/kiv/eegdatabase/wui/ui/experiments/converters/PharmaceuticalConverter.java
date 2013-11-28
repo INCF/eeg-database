@@ -30,13 +30,10 @@ import org.apache.wicket.util.string.Strings;
 import java.util.List;
 import java.util.Locale;
 
-/**
- * Created by IntelliJ IDEA.
- * User: Jakub Balhar
- * Date: 12.5.13
- * Time: 15:18
- */
 public class PharmaceuticalConverter implements IConverter<Pharmaceutical> {
+
+    private static final long serialVersionUID = 1L;
+
     private PharmaceuticalFacade pharmaceuticalFacade;
 
     public PharmaceuticalConverter(PharmaceuticalFacade pharmaceuticalFacade) {
@@ -45,7 +42,7 @@ public class PharmaceuticalConverter implements IConverter<Pharmaceutical> {
 
     @Override
     public Pharmaceutical convertToObject(String s, Locale locale) {
-        if(Strings.isEmpty(s)){
+        if (Strings.isEmpty(s)) {
             return null;
         }
 

@@ -100,8 +100,8 @@
     <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
     <bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
 
-    <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseServiceImpl" autowire="byType" />
-    <bean name="diseaseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.DiseaseFacadeImpl" autowire="byType" />
+    <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
+    <bean name="diseaseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacadeImpl" autowire="byType" />
 
     <bean name="experimentDownloadProvider" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider" autowire="byType" />
     
