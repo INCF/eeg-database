@@ -27,7 +27,7 @@ import java.util.List;
 import org.apache.wicket.extensions.wizard.WizardStep;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.markup.html.form.upload.MultiFileUploadField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -38,7 +38,7 @@ public class AddExperimentResultsForm extends WizardStep {
 
     private static final long serialVersionUID = 8769628527223589880L;
 
-    private FileUploadField fileUploadField;
+    private MultiFileUploadField fileUploadField;
 
     @SpringBean
     private ExperimentsFacade experimentsFacade;
@@ -53,7 +53,7 @@ public class AddExperimentResultsForm extends WizardStep {
 
     private void addFileUploadField(){
         
-        fileUploadField = new FileUploadField("resultFile", model);
+        fileUploadField = new MultiFileUploadField("resultFile", model);
 
         ComponentFeedbackMessageFilter fileFilter = new ComponentFeedbackMessageFilter(fileUploadField);
         final FeedbackPanel fileFeedback = new FeedbackPanel("fileFeedback", fileFilter);

@@ -56,6 +56,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -177,6 +178,11 @@ public class ExperimentFormPage extends MenuPage {
 
                 ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(this);
                 return new FeedbackPanel(id, filter);
+            }
+            
+            @Override
+            protected Component newButtonBar(String id) {
+                return new AjaxWizardButtonBar(id, this);
             }
             
             @Override
