@@ -98,10 +98,7 @@ public class SimpleScenarioTypeDaoTest extends AbstractDataAccessTest {
     @Transactional
     public void testCreateScenarioTypeNonXml() throws Exception {
         ScenarioType<Blob> scenarioType = scenarioTypeNonXml;
-        InputStream stream = new FileInputStream(new File(path2));
-        scenarioType.setScenarioXml(Hibernate.createBlob(stream));
         scenarioType.setScenario(scenario);
-        scenario.setScenarioType(scenarioType);
         scenarioTypeDao.create(scenarioType);
         scenarioDao.create(scenario);
     }

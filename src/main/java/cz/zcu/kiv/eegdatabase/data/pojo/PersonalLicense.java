@@ -27,7 +27,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -110,7 +109,7 @@ public class PersonalLicense implements Serializable{
 		this.attachmentFileName = attachmentFileName;
 	}
 	
-	public byte[] getAttachmentContent() {
+	public byte [] getAttachmentContent() {
 		return attachmentContent;
 	}
 

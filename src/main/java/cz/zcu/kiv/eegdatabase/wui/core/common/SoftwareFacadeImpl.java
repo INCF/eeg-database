@@ -49,16 +49,6 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     }
 
     @Override
-    public void createDefaultRecord(Software software) {
-        service.createDefaultRecord(software);
-    }
-
-    @Override
-    public boolean isDefault(int id) {
-        return service.isDefault(id);
-    }
-
-    @Override
     public boolean canSaveDefaultTitle(String title, int swId) {
         return service.canSaveDefaultTitle(title, swId);
     }

@@ -35,7 +35,7 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Integer>
-        implements GenericListDaoWithDefault<StimulusType> {
+        implements GenericListDao<StimulusType> {
 
     public SimpleStimulusTypeDao() {
         super(StimulusType.class);
@@ -83,25 +83,4 @@ public class SimpleStimulusTypeDao extends SimpleGenericDao<StimulusType, Intege
         researchGroup.getStimulusTypes().remove(persistent);
     }
 
-    @Override
-    public void createDefaultRecord(StimulusType persistent) {
-        persistent.setDefaultNumber(1);
-        create(persistent);
-    }
-
-    @Override
-    public List<StimulusType> getDefaultRecords() {
-        String hqlQuery = "from StimulusType st where st.defaultNumber=1";
-        return getHibernateTemplate().find(hqlQuery);
-    }
-
-    @Override
-    public boolean isDefault(int id) {
-        String hqlQuery = "select st.defaultNumber from StimulusType st where st.stimulusTypeId = :id";
-        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
-        if (list.isEmpty()) {
-            return false;
-        }
-        return (list.get(0) == 1);
-    }
 }

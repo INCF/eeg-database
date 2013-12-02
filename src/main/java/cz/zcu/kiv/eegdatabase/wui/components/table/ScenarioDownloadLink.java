@@ -52,8 +52,8 @@ public class ScenarioDownloadLink extends Panel {
         super(id);
 
         final Scenario scenario = model.getObject();
-        boolean fileExist = scenario.getScenarioType().getScenarioXml() != null;
         // added link for download
+		boolean fileExist = false;// scenario.getScenarioType().getScenarioXml() != null;
         add(new Link<Void>("download") {
 
             private static final long serialVersionUID = 1L;
@@ -67,6 +67,6 @@ public class ScenarioDownloadLink extends Panel {
 
             }
         }).setVisibilityAllowed(fileExist);
-        add(new Label("noFile", ResourceUtils.getModel("label.notAvailable")).setVisibilityAllowed(!fileExist));
+        add(new Label("noFile", ResourceUtils.getModel("label.notAvailable"))).setVisibilityAllowed(!fileExist);
     }
 }

@@ -43,11 +43,10 @@ public class MeasurationDataView extends AbstractView {
     protected void renderMergedOutputModel(Map map, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Loading the DataFile object loaded by Controller
         DataFile data = (DataFile) map.get("dataObject");
-        Blob b = data.getFileContent();
+        byte[] b = data.getFileContent();
         log.debug("Loading Data object - ID " + data.getDataFileId());
 
         /** Downloading the bytes for writing to output */
-        byte[] br = b.getBytes(1,(int) b.length());
 
         // Setting the content type, so the download dialog opens and user is able to download data file
         /* TODO: load the original MIME type from database when the POJO object is ready */
@@ -60,7 +59,7 @@ public class MeasurationDataView extends AbstractView {
         response.setHeader("Content-Disposition", "attachment;filename=" + data.getFilename());
 
         // Writing the bytes to the output stream
-        response.getOutputStream().write(br);
+        response.getOutputStream().write(b);
     }
 
 }

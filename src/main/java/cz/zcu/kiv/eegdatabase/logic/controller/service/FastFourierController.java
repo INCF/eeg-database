@@ -67,8 +67,7 @@ public class FastFourierController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg"))||(dataFile.getFilename().endsWith(".eeg"))) {
-                    Blob blob = dataFile.getFileContent();
-                    data = blob.getBytes(1, (int) blob.length());
+                    data = dataFile.getFileContent();
                     break;
                 }
             }
@@ -130,7 +129,7 @@ public class FastFourierController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setFigure(Hibernate.createBlob(out.toByteArray()));
+            service.setFigure(out.toByteArray());
             service.setStatus("finished");
             resultDao.update(service);
 

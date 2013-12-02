@@ -24,10 +24,72 @@
 <!DOCTYPE hibernate-configuration PUBLIC "-//Hibernate/Hibernate Configuration DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
 <hibernate-configuration>
 	<session-factory>
-		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
-		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Analysis"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Article"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Artifact"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ArtifactRemoveMethod"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.DataFile"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Digitization"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Disease"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeFix"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeLocation"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Experiment"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRelId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId"/>
 		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage"/>
-		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
 		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDefGroupRelId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Hardware"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.HardwareGroupRelId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.History"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.IScenarioType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Keywords"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.License"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.LicenseType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Person"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDefGroupRelId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamValId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ProjectType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Reservation"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Software"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Stimulus"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusRelId"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.StimulusType"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.Weather"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel"/>
+		<mapping class="cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRelId"/>
+
 	</session-factory>
 </hibernate-configuration>

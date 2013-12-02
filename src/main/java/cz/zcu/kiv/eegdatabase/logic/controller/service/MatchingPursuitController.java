@@ -71,7 +71,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg")) || (dataFile.getFilename().endsWith(".eeg"))) {
-                    data = dataFile.getFileContent().getBytes(1, (int) dataFile.getFileContent().length());
+                    data = dataFile.getFileContent();
                     break;
                 }
             }
@@ -105,7 +105,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Not enough memory for analysed signal.";
-                service.setFigure(Hibernate.createBlob(errorText.getBytes()));
+                service.setFigure(errorText.getBytes());
                 resultDao.update(service);
                 return;
             }
@@ -141,7 +141,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setFigure(Hibernate.createBlob(out.toByteArray()));
+            service.setFigure(out.toByteArray());
             service.setStatus("finished");
             resultDao.update(service);
 

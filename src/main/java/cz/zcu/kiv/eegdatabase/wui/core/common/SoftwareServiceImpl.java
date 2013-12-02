@@ -51,18 +51,6 @@ public class SoftwareServiceImpl implements SoftwareService{
     }
 
     @Override
-    @Transactional
-    public void createDefaultRecord(Software software) {
-        softwareDao.createDefaultRecord(software);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public boolean isDefault(int id) {
-        return softwareDao.isDefault(id);
-    }
-
-    @Override
     @Transactional(readOnly = true)
     public boolean canSaveDefaultTitle(String title, int swId) {
         return softwareDao.canSaveDefaultTitle(title, swId);

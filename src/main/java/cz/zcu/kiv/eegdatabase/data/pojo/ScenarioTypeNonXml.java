@@ -41,18 +41,14 @@ import java.sql.Blob;
 @javax.persistence.Table(name="SCENARIO_TYPE_NONXML")
 @PrimaryKeyJoinColumn(name = "SCENARIO_ID", referencedColumnName = "SCENARIO_ID")
 public class ScenarioTypeNonXml extends ScenarioType<Blob> {
-  @Lob
-  @Column(name = "SCENARIO_XML")
-  private Blob scenarioXml;
 
   public ScenarioTypeNonXml() {
   }
 
   public Blob getScenarioXml() {
-    return scenarioXml;
+    return null;
   }
 
   public void setScenarioXml(Blob scenarioXml) {
-    this.scenarioXml = scenarioXml;
   }
 }

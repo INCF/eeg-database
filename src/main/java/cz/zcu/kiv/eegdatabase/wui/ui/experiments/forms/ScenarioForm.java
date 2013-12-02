@@ -222,8 +222,6 @@ public class ScenarioForm extends Form<Scenario> {
                         scenario.setMimetype(fileUpload.getContentType());
                     }
 
-                    scenarioType = new ScenarioTypeNonXml();
-                    scenarioType.setScenarioXml(Hibernate.createBlob(fileUpload.getBytes()));
                 }
 
                 // loading XML
@@ -251,14 +249,12 @@ public class ScenarioForm extends Form<Scenario> {
                     // no schema - binary storage
                     Boolean isSchemaSelected = schema.getModelObject();
                     if (!isSchemaSelected) {
-                        scenarioType = new ScenarioTypeNonSchema();
                     }
                     // schema selected - structured storage
                     else {
                         Class c;
                         try {
                             c = Class.forName("cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeSchema" + schemaList.getModelObject().getSchemaId());
-                            scenarioType = (ScenarioType) c.newInstance();
                         } catch (Exception e) {
                             feedback.error(e.getMessage());
                             target.add(feedback);
@@ -266,19 +262,10 @@ public class ScenarioForm extends Form<Scenario> {
                         }
                     }
 
-                    if (scenario.getScenarioId() > 0) {
-                        scenarioType = scenario.getScenarioType();
-                    }
-
-                    scenarioType.setScenarioXml(doc);
                 }
 
                 if (!dataAvailable.getModelObject()) {
-                    scenarioType = new ScenarioTypeNonXml();
                 }
-                scenario.setScenarioType(scenarioType);
-                scenarioType.setScenario(scenario);
-
                 scenariosFacade.create(scenario);
                 window.close(target);
             }

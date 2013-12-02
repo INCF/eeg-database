@@ -97,10 +97,7 @@ public class ScenarioXMLProvider {
         try {
             DataFileDTO file = new DataFileDTO();
             Scenario scenario = scenarioFacade.read(scenarioId);
-            ScenarioType scenarioXml = scenarioTypeFacade.read(scenarioId);
 
-            byte[] fileOutput = toByteArray(scenarioXml.getScenarioXml());
-            file.setFileContent(fileOutput);
             Person user = personFacade.getPerson(loggedUserName);
             Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
             History history = new History();

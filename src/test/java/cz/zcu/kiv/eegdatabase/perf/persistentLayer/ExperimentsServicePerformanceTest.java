@@ -62,11 +62,6 @@ public class ExperimentsServicePerformanceTest extends PerformanceTest {
     @Autowired
     ScenarioDao scenarioDao;
 
-    @Autowired
-    private ScenarioTypeDao scenarioTypeDao;
-
-    @Autowired
-    private ScenarioTypeNonXml scenarioTypeNonXml = null;
 
     private Experiment experiment;
     private Hardware hardware;
@@ -95,8 +90,6 @@ public class ExperimentsServicePerformanceTest extends PerformanceTest {
         ResearchGroup group = new ResearchGroup();
         group.setResearchGroupId(6);
 
-        ScenarioType<Blob> scenarioType = scenarioTypeNonXml;
-        scenarioTypeDao.create(scenarioType);
 
         scenario = new Scenario();
         scenario.setResearchGroup(group);
@@ -106,7 +99,6 @@ public class ExperimentsServicePerformanceTest extends PerformanceTest {
         scenario.setResearchGroup(group);
         scenario.setScenarioName("scenario name test");
         scenario.setScenarioLength(10);
-        scenario.setScenarioType(scenarioType);
         scenarioDao.create(scenario);
 
         history.setPerson(personeDao.getPerson("kaby"));

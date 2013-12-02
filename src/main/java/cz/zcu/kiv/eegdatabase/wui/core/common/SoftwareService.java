@@ -37,10 +37,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
  */
 public interface SoftwareService extends GenericService<Software, Integer>{
 
-    void createDefaultRecord(Software software);
-
-    boolean isDefault(int id);
-
     boolean canSaveDefaultTitle(String title, int swId);
     
     void createGroupRel(Software persistent, ResearchGroup researchGroup);
