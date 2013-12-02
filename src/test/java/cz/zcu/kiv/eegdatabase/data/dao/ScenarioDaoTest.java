@@ -74,7 +74,6 @@ public class ScenarioDaoTest extends AbstractDataAccessTest {
     scenarioType.setScenarioId(0);
     scenarioType.setScenario(scenario);
 
-    scenario.setScenarioType(scenarioType);
     scenario.setResearchGroup(researchGroupDao.getAllRecords().get(0));
   }
 

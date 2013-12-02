@@ -37,9 +37,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
  */
 public interface SoftwareFacade extends GenericFacade<Software, Integer>{
 
-    void createDefaultRecord(Software software);
-
-    boolean isDefault(int id);
 
     boolean canSaveDefaultTitle(String title, int swId);
     

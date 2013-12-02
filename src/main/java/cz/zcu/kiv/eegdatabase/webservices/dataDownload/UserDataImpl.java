@@ -23,9 +23,11 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
+import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
+import java.io.ByteArrayInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.Hibernate;
@@ -42,6 +44,7 @@ import java.sql.Blob;
 import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Web service providing user's data remotely.
@@ -259,8 +262,6 @@ public class UserDataImpl implements UserDataService {
         DataFileInfo info;
         List<DataFile> files;
 
-        try {
-
             for (Experiment experiment : experiments) {
 
                 files = experimentDao.getDataFilesWhereExpId(experiment.getExperimentId());
@@ -270,7 +271,7 @@ public class UserDataImpl implements UserDataService {
 
                         info.setExperimentId(file.getExperiment().getExperimentId());
                         info.setFileId(file.getDataFileId());
-                        info.setFileLength(file.getFileContent().length());
+                        info.setFileLength(file.getFileContent().length);
                         info.setFileName(file.getFilename());
                         info.setMimeType(file.getMimetype());
 
@@ -279,12 +280,6 @@ public class UserDataImpl implements UserDataService {
             }
 
             log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved list of data files.");
-        } catch (SQLException e) {
-            UserDataServiceException exception = new UserDataServiceException(e);
-            log.error("User " + personDao.getLoggedPerson().getEmail() + " did NOT retrieve list of data files!");
-            log.error(e.getMessage(), e);
-            throw exception;
-        }
 
         return fileInformation;
     }
@@ -320,8 +315,7 @@ public class UserDataImpl implements UserDataService {
         DataFile file = files.get(0);
 
         DataSource rawData;
-        try {
-            final InputStream in = file.getFileContent().getBinaryStream();
+            final InputStream in = new ByteArrayInputStream(file.getFileContent());
             rawData = new DataSource() {
                 public String getContentType() {
                     return "application/octet-stream";
@@ -340,12 +334,6 @@ public class UserDataImpl implements UserDataService {
                 }
             };
             log.debug("User " + personDao.getLoggedPerson().getEmail() + " retrieved file " + dataFileId);
-        } catch (SQLException e) {
-            UserDataServiceException exception = new UserDataServiceException(e);
-            log.error("User " + personDao.getLoggedPerson().getEmail() + " did NOT retrieve file " + dataFileId);
-            log.error(e.getMessage(), e);
-            throw exception;
-        }
 
         return new DataHandler(rawData);
     }
@@ -365,8 +353,7 @@ public class UserDataImpl implements UserDataService {
 
         try {
             if (inputData != null) {
-                Blob blob = dataFileDao.createBlob(inputData.getInputStream(), (int) dataFile.getFileLength());
-                file.setFileContent(blob);
+                file.setFileContent( IOUtils.toByteArray(inputData.getInputStream()));
             }
         } catch (IOException e) {
             log.error(e.getMessage(), e);

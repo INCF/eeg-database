@@ -44,7 +44,6 @@ public class ScenarioXMLDownloadView extends AbstractView {
         log.debug("Processing view for scenario XML output");
 
         Scenario scenario = (Scenario) map.get("dataObject");
-        Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
         
         log.debug("Loading Scenario object - ID " + scenario.getScenarioId());
 
@@ -53,9 +52,6 @@ public class ScenarioXMLDownloadView extends AbstractView {
 
         log.debug("Setting filename");
         response.setHeader("Content-Disposition", "attachment;filename=scenario-" + scenario.getScenarioId());
-
-        log.debug("Printing file content to output");
-        response.getOutputStream().write(c.getBytes(1, (int) c.length()));
 
         log.debug("End of the view");
     }

@@ -181,7 +181,6 @@ public class AddScenarioController
             // Editing existing
             log.debug("Editing existing scenario.");
             scenario = scenarioDao.read(id);
-            scenarioType = scenario.getScenarioType();
         } else {
             // Creating new
             log.debug("Creating new scenario object");
@@ -207,43 +206,12 @@ public class AddScenarioController
         scenario.setScenarioLength(Integer.parseInt(data.getLength()));
         //loading non-XML
         if ((file != null) && (!file.isEmpty())) {
-            // File uploaded
-            log.debug("Setting the data file");
-            String filename = file.getOriginalFilename().replace(" ", "_");
-            scenario.setScenarioName(filename);
-            if (file.getContentType().length() > MAX_MIMETYPE_LENGTH) {
-                int index = filename.lastIndexOf(".");
-                scenario.setMimetype(filename.substring(index));
-            } else {
-                scenario.setMimetype(file.getContentType());
-            }
-
-            scenarioType = new ScenarioTypeNonXml();
-            scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
+            
         }
 
         //loading XML
         if ((xmlFile != null) && (!xmlFile.isEmpty())) {
-            //load the XML file to a table with the XMLType column
-            log.debug("Setting the XML data file");
-            String filename = xmlFile.getOriginalFilename().replace(" ", "_");
-            scenario.setScenarioName(filename);
-
-            scenario.setMimetype(xmlFile.getContentType());
-
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            InputStream inputStream = xmlFile.getInputStream();
-            Document doc = docBuilder.parse(inputStream);
-
-            int schemaId = data.getScenarioSchema();
-            String schemaNeeded = data.getScenarioOption();
-
-            scenarioType = new ScenarioTypeNonSchema();
-            if (id > 0) {
-                scenarioType = scenario.getScenarioType();
-            }
-            scenarioType.setScenarioXml(doc);
+            
         }
 
         log.debug("Setting private/public access");
@@ -251,10 +219,8 @@ public class AddScenarioController
 
         log.debug("Saving scenario object");
         if (!data.isDataFileAvailable()) {
-            scenarioType = new ScenarioTypeNonXml();
+            
         }
-        scenario.setScenarioType(scenarioType);
-        scenarioType.setScenario(scenario);
         if (id > 0) {
             // Editing existing
             // scenarioTypeDao.update(scenarioType);

@@ -162,25 +162,7 @@ public class ScenarioServiceImpl implements ScenarioService {
         scenario.setPerson(owner);
 
         scenario.setScenarioLength((int) file.getSize());
-        IScenarioType scenarioType;
 
-        if(scenarioData.getMimeType() != null && "application/xml".equals(scenario.getMimetype())) {
-             //XML file type
-            scenarioType = new ScenarioTypeNonSchema();
-
-            DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
-            InputStream inputStream = file.getInputStream();
-            Document doc = docBuilder.parse(inputStream);
-            scenarioType.setScenarioXml(doc);
-        }   else{
-            //NonXML file type
-            scenarioType = new ScenarioTypeNonXml();
-            scenarioType.setScenarioXml(Hibernate.createBlob(file.getBytes()));
-        }
-
-        scenario.setScenarioType(scenarioType);
-        scenarioType.setScenario(scenario);
         scenario.setPrivateScenario(scenarioData.isPrivate());
         return scenarioDao.create(scenario);
 
@@ -194,49 +176,12 @@ public class ScenarioServiceImpl implements ScenarioService {
         Scenario scenario = scenarioDao.read(id);
         IScenarioType scenarioType;
 
-        if(scenario == null || (scenarioType = scenario.getScenarioType()) == null) throw new RestNotFoundException("No file with such id! ");
-
         //if is user member of group, then he has rights to download file
         //basic verification, in future should be extended
         ResearchGroup expGroup = scenario.getResearchGroup();
         if (!isInGroup(personDao.getLoggedPerson(), expGroup.getResearchGroupId())) throw new RestServiceException("User does not have access to this file!");
 
-        if(scenarioType.getScenarioXml() == null) throw new RestNotFoundException("No present scenario file!");
-
-        if(scenarioType.getScenarioXml() instanceof Blob){
-            ScenarioType<Blob> file = (ScenarioType<Blob>) scenarioType;
-            InputStream is = file.getScenarioXml().getBinaryStream();
-            // copy it to response's OutputStream
-            response.setContentType(scenario.getMimetype() != null ? scenario.getMimetype().trim() : "application/octet-stream");
-            response.setContentLength((int) file.getScenarioXml().length());
-            response.setHeader("Content-Disposition", "attachment; filename=\"" + scenario.getScenarioName() + "\"");
-            IOUtils.copy(is, response.getOutputStream());
-            response.flushBuffer();
-        }
-        else if (scenarioType.getScenarioXml() instanceof Document){
-            File tmpXml = File.createTempFile("scenario", "download");
-            ScenarioType<Document> doc = (ScenarioType<Document>) scenarioType;
-            Source source = new DOMSource(doc.getScenarioXml());
-            Result result = new StreamResult(tmpXml);
-            TransformerFactory transformerFactory = TransformerFactory.newInstance();
-            Transformer transformer = transformerFactory.newTransformer();
-            transformer.transform(source, result);
-
-            InputStream inStream = null;
-
-            try {
-                response.setContentLength((int) tmpXml.length());
-                response.setHeader("Content-Disposition", "attachment; filename=\"" + scenario.getScenarioName() + "\"");
-                inStream = new FileInputStream(tmpXml);
-                IOUtils.copy(inStream, response.getOutputStream());
-            } finally {
-                if(inStream != null)
-                    inStream.close();
-                response.flushBuffer();
-                tmpXml.delete();
-            }
-        }
-        else throw new RestServiceException("Unsupported file type!");
+        
     }
 
     /**

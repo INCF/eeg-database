@@ -113,17 +113,11 @@ public class FileServiceImpl implements FileService {
     @Override
     @Transactional
     public DataFileDTO getFile(int fileId) {
-        try {
             DataFile dataFileEntity = fileDAO.read(fileId);
             DataFileDTO dto = new DataFileDTO();
             dto.setFileName(dataFileEntity.getFilename());
             dto.setMimetype(dataFileEntity.getMimetype());
-            long length = dataFileEntity.getFileContent().length();
-            dto.setFileContent(dataFileEntity.getFileContent().getBytes(1, (int) length).clone());
+            dto.setFileContent(dataFileEntity.getFileContent());
             return dto;
-        } catch (SQLException e) {
-            log.error(e.getMessage(), e);
-            return null;
-        }
     }
 }

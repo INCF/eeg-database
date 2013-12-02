@@ -92,6 +92,7 @@ import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ResearchGroupInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ResearchGroupMembershipInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ScenarioInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.WeatherInfo;
+import org.apache.commons.io.IOUtils;
 
 /**
  * @author František Liška
@@ -215,8 +216,6 @@ public class ClientServiceImpl implements ClientService {
 	@Override
 	public int addScenario(ScenarioInfo info, @XmlMimeType("application/octet-stream") DataHandler inputData) throws ClientServiceException {
 		Scenario s = new Scenario();
-		IScenarioType scenarioType = new ScenarioTypeNonXml();
-		scenarioType.setScenario(s);
 		s.setDescription(info.getDescription());
 		Person p = personDao.read(info.getOwnerPersonId());
 		s.setPerson(p);
@@ -230,13 +229,11 @@ public class ClientServiceImpl implements ClientService {
 				s.setMimetype(info.getMimetype());
 				s.setScenarioName(info.getScenarioName());
 				Blob blob = dataFileDao.createBlob(inputData.getInputStream(), (int) info.getFileLength());
-				scenarioType.setScenarioXml(blob);
 			}
 		} catch (IOException ex) {
 			log.error(ex.getMessage(), ex);
 			throw new ClientServiceException(ex);
 		}
-		s.setScenarioType(scenarioType);
 		int scenarioId = scenarioDao.create(s);
 		log.debug("User " + personDao.getLoggedPerson().getEmail() + " created new Scenario (primary key " + scenarioId + ").");
 		p.getScenarios().add(s);
@@ -257,8 +254,8 @@ public class ClientServiceImpl implements ClientService {
 
 		try {
 			if (inputData != null) {
-				Blob blob = dataFileDao.createBlob(inputData.getInputStream(), (int) info.getFileLength());
-				file.setFileContent(blob);
+				
+				file.setFileContent(IOUtils.toByteArray(inputData.getInputStream()));
 			}
 		} catch (IOException ex) {
 			log.error(ex.getMessage(), ex);

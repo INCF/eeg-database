@@ -27,8 +27,6 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import oracle.jdbc.rowset.OracleSerialBlob;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Component;
@@ -67,6 +65,8 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvironmentForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
+import java.sql.Blob;
+import javax.sql.rowset.serial.SerialBlob;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPage extends MenuPage {
@@ -128,8 +128,7 @@ public class ExperimentFormPage extends MenuPage {
                             DataFile file = new DataFile();
 
                             byte[] fileBytes = fileUpload.getBytes();
-                            OracleSerialBlob blob = new OracleSerialBlob(fileBytes);
-                            file.setFileContent(blob);
+                            file.setFileContent(fileBytes);
                             file.setMimetype(fileUpload.getContentType());
                             file.setFilename(fileUpload.getClientFileName());
                             files.add(file);

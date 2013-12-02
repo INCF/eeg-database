@@ -76,10 +76,8 @@ public class ScenarioMultiController extends MultiActionController {
         } catch (Exception e) {
         }
         Scenario scenario = scenarioDao.read(id);
-        IScenarioType scenarioType = scenario.getScenarioType();
         mav.addObject("scenarioDetail", scenario);
         mav.addObject("isOwner", (auth.userIsOwnerOfScenario(id))||(auth.isAdmin()));
-        mav.addObject("containsFile", scenarioType.getScenarioXml() != null);
 
         return mav;
     }

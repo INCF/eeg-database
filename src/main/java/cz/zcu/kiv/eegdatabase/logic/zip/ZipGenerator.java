@@ -79,8 +79,6 @@ public class ZipGenerator implements Generator {
             Scenario scen = exp.getScenario();
             log.debug("getting scenario file");
 
-            IScenarioType scenFile = scen.getScenarioType();
-
             byte[] xmlMetadata = null;
             if (meta instanceof ByteArrayOutputStream) {
                 xmlMetadata = ((ByteArrayOutputStream) meta).toByteArray();
@@ -90,11 +88,9 @@ public class ZipGenerator implements Generator {
 
             if (mc.isScenFile()) {
                 try {
-                    scenario = toByteArray(scenFile.getScenarioXml());
                     log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");
                     e = new ZipEntry("Scenario/" + scen.getScenarioName());
                     zos.putNextEntry(e);
-                    zos.write(scenario);
                     zos.closeEntry();
                 } catch (Exception ex) {
                     ex.printStackTrace();
@@ -110,9 +106,8 @@ public class ZipGenerator implements Generator {
 
             for (DataFile d : dataFiles) {
                 e = new ZipEntry(getDataZip() + "/" + d.getFilename());
-                Blob blob = d.getFileContent();
-                if (blob != null) {
-                    byte[] pole = blob.getBytes(1, (int) blob.length());
+                byte[] data = d.getFileContent();
+                if (data != null) {
                     log.debug("saving data file to zip file");
                     try {
                         zos.putNextEntry(e);
@@ -129,7 +124,7 @@ public class ZipGenerator implements Generator {
                         fileCounter++;
                     }
 
-                    zos.write(pole);
+                    zos.write(data);
                     zos.closeEntry();
                 }
             }

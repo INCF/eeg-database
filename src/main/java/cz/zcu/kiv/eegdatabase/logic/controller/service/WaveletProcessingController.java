@@ -85,8 +85,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg")) || (dataFile.getFilename().endsWith(".eeg"))) {
-                    Blob blob = dataFile.getFileContent();
-                    data = blob.getBytes(1, (int) blob.length());
+                    data = dataFile.getFileContent();
                     break;
                 }
             }
@@ -126,7 +125,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
                     service.setStatus("failed");
                     service.setFilename("errorLog.txt");
                     String errorText = "Not enough memory for analysed signal.";
-                    service.setFigure(Hibernate.createBlob(errorText.getBytes()));
+                    service.setFigure(errorText.getBytes());
                     resultDao.update(service);
                     return;
                 }
@@ -143,11 +142,11 @@ public class WaveletProcessingController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Error while creating an image.";
-                service.setFigure(Hibernate.createBlob(errorText.getBytes()));
+                service.setFigure(errorText.getBytes());
                 resultDao.update(service);
                 return;
             }
-            service.setFigure(Hibernate.createBlob(image));
+            service.setFigure(image);
             service.setStatus("finished");
             resultDao.update(service);
         }

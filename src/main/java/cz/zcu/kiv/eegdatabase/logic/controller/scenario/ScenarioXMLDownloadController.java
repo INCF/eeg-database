@@ -76,8 +76,6 @@ public class ScenarioXMLDownloadController extends AbstractController {
         int scenarioId = Integer.parseInt(request.getParameter("scenarioId"));
         Scenario scenario = scenarioDao.read(scenarioId);
         //TODO set Blob or XMLType
-        Object data = scenario.getScenarioType().getScenarioXml();
-        byte[] fileOutput = toByteArray(data);
         //Document xmlType = (Document) scenario.getScenarioType().getScenarioXml();
         //Blob c = (Blob) scenario.getScenarioType().getScenarioXml();
 
@@ -94,7 +92,6 @@ public class ScenarioXMLDownloadController extends AbstractController {
         historyDao.create(history);
         response.setHeader("Content-Type", scenario.getMimetype());
         response.setHeader("Content-Disposition", "attachment;filename=" + scenario.getScenarioName());
-        response.getOutputStream().write(fileOutput);
         response.flushBuffer();
         // mav.addObject("dataObject", scenarioDao.read(scenarioId));
 

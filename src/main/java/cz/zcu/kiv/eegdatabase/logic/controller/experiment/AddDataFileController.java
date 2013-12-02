@@ -120,7 +120,7 @@ public class AddDataFileController
                         String name[] = en.getName().split("/");
                         data.setFilename(name[name.length - 1]);
                         data.setDescription(addDataCommand.getDescription());
-                        data.setFileContent(Hibernate.createBlob(SignalProcessingUtils.extractZipEntry(zis)));
+                        data.setFileContent(SignalProcessingUtils.extractZipEntry(zis));
                         String[] partOfName = en.getName().split("[.]");
                         data.setMimetype(partOfName[partOfName.length - 1]);
                         dataFileDao.create(data);
@@ -147,7 +147,7 @@ public class AddDataFileController
                     data.setDescription(addDataCommand.getDescription());
 
                     log.debug("Setting the binary data to object.");
-                    data.setFileContent(Hibernate.createBlob(file.getBytes()));
+                    data.setFileContent(file.getBytes());
 
                     dataFileDao.create(data);
                     log.debug("Data stored into database.");
