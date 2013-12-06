@@ -44,43 +44,43 @@
     </appender>
 
     <logger name="org.hibernate">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <logger name="org.hibernate.SQL">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <logger name="org.hibernate.type">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     
     <logger name="org.springframework">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     
     <logger name="org.apache.wicket">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     <logger name="org.apache.wicket.protocol.http.HttpSessionStore">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     <logger name="org.apache.wicket.version">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     <logger name="org.apache.wicket.RequestCycle">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
     <logger name="org.apache.wicket.protocol.http.WebSession=INFO">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <logger name="cz.zcu.kiv.eegdatabase.Tests">
-        <level value="debug" />
+        <level value="warn" />
     </logger>
 
     <root>
-        <priority value="debug" />
+        <priority value="warn" />
         <appender-ref ref="logFile" />
         <appender-ref ref="console" />
     </root>
