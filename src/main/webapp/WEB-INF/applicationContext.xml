@@ -22,13 +22,12 @@
     applicationContext.xml, 2013/10/02 00:01 Jakub Rinkes
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:context="http://www.springframework.org/schema/context"
        xmlns:security="http://www.springframework.org/schema/security"
        xmlns:task="http://www.springframework.org/schema/task"
        xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-		http://www.springframework.org/schema/context
-		http://www.springframework.org/schema/context/spring-context-3.0.xsd
+
+
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
@@ -69,6 +68,20 @@
             </list>
         </property>
     </bean>
+
+    <bean id="proxyFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
+        <property name="serviceClass" value="
+            cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated.ProcessService" />
+        <property name="address" value="
+            http://147.228.63.134:8080/eegdataprocessor/webservice/webservice/processService" />
+        <property name="username" value="jan.stebetak@seznam.cz" />
+        <property name="password" value="stebjan" />
+    </bean>
+
+    <bean id="service" class="cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated.ProcessService"
+              factory-bean="proxyFactory" factory-method="create" />
+
+    <bean id="test" class="cz.zcu.kiv.eegdatabase.webservices.EDPClient.Test" />
 
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 

@@ -4,7 +4,6 @@ import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;
 import javax.jws.WebService;
-import javax.xml.bind.annotation.XmlSeeAlso;
 import javax.xml.ws.RequestWrapper;
 import javax.xml.ws.ResponseWrapper;
 
@@ -15,7 +14,7 @@ import javax.xml.ws.ResponseWrapper;
  * 
  */
 @WebService(targetNamespace = "http://webservice.eegprocessor.kiv.zcu.cz/", name = "ProcessService")
-@XmlSeeAlso({ObjectFactory.class})
+
 public interface ProcessService {
 
     @WebResult(name = "return", targetNamespace = "")

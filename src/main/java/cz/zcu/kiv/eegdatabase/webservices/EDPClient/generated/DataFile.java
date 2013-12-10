@@ -7,17 +7,17 @@ import javax.xml.bind.annotation.XmlType;
 
 
 /**
- * <p>Java class for getMethodParameters complex type.
+ * <p>Java class for dataFile complex type.
  * 
  * <p>The following schema fragment specifies the expected content contained within this class.
  * 
  * <pre>
- * &lt;complexType name="getMethodParameters">
+ * &lt;complexType name="dataFile">
  *   &lt;complexContent>
  *     &lt;restriction base="{http://www.w3.org/2001/XMLSchema}anyType">
  *       &lt;sequence>
- *         &lt;element name="arg0" type="{http://webservice.eegprocessor.kiv.zcu.cz/}supportedFormat" minOccurs="0"/>
- *         &lt;element name="arg1" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
+ *         &lt;element name="file" type="{http://www.w3.org/2001/XMLSchema}base64Binary" minOccurs="0"/>
+ *         &lt;element name="fileName" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *       &lt;/sequence>
  *     &lt;/restriction>
  *   &lt;/complexContent>
@@ -27,61 +27,59 @@ import javax.xml.bind.annotation.XmlType;
  * 
  */
 @XmlAccessorType(XmlAccessType.FIELD)
-@XmlType(name = "getMethodParameters", propOrder = {
-    "arg0",
-    "arg1"
+@XmlType(name = "dataFile", propOrder = {
+    "file",
+    "fileName"
 })
-public class GetMethodParameters {
+public class DataFile {
 
-    protected SupportedFormat arg0;
-    protected String arg1;
+    protected byte[] file;
+    protected String fileName;
 
     /**
-     * Gets the value of the arg0 property.
+     * Gets the value of the file property.
      * 
      * @return
      *     possible object is
-     *     {@link SupportedFormat }
-     *     
+     *     byte[]
      */
-    public SupportedFormat getArg0() {
-        return arg0;
+    public byte[] getFile() {
+        return file;
     }
 
     /**
-     * Sets the value of the arg0 property.
+     * Sets the value of the file property.
      * 
      * @param value
      *     allowed object is
-     *     {@link SupportedFormat }
-     *     
+     *     byte[]
      */
-    public void setArg0(SupportedFormat value) {
-        this.arg0 = value;
+    public void setFile(byte[] value) {
+        this.file = value;
     }
 
     /**
-     * Gets the value of the arg1 property.
+     * Gets the value of the fileName property.
      * 
      * @return
      *     possible object is
      *     {@link String }
      *     
      */
-    public String getArg1() {
-        return arg1;
+    public String getFileName() {
+        return fileName;
     }
 
     /**
-     * Sets the value of the arg1 property.
+     * Sets the value of the fileName property.
      * 
      * @param value
      *     allowed object is
      *     {@link String }
      *     
      */
-    public void setArg1(String value) {
-        this.arg1 = value;
+    public void setFileName(String value) {
+        this.fileName = value;
     }
 
 }
