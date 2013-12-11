@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated;
+package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 
 import javax.jws.WebMethod;
 import javax.jws.WebParam;

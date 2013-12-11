@@ -1,10 +1,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 
-import cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated.ProcessService;
 import org.apache.cxf.jaxws.JaxWsProxyFactoryBean;
-
-import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -30,7 +26,7 @@ public class Test {
     //    ApplicationContext context = new ClassPathXmlApplicationContext("applicationContext.xml");
 
        // service = (ProcessService) context.getBean("service");
-        List<String> list = service.getAvailableMethods();
-        System.out.println(Arrays.toString(list.toArray()));
+      //  List<String> list = service.getAvailableMethods();
+      //  System.out.println(Arrays.toString(list.toArray()));
     }
 }

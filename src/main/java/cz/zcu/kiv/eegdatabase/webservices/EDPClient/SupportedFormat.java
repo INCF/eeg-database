@@ -1,5 +1,5 @@
 
-package cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated;
+package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 
 import javax.xml.bind.annotation.XmlEnum;
 import javax.xml.bind.annotation.XmlType;

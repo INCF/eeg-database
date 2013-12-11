@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.webservices.EDPClient.generated;
+package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 
 import javax.xml.namespace.QName;
 import javax.xml.ws.Service;
