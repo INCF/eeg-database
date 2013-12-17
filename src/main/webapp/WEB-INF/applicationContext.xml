@@ -69,20 +69,6 @@
         </property>
     </bean>
 
-    <bean id="proxyFactory" class="org.apache.cxf.jaxws.JaxWsProxyFactoryBean">
-        <property name="serviceClass" value="
-            cz.zcu.kiv.eegdatabase.webservices.EDPClient.ProcessService" />
-        <property name="address" value="
-            http://147.228.63.134:8080/eegdataprocessor/webservice/webservice/processService" />
-        <property name="username" value="jan.stebetak@seznam.cz" />
-        <property name="password" value="stebjan" />
-    </bean>
-
-    <bean id="service" class="cz.zcu.kiv.eegdatabase.webservices.EDPClient.ProcessService"
-              factory-bean="proxyFactory" factory-method="create" />
-
-    <bean id="test" class="cz.zcu.kiv.eegdatabase.webservices.EDPClient.Test" />
-
     <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
     <!-- CORE -->
@@ -178,8 +164,9 @@
 
     <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
 
-    <bean name="signalProcessingService" class="cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingServiceImpl" autowire="byType"/>
-
+    <bean name="signalProcessingService" class="cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingServiceImpl" autowire="byType">
+        <property name="eegService" ref="eegService"/>
+            </bean>
     <!-- ACCESS CONTROL -->
     <bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
 	<constructor-arg ref="licenseDao"/>

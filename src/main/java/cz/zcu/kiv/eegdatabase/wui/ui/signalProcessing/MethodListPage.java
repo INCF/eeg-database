@@ -33,7 +33,7 @@ public class MethodListPage extends MenuPage {
                     @Override
                     protected void populateItem(final ListItem<String> item) {
                         final String method = item.getModelObject();
-                        item.add(new Label("name", method.toString()));
+                        item.add(new Label("name", method));
 
                     }
                 };
