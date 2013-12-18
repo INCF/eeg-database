@@ -166,7 +166,7 @@
 
     <bean name="signalProcessingService" class="cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingServiceImpl" autowire="byType">
         <property name="eegService" ref="eegService"/>
-            </bean>
+    </bean>
     <!-- ACCESS CONTROL -->
     <bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
 	<constructor-arg ref="licenseDao"/>

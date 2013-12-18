@@ -34,15 +34,29 @@ This file is part of the EEG-database project
     </div>
 
     <table class="dataTable" style="width: 450px;">
-            <thead>
-              <tr>
-                <th style="width: 250px;"><wicket:message key="dataTable.heading.methodName" /></th>
-              </tr>
-            </thead>
-            <tr wicket:id="methods">
-              <td wicket:id="name"></td>
-            </tr>
-          </table>
+        <thead>
+        <tr>
+            <th style="width: 250px;">
+                <wicket:message key="dataTable.heading.methodName"/>
+            </th>
+        </tr>
+        </thead>
+        <tr wicket:id="methods">
+            <td wicket:id="name"></td>
+        </tr>
+    </table>
+    <table class="dataTable" style="width: 450px;">
+        <thead>
+        <tr>
+            <th style="width: 250px;">
+                <wicket:message key="dataTable.heading.suitableData"/>
+            </th>
+        </tr>
+        </thead>
+        <tr wicket:id="data">
+            <td wicket:id="name"></td>
+        </tr>
+    </table>
 </wicket:extend>
 </body>
 </html>

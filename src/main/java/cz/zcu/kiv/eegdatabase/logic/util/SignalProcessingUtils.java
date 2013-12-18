@@ -40,7 +40,7 @@ import java.util.zip.ZipInputStream;
  */
 public class SignalProcessingUtils {
 
-    public static List<String> getHeaders(Experiment e) throws Exception {
+    public static List<String> getHeaders(Experiment e)  {
         List<String> headers = new ArrayList<String>();
         for (DataFile file: e.getDataFiles()) {
             if (file.getFilename().endsWith(".vhdr")) {

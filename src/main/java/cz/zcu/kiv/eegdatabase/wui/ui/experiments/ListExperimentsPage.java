@@ -91,7 +91,7 @@ public class ListExperimentsPage extends MenuPage {
             add(new Label("title", title));
         } else if (param.equals(PARAM_SUBJECT)) {
             subject = true;
-            title = ResourceUtils.getModel("pageTitle.myExperiments");
+            title = ResourceUtils.getModel("pageTitle.meAsSubject");
             add(new Label("title", title));
         } else {
 			Args.notNull(param, "Either OWNER or SUBJECT param must be passed as page parameter!");
