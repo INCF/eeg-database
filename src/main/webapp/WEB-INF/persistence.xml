@@ -28,6 +28,7 @@
 			 xmlns:tx="http://www.springframework.org/schema/tx"
 			 xmlns:util="http://www.springframework.org/schema/util"
 			 xmlns:hprof="http://www.nhprof.com/schema/hprof"
+			 xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
@@ -39,7 +40,9 @@
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util-3.0.xsd
        http://www.nhprof.com/schema/hprof
-       http://www.nhprof.com/schema/hprof/hprof.xsd">
+       http://www.nhprof.com/schema/hprof/hprof.xsd
+       http://www.springframework.org/schema/data/elasticsearch
+       http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<context:annotation-config/>
@@ -75,13 +78,20 @@
 	</bean>
 
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
-					factory-method="noOpText" />
+				factory-method="noOpText" />
 
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 		<property name="driverClassName" value="${jdbc.driverClassName}"/>
 		<property name="url" value="${jdbc.url}"/>
 		<property name="username" value="${jdbc.username}"/>
 		<property name="password" value="${jdbc.password}"/>
+	</bean>
+	
+	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.elastic"/>
+	<elasticsearch:transport-client id="elasticClient" cluster-nodes="${elasticsearch.url}" cluster-name="${elasticsearch.clusterName}" />
+
+	<bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+		<constructor-arg name="client" ref="elasticClient"/>
 	</bean>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
@@ -124,10 +134,10 @@
 	</bean>
 
 	<bean id="captchaEngine"
-					class="com.octo.captcha.engine.image.gimpy.SimpleListImageCaptchaEngine"/>
+				class="com.octo.captcha.engine.image.gimpy.SimpleListImageCaptchaEngine"/>
           
 	<bean id="captchaService"
-					class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
+				class="com.octo.captcha.service.multitype.GenericManageableCaptchaService">
 		<constructor-arg index="0">
 			<ref bean="imageEngine"/>
 		</constructor-arg>
@@ -142,7 +152,7 @@
 
 
 	<bean id="imageEngine"
-					class="com.octo.captcha.engine.GenericCaptchaEngine">
+				class="com.octo.captcha.engine.GenericCaptchaEngine">
 		<constructor-arg index="0">
 			<list>
 				<ref bean="CaptchaFactory"/>
@@ -150,7 +160,7 @@
 		</constructor-arg>
 	</bean>
 	<bean id="CaptchaFactory"
-					class="com.octo.captcha.image.gimpy.GimpyFactory">
+				class="com.octo.captcha.image.gimpy.GimpyFactory">
 		<constructor-arg>
 			<ref bean="wordgen"/>
 		</constructor-arg>
@@ -160,21 +170,21 @@
 	</bean>
 
 	<bean id="wordgen"
-					class="com.octo.captcha.component.word.wordgenerator.DictionaryWordGenerator">
+				class="com.octo.captcha.component.word.wordgenerator.DictionaryWordGenerator">
 		<constructor-arg>
 			<ref bean="filedict"/>
 		</constructor-arg>
 	</bean>
 
 	<bean id="filedict"
-					class="com.octo.captcha.component.word.FileDictionary">
+				class="com.octo.captcha.component.word.FileDictionary">
 		<constructor-arg index="0">
 			<value>toddlist</value>
 		</constructor-arg>
 	</bean>
 
 	<bean id="wordtoimage"
-					class="com.octo.captcha.component.image.wordtoimage.ComposedWordToImage">
+				class="com.octo.captcha.component.image.wordtoimage.ComposedWordToImage">
 		<constructor-arg index="0">
 			<ref bean="fontGenRandom"/>
 		</constructor-arg>
@@ -187,7 +197,7 @@
 	</bean>
 
 	<bean id="fontGenRandom"
-					class="com.octo.captcha.component.image.fontgenerator.RandomFontGenerator">
+				class="com.octo.captcha.component.image.fontgenerator.RandomFontGenerator">
 		<constructor-arg index="0">
 			<value>40</value>
 		</constructor-arg>
@@ -214,7 +224,7 @@
 	</bean>
 
 	<bean id="backGenUni"
-					class="com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator">
+				class="com.octo.captcha.component.image.backgroundgenerator.UniColorBackgroundGenerator">
 		<constructor-arg index="0">
 			<value>300</value>
 		</constructor-arg>
@@ -224,7 +234,7 @@
 	</bean>
 
 	<bean id="simpleWhitePaster"
-					class="com.octo.captcha.component.image.textpaster.SimpleTextPaster">
+				class="com.octo.captcha.component.image.textpaster.SimpleTextPaster">
 		<constructor-arg type="java.lang.Integer" index="0">
 			<value>3</value>
 		</constructor-arg>
