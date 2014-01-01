@@ -159,7 +159,7 @@ public class DataFile implements java.io.Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ANALYSIS_ID", nullable = false)
+	@JoinColumn(name = "ANALYSIS_ID", nullable = true)
 	public Analysis getAnalysis() {
 		return this.analysis;
 	}
