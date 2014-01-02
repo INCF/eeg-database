@@ -111,7 +111,7 @@ public class ClientServiceImpl implements ClientService {
 	private GenericDao<SubjectGroup, Integer> subjectGroupDao;
 	private DigitizationDao digitizationDao;
 	private DataFileDao dataFileDao;
-	private ExperimentDao<Experiment, Integer> experimentDao;
+	private ExperimentDao experimentDao;
 	private GenericDao<PersonOptParamVal, PersonOptParamValId> personOptParamValDao;
 	private GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao;
 	private GenericDao<FileMetadataParamVal, FileMetadataParamValId> fileMetadataParamValDao;

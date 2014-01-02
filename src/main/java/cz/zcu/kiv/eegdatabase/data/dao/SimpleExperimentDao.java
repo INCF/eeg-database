@@ -27,6 +27,9 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ExperimentElastic;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.repositories.SampleExperimentRepository;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -45,6 +48,15 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import javax.annotation.Resource;
+import static org.elasticsearch.index.query.FilterBuilders.andFilter;
+import static org.elasticsearch.index.query.FilterBuilders.nestedFilter;
+import static org.elasticsearch.index.query.FilterBuilders.termFilter;
+import org.elasticsearch.index.query.NestedFilterBuilder;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 /**
  * This class extends powers (extend from) class SimpleGenericDao. Class is
@@ -52,12 +64,32 @@ import java.util.List;
  *
  * @author Pavel Bořík, A06208
  */
-public class SimpleExperimentDao<T, PK extends Serializable>
-				extends SimpleGenericDao<T, PK> implements ExperimentDao<T, PK> {
+public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> implements ExperimentDao {
 
+	@Resource
+	private SampleExperimentRepository sampleExperimentRepository;
+	@Autowired
+	private ElasticsearchTemplate elasticsearchTemplate;
 
-	public SimpleExperimentDao(Class<T> type) {
-		super(type);
+	public SimpleExperimentDao() {
+		super(Experiment.class);
+	}
+
+	@Override
+	public ElasticsearchTemplate getElasticsearchTemplate() {
+		return elasticsearchTemplate;
+	}
+
+	public void setElasticsearchTemplate(ElasticsearchTemplate elasticsearchTemplate) {
+		this.elasticsearchTemplate = elasticsearchTemplate;
+	}
+
+	public SampleExperimentRepository getSampleExperimentRepository() {
+		return sampleExperimentRepository;
+	}
+
+	public void setSampleExperimentRepository(SampleExperimentRepository sampleExperimentRepository) {
+		this.sampleExperimentRepository = sampleExperimentRepository;
 	}
 
 	public List<DataFile> getDataFilesWhereExpId(int experimentId) {
@@ -132,6 +164,7 @@ public class SimpleExperimentDao<T, PK extends Serializable>
 	}
 
 	@Override
+	@Transactional
 	public List<Experiment> getAllExperimentsForUser(Person person, int start, int count) {
 		if (person.getAuthority().equals("ROLE_ADMIN")) {
 			String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p "
@@ -299,7 +332,46 @@ public class SimpleExperimentDao<T, PK extends Serializable>
 
 	@Transactional(readOnly = true)
 	@Override
-	public List<T> getAllRecordsFull() {
+	public List<Experiment> getAllRecordsFull() {
 		return super.getAllRecordsFull();
+	}
+
+	@Override
+	@Transactional
+	public List<Experiment> findByGenericParameter(String name, String value) {
+
+		NestedFilterBuilder builder = nestedFilter("params", andFilter(termFilter("params.name", name), termFilter("params.valueString", value)));
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(builder).build();
+		List<ExperimentElastic> esResult = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		return this.transformEsResultToHibernate(esResult);
+
+	}
+
+	@Override
+	@Transactional
+	public List<Experiment> findByGenericParameter(String name, int value) {
+		NestedFilterBuilder builder = nestedFilter("params", andFilter(termFilter("params.name", name), termFilter("params.valueInteger", value)));
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(builder).build();
+		List<ExperimentElastic> esResult = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		return this.transformEsResultToHibernate(esResult);
+	}
+
+	public List<Experiment> findByGenericParameters(List<GenericParameter> params) {
+		
+		
+		return null;
+	}
+
+	private List<Experiment> transformEsResultToHibernate(List<ExperimentElastic> experiments) {
+		List<Integer> ids = new ArrayList<Integer>();
+		for (ExperimentElastic e : experiments) {
+			ids.add(Integer.parseInt(e.getExperimentId()));
+		}
+		return this.getExperimentsById(ids);
+	}
+
+	private List<Experiment> getExperimentsById(List<Integer> ids) {
+		String query = "from Experiment e where e.experimentId IN ( :ids )";
+		return getSessionFactory().getCurrentSession().createQuery(query).setParameterList("ids", ids).list();
 	}
 }

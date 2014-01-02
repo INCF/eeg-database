@@ -263,6 +263,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
 		//TODO remove before production deployment
 		mountPage("migrateDb", DbMigrationPage.class);
+		
+		mountPage("elastic", Elastic.class);
     }
 
     @Override

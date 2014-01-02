@@ -1,31 +1,38 @@
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * This file is part of the EEG-database project
- * 
- *   ==========================================
- *  
- *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *  
+ *
+ * ==========================================
+ *
+ * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
  *  ***********************************************************************************************************************
- *  
- *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- *   the License. You may obtain a copy of the License at
- *  
- *       http://www.apache.org/licenses/LICENSE-2.0
- *  
- *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- *   specific language governing permissions and limitations under the License.
- *  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
  *  ***********************************************************************************************************************
- *  
- *   Experiment.java, 2013/10/02 00:01 Jakub Rinkes
- ******************************************************************************/
+ *
+ * Experiment.java, 2013/10/02 00:01 Jakub Rinkes
+ * ****************************************************************************
+ */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 // Generated 19.1.2010 23:18:53 by Hibernate Tools 3.2.1.GA
 
 import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ExperimentElastic;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.formgen.annotation.Form;
@@ -35,9 +42,9 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 import org.hibernate.annotations.GenericGenerator;
 
@@ -79,71 +86,87 @@ public class Experiment implements Serializable {
 	private Set<Disease> diseases = new HashSet<Disease>(0);
 	private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
 	private Set<Software> softwares = new HashSet<Software>(0);
-	private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(
-			0);
+	private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
 	private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
 	private Set<History> histories = new HashSet<History>(0);
-	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(
-			0);
+	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 	private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
+	private ExperimentElastic elasticExperiment = new ExperimentElastic();
 
+	public void setElasticExperiment(ExperimentElastic e) {
+		this.elasticExperiment = e;
+	}
+
+	@Transient
+	public ExperimentElastic getElasticExperiment() {
+		return this.elasticExperiment;
+	}
 
 	public Experiment() {
 	}
 
 	public Experiment(Weather weather, Person personBySubjectPersonId,
-			Scenario scenario, Person personByOwnerId,
-			ResearchGroup researchGroup, Digitization digitization,
-			SubjectGroup subjectGroup, Artifact artifact,
-			ElectrodeConf electrodeConf) {
-		this.weather = weather;
-		this.personBySubjectPersonId = personBySubjectPersonId;
-		this.scenario = scenario;
-		this.personByOwnerId = personByOwnerId;
-		this.researchGroup = researchGroup;
-		this.digitization = digitization;
-		this.subjectGroup = subjectGroup;
-		this.artifact = artifact;
-		this.electrodeConf = electrodeConf;
+					Scenario scenario, Person personByOwnerId,
+					ResearchGroup researchGroup, Digitization digitization,
+					SubjectGroup subjectGroup, Artifact artifact,
+					ElectrodeConf electrodeConf) {
+		this.setWeather(weather);
+		this.setPersonBySubjectPersonId(personBySubjectPersonId);
+		this.setScenario(scenario);
+		this.setPersonByOwnerId(personByOwnerId);
+		this.setResearchGroup(researchGroup);
+		this.setDigitization(digitization);
+		this.setSubjectGroup(subjectGroup);
+		this.setArtifact(artifact);
+		this.setElectrodeConf(electrodeConf);
 	}
 
 	public Experiment(Weather weather, Person personBySubjectPersonId,
-			Scenario scenario, Person personByOwnerId,
-			ResearchGroup researchGroup, Digitization digitization,
-			SubjectGroup subjectGroup, Artifact artifact,
-			ElectrodeConf electrodeConf, Timestamp startTime,
-			Timestamp endTime, int temperature, boolean privateExperiment,
-			String environmentNote, Set<Person> persons,
-			Set<Hardware> hardwares, Set<Pharmaceutical> pharmaceuticals,
-			Set<Disease> diseases, Set<ProjectType> projectTypes,
-			Set<Software> softwares,
-			Set<ArtifactRemoveMethod> artifactRemoveMethods,
-			Set<DataFile> dataFiles, Set<History> histories,
-			Set<ExperimentOptParamVal> experimentOptParamVals) {
-		this.weather = weather;
-		this.personBySubjectPersonId = personBySubjectPersonId;
-		this.scenario = scenario;
-		this.personByOwnerId = personByOwnerId;
-		this.researchGroup = researchGroup;
-		this.digitization = digitization;
-		this.subjectGroup = subjectGroup;
-		this.artifact = artifact;
-		this.electrodeConf = electrodeConf;
-		this.startTime = startTime;
-		this.endTime = endTime;
-		this.temperature = temperature;
-		this.privateExperiment = privateExperiment;
-		this.environmentNote = environmentNote;
-		this.persons = persons;
-		this.hardwares = hardwares;
-		this.pharmaceuticals = pharmaceuticals;
-		this.diseases = diseases;
-		this.projectTypes = projectTypes;
-		this.softwares = softwares;
-		this.artifactRemoveMethods = artifactRemoveMethods;
-		this.dataFiles = dataFiles;
-		this.histories = histories;
-		this.experimentOptParamVals = experimentOptParamVals;
+					Scenario scenario, Person personByOwnerId,
+					ResearchGroup researchGroup, Digitization digitization,
+					SubjectGroup subjectGroup, Artifact artifact,
+					ElectrodeConf electrodeConf, Timestamp startTime,
+					Timestamp endTime, int temperature, boolean privateExperiment,
+					String environmentNote, Set<Person> persons,
+					Set<Hardware> hardwares, Set<Pharmaceutical> pharmaceuticals,
+					Set<Disease> diseases, Set<ProjectType> projectTypes,
+					Set<Software> softwares,
+					Set<ArtifactRemoveMethod> artifactRemoveMethods,
+					Set<DataFile> dataFiles, Set<History> histories,
+					Set<ExperimentOptParamVal> experimentOptParamVals) {
+		this.setWeather(weather);
+		this.setPersonBySubjectPersonId(personBySubjectPersonId);
+		this.setScenario(scenario);
+		this.setPersonByOwnerId(personByOwnerId);
+		this.setResearchGroup(researchGroup);
+		this.setDigitization(digitization);
+		this.setSubjectGroup(subjectGroup);
+		this.setArtifact(artifact);
+		this.setElectrodeConf(electrodeConf);
+		this.setStartTime(startTime);
+		this.setEndTime(endTime);
+		this.setTemperature(temperature);
+		this.setPrivateExperiment(privateExperiment);
+		this.setEnvironmentNote(environmentNote);
+		this.setPersons(persons);
+		this.setHardwares(hardwares);
+		this.setPharmaceuticals(pharmaceuticals);
+		this.setDiseases(diseases);
+		this.setProjectTypes(projectTypes);
+		this.setSoftwares(softwares);
+		this.setArtifactRemoveMethods(artifactRemoveMethods);
+		this.setDataFiles(dataFiles);
+		this.setHistories(histories);
+		this.setExperimentOptParamVals(experimentOptParamVals);
+	}
+
+	@Transient
+	public List<GenericParameter> getGenericParameters() {
+		return this.elasticExperiment.getParams();
+	}
+
+	public void setGenericParameters(List<GenericParameter> params) {
+		this.elasticExperiment.setParams(params);
 	}
 
 	@GenericGenerator(name = "generator", strategy = "increment")
@@ -353,7 +376,7 @@ public class Experiment implements Serializable {
 	}
 
 	public void setArtifactRemoveMethods(
-			Set<ArtifactRemoveMethod> artifactRemoveMethods) {
+					Set<ArtifactRemoveMethod> artifactRemoveMethods) {
 		this.artifactRemoveMethods = artifactRemoveMethods;
 	}
 
@@ -381,11 +404,11 @@ public class Experiment implements Serializable {
 	}
 
 	public void setExperimentOptParamVals(
-			Set<ExperimentOptParamVal> experimentOptParamVals) {
+					Set<ExperimentOptParamVal> experimentOptParamVals) {
 		this.experimentOptParamVals = experimentOptParamVals;
 	}
-	
-	@OneToMany(mappedBy="experiment")
+
+	@OneToMany(mappedBy = "experiment")
 	public Set<ExperimentPackageConnection> getExperimentPackageConnections() {
 		return experimentPackageConnections;
 	}
@@ -393,35 +416,34 @@ public class Experiment implements Serializable {
 	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
 		this.experimentPackageConnections = experimentPackageConnections;
 	}
-	
-	@Transient
-	public Date getFinishDate(){
-        if(endTime != null)
-            return new Date(endTime.getTime());
-        else {
-            Date now = new Date();
-            endTime = new Timestamp(now.getTime());
-            return now;
-        }
-    }
-    
-	@Transient
-    public Date getStartDate(){
-        if(startTime != null)
-            return new Date(startTime.getTime());
-        else {
-            Date now = new Date();
-            startTime = new Timestamp(now.getTime());
-            return now;
-        }
-    }
-    
-    public void setFinishDate(Date date){
-        endTime = new Timestamp(date.getTime());
-    }
-    
-    public void setStartDate(Date date){
-        startTime = new Timestamp(date.getTime());
-    }
 
+	@Transient
+	public Date getFinishDate() {
+		if (endTime != null) {
+			return new Date(endTime.getTime());
+		} else {
+			Date now = new Date();
+			endTime = new Timestamp(now.getTime());
+			return now;
+		}
+	}
+
+	@Transient
+	public Date getStartDate() {
+		if (startTime != null) {
+			return new Date(startTime.getTime());
+		} else {
+			Date now = new Date();
+			startTime = new Timestamp(now.getTime());
+			return now;
+		}
+	}
+
+	public void setFinishDate(Date date) {
+		endTime = new Timestamp(date.getTime());
+	}
+
+	public void setStartDate(Date date) {
+		startTime = new Timestamp(date.getTime());
+	}
 }

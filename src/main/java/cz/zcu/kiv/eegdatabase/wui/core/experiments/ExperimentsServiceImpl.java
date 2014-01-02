@@ -51,7 +51,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     
     protected Log log = LogFactory.getLog(getClass());
 
-    private ExperimentDao<Experiment, Integer> experimentDao;
+    private ExperimentDao experimentDao;
     private HardwareDao hardwareDao;
     private SimpleSoftwareDao softwareDao;
     private PersonDao personDao;
@@ -61,7 +61,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     private ExperimentPackageConnectionDao experimentPackageConnectionDao;
 
     @Required
-    public void setExperimentDao(ExperimentDao<Experiment, Integer> experimentDao) {
+    public void setExperimentDao(ExperimentDao experimentDao) {
         this.experimentDao = experimentDao;
     }
 

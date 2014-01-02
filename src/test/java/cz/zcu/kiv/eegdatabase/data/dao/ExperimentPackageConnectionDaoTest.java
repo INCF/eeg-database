@@ -43,7 +43,7 @@ public class ExperimentPackageConnectionDaoTest extends AbstractDataAccessTest{
     @Autowired
     private ExperimentPackageDao experimentPackageDao;
     @Autowired
-    private ExperimentDao<Experiment, Integer> experimentDao;
+    private ExperimentDao experimentDao;
     
     Experiment experiment;
     ExperimentPackage experimentPackage;

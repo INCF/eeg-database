@@ -19,277 +19,277 @@
    
    ***********************************************************************************************************************
    
-    applicationContext.xml, 2013/10/02 00:01 Jakub Rinkes
+		applicationContext.xml, 2013/10/02 00:01 Jakub Rinkes
 -->
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-       xmlns:security="http://www.springframework.org/schema/security"
-       xmlns:task="http://www.springframework.org/schema/task"
-       xsi:schemaLocation="http://www.springframework.org/schema/beans
+			 xmlns:security="http://www.springframework.org/schema/security"
+			 xmlns:task="http://www.springframework.org/schema/task"
+			 xmlns:context="http://www.springframework.org/schema/context"
+			 xsi:schemaLocation="http://www.springframework.org/schema/beans
 		http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
-
-
 		http://www.springframework.org/schema/security
 		http://www.springframework.org/schema/security/spring-security-3.1.xsd http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task.xsd">
 
-    <!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic.controller" /> -->
+	<!-- <context:component-scan base-package="cz.zcu.kiv.eegdatabase.logic.controller" /> -->
 
-    <!-- SECURITY -->
-    <security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
 
-        <security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-        <security:intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	<!-- SECURITY -->
+	<security:http create-session="never" auto-config="true" access-decision-manager-ref="accessDecisionManager">
 
-        <security:intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />
-        <security:intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />
-        <security:intercept-url pattern="/status" access="IS_AUTHENTICATED_FULLY" />
-        <security:intercept-url pattern="/oauthcallback" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/signin/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/signin" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/signup" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+		<security:intercept-url pattern="/signup/*" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-        <security:remember-me />
-        <security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
-    </security:http>
+		<security:intercept-url pattern="/connect" access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/connect/*" access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/status" access="IS_AUTHENTICATED_FULLY" />
+		<security:intercept-url pattern="/oauthcallback" access="IS_AUTHENTICATED_ANONYMOUSLY" />
 
-    <security:authentication-manager alias="authenticationManager">
-        <security:authentication-provider>
-            <security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=true and username=?"
-                authorities-by-username-query="select username, authority from person where username=?" />
-            <security:password-encoder ref="encoder" />
-        </security:authentication-provider>
-    </security:authentication-manager>
+		<security:remember-me />
+		<security:intercept-url pattern="/**" access="IS_AUTHENTICATED_ANONYMOUSLY" />
+	</security:http>
 
-    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-        <property name="decisionVoters">
-            <list>
-                <bean class="org.springframework.security.access.vote.RoleVoter">
-                    <property name="rolePrefix" value="ROLE_" />
-                </bean>
-                <bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-            </list>
-        </property>
-    </bean>
+	<security:authentication-manager alias="authenticationManager">
+		<security:authentication-provider>
+			<security:jdbc-user-service data-source-ref="dataSource" users-by-username-query="select username, password, confirmed, 1 AS enabled FROM person WHERE confirmed=true and username=?"
+																	authorities-by-username-query="select username, authority from person where username=?" />
+			<security:password-encoder ref="encoder" />
+		</security:authentication-provider>
+	</security:authentication-manager>
 
-    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+	<bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+		<property name="decisionVoters">
+			<list>
+				<bean class="org.springframework.security.access.vote.RoleVoter">
+					<property name="rolePrefix" value="ROLE_" />
+				</bean>
+				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+			</list>
+		</property>
+	</bean>
 
-    <!-- CORE -->
-    <bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
+	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-    <bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
-    <bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
+	<!-- CORE -->
+	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
 
-    <bean id="personService" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
-    <bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
+	<bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
+	<bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />
+
+	<bean id="personService" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
+	<bean id="personFacade " class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacadeImpl" autowire="byType" />
     
-    <bean name="personOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamServiceImpl" autowire="byType" >
-        <property name="valDAO" ref="personOptParamValDao"/>
-    </bean>
-    <bean name="personOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamFacadeImpl" autowire="byType" />
+	<bean name="personOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamServiceImpl" autowire="byType" >
+		<property name="valDAO" ref="personOptParamValDao"/>
+	</bean>
+	<bean name="personOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamFacadeImpl" autowire="byType" />
     
 
-    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" >
-        <property name="membershipDao" ref="researchGroupMembershipDao"/>
-        <property name="artifactDao" ref="artifactDao"/>
-        <property name="permRequestDao" ref="groupPermissionRequestDao"/>
-    </bean>
-    <bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
+	<bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl" autowire="byType" >
+		<property name="membershipDao" ref="researchGroupMembershipDao"/>
+		<property name="artifactDao" ref="artifactDao"/>
+		<property name="permRequestDao" ref="groupPermissionRequestDao"/>
+	</bean>
+	<bean id="researchGroupFacade " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacadeImpl" autowire="byType" />
 
-    <bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />
-    <bean name="educationLevelFacade" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl" autowire="byType" />
+	<bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />
+	<bean name="educationLevelFacade" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl" autowire="byType" />
 
-    <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
-    <bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
+	<bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
+	<bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
 
-    <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
-    <bean name="diseaseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacadeImpl" autowire="byType" />
+	<bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
+	<bean name="diseaseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacadeImpl" autowire="byType" />
 
-    <bean name="experimentDownloadProvider" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider" autowire="byType" />
+	<bean name="experimentDownloadProvider" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider" autowire="byType" />
     
-    <bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" />
-    <bean name="experimentsOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamFacadeImpl" autowire="byType" />
+	<bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" />
+	<bean name="experimentsOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamFacadeImpl" autowire="byType" />
     
-    <bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />
-    <bean name="fileFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileFacadeImpl" autowire="byType" />
+	<bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />
+	<bean name="fileFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileFacadeImpl" autowire="byType" />
 
-    <bean name="fileMetadataParamService" class="cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamServiceImpl" autowire="byType" >
-        <property name="fileMetadataParamValDao" ref="fileMetadataDao"/>
-    </bean>
-    <bean name="fileMetadataParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamFacadeImpl" autowire="byType" />
+	<bean name="fileMetadataParamService" class="cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamServiceImpl" autowire="byType" >
+		<property name="fileMetadataParamValDao" ref="fileMetadataDao"/>
+	</bean>
+	<bean name="fileMetadataParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamFacadeImpl" autowire="byType" />
     
-    <bean name="historyService" class="cz.zcu.kiv.eegdatabase.wui.core.history.HistoryServiceImpl" autowire="byType" />
-    <bean name="historyFacade" class="cz.zcu.kiv.eegdatabase.wui.core.history.HistoryFacadeImpl" autowire="byType" />
+	<bean name="historyService" class="cz.zcu.kiv.eegdatabase.wui.core.history.HistoryServiceImpl" autowire="byType" />
+	<bean name="historyFacade" class="cz.zcu.kiv.eegdatabase.wui.core.history.HistoryFacadeImpl" autowire="byType" />
 
-    <bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
-    <bean name="weatherFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacadeImpl" autowire="byType" />
+	<bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
+	<bean name="weatherFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacadeImpl" autowire="byType" />
     
-    <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
-    <bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
+	<bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
+	<bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
 
-    <bean name="softwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareServiceImpl" autowire="byType" >
-        <property name="softwareDao" ref="softwareDao"/>
-    </bean>
-    <bean name="softwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacadeImpl" autowire="byType" />
+	<bean name="softwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareServiceImpl" autowire="byType" >
+		<property name="softwareDao" ref="softwareDao"/>
+	</bean>
+	<bean name="softwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacadeImpl" autowire="byType" />
 
-    <bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
-        <property name="artifactDao" ref="artifactDao"/>
-    </bean>
-    <bean name="artifactFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacadeImpl" autowire="byType" />
+	<bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
+		<property name="artifactDao" ref="artifactDao"/>
+	</bean>
+	<bean name="artifactFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactFacadeImpl" autowire="byType" />
 
-    <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
-        <property name="projectTypeDao" ref="projectTypeDao"/>
-    </bean>
-    <bean name="projectTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacadeImpl" autowire="byType" />
+	<bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
+		<property name="projectTypeDao" ref="projectTypeDao"/>
+	</bean>
+	<bean name="projectTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacadeImpl" autowire="byType" />
     
-    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
-        <property name="scenarioDAO" ref="scenarioDao"/>
-    </bean>
-    <bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
+	<bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
+		<property name="scenarioDAO" ref="scenarioDao"/>
+	</bean>
+	<bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
     
-    <bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />
-    <bean name="scenarioTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacadeImpl" autowire="byType" />
+	<bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />
+	<bean name="scenarioTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacadeImpl" autowire="byType" />
     
-    <bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
-    <bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
+	<bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
+	<bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
 
-    <bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
-        <property name="stimulusDao" ref="stimulusDao"/>
-    </bean>
-    <bean name="stimulusFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacadeImpl" autowire="byType" />
+	<bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
+		<property name="stimulusDao" ref="stimulusDao"/>
+	</bean>
+	<bean name="stimulusFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacadeImpl" autowire="byType" />
 
-    <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
-        <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
-    </bean>
-    <bean name="pharmaceuticalFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacadeImpl" autowire="byType" />
+	<bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
+		<property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
+	</bean>
+	<bean name="pharmaceuticalFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacadeImpl" autowire="byType" />
 
-    <bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
+	<bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
 
-    <bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
+	<bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
 
-    <bean name="signalProcessingService" class="cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingServiceImpl" autowire="byType">
-        <property name="eegService" ref="eegService"/>
-    </bean>
-    <!-- ACCESS CONTROL -->
-    <bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
-	<constructor-arg ref="licenseDao"/>
-    </bean>
-    <bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl" autowire="byType">
-	<constructor-arg ref="personalLicenseDao"/>
-    </bean>
-    <bean name="licenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseFacadeImpl" autowire="byType">
-	<constructor-arg ref="licenseService"/>
-    </bean>
+	<bean name="signalProcessingService" class="cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingServiceImpl" autowire="byType">
+		<property name="eegService" ref="eegService"/>
+	</bean>
+	<!-- ACCESS CONTROL -->
+	<bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
+		<constructor-arg ref="licenseDao"/>
+	</bean>
+	<bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl" autowire="byType">
+		<constructor-arg ref="personalLicenseDao"/>
+	</bean>
+	<bean name="licenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseFacadeImpl" autowire="byType">
+		<constructor-arg ref="licenseService"/>
+	</bean>
 
-    <bean name="experimentPackageConnectionService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageConnectionServiceImpl" autowire="byType">
-	<constructor-arg ref="experimentPackageConnectionDao"/>
-    </bean>
-    <bean name="experimentPackageLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseServiceImpl" autowire="byType">
-	<constructor-arg ref="experimentPackageLicenseDao"/>
-    </bean>
-    <bean name="experimentPackageService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageServiceImpl" autowire="byType">
-	<constructor-arg ref="experimentPackageDao"/>
-    </bean>
+	<bean name="experimentPackageConnectionService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageConnectionServiceImpl" autowire="byType">
+		<constructor-arg ref="experimentPackageConnectionDao"/>
+	</bean>
+	<bean name="experimentPackageLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseServiceImpl" autowire="byType">
+		<constructor-arg ref="experimentPackageLicenseDao"/>
+	</bean>
+	<bean name="experimentPackageService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageServiceImpl" autowire="byType">
+		<constructor-arg ref="experimentPackageDao"/>
+	</bean>
 
-    <bean name="experimentPackageFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageFacadeImpl" autowire="byType">
-	<constructor-arg ref="experimentPackageService"/>
-    </bean>
-
-
-    <!-- MAIL -->
-    <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
-
-    <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-        <property name="host" value="${email.smtp}" />
-    </bean>
-
-    <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-        <property name="from" value="${email.from}" />
-        <property name="subject" value="${email.subject}" />
-    </bean>
+	<bean name="experimentPackageFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageFacadeImpl" autowire="byType">
+		<constructor-arg ref="experimentPackageService"/>
+	</bean>
 
 
-    <!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
+	<!-- MAIL -->
+	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
 
-    <bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
-        <property name="sessionFactory" ref="sessionFactory" />
-        <property name="personDao" ref="personDao" />
-    </bean>
+	<bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${email.smtp}" />
+	</bean>
 
-    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
+	<bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+		<property name="from" value="${email.from}" />
+		<property name="subject" value="${email.subject}" />
+	</bean>
 
-    <!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
-    <!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
+
+	<!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
+
+	<bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+		<property name="personDao" ref="personDao" />
+	</bean>
+
+	<bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
+
+	<!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
+	<!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
 
 
-    <bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
-    </bean>
+	<bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
+	</bean>
 
-    <bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml" parent="scenarioTypeParent">
-    </bean>
+	<bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml" parent="scenarioTypeParent">
+	</bean>
 
-    <bean id="scenarioTypeNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema" parent="scenarioTypeParent">
-    </bean>
+	<bean id="scenarioTypeNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema" parent="scenarioTypeParent">
+	</bean>
 
-    <bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
-        <!-- property -->
-        <property name="encoding" value="${encoding}" />
-        <property name="objects" value="${objects}" />
-        <property name="measured" value="${measured}" />
-        <property name="experimenter" value="${experimenter}" />
-    </bean>
+	<bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
+		<!-- property -->
+		<property name="encoding" value="${encoding}" />
+		<property name="objects" value="${objects}" />
+		<property name="measured" value="${measured}" />
+		<property name="experimenter" value="${experimenter}" />
+	</bean>
 
-    <bean name="zipGenerator" class="cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator">
-        <property name="metadata" value="${metadata.file}" />
-        <property name="transformer" ref="transformer" />
-        <property name="dataZip" value="${data.zip}" />
+	<bean name="zipGenerator" class="cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator">
+		<property name="metadata" value="${metadata.file}" />
+		<property name="transformer" ref="transformer" />
+		<property name="dataZip" value="${data.zip}" />
 
-    </bean>
+	</bean>
 
-    <!-- Transformer POJO to resource of semantic web -->
-    <bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory" init-method="init">
-        <property name="ontologyHeader" value="classpath:ontologyHeader.owl" />
-    </bean>
+	<!-- Transformer POJO to resource of semantic web -->
+	<bean name="semanticFactory" class="cz.zcu.kiv.eegdatabase.logic.semantic.SimpleSemanticFactory" init-method="init">
+		<property name="ontologyHeader" value="classpath:ontologyHeader.owl" />
+	</bean>
 
-    <!-- Creating csv file with our experiments and scenarios for NIF -->
-    <bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
-        <property name="domain" value="${app.domain}" />
-    </bean>
+	<!-- Creating csv file with our experiments and scenarios for NIF -->
+	<bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
+		<property name="domain" value="${app.domain}" />
+	</bean>
 
-    <bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
+	<bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
-    <!-- Solr POJO indexer -->
-    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
+	<!-- Solr POJO indexer -->
+	<bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
 
-    <!-- Solr indexer for LinkedIn articles -->
-    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
+	<!-- Solr indexer for LinkedIn articles -->
+	<bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
 
-    <!-- Solr autocomplete indexer -->
-    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
+	<!-- Solr autocomplete indexer -->
+	<bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
 
-    <!-- Solr indexing service -->
-    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
+	<!-- Solr indexing service -->
+	<bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
 
-    <!-- Solr Server instance (production server) -->
-    <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-        <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
-        <constructor-arg name="client" ref="httpClient"/>
-        <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
-    </bean>
+	<!-- Solr Server instance (production server) -->
+	<bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+		<constructor-arg name="baseURL" value="${solr.serverUrl}"/>
+		<constructor-arg name="client" ref="httpClient"/>
+		<property name="connectionTimeout" value="${solr.connectionTimeout}"/>
+	</bean>
 
-    <!-- HttpClient Factory -->
-    <bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
-        <constructor-arg name="url"  value="${solr.serverUrl}"/>
-        <constructor-arg name="username"  value="${solr.username}"/>
-        <constructor-arg name="password" value="${solr.password}"/>
-        <constructor-arg name="connManager">
-            <bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
-                <property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
-                <property name="maxTotal" value="${solr.maxTotalConnections}" />
-            </bean>
-        </constructor-arg>
-    </bean>
+	<!-- HttpClient Factory -->
+	<bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
+		<constructor-arg name="url"  value="${solr.serverUrl}"/>
+		<constructor-arg name="username"  value="${solr.username}"/>
+		<constructor-arg name="password" value="${solr.password}"/>
+		<constructor-arg name="connManager">
+			<bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
+				<property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
+				<property name="maxTotal" value="${solr.maxTotalConnections}" />
+			</bean>
+		</constructor-arg>
+	</bean>
 
-    <!-- Activates @Scheduled and @Async annotations for scheduling -->
-    <task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
-    <task:executor id="indexingExecutor" pool-size="5"/>
-    <task:scheduler id="indexingScheduler" pool-size="1"/>
+	<!-- Activates @Scheduled and @Async annotations for scheduling -->
+	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
+	<task:executor id="indexingExecutor" pool-size="5"/>
+	<task:scheduler id="indexingScheduler" pool-size="1"/>
 
 </beans>

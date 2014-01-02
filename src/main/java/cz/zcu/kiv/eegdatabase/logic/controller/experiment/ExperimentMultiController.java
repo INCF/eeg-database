@@ -58,7 +58,7 @@ public class ExperimentMultiController extends MultiActionController {
 	private Log log = LogFactory.getLog(getClass());
 	private AuthorizationManager auth;
 	private PersonDao personDao;
-	private ExperimentDao<Experiment, Integer> experimentDao;
+	private ExperimentDao experimentDao;
 	private ServiceResultDao resultDao;
 	private ResearchGroupDao researchGroupDao;
 	private static final int ITEMS_PER_PAGE = 20;
@@ -227,11 +227,11 @@ public class ExperimentMultiController extends MultiActionController {
 		return mav;
 	}
 
-	public ExperimentDao<Experiment, Integer> getExperimentDao() {
+	public ExperimentDao getExperimentDao() {
 		return experimentDao;
 	}
 
-	public void setExperimentDao(ExperimentDao<Experiment, Integer> experimentDao) {
+	public void setExperimentDao(ExperimentDao experimentDao) {
 		this.experimentDao = experimentDao;
 	}
 
