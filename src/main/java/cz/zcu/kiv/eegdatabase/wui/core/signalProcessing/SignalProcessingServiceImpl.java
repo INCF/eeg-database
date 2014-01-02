@@ -20,7 +20,7 @@ import java.util.List;
 public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, Integer>
         implements SignalProcessingService {
     @Autowired
-    private ExperimentDao<Experiment, Integer> experimentDao;
+    private ExperimentDao experimentDao;
     private ProcessService eegService;
 
 

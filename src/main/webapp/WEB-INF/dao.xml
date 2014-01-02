@@ -29,6 +29,7 @@
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd">
 
+	<context:annotation-config/>
 	<bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
@@ -90,11 +91,7 @@
 
 
 	<bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.Experiment</value>
-		</constructor-arg>
 		<property name="sessionFactory" ref="sessionFactory"/>
-		<!--<property name="elasticsearchTemplate" ref="elasticsearchTemplate"/>-->
 	</bean>
 
 	<bean name="historyDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">

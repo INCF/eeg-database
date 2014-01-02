@@ -27,8 +27,8 @@
 			 xmlns:aop="http://www.springframework.org/schema/aop"
 			 xmlns:tx="http://www.springframework.org/schema/tx"
 			 xmlns:util="http://www.springframework.org/schema/util"
-			 xmlns:hprof="http://www.nhprof.com/schema/hprof"
 			 xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+			 xmlns:hprof="http://www.nhprof.com/schema/hprof"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
@@ -46,7 +46,16 @@
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<context:annotation-config/>
+	
+	<elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
 
+	<bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+		<constructor-arg name="client" ref="client"/>
+	</bean>
+	
+	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.elasticsearch.repositories" />
+
+	
 	<!-- It is not sure whether this file will be used or not. -->
 	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 		<property name="locations">
@@ -88,16 +97,15 @@
 
 	</bean>
 	
-<!--	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.elastic"/>
-	<elasticsearch:transport-client id="elasticClient" cluster-nodes="${elasticsearch.url}" cluster-name="${elasticsearch.clusterName}" />
-
-	<bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
-		<constructor-arg name="client" ref="elasticClient"/>
-	</bean>-->
+	<bean id="myInterceptor" class="cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.MyInterceptor"/>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 				
+		<property name="entityInterceptor">
+			<ref bean="myInterceptor"/>
+		</property>
+		
 		<property name="hibernateProperties">
 			<props>
 				<prop key="hibernate.dialect">${db.dialect}</prop>
