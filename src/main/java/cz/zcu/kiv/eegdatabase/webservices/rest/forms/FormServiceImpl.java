@@ -58,13 +58,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	@Override
 	public void afterPropertiesSet() throws Exception {
 		generator = new SimpleFormGenerator(new OdmlFormProvider());
-		//generator.loadPackage(POJO_BASE);
-		try {
-			Class<?> cls = Class.forName("cz.zcu.kiv.eegdatabase.data.pojo.Experiment");
-			generator.loadClass(cls);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		generator.loadPackage(POJO_BASE);
 	}
 	
 	
