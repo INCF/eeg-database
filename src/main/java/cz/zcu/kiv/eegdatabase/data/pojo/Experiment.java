@@ -77,6 +77,7 @@ public class Experiment implements Serializable {
     @Column(name = "START_TIME")
     private Timestamp startTime;
     //@DateBridge(resolution = Resolution.DAY)//Precision stored in the index: day
+    @FormItem(label = "konec")
     @Column(name = "END_TIME_ID")
     private Timestamp endTime;
     @Column(name = "ORA_ROWSCN", insertable = false, updatable = false)
@@ -98,6 +99,7 @@ public class Experiment implements Serializable {
             @Field(name = "environmentNote")})   // use a different field name
     */
     //@Boost(2)//Boost environmentNote field
+    @FormItem(label = "poznamka")
     @SolrField(name = IndexField.TEXT)
     @Column(name = "ENVIRONMENT_NOTE")
     private String environmentNote;

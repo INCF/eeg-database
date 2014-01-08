@@ -22,21 +22,22 @@
  * FormServiceController.java, 3. 1. 2014 10:08:47, Jakub Krauz
  *
  **********************************************************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.rest.form;
+package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
+import java.util.List;
+
 import javax.servlet.http.HttpServletResponse;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+
 import cz.zcu.kiv.formgen.Form;
-import cz.zcu.kiv.formgen.FormGenerator;
-import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.Writer;
-import cz.zcu.kiv.formgen.core.SimpleFormGenerator;
-import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
@@ -47,47 +48,52 @@ import cz.zcu.kiv.formgen.odml.OdmlWriter;
  */
 @Secured("IS_AUTHENTICATED_FULLY")
 @Controller
-@RequestMapping("/form-layout")
+@RequestMapping("/form-layouts")
 public class FormServiceController {
 	
-	// TODO logika sluzby do tridy FormService
-	@RequestMapping(value = "/{name}")
-	public void getForm(@PathVariable String name, HttpServletResponse response) throws ClassNotFoundException, FormNotFoundException, IOException {
-		FormGenerator generator = new SimpleFormGenerator(new OdmlFormProvider());
-		//generator.loadPackage("cz.zcu.kiv.eegdatabase.data.pojo");
-		Class<?> cls = Class.forName("cz.zcu.kiv.eegdatabase.data.pojo.Experiment");
-		generator.loadClass(cls);
-		
-		Form form = generator.getForm(name);
+	/** The service object providing data. */
+	@Autowired
+	private FormService service;
+	
+	
+	/**
+	 * Gets the count of form layouts available.
+	 * @return count of form layouts available
+	 */
+	@RequestMapping(value = "/count")
+	public @ResponseBody int availableFormsCount() {
+		return service.availableFormLayoutsCount();
+	}
+	
+	
+	/**
+	 * Gets names of all form layouts available.
+	 * @return names of form layouts available
+	 */
+	@RequestMapping(value = "/available")
+	public @ResponseBody List<String> availableForms() {
+		return service.availableFormLayouts();
+	}
+
+	
+	/**
+	 * Gets a form layouts with the specified name.
+	 * @param name - name of the form layout
+	 * @param response - HTTP response object
+	 * @throws IOException if an error writing to response's output stream occured
+	 */
+	@RequestMapping(value = "/get/{name}" /*, produces = "application/xml"*/ )
+	public void getForm(@PathVariable String name, HttpServletResponse response) throws IOException {
+		Form form = service.getFormLayout(name);
 		if (form == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
 		Writer writer = new OdmlWriter();
 		response.setContentType("application/xml");
+		//response.setContentLength(???);
 		writer.write(form, response.getOutputStream());
 		response.flushBuffer();
 	}
-	
-	
-	/*@RequestMapping(value = "/pokus", produces = "application/json")
-	public @ResponseBody String pokus() {
-		return "99";
-	}
-	
-	
-	@RequestMapping(value = "/pokus6")
-	public void pokus6(HttpServletResponse response) throws IOException {
-		ByteArrayOutputStream os = new ByteArrayOutputStream();
-		for (int i : "<xml><section><name>formular</name><section><name>polozka</name></section></section></xml>".toCharArray())
-			os.write(i);
-		ByteArrayInputStream is = new ByteArrayInputStream(os.toByteArray());
-		
-		response.setContentType("application/xml");
-        response.setContentLength(os.size());
-        //response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");
-        IOUtils.copy(is, response.getOutputStream());
-        response.flushBuffer();
-	}*/
 	
 }
