@@ -99,6 +99,16 @@
             <artifactId>hibernate-profiler</artifactId>
             <version>1.0</version>
         </dependency>
+        <dependency>
+        	<groupId>cz.zcu.kiv</groupId>
+        	<artifactId>layout-generator</artifactId>
+        	<version>0.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gnode</groupId>
+            <artifactId>odml-java-lib</artifactId>
+            <version>1.0.1</version>
+        </dependency>
         <!--=================================== Test scoped libraries ================================== -->
         <dependency>
             <groupId>junit</groupId>
@@ -712,12 +722,22 @@
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.8</version>
+            <version>0.9.9-RC1</version>
         </dependency>
         <dependency>
             <groupId>joda-time</groupId>
             <artifactId>joda-time</artifactId>
             <version>2.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.codehaus.jackson</groupId>
+            <artifactId>jackson-mapper-asl</artifactId>
+            <version>1.9.13</version>
+        </dependency>
+        <dependency>
+            <groupId>org.jopendocument</groupId>
+            <artifactId>jdom</artifactId>
+            <version>1.1.1</version>
         </dependency>
 
     </dependencies>

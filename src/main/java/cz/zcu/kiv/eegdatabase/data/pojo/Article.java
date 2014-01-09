@@ -30,8 +30,11 @@ import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
+import cz.zcu.kiv.formgen.annotation.Form;
+import cz.zcu.kiv.formgen.annotation.FormItem;
 
 import javax.persistence.*;
+
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
@@ -42,6 +45,7 @@ import java.util.Set;
 @Entity
 @Indexed // Mark for indexing
 //@Analyzer(impl = StandardAnalyzer.class)
+@Form("article")
 @javax.persistence.Table(name = "ARTICLES")
 public class Article implements java.io.Serializable {
 
@@ -63,6 +67,7 @@ public class Article implements java.io.Serializable {
             @Field(store = Store.YES),       // title value is stored in the index
             @Field(name = "title")})   // use a different field name
     */
+    @FormItem
     @Column(name = "TITLE")
     @SolrField(name = IndexField.TITLE) // Solr fulltext search
     private String title;
@@ -72,6 +77,7 @@ public class Article implements java.io.Serializable {
             @Field(store = Store.YES),       // text value is stored in the index
             @Field(name = "text")})   // use a different field name
     */
+    @FormItem(required = true)
     @SolrField(name = IndexField.TEXT)
     @Column(name = "TEXT")
     @Lob
