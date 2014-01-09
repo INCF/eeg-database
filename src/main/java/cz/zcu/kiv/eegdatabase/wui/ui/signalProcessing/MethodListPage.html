@@ -31,32 +31,56 @@ This file is part of the EEG-database project
         <h1>
             <wicket:message key="pageTitle.availableMethods"/>
         </h1>
-    </div>
 
-    <table class="dataTable" style="width: 450px;">
-        <thead>
-        <tr>
-            <th style="width: 250px;">
-                <wicket:message key="dataTable.heading.methodName"/>
-            </th>
-        </tr>
-        </thead>
-        <tr wicket:id="methods">
-            <td wicket:id="name"></td>
-        </tr>
-    </table>
-    <table class="dataTable" style="width: 450px;">
-        <thead>
-        <tr>
-            <th style="width: 250px;">
-                <wicket:message key="dataTable.heading.suitableData"/>
-            </th>
-        </tr>
-        </thead>
-        <tr wicket:id="data">
-            <td wicket:id="name"></td>
-        </tr>
-    </table>
+
+        <table class="dataTable" style="width: 450px;">
+            <thead>
+            <tr>
+                <th style="width: 250px;">
+                    <wicket:message key="dataTable.heading.methodName"/>
+                </th>
+            </tr>
+            </thead>
+            <tr wicket:id="methods">
+                <td wicket:id="name"></td>
+            </tr>
+        </table>
+        <table class="dataTable" style="width: 450px;">
+            <thead>
+            <tr>
+                <th style="width: 250px;">
+                    <wicket:message key="dataTable.heading.suitableData"/>
+                </th>
+            </tr>
+            </thead>
+            <tr wicket:id="data">
+                <td wicket:id="name"></td>
+            </tr>
+        </table>
+
+        <h2>
+            <wicket:message key="label.selectMethodAndData"/>
+        </h2>
+
+        <form wicket:id="selectServiceForm" class="standardInputForm">
+            <div class="itemBox">
+                <label for="methodList" class="selectBoxLabel">
+                    <wicket:message key="label.service"/>
+                </label>
+                <select wicket:id="methodList" class="selectBox"> </select>
+            </div>
+            <div class="itemBox">
+                <label for="dataList" class="selectBoxLabel">
+                    <wicket:message key="label.selectData"/>
+                </label>
+                <select wicket:id="dataList" class="selectBox"> </select>
+            </div>
+            <div class="submitBox"><input type="submit" wicket:id="submit" class="submitButton lightButtonLink"
+                                          wicket:message="value:button.next"/>
+            </div>
+        </form>
+    </div>
 </wicket:extend>
+
 </body>
 </html>
