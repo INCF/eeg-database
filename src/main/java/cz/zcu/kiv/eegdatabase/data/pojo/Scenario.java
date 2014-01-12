@@ -36,6 +36,9 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private boolean userMemberOfGroup;
+	private byte[] scenarioFile;
+	private String group;
+	private Boolean availableFile;
 
 	@Transient
 	public boolean isUserMemberOfGroup() {
@@ -45,8 +48,6 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 	public void setUserMemberOfGroup(boolean userMemberOfGroup) {
 		this.userMemberOfGroup = userMemberOfGroup;
 	}
-	private String group;
-	private Boolean availableFile;
 
 	@Transient
 	public String getGroup() {
@@ -90,8 +91,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
-	@GenericGenerator(name = "generator", strategy = "foreign", parameters =
-					@Parameter(name = "property", value = "scenarioType"))
+	@GenericGenerator(name = "generator", strategy = "increment")
 	@Id
 	@GeneratedValue(generator = "generator")
 	@Column(name = "SCENARIO_ID", nullable = false, precision = 22, scale = 0)
@@ -195,6 +195,17 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
+	//@TODO: add switch form bullshit scenario_type non/yes xml and scenario_type_1234 to simple blob data stored with this entity. db migration will be necessary
+	//{@see cz.zcu.kiv.eegdatabase.wui.components.table.ScenarioDownloadLing.java}
+//	@Column(name = "SCENARIO_FILE", nullable = true)
+//	public byte[] getScenarioFile() {
+//		return this.scenarioFile;
+//	}
+//
+//	public void setScenarioFile(byte[] scenarioFile) {
+//		this.scenarioFile = scenarioFile;
+//	}
+	
 	@Override
 	public int compareTo(Scenario scen) {
 		return this.title.compareTo(scen.getTitle());

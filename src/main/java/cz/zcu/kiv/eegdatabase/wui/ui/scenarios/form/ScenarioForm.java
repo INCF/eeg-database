@@ -205,7 +205,7 @@ public class ScenarioForm extends Form<Scenario> {
                         scenario.setMimetype(fileUpload.getContentType());
                     }
 
-                    scenarioType.setScenarioXml(Hibernate.createBlob(fileUpload.getBytes()));
+//                    scenarioType.setScenarioXml(Hibernate.createBlob(fileUpload.getBytes()));
                 }
 
                 // loading XML
