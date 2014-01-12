@@ -67,6 +67,6 @@ public class ScenarioDownloadLink extends Panel {
 
             }
         }).setVisibilityAllowed(fileExist);
-        add(new Label("noFile", ResourceUtils.getModel("label.notAvailable"))).setVisibilityAllowed(!fileExist);
+        add(new Label("noFile", ResourceUtils.getModel("label.notAvailable")).setVisibilityAllowed(!fileExist));
     }
 }
