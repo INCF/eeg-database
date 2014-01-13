@@ -19,26 +19,37 @@
  *
  ***********************************************************************************************************************
  *
- * SignalProcessingService.java, 13. 12. 2012 12:33:09, Jan Stebetak
+ * MethodListPage.java, 13. 1. 2014 13:45:47, Jan Stebetak
  *
  **********************************************************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.core.signalProcessing;
+package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
-
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 
 /**
  * Created with IntelliJ IDEA.
  * User: stebjan
- * Date: 11.12.13
- * Time: 13:15
+ * Date: 13.1.14
+ * Time: 13:45
  * To change this template use File | Settings | File Templates.
  */
-public interface SignalProcessingService extends GenericService<Experiment, Integer> {
+public class MethodParametersPage extends MenuPage {
+    @SpringBean
+    SignalProcessingService service;
+    private int experimentId;
 
-    public List<String> getAvailableMethods();
+    public MethodParametersPage(PageParameters parameters) {
 
-    public List<String> getSuitableHeaders(int experimentId);
+        System.out.println(parameters.get(PageParametersUtils.METHOD_NAME));
+        Label label = new Label("methodName", parameters.get(PageParametersUtils.METHOD_NAME));
+        add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
+        add(label);
+    }
 }

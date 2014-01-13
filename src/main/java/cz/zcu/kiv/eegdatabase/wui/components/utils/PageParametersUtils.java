@@ -22,11 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
+import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-
-import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 
 /**
  * Utilities class for page parameters.
@@ -37,6 +36,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 public class PageParametersUtils {
 
     public static final String GROUP_PARAM = "GROUP";
+    public static final String METHOD_NAME = "METHOD_NAME";
+    public static final String DATA = "DATA";
 
     /**
      * Created page parameters with parameter key and object

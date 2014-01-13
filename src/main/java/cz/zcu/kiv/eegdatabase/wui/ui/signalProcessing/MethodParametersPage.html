@@ -1,0 +1,58 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+
+ ***********************************************************************************************************************
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+
+ ***********************************************************************************************************************
+
+  MethodListPage.html, 2014/01/13 13:38 Jan Stebetak
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<body>
+<wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+    <div class="mainContentWithMenu">
+        <h1>
+            <wicket:message key="pageTitle.methodParameters"/>:&nbsp;
+            <span wicket:id="methodName"></span>
+        </h1>
+
+
+      <!--  <form wicket:id="selectServiceForm" class="standardInputForm">
+            <div class="itemBox">
+                <label for="methodList" class="selectBoxLabel">
+                    <wicket:message key="label.service"/>
+                </label>
+                <select wicket:id="methodList" class="selectBox"> </select>
+            </div>
+            <div class="itemBox">
+                <label for="dataList" class="selectBoxLabel">
+                    <wicket:message key="label.selectData"/>
+                </label>
+                <select wicket:id="dataList" class="selectBox"> </select>
+            </div>
+            <div class="submitBox"><input type="submit" wicket:id="submit" class="submitButton lightButtonLink"
+                                          wicket:message="value:button.next"/>
+            </div>
+        </form>   -->
+    </div>
+</wicket:extend>
+
+</body>
+</html>

@@ -1,10 +1,33 @@
+/***********************************************************************************************************************
+ *
+ * This file is part of the EEG-database project
+ *
+ * =============================================
+ *
+ * Copyright (C) 2014 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
+ ***********************************************************************************************************************
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ *
+ ***********************************************************************************************************************
+ *
+ * MethodListPage.java, 11. 12. 2013 10:08:47, Jan Stebetak
+ *
+ **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
@@ -39,6 +62,7 @@ public class MethodListPage extends MenuPage {
     @SpringBean
     SignalProcessingService service;
     private int experimentId;
+
 
     public MethodListPage(PageParameters parameters) {
         experimentId = parseParameters(parameters);
@@ -86,6 +110,7 @@ public class MethodListPage extends MenuPage {
     }
 
     private class SelectServiceForm extends Form<String> {
+        private SubmitLink submit;
 
         public SelectServiceForm(String id, IModel<String> model, final SignalProcessingService service, final FeedbackPanel feedback) {
             super(id, new CompoundPropertyModel<String>(model));
@@ -93,24 +118,27 @@ public class MethodListPage extends MenuPage {
                     service.getAvailableMethods());
 
 
-
             final DropDownChoice<String> data = new DropDownChoice<String>("dataList", new Model<String>(),
-                                service.getSuitableHeaders(experimentId));
+                    service.getSuitableHeaders(experimentId));
 
 
-            SubmitLink submit = new SubmitLink("submit") {
+            submit = new SubmitLink("submit") {
                 @Override
                 public void onSubmit() {
-                    System.out.println(method.getModel().getObject());
-                    System.out.println(data.getModel().getObject());
-                    setResponsePage(UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    PageParameters param = PageParametersUtils.getDefaultPageParameters(experimentId);
+                    param = PageParametersUtils.addParameters(param, PageParametersUtils.METHOD_NAME,
+                            method.getModel().getObject());
+                    param = PageParametersUtils.addParameters(param, PageParametersUtils.DATA,
+                            data.getModel().getObject());
+                    setResponsePage(MethodParametersPage.class, param);
                 }
 
 
             };
+            method.setRequired(true);
+            data.setRequired(true);
             add(method, data, submit);
         }
-
 
     }
 
