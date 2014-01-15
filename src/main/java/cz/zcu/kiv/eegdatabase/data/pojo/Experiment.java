@@ -60,37 +60,38 @@ public class Experiment implements Serializable {
 	@SolrId
 	private int experimentId;
 	@Indexed
-	private Weather weather;
+	private Weather weather; //being transformed to GenericParameter
 	private Person personBySubjectPersonId;
 	private Scenario scenario;
 	private Person personByOwnerId;
 	private ResearchGroup researchGroup;
-	private Digitization digitization;
+	private Digitization digitization;//being transformed to GenericParameter
 	private SubjectGroup subjectGroup;
 	private Artifact artifact;
 	private ElectrodeConf electrodeConf;
-    @FormItem(label = "zacatek")
+	@FormItem(label = "zacatek")
 	private Timestamp startTime;
-    @FormItem(label = "konec")
+	@FormItem(label = "konec")
 	private Timestamp endTime;
 	@SolrField(name = IndexField.TEMPERATURE)
-    @FormItem(label = "teplota")
-	private int temperature;
+	@FormItem(label = "teplota")
+	private int temperature;//being transformed to GenericParameter
 	private boolean privateExperiment;
 	@SolrField(name = IndexField.TEXT)
-    @FormItem(label = "poznamka")
+	@FormItem(label = "poznamka")
 	private String environmentNote;
 	private Set<Person> persons = new HashSet<Person>(0);
-	private Set<Hardware> hardwares = new HashSet<Hardware>(0);
-	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);
-	private Set<Disease> diseases = new HashSet<Disease>(0);
-	private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
-	private Set<Software> softwares = new HashSet<Software>(0);
+	private Set<Hardware> hardwares = new HashSet<Hardware>(0);//being transformed to GenericParameter
+	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);//being transformed to GenericParameter
+	private Set<Disease> diseases = new HashSet<Disease>(0);//being transformed to GenericParameter
+	private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);//being transformed to GenericParameter
+	private Set<Software> softwares = new HashSet<Software>(0);//being transformed to GenericParameter
 	private Set<ArtifactRemoveMethod> artifactRemoveMethods = new HashSet<ArtifactRemoveMethod>(0);
 	private Set<DataFile> dataFiles = new HashSet<DataFile>(0);
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 	private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
+
 	private ExperimentElastic elasticExperiment = new ExperimentElastic();
 
 	public void setElasticExperiment(ExperimentElastic e) {
