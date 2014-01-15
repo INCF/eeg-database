@@ -24,14 +24,27 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
+import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created with IntelliJ IDEA.
@@ -44,12 +57,39 @@ public class MethodParametersPage extends MenuPage {
     @SpringBean
     SignalProcessingService service;
     private int experimentId;
+    private String methodName;
+    private String dataName;
 
-    public MethodParametersPage(PageParameters parameters) {
+    public MethodParametersPage(PageParameters parameters) throws SQLException {
 
-        System.out.println(parameters.get(PageParametersUtils.METHOD_NAME));
-        Label label = new Label("methodName", parameters.get(PageParametersUtils.METHOD_NAME));
+        methodName = parameters.get(PageParametersUtils.METHOD_NAME).toString();
+        experimentId = parameters.get(BasePage.DEFAULT_PARAM_ID).toInt();
+        dataName = parameters.get(PageParametersUtils.DATA).toString();
+        Label label = new Label("methodName", methodName);
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
         add(label);
+        add(new MethodParametersForm("methodParametersForm", new Model<String>(), service, getFeedback()));
+    }
+
+    private class MethodParametersForm extends Form<String> {
+        public MethodParametersForm(String id, IModel<String> model, final SignalProcessingService service,
+                                    final FeedbackPanel feedback) throws SQLException {
+            super(id, new CompoundPropertyModel<String>(model));
+            List<ChannelInfo> infoList = service.getChannelInfo(experimentId, dataName);
+            List<String> channels = new ArrayList<String>(infoList.size());
+            for (ChannelInfo channel : infoList) {
+                channels.add(channel.getName());
+            }
+            final DropDownChoice<String> channelList = new DropDownChoice<String>("channelList", new Model<String>(),
+                    channels);
+
+            SubmitLink submit = new SubmitLink("submit") {
+                @Override
+                public void onSubmit() {
+
+                }
+            };
+            add(submit, channelList);
+        }
     }
 }

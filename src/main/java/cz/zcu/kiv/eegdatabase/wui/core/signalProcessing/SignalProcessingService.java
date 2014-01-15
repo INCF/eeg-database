@@ -25,8 +25,11 @@
 package cz.zcu.kiv.eegdatabase.wui.core.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
+import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
+import java.sql.SQLException;
 import java.util.List;
 
 /**
@@ -41,4 +44,8 @@ public interface SignalProcessingService extends GenericService<Experiment, Inte
     public List<String> getAvailableMethods();
 
     public List<String> getSuitableHeaders(int experimentId);
+
+    public List<MethodParameters> getMethodParameters(String methodName);
+
+    public List<ChannelInfo> getChannelInfo(int experimentId, String header) throws SQLException;
 }
