@@ -23,16 +23,12 @@
 package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
 
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
 import java.io.ByteArrayInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.Hibernate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 
 import javax.activation.DataHandler;
 import javax.activation.DataSource;
@@ -40,8 +36,6 @@ import javax.jws.WebService;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.sql.Timestamp;
 import java.util.*;
 import org.apache.commons.io.IOUtils;
