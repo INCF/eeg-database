@@ -174,7 +174,6 @@ public class ScenarioServiceImpl implements ScenarioService {
     @Override
     public void getFile(int id, HttpServletResponse response) throws RestServiceException, SQLException, IOException, TransformerException, RestNotFoundException {
         Scenario scenario = scenarioDao.read(id);
-        IScenarioType scenarioType;
 
         //if is user member of group, then he has rights to download file
         //basic verification, in future should be extended

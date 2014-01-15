@@ -52,17 +52,12 @@ import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.hibernate.Hibernate;
 import org.w3c.dom.Document;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.IScenarioType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
@@ -191,7 +186,6 @@ public class ScenarioForm extends Form<Scenario> {
                 FileUpload xmlfileUpload = xmlfile.getFileUpload();
 
                 Scenario scenario = ScenarioForm.this.getModelObject();
-                IScenarioType scenarioType = null;
 
                 // loading non-XML
                 if ((fileUpload != null) && (!(fileUpload.getSize() == 0))) {

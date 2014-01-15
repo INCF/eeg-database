@@ -44,7 +44,6 @@ import org.junit.runners.Suite;
         ScenarioDaoTest.class,
         SimpleReservationDaoTest.class,
         SimpleScenarioSchemasDaoTest.class,
-        SimpleScenarioTypeDaoTest.class,
         StimulusDaoTest.class,
         WeatherDaoTest.class
 

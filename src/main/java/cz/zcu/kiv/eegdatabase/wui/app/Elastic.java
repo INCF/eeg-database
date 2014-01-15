@@ -37,6 +37,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
@@ -140,7 +141,8 @@ public class Elastic extends BasePage {
 			for (Hardware hw : experiment.getHardwares()) {
 				param = new GenericParameter("hardware", hw.getTitle());
 				if (!hw.getDescription().equals("")) {
-					param.getAttributes().put("description", hw.getDescription());
+					
+					param.getAttributes().add(new ParameterAttribute("description", hw.getDescription()));
 
 				}
 				experiment.getGenericParameters().add(param);
@@ -149,7 +151,7 @@ public class Elastic extends BasePage {
 			for (Software sw : experiment.getSoftwares()) {
 				param = new GenericParameter("software", sw.getTitle());
 				if (!sw.getDescription().equals("")) {
-					param.getAttributes().put("description", sw.getDescription());
+					param.getAttributes().add(new ParameterAttribute("description", sw.getDescription()));
 
 				}
 				experiment.getGenericParameters().add(param);

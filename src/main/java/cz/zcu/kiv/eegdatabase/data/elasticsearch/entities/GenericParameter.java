@@ -4,8 +4,8 @@
  */
 package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
 
-import java.util.HashMap;
-import java.util.Map;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -16,23 +16,21 @@ public class GenericParameter {
 	private String name;
 	private String valueString;
 	private Integer valueInteger;
-	private Map<String, String> attributes = new HashMap<String, String>();
+	private List<ParameterAttribute> attributes = new ArrayList<ParameterAttribute>();
 
 	public GenericParameter() {
 	}
-	
-	
+
 	public GenericParameter(String name, Integer valueInteger) {
 		this.setName(name);
 		this.setValueInteger(valueInteger);
 	}
-	
-		public GenericParameter(String name, String valueString) {
+
+	public GenericParameter(String name, String valueString) {
 		this.setName(name);
 		this.setValueString(valueString);
 	}
 
-	
 	public String getName() {
 		return name;
 	}
@@ -57,11 +55,11 @@ public class GenericParameter {
 		this.valueInteger = valueInteger;
 	}
 
-	public Map<String, String> getAttributes() {
+	public List<ParameterAttribute> getAttributes() {
 		return attributes;
 	}
 
-	public void setAttributes(Map<String, String> attributes) {
+	public void setAttributes(List<ParameterAttribute> attributes) {
 		this.attributes = attributes;
 	}
 }

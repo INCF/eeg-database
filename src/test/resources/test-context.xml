@@ -319,16 +319,8 @@
 		<property name="scenario" ref="scenario"/>
 	</bean>
 
-	<bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml"
-					parent="scenarioDoc">
-	</bean>
-
 	<bean id="nonXmlContent" class="java.lang.String">
 		<constructor-arg type="java.lang.String" value="test test test"></constructor-arg>
-	</bean>
-
-	<bean id="scenarioNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema"
-					parent="scenarioDoc">
 	</bean>
 
 	<bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>

@@ -55,7 +55,6 @@ import java.util.List;
  *         &lt;element name="temperature" type="{http://www.w3.org/2001/XMLSchema}int" minOccurs="0"/>
  *         &lt;element name="addParam" type="{}MeasurationAddParam" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="person" type="{}PersonType" maxOccurs="unbounded" minOccurs="0"/>
- *         &lt;element name="scenario" type="{}ScenarioTypeNonSchema" minOccurs="0"/>
  *         &lt;element name="data" type="{}DataType" maxOccurs="unbounded" minOccurs="0"/>
  *       &lt;/sequence>
  *       &lt;attribute name="startTime" type="{http://www.w3.org/2001/XMLSchema}dateTime" />

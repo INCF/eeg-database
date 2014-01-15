@@ -1,3 +1,4 @@
+//@TODO: this should be removed as its not used. Im not removing it now as it has too many dependencies.. @bydga
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 // Generated 2.12.2013 0:56:28 by Hibernate Tools 3.4.0.CR1
