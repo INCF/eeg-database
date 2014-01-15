@@ -41,6 +41,14 @@ This file is part of the EEG-database project
                 </label>
                 <select wicket:id="channelList" class="selectBox"> </select>
             </div>
+
+            <div wicket:id="params" class="itemBox">
+                <label for="text" class="selectBoxLabel">
+                     <span wicket:id="paramName"></span>
+                </label>
+                <input wicket:id="text" class="selectBox"/>
+
+          </div>
         <!--       <div class="itemBox">
                 <label for="dataList" class="selectBoxLabel">
                     <wicket:message key="label.selectData"/>
@@ -48,7 +56,7 @@ This file is part of the EEG-database project
                 <select wicket:id="dataList" class="selectBox"> </select>
             </div>-->
             <div class="submitBox"><input type="submit" wicket:id="submit" class="submitButton lightButtonLink"
-                                          wicket:message="value:button.run"/>
+                       wicket:message="value:button.run"/>
             </div>
         </form>
     </div>

@@ -25,6 +25,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
+import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -35,6 +36,9 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -82,6 +86,26 @@ public class MethodParametersPage extends MenuPage {
             }
             final DropDownChoice<String> channelList = new DropDownChoice<String>("channelList", new Model<String>(),
                     channels);
+            List<MethodParameters> paramList = service.getMethodParameters(methodName);
+            for (MethodParameters param: paramList) {
+                if (param.getDescription().startsWith("Channel")) {
+                    paramList.remove(param);
+                    break;
+                }
+            }
+            final ListView<MethodParameters> params = new ListView<MethodParameters>("params",
+                    paramList) {
+                @Override
+                protected void populateItem(final ListItem<MethodParameters> components) {
+                    final String paramName = components.getModelObject().getDescription();
+                    Label label = new Label("paramName", paramName);
+                    components.add(label);
+                    TextField<String> field = new TextField<String>("text", String.class);
+                    components.add(field);
+
+                }
+            };
+            params.setReuseItems(true);
 
             SubmitLink submit = new SubmitLink("submit") {
                 @Override
@@ -89,7 +113,7 @@ public class MethodParametersPage extends MenuPage {
 
                 }
             };
-            add(submit, channelList);
+            add(submit, channelList, params);
         }
     }
 }

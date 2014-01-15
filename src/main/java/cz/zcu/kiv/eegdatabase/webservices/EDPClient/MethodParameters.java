@@ -4,6 +4,7 @@ package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlType;
+import java.io.Serializable;
 
 
 /**
@@ -33,7 +34,7 @@ import javax.xml.bind.annotation.XmlType;
     "description",
     "expectedValues"
 })
-public class MethodParameters {
+public class MethodParameters implements Serializable {
 
     protected String dataType;
     protected String description;
