@@ -81,7 +81,8 @@ public class SpringJavaMailService implements MailService {
         sb.append("</body></html>");
 
         String emailSubject = messageSource.getMessage("registration.email.subject", null, locale);
-        return sendEmail(user.getEmail(), emailSubject, sb.toString());
+		String email = (user.getEmail() == null ? user.getUsername() : user.getEmail());
+        return sendEmail(email, emailSubject, sb.toString());
     }
 
     @Override
