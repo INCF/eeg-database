@@ -175,10 +175,6 @@
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
-	<bean name="scenarioTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioTypeDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-
 	<bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>

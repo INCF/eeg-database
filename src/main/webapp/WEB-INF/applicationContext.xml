@@ -144,9 +144,6 @@
 	</bean>
 	<bean name="scenariosFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacadeImpl" autowire="byType" />
     
-	<bean name="scenarioTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeServiceImpl" autowire="byType" />
-	<bean name="scenarioTypeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacadeImpl" autowire="byType" />
-    
 	<bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
 	<bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
 
@@ -218,9 +215,6 @@
 	<!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
 	<!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
 
-
-	<bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
-	</bean>
 
 	<bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
 		<!-- property -->

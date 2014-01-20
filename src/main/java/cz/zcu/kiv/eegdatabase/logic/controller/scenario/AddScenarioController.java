@@ -57,7 +57,6 @@ public class AddScenarioController
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;
     private ScenarioSchemasDao scenarioSchemasDao;
-    private ScenarioTypeDao scenarioTypeDao;
     private static final int MAX_MIMETYPE_LENGTH = 30;
 
     public AddScenarioController() {
@@ -221,7 +220,6 @@ public class AddScenarioController
         }
         if (id > 0) {
             // Editing existing
-            // scenarioTypeDao.update(scenarioType);
             scenarioDao.update(scenario);
         } else {
             // Creating new
@@ -272,13 +270,5 @@ public class AddScenarioController
 
     public void setScenarioSchemasDao(ScenarioSchemasDao scenarioSchemasDao) {
         this.scenarioSchemasDao = scenarioSchemasDao;
-    }
-
-    public ScenarioTypeDao getScenarioTypeDao() {
-        return scenarioTypeDao;
-    }
-
-    public void setScenarioTypeDao(ScenarioTypeDao scenarioTypeDao) {
-        this.scenarioTypeDao = scenarioTypeDao;
     }
 }

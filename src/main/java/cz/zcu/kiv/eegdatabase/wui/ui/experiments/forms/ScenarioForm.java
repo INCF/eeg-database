@@ -67,7 +67,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 
 public class ScenarioForm extends Form<Scenario> {
 
@@ -75,9 +74,6 @@ public class ScenarioForm extends Form<Scenario> {
 
     @SpringBean
     private ScenariosFacade scenariosFacade;
-
-    @SpringBean
-    private ScenarioTypeFacade scenarioTypeFacade;
 
     @SpringBean
     private ResearchGroupFacade researchGroupFacade;

@@ -44,6 +44,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import java.util.List;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,10 +67,14 @@ public class Elastic extends BasePage {
 	GenericListDao<Artifact> artifactDao;
 	@SpringBean
 	DigitizationDao digitizationDao;
+	
+	@SpringBean
+	PersonFacade personFacade;
 
 	public Elastic() {
 		
-		reinsert();
+//		reinsert();
+		personFacade.changeUserPassword("bydgam@gmail.com", "necum");
 	}
 
 	private void insertNew() {
