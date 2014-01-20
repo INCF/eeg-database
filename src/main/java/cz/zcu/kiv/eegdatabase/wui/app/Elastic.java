@@ -37,6 +37,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
@@ -67,8 +68,8 @@ public class Elastic extends BasePage {
 	DigitizationDao digitizationDao;
 
 	public Elastic() {
-		findByMethod();
-		findByEsMethod();
+		
+		reinsert();
 	}
 
 	private void insertNew() {
@@ -127,36 +128,11 @@ public class Elastic extends BasePage {
 	}
 
 	private void reinsert() {
-		this.experimentDao.getElasticsearchTemplate().deleteIndex(ExperimentElastic.class);
-		this.experimentDao.getElasticsearchTemplate().createIndex(ExperimentElastic.class);
-		this.experimentDao.getElasticsearchTemplate().putMapping(ExperimentElastic.class);
 
-		List<Experiment> e = experimentDao.getAllRecordsFull();
-		System.err.println(e.size());
-
-		for (Experiment experiment : e) {
-			GenericParameter param = new GenericParameter("temperature", experiment.getTemperature());
-			experiment.getGenericParameters().add(param);
-			for (Hardware hw : experiment.getHardwares()) {
-				param = new GenericParameter("hardware", hw.getTitle());
-				if (!hw.getDescription().equals("")) {
-					param.getAttributes().put("description", hw.getDescription());
-
-				}
-				experiment.getGenericParameters().add(param);
-			}
-
-			for (Software sw : experiment.getSoftwares()) {
-				param = new GenericParameter("software", sw.getTitle());
-				if (!sw.getDescription().equals("")) {
-					param.getAttributes().put("description", sw.getDescription());
-
-				}
-				experiment.getGenericParameters().add(param);
-			}
-
-
-			experimentDao.update(experiment);
+		List<Experiment> exps = experimentDao.getAllRecordsFull();
+		System.out.println("doing " + exps.size());
+		for (Experiment e : exps) {
+			experimentDao.update(e);
 		}
 
 

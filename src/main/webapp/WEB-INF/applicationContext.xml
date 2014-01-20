@@ -222,12 +222,6 @@
 	<bean id="scenarioTypeParent" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType" abstract="true">
 	</bean>
 
-	<bean id="scenarioTypeNonXml" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonXml" parent="scenarioTypeParent">
-	</bean>
-
-	<bean id="scenarioTypeNonSchema" class="cz.zcu.kiv.eegdatabase.data.pojo.ScenarioTypeNonSchema" parent="scenarioTypeParent">
-	</bean>
-
 	<bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
 		<!-- property -->
 		<property name="encoding" value="${encoding}" />

@@ -175,8 +175,6 @@ public class AddScenarioController
         MultipartFile xmlFile = data.getDataFileXml();
 
         Scenario scenario;
-        IScenarioType scenarioType = null;
-
         if (id > 0) {
             // Editing existing
             log.debug("Editing existing scenario.");

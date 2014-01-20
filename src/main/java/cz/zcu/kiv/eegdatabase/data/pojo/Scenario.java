@@ -195,16 +195,14 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
-	//@TODO: add switch form bullshit scenario_type non/yes xml and scenario_type_1234 to simple blob data stored with this entity. db migration will be necessary
-	//{@see cz.zcu.kiv.eegdatabase.wui.components.table.ScenarioDownloadLing.java}
-//	@Column(name = "SCENARIO_FILE", nullable = true)
-//	public byte[] getScenarioFile() {
-//		return this.scenarioFile;
-//	}
-//
-//	public void setScenarioFile(byte[] scenarioFile) {
-//		this.scenarioFile = scenarioFile;
-//	}
+	@Column(name = "SCENARIO_FILE", nullable = true)
+	public byte[] getScenarioFile() {
+		return this.scenarioFile;
+	}
+
+	public void setScenarioFile(byte[] scenarioFile) {
+		this.scenarioFile = scenarioFile;
+	}
 	
 	@Override
 	public int compareTo(Scenario scen) {
