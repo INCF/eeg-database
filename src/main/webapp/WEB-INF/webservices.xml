@@ -77,7 +77,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
                   username="jan.stebetak@seznam.cz"
                   password="stebjan" />
 
-    <bean id="userData" class="cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataImpl">
+    <bean id="userData" class="cz.zcu.kiv.eegdatabase.webservices.datadownload.UserDataImpl">
         <property name="personDao" ref="personDao"/>
         <property name="experimentDao" ref="experimentDao"/>
         <property name="scenarioDao" ref="scenarioDao"/>

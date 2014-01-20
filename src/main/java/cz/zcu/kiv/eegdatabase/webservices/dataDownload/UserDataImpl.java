@@ -20,12 +20,12 @@
  *  
  *   UserDataImpl.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
+package cz.zcu.kiv.eegdatabase.webservices.datadownload;
 
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
+import cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers.*;
 import java.io.ByteArrayInputStream;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -45,7 +45,7 @@ import org.apache.commons.io.IOUtils;
  *
  * @author Petr Miko
  */
-@WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.dataDownload.UserDataService")
+@WebService(endpointInterface = "cz.zcu.kiv.eegdatabase.webservices.datadownload.UserDataService")
 public class UserDataImpl implements UserDataService {
 
     /* necessary Dao objects*/
@@ -111,7 +111,7 @@ public class UserDataImpl implements UserDataService {
     public boolean isServiceAvailable() {
 
         log.debug("User " + personDao.getLoggedPerson().getEmail() +
-                " verified connection with dataDownload web service.");
+                " verified connection with datadownload web service.");
         return true;
     }
 
