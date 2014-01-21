@@ -150,7 +150,7 @@ public class Experiment implements Serializable {
 		this.setPrivateExperiment(privateExperiment);
 		this.setEnvironmentNote(environmentNote);
 		this.setPersons(persons);
-		this.setHardwares(hardwares);
+//		this.setHardwares(hardwares);
 		this.setPharmaceuticals(pharmaceuticals);
 		this.setDiseases(diseases);
 		this.setProjectTypes(projectTypes);

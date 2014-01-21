@@ -31,7 +31,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao;
@@ -40,7 +39,6 @@ import cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
@@ -52,7 +50,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     protected Log log = LogFactory.getLog(getClass());
 
     private ExperimentDao experimentDao;
-    private HardwareDao hardwareDao;
     private SimpleSoftwareDao softwareDao;
     private PersonDao personDao;
     private SimpleDiseaseDao diseaseDao;
@@ -68,11 +65,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Required
     public void setExperimentPackageConnectionDao(ExperimentPackageConnectionDao experimentPackageConnectionDao) {
         this.experimentPackageConnectionDao = experimentPackageConnectionDao;
-    }
-    
-    @Required
-    public void setHardwareDao(HardwareDao hardwareDao) {
-        this.hardwareDao = hardwareDao;
     }
     
     @Required
@@ -177,9 +169,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Transactional
     public Integer create(Experiment experiment) {
         
-        for(Hardware tmp : experiment.getHardwares()) 
-            hardwareDao.read(tmp.getHardwareId()).getExperiments().add(experiment);
-        
         for(Disease tmp : experiment.getDiseases())
             diseaseDao.read(tmp.getDiseaseId()).getExperiments().add(experiment);
         
@@ -220,9 +209,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         
         // remove old objects from both side of relation
         // first remove from side of the objects
-        for(Hardware tmp : updated.getHardwares())
-            hardwareDao.read(tmp.getHardwareId()).getExperiments().remove(updated);
-        
         for(Disease tmp : updated.getDiseases())
             diseaseDao.read(tmp.getDiseaseId()).getExperiments().remove(updated);
         
@@ -238,7 +224,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         for(Software tmp : updated.getSoftwares())
             softwareDao.read(tmp.getSoftwareId()).getExperiments().remove(updated);
         // then remove from experiment sides
-        updated.getHardwares().clear();
         updated.getSoftwares().clear();
         updated.getDiseases().clear();
         updated.getPersons().clear();
@@ -246,9 +231,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         updated.getProjectTypes().clear();
         
         // add new objects for experiments and create relation from both side
-        
-        for(Hardware tmp : experiment.getHardwares())
-            hardwareDao.read(tmp.getHardwareId()).getExperiments().add(updated);
         
         for(Disease tmp : experiment.getDiseases())
             diseaseDao.read(tmp.getDiseaseId()).getExperiments().add(updated);
@@ -265,7 +247,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         for(Software tmp : experiment.getSoftwares())
             softwareDao.read(tmp.getSoftwareId()).getExperiments().add(updated);
         
-        updated.setHardwares(experiment.getHardwares());
         updated.setSoftwares(experiment.getSoftwares());
         updated.setDiseases(experiment.getDiseases());
         updated.setPersons(experiment.getPersons());

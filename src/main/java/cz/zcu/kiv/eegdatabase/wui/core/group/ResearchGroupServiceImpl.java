@@ -40,7 +40,6 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericListDao;
-import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonOptParamDefDao;
@@ -77,7 +76,6 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     GenericDao<GroupPermissionRequest, Integer> permRequestDao;
     MailService mailService;
 
-    HardwareDao hardwareDao;
     GenericListDao<Artifact> artifactDao;
     WeatherDao weatherDao;
     ExperimentOptParamDefDao experiemntParamDefDao;
@@ -125,11 +123,6 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Required
     public void setArtifactDao(GenericListDao<Artifact> artifactDao) {
         this.artifactDao = artifactDao;
-    }
-
-    @Required
-    public void setHardwareDao(HardwareDao hardwareDao) {
-        this.hardwareDao = hardwareDao;
     }
 
     @Required
@@ -465,22 +458,12 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
      * @param researchGroup
      */
     private void preparedDefaultListsForNewGroup(ResearchGroup researchGroup) {
-        List<Hardware> hardwareList = hardwareDao.getDefaultRecords();
         Hardware hardware;
         Weather weather;
         PersonOptParamDef personOptParamDef;
         FileMetadataParamDef fileMetadataParamDef;
         ExperimentOptParamDef experimentOptParamDef;
 
-        for (int i = 0; i < hardwareList.size(); i++) {
-            hardware = new Hardware();
-            hardware.setDefaultNumber(0);
-            hardware.setDescription(hardwareList.get(i).getDescription());
-            hardware.setTitle(hardwareList.get(i).getTitle());
-            hardware.setType(hardwareList.get(i).getType());
-            hardwareDao.create(hardware);
-            hardwareDao.createGroupRel(hardware, researchGroup);
-        }
         List<Weather> weatherList = weatherDao.getDefaultRecords();
         for (int i = 0; i < weatherList.size(); i++) {
             weather = new Weather();

@@ -57,8 +57,6 @@ public class AddExperimentController {
     @Autowired
     private ScenarioDao scenarioDao;
     @Autowired
-    private HardwareDao hardwareDao;
-    @Autowired
     private WeatherDao weatherDao;
     @Autowired
     private ResearchGroupDao researchGroupDao;
@@ -164,16 +162,6 @@ public class AddExperimentController {
         return scenarioList;
     }
 
-    @ModelAttribute("hardwareList")
-    private List<Hardware> populateHardwareList(@RequestParam("id") String idString){
-        int experimentId = 0;
-        if(idString!=null){
-            experimentId = Integer.parseInt(idString) ;
-        }
-            int groupId = experimentDao.read(experimentId).getResearchGroup().getResearchGroupId();
-            List<Hardware> list = hardwareDao.getRecordsByGroup(groupId);
-        return list;
-    }
 
     @ModelAttribute("weatherList")
     private List<Weather> populateWeatherList(@RequestParam("id") String idString){
@@ -301,9 +289,6 @@ public class AddExperimentController {
         int[] hardwareArray = data.getHardware();
         Set<Hardware> hardwareSet = new HashSet<Hardware>();
         for (int hardwareId : hardwareArray) {
-            Hardware tempHardware = hardwareDao.read(hardwareId);
-            hardwareSet.add(tempHardware);
-            tempHardware.getExperiments().add(experiment);
             log.debug("Added Hardware object - ID " + hardwareId);
         }
         log.debug("Setting Hardware list to Measuration object");
@@ -363,14 +348,6 @@ public class AddExperimentController {
 
     public void setScenarioDao(ScenarioDao scenarioDao) {
         this.scenarioDao = scenarioDao;
-    }
-
-    public HardwareDao getHardwareDao() {
-        return hardwareDao;
-    }
-
-    public void setHardwareDao(HardwareDao hardwareDao) {
-        this.hardwareDao = hardwareDao;
     }
 
     public WeatherDao getWeatherDao() {

@@ -61,7 +61,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
     private ScenarioSchemasDao scenarioSchemasDao;
     private PersonDao personDao;
     private ScenarioDao scenarioDao;
-    private HardwareDao hardwareDao;
     private WeatherDao weatherDao;
     private ResearchGroupDao researchGroupDao;
     private AuthorizationManager auth;
@@ -210,9 +209,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
                 AddExperimentWizardCommand data = (AddExperimentWizardCommand)command;
                 int researchGroupId = data.getResearchGroup();
-                List<Hardware> hardwareList = hardwareDao.getRecordsByGroup(researchGroupId);
                 List<Weather> weatherList = weatherDao.getRecordsByGroup(researchGroupId);
-                map.put("hardwareList", hardwareList);
                 map.put("weatherList", weatherList);
 
                 break;
@@ -289,9 +286,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
         Set<Hardware> hardwareSet = new HashSet<Hardware>();
         for (int hardwareId : hardwareArray) {
             System.out.println("hardwareId "+ hardwareId);
-            Hardware tempHardware = hardwareDao.read(hardwareId);
-            hardwareSet.add(tempHardware);
-            tempHardware.getExperiments().add(experiment);
             log.debug("Added Hardware object - ID " + hardwareId);
         }
         log.debug("Setting Hardware list to Measuration object");
@@ -509,14 +503,6 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
 
     public void setWeatherDao(WeatherDao weatherDao) {
         this.weatherDao = weatherDao;
-    }
-
-    public HardwareDao getHardwareDao() {
-        return hardwareDao;
-    }
-
-    public void setHardwareDao(HardwareDao hardwareDao) {
-        this.hardwareDao = hardwareDao;
     }
 
     public PersonDao getPersonDao() {

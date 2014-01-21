@@ -50,7 +50,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
-import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListHardwareDefinitionsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListsLeftPageMenu;
@@ -67,9 +66,6 @@ public class HardwareFormPage extends MenuPage {
     private static final long serialVersionUID = -761588925622549613L;
 
     protected Log log = LogFactory.getLog(getClass());
-
-    @SpringBean
-    HardwareFacade facade;
 
     @SpringBean
     ResearchGroupFacade groupFacade;

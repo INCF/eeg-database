@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
 import java.util.ArrayList;
 
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -121,12 +122,12 @@ public class ExperimentsDetailPage extends MenuPage {
 
         final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
 
-        PropertyListView<Hardware> hardware = new PropertyListView<Hardware>("hardware", new ListModel<Hardware>(new ArrayList<Hardware>(experiment.getHardwares()))) {
+        PropertyListView<GenericParameter> hardware = new PropertyListView<GenericParameter>("hardware", new ListModel<GenericParameter>(new ArrayList<GenericParameter>(experiment.getGenericParameters("hardware")))) {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<Hardware> item) {
+            protected void populateItem(ListItem<GenericParameter> item) {
                 item.add(new Label("title"));
                 item.add(new Label("type"));
 
