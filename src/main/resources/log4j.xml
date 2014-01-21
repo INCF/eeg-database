@@ -27,7 +27,7 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="all">
 
     <appender name="logFile" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="c:/logs/eeg_database.log" />
+        <param name="File" value="/tmp/eeg_database.log" />
         <param name="Append" value="true" />
         <param name="DatePattern" value=".yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">

@@ -261,8 +261,6 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 		mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
 		mountPage("revoked-licenses", RevokedRequestPage.class);
 
-		//TODO remove before production deployment
-		mountPage("migrateDb", DbMigrationPage.class);
     }
 
     @Override

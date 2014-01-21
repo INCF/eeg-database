@@ -24,7 +24,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>cz.zcu.kiv.eegdatabase</groupId>
     <artifactId>eegdatabase</artifactId>
-    <version>0.0.1-SNAPSHOT</version>
+    <version>2.0-RELEASE</version>
     <packaging>war</packaging>
     <name>eegdatabase</name>
     <description>EEG/ERP portal enables community researchers to store, update and download data and metadata from
