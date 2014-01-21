@@ -73,8 +73,10 @@ public class Elastic extends BasePage {
 
 	public Elastic() {
 		
-//		reinsert();
-		personFacade.changeUserPassword("bydgam@gmail.com", "necum");
+		reinsert();
+//		personFacade.changeUserPassword("bydgam@gmail.com", "necum");
+		
+		
 	}
 
 	private void insertNew() {
@@ -134,9 +136,10 @@ public class Elastic extends BasePage {
 
 	private void reinsert() {
 
-		List<Experiment> exps = experimentDao.getAllRecordsFull();
+		List<Experiment> exps = experimentDao.getAllRecords();
 		System.out.println("doing " + exps.size());
 		for (Experiment e : exps) {
+//			e = experimentDao.read(e.getExperimentId());
 			experimentDao.update(e);
 		}
 

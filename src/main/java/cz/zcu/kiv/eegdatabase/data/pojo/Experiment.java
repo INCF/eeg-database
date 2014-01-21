@@ -166,24 +166,24 @@ public class Experiment implements Serializable {
 		return this.elasticExperiment.getParams();
 	}
 
-	public List<GenericParameter> getGenericParameters(String paramName) {
-		List<GenericParameter> out = new ArrayList<GenericParameter>();
-		for (GenericParameter p : this.getGenericParameters()) {
-			if (p.getName().equals(paramName)) {
-				out.add(p);
-			}
-		}
-		return out;
-	}
-
-	public GenericParameter getGenericParameter(String paramName) {
-		for (GenericParameter p : this.getGenericParameters()) {
-			if (p.getName().equals(paramName)) {
-				return p;
-			}
-		}
-		return null;
-	}
+//	public List<GenericParameter> getGenericParameters(String paramName) {
+//		List<GenericParameter> out = new ArrayList<GenericParameter>();
+//		for (GenericParameter p : this.getGenericParameters()) {
+//			if (p.getName().equals(paramName)) {
+//				out.add(p);
+//			}
+//		}
+//		return out;
+//	}
+//
+//	public GenericParameter getGenericParameter(String paramName) {
+//		for (GenericParameter p : this.getGenericParameters()) {
+//			if (p.getName().equals(paramName)) {
+//				return p;
+//			}
+//		}
+//		return null;
+//	}
 
 	public void setGenericParameters(List<GenericParameter> params) {
 		this.elasticExperiment.setParams(params);
