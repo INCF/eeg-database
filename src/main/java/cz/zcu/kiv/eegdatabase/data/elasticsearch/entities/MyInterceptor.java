@@ -80,11 +80,13 @@ public class MyInterceptor extends EmptyInterceptor {
 		return res;
 	}
 
-	
 	/**
-	 * Just temporal method. Keeps synced specific params that are stored in ES with its originals in relational DB. 
-	 * As soon as the bussiness code will be completely switched to GenericParameters, all original experiment properties will be dropped and this method will not be necessary.
-	 * @param e 
+	 * Just temporal method. Keeps synced specific params that are stored in ES
+	 * with its originals in relational DB. As soon as the bussiness code will
+	 * be completely switched to GenericParameters, all original experiment
+	 * properties will be dropped and this method will not be necessary.
+	 *
+	 * @param e
 	 */
 	private void syncExperimentParams(Experiment e) {
 
@@ -95,6 +97,10 @@ public class MyInterceptor extends EmptyInterceptor {
 			param = new GenericParameter("hardware", hw.getTitle());
 			if (!"".equals(hw.getDescription())) {
 				param.getAttributes().add(new ParameterAttribute("description", hw.getDescription()));
+			}
+
+			if (!"".equals(hw.getType())) {
+				param.getAttributes().add(new ParameterAttribute("type", hw.getType()));
 			}
 			e.getGenericParameters().add(param);
 		}
