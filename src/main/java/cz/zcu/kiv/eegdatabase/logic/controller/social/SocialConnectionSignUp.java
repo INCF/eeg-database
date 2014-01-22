@@ -57,10 +57,10 @@ public final class SocialConnectionSignUp implements ConnectionSignUp {
            LinkedIn ln = (LinkedIn) connection.getApi();
            LinkedInProfileFull full = ln.profileOperations().getUserProfileFull();
            System.out.println("xxxx " + full.getId());
+           linkedin.profileOperations().getUserProfile().getId();
 
         }
-        System.out.println("zzzz " + email);
-        linkedin.profileOperations().getUserProfile().getId();
+
 
         SocialUser user = new SocialUser(profile.getEmail(),
                 profile.getFirstName(), profile.getLastName());
