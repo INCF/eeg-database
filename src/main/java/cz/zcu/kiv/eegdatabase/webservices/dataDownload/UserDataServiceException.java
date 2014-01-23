@@ -20,7 +20,7 @@
  *  
  *   UserDataServiceException.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
+package cz.zcu.kiv.eegdatabase.webservices.datadownload;
 
 /**
  * User: Petr Miko - miko.petr (at) gmail.com

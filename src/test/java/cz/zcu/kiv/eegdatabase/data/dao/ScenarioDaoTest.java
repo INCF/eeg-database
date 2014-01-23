@@ -25,7 +25,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,16 +41,11 @@ public class ScenarioDaoTest extends AbstractDataAccessTest {
   @Autowired
   protected ScenarioDao scenarioDao;
   @Autowired
-  protected ScenarioTypeDao scenarioTypeDao;
-  @Autowired
   protected PersonDao personDao;
-  @Autowired
-  protected ScenarioTypeDao getScenarioTypeDao;
   @Autowired
   protected ResearchGroupDao researchGroupDao;
 
   protected Scenario scenario;
-  protected ScenarioType scenarioType;
   protected Person person;
   protected ReservationDao reservationDao;
 
@@ -69,10 +63,6 @@ public class ScenarioDaoTest extends AbstractDataAccessTest {
     scenario.setUserMemberOfGroup(false);
     scenario.setMimetype("test-Mimetype");
     scenario.setPerson(person);
-
-    scenarioType = new ScenarioType();
-    scenarioType.setScenarioId(0);
-    scenarioType.setScenario(scenario);
 
     scenario.setResearchGroup(researchGroupDao.getAllRecords().get(0));
   }

@@ -20,7 +20,7 @@
  *  
  *   DataFileInfo.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
+package cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers;
 
 /**
  * Class for gathering few important information about data file.

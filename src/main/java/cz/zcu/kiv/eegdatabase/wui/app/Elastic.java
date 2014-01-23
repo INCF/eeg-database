@@ -22,7 +22,7 @@
  *
  *  ***********************************************************************************************************************
  *
- * DbMigrationPage.java, 2013/10/02 00:01 Jakub Rinkes
+ * Elastic.java, 2013/10/02 00:01 Jakub Rinkes
  * ****************************************************************************
  */
 /*
@@ -44,6 +44,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import java.util.List;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.springframework.transaction.annotation.Transactional;
@@ -66,10 +67,16 @@ public class Elastic extends BasePage {
 	GenericListDao<Artifact> artifactDao;
 	@SpringBean
 	DigitizationDao digitizationDao;
+	
+	@SpringBean
+	PersonFacade personFacade;
 
 	public Elastic() {
 		
 		reinsert();
+//		personFacade.changeUserPassword("bydgam@gmail.com", "necum");
+		
+		
 	}
 
 	private void insertNew() {
@@ -129,9 +136,10 @@ public class Elastic extends BasePage {
 
 	private void reinsert() {
 
-		List<Experiment> exps = experimentDao.getAllRecordsFull();
+		List<Experiment> exps = experimentDao.getAllRecords();
 		System.out.println("doing " + exps.size());
 		for (Experiment e : exps) {
+//			e = experimentDao.read(e.getExperimentId());
 			experimentDao.update(e);
 		}
 

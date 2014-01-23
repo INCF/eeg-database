@@ -42,6 +42,7 @@ import javax.persistence.*;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
@@ -91,7 +92,6 @@ public class Experiment implements Serializable {
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 	private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
-
 	private ExperimentElastic elasticExperiment = new ExperimentElastic();
 
 	public void setElasticExperiment(ExperimentElastic e) {
@@ -107,10 +107,10 @@ public class Experiment implements Serializable {
 	}
 
 	public Experiment(Weather weather, Person personBySubjectPersonId,
-					Scenario scenario, Person personByOwnerId,
-					ResearchGroup researchGroup, Digitization digitization,
-					SubjectGroup subjectGroup, Artifact artifact,
-					ElectrodeConf electrodeConf) {
+			Scenario scenario, Person personByOwnerId,
+			ResearchGroup researchGroup, Digitization digitization,
+			SubjectGroup subjectGroup, Artifact artifact,
+			ElectrodeConf electrodeConf) {
 		this.setWeather(weather);
 		this.setPersonBySubjectPersonId(personBySubjectPersonId);
 		this.setScenario(scenario);
@@ -123,18 +123,18 @@ public class Experiment implements Serializable {
 	}
 
 	public Experiment(Weather weather, Person personBySubjectPersonId,
-					Scenario scenario, Person personByOwnerId,
-					ResearchGroup researchGroup, Digitization digitization,
-					SubjectGroup subjectGroup, Artifact artifact,
-					ElectrodeConf electrodeConf, Timestamp startTime,
-					Timestamp endTime, int temperature, boolean privateExperiment,
-					String environmentNote, Set<Person> persons,
-					Set<Hardware> hardwares, Set<Pharmaceutical> pharmaceuticals,
-					Set<Disease> diseases, Set<ProjectType> projectTypes,
-					Set<Software> softwares,
-					Set<ArtifactRemoveMethod> artifactRemoveMethods,
-					Set<DataFile> dataFiles, Set<History> histories,
-					Set<ExperimentOptParamVal> experimentOptParamVals) {
+			Scenario scenario, Person personByOwnerId,
+			ResearchGroup researchGroup, Digitization digitization,
+			SubjectGroup subjectGroup, Artifact artifact,
+			ElectrodeConf electrodeConf, Timestamp startTime,
+			Timestamp endTime, int temperature, boolean privateExperiment,
+			String environmentNote, Set<Person> persons,
+			Set<Hardware> hardwares, Set<Pharmaceutical> pharmaceuticals,
+			Set<Disease> diseases, Set<ProjectType> projectTypes,
+			Set<Software> softwares,
+			Set<ArtifactRemoveMethod> artifactRemoveMethods,
+			Set<DataFile> dataFiles, Set<History> histories,
+			Set<ExperimentOptParamVal> experimentOptParamVals) {
 		this.setWeather(weather);
 		this.setPersonBySubjectPersonId(personBySubjectPersonId);
 		this.setScenario(scenario);
@@ -165,6 +165,25 @@ public class Experiment implements Serializable {
 	public List<GenericParameter> getGenericParameters() {
 		return this.elasticExperiment.getParams();
 	}
+
+//	public List<GenericParameter> getGenericParameters(String paramName) {
+//		List<GenericParameter> out = new ArrayList<GenericParameter>();
+//		for (GenericParameter p : this.getGenericParameters()) {
+//			if (p.getName().equals(paramName)) {
+//				out.add(p);
+//			}
+//		}
+//		return out;
+//	}
+//
+//	public GenericParameter getGenericParameter(String paramName) {
+//		for (GenericParameter p : this.getGenericParameters()) {
+//			if (p.getName().equals(paramName)) {
+//				return p;
+//			}
+//		}
+//		return null;
+//	}
 
 	public void setGenericParameters(List<GenericParameter> params) {
 		this.elasticExperiment.setParams(params);
@@ -377,7 +396,7 @@ public class Experiment implements Serializable {
 	}
 
 	public void setArtifactRemoveMethods(
-					Set<ArtifactRemoveMethod> artifactRemoveMethods) {
+			Set<ArtifactRemoveMethod> artifactRemoveMethods) {
 		this.artifactRemoveMethods = artifactRemoveMethods;
 	}
 
@@ -405,7 +424,7 @@ public class Experiment implements Serializable {
 	}
 
 	public void setExperimentOptParamVals(
-					Set<ExperimentOptParamVal> experimentOptParamVals) {
+			Set<ExperimentOptParamVal> experimentOptParamVals) {
 		this.experimentOptParamVals = experimentOptParamVals;
 	}
 

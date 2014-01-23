@@ -20,7 +20,7 @@
  *  
  *   HardwareInfo.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers;
+package cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers;
 
 import java.util.List;
 

@@ -24,10 +24,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package cz.zcu.kiv.eegdatabase.webservices.dataDownload;
+package cz.zcu.kiv.eegdatabase.webservices.datadownload;
 
 
-import cz.zcu.kiv.eegdatabase.webservices.dataDownload.wrappers.*;
+import cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers.*;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;

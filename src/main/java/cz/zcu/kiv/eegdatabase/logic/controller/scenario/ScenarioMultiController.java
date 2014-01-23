@@ -25,7 +25,6 @@ package cz.zcu.kiv.eegdatabase.logic.controller.scenario;
 import cz.zcu.kiv.eegdatabase.data.dao.AuthorizationManager;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioTypeDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
 import org.springframework.web.servlet.ModelAndView;
@@ -43,7 +42,6 @@ public class ScenarioMultiController extends MultiActionController {
 
     private AuthorizationManager auth;
     private ScenarioDao scenarioDao;
-    private ScenarioTypeDao scenarioTypeDao;
     private PersonDao personDao;
 
     private static final int ITEMS_PER_PAGE = 20;

@@ -1,25 +1,30 @@
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * This file is part of the EEG-database project
- * 
- *   ==========================================
- *  
- *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *  
+ *
+ * ==========================================
+ *
+ * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
  *  ***********************************************************************************************************************
- *  
- *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- *   the License. You may obtain a copy of the License at
- *  
- *       http://www.apache.org/licenses/LICENSE-2.0
- *  
- *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- *   specific language governing permissions and limitations under the License.
- *  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
  *  ***********************************************************************************************************************
- *  
- *   ScenarioDetailPage.java, 2013/10/02 00:01 Jakub Rinkes
- ******************************************************************************/
+ *
+ * ScenarioDetailPage.java, 2013/10/02 00:01 Jakub Rinkes
+ *****************************************************************************
+ */
 package cz.zcu.kiv.eegdatabase.wui.ui.scenarios;
 
 import java.io.IOException;
@@ -49,98 +54,83 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
 
 /**
  * Page of detail for scenario.
- * 
+ *
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = {"ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN"})
 public class ScenarioDetailPage extends MenuPage {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
+	protected Log log = LogFactory.getLog(getClass());
+	@SpringBean
+	ScenariosFacade scenarioFacade;
+	@SpringBean
+	ScenarioXMLProvider xmlProvider;
+	@SpringBean
+	SecurityFacade security;
 
-    protected Log log = LogFactory.getLog(getClass());
+	public ScenarioDetailPage(PageParameters params) {
 
-    @SpringBean
-    ScenariosFacade scenarioFacade;
+		int scenarioId = parseParameters(params);
 
-    @SpringBean
-    ScenarioTypeFacade scenarioTypeFacade;
+		setupComponents(scenarioId);
+	}
 
-    @SpringBean
-    ScenarioXMLProvider xmlProvider;
-    
-    @SpringBean
-    SecurityFacade security;
+	private void setupComponents(final int scenarioId) {
 
-    public ScenarioDetailPage(PageParameters params) {
+		setPageTitle(ResourceUtils.getModel("pageTitle.scenarioDetail"));
 
-        int scenarioId = parseParameters(params);
+		add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
 
-        setupComponents(scenarioId);
-    }
+		final Scenario scenario = scenarioFacade.read(scenarioId);
 
-    private void setupComponents(final int scenarioId) {
+		add(new Label("title", scenario.getTitle()));
+		add(new Label("description", scenario.getDescription()));
+		add(new Label("length", scenario.getScenarioLength() + ""));
+		add(new Label("private", scenario.isPrivateScenario() + ""));
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.scenarioDetail"));
+		boolean existFile = scenario.getScenarioFile() != null;
 
-        add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
+		add(new Link<Void>("download") {
+			private static final long serialVersionUID = 1L;
 
-        final Scenario scenario = scenarioFacade.read(scenarioId);
+			@Override
+			public void onClick() {
 
-        add(new Label("title", scenario.getTitle()));
-        add(new Label("description", scenario.getDescription()));
-        add(new Label("length", scenario.getScenarioLength()+ ""));
-        add(new Label("private", scenario.isPrivateScenario() + ""));
+				AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter() {
+					private static final long serialVersionUID = 1L;
 
-        boolean existFile =false;
+					public void write(OutputStream output) throws IOException {
+						output.write(scenario.getScenarioFile());
+					}
+				};
 
-        add(new Link<Void>("download") {
+				getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream).setFileName(scenario.getScenarioName()));
 
-            private static final long serialVersionUID = 1L;
+			}
+		}.setVisibilityAllowed(existFile));
 
-            @Override
-            public void onClick() {
-                final DataFileDTO file = xmlProvider.getXmlFileForScenario(scenarioId, EEGDataBaseSession.get().getLoggedUser().getUsername());
+		add(new Label("noFile", ResourceUtils.getModel("scenarioDetail.noFile")).setVisibilityAllowed(!existFile));
 
-                if (file == null || file.getFileContent() == null)
-                    return;
+		BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("edit", ScenarioFormPage.class, PageParametersUtils.getDefaultPageParameters(scenarioId));
 
-                AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter()
-                {
-                    private static final long serialVersionUID = 1L;
+		boolean isOwnerOrAdmin = (security.userIsOwnerOfScenario(scenarioId) || security.isAdmin());
+		editLink.setVisibilityAllowed(isOwnerOrAdmin);
+		add(editLink);
+	}
 
-                    public void write(OutputStream output) throws IOException
-                    {
-                        output.write(file.getFileContent());
-                    }
-                };
+	private int parseParameters(PageParameters parameters) {
 
-                getRequestCycle().scheduleRequestHandlerAfterCurrent(new
-                        ResourceStreamRequestHandler(stream).setFileName(scenario.getScenarioName()));
-
-            }
-        }.setVisibilityAllowed(existFile));
-
-        add(new Label("noFile", ResourceUtils.getModel("scenarioDetail.noFile")).setVisibilityAllowed(!existFile));
-        
-        BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("edit", ScenarioFormPage.class, PageParametersUtils.getDefaultPageParameters(scenarioId));
-        
-        boolean isOwnerOrAdmin = (security.userIsOwnerOfScenario(scenarioId) || security.isAdmin());
-        editLink.setVisibilityAllowed(isOwnerOrAdmin);
-        add(editLink);
-    }
-
-    private int parseParameters(PageParameters parameters) {
-
-        StringValue value = parameters.get(BasePage.DEFAULT_PARAM_ID);
-        if (value.isNull() || value.isEmpty())
-            throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
-        return value.toInt();
-    }
+		StringValue value = parameters.get(BasePage.DEFAULT_PARAM_ID);
+		if (value.isNull() || value.isEmpty()) {
+			throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
+		}
+		return value.toInt();
+	}
 }

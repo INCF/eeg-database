@@ -60,6 +60,7 @@ public class PersonMapper {
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
         person.setUsername(dto.getEmail().toLowerCase());
+        person.setEmail(dto.getEmail().toLowerCase());
         person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));

@@ -43,11 +43,9 @@ import org.w3c.dom.Document;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioType;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.type.ScenarioTypeFacade;
 
 /**
  * Provider for prepare downloaded file for scenario.
@@ -60,7 +58,6 @@ public class ScenarioXMLProvider {
     protected Log log = LogFactory.getLog(getClass());
 
     ScenariosFacade scenarioFacade;
-    ScenarioTypeFacade scenarioTypeFacade;
     HistoryFacade historyFacade;
     PersonFacade personFacade;
 
@@ -77,11 +74,6 @@ public class ScenarioXMLProvider {
     @Required
     public void setPersonFacade(PersonFacade personFacade) {
         this.personFacade = personFacade;
-    }
-    
-    @Required
-    public void setScenarioTypeFacade(ScenarioTypeFacade scenarioTypeFacade) {
-        this.scenarioTypeFacade = scenarioTypeFacade;
     }
     
     /**
