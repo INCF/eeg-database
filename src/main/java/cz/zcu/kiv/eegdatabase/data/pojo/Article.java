@@ -23,7 +23,7 @@
  *  ***********************************************************************************************************************
  *
  * Article.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
@@ -58,10 +58,10 @@ public class Article implements Serializable {
 	private ResearchGroup researchGroup;
 	private Timestamp time;
 	@SolrField(name = IndexField.TEXT)
-    @FormItem(required = true)
+	@FormItem(required = true)
 	private String text;
 	@SolrField(name = IndexField.TITLE)
-    @FormItem
+	@FormItem
 	private String title;
 	private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
 	private Set<Person> subscribers = new HashSet<Person>(0);
@@ -74,8 +74,8 @@ public class Article implements Serializable {
 	}
 
 	public Article(Person person, ResearchGroup researchGroup, Timestamp time,
-					String text, String title, Set<ArticleComment> articleComments,
-					Set<Person> subscribers) {
+			String text, String title, Set<ArticleComment> articleComments,
+			Set<Person> subscribers) {
 		this.person = person;
 		this.researchGroup = researchGroup;
 		this.time = time;
