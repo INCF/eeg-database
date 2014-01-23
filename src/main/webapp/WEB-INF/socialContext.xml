@@ -82,8 +82,10 @@
         <property name="interceptors">
             <list>
                 <bean class="cz.zcu.kiv.eegdatabase.logic.controller.social.FacebookUniqueConnectInterceptor" />
+
             </list>
         </property>
+        <property name="applicationUrl" value="${app.domain}" />
 
     </bean>
 
