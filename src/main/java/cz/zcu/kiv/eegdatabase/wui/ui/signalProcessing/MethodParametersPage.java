@@ -11,7 +11,7 @@
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
  *
- *     http://www.apache.org/licenses/LICENSE-2.0
+ * http://www.apache.org/licenses/LICENSE-2.0
  *
  * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
@@ -25,6 +25,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
+import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
@@ -63,6 +64,7 @@ public class MethodParametersPage extends MenuPage {
     private int experimentId;
     private String methodName;
     private String dataName;
+    private static final int CHANNEL_POSITION = 2;
 
     public MethodParametersPage(PageParameters parameters) throws SQLException {
 
@@ -72,13 +74,13 @@ public class MethodParametersPage extends MenuPage {
         Label label = new Label("methodName", methodName);
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
         add(label);
-        add(new MethodParametersForm("methodParametersForm", new Model<String>(), service, getFeedback()));
+        add(new MethodParametersForm("methodParametersForm", new Model(), service, getFeedback()));
     }
 
-    private class MethodParametersForm extends Form<String> {
-        public MethodParametersForm(String id, IModel<String> model, final SignalProcessingService service,
+    private class MethodParametersForm extends Form<List<String>> {
+        public MethodParametersForm(String id, IModel<List<String>> model, final SignalProcessingService service,
                                     final FeedbackPanel feedback) throws SQLException {
-            super(id, new CompoundPropertyModel<String>(model));
+            super(id, new CompoundPropertyModel<List<String>>(model));
             List<ChannelInfo> infoList = service.getChannelInfo(experimentId, dataName);
             List<String> channels = new ArrayList<String>(infoList.size());
             for (ChannelInfo channel : infoList) {
@@ -87,20 +89,25 @@ public class MethodParametersPage extends MenuPage {
             final DropDownChoice<String> channelList = new DropDownChoice<String>("channelList", new Model<String>(),
                     channels);
             List<MethodParameters> paramList = service.getMethodParameters(methodName);
+            List<String> paramListToString = new ArrayList<String>(paramList.size());
             for (MethodParameters param: paramList) {
-                if (param.getDescription().startsWith("Channel")) {
-                    paramList.remove(param);
-                    break;
+                if (!param.getDescription().startsWith("Channel")) {
+                    paramListToString.add(param.getDescription());
+
                 }
             }
-            final ListView<MethodParameters> params = new ListView<MethodParameters>("params",
-                    paramList) {
+            final ListView<String> params = new ListView<String>("params",
+                    paramListToString) {
                 @Override
-                protected void populateItem(final ListItem<MethodParameters> components) {
-                    final String paramName = components.getModelObject().getDescription();
-                    Label label = new Label("paramName", paramName);
+                protected void populateItem(final ListItem<String> components) {
+
+                    Label label = new Label("paramName", components.getModelObject());
                     components.add(label);
-                    TextField<String> field = new TextField<String>("text", String.class);
+                    TextField<String> field = new TextField<String>("text", components.getModel());
+                    field.setDefaultModelObject("");
+                    if (label.getDefaultModelObjectAsString().equals("From sample")) {
+                        field.setDefaultModelObject("1");
+                    }
                     components.add(field);
 
                 }
@@ -110,9 +117,20 @@ public class MethodParametersPage extends MenuPage {
             SubmitLink submit = new SubmitLink("submit") {
                 @Override
                 public void onSubmit() {
-
+                    List<String> test = (List<String>) params.getList();
+                    if (test == null) {
+                        System.out.println("null");
+                    } else {
+                        test.add(CHANNEL_POSITION, channelList.getModelObject());
+                        for (String word: test) {
+                            System.out.println(word);
+                        }
+                    }
+                    List<DataFile> files = service.getDataFiles(experimentId, dataName);
+                    setResponsePage(MethodListPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                 }
             };
+            channelList.setRequired(true);
             add(submit, channelList, params);
         }
     }

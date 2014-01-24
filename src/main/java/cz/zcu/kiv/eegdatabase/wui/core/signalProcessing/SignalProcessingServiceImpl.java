@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -53,17 +54,53 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
     @Override
     @Transactional
     public List<ChannelInfo> getChannelInfo(int experimentId, String header) throws SQLException {
+        readHeader(experimentId, header);
+        return transformer.getChannelInfo();
+    }
+
+    @Override
+    @Transactional
+    public List<cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile>
+    getDataFiles(int experimentId, String header) {
+        List<cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile> dataFiles =
+                new ArrayList<cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile>();
+        readHeader(experimentId, header);
+        String dataFileName = transformer.getProperties().get("CI").get("DataFile");
+        dataFileName = dataFileName.replace(" ", "_");
+        cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile headerFile = new
+                cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile();
+        cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile dataFile = new
+                cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile();
         Experiment e = experimentDao.read(experimentId);
-        DataFile headerFile = null;
-        for (DataFile file: e.getDataFiles()) {
+        for (DataFile file : e.getDataFiles()) {
             if (file.getFilename().equals(header + ".vhdr")) {
-                headerFile = file;
-                break;
+                headerFile.setFileName(header + ".vhdr");
+                headerFile.setFile(file.getFileContent());
+                dataFiles.add(headerFile);
+            }
+            if (file.getFilename().equals(dataFileName)) {
+                dataFile.setFileName(dataFileName);
+                dataFile.setFile(file.getFileContent());
+                dataFiles.add(dataFile);
             }
         }
-        byte[] bytes = headerFile.getFileContent();
-        transformer.readVhdr(bytes);
-        return transformer.getChannelInfo();
+
+        return dataFiles;
+    }
+
+    @Transactional
+    private void readHeader(int experimentId, String header) {
+        if (transformer.isHeaderRed()) {
+            return;
+        }
+        Experiment e = experimentDao.read(experimentId);
+        for (DataFile file : e.getDataFiles()) {
+            if (file.getFilename().equals(header + ".vhdr")) {
+                transformer.readVhdr(file.getFileContent());
+                return;
+            }
+        }
+
     }
 
     public ProcessService getEegService() {
