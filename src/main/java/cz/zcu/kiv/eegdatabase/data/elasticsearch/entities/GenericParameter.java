@@ -27,6 +27,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -34,7 +35,7 @@ import java.util.List;
  *
  * @author bydga
  */
-public class GenericParameter {
+public class GenericParameter  implements Serializable{
 
 	private String name;
 	private String valueString;

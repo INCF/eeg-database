@@ -27,11 +27,13 @@
  */
 package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
 
+import java.io.Serializable;
+
 /**
  *
  * @author bydga
  */
-public class ParameterAttribute {
+public class ParameterAttribute implements Serializable {
 
 	private String name;
 	private String value;
