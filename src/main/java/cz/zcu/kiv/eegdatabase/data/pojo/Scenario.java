@@ -23,19 +23,25 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 // Generated 2.12.2013 0:56:28 by Hibernate Tools 3.4.0.CR1
+import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.BlobSerializer;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.HashSet;
 import java.util.Set;
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Parameter;
 
@@ -44,6 +50,7 @@ import org.hibernate.annotations.Parameter;
  */
 @Entity
 @Table(name = "SCENARIO")
+@XmlRootElement
 public class Scenario implements Serializable, Comparable<Scenario> {
 
 	private int scenarioId;
@@ -58,7 +65,7 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 	private Set<History> histories = new HashSet<History>(0);
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private boolean userMemberOfGroup;
-	private byte[] scenarioFile;
+	private Blob scenarioFile;
 	private String group;
 	private Boolean availableFile;
 
@@ -217,12 +224,15 @@ public class Scenario implements Serializable, Comparable<Scenario> {
 		this.experiments = experiments;
 	}
 
+	@XmlJavaTypeAdapter(BlobSerializer.class)
+	@Basic(fetch=FetchType.LAZY)
+	@Lob
 	@Column(name = "SCENARIO_FILE", nullable = true)
-	public byte[] getScenarioFile() {
+	public Blob getScenarioFile() {
 		return this.scenarioFile;
 	}
 
-	public void setScenarioFile(byte[] scenarioFile) {
+	public void setScenarioFile(Blob scenarioFile) {
 		this.scenarioFile = scenarioFile;
 	}
 	

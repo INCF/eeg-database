@@ -23,7 +23,7 @@
  *  ***********************************************************************************************************************
  *
  * ScenarioDetailPage.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.scenarios;
 
@@ -56,6 +56,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Page of detail for scenario.
@@ -107,7 +110,7 @@ public class ScenarioDetailPage extends MenuPage {
 					private static final long serialVersionUID = 1L;
 
 					public void write(OutputStream output) throws IOException {
-						output.write(scenario.getScenarioFile());
+						output.write(scenarioFacade.getScenarioFile(scenarioId));
 					}
 				};
 

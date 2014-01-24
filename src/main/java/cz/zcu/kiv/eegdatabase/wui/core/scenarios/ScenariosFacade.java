@@ -1,25 +1,30 @@
-/*******************************************************************************
+/**
+ * *****************************************************************************
  * This file is part of the EEG-database project
- * 
- *   ==========================================
- *  
- *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *  
+ *
+ * ==========================================
+ *
+ * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
  *  ***********************************************************************************************************************
- *  
- *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- *   the License. You may obtain a copy of the License at
- *  
- *       http://www.apache.org/licenses/LICENSE-2.0
- *  
- *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- *   specific language governing permissions and limitations under the License.
- *  
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
  *  ***********************************************************************************************************************
- *  
- *   ScenariosFacade.java, 2013/10/02 00:01 Jakub Rinkes
- ******************************************************************************/
+ *
+ * ScenariosFacade.java, 2013/10/02 00:01 Jakub Rinkes
+ *****************************************************************************
+ */
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
 import java.util.List;
@@ -32,43 +37,46 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
 public interface ScenariosFacade extends GenericFacade<Scenario, Integer> {
 
-    List<Scenario> getScenariosWhereOwner(Person owner);
+	List<Scenario> getScenariosWhereOwner(Person owner);
 
-    List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
+	List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
 
-    List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
+	List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
 
-    boolean canSaveTitle(String title, int id);
+	boolean canSaveTitle(String title, int id);
 
-    List<Scenario> getScenariosForList(Person person, int start, int count);
+	List<Scenario> getScenariosForList(Person person, int start, int count);
 
-    int getScenarioCountForList(Person person);
-    
-    Integer createScenarioSchema(ScenarioSchemas newInstance);
+	int getScenarioCountForList(Person person);
 
-    ScenarioSchemas readScenarioSchema(Integer id);
+	Integer createScenarioSchema(ScenarioSchemas newInstance);
 
-    List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue);
+	ScenarioSchemas readScenarioSchema(Integer id);
 
-    List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue);
+	List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue);
 
-    void updateScenarioSchema(ScenarioSchemas transientObject);
+	List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue);
 
-    void deleteScenarioSchema(ScenarioSchemas persistentObject);
+	void updateScenarioSchema(ScenarioSchemas transientObject);
 
-    List<ScenarioSchemas> getAllScenarioSchemasRecords();
+	void deleteScenarioSchema(ScenarioSchemas persistentObject);
 
-    List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max);
+	List<ScenarioSchemas> getAllScenarioSchemasRecords();
 
-    int getCountScenarioSchemasRecords();
-    
-    int getNextSchemaId();
-    
-    List<ScenarioSchemas> getListOfScenarioSchemas();
-    
-    boolean existsScenario(String title);
+	List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max);
 
-    void flush();
+	int getCountScenarioSchemasRecords();
 
-    Scenario getScenarioByTitle(String input);
+	int getNextSchemaId();
+	
+	byte[] getScenarioFile(int scenarioId);
+
+
+	List<ScenarioSchemas> getListOfScenarioSchemas();
+
+	boolean existsScenario(String title);
+
+	void flush();
+
+	Scenario getScenarioByTitle(String input);
 }

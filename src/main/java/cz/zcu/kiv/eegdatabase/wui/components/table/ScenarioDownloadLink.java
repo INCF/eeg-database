@@ -23,7 +23,7 @@
  *  ***********************************************************************************************************************
  *
  * ScenarioDownloadLink.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.wui.components.table;
 
@@ -39,6 +39,11 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
+import java.io.IOException;
+import java.io.OutputStream;
+import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 
 /**
  * Panel with link and security policy. Prepared download scenario file. Added
@@ -49,9 +54,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
  */
 public class ScenarioDownloadLink extends Panel {
 
-	@SpringBean
-	ScenarioXMLProvider xmlProvider;
 	private static final long serialVersionUID = 1L;
+	@SpringBean
+	ScenariosFacade scenariosFacade;
 
 	public ScenarioDownloadLink(String id, IModel<Scenario> model) {
 		super(id);
@@ -64,10 +69,16 @@ public class ScenarioDownloadLink extends Panel {
 
 			@Override
 			public void onClick() {
-				// get downloaded file
-				final DataFileDTO file = xmlProvider.getXmlFileForScenario(scenario.getScenarioId(), EEGDataBaseSession.get().getLoggedUser().getUsername());
-				// get file for download in wicket request cykle.
-				getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(file));
+				AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void write(OutputStream output) throws IOException {
+						output.write(scenariosFacade.getScenarioFile(scenario.getScenarioId()));
+					}
+				};
+
+				getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream).setFileName(scenario.getScenarioName()));
 
 			}
 		}).setVisibilityAllowed(fileExist);
