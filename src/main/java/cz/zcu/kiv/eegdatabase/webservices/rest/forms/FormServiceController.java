@@ -46,7 +46,7 @@ import cz.zcu.kiv.formgen.odml.OdmlWriter;
  *
  * @author Jakub Krauz
  */
-@Secured("IS_AUTHENTICATED_FULLY")
+//@Secured("IS_AUTHENTICATED_FULLY")     // temporarily disabled for testing purposed
 @Controller
 @RequestMapping("/form-layouts")
 public class FormServiceController {
