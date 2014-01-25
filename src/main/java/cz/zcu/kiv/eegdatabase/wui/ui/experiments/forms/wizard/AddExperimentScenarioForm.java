@@ -295,7 +295,8 @@ public class AddExperimentScenarioForm extends WizardStep {
         };
 
         final FeedbackPanel scenarioFeedback = createFeedbackForComponent(scenarioField, "scenarioFeedback");
-        scenarioField.add(new UniqueEntityValidator<Scenario>(scenarioFacade));
+        //FIXME:  doenst work on Experiment EDIT form (change scenario) after migration to potgres + blob type
+//       scenarioField.add(new UniqueEntityValidator<Scenario>(scenarioFacade));
         scenarioField.setRequired(true);
         scenarioField.setLabel(ResourceUtils.getModel("label.scenario"));
         add(scenarioField, scenarioFeedback);
