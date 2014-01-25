@@ -40,7 +40,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import cz.zcu.kiv.eegdatabase.accesscontrol.temporary.DbMigrationPage;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -261,8 +261,6 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 		mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
 		mountPage("revoked-licenses", RevokedRequestPage.class);
 
-		//TODO remove before production deployment
-		mountPage("migrateDb", DbMigrationPage.class);
 		
 		mountPage("elastic", Elastic.class);
     }
