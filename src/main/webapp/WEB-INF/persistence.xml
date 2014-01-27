@@ -97,13 +97,13 @@
 
 	</bean>
 	
-	<bean id="myInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.MyInterceptor"/>
+	<bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>
 				
 		<property name="entityInterceptor">
-			<ref bean="myInterceptor"/>
+			<ref bean="elasticSynchronizationInterceptor"/>
 		</property>
 		
 		<property name="hibernateProperties">

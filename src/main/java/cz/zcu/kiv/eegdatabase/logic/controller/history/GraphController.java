@@ -56,7 +56,7 @@ public class GraphController extends AbstractController {
     }
 
     private Log log = LogFactory.getLog(getClass());
-    private SimpleHistoryDao<History, Integer> historyDao;
+    private SimpleHistoryDao historyDao;
     private AuthorizationManager auth;
     private PersonDao personDao;
 
@@ -107,11 +107,11 @@ public class GraphController extends AbstractController {
         return null;
     }
 
-    public SimpleHistoryDao<History, Integer> getHistoryDao() {
+    public SimpleHistoryDao getHistoryDao() {
         return historyDao;
     }
 
-    public void setHistoryDao(SimpleHistoryDao<History, Integer> historyDao) {
+    public void setHistoryDao(SimpleHistoryDao historyDao) {
         this.historyDao = historyDao;
     }
 

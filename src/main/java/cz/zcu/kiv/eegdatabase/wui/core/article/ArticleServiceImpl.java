@@ -38,16 +38,16 @@ public class ArticleServiceImpl implements ArticleService {
 
     protected Log log = LogFactory.getLog(getClass());
 
-    ArticleDao<Article, Integer> dao;
-    ArticleCommentDao<ArticleComment, Integer> commentDao;
+    ArticleDao dao;
+    ArticleCommentDao commentDao;
 
     @Required
-    public void setDao(ArticleDao<Article, Integer> dao) {
+    public void setDao(ArticleDao dao) {
         this.dao = dao;
     }
 
     @Required
-    public void setCommentDao(ArticleCommentDao<ArticleComment, Integer> commentDao) {
+    public void setCommentDao(ArticleCommentDao commentDao) {
         this.commentDao = commentDao;
     }
 

@@ -53,7 +53,7 @@ public class SearchHistoryController extends AbstractSearchController {
 
     private AuthorizationManager auth;
     private PersonDao personDao;
-    private SimpleHistoryDao<History, Integer> historyDao;
+    private SimpleHistoryDao historyDao;
 
     public SearchHistoryController() {
         setCommandClass(HistorySearcherCommand.class);
@@ -109,11 +109,11 @@ public class SearchHistoryController extends AbstractSearchController {
         return mav;
     }
 
-    public SimpleHistoryDao<History, Integer> getHistoryDao() {
+    public SimpleHistoryDao getHistoryDao() {
         return historyDao;
     }
 
-    public void setHistoryDao(SimpleHistoryDao<History, Integer> historyDao) {
+    public void setHistoryDao(SimpleHistoryDao historyDao) {
         this.historyDao = historyDao;
     }
 
