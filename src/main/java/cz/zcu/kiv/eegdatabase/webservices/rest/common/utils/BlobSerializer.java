@@ -1,4 +1,5 @@
-package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
+package cz.zcu.kiv.eegdatabase.webservices.rest.common.utils;
+
 
 
 import java.sql.Blob;

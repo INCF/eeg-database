@@ -27,9 +27,9 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.ExperimentElastic;
-import cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.GenericParameter;
-import cz.zcu.kiv.eegdatabase.data.elasticsearch.repositories.SampleExperimentRepository;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.nosql.repositories.SampleExperimentRepository;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;

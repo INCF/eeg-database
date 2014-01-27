@@ -53,7 +53,7 @@
 		<constructor-arg name="client" ref="client"/>
 	</bean>
 	
-	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.elasticsearch.repositories" />
+	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.nosql.repositories" />
 
 	
 	<!-- It is not sure whether this file will be used or not. -->
@@ -97,7 +97,7 @@
 
 	</bean>
 	
-	<bean id="myInterceptor" class="cz.zcu.kiv.eegdatabase.data.elasticsearch.entities.MyInterceptor"/>
+	<bean id="myInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.MyInterceptor"/>
 
 	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
 		<property name="dataSource" ref="dataSource"/>

@@ -25,7 +25,7 @@
  * ParameterAttribute.java, 2013/10/02 00:01 Martin Bydzovsky
  * ****************************************************************************
  */
-package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
+package cz.zcu.kiv.eegdatabase.data.nosql.entities;
 
 import java.io.Serializable;
 

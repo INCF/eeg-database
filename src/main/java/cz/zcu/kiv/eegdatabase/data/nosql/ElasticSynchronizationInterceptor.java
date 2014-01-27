@@ -25,9 +25,12 @@
  * MyInterceptor.java, 2013/10/02 00:01 Martin Bydzovsky
  * ****************************************************************************
  */
-package cz.zcu.kiv.eegdatabase.data.elasticsearch.entities;
+package cz.zcu.kiv.eegdatabase.data.nosql;
 
-import cz.zcu.kiv.eegdatabase.data.elasticsearch.repositories.SampleExperimentRepository;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
+import cz.zcu.kiv.eegdatabase.data.nosql.repositories.SampleExperimentRepository;
 import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
@@ -46,7 +49,7 @@ import org.hibernate.type.Type;
  *
  * @author bydga
  */
-public class MyInterceptor extends EmptyInterceptor {
+public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 	@Resource
 	private SampleExperimentRepository sampleExperimentRepository;

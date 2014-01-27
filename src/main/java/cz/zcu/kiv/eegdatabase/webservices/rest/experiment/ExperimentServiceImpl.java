@@ -23,6 +23,8 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.experiment;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.experiment.wrappers.*;
 import cz.zcu.kiv.eegdatabase.webservices.rest.groups.wrappers.ResearchGroupData;
