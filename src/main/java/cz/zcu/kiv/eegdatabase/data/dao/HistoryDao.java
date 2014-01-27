@@ -37,7 +37,7 @@ import java.util.List;
  * DAO for fetching and saving download history.
  * @author pbruha
  */
-public interface HistoryDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface HistoryDao extends GenericDao<History, Integer> {
 
   public List<History> getHistory(ChoiceHistory historyType, boolean isGroupAdmin, int groupId);
 

@@ -34,10 +34,10 @@ import java.util.List;
 
 public class HistoryServiceImpl implements HistoryService {
 
-    HistoryDao<History, Integer> dao;
+    HistoryDao dao;
 
     @Required
-    public void setDao(HistoryDao<History, Integer> dao) {
+    public void setDao(HistoryDao dao) {
         this.dao = dao;
     }
 

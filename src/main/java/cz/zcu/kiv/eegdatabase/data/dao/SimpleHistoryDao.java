@@ -42,12 +42,12 @@ import org.hibernate.Session;
  * Class is determined only for History.
  * @author pbruha
  */
-public class SimpleHistoryDao<T, PK extends Serializable> extends SimpleGenericDao<T, PK> implements HistoryDao<T, PK> {
+public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> implements HistoryDao {
 
   private final int maxResults = 5;
 
-  public SimpleHistoryDao(Class<T> type) {
-    super(type);
+  public SimpleHistoryDao() {
+    super(History.class);
   }
 /**
  * Returns list of download history by constant history type (DAILY, WEEKLY, MONTHLY).

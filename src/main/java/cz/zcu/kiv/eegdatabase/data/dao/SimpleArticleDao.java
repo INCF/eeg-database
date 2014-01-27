@@ -39,12 +39,12 @@ import java.util.List;
 /**
  * @author Jiri Vlasimsky
  */
-public class SimpleArticleDao<T, PK extends Serializable>
-        extends SimpleGenericDao<T, PK> implements ArticleDao<T, PK> {
-    public SimpleArticleDao(Class<T> type) {
-        super(type);
+public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> implements ArticleDao {
+    public SimpleArticleDao() {
+        super(Article.class);
     }
 
+    @Override
     public List<Article> getAllArticles() {
         String HQLSelect = "from Article order by time desc";
         List<Article> articles = getHibernateTemplate().find(HQLSelect);
@@ -52,7 +52,7 @@ public class SimpleArticleDao<T, PK extends Serializable>
     }
 
     @Override
-    public List getArticlesForUser(Person person) {
+    public List<Article> getArticlesForUser(Person person) {
         String query;
         List articles = null;
 
@@ -77,15 +77,15 @@ public class SimpleArticleDao<T, PK extends Serializable>
     }
 
     @Override
-    public List getArticlesForUser(Person person, int limit) {
+    public List<Article> getArticlesForUser(Person person, int limit) {
         getHibernateTemplate().setMaxResults(limit);
-        List articles = getArticlesForUser(person);
+        List<Article> articles = getArticlesForUser(person);
         getHibernateTemplate().setMaxResults(0);
         return articles;
     }
 
     @Override
-    public List getArticlesForList(Person person, int min, int count) {
+    public List<Article> getArticlesForList(Person person, int min, int count) {
         String query;
         List articles = null;
 
@@ -152,11 +152,5 @@ public class SimpleArticleDao<T, PK extends Serializable>
         String HQLSelect = "from Article order by time desc";
         List<Article> articles = getHibernateTemplate().find(HQLSelect);
         return articles;
-    }
-
-    @Transactional(readOnly = true)
-    @Override
-    public List<T> getAllRecordsFull() {
-        return super.getAllRecordsFull();
     }
 }

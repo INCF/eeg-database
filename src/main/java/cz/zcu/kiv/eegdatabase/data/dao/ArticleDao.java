@@ -36,14 +36,14 @@ import java.util.List;
 /**
  * @author Jiri Vlasimsky
  */
-public interface ArticleDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface ArticleDao extends GenericDao<Article, Integer> {
      public List<Article> getAllArticles();
 
-    List getArticlesForUser(Person person);
+    List<Article> getArticlesForUser(Person person);
 
-    List getArticlesForUser(Person person, int limit);
+    List<Article> getArticlesForUser(Person person, int limit);
 
-    List getArticlesForList(Person person, int min, int count);
+    List<Article> getArticlesForList(Person person, int min, int count);
 
     public int getArticleCountForPerson(Person person);
 

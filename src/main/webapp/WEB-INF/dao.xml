@@ -65,9 +65,6 @@
 	<!-- packages and licenses END -->
 
 	<bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>
-		</constructor-arg>
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
     
@@ -76,9 +73,6 @@
 	</bean>
 
 	<bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
-		</constructor-arg>
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 
@@ -95,9 +89,6 @@
 	</bean>
 
 	<bean name="historyDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.History</value>
-		</constructor-arg>
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
 

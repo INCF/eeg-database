@@ -35,7 +35,7 @@ import java.util.List;
 /**
  * @author Jiriik
  */
-public interface ArticleCommentDao<T, PK extends Serializable> extends GenericDao<T, PK> {
+public interface ArticleCommentDao  extends GenericDao<ArticleComment, Integer> {
     List<ArticleComment> getCommentsForArticle(int articleId);
 }
 

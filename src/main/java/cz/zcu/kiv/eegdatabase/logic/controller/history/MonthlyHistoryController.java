@@ -51,7 +51,7 @@ import java.util.Map;
 public class MonthlyHistoryController extends AbstractHistoryController {
 
     private Log log = LogFactory.getLog(getClass());
-    private HistoryDao<History, Integer> historyDao;
+    private HistoryDao historyDao;
     private AuthorizationManager auth;
     private PersonDao personDao;
     private ResearchGroupDao researchGroupDao;

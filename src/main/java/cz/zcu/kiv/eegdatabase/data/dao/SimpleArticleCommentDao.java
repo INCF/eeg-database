@@ -34,11 +34,10 @@ import java.util.List;
 /**
  * @author Jiri Vlasimsky
  */
-public class SimpleArticleCommentDao<T, PK extends Serializable>
-        extends SimpleGenericDao<T, PK> implements ArticleCommentDao<T, PK> {
+public class SimpleArticleCommentDao extends SimpleGenericDao<ArticleComment, Integer> implements ArticleCommentDao {
 
-    public SimpleArticleCommentDao(Class<T> type) {
-        super(type);
+    public SimpleArticleCommentDao() {
+        super(ArticleComment.class);
     }
 
     @Override
