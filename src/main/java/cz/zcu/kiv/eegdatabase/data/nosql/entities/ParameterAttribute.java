@@ -28,6 +28,8 @@
 package cz.zcu.kiv.eegdatabase.data.nosql.entities;
 
 import java.io.Serializable;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  *
@@ -35,7 +37,9 @@ import java.io.Serializable;
  */
 public class ParameterAttribute implements Serializable {
 
+	@Field(type = FieldType.String)
 	private String name;
+	@Field(type = FieldType.String)
 	private String value;
 
 	public ParameterAttribute() {

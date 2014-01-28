@@ -30,29 +30,35 @@ package cz.zcu.kiv.eegdatabase.data.nosql.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import org.springframework.data.elasticsearch.annotations.Field;
+import org.springframework.data.elasticsearch.annotations.FieldType;
 
 /**
  *
  * @author bydga
  */
-public class GenericParameter  implements Serializable{
+public class GenericParameter implements Serializable {
 
+	@Field(type = FieldType.String)
 	private String name;
+	@Field(type = FieldType.String)
 	private String valueString;
+	@Field(type = FieldType.Integer)
 	private Integer valueInteger;
+	@Field(type = FieldType.Nested)
 	private List<ParameterAttribute> attributes = new ArrayList<ParameterAttribute>();
 
 	public GenericParameter() {
 	}
 
 	public GenericParameter(String name, Integer valueInteger) {
-		this.setName(name);
-		this.setValueInteger(valueInteger);
+		this.name = name;
+		this.valueInteger = valueInteger;
 	}
 
 	public GenericParameter(String name, String valueString) {
-		this.setName(name);
-		this.setValueString(valueString);
+		this.name = name;
+		this.valueString = valueString;
 	}
 
 	public String getName() {
