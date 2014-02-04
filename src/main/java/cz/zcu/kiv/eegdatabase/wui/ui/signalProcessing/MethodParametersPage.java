@@ -27,6 +27,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
+import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -122,11 +123,10 @@ public class MethodParametersPage extends MenuPage {
                         System.out.println("null");
                     } else {
                         test.add(CHANNEL_POSITION, channelList.getModelObject());
-                        for (String word: test) {
-                            System.out.println(word);
-                        }
                     }
                     List<DataFile> files = service.getDataFiles(experimentId, dataName);
+                    String output = new String(service.processService(files, SupportedFormat.KIV_FORMAT, methodName, test));
+                   // System.out.println(output);
                     setResponsePage(MethodListPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                 }
             };

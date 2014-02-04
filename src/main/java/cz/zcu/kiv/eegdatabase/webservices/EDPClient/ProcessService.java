@@ -1,6 +1,5 @@
 package cz.zcu.kiv.eegdatabase.webservices.EDPClient;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import javax.jws.WebMethod;
 import javax.jws.WebParam;
 import javax.jws.WebResult;

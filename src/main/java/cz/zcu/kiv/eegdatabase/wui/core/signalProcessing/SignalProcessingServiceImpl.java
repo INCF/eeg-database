@@ -88,6 +88,12 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
         return dataFiles;
     }
 
+    @Override
+    public byte[] processService(List<cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile> files,
+                                 SupportedFormat format, String methodName, List<String> params) {
+        return eegService.processData(files, format, methodName, params);
+    }
+
     @Transactional
     private void readHeader(int experimentId, String header) {
         if (transformer.isHeaderRed()) {

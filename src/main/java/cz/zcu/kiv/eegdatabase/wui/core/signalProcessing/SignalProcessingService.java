@@ -28,6 +28,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
+import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
 import java.sql.SQLException;
@@ -51,4 +52,6 @@ public interface SignalProcessingService extends GenericService<Experiment, Inte
     public List<ChannelInfo> getChannelInfo(int experimentId, String header) throws SQLException;
 
     public List<DataFile> getDataFiles(int experimentId, String header);
+
+    public byte[] processService(List<DataFile> files, SupportedFormat format, String methodName, List<String> params);
 }
