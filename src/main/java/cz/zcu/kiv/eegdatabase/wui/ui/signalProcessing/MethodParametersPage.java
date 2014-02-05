@@ -31,9 +31,13 @@ import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -60,6 +64,8 @@ import java.util.List;
  * To change this template use File | Settings | File Templates.
  */
 public class MethodParametersPage extends MenuPage {
+
+    protected Log log = LogFactory.getLog(getClass());
     @SpringBean
     SignalProcessingService service;
     private int experimentId;
@@ -91,7 +97,7 @@ public class MethodParametersPage extends MenuPage {
                     channels);
             List<MethodParameters> paramList = service.getMethodParameters(methodName);
             List<String> paramListToString = new ArrayList<String>(paramList.size());
-            for (MethodParameters param: paramList) {
+            for (MethodParameters param : paramList) {
                 if (!param.getDescription().startsWith("Channel")) {
                     paramListToString.add(param.getDescription());
 
@@ -120,14 +126,17 @@ public class MethodParametersPage extends MenuPage {
                 public void onSubmit() {
                     List<String> test = (List<String>) params.getList();
                     if (test == null) {
-                        System.out.println("null");
+                        log.error("no parameters are found.");
                     } else {
                         test.add(CHANNEL_POSITION, channelList.getModelObject());
                     }
                     List<DataFile> files = service.getDataFiles(experimentId, dataName);
                     String output = new String(service.processService(files, SupportedFormat.KIV_FORMAT, methodName, test));
-                   // System.out.println(output);
-                    setResponsePage(MethodListPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    DataFileDTO outputFile = new DataFileDTO();
+                    outputFile.setFileName(methodName + "_result.xml");
+                    outputFile.setFileContent(output.getBytes());
+
+                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
                 }
             };
             channelList.setRequired(true);
