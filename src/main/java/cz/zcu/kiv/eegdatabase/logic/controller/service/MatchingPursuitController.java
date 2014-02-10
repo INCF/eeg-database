@@ -29,7 +29,6 @@ import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
 import cz.zcu.kiv.eegdsp.matchingpursuit.MatchingPursuit;
-import org.hibernate.Hibernate;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -41,9 +40,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-
 import java.io.ByteArrayOutputStream;
-
 import java.util.Map;
 
 
@@ -105,7 +102,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Not enough memory for analysed signal.";
-                service.setFigure(errorText.getBytes());
+                service.setContent(errorText.getBytes());
                 resultDao.update(service);
                 return;
             }
@@ -141,7 +138,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setFigure(out.toByteArray());
+            service.setContent(out.toByteArray());
             service.setStatus("finished");
             resultDao.update(service);
 

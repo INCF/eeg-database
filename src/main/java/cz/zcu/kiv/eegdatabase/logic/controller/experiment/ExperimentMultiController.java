@@ -43,8 +43,6 @@ import org.springframework.web.servlet.mvc.multiaction.MultiActionController;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -209,7 +207,7 @@ public class ExperimentMultiController extends MultiActionController {
 			response.setHeader("Content-Type", "application/png");
 		}
 		response.setHeader("Content-Disposition", "attachment;filename=" + service.getFilename());
-		response.getOutputStream().write(service.getFigure());
+		response.getOutputStream().write(service.getContent());
 		//return new ModelAndView("redirect:services-result.html");
 		return null;
 	}

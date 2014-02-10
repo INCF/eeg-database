@@ -25,14 +25,12 @@ package cz.zcu.kiv.eegdatabase.logic.controller.service;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
-import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
 import cz.zcu.kiv.eegdsp.wavelet.continuous.WaveletTransformationContinuous;
 import cz.zcu.kiv.eegdsp.wavelet.continuous.algorithm.wavelets.WaveletCWT;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.WaveletTransformationDiscrete;
 import cz.zcu.kiv.eegdsp.wavelet.discrete.algorithm.wavelets.WaveletDWT;
-import org.hibernate.Hibernate;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -40,12 +38,10 @@ import javax.imageio.ImageIO;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.awt.*;
-import java.awt.geom.Line2D;
 import java.awt.geom.Rectangle2D;
 import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
-import java.sql.Blob;
 import java.util.Map;
 
 
@@ -125,7 +121,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
                     service.setStatus("failed");
                     service.setFilename("errorLog.txt");
                     String errorText = "Not enough memory for analysed signal.";
-                    service.setFigure(errorText.getBytes());
+                    service.setContent(errorText.getBytes());
                     resultDao.update(service);
                     return;
                 }
@@ -142,11 +138,11 @@ public class WaveletProcessingController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Error while creating an image.";
-                service.setFigure(errorText.getBytes());
+                service.setContent(errorText.getBytes());
                 resultDao.update(service);
                 return;
             }
-            service.setFigure(image);
+            service.setContent(image);
             service.setStatus("finished");
             resultDao.update(service);
         }

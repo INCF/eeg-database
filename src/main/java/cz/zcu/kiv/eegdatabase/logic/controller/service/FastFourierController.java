@@ -28,7 +28,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessingResult;
 import cz.zcu.kiv.eegdsp.common.ISignalProcessor;
 import cz.zcu.kiv.eegdsp.main.SignalProcessingFactory;
-import org.hibernate.Hibernate;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.ChartUtilities;
 import org.jfree.chart.JFreeChart;
@@ -41,7 +40,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 import java.util.Map;
 
 
@@ -129,7 +127,7 @@ public class FastFourierController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setFigure(out.toByteArray());
+            service.setContent(out.toByteArray());
             service.setStatus("finished");
             resultDao.update(service);
 
