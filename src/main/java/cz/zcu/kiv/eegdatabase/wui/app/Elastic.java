@@ -90,23 +90,6 @@ public class Elastic extends BasePage {
 		Experiment read = this.experimentDao.read(318);
 		experimentDao.delete(read);
 	}
-	
-	private void findByEsMethod()
-	{
-		List<Experiment> findByGenericParameter = experimentDao.findByGenericParameter("temperature", -15);
-	
-		System.out.println("found2:");
-		System.out.println("##########################");
-		for (Experiment experiment : findByGenericParameter) {
-			System.out.println(experiment.getElasticExperiment().getExperimentId());
-			System.out.println(experiment.getExperimentId());
-			for (GenericParameter p : experiment.getGenericParameters()) {
-
-				System.out.println(p.getName() + " : " + p.getValueString());
-			}
-		}
-		
-	}
 
 	@Transactional
 	private void findByMethod() {

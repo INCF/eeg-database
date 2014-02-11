@@ -35,25 +35,24 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.Session;
-import org.hibernate.criterion.LogicalExpression;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.io.Serializable;
 import java.text.ParseException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.Resource;
-import static org.elasticsearch.index.query.FilterBuilders.andFilter;
-import static org.elasticsearch.index.query.FilterBuilders.nestedFilter;
+import org.apache.commons.lang.NotImplementedException;
+import org.elasticsearch.index.query.AndFilterBuilder;
+import org.elasticsearch.index.query.BoolFilterBuilder;
 import static org.elasticsearch.index.query.FilterBuilders.termFilter;
 import org.elasticsearch.index.query.NestedFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -138,15 +137,15 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 	public Experiment getExperimentForDetail(int experimentId) {
 		String query = "from Experiment e left join fetch e.dataFiles left join fetch e.hardwares left join fetch e.experimentOptParamVals left join fetch e.scenario "
-						+ "left join fetch e.weather left join fetch e.projectTypes left join fetch e.diseases left join fetch e.pharmaceuticals pharmaceuticals "
-						+ "left join fetch e.softwares left join fetch e.persons where e.experimentId = :experimentId";
+				+ "left join fetch e.weather left join fetch e.projectTypes left join fetch e.diseases left join fetch e.pharmaceuticals pharmaceuticals "
+				+ "left join fetch e.softwares left join fetch e.persons where e.experimentId = :experimentId";
 		return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
 	}
 
 	public int getCountForAllExperimentsForUser(Person person) {
 		if (person.getAuthority().equals("ROLE_ADMIN")) {
 			String query = "select count(distinct e) from Experiment e "
-							+ "left join e.researchGroup.researchGroupMemberships m ";
+					+ "left join e.researchGroup.researchGroupMemberships m ";
 			return ((Long) getSessionFactory().getCurrentSession().createQuery(query).uniqueResult()).intValue();
 		} else {
 //            String query = "select count(distinct e) from Experiment e " +
@@ -155,10 +154,10 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 //                    "e.privateExperiment = false " +
 //                    "or m.person.personId = :personId";
 			String query = "select count(distinct epc.experiment) from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
-							+ " PersonalLicense pl where "
-							+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-							+ "epl.license.licenseId = pl.license.licenseId and "
-							+ "pl.person.personId = :personId";
+					+ " PersonalLicense pl where "
+					+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+					+ "epl.license.licenseId = pl.license.licenseId and "
+					+ "pl.person.personId = :personId";
 			return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
 		}
 	}
@@ -168,7 +167,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	public List<Experiment> getAllExperimentsForUser(Person person, int start, int count) {
 		if (person.getAuthority().equals("ROLE_ADMIN")) {
 			String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p "
-							+ "left join e.researchGroup.researchGroupMemberships m ";
+					+ "left join e.researchGroup.researchGroupMemberships m ";
 			return getSessionFactory().getCurrentSession().createQuery(query).setFirstResult(start).setMaxResults(count).list();
 		} else {
 //            String query = "select distinct e from Experiment e join fetch e.scenario s join fetch e.personBySubjectPersonId p " +
@@ -178,26 +177,26 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 //                    "or m.person.personId = :personId " +
 //                    "order by e.startTime desc";
 			String query = "select distinct e from Experiment e, ExperimentPackageConnection epc, ExperimentPackageLicense epl, PersonalLicense pl "
-							+ " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
-							+ " where "
-							+ "e.experimentId = epc.experiment.experimentId and "
-							+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-							+ "epl.license.licenseId = pl.license.licenseId and "
-							+ "pl.person.personId = :personId "
-							+ "order by e.startTime desc";
+					+ " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
+					+ " where "
+					+ "e.experimentId = epc.experiment.experimentId and "
+					+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+					+ "epl.license.licenseId = pl.license.licenseId and "
+					+ "pl.person.personId = :personId "
+					+ "order by e.startTime desc";
 			return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(count).list();
 		}
 	}
 
 	public List<Experiment> getRecordsNewerThan(int personId) {
 		String HQLselect = "SELECT ex, s FROM Experiment ex LEFT JOIN FETCH ex.scenario s "
-						+ "WHERE ex.experimentId IN "
-						+ "(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
-						+ " PersonalLicense pl where "
-						+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-						+ "epl.license.licenseId = pl.license.licenseId and "
-						+ "pl.person.personId = :personId) "
-						+ " ORDER BY ex.startTime DESC";
+				+ "WHERE ex.experimentId IN "
+				+ "(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
+				+ " PersonalLicense pl where "
+				+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+				+ "epl.license.licenseId = pl.license.licenseId and "
+				+ "pl.person.personId = :personId) "
+				+ " ORDER BY ex.startTime DESC";
 		String[] stringParams = {"personId"};
 		Object[] objectParams = {personId};
 		return getHibernateTemplate().findByNamedParam(HQLselect, stringParams, objectParams);
@@ -223,7 +222,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 				}
 				if (request.getSource().equals("usedHardware")) {
 					hqlQuery += " (lower(hw.title) like lower('%" + request.getCondition()
-									+ "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
+							+ "%') or lower(hw.type) like lower('%" + request.getCondition() + "%'))";
 
 				} else if (request.getSource().endsWith("Time")) {
 					String[] times = request.getCondition().split(" ");
@@ -238,21 +237,21 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 				} else if (request.getSource().startsWith("age")) {
 					hqlQuery += "e.personBySubjectPersonId.dateOfBirth"
-									+ getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
+							+ getCondition(request.getSource()) + "'" + getPersonYearOfBirth(request.getCondition()) + "'";
 				} else if (request.getSource().endsWith("gender")) {
 					hqlQuery += "e.personBySubjectPersonId.gender = '" + request.getCondition().toUpperCase().charAt(0) + "'";
 				} else {
 					hqlQuery += "lower(e." + request.getSource() + ")" + getCondition(request.getSource())
-									+ "lower('%" + request.getCondition() + "%')";
+							+ "lower('%" + request.getCondition() + "%')";
 				}
 				ignoreChoice = false;
 			}
 //            hqlQuery += " and e.experimentId IN(SELECT e.experimentId FROM Experiment e LEFT JOIN e.researchGroup.researchGroupMemberships membership WHERE e.privateExperiment = false OR membership.person.id = " + personId + ")";
 			hqlQuery += " and e.experimentId IN(SELECT epc.experiment.experimentId from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
-							+ " PersonalLicense pl where "
-							+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-							+ "epl.license.licenseId = pl.license.licenseId and "
-							+ "pl.person.personId = " + personId + ")";
+					+ " PersonalLicense pl where "
+					+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+					+ "epl.license.licenseId = pl.license.licenseId and "
+					+ "pl.person.personId = " + personId + ")";
 			Session ses = getSession();
 			Query q = ses.createQuery(hqlQuery);
 			int i = 0;
@@ -264,7 +263,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 			results = q.list();
 		} catch (ParseException e) {
 			throw new RuntimeException("Inserted date and time is not in valid format \n"
-							+ "Valid format is DD/MM/YYYY HH:MM or DD/MM/YYYY.");
+					+ "Valid format is DD/MM/YYYY HH:MM or DD/MM/YYYY.");
 		} catch (Exception e) {
 			return new ArrayList<Experiment>();
 		}
@@ -282,13 +281,13 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 //	return criteria.list();
 
 		String query = "select distinct e from Experiment e, ExperimentPackageConnection epc, ExperimentPackageLicense epl, PersonalLicense pl "
-						+ " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
-						+ " where "
-						+ "e.experimentId = epc.experiment.experimentId and "
-						+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-						+ "epl.license.licenseId = pl.license.licenseId and "
-						+ "pl.person.personId = :personId "
-						+ "order by e.startTime desc";
+				+ " join fetch e.scenario s join fetch e.personBySubjectPersonId p "
+				+ " where "
+				+ "e.experimentId = epc.experiment.experimentId and "
+				+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+				+ "epl.license.licenseId = pl.license.licenseId and "
+				+ "pl.person.personId = :personId "
+				+ "order by e.startTime desc";
 		return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", personId).setFirstResult(start).setMaxResults(limit).list();
 
 
@@ -301,10 +300,10 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 //        criteria.add(Restrictions.or(Restrictions.eq("personByOwnerId.personId", personId), Restrictions.eq("privateExperiment", false)));
 //        return criteria.list().size();
 		String query = "select count(distinct epc.experiment) from ExperimentPackageConnection epc, ExperimentPackageLicense epl, "
-						+ " PersonalLicense pl where "
-						+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
-						+ "epl.license.licenseId = pl.license.licenseId and "
-						+ "pl.person.personId = :personId";
+				+ " PersonalLicense pl where "
+				+ "epc.experimentPackage.experimentPackageId = epl.experimentPackage.experimentPackageId and "
+				+ "epl.license.licenseId = pl.license.licenseId and "
+				+ "pl.person.personId = :personId";
 		return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", personId).uniqueResult()).intValue();
 	}
 
@@ -336,29 +335,9 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		return super.getAllRecordsFull();
 	}
 
-	@Override
-	@Transactional
-	public List<Experiment> findByGenericParameter(String name, String value) {
-
-		NestedFilterBuilder builder = nestedFilter("params", andFilter(termFilter("params.name", name), termFilter("params.valueString", value)));
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(builder).build();
-		List<ExperimentElastic> esResult = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-		return this.transformEsResultToHibernate(esResult);
-
-	}
-
-	@Override
-	@Transactional
-	public List<Experiment> findByGenericParameter(String name, int value) {
-		NestedFilterBuilder builder = nestedFilter("params", andFilter(termFilter("params.name", name), termFilter("params.valueInteger", value)));
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(builder).build();
-		List<ExperimentElastic> esResult = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-		return this.transformEsResultToHibernate(esResult);
-	}
-
 	public List<Experiment> findByGenericParameters(List<GenericParameter> params) {
-		
-		
+
+
 		return null;
 	}
 
@@ -373,5 +352,68 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	private List<Experiment> getExperimentsById(List<Integer> ids) {
 		String query = "from Experiment e where e.experimentId IN ( :ids )";
 		return getSessionFactory().getCurrentSession().createQuery(query).setParameterList("ids", ids).list();
+	}
+
+	@Override
+	public List<Experiment> searchByParameter(String paramName, String paramValue) {
+		GenericParameter[] p = {new GenericParameter(paramName, paramValue)};
+		return this.searchByParameters(p);
+	}
+
+	@Override
+	public List<Experiment> searchByParameter(String paramName, int paramValue) {
+		GenericParameter[] p = {new GenericParameter(paramName, paramValue)};
+		return this.searchByParameters(p);
+	}
+
+	@Override
+	public List<Experiment> searchByParameterRange(String paramName, int min, int max) {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public List<Experiment> searchByParameters(GenericParameter[] params) {
+		GenericParameter[] not = {};
+		return this.searchByParameters(params, not);
+	}
+
+	@Override
+	public List<Experiment> searchByParameters(GenericParameter[] contains, GenericParameter[] notContains) {
+		AndFilterBuilder and = new AndFilterBuilder();
+		for (GenericParameter p : contains) {
+			BoolFilterBuilder b = new BoolFilterBuilder();
+			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
+			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
+			b.must(termFilter("params.name", p.getName())).must(termFilter(fieldName, value));
+			and.add(new NestedFilterBuilder("params", b));
+		}
+
+		for (GenericParameter p : notContains) {
+			BoolFilterBuilder b = new BoolFilterBuilder();
+			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
+			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
+			b.must(termFilter("params.name", p.getName())).mustNot(termFilter(fieldName, value));
+			and.add(new NestedFilterBuilder("params", b));
+		}
+
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(and).build();
+		searchQuery.setPageable(new PageRequest(0, 1000));
+		System.out.println(searchQuery.getFilter());
+		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		System.out.println(list.size());
+
+		System.out.println(Arrays.toString(list.toArray()));
+		return this.transformEsResultToHibernate(list);
+	}
+
+	@Override
+	public List<Experiment> search(String value) {
+		throw new NotImplementedException();
+	}
+
+	@Override
+	public List<Experiment> searchByAttribute(String attrName, String attrValue) {
+		throw new NotImplementedException();
 	}
 }

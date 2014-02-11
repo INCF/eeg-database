@@ -25,11 +25,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.lucene.analysis.Analyzer;
 import org.apache.lucene.queryparser.classic.ParseException;
-import org.apache.lucene.search.highlight.Highlighter;
-import org.apache.lucene.search.highlight.InvalidTokenOffsetsException;
-import org.apache.lucene.util.Version;
 import org.apache.solr.client.solrj.SolrServerException;
 import org.hibernate.*;
 import org.hibernate.criterion.DetachedCriteria;
@@ -39,7 +35,6 @@ import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
 import java.io.IOException;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.*;
@@ -56,8 +51,6 @@ public class SimpleGenericDao<T, PK extends Serializable>
 
     @Autowired
     PojoIndexer indexer;
-
-    protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_31;
 
     protected Class<T> type;
     protected Log log = LogFactory.getLog(getClass());

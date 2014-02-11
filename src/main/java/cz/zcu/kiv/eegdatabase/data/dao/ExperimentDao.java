@@ -23,10 +23,11 @@
  *  ***********************************************************************************************************************
  *
  * ExperimentDao.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -43,10 +44,6 @@ import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
  */
 public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 
-	public List<Experiment> findByGenericParameter(String name, String value);
-	
-	public List<Experiment> findByGenericParameter(String name, int value);
-	
 	public ElasticsearchTemplate getElasticsearchTemplate();
 
 	public List<DataFile> getDataFilesWhereExpId(int experimentId);
@@ -78,4 +75,18 @@ public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 	public List<Experiment> getVisibleExperiments(int personId, int start, int limit);
 
 	public int getVisibleExperimentsCount(int personId);
+
+	public List<Experiment> searchByParameter(String paramName, String paramValue);
+
+	public List<Experiment> searchByParameter(String paramName, int paramValue);
+
+	public List<Experiment> searchByParameterRange(String paramName, int min, int max);
+
+	public List<Experiment> searchByParameters(GenericParameter[] params);
+
+	public List<Experiment> searchByParameters(GenericParameter[] contains, GenericParameter[] notContains);
+
+	public List<Experiment> search(String value);
+
+	public List<Experiment> searchByAttribute(String attrName, String attrValue);
 }
