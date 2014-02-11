@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
@@ -31,6 +29,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.GrantedLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ManageLicenseRequestsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.RevokedRequestPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing.ResultListPage;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 /**
  * Enumeration of left menu page for experiment section.
@@ -49,7 +49,7 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
 	LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
     SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
     ADD_EXPERIMENTS(ExperimentFormPage.class, "menuItem.experiments.addExperiment", null),
-    RESULT(UnderConstructPage.class, "menuItem.serviceResult", null),
+    RESULT(ResultListPage.class, "menuItem.serviceResult", null),
 
     ;
 

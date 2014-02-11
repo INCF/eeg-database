@@ -25,6 +25,8 @@
 package cz.zcu.kiv.eegdatabase.wui.core.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
@@ -54,4 +56,11 @@ public interface SignalProcessingService extends GenericService<Experiment, Inte
     public List<DataFile> getDataFiles(int experimentId, String header);
 
     public byte[] processService(List<DataFile> files, SupportedFormat format, String methodName, List<String> params);
+
+    public Person getLoggedPerson();
+
+    public void updateResult(ServiceResult result);
+
+    public void createResult(ServiceResult result);
+
 }

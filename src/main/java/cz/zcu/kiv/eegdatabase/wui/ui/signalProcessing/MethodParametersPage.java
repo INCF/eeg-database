@@ -24,6 +24,7 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
@@ -31,9 +32,7 @@ import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 import org.apache.commons.logging.Log;
@@ -68,6 +67,7 @@ public class MethodParametersPage extends MenuPage {
     protected Log log = LogFactory.getLog(getClass());
     @SpringBean
     SignalProcessingService service;
+
     private int experimentId;
     private String methodName;
     private String dataName;
@@ -131,12 +131,24 @@ public class MethodParametersPage extends MenuPage {
                         test.add(CHANNEL_POSITION, channelList.getModelObject());
                     }
                     List<DataFile> files = service.getDataFiles(experimentId, dataName);
-                    String output = new String(service.processService(files, SupportedFormat.KIV_FORMAT, methodName, test));
-                    DataFileDTO outputFile = new DataFileDTO();
-                    outputFile.setFileName(methodName + "_result.xml");
-                    outputFile.setFileContent(output.getBytes());
+                    ServiceResult result = new ServiceResult();
+                    DataFile file = files.get(0);
+                    int index = file.getFileName().indexOf(".");
 
-                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
+                    result.setOwner(service.getLoggedPerson());
+                    result.setStatus("running");
+                    result.setTitle(file.getFileName().substring(0, index) + " " + methodName);
+                    service.createResult(result);
+                    ServiceResultManager manager = new ServiceResultManager(files, SupportedFormat.KIV_FORMAT, methodName, test,
+                            service, result);
+                    manager.start();
+//                    String output = new String(service.processService(files, SupportedFormat.KIV_FORMAT, methodName, test));
+//                    DataFileDTO outputFile = new DataFileDTO();
+//                    outputFile.setFileName(methodName + "_result.xml");
+//                    outputFile.setFileContent(output.getBytes());
+//
+//                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
+                    setResponsePage(MethodListPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                 }
             };
             channelList.setRequired(true);

@@ -1,8 +1,12 @@
 package cz.zcu.kiv.eegdatabase.wui.core.signalProcessing;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.DataTransformer;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
@@ -30,6 +34,10 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
     private ExperimentDao experimentDao;
     @Autowired
     private DataTransformer transformer;
+    @Autowired
+    private PersonDao personDao;
+    @Autowired
+    private ServiceResultDao resultDao;
     private ProcessService eegService;
 
 
@@ -92,6 +100,21 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
     public byte[] processService(List<cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile> files,
                                  SupportedFormat format, String methodName, List<String> params) {
         return eegService.processData(files, format, methodName, params);
+    }
+
+    @Override
+    public Person getLoggedPerson() {
+        return personDao.getLoggedPerson();
+    }
+
+    @Override
+    public void updateResult(ServiceResult result) {
+        resultDao.update(result);
+    }
+
+    @Override
+    public void createResult(ServiceResult result) {
+        resultDao.create(result);
     }
 
     @Transactional

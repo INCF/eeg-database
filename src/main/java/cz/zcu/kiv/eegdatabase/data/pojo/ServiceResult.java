@@ -82,7 +82,7 @@ public class ServiceResult implements java.io.Serializable {
 		this.owner = owner;
 	}
 
-	@Column(name = "CONTENT", nullable = false)
+	@Column(name = "CONTENT")
 	public byte[] getContent() {
 		return this.content;
 	}

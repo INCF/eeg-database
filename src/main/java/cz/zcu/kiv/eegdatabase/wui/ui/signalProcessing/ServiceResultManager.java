@@ -24,12 +24,10 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ServiceResultDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ServiceResult;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
@@ -38,18 +36,34 @@ import java.util.List;
  */
 public class ServiceResultManager extends Thread {
 
-    @Autowired
-    private ServiceResultDao resultDao;
-
-    @SpringBean
     private SignalProcessingService service;
 
     private List<DataFile> files;
     private SupportedFormat format;
     private String methodName;
     private List<String> parameters;
+    ServiceResult result;
 
-    public ServiceResultManager(List<DataFile> files, SupportedFormat format, String methodName, List<String> parameters) {
+    public ServiceResultManager(List<DataFile> files, SupportedFormat format, String methodName, List<String> parameters,
+                                SignalProcessingService service, ServiceResult result) {
+        this.files = files;
+        this.format = format;
+        this.methodName = methodName;
+        this.parameters = parameters;
+        this.service = service;
+        this.result = result;
 
+
+    }
+
+    @Override
+    public void run() {
+        System.out.println("start");
+
+        String output = new String(service.processService(files, format, methodName, parameters));
+        result.setContent(output.getBytes());
+        result.setStatus("finished");
+        result.setFilename(methodName + "_result.xml");
+        service.updateResult(result);
     }
 }
