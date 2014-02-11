@@ -49,8 +49,13 @@ import javax.annotation.Resource;
 import org.apache.commons.lang.NotImplementedException;
 import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.BoolFilterBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
 import static org.elasticsearch.index.query.FilterBuilders.termFilter;
+import org.elasticsearch.index.query.MultiMatchQueryBuilder;
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import org.elasticsearch.index.query.NestedFilterBuilder;
+import org.elasticsearch.index.query.NestedQueryBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -379,37 +384,38 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 	@Override
 	public List<Experiment> searchByParameters(GenericParameter[] contains, GenericParameter[] notContains) {
+
 		AndFilterBuilder and = new AndFilterBuilder();
 		for (GenericParameter p : contains) {
-			BoolFilterBuilder b = new BoolFilterBuilder();
+			BoolQueryBuilder b = new BoolQueryBuilder();
 			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
 			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
-			b.must(termFilter("params.name", p.getName())).must(termFilter(fieldName, value));
+			b.must(termQuery("params.name", p.getName())).must(termQuery(fieldName, value));
 			and.add(new NestedFilterBuilder("params", b));
 		}
 
 		for (GenericParameter p : notContains) {
-			BoolFilterBuilder b = new BoolFilterBuilder();
+			BoolQueryBuilder b = new BoolQueryBuilder();
 			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
 			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
-			b.must(termFilter("params.name", p.getName())).mustNot(termFilter(fieldName, value));
+			b.must(termQuery("params.name", p.getName())).mustNot(termQuery(fieldName, value));
 			and.add(new NestedFilterBuilder("params", b));
 		}
 
-
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(and).build();
 		searchQuery.setPageable(new PageRequest(0, 1000));
-		System.out.println(searchQuery.getFilter());
 		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-		System.out.println(list.size());
-
-		System.out.println(Arrays.toString(list.toArray()));
 		return this.transformEsResultToHibernate(list);
 	}
 
 	@Override
 	public List<Experiment> search(String value) {
-		throw new NotImplementedException();
+
+		MultiMatchQueryBuilder builder = new MultiMatchQueryBuilder(value, "params.valueString", "params.attributes.value");
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(builder).build();
+		searchQuery.setPageable(new PageRequest(0, 1000));
+		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		return this.transformEsResultToHibernate(list);
 	}
 
 	@Override
