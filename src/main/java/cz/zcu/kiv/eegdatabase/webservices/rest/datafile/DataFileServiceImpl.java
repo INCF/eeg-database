@@ -82,7 +82,7 @@ public class DataFileServiceImpl implements DataFileService {
         datafile.setExperiment(experimentDao.getExperimentForDetail(experimentId));
         datafile.setDescription(description);
         datafile.setFilename(file.getOriginalFilename().replace(" ", "_"));
-        datafile.setFileContent(file.getBytes());
+        datafile.setFileContent(Hibernate.createBlob(file.getBytes()));
         datafile.setMimetype(file.getContentType() != null ? file.getContentType().toLowerCase() : "application/octet-stream");
 
         //DB column size restriction
@@ -121,7 +121,7 @@ public class DataFileServiceImpl implements DataFileService {
         if (!isInGroup(personDao.getLoggedPerson(), expGroup.getResearchGroupId())) throw new RestServiceException("User does not have access to this file!");
 
         // copy it to response's OutputStream
-		byte[] data = file.getFileContent();
+	byte[] data = file.getFileContent().getBytes(1, (int)file.getFileContent().length());
         response.setContentType(file.getMimetype());
         response.setContentLength(data.length);
         response.setHeader("Content-Disposition", "attachment; filename=\"" + file.getFilename() + "\"");

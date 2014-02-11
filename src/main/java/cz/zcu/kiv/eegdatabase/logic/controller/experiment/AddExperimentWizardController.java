@@ -357,7 +357,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
                         String name[] = en.getName().split("/");
                         dataFile.setFilename(name[name.length-1]);
                         data.setFileDescription(data.getFileDescription());
-                        dataFile.setFileContent(SignalProcessingUtils.extractZipEntry(zis));
+                        dataFile.setFileContent(Hibernate.createBlob(zis));
                         String[] partOfName = en.getName().split("[.]");
                         dataFile.setMimetype(partOfName[partOfName.length-1]);
                         dataFileDao.create(dataFile);
@@ -384,7 +384,7 @@ public class AddExperimentWizardController extends AbstractWizardFormController 
             dataFile.setDescription(data.getFileDescription());
 
             log.debug("Setting the binary data to object.");
-            dataFile.setFileContent(file.getBytes());
+            dataFile.setFileContent(Hibernate.createBlob(file.getBytes()));
 
             dataFileDao.create(dataFile);
             log.debug("Data stored into database.");

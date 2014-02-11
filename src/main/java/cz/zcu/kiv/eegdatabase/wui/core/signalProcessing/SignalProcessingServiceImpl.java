@@ -20,6 +20,8 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * Created with IntelliJ IDEA.
@@ -83,12 +85,26 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
         for (DataFile file : e.getDataFiles()) {
             if (file.getFilename().equals(header + ".vhdr")) {
                 headerFile.setFileName(header + ".vhdr");
-                headerFile.setFile(file.getFileContent());
+                try {
+                    headerFile.setFile(file.getFileContent().getBytes(1, (int)file.getFileContent().length()));
+                }catch (SQLException ex)
+                {
+                    Logger.getLogger(SignalProcessingServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new RuntimeException(ex);
+
+                }
                 dataFiles.add(headerFile);
             }
             if (file.getFilename().equals(dataFileName)) {
                 dataFile.setFileName(dataFileName);
-                dataFile.setFile(file.getFileContent());
+                try {
+                    dataFile.setFile(file.getFileContent().getBytes(1, (int)file.getFileContent().length()));
+                }catch (SQLException ex)
+                {
+                    Logger.getLogger(SignalProcessingServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new RuntimeException(ex);
+
+                }
                 dataFiles.add(dataFile);
             }
         }
@@ -125,7 +141,12 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
         Experiment e = experimentDao.read(experimentId);
         for (DataFile file : e.getDataFiles()) {
             if (file.getFilename().equals(header + ".vhdr")) {
-                transformer.readVhdr(file.getFileContent());
+                try {
+                    transformer.readVhdr(file.getFileContent().getBytes(1, (int)file.getFileContent().length()));
+                } catch (SQLException ex) {
+                    Logger.getLogger(SignalProcessingServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+                    throw new RuntimeException(ex);
+                }
                 return;
             }
         }

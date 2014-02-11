@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 // Generated 2.12.2013 0:56:28 by Hibernate Tools 3.4.0.CR1
 
+import java.sql.Blob;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -37,7 +38,7 @@ public class ServiceResult implements java.io.Serializable {
 
 	private int serviceResultId;
 	private Person owner;
-	private byte[] content;
+	private Blob content;
 	private String filename;
 	private String title;
 	private String status;
@@ -51,7 +52,7 @@ public class ServiceResult implements java.io.Serializable {
 		this.status = status;
 	}
 
-	public ServiceResult(Person owner, byte[] content, String filename,
+	public ServiceResult(Person owner, Blob content, String filename,
 			String title, String status) {
 		this.owner = owner;
 		this.content = content;
@@ -83,11 +84,13 @@ public class ServiceResult implements java.io.Serializable {
 	}
 
 	@Column(name = "CONTENT")
-	public byte[] getContent() {
+    @Basic(fetch=FetchType.LAZY)
+    @Lob
+	public Blob getContent() {
 		return this.content;
 	}
 
-	public void setContent(byte[] content) {
+	public void setContent(Blob content) {
 		this.content = content;
 	}
 

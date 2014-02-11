@@ -23,7 +23,7 @@
  *  ***********************************************************************************************************************
  *
  * ExperimentMultiController.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
@@ -36,6 +36,9 @@ import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.EegReader;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
 import cz.zcu.kiv.eegdatabase.logic.util.Paginator;
+import java.io.IOException;
+import java.sql.Blob;
+import java.sql.SQLException;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.web.servlet.ModelAndView;
@@ -45,6 +48,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Delegate class for multicontroller for experiments.
@@ -149,21 +155,36 @@ public class ExperimentMultiController extends MultiActionController {
 		ArrayList<double[]> signalData = new ArrayList<double[]>();
 		for (DataFile file : m.getDataFiles()) {
 			if (file.getFilename().endsWith(".vhdr")) {
-				byte[] b = file.getFileContent();
+				Blob b = file.getFileContent();
 				int index = file.getFilename().lastIndexOf(".");
 				String fileName = file.getFilename().substring(0, index);
-				//break;
-				vhdr.readVhdr(b);
+				try {
+					vhdr.readVhdr(IOUtils.toByteArray(b.getBinaryStream()));
+				} catch (IOException ex) {
+					Logger.getLogger(ExperimentMultiController.class.getName()).log(Level.SEVERE, null, ex);
+					throw new RuntimeException(ex);
+				} catch (SQLException ex) {
+					Logger.getLogger(ExperimentMultiController.class.getName()).log(Level.SEVERE, null, ex);
+					throw new RuntimeException(ex);
+				}
 				channels = vhdr.getChannels();
 				mav.addObject("channels", channels);
 
 				for (DataFile file2 : m.getDataFiles()) {
 					if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
 						filesIn = true;
-						byte[] b2 = file.getFileContent();
+						Blob b2 = file.getFileContent();
 						EegReader eeg = new EegReader(vhdr);
 						for (ChannelInfo ch : channels) {
-							signalData.add(eeg.readFile(b2, ch.getNumber()));
+							try {
+								signalData.add(eeg.readFile(IOUtils.toByteArray(b2.getBinaryStream()), ch.getNumber()));
+							} catch (IOException ex) {
+								Logger.getLogger(ExperimentMultiController.class.getName()).log(Level.SEVERE, null, ex);
+								throw new RuntimeException(ex);
+							} catch (SQLException ex) {
+								Logger.getLogger(ExperimentMultiController.class.getName()).log(Level.SEVERE, null, ex);
+								throw new RuntimeException(ex);
+							}
 						}
 						mav.addObject("signalData", signalData);
 					}
@@ -207,7 +228,7 @@ public class ExperimentMultiController extends MultiActionController {
 			response.setHeader("Content-Type", "application/png");
 		}
 		response.setHeader("Content-Disposition", "attachment;filename=" + service.getFilename());
-		response.getOutputStream().write(service.getContent());
+		response.getOutputStream().write(service.getContent().getBytes(1, (int)service.getContent().length()));
 		//return new ModelAndView("redirect:services-result.html");
 		return null;
 	}

@@ -45,6 +45,7 @@ import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
+import org.apache.commons.io.IOUtils;
 
 /**
  * Controller for adding data file to database
@@ -120,7 +121,7 @@ public class AddDataFileController
                         String name[] = en.getName().split("/");
                         data.setFilename(name[name.length - 1]);
                         data.setDescription(addDataCommand.getDescription());
-                        data.setFileContent(SignalProcessingUtils.extractZipEntry(zis));
+                        data.setFileContent(Hibernate.createBlob(zis));
                         String[] partOfName = en.getName().split("[.]");
                         data.setMimetype(partOfName[partOfName.length - 1]);
                         dataFileDao.create(data);
@@ -147,7 +148,7 @@ public class AddDataFileController
                     data.setDescription(addDataCommand.getDescription());
 
                     log.debug("Setting the binary data to object.");
-                    data.setFileContent(file.getBytes());
+                    data.setFileContent(Hibernate.createBlob(file.getBytes()));
 
                     dataFileDao.create(data);
                     log.debug("Data stored into database.");

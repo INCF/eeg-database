@@ -43,6 +43,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
+import org.hibernate.Hibernate;
 
 /**
  * Form for license request.
@@ -140,7 +141,7 @@ public class LicenseRequestForm extends Panel {
 		FileUpload f = uploadField.getFileUpload();
 		if(f != null) {
 			persLicense.setAttachmentFileName(f.getClientFileName());
-			persLicense.setAttachmentContent(f.getBytes());
+			persLicense.setAttachmentContent(Hibernate.createBlob(f.getBytes()));
 		}
 		persLicense.setLicense(licenseModel.getObject());
 		persLicense.setPerson(EEGDataBaseSession.get().getLoggedUser());

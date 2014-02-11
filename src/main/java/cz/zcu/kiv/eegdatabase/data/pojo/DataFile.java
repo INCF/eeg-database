@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.BlobSerializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -47,7 +48,7 @@ public class DataFile implements java.io.Serializable {
 	private Experiment experiment;
 	@SolrField(name = IndexField.TEXT)
 	private String description;
-	private byte[] fileContent;
+	private Blob fileContent;
 	private String mimetype;
 	private String filename;
 	private Set<FileMetadataParamVal> fileMetadataParamVals = new HashSet<FileMetadataParamVal>(
@@ -58,7 +59,7 @@ public class DataFile implements java.io.Serializable {
 	public DataFile() {
 	}
 
-	public DataFile(Experiment experiment, byte[] fileContent, String mimetype,
+	public DataFile(Experiment experiment, Blob fileContent, String mimetype,
 			String filename, Analysis analysis) {
 		this.experiment = experiment;
 		this.fileContent = fileContent;
@@ -68,7 +69,7 @@ public class DataFile implements java.io.Serializable {
 	}
 
 	public DataFile(Experiment experiment, String description,
-			byte[] fileContent, String mimetype, String filename,
+			Blob fileContent, String mimetype, String filename,
 			Set<FileMetadataParamVal> fileMetadataParamVals,
 			Set<History> histories, Analysis analysis) {
 		this.experiment = experiment;
@@ -112,12 +113,14 @@ public class DataFile implements java.io.Serializable {
 		this.description = description;
 	}
 
+	@Basic(fetch=FetchType.LAZY)
+	@Lob
 	@Column(name = "FILE_CONTENT", nullable = false)
-	public byte[] getFileContent() {
+	public Blob getFileContent() {
 		return this.fileContent;
 	}
 
-	public void setFileContent(byte[] fileContent) {
+	public void setFileContent(Blob fileContent) {
 		this.fileContent = fileContent;
 	}
 

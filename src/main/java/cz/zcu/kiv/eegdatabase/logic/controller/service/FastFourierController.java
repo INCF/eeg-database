@@ -41,6 +41,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
+import org.hibernate.Hibernate;
 
 
 public class FastFourierController extends AbstractProcessingController {
@@ -65,7 +66,7 @@ public class FastFourierController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg"))||(dataFile.getFilename().endsWith(".eeg"))) {
-                    data = dataFile.getFileContent();
+                    data = dataFile.getFileContent().getBytes(1, (int)dataFile.getFileContent().length());
                     break;
                 }
             }
@@ -127,7 +128,7 @@ public class FastFourierController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setContent(out.toByteArray());
+            service.setContent(Hibernate.createBlob(out.toByteArray()));
             service.setStatus("finished");
             resultDao.update(service);
 

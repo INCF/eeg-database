@@ -91,6 +91,7 @@ import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ResearchGroupMembershi
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.ScenarioInfo;
 import cz.zcu.kiv.eegdatabase.webservices.client.wrappers.WeatherInfo;
 import org.apache.commons.io.IOUtils;
+import org.hibernate.Hibernate;
 
 /**
  * @author František Liška
@@ -253,7 +254,7 @@ public class ClientServiceImpl implements ClientService {
 		try {
 			if (inputData != null) {
 				
-				file.setFileContent(IOUtils.toByteArray(inputData.getInputStream()));
+				file.setFileContent(Hibernate.createBlob(inputData.getInputStream()));
 			}
 		} catch (IOException ex) {
 			log.error(ex.getMessage(), ex);

@@ -33,6 +33,8 @@ import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class FileServiceImpl implements FileService {
 
@@ -117,7 +119,12 @@ public class FileServiceImpl implements FileService {
             DataFileDTO dto = new DataFileDTO();
             dto.setFileName(dataFileEntity.getFilename());
             dto.setMimetype(dataFileEntity.getMimetype());
-            dto.setFileContent(dataFileEntity.getFileContent());
+		try {
+			dto.setFileContent(dataFileEntity.getFileContent().getBytes(1, (int)dataFileEntity.getFileContent().length()));
+		} catch (SQLException ex) {
+			Logger.getLogger(FileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
+			throw new RuntimeException(ex);
+		}
             return dto;
     }
 }

@@ -26,7 +26,9 @@
  */
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.utils.BlobSerializer;
 import java.io.Serializable;
+import java.sql.Blob;
 import java.util.Date;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -96,10 +98,10 @@ public class PersonalLicense implements Serializable{
 	@Column(name = "ATTACHMENT_FILE_NAME")
 	private String attachmentFileName;
 	
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "ATTACHMENT_CONTENT")
+	@Basic(fetch=FetchType.LAZY)
 	@Lob
-	private byte[] attachmentContent;
+	@Column(name = "ATTACHMENT_CONTENT")
+	private Blob attachmentContent;
 
 	public String getAttachmentFileName() {
 		return attachmentFileName;
@@ -109,11 +111,11 @@ public class PersonalLicense implements Serializable{
 		this.attachmentFileName = attachmentFileName;
 	}
 	
-	public byte [] getAttachmentContent() {
+	public Blob getAttachmentContent() {
 		return attachmentContent;
 	}
 
-	public void setAttachmentContent(byte[] attachmentContent) {
+	public void setAttachmentContent(Blob attachmentContent) {
 		this.attachmentContent = attachmentContent;
 	}
 	

@@ -23,15 +23,21 @@
  *  ***********************************************************************************************************************
  *
  * DownloadRequestAttachmentPanel.java, 2013/10/02 00:01 Jakub Rinkes
- *****************************************************************************
+ * ****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.ByteArrayResource;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.util.resource.FileResourceStream;
+import org.apache.wicket.util.resource.IResourceStream;
 
 /**
  * Panel with confirm link for the table (or any repeater) of PersonalLicense
@@ -46,8 +52,13 @@ public class DownloadRequestAttachmentPanel extends Panel {
 	public DownloadRequestAttachmentPanel(String id, IModel<PersonalLicense> request) {
 		super(id);
 		ByteArrayResource res;
-		res = new ByteArrayResource("", request.getObject().getAttachmentContent(), request.getObject().getAttachmentFileName());
-		add(new ResourceLink("link", res));
+		try {
+			res = new ByteArrayResource("", request.getObject().getAttachmentContent().getBytes(0, (int) request.getObject().getAttachmentContent().length()), request.getObject().getAttachmentFileName());
+			add(new ResourceLink("link", res));
+		} catch (SQLException ex) {
+			Logger.getLogger(DownloadRequestAttachmentPanel.class.getName()).log(Level.SEVERE, null, ex);
+			throw new RuntimeException(ex);
+		}
 
 	}
 }

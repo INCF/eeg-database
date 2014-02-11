@@ -43,7 +43,7 @@ public class MeasurationDataView extends AbstractView {
     protected void renderMergedOutputModel(Map map, HttpServletRequest request, HttpServletResponse response) throws Exception {
         // Loading the DataFile object loaded by Controller
         DataFile data = (DataFile) map.get("dataObject");
-        byte[] b = data.getFileContent();
+        byte[] b = data.getFileContent().getBytes(1, (int)data.getFileContent().length());
         log.debug("Loading Data object - ID " + data.getDataFileId());
 
         /** Downloading the bytes for writing to output */

@@ -30,6 +30,7 @@ import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.core.signalProcessing.SignalProcessingService;
 
 import java.util.List;
+import org.hibernate.Hibernate;
 
 /**
  * Created by stebjan on 10.2.14.
@@ -61,7 +62,7 @@ public class ServiceResultManager extends Thread {
         System.out.println("start");
 
         String output = new String(service.processService(files, format, methodName, parameters));
-        result.setContent(output.getBytes());
+        result.setContent(Hibernate.createBlob(output.getBytes()));
         result.setStatus("finished");
         result.setFilename(methodName + "_result.xml");
         service.updateResult(result);

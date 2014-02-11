@@ -42,6 +42,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.ByteArrayOutputStream;
 import java.util.Map;
+import org.hibernate.Hibernate;
 
 
 
@@ -68,7 +69,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg")) || (dataFile.getFilename().endsWith(".eeg"))) {
-                    data = dataFile.getFileContent();
+                    data = dataFile.getFileContent().getBytes(1,(int) dataFile.getFileContent().length());
                     break;
                 }
             }
@@ -102,7 +103,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Not enough memory for analysed signal.";
-                service.setContent(errorText.getBytes());
+                service.setContent(Hibernate.createBlob(errorText.getBytes()));
                 resultDao.update(service);
                 return;
             }
@@ -138,7 +139,7 @@ public class MatchingPursuitController extends AbstractProcessingController {
             } catch (Exception e) {
 
             }
-            service.setContent(out.toByteArray());
+            service.setContent(Hibernate.createBlob(out.toByteArray()));
             service.setStatus("finished");
             resultDao.update(service);
 

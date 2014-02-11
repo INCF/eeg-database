@@ -60,7 +60,7 @@ public abstract class AbstractProcessingController extends SimpleFormController 
         byte[] bytes = null;
         for (DataFile d : experiment.getDataFiles()) {
             if ((d.getFilename().endsWith(".vhdr"))&&(d.getFilename().startsWith(header))) {
-                bytes = d.getFileContent();
+                bytes = d.getFileContent().getBytes(1, (int)d.getFileContent().length());
                 int index = d.getFilename().lastIndexOf(".");
                 fileName = d.getFilename().substring(0, index);
                 break;

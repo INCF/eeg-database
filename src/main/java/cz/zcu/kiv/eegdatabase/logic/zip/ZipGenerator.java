@@ -105,7 +105,7 @@ public class ZipGenerator implements Generator {
 
             for (DataFile d : dataFiles) {
                 e = new ZipEntry(getDataZip() + "/" + d.getFilename());
-                byte[] data = d.getFileContent();
+                byte[] data = d.getFileContent().getBytes(1, (int)d.getFileContent().length());
                 if (data != null) {
                     log.debug("saving data file to zip file");
                     try {

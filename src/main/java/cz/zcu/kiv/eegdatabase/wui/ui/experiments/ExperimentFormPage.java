@@ -67,6 +67,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResul
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
 import java.sql.Blob;
 import javax.sql.rowset.serial.SerialBlob;
+import org.hibernate.Hibernate;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPage extends MenuPage {
@@ -128,7 +129,7 @@ public class ExperimentFormPage extends MenuPage {
                             DataFile file = new DataFile();
 
                             byte[] fileBytes = fileUpload.getBytes();
-                            file.setFileContent(fileBytes);
+                            file.setFileContent(Hibernate.createBlob(fileBytes));
                             file.setMimetype(fileUpload.getContentType());
                             file.setFilename(fileUpload.getClientFileName());
                             files.add(file);

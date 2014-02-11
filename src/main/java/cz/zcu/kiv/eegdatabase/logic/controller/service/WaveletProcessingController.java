@@ -43,6 +43,7 @@ import java.awt.image.BufferedImage;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Map;
+import org.hibernate.Hibernate;
 
 
 public class WaveletProcessingController extends AbstractProcessingController {
@@ -81,7 +82,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
             int index = dataFile.getFilename().lastIndexOf(".");
             if (dataFile.getFilename().substring(0, index).equals(super.fileName)) {
                 if ((dataFile.getFilename().endsWith(".avg")) || (dataFile.getFilename().endsWith(".eeg"))) {
-                    data = dataFile.getFileContent();
+                    data = dataFile.getFileContent().getBytes(1, (int)dataFile.getFileContent().length());
                     break;
                 }
             }
@@ -121,7 +122,7 @@ public class WaveletProcessingController extends AbstractProcessingController {
                     service.setStatus("failed");
                     service.setFilename("errorLog.txt");
                     String errorText = "Not enough memory for analysed signal.";
-                    service.setContent(errorText.getBytes());
+                    service.setContent(Hibernate.createBlob(errorText.getBytes()));
                     resultDao.update(service);
                     return;
                 }
@@ -138,11 +139,11 @@ public class WaveletProcessingController extends AbstractProcessingController {
                 service.setStatus("failed");
                 service.setFilename("errorLog.txt");
                 String errorText = "Error while creating an image.";
-                service.setContent(errorText.getBytes());
+                service.setContent(Hibernate.createBlob(errorText.getBytes()));
                 resultDao.update(service);
                 return;
             }
-            service.setContent(image);
+            service.setContent(Hibernate.createBlob(image));
             service.setStatus("finished");
             resultDao.update(service);
         }
