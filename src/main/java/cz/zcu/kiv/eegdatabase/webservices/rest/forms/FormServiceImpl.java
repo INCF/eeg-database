@@ -31,8 +31,8 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
 import cz.zcu.kiv.formgen.Form;
-import cz.zcu.kiv.formgen.FormGenerator;
-import cz.zcu.kiv.formgen.core.SimpleFormGenerator;
+import cz.zcu.kiv.formgen.LayoutGenerator;
+import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
 
 /**
@@ -47,7 +47,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
 	
 	/** Tool for transforming POJO classes to form layouts. */
-	private FormGenerator generator;
+	private LayoutGenerator generator;
 	
 	
 	/**
@@ -57,7 +57,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 */
 	@Override
 	public void afterPropertiesSet() throws Exception {
-		generator = new SimpleFormGenerator(new OdmlFormProvider());
+		generator = new SimpleLayoutGenerator(new OdmlFormProvider());
 		generator.loadPackage(POJO_BASE);
 	}
 	
