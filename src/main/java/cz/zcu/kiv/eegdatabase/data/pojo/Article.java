@@ -48,12 +48,13 @@ import org.hibernate.annotations.Type;
  */
 @Entity
 @Indexed
-@Form("article")
+@Form
 @Table(name = "ARTICLES")
 public class Article implements Serializable {
 
 	@SolrId
 	private int articleId;
+	@FormItem
 	private Person person;
 	private ResearchGroup researchGroup;
 	private Timestamp time;
@@ -61,9 +62,10 @@ public class Article implements Serializable {
 	@FormItem(required = true)
 	private String text;
 	@SolrField(name = IndexField.TITLE)
-	@FormItem
+	@FormItem(required = true)
 	private String title;
 	private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
+	@FormItem
 	private Set<Person> subscribers = new HashSet<Person>(0);
 
 	public Article() {
