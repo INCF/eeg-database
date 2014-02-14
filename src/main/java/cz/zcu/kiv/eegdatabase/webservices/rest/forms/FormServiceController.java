@@ -34,8 +34,11 @@ import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.Form;
 import cz.zcu.kiv.formgen.Writer;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
@@ -46,7 +49,7 @@ import cz.zcu.kiv.formgen.odml.OdmlWriter;
  *
  * @author Jakub Krauz
  */
-//@Secured("IS_AUTHENTICATED_FULLY")     // temporarily disabled for testing purposed
+//@Secured("IS_AUTHENTICATED_FULLY")     // temporarily disabled for testing purposes
 @Controller
 @RequestMapping("/form-layouts")
 public class FormServiceController {
@@ -57,34 +60,63 @@ public class FormServiceController {
 	
 	
 	/**
-	 * Gets the count of form layouts available.
-	 * @return count of form layouts available
+	 * Gets the count of forms available.
+	 * @return count of forms available
+	 */
+	@RequestMapping(value = "/form/count")
+	public @ResponseBody int availableFormsCount() {
+		return service.availableFormsCount();
+	}
+	
+	
+	/**
+	 * Gets names of all forms with available layouts.
+	 * @return names of forms with available layouts
+	 */
+	@RequestMapping(value = "/form/available")
+	public @ResponseBody List<String> availableForms() {
+		return service.availableForms();
+	}
+	
+	
+	/**
+	 * Gets the count of form-layouts available.
+	 * @param formName - name of a specific form, or null (any form)
+	 * @return count of form-layouts available
 	 */
 	@RequestMapping(value = "/count")
-	public @ResponseBody int availableFormsCount() {
-		return service.availableFormLayoutsCount();
+	public @ResponseBody int availableLayoutsCount(@RequestParam(value = "form", required = false) String formName) {
+		if (formName == null)
+			return service.availableLayoutsCount();
+		else
+			return service.availableLayoutsCount(formName);
 	}
 	
 	
 	/**
 	 * Gets names of all form layouts available.
+	 * @param formName - name of a specific form, or null (any form)
 	 * @return names of form layouts available
 	 */
 	@RequestMapping(value = "/available")
-	public @ResponseBody List<String> availableForms() {
-		return service.availableFormLayouts();
+	public @ResponseBody AvailableLayoutsDataList availableLayouts(@RequestParam(value = "form", required = false) String formName) {
+		if (formName == null)
+			return service.availableLayouts();
+		else
+			return service.availableLayouts(formName);
 	}
 
 	
 	/**
 	 * Gets a form layouts with the specified name.
-	 * @param name - name of the form layout
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
 	 * @param response - HTTP response object
 	 * @throws IOException if an error writing to response's output stream occured
 	 */
-	@RequestMapping(value = "/get/{name}" /*, produces = "application/xml"*/ )
-	public void getForm(@PathVariable String name, HttpServletResponse response) throws IOException {
-		Form form = service.getFormLayout(name);
+	@RequestMapping(value = "/get/{formName}/{layoutName}" /*, produces = "application/xml"*/ )
+	public void getForm(@PathVariable String formName, @PathVariable String layoutName, HttpServletResponse response) throws IOException {
+		Form form = service.getLayout(formName, layoutName);
 		if (form == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;

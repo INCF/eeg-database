@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.Form;
 
 /**
@@ -35,23 +36,57 @@ import cz.zcu.kiv.formgen.Form;
  */
 public interface FormService {
 	
+	
 	/**
-	 * Gets the count of form layouts available.
-	 * @return count of form layouts
+	 * Gets the count of forms with available layouts.
+	 * @return count of forms
 	 */
-	int availableFormLayoutsCount();
+	int availableFormsCount();
+	
+	
+	/**
+	 * Gets names of forms with available layouts.
+	 * @return names of forms
+	 */
+	List<String> availableForms();
+	
+	
+	/**
+	 * Gets the count of all form-layouts available.
+	 * @return count of form-layouts
+	 */
+	int availableLayoutsCount();
+	
+	
+	/**
+	 * Gets the count of form-layouts available for the specified form.
+	 * @param formName - name of the form
+	 * @return count of form-layouts
+	 */
+	int availableLayoutsCount(String formName);
+	
 	
 	/**
 	 * Gets names of all form layouts available.
 	 * @return names of form layouts
 	 */
-	List<String> availableFormLayouts();
+	AvailableLayoutsDataList availableLayouts();
+	
 	
 	/**
-	 * Gets a form layout with the specified name.
-	 * @param name - name of the form layout
-	 * @return requested form layout
+	 * Gets names of form layouts available for the specified form.
+	 * @param formName - name of the form
+	 * @return names of form layouts
 	 */
-	Form getFormLayout(String name);
+	AvailableLayoutsDataList availableLayouts(String formName);
+	
+	
+	/**
+	 * Gets a form-layout with the specified name.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @return requested form-layout
+	 */
+	Form getLayout(String formName, String layoutName);
 
 }

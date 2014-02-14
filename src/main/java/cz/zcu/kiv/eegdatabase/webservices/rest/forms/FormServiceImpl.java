@@ -30,6 +30,8 @@ import java.util.List;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.stereotype.Service;
 
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.Form;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
@@ -42,6 +44,10 @@ import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
  */
 @Service
 public class FormServiceImpl implements FormService, InitializingBean {
+	
+	
+	// TODO databaze
+	
 	
 	/** Base package of POJO classes. */
 	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
@@ -66,29 +72,71 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableFormLayoutsCount() {
+	public int availableFormsCount() {
 		return generator.getForms().size();
 	}
 	
-
+	
 	/**
-	 * {@inheritDoc}
+     * {@inheritDoc}
 	 */
 	@Override
-	public List<String> availableFormLayouts() {
+	public List<String> availableForms() {
 		List<String> list = new LinkedList<String>();				
 		for (Form form : generator.getForms())
 			list.add(form.getName());
 		return list;
 	}
-
+	
+	
+	/**
+     * {@inheritDoc}
+	 */
+	@Override
+	public int availableLayoutsCount() {
+		return generator.getForms().size();
+	}
+	
+	
+	/**
+     * {@inheritDoc}
+	 */
+	@Override
+	public int availableLayoutsCount(String formName) {
+		return 1;
+	}
+	
 	
 	/**
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Form getFormLayout(String name) {
-		return generator.getForm(name);
+	public AvailableLayoutsDataList availableLayouts() {
+		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();				
+		for (Form form : generator.getForms())
+			list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+		return new AvailableLayoutsDataList(list);
+	}
+	
+	
+	/**
+     * {@inheritDoc}
+	 */
+	@Override
+	public AvailableLayoutsDataList availableLayouts(String formName) {
+		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();				
+		Form form = generator.getForm(formName);
+		list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+		return new AvailableLayoutsDataList(list);
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public Form getLayout(String formName, String layoutName) {
+		return generator.getForm(formName);
 	}
 
 
