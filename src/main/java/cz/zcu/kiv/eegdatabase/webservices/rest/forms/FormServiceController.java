@@ -25,8 +25,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
-import java.util.List;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,7 +35,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.Form;
 import cz.zcu.kiv.formgen.Writer;
@@ -64,18 +63,24 @@ public class FormServiceController {
 	 * @return count of forms available
 	 */
 	@RequestMapping(value = "/form/count")
-	public @ResponseBody int availableFormsCount() {
-		return service.availableFormsCount();
+	public @ResponseBody RecordCountData availableFormsCount() {
+		RecordCountData count = new RecordCountData();
+		count.setMyRecords(service.availableFormsCount(true));
+		count.setPublicRecords(service.availableFormsCount(false));
+		return count;
 	}
 	
 	
 	/**
 	 * Gets names of all forms with available layouts.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of forms with available layouts
 	 */
 	@RequestMapping(value = "/form/available")
-	public @ResponseBody List<String> availableForms() {
-		return service.availableForms();
+	public @ResponseBody AvailableFormsDataList availableForms (
+					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly) {
+		
+		return new AvailableFormsDataList(service.availableForms(mineOnly));
 	}
 	
 	
@@ -85,25 +90,36 @@ public class FormServiceController {
 	 * @return count of form-layouts available
 	 */
 	@RequestMapping(value = "/count")
-	public @ResponseBody int availableLayoutsCount(@RequestParam(value = "form", required = false) String formName) {
-		if (formName == null)
-			return service.availableLayoutsCount();
-		else
-			return service.availableLayoutsCount(formName);
+	public @ResponseBody RecordCountData availableLayoutsCount (
+					@RequestParam(value = "form", required = false) String formName) {
+		
+		RecordCountData count = new RecordCountData();
+		if (formName == null) {
+			count.setMyRecords(service.availableLayoutsCount(true));
+			count.setPublicRecords(service.availableLayoutsCount(false));
+		} else {
+			count.setMyRecords(service.availableLayoutsCount(formName, true));
+			count.setPublicRecords(service.availableLayoutsCount(formName, false));
+		}
+		
+		return count;
 	}
 	
 	
 	/**
 	 * Gets names of all form layouts available.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @param formName - name of a specific form, or null (any form)
 	 * @return names of form layouts available
 	 */
 	@RequestMapping(value = "/available")
-	public @ResponseBody AvailableLayoutsDataList availableLayouts(@RequestParam(value = "form", required = false) String formName) {
+	public @ResponseBody AvailableLayoutsDataList availableLayouts (
+					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
+					@RequestParam(value = "form", required = false) String formName) {
 		if (formName == null)
-			return service.availableLayouts();
+			return service.availableLayouts(mineOnly);
 		else
-			return service.availableLayouts(formName);
+			return service.availableLayouts(formName, mineOnly);
 	}
 
 	
@@ -114,8 +130,10 @@ public class FormServiceController {
 	 * @param response - HTTP response object
 	 * @throws IOException if an error writing to response's output stream occured
 	 */
-	@RequestMapping(value = "/get/{formName}/{layoutName}" /*, produces = "application/xml"*/ )
-	public void getForm(@PathVariable String formName, @PathVariable String layoutName, HttpServletResponse response) throws IOException {
+	@RequestMapping(value = "/get/{formName}/{layoutName}", produces = "application/xml")
+	public void getFormLayout(@PathVariable String formName, @PathVariable String layoutName, 
+					HttpServletResponse response) throws IOException {
+		
 		Form form = service.getLayout(formName, layoutName);
 		if (form == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);

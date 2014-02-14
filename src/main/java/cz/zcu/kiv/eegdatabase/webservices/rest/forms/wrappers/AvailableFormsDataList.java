@@ -19,7 +19,7 @@
  *
  ***********************************************************************************************************************
  *
- * AvailableLayoutsDataList.java, 14. 2. 2014 10:39:37, Jakub Krauz
+ * AvailableFormsDataList.java, 14. 2. 2014 18:23:48, Jakub Krauz
  *
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers;
@@ -32,51 +32,51 @@ import javax.xml.bind.annotation.XmlRootElement;
 
 
 /**
- * Data container for list of available form-layouts.
+ * Data container for list of available forms.
  * Required for XML marshaling, supports also JSON format.
  * 
  * @author Jakub Krauz
  */
-@XmlRootElement(name = "layouts")
-public class AvailableLayoutsDataList {
+@XmlRootElement(name = "forms")
+public class AvailableFormsDataList {
 	
-	/** List of data wrappers with form and layout names. */
-	private List<AvailableLayoutsData> layouts;
+	/** List of form names. */
+	private List<String> forms;
 	
 	
 	/**
 	 * Implicit constructor.
 	 */
-	public AvailableLayoutsDataList() {
-		this(new ArrayList<AvailableLayoutsData>());
+	public AvailableFormsDataList() {
+		this(new ArrayList<String>());
 	}
 	
 	
 	/**
 	 * Initializing constructor.
-	 * @param layouts - list of data wrappers
+	 * @param forms - list of form names
 	 */
-	public AvailableLayoutsDataList(List<AvailableLayoutsData> layouts) {
-		this.layouts = layouts;
+	public AvailableFormsDataList(List<String> forms) {
+		this.forms = forms;
+	}
+
+	
+	/**
+	 * Gets the list of form names.
+	 * @return list of form names
+	 */
+	@XmlElement(name = "form")
+	public List<String> getForms() {
+		return forms;
 	}
 
 
 	/**
-	 * Gets the list of data wrappers with form and layout names.
-	 * @return the list of data wrappers
+	 * Sets the list of form names.
+	 * @param forms - the list of form names
 	 */
-	@XmlElement(name = "layout")
-	public List<AvailableLayoutsData> getLayouts() {
-		return layouts;
-	}
-
-
-	/**
-	 * Sets the list of data wrappers with form and layout names.
-	 * @param layouts - the list of data wrappers
-	 */
-	public void setLayouts(List<AvailableLayoutsData> layouts) {
-		this.layouts = layouts;
+	public void setForms(List<String> forms) {
+		this.forms = forms;
 	}
 
 }

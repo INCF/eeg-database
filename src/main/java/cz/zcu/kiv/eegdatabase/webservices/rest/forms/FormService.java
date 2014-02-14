@@ -39,46 +39,52 @@ public interface FormService {
 	
 	/**
 	 * Gets the count of forms with available layouts.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of forms
 	 */
-	int availableFormsCount();
+	int availableFormsCount(boolean mineOnly);
 	
 	
 	/**
 	 * Gets names of forms with available layouts.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of forms
 	 */
-	List<String> availableForms();
+	List<String> availableForms(boolean mineOnly);
 	
 	
 	/**
 	 * Gets the count of all form-layouts available.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of form-layouts
 	 */
-	int availableLayoutsCount();
+	int availableLayoutsCount(boolean mineOnly);
 	
 	
 	/**
 	 * Gets the count of form-layouts available for the specified form.
 	 * @param formName - name of the form
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of form-layouts
 	 */
-	int availableLayoutsCount(String formName);
+	int availableLayoutsCount(String formName, boolean mineOnly);
 	
 	
 	/**
 	 * Gets names of all form layouts available.
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of form layouts
 	 */
-	AvailableLayoutsDataList availableLayouts();
+	AvailableLayoutsDataList availableLayouts(boolean mineOnly);
 	
 	
 	/**
 	 * Gets names of form layouts available for the specified form.
 	 * @param formName - name of the form
+	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of form layouts
 	 */
-	AvailableLayoutsDataList availableLayouts(String formName);
+	AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly);
 	
 	
 	/**

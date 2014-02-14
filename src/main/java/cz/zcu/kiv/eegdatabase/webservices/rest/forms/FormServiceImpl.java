@@ -37,6 +37,7 @@ import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
 
+
 /**
  * Service implementation for form layouts. Used in REST.
  * 
@@ -72,8 +73,11 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableFormsCount() {
-		return generator.getForms().size();
+	public int availableFormsCount(boolean mineOnly) {
+		if (mineOnly)
+			return 0;
+		else
+			return generator.getForms().size();
 	}
 	
 	
@@ -81,10 +85,14 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public List<String> availableForms() {
+	public List<String> availableForms(boolean mineOnly) {
 		List<String> list = new LinkedList<String>();				
-		for (Form form : generator.getForms())
-			list.add(form.getName());
+		if (mineOnly) {
+			
+		} else {
+			for (Form form : generator.getForms())
+				list.add(form.getName());
+		}
 		return list;
 	}
 	
@@ -93,8 +101,11 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableLayoutsCount() {
-		return generator.getForms().size();
+	public int availableLayoutsCount(boolean mineOnly) {
+		if (mineOnly)
+			return 0;
+		else
+			return generator.getForms().size();
 	}
 	
 	
@@ -102,8 +113,11 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableLayoutsCount(String formName) {
-		return 1;
+	public int availableLayoutsCount(String formName, boolean mineOnly) {
+		if (mineOnly)
+			return 0;
+		else
+			return 1;
 	}
 	
 	
@@ -111,10 +125,14 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts() {
-		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();				
-		for (Form form : generator.getForms())
-			list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+	public AvailableLayoutsDataList availableLayouts(boolean mineOnly) {
+		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();
+		if (mineOnly) {
+			
+		} else {
+			for (Form form : generator.getForms())
+				list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+		}
 		return new AvailableLayoutsDataList(list);
 	}
 	
@@ -123,10 +141,14 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts(String formName) {
-		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();				
-		Form form = generator.getForm(formName);
-		list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+	public AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly) {
+		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();
+		if (mineOnly) {
+			
+		} else {
+			Form form = generator.getForm(formName);
+			list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
+		}
 		return new AvailableLayoutsDataList(list);
 	}
 	
