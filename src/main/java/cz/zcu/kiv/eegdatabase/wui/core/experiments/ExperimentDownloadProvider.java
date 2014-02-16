@@ -23,6 +23,8 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
@@ -42,7 +44,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileService;
 import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryService;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
@@ -53,7 +55,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
  * TODO this should be in facade ???
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class ExperimentDownloadProvider {
 
@@ -64,7 +66,7 @@ public class ExperimentDownloadProvider {
     PersonService personService;
 
     FileService fileService;
-    
+
     HistoryService historyService;
 
     ZipGenerator zipGenerator;
@@ -88,12 +90,12 @@ public class ExperimentDownloadProvider {
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
     }
-    
+
     @Required
     public void setHistoryService(HistoryService historyService) {
         this.historyService = historyService;
     }
-    
+
     /**
      * Method get data from web page, preprocess them for generator and generate zip file with content.
      * 
@@ -104,7 +106,7 @@ public class ExperimentDownloadProvider {
      * @return
      */
     @Transactional
-    public DataFileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
+    public FileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
         try {
 
             Experiment experiment = service.getExperimentForDetail(exp.getExperimentId());
@@ -136,8 +138,8 @@ public class ExperimentDownloadProvider {
                     newFiles.add(newItem);
                 }
             }
-            
-            // prepared history log 
+
+            // prepared history log
             Person user = personService.getLoggedPerson();
             Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
             History history = new History();
@@ -151,10 +153,20 @@ public class ExperimentDownloadProvider {
             historyService.create(history);
 
             log.error("files count " + newFiles.size());
+            
+            // TODO generator create zip file in memory - problem with heap size. Throw exception with memory allocation problem.
             ByteArrayOutputStream stream = (ByteArrayOutputStream) zipGenerator.generate(experiment, mc, newFiles);
 
-            DataFileDTO dto = new DataFileDTO();
-            dto.setFileContent(stream.toByteArray());
+            FileDTO dto = new FileDTO();
+            File file = File.createTempFile("experimentDownload", ".tmp");
+            FileOutputStream fileStream = new FileOutputStream(file);
+            stream.writeTo(fileStream);
+
+            dto.setFile(file);
+
+            fileStream.close();
+            stream.close();
+
             if (scenarioName != null)
                 dto.setFileName(scenarioName.replaceAll("\\s", "_") + ".zip");
             else

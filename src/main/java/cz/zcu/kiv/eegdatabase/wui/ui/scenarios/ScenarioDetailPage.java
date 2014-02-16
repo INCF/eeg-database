@@ -27,9 +27,6 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.scenarios;
 
-import java.io.IOException;
-import java.io.OutputStream;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -37,28 +34,23 @@ import org.apache.wicket.authroles.authorization.strategies.role.annotations.Aut
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * Page of detail for scenario.
@@ -106,15 +98,9 @@ public class ScenarioDetailPage extends MenuPage {
 			@Override
 			public void onClick() {
 
-				AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter() {
-					private static final long serialVersionUID = 1L;
+			    FileDTO file = scenarioFacade.getScenarioFile(scenario.getScenarioId());
 
-					public void write(OutputStream output) throws IOException {
-						output.write(scenarioFacade.getScenarioFile(scenarioId));
-					}
-				};
-
-				getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream).setFileName(scenario.getScenarioName()));
+                getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(file));
 
 			}
 		}.setVisibilityAllowed(existFile));

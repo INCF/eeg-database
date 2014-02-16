@@ -27,7 +27,7 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
 /**
@@ -54,12 +54,12 @@ public class SimpleDownloadLink extends Link<Void> {
     @Override
     public void onClick() {
 
-        final DataFileDTO file = getFile();
+        final FileDTO file = getFile();
 
         getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(file));
     }
 
-    private DataFileDTO getFile() {
+    private FileDTO getFile() {
         return facade.getFile(fileId);
     }
 

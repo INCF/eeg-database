@@ -30,7 +30,11 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+
+import java.io.InputStream;
+import java.sql.Blob;
 import java.sql.SQLException;
+
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
@@ -193,15 +197,11 @@ public class SimpleScenarioDao extends SimpleGenericDao<Scenario, Integer> imple
 		return super.getAllRecordsFull();
 	}
 
-	@Transactional(readOnly = true)
-	@Override
-	public byte[] getScenarioFile(int scenarioId) {
-		String query = "from Scenario s where s.scenarioId=:scenarioId";
-		Scenario s = (Scenario) getSessionFactory().getCurrentSession().createQuery(query).setParameter("scenarioId", scenarioId).uniqueResult();
-		try {
-			return s.getScenarioFile().getBytes(1, (int) s.getScenarioFile().length());
-		} catch (SQLException ex) {
-			return null;
-		}
-	}
+    @Transactional(readOnly = true)
+    @Override
+    public Blob getScenarioFile(int scenarioId) {
+        String query = "from Scenario s where s.scenarioId=:scenarioId";
+        Scenario s = (Scenario) getSessionFactory().getCurrentSession().createQuery(query).setParameter("scenarioId", scenarioId).uniqueResult();
+        return s.getScenarioFile();
+    }
 }

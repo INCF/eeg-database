@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import java.util.ArrayList;
 
 import org.apache.wicket.RestartResponseAtInterceptPageException;

@@ -29,6 +29,7 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
 import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
@@ -59,6 +60,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     private SimplePharmaceuticalDao pharmDao;
     private SimpleProjectTypeDao projectTypesDao;
     private ExperimentPackageConnectionDao experimentPackageConnectionDao;
+    private DataFileDao dataFileDao;
 
     @Required
     public void setExperimentDao(ExperimentDao experimentDao) {
@@ -99,6 +101,11 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     public void setDiseaseDao(SimpleDiseaseDao diseaseDao) {
         this.diseaseDao = diseaseDao;
     }
+    
+    @Required
+    public void setDataFileDao(DataFileDao dataFileDao) {
+        this.dataFileDao = dataFileDao;
+    }
 
     @Override
     @Transactional(readOnly = true)
@@ -115,7 +122,10 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Override
     @Transactional(readOnly = true)
     public Experiment getExperimentForDetail(int experimentId) {
-        return experimentDao.getExperimentForDetail(experimentId);
+        
+        Experiment experiment = experimentDao.getExperimentForDetail(experimentId);
+        
+        return experiment;
     }
 
     @Override

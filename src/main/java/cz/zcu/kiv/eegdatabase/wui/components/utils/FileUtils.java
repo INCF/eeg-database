@@ -22,43 +22,71 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.io.OutputStream;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
-import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
+import org.apache.wicket.util.io.IOUtils;
 
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.FileDownloadStreamWriter;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 
 /**
  * Utilities class for files.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class FileUtils {
-    
+
+    protected static Log log = LogFactory.getLog(FileUtils.class);
+
     /**
      * Prepared request handler for file download.
      * 
      * @param file
      * @return
      */
-    public static ResourceStreamRequestHandler prepareDownloadFile(final DataFileDTO file) {
+    public static ResourceStreamRequestHandler prepareDownloadFile(final FileDTO file) {
 
-        if (file == null || file.getFileContent() == null)
+        if (file == null || file.getFile() == null)
             return null;
 
-        AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter()
-        {
-            private static final long serialVersionUID = 1L;
-
-            public void write(OutputStream output) throws IOException
-            {
-                output.write(file.getFileContent());
-            }
-        };
+        FileDownloadStreamWriter stream = new FileDownloadStreamWriter(file.getFile(), file.getMimetype());
 
         return new ResourceStreamRequestHandler(stream).setFileName(file.getFileName());
+    }
+    
+    /**
+     * Prepare byte array from file.
+     * 
+     * @param file
+     * @return
+     */
+    public static byte[] getFileContent(File file) {
+
+        if (file == null) {
+            return new byte[0];
+        } else {
+            try {
+                
+                FileInputStream fileInputStream = new FileInputStream(file);
+                byte[] byteArray = IOUtils.toByteArray(fileInputStream);
+                fileInputStream.close();
+                return byteArray;
+                
+            } catch (FileNotFoundException e) {
+                log.error(e.getMessage(), e);
+                return new byte[0];
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+                return new byte[0];
+            }
+        }
+
     }
 }

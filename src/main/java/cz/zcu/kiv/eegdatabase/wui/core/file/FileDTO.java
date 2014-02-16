@@ -22,23 +22,23 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.file;
 
+import java.io.File;
+
 import cz.zcu.kiv.eegdatabase.wui.core.dto.IdentifiDTO;
 
 /**
- * Object for download file from wicket. Files are in blobs and we use hibernate entities fetched 
- * still is here problem with access in blob without runnig transaction. I use this object for preparing
- * file for download or upload. 
+ * Object for file transfer in wicket.
  * 
  * @author Jakub Rinkes
  * 
  */
-public class DataFileDTO extends IdentifiDTO {
+public class FileDTO extends IdentifiDTO {
 
     private static final long serialVersionUID = -6900316858954849742L;
 
     private String fileName;
     private String mimetype;
-    byte[] fileContent = new byte[0];
+    private File file;
 
     public String getFileName() {
         return fileName;
@@ -56,12 +56,12 @@ public class DataFileDTO extends IdentifiDTO {
         this.mimetype = mimetype;
     }
 
-    public byte[] getFileContent() {
-        return fileContent;
+    public File getFile() {
+        return file;
     }
 
-    public void setFileContent(byte[] fileContent) {
-        this.fileContent = fileContent;
+    public void setFile(File file) {
+        this.file = file;
     }
 
 }

@@ -22,28 +22,18 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 
-import java.io.ByteArrayOutputStream;
-import java.sql.Blob;
 import java.sql.Timestamp;
 import java.util.Calendar;
-
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.Document;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
@@ -84,10 +74,11 @@ public class ScenarioXMLProvider {
      * @return
      */
     @Transactional
-    public DataFileDTO getXmlFileForScenario(int scenarioId, String loggedUserName) {
+    public FileDTO getXmlFileForScenario(int scenarioId, String loggedUserName) {
 
         try {
-            DataFileDTO file = new DataFileDTO();
+            
+            FileDTO file = new FileDTO();
             Scenario scenario = scenarioFacade.read(scenarioId);
 
             Person user = personFacade.getPerson(loggedUserName);
@@ -106,24 +97,6 @@ public class ScenarioXMLProvider {
             log.error(e.getMessage(), e);
             return null;
         }
-    }
-
-    private byte[] toByteArray(Object o) throws Exception {
-        if (o instanceof Blob) {
-            return ((Blob) o).getBytes(1, (int) ((Blob) o).length());
-        }
-        else if (o instanceof Document) {
-            Source source = new DOMSource((Document) o);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            Result result = new StreamResult(out);
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer();
-            transformer.transform(source, result);
-
-            return out.toByteArray();
-        }
-
-        return null;
     }
 
 }

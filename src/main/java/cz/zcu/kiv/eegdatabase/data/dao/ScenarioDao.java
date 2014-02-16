@@ -27,11 +27,12 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.sql.Blob;
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-
-import java.util.List;
 
 /**
  * DAO for fetching and saving objects with people.
@@ -62,5 +63,5 @@ public interface ScenarioDao extends GenericDao<Scenario, Integer> {
 
 	public void flush();
 
-	public byte[] getScenarioFile(int scenarioId);
+	public Blob getScenarioFile(int scenarioId);
 }

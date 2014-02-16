@@ -56,7 +56,18 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
 
     @Override
     public Experiment getExperimentForDetail(int experimentId) {
-        return service.getExperimentForDetail(experimentId);
+        
+        Experiment experiment = service.getExperimentForDetail(experimentId);
+        
+        for(DataFile file : experiment.getDataFiles()){
+            
+            log.warn(file.getFilename());
+            log.warn(file.getMimetype());
+            log.warn(file.getDescription());
+            log.warn(file.getFileContent());
+        }
+        
+        return experiment;
     }
 
     @Override

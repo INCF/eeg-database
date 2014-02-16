@@ -44,8 +44,9 @@ import cz.zcu.kiv.eegdatabase.logic.signal.ChannelInfo;
 import cz.zcu.kiv.eegdatabase.logic.signal.EegReader;
 import cz.zcu.kiv.eegdatabase.logic.signal.VhdrReader;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 
 /**
@@ -99,16 +100,16 @@ public class ExperimentSignalViewCanvasPanel extends WebMarkupContainer {
         ArrayList<double[]> signalData = new ArrayList<double[]>();
         for (DataFile file : experiment.getDataFiles()) {
             if (file.getFilename().endsWith(".vhdr")) {
-                DataFileDTO fileDto = fileFacade.getFile(file.getDataFileId());
-                bytes = fileDto.getFileContent();
+                FileDTO fileDto = fileFacade.getFile(file.getDataFileId());
+                bytes = FileUtils.getFileContent(fileDto.getFile());
                 vhdr.readVhdr(bytes);
                 channels = vhdr.getChannels();
                 tree.append(getTree(channels));
                 for (DataFile file2 : experiment.getDataFiles()) {
                     if ((file2.getFilename().endsWith(".eeg")) || (file2.getFilename().endsWith(".avg"))) {
                         filesIn = true;
-                        DataFileDTO fileDto2 = fileFacade.getFile(file2.getDataFileId());
-                        data = fileDto2.getFileContent();
+                        FileDTO fileDto2 = fileFacade.getFile(file2.getDataFileId());
+                        data = FileUtils.getFileContent(fileDto2.getFile());
                         EegReader eeg = new EegReader(vhdr);
                         for (ChannelInfo ch : channels) {
                             signalData.add(eeg.readFile(data, ch.getNumber()));

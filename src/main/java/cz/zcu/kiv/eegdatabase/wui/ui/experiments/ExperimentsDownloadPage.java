@@ -64,7 +64,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 
@@ -327,9 +327,9 @@ public class ExperimentsDownloadPage extends MenuPage {
                     }
 
                     Collection<DataFile> files = group.getModelObject();
-                    DataFileDTO outputFile = downloadProvider.generate(experiment, command, files, paramSelect);
+                    FileDTO outputFile = downloadProvider.generate(experiment, command, files, paramSelect);
 
-                    if (outputFile == null || outputFile.getFileContent().length == 0)
+                    if (outputFile == null || outputFile.getFile() == null)
                         error("Error while file is generated. Can't be downloaded.");
                     else {
                         getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));

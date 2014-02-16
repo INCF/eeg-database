@@ -65,9 +65,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvironmentForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
-import java.sql.Blob;
-import javax.sql.rowset.serial.SerialBlob;
-import org.hibernate.Hibernate;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPage extends MenuPage {
@@ -78,7 +75,7 @@ public class ExperimentFormPage extends MenuPage {
 
     @SpringBean
     private ExperimentsFacade facade;
-    
+
     @SpringBean
     private FileFacade fileFacade;
 
@@ -126,18 +123,18 @@ public class ExperimentFormPage extends MenuPage {
                     List<FileUpload> fileUploadList = fileModel.getObject();
                     if (!fileUploadList.isEmpty()) {
                         for (FileUpload fileUpload : fileUploadList) {
-                            DataFile file = new DataFile();
 
-                            byte[] fileBytes = fileUpload.getBytes();
-                            file.setFileContent(Hibernate.createBlob(fileBytes));
+                            DataFile file = new DataFile();
                             file.setMimetype(fileUpload.getContentType());
                             file.setFilename(fileUpload.getClientFileName());
+                            file.setFileContentStream(fileUpload.getInputStream());
                             files.add(file);
                         }
                     }
                 }
                 catch (Exception ex) {
                     error("File saving failed");
+                    log.error(ex.getMessage(), ex);
                 }
 
                 // TODO user must somehow insert this data instead of us.
@@ -162,10 +159,10 @@ public class ExperimentFormPage extends MenuPage {
                     facade.update(experiment);
                 else
                     id = facade.create(experiment);
-                
+
                 Experiment read = facade.read(id);
-                
-                for(DataFile file :files){
+
+                for (DataFile file : files) {
                     file.setExperiment(experiment);
                     fileFacade.create(file);
                 }
@@ -179,17 +176,17 @@ public class ExperimentFormPage extends MenuPage {
                 ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(this);
                 return new FeedbackPanel(id, filter);
             }
-            
+
             @Override
             protected Component newButtonBar(String id) {
                 return new AjaxWizardButtonBar(id, this);
             }
-            
+
             @Override
             public void onCancel() {
                 throw new RestartResponseAtInterceptPageException(ExperimentsDetailPage.class, getPageParameters());
             }
-            
+
         };
 
         add(wizard);

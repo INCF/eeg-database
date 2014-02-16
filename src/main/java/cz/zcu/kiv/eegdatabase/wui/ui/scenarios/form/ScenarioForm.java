@@ -27,13 +27,12 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form;
 
-import java.io.InputStream;
+import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
@@ -55,172 +54,185 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-import org.w3c.dom.Document;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import org.hibernate.Hibernate;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 
 public class ScenarioForm extends Form<Scenario> {
 
-	private static final long serialVersionUID = 1L;
-	@SpringBean
-	private ScenariosFacade scenariosFacade;
-	@SpringBean
-	ScenarioXMLProvider xmlProvider;
-	@SpringBean
-	private ResearchGroupFacade researchGroupFacade;
+    private static final long serialVersionUID = 1L;
+    protected Log log = LogFactory.getLog(getClass());
 
-	public ScenarioForm(String id, IModel<Scenario> model, final FeedbackPanel feedback) {
-		super(id, new CompoundPropertyModel<Scenario>(model));
+    @SpringBean
+    private ScenariosFacade scenariosFacade;
+    @SpringBean
+    ScenarioXMLProvider xmlProvider;
+    @SpringBean
+    private ResearchGroupFacade researchGroupFacade;
 
-		setMultiPart(true);
+    public ScenarioForm(String id, IModel<Scenario> model, final FeedbackPanel feedback) {
+        super(id, new CompoundPropertyModel<Scenario>(model));
 
-		Person owner = model.getObject().getPerson();
-		if (owner == null) {
-			owner = EEGDataBaseSession.get().getLoggedUser();
-		}
+        setMultiPart(true);
 
-		model.getObject().setPerson(owner);
+        Person owner = model.getObject().getPerson();
+        if (owner == null) {
+            owner = EEGDataBaseSession.get().getLoggedUser();
+        }
 
-		List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(owner);
-		if (choices == null || choices.isEmpty()) {
-			choices = Arrays.asList(model.getObject().getResearchGroup());
-		}
+        model.getObject().setPerson(owner);
 
-		DropDownChoice<ResearchGroup> groups = new DropDownChoice<ResearchGroup>("researchGroup", choices, new ChoiceRenderer<ResearchGroup>(
-				"title"));
-		groups.setRequired(true);
+        List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(owner);
+        if (choices == null || choices.isEmpty()) {
+            choices = Arrays.asList(model.getObject().getResearchGroup());
+        }
 
-		TextField<String> title = new TextField<String>("title");
-		title.setLabel(ResourceUtils.getModel("label.scenarioTitle"));
-		title.setRequired(true);
+        DropDownChoice<ResearchGroup> groups = new DropDownChoice<ResearchGroup>("researchGroup", choices, new ChoiceRenderer<ResearchGroup>(
+                "title"));
+        groups.setRequired(true);
 
-		TextField<Integer> length = new TextField<Integer>("scenarioLength", Integer.class);
-		length.setRequired(true);
-		length.add(RangeValidator.minimum(0));
+        TextField<String> title = new TextField<String>("title");
+        title.setLabel(ResourceUtils.getModel("label.scenarioTitle"));
+        title.setRequired(true);
 
-		TextArea<String> description = new TextArea<String>("description");
-		description.setRequired(true);
-		description.setLabel(ResourceUtils.getModel("label.scenarioDescription"));
-		description.add(StringValidator.maximumLength(255));
+        TextField<Integer> length = new TextField<Integer>("scenarioLength", Integer.class);
+        length.setRequired(true);
+        length.add(RangeValidator.minimum(0));
 
-		final WebMarkupContainer fileContainer = new WebMarkupContainer("contailer");
-		fileContainer.setVisibilityAllowed(false);
-		fileContainer.setOutputMarkupPlaceholderTag(true);
+        TextArea<String> description = new TextArea<String>("description");
+        description.setRequired(true);
+        description.setLabel(ResourceUtils.getModel("label.scenarioDescription"));
+        description.add(StringValidator.maximumLength(255));
 
-		/*
-		 * TODO file field for xml was not visible in old portal. I dont know why. So I hided it but its implemented and not tested.
-		 */
-		// hidded line in old portal
-		final DropDownChoice<ScenarioSchemas> schemaList = new DropDownChoice<ScenarioSchemas>("schemaList", new Model<ScenarioSchemas>(), scenariosFacade.getListOfScenarioSchemas(),
-				new ChoiceRenderer<ScenarioSchemas>("schemaName", "schemaId"));
-		schemaList.setOutputMarkupPlaceholderTag(true);
-		schemaList.setRequired(true);
-		schemaList.setLabel(ResourceUtils.getModel("label.scenarioSchema"));
-		schemaList.setVisibilityAllowed(false);
+        final WebMarkupContainer fileContainer = new WebMarkupContainer("contailer");
+        fileContainer.setVisibilityAllowed(false);
+        fileContainer.setOutputMarkupPlaceholderTag(true);
 
-		final FileUploadField file = new FileUploadField("file", new ListModel<FileUpload>());
-		file.setOutputMarkupId(true);
-		file.setLabel(ResourceUtils.getModel("description.fileType.dataFile"));
-		file.setOutputMarkupPlaceholderTag(true);
+        /*
+         * TODO file field for xml was not visible in old portal. I dont know why. So I hided it but its implemented and not tested.
+         */
+        // hidded line in old portal
+        final DropDownChoice<ScenarioSchemas> schemaList = new DropDownChoice<ScenarioSchemas>("schemaList", new Model<ScenarioSchemas>(), scenariosFacade.getListOfScenarioSchemas(),
+                new ChoiceRenderer<ScenarioSchemas>("schemaName", "schemaId"));
+        schemaList.setOutputMarkupPlaceholderTag(true);
+        schemaList.setRequired(true);
+        schemaList.setLabel(ResourceUtils.getModel("label.scenarioSchema"));
+        schemaList.setVisibilityAllowed(false);
 
-		// hidded line in old portal
-		final FileUploadField xmlfile = new FileUploadField("xmlfile", new ListModel<FileUpload>());
-		xmlfile.setOutputMarkupId(true);
-		xmlfile.setLabel(ResourceUtils.getModel("label.xmlDataFile"));
-		xmlfile.setOutputMarkupPlaceholderTag(true);
-		xmlfile.setVisibilityAllowed(false);
+        final FileUploadField file = new FileUploadField("file", new ListModel<FileUpload>());
+        file.setOutputMarkupId(true);
+        file.setLabel(ResourceUtils.getModel("description.fileType.dataFile"));
+        file.setOutputMarkupPlaceholderTag(true);
 
-		// hidded line in old portal
-		final RadioGroup<Boolean> schema = new RadioGroup<Boolean>("schema", new Model<Boolean>(Boolean.FALSE));
-		schema.add(new Radio<Boolean>("noschema", new Model<Boolean>(Boolean.FALSE), schema));
-		schema.add(new Radio<Boolean>("fromschema", new Model<Boolean>(Boolean.TRUE), schema));
-		schema.setOutputMarkupPlaceholderTag(true);
-		schema.setVisibilityAllowed(false);
-		schema.add(new AjaxFormChoiceComponentUpdatingBehavior() {
-			private static final long serialVersionUID = 1L;
+        // hidded line in old portal
+        final FileUploadField xmlfile = new FileUploadField("xmlfile", new ListModel<FileUpload>());
+        xmlfile.setOutputMarkupId(true);
+        xmlfile.setLabel(ResourceUtils.getModel("label.xmlDataFile"));
+        xmlfile.setOutputMarkupPlaceholderTag(true);
+        xmlfile.setVisibilityAllowed(false);
 
-			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
-				schemaList.setVisibilityAllowed(schema.getModelObject());
-				xmlfile.setRequired(!xmlfile.isRequired());
+        // hidded line in old portal
+        final RadioGroup<Boolean> schema = new RadioGroup<Boolean>("schema", new Model<Boolean>(Boolean.FALSE));
+        schema.add(new Radio<Boolean>("noschema", new Model<Boolean>(Boolean.FALSE), schema));
+        schema.add(new Radio<Boolean>("fromschema", new Model<Boolean>(Boolean.TRUE), schema));
+        schema.setOutputMarkupPlaceholderTag(true);
+        schema.setVisibilityAllowed(false);
+        schema.add(new AjaxFormChoiceComponentUpdatingBehavior() {
+            private static final long serialVersionUID = 1L;
 
-				target.add(xmlfile);
-				target.add(schemaList);
-			}
-		});
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
+                schemaList.setVisibilityAllowed(schema.getModelObject());
+                xmlfile.setRequired(!xmlfile.isRequired());
 
-		CheckBox privateCheck = new CheckBox("privateScenario");
-		final CheckBox dataAvailable = new CheckBox("dataAvailable", new Model<Boolean>());
-		dataAvailable.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-			private static final long serialVersionUID = 1L;
+                target.add(xmlfile);
+                target.add(schemaList);
+            }
+        });
 
-			@Override
-			protected void onUpdate(AjaxRequestTarget target) {
+        CheckBox privateCheck = new CheckBox("privateScenario");
+        final CheckBox dataAvailable = new CheckBox("dataAvailable", new Model<Boolean>());
+        dataAvailable.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+            private static final long serialVersionUID = 1L;
 
-				fileContainer.setVisibilityAllowed(dataAvailable.getModelObject());
-				file.setRequired(!file.isRequired());
-				target.add(fileContainer);
-			}
-		});
+            @Override
+            protected void onUpdate(AjaxRequestTarget target) {
 
-		SubmitLink submit = new SubmitLink("submit") {
-			private static final long serialVersionUID = 1L;
+                fileContainer.setVisibilityAllowed(dataAvailable.getModelObject());
+                file.setRequired(!file.isRequired());
+                target.add(fileContainer);
+            }
+        });
 
-			@Override
-			public void onSubmit() {
-				FileUpload fileUpload = file.getFileUpload();
+        SubmitLink submit = new SubmitLink("submit") {
+            private static final long serialVersionUID = 1L;
 
-				Scenario scenario = ScenarioForm.this.getModelObject();
+            @Override
+            public void onSubmit() {
 
-				// loading non-XML
-				if ((fileUpload != null) && (!(fileUpload.getSize() == 0))) {
-					// File uploaded
-					String filename = fileUpload.getClientFileName().replace(" ", "_");
-					scenario.setScenarioName(filename);
-					if (fileUpload.getContentType().length() > CoreConstants.MAX_MIMETYPE_LENGTH) {
-						int index = filename.lastIndexOf(".");
-						scenario.setMimetype(filename.substring(index));
-					} else {
-						scenario.setMimetype(fileUpload.getContentType());
-					}
-					
-					scenario.setScenarioFile(Hibernate.createBlob(fileUpload.getBytes()));
-				}
+                FileUpload uploadedFile = file.getFileUpload();
+                Scenario scenario = ScenarioForm.this.getModelObject();
 
-				if (!dataAvailable.getModelObject()) {
-				}
+                // loading non-XML
+                if ((uploadedFile != null) && (!(uploadedFile.getSize() == 0))) {
 
-				if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
-					error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-				}
+                    String name = uploadedFile.getClientFileName();
+                    // when uploading from localhost some browsers will specify the entire path, we strip it
+                    // down to just the file name
+                    name = Strings.lastPathComponent(name, '/');
+                    name = Strings.lastPathComponent(name, '\\');
 
-				if (scenario.getScenarioId() > 0) {
-					// Editing existing
-					// scenarioTypeDao.update(scenarioType);
-					scenariosFacade.update(scenario);
-				} else {
-					// Creating new
-					scenariosFacade.create(scenario);
-				}
+                    // File uploaded
+                    String filename = name.replace(" ", "_");
+                    scenario.setScenarioName(filename);
 
-				setResponsePage(getPage());
-			}
-		};
+                    scenario.setMimetype(uploadedFile.getContentType());
+                    try {
+                        scenario.setFileContentStream(uploadedFile.getInputStream());
+                    } catch (IOException e) {
+                        log.error(e.getMessage(), e);
+                    }
+                }
 
-		fileContainer.add(file, xmlfile, schema, schemaList);
+                if (!dataAvailable.getModelObject()) {
+                }
 
-		add(groups, title, length, description, privateCheck, dataAvailable, submit, fileContainer);
-	}
+                if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
+                    error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
+                }
+
+                if (scenario.getScenarioId() > 0) {
+                    // Editing existing
+                    // scenarioTypeDao.update(scenarioType);
+                    scenariosFacade.update(scenario);
+                } else {
+                    // Creating new
+                    scenariosFacade.create(scenario);
+                }
+
+                /*
+                 * clean up after upload file, and set model to null or will be problem with page serialization when redirect start - DON'T DELETE IT !
+                 */
+                ScenarioForm.this.setModelObject(null);
+
+                setResponsePage(ScenarioDetailPage.class, PageParametersUtils.getDefaultPageParameters(scenario.getScenarioId()));
+            }
+        };
+
+        fileContainer.add(file, xmlfile, schema, schemaList);
+
+        add(groups, title, length, description, privateCheck, dataAvailable, submit, fileContainer);
+    }
 }

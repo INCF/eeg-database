@@ -34,47 +34,49 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 
 public interface ScenariosService extends GenericService<Scenario, Integer> {
 
-	List<Scenario> getScenariosWhereOwner(Person owner);
+    List<Scenario> getScenariosWhereOwner(Person owner);
 
-	List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
+    List<Scenario> getScenariosWhereOwner(Person person, int LIMIT);
 
-	List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
+    List<Scenario> getScenarioSearchResults(List<SearchRequest> request, int personId);
 
-	boolean canSaveTitle(String title, int id);
+    boolean canSaveTitle(String title, int id);
 
-	List<Scenario> getScenariosForList(Person person, int start, int count);
+    List<Scenario> getScenariosForList(Person person, int start, int count);
 
-	int getScenarioCountForList(Person person);
+    int getScenarioCountForList(Person person);
 
-	void flush();
+    void flush();
 
-	Scenario getScenarioByTitle(String title);
+    Scenario getScenarioByTitle(String title);
 
-//    Integer create(ScenarioSchemas newInstance);
-	Integer createScenarioSchema(ScenarioSchemas newInstance);
+    // Integer create(ScenarioSchemas newInstance);
 
-	ScenarioSchemas readScenarioSchema(Integer id);
+    Integer createScenarioSchema(ScenarioSchemas newInstance);
 
-	List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue);
+    ScenarioSchemas readScenarioSchema(Integer id);
 
-	List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue);
+    List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, int parameterValue);
 
-	void updateScenarioSchema(ScenarioSchemas transientObject);
+    List<ScenarioSchemas> readScenarioSchemaByParameter(String parameterName, String parameterValue);
 
-	void deleteScenarioSchema(ScenarioSchemas persistentObject);
+    void updateScenarioSchema(ScenarioSchemas transientObject);
 
-	List<ScenarioSchemas> getAllScenarioSchemasRecords();
+    void deleteScenarioSchema(ScenarioSchemas persistentObject);
 
-	List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max);
+    List<ScenarioSchemas> getAllScenarioSchemasRecords();
 
-	int getCountScenarioSchemasRecords();
+    List<ScenarioSchemas> getScenarioSchemasRecordsAtSides(int first, int max);
 
-	int getNextSchemaId();
+    int getCountScenarioSchemasRecords();
 
-	List<ScenarioSchemas> getListOfScenarioSchemas();
+    int getNextSchemaId();
 
-	public byte[] getScenarioFile(int scenarioId);
+    List<ScenarioSchemas> getListOfScenarioSchemas();
+
+    FileDTO getScenarioFile(int scenarioId);
 }

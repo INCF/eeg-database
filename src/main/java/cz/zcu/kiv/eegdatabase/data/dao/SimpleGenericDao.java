@@ -22,22 +22,26 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
+import java.io.IOException;
+import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.lucene.queryparser.classic.ParseException;
 import org.apache.solr.client.solrj.SolrServerException;
-import org.hibernate.*;
+import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 
-import java.io.IOException;
-import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.util.*;
+import cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer;
 
 /**
  * Class implements interface for connecting logic and data layer.
@@ -51,6 +55,8 @@ public class SimpleGenericDao<T, PK extends Serializable>
 
     @Autowired
     PojoIndexer indexer;
+
+    //    protected final static Version LUCENE_COMPATIBILITY_VERSION = Version.LUCENE_31;
 
     protected Class<T> type;
     protected Log log = LogFactory.getLog(getClass());

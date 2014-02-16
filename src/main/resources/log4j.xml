@@ -74,6 +74,9 @@
     <logger name="org.apache.wicket.protocol.http.WebSession=INFO">
         <level value="warn" />
     </logger>
+    <logger name="cz.zcu.kiv.eegdatabase.wui">
+        <level value="info" />
+    </logger>
 
     <logger name="cz.zcu.kiv.eegdatabase.Tests">
         <level value="warn" />

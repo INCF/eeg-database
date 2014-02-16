@@ -22,35 +22,60 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.file;
 
-import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Required;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.InputStream;
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.HibernateException;
+import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
+
+import cz.zcu.kiv.eegdatabase.data.dao.DataFileDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 
 public class FileServiceImpl implements FileService {
 
     protected Log log = LogFactory.getLog(getClass());
 
-    DataFileDao fileDAO;
+    private DataFileDao fileDAO;
+    private SessionFactory factory;
 
     @Required
     public void setFileDAO(DataFileDao fileDAO) {
         this.fileDAO = fileDAO;
     }
 
+    @Required
+    public void setFactory(SessionFactory factory) {
+        this.factory = factory;
+    }
+
     @Override
     @Transactional
     public Integer create(DataFile newInstance) {
-        return fileDAO.create(newInstance);
+
+        try {
+
+            Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(newInstance.getFileContentStream(), newInstance.getFileContentStream().available());
+            newInstance.setFileContent(createBlob);
+
+            return fileDAO.create(newInstance);
+
+        } catch (HibernateException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
     }
 
     @Override
@@ -102,29 +127,30 @@ public class FileServiceImpl implements FileService {
 
     @Override
     @Transactional
-    public Blob createBlob(byte[] input) {
-        return fileDAO.createBlob(input);
-    }
+    public FileDTO getFile(int fileId) {
 
-    @Override
-    @Transactional
-    public Blob createBlob(InputStream input, int length) {
-        return fileDAO.createBlob(input, length);
-    }
-
-    @Override
-    @Transactional
-    public DataFileDTO getFile(int fileId) {
+        try {
             DataFile dataFileEntity = fileDAO.read(fileId);
-            DataFileDTO dto = new DataFileDTO();
+            FileDTO dto = new FileDTO();
+
+            File tmpFile;
+            tmpFile = File.createTempFile("dataFile", ".tmp");
+            tmpFile.deleteOnExit();
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            IOUtils.copy(dataFileEntity.getFileContent().getBinaryStream(), out);
+            out.close();
+            dto.setFile(tmpFile);
             dto.setFileName(dataFileEntity.getFilename());
             dto.setMimetype(dataFileEntity.getMimetype());
-		try {
-			dto.setFileContent(dataFileEntity.getFileContent().getBytes(1, (int)dataFileEntity.getFileContent().length()));
-		} catch (SQLException ex) {
-			Logger.getLogger(FileServiceImpl.class.getName()).log(Level.SEVERE, null, ex);
-			throw new RuntimeException(ex);
-		}
+
             return dto;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        }
+
     }
 }

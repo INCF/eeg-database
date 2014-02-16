@@ -34,54 +34,41 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.file.DataFileDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
-import java.io.IOException;
-import java.io.OutputStream;
-import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
-import org.apache.wicket.util.resource.AbstractResourceStreamWriter;
 
 /**
- * Panel with link and security policy. Prepared download scenario file. Added
- * in table with scenarios.
- *
+ * Panel with link and security policy. Prepared download scenario file. Added in table with scenarios.
+ * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class ScenarioDownloadLink extends Panel {
 
-	private static final long serialVersionUID = 1L;
-	@SpringBean
-	ScenariosFacade scenariosFacade;
+    private static final long serialVersionUID = 1L;
+    @SpringBean
+    ScenariosFacade scenariosFacade;
 
-	public ScenarioDownloadLink(String id, IModel<Scenario> model) {
-		super(id);
+    public ScenarioDownloadLink(String id, IModel<Scenario> model) {
+        super(id);
 
-		final Scenario scenario = model.getObject();
-		// added link for download
-		boolean fileExist = scenario.getScenarioFile() != null;
-		add(new Link<Void>("download") {
-			private static final long serialVersionUID = 1L;
+        final Scenario scenario = model.getObject();
+        // added link for download
+        boolean fileExist = scenario.getScenarioFile() != null;
+        add(new Link<Void>("download") {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void onClick() {
-				AbstractResourceStreamWriter stream = new AbstractResourceStreamWriter() {
-					private static final long serialVersionUID = 1L;
+            @Override
+            public void onClick() {
 
-					@Override
-					public void write(OutputStream output) throws IOException {
-						output.write(scenariosFacade.getScenarioFile(scenario.getScenarioId()));
-					}
-				};
+                FileDTO file = scenariosFacade.getScenarioFile(scenario.getScenarioId());
 
-				getRequestCycle().scheduleRequestHandlerAfterCurrent(new ResourceStreamRequestHandler(stream).setFileName(scenario.getScenarioName()));
+                getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(file));
 
-			}
-		}).setVisibilityAllowed(fileExist);
-		add(new Label("noFile", ResourceUtils.getModel("label.notAvailable")).setVisibilityAllowed(!fileExist));
-	}
+            }
+        }).setVisibilityAllowed(fileExist);
+        add(new Label("noFile", ResourceUtils.getModel("label.notAvailable")).setVisibilityAllowed(!fileExist));
+    }
 }
