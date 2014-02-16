@@ -11,4 +11,5 @@ src/main/webapp/files/js/messages-en.json
 nb-configuration.xml
 src/main/resources/rebel.xml
 src/main/webapp/META-INF/context.xml
+/logs
 
