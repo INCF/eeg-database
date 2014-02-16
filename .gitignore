@@ -6,7 +6,6 @@ target
 bin
 .project
 .classpath
-.gitignore
 .settings
 src/main/webapp/files/js/messages-en.json
 nb-configuration.xml

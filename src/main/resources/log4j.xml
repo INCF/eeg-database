@@ -27,7 +27,15 @@
 <log4j:configuration xmlns:log4j="http://jakarta.apache.org/log4j/" debug="false" threshold="all">
 
     <appender name="logFile" class="org.apache.log4j.DailyRollingFileAppender">
-        <param name="File" value="/Users/bydga/tmp/eeg.log" />
+    <!-- 
+	Relative to the folder where your application runs - usually the target/eegdatabase.war gets copied to the container folder.
+	i.e. on OSX it is something like /usr/local/Cellar/tomcat/7.0.47/libexec/bin (when you installed tomcat via homebrew)
+	
+	If this doesn't fit to everyone, ${user.home}/eegdatabase.log can be used instead - then 
+	/Users/bydga/logs/eegdatabase.log will be used on OSX or
+	C:\Users\bydga\eegdatabase.log on Windows
+    -->
+        <param name="File" value="./logs/eegdatabase.log" />
         <param name="Append" value="true" />
         <param name="DatePattern" value=".yyyy-MM-dd" />
         <layout class="org.apache.log4j.PatternLayout">
