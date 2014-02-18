@@ -248,5 +248,9 @@
 	<bean name="serviceResultDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao">
 		<property name="sessionFactory" ref="sessionFactory"/>
 	</bean>
+	
+	<bean name="formLayoutDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFormLayoutDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 </beans>
