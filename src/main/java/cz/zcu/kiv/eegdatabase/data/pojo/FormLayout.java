@@ -26,7 +26,6 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
 import java.sql.Blob;
-
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -41,6 +40,11 @@ import javax.persistence.Table;
 import org.hibernate.annotations.GenericGenerator;
 
 
+/**
+ * Entity representing a form-layout object.
+ *
+ * @author Jakub Krauz
+ */
 @Entity
 @Table(name = "FORM_LAYOUT")
 public class FormLayout implements Serializable {
@@ -97,8 +101,8 @@ public class FormLayout implements Serializable {
 		this.layoutName = layoutName;
 	}
 
-	@Basic(fetch = FetchType.LAZY)
 	@Lob
+	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "CONTENT", nullable = false)
 	public Blob getContent() {
 		return content;

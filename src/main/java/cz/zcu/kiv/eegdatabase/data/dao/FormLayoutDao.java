@@ -26,17 +26,122 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import java.io.InputStream;
 import java.sql.Blob;
+import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+
 
 /**
- *
+ * DAO interface for fetching and saving form-layouts data.
+ * 
  * @author Jakub Krauz
  */
 public interface FormLayoutDao extends GenericDao<FormLayout, Integer> {
 	
+	/**
+	 * Gets count of all forms with available layouts.
+	 * @return count of forms
+	 */
+	int getAllFormsCount();
+	
+	/**
+	 * Gets count of forms with available layouts owned by the given person.
+	 * @param owner the owner of layouts
+	 * @return count of forms
+	 */
+	int getFormsCount(Person owner);
+	
+	/**
+	 * Gets names of all forms with available layouts.
+	 * @return names of forms
+	 */
+	List<String> getAllFormNames();
+	
+	/**
+	 * Gets names of all forms with available layouts owned by the given person.
+	 * @param owner the owner
+	 * @return names of forms
+	 */
+	List<String> getFormNames(Person owner);
+	
+	/**
+	 * Gets count of all layouts available.
+	 * @return count of layouts
+	 */
+	int getAllLayoutsCount();
+	
+	/**
+	 * Gets count of all layouts owned by the given person.
+	 * @param owner the owner
+	 * @return count of layouts
+	 */
+	int getLayoutsCount(Person owner);
+	
+	/**
+	 * Gets count of all layouts for the given form.
+	 * @param formName the name of the form
+	 * @return count of layouts
+	 */
+	int getLayoutsCount(String formName);
+	
+	/**
+	 * Gets count of all layouts for the given form and owned by the given person.
+	 * @param owner the owner
+	 * @param formName the name of the form
+	 * @return count of layouts
+	 */
+	int getLayoutsCount(Person owner, String formName);
+	
+	/**
+	 * Gets the layout for the given form and layout name.
+	 * @param formName the name of the form
+	 * @param layoutName the name of the layout
+	 * @return the layout or null
+	 */
+	FormLayout getLayout(String formName, String layoutName);
+	
+	/**
+	 * Gets all layouts available.
+	 * @return list of layouts
+	 */
+	List<FormLayout> getAllLayouts();
+	
+	/**
+	 * Gets all layouts owned by the given person.
+	 * @param owner the owner
+	 * @return list of layouts
+	 */
+	List<FormLayout> getLayouts(Person owner);
+	
+	/**
+	 * Gets all layouts for the given form.
+	 * @param formName the name of the form
+	 * @return list of layouts
+	 */
+	List<FormLayout> getLayouts(String formName);
+	
+	/**
+	 * Gets all layouts for the given form and owned by the given person.
+	 * @param owner the owner
+	 * @param formName the name of the form
+	 * @return list of layouts
+	 */
+	List<FormLayout> getLayouts(Person owner, String formName);
+	
+	/**
+	 * Creates a BLOB object.
+	 * @param input byte array
+	 * @return the created Blob
+	 */
     Blob createBlob(byte[] input);
     
+    /**
+     * Creates a BLOB object.
+     * @param input inout stream
+     * @param length length (in bytes) of the input stream
+     * @return the created Blob
+     */
     Blob createBlob(InputStream input, int length);
 
 }
