@@ -260,7 +260,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         @Override
         public void run() {
             log.debug("Starting OOP to OWL transformation process.");
-            System.out.println("\nStarting transformation to OWL.");
             transactionTemplate.execute(new TransactionCallback() {
                 @Override
                 public Object doInTransaction(TransactionStatus status) {
@@ -269,7 +268,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
                 }
             });
             log.debug("OOP to OWL transformation process finished.");
-            System.out.println("Transformation finished.");
         }
 
     }
