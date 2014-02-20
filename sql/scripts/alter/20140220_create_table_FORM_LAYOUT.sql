@@ -2,7 +2,7 @@ CREATE TABLE form_layout (
 	form_layout_id INTEGER PRIMARY KEY NOT NULL,
 	form_name VARCHAR(50) NOT NULL,
 	layout_name VARCHAR(50) NOT NULL,
-	content OID NOT NULL,
+	content BYTEA NOT NULL,
 	person_id INTEGER
 );
 

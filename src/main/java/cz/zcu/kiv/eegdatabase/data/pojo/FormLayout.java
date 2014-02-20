@@ -25,7 +25,6 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
-import java.sql.Blob;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -33,7 +32,6 @@ import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.Lob;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
@@ -57,14 +55,14 @@ public class FormLayout implements Serializable {
 	
 	private String layoutName;
 	
-	private Blob content;
+	private byte[] content;
 	
 	private Person person;
 	
 	public FormLayout() {
 	}
 	
-	public FormLayout(String formName, String layoutName, Blob content, Person person) {
+	public FormLayout(String formName, String layoutName, byte[] content, Person person) {
 		this.formName = formName;
 		this.layoutName = layoutName;
 		this.content = content;
@@ -101,14 +99,14 @@ public class FormLayout implements Serializable {
 		this.layoutName = layoutName;
 	}
 
-	@Lob
+	//@Lob
 	@Basic(fetch = FetchType.LAZY)
 	@Column(name = "CONTENT", nullable = false)
-	public Blob getContent() {
+	public byte[] getContent() {
 		return content;
 	}
 
-	public void setContent(Blob content) {
+	public void setContent(byte[] content) {
 		this.content = content;
 	}
 

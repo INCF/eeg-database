@@ -24,8 +24,6 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.io.InputStream;
-import java.sql.Blob;
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
@@ -38,6 +36,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
  * @author Jakub Krauz
  */
 public interface FormLayoutDao extends GenericDao<FormLayout, Integer> {
+	
+	/**
+	 * Updates the layout or creates a new one.
+	 * @param layout the updated/saved layout
+	 */
+	void createOrUpdateByName(FormLayout layout);
 	
 	/**
 	 * Gets count of all forms with available layouts.
@@ -129,19 +133,5 @@ public interface FormLayoutDao extends GenericDao<FormLayout, Integer> {
 	 */
 	List<FormLayout> getLayouts(Person owner, String formName);
 	
-	/**
-	 * Creates a BLOB object.
-	 * @param input byte array
-	 * @return the created Blob
-	 */
-    Blob createBlob(byte[] input);
-    
-    /**
-     * Creates a BLOB object.
-     * @param input inout stream
-     * @param length length (in bytes) of the input stream
-     * @return the created Blob
-     */
-    Blob createBlob(InputStream input, int length);
 
 }

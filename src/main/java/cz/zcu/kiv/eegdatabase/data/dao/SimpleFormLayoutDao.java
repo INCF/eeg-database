@@ -24,8 +24,6 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.io.InputStream;
-import java.sql.Blob;
 import java.util.List;
 
 import org.hibernate.criterion.DetachedCriteria;
@@ -51,6 +49,19 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 	
 	
 	@Override
+	public void createOrUpdateByName(FormLayout layout) {
+		FormLayout savedLayout = getLayout(layout.getFormName(), layout.getLayoutName());
+		if (savedLayout == null) {
+			create(layout);
+		} else {
+			savedLayout.setContent(layout.getContent());
+			savedLayout.setPerson(layout.getPerson());
+			update(savedLayout);
+		}
+	}
+	
+	
+	@Override
 	public int getAllFormsCount() {
 		return getFormsCount(null);
 	}
@@ -59,7 +70,7 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 	@Override
 	public int getFormsCount(Person owner) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(type);
-		criteria.setProjection(Projections.rowCount());
+		criteria.setProjection(Projections.distinct(Projections.countDistinct("formName")));
 		if (owner != null)
 			criteria.add(Restrictions.eq("person.personId", owner.getPersonId()));
 		
@@ -156,19 +167,6 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 		
         return getHibernateTemplate().findByCriteria(criteria);
 	}
-	
-	
-	@Override
-    public Blob createBlob(byte[] input) {
-        return getHibernateTemplate().getSessionFactory().getCurrentSession().getLobHelper().createBlob(input);
-    }
-
-	
-	@Override
-    public Blob createBlob(InputStream input, int length) {
-        return getHibernateTemplate().getSessionFactory().getCurrentSession().getLobHelper().createBlob(input,length);
-    }
-
 
     
 }
