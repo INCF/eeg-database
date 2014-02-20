@@ -25,22 +25,22 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.annotation.Secured;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.multipart.MultipartFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import cz.zcu.kiv.formgen.Form;
-import cz.zcu.kiv.formgen.Writer;
-import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
 /**
@@ -64,10 +64,7 @@ public class FormServiceController {
 	 */
 	@RequestMapping(value = "/form/count")
 	public @ResponseBody RecordCountData availableFormsCount() {
-		RecordCountData count = new RecordCountData();
-		count.setMyRecords(service.availableFormsCount(true));
-		count.setPublicRecords(service.availableFormsCount(false));
-		return count;
+		return service.availableFormsCount();
 	}
 	
 	
@@ -80,7 +77,7 @@ public class FormServiceController {
 	public @ResponseBody AvailableFormsDataList availableForms (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly) {
 		
-		return new AvailableFormsDataList(service.availableForms(mineOnly));
+		return service.availableForms(mineOnly);
 	}
 	
 	
@@ -93,16 +90,10 @@ public class FormServiceController {
 	public @ResponseBody RecordCountData availableLayoutsCount (
 					@RequestParam(value = "form", required = false) String formName) {
 		
-		RecordCountData count = new RecordCountData();
-		if (formName == null) {
-			count.setMyRecords(service.availableLayoutsCount(true));
-			count.setPublicRecords(service.availableLayoutsCount(false));
-		} else {
-			count.setMyRecords(service.availableLayoutsCount(formName, true));
-			count.setPublicRecords(service.availableLayoutsCount(formName, false));
-		}
-		
-		return count;
+		if (formName == null)
+			return service.availableLayoutsCount();
+		else
+			return service.availableLayoutsCount(formName);
 	}
 	
 	
@@ -116,6 +107,7 @@ public class FormServiceController {
 	public @ResponseBody AvailableLayoutsDataList availableLayouts (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
 					@RequestParam(value = "form", required = false) String formName) {
+		
 		if (formName == null)
 			return service.availableLayouts(mineOnly);
 		else
@@ -129,21 +121,39 @@ public class FormServiceController {
 	 * @param layoutName - name of the layout
 	 * @param response - HTTP response object
 	 * @throws IOException if an error writing to response's output stream occured
+	 * @throws SQLException 
 	 */
 	@RequestMapping(value = "/get/{formName}/{layoutName}", produces = "application/xml")
 	public void getFormLayout(@PathVariable String formName, @PathVariable String layoutName, 
-					HttpServletResponse response) throws IOException {
-		
-		Form form = service.getLayout(formName, layoutName);
-		if (form == null) {
+					HttpServletResponse response) throws IOException, SQLException {
+
+		FormLayout layout = service.getLayout(formName, layoutName);
+		if (layout == null) {
 			response.sendError(HttpServletResponse.SC_NOT_FOUND);
 			return;
 		}
-		Writer writer = new OdmlWriter();
 		response.setContentType("application/xml");
-		//response.setContentLength(???);
-		writer.write(form, response.getOutputStream());
+		response.setContentLength(layout.getContent().length);
+		response.getOutputStream().write(layout.getContent());
 		response.flushBuffer();
 	}
+	
+	
+	/**
+	 * Saves an uploaded layout with the specified name.
+	 * @param response - HTTP response
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @param file - document with the layout
+	 * @throws IOException
+	 */
+	@RequestMapping(method = RequestMethod.POST)
+	@ResponseStatus(HttpStatus.CREATED)
+	public void uploadLayout(HttpServletResponse response, @RequestParam("form") String formName, 
+					@RequestParam("layout") String layoutName, @RequestParam("odml") MultipartFile file) throws IOException {
+		
+		service.saveLayout(formName, layoutName, file.getBytes());
+	}
+	
 	
 }

@@ -24,15 +24,23 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.InitializingBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
+import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import cz.zcu.kiv.formgen.Form;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
@@ -44,17 +52,21 @@ import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
  * @author Jakub Krauz
  */
 @Service
+@Transactional(readOnly = true)
 public class FormServiceImpl implements FormService, InitializingBean {
 	
+	@Autowired
+	@Qualifier("formLayoutDao")
+	private FormLayoutDao formLayoutDao;
 	
-	// TODO databaze
+    @Autowired
+    @Qualifier("personDao")
+    private PersonDao personDao;
 	
 	
 	/** Base package of POJO classes. */
 	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
 	
-	/** Tool for transforming POJO classes to form layouts. */
-	private LayoutGenerator generator;
 	
 	
 	/**
@@ -63,9 +75,13 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public void afterPropertiesSet() throws Exception {
-		generator = new SimpleLayoutGenerator(new OdmlFormProvider());
+		LayoutGenerator generator = new SimpleLayoutGenerator(new OdmlFormProvider());
 		generator.loadPackage(POJO_BASE);
+		
+		// TODO aktualizace layoutu v databazi
+		// metoda volana 3x ???
 	}
 	
 	
@@ -73,11 +89,11 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableFormsCount(boolean mineOnly) {
-		if (mineOnly)
-			return 0;
-		else
-			return generator.getForms().size();
+	public RecordCountData availableFormsCount() {
+		RecordCountData count = new RecordCountData();
+		count.setPublicRecords(formLayoutDao.getAllFormsCount());
+		count.setMyRecords(formLayoutDao.getFormsCount(personDao.getLoggedPerson()));
+		return count;
 	}
 	
 	
@@ -85,15 +101,10 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public List<String> availableForms(boolean mineOnly) {
-		List<String> list = new LinkedList<String>();				
-		if (mineOnly) {
-			
-		} else {
-			for (Form form : generator.getForms())
-				list.add(form.getName());
-		}
-		return list;
+	public AvailableFormsDataList availableForms(boolean mineOnly) {
+		List<String> list = mineOnly ? formLayoutDao.getFormNames(personDao.getLoggedPerson()) 
+					: formLayoutDao.getAllFormNames();
+		return new AvailableFormsDataList(list);
 	}
 	
 	
@@ -101,11 +112,11 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableLayoutsCount(boolean mineOnly) {
-		if (mineOnly)
-			return 0;
-		else
-			return generator.getForms().size();
+	public RecordCountData availableLayoutsCount() {
+		RecordCountData count = new RecordCountData();
+		count.setPublicRecords(formLayoutDao.getAllLayoutsCount());
+		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson()));
+		return count;
 	}
 	
 	
@@ -113,11 +124,13 @@ public class FormServiceImpl implements FormService, InitializingBean {
      * {@inheritDoc}
 	 */
 	@Override
-	public int availableLayoutsCount(String formName, boolean mineOnly) {
-		if (mineOnly)
-			return 0;
-		else
-			return 1;
+	public RecordCountData availableLayoutsCount(String formName) {
+		if (formName == null)
+			return null;
+		RecordCountData count = new RecordCountData();
+		count.setPublicRecords(formLayoutDao.getLayoutsCount(formName));
+		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson(), formName));
+		return count;
 	}
 	
 	
@@ -126,14 +139,14 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 */
 	@Override
 	public AvailableLayoutsDataList availableLayouts(boolean mineOnly) {
-		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();
-		if (mineOnly) {
-			
-		} else {
-			for (Form form : generator.getForms())
-				list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
-		}
-		return new AvailableLayoutsDataList(list);
+		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson()) 
+					: formLayoutDao.getAllLayouts();
+		
+		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
+		for (FormLayout formLayout : list)
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
+		
+		return new AvailableLayoutsDataList(dataList);
 	}
 	
 	
@@ -142,14 +155,14 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 */
 	@Override
 	public AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly) {
-		List<AvailableLayoutsData> list = new LinkedList<AvailableLayoutsData>();
-		if (mineOnly) {
-			
-		} else {
-			Form form = generator.getForm(formName);
-			list.add(new AvailableLayoutsData(form.getName(), form.getLayoutName()));
-		}
-		return new AvailableLayoutsDataList(list);
+		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson(), formName) 
+				: formLayoutDao.getLayouts(formName);
+		
+		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
+		for (FormLayout formLayout : list)
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
+		
+		return new AvailableLayoutsDataList(dataList);
 	}
 	
 	
@@ -157,8 +170,18 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public Form getLayout(String formName, String layoutName) {
-		return generator.getForm(formName);
+	public FormLayout getLayout(String formName, String layoutName) {
+		return formLayoutDao.getLayout(formName, layoutName);
+	}
+	
+	
+	/**
+	 * {@inheritDoc}
+	 */
+	@Override
+	public void saveLayout(String formName, String layoutName, byte[] content) {
+		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson());
+		formLayoutDao.createOrUpdateByName(layout);
 	}
 
 

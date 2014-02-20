@@ -24,10 +24,10 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import cz.zcu.kiv.formgen.Form;
 
 /**
  * Service interface providing form-layouts data and operations on REST service.
@@ -39,10 +39,9 @@ public interface FormService {
 	
 	/**
 	 * Gets the count of forms with available layouts.
-	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of forms
 	 */
-	int availableFormsCount(boolean mineOnly);
+	RecordCountData availableFormsCount();
 	
 	
 	/**
@@ -50,24 +49,22 @@ public interface FormService {
 	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of forms
 	 */
-	List<String> availableForms(boolean mineOnly);
+	AvailableFormsDataList availableForms(boolean mineOnly);
 	
 	
 	/**
 	 * Gets the count of all form-layouts available.
-	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of form-layouts
 	 */
-	int availableLayoutsCount(boolean mineOnly);
+	RecordCountData availableLayoutsCount();
 	
 	
 	/**
 	 * Gets the count of form-layouts available for the specified form.
 	 * @param formName - name of the form
-	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return count of form-layouts
 	 */
-	int availableLayoutsCount(String formName, boolean mineOnly);
+	RecordCountData availableLayoutsCount(String formName);
 	
 	
 	/**
@@ -93,6 +90,15 @@ public interface FormService {
 	 * @param layoutName - name of the layout
 	 * @return requested form-layout
 	 */
-	Form getLayout(String formName, String layoutName);
+	FormLayout getLayout(String formName, String layoutName);
+	
+	
+	/**
+	 * Saves the uploaded layout.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @param content - byte array with the layout document
+	 */
+	void saveLayout(String formName, String layoutName, byte[] content);
 
 }
