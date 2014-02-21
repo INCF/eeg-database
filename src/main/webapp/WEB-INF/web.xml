@@ -41,6 +41,7 @@
             /WEB-INF/persistence.xml
             /WEB-INF/socialContext.xml
             /WEB-INF/webservices.xml
+            /WEB-INF/url-mapping.xml
         </param-value>
     </context-param>
     <listener>

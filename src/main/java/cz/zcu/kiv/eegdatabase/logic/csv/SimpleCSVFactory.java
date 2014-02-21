@@ -22,20 +22,24 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.csv;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.io.PrintStream;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-
-import java.io.*;
-import java.sql.Timestamp;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Generating csv from experiments or scenarios
@@ -59,6 +63,7 @@ public class SimpleCSVFactory implements CSVFactory {
      * @return csv file with scenarios
      * @throws IOException - error writing to stream
      */
+    @Transactional(readOnly = true)
     public OutputStream generateScenariosCsvFile() throws IOException {
 
         log.debug("Creating output stream");
@@ -82,6 +87,7 @@ public class SimpleCSVFactory implements CSVFactory {
      * @return csv file with experiments
      * @throws IOException - error writing to stream
      */
+    @Transactional(readOnly = true)
     public OutputStream generateExperimentsCsvFile() throws IOException {
         log.debug("Generating csv file from experiments");
         log.debug("Creating output stream");

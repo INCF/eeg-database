@@ -68,7 +68,7 @@
 			</list>
 		</property>
 	</bean>
-
+    
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<!-- CORE -->
@@ -240,6 +240,9 @@
 	<bean name="csvFactory" class="cz.zcu.kiv.eegdatabase.logic.csv.SimpleCSVFactory">
 		<property name="domain" value="${app.domain}" />
 	</bean>
+    <bean name="nifMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.nif.NIFMultiController">
+    </bean>
 
 	<bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
@@ -279,5 +282,5 @@
 	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
 	<task:executor id="indexingExecutor" pool-size="5"/>
 	<task:scheduler id="indexingScheduler" pool-size="1"/>
-
+    
 </beans>
