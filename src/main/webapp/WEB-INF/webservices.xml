@@ -42,7 +42,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <!--<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml"/>    DEPRECATED -->
     <import resource="classpath:META-INF/cxf/cxf-servlet.xml"/>
 
-    <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/>
+<!--     <context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices"/> -->
     <context:annotation-config/>
     <security:global-method-security secured-annotations="enabled" />
 
