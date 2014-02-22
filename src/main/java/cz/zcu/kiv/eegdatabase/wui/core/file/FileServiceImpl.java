@@ -137,7 +137,7 @@ public class FileServiceImpl implements FileService {
             tmpFile = File.createTempFile("dataFile", ".tmp");
             tmpFile.deleteOnExit();
             FileOutputStream out = new FileOutputStream(tmpFile);
-            IOUtils.copy(dataFileEntity.getFileContent().getBinaryStream(), out);
+            IOUtils.copyLarge(dataFileEntity.getFileContent().getBinaryStream(), out);
             out.close();
             dto.setFile(tmpFile);
             dto.setFileName(dataFileEntity.getFilename());
