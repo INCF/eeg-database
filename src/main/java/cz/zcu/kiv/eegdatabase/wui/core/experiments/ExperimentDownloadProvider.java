@@ -22,9 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileOutputStream;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
@@ -155,17 +153,10 @@ public class ExperimentDownloadProvider {
             log.error("files count " + newFiles.size());
             
             // TODO generator create zip file in memory - problem with heap size. Throw exception with memory allocation problem.
-            ByteArrayOutputStream stream = (ByteArrayOutputStream) zipGenerator.generate(experiment, mc, newFiles);
+            File file = zipGenerator.generate(experiment, mc, newFiles);
 
             FileDTO dto = new FileDTO();
-            File file = File.createTempFile("experimentDownload", ".tmp");
-            FileOutputStream fileStream = new FileOutputStream(file);
-            stream.writeTo(fileStream);
-
             dto.setFile(file);
-
-            fileStream.close();
-            stream.close();
 
             if (scenarioName != null)
                 dto.setFileName(scenarioName.replaceAll("\\s", "_") + ".zip");
@@ -173,6 +164,7 @@ public class ExperimentDownloadProvider {
                 dto.setFileName("Experiment_data_" + exp.getExperimentId() + ".zip");
 
             return dto;
+            
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return null;

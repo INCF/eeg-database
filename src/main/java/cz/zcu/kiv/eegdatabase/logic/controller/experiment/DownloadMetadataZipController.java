@@ -26,26 +26,36 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.controller.experiment;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
-import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import cz.zcu.kiv.eegdatabase.logic.zip.Generator;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.InputStream;
+import java.sql.Timestamp;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.validation.BindException;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.SimpleFormController;
 
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-import java.io.ByteArrayOutputStream;
-import java.io.OutputStream;
-import java.sql.Timestamp;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashSet;
-import java.util.Set;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamValId;
+import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
+import cz.zcu.kiv.eegdatabase.logic.zip.Generator;
 
 /**
  * @author Petr Jezek
@@ -143,7 +153,8 @@ public class DownloadMetadataZipController extends SimpleFormController {
         log.debug("Saving download history");
         historyDao.create(history);
 
-        OutputStream out = getZipGenerator().generate(fromDB, mc, newFiles);
+        File file = getZipGenerator().generate(fromDB, mc, newFiles);
+        InputStream dataStream = new FileInputStream(file);
 
         response.setHeader("Content-Type", "application/zip");
         if (scenarioName == null) {
@@ -158,9 +169,9 @@ public class DownloadMetadataZipController extends SimpleFormController {
             response.setHeader("Content-Disposition", "attachment;filename=" + scenarioName + ".zip");
         }
 
-        if (out instanceof ByteArrayOutputStream) {
-            ByteArrayOutputStream bout = (ByteArrayOutputStream) out;
-            response.getOutputStream().write(bout.toByteArray());
+        if (dataStream instanceof InputStream) {
+            IOUtils.copyLarge(dataStream, response.getOutputStream());
+            dataStream.close();
         }
         log.debug(zipGenerator);
         return null;

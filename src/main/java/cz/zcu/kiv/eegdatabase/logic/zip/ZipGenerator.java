@@ -31,30 +31,26 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
  * @author Jan Štěbeták
  */
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
-import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.w3c.dom.Document;
-
-import javax.xml.transform.Result;
-import javax.xml.transform.Source;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
-import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
+
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
 
 public class ZipGenerator implements Generator {
 
@@ -65,13 +61,20 @@ public class ZipGenerator implements Generator {
     private Log log = LogFactory.getLog(getClass());
     private int fileCounter = 0;
 
-    public OutputStream generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles) throws Exception, SQLException, IOException {
-        ZipOutputStream zos = null;
-        ByteArrayOutputStream baos = null;
+    public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles) throws Exception, SQLException, IOException {
+
+        ZipOutputStream zipOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File tempZipFile = null;
+
         try {
             log.debug("creating output stream");
-            baos = new ByteArrayOutputStream();
-            zos = new ZipOutputStream(baos);
+            // create temp zip file
+            tempZipFile = File.createTempFile("experimentDownload_", ".zip");
+            // open stream to temp zip file
+            fileOutputStream = new FileOutputStream(tempZipFile);
+            // prepare zip stream
+            zipOutputStream = new ZipOutputStream(fileOutputStream);
 
             log.debug("transforming metadata from database to xml file");
             OutputStream meta = getTransformer().transform(exp, mc, dataFiles);
@@ -82,77 +85,72 @@ public class ZipGenerator implements Generator {
             if (meta instanceof ByteArrayOutputStream) {
                 xmlMetadata = ((ByteArrayOutputStream) meta).toByteArray();
             }
-            byte[] scenario;
-            ZipEntry e;
+
+            ZipEntry entry;
 
             if (mc.isScenFile()) {
                 try {
+
                     log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");
-                    e = new ZipEntry("Scenario/" + scen.getScenarioName());
-                    zos.putNextEntry(e);
-                    zos.closeEntry();
+                    entry = new ZipEntry("Scenario/" + scen.getScenarioName());
+                    zipOutputStream.putNextEntry(entry);
+                    zipOutputStream.closeEntry();
+
                 } catch (Exception ex) {
                     ex.printStackTrace();
                 }
             }
+
             if (xmlMetadata != null) {
                 log.debug("saving xml file of metadata to zip file");
-                e = new ZipEntry(getMetadata() + ".xml");
-                zos.putNextEntry(e);
-                zos.write(xmlMetadata);
-                zos.closeEntry();
+                entry = new ZipEntry(getMetadata() + ".xml");
+                zipOutputStream.putNextEntry(entry);
+                zipOutputStream.write(xmlMetadata);
+                zipOutputStream.closeEntry();
             }
 
-            for (DataFile d : dataFiles) {
-                e = new ZipEntry(getDataZip() + "/" + d.getFilename());
-                byte[] data = d.getFileContent().getBytes(1, (int)d.getFileContent().length());
-                if (data != null) {
+            for (DataFile dataFile : dataFiles) {
+                entry = new ZipEntry(getDataZip() + "/" + dataFile.getFilename());
+
+                if (dataFile.getFileContent().length() > 0) {
+
                     log.debug("saving data file to zip file");
+
                     try {
-                        zos.putNextEntry(e);
+
+                        zipOutputStream.putNextEntry(entry);
+
                     } catch (ZipException ex) {
-                        String[] partOfName = d.getFilename().split("[.]");
+
+                        String[] partOfName = dataFile.getFilename().split("[.]");
                         String filename;
                         if (partOfName.length < 2) {
                             filename = partOfName[0] + "" + fileCounter;
                         } else {
                             filename = partOfName[0] + "" + fileCounter + "." + partOfName[1];
                         }
-                        e = new ZipEntry(getDataZip() + "/" + filename);
-                        zos.putNextEntry(e);
+                        entry = new ZipEntry(getDataZip() + "/" + filename);
+                        zipOutputStream.putNextEntry(entry);
                         fileCounter++;
                     }
 
-                    zos.write(data);
-                    zos.closeEntry();
+                    IOUtils.copyLarge(dataFile.getFileContent().getBinaryStream(), zipOutputStream);
+                    zipOutputStream.closeEntry();
                 }
             }
+
             log.debug("returning output stream of zip file");
+            return tempZipFile;
 
         } finally {
-            zos.flush();
-            zos.close();
+
+            zipOutputStream.flush();
+            zipOutputStream.close();
+            fileOutputStream.flush();
+            fileOutputStream.close();
             fileCounter = 0;
 
         }
-        return baos;
-    }
-
-    private byte[] toByteArray(Object o) throws Exception {
-        if (o instanceof Blob) {
-            return ((Blob) o).getBytes(1, (int) ((Blob) o).length());
-        } else if (o instanceof Document) {
-            Source source = new DOMSource((Document) o);
-            ByteArrayOutputStream out = new ByteArrayOutputStream();
-            Result result = new StreamResult(out);
-            TransformerFactory factory = TransformerFactory.newInstance();
-            Transformer transformer = factory.newTransformer();
-            transformer.transform(source, result);
-
-            return out.toByteArray();
-        }
-
-        return null;
     }
 
     /**
@@ -163,7 +161,8 @@ public class ZipGenerator implements Generator {
     }
 
     /**
-     * @param transformer the transformer to set
+     * @param transformer
+     *            the transformer to set
      */
     public void setTransformer(DataTransformer transformer) {
         this.transformer = transformer;
@@ -177,7 +176,8 @@ public class ZipGenerator implements Generator {
     }
 
     /**
-     * @param metadata the metadata to set
+     * @param metadata
+     *            the metadata to set
      */
     public void setMetadata(String metadata) {
         this.metadata = metadata;
@@ -191,7 +191,8 @@ public class ZipGenerator implements Generator {
     }
 
     /**
-     * @param dataZip the dataZip to set
+     * @param dataZip
+     *            the dataZip to set
      */
     public void setDataZip(String dataZip) {
         this.dataZip = dataZip;
@@ -202,4 +203,3 @@ public class ZipGenerator implements Generator {
         return "metadata: " + metadata;
     }
 }
-

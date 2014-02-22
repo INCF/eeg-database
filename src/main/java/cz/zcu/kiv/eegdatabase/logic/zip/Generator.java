@@ -27,14 +27,14 @@
 
 package cz.zcu.kiv.eegdatabase.logic.zip;
 
+import java.io.File;
+import java.io.IOException;
+import java.sql.SQLException;
+import java.util.Set;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
-
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.util.Set;
 
 /**
  *
@@ -42,5 +42,5 @@ import java.util.Set;
  */
 public interface Generator {
 
-  public OutputStream generate(Experiment exp, MetadataCommand mc, Set<DataFile> datas) throws Exception, SQLException, IOException;
+  public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> datas) throws Exception, SQLException, IOException;
 }
