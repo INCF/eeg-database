@@ -24,9 +24,12 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
+import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -41,9 +44,12 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.formgen.Form;
+import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
+import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
 /**
@@ -55,33 +61,47 @@ import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
 @Transactional(readOnly = true)
 public class FormServiceImpl implements FormService, InitializingBean {
 	
+	/** The DAO object providing form-layout data. */
 	@Autowired
 	@Qualifier("formLayoutDao")
 	private FormLayoutDao formLayoutDao;
 	
+	/** The DAO object providing person-related data - used for getting the logged user. */
     @Autowired
     @Qualifier("personDao")
     private PersonDao personDao;
 	
-	
 	/** Base package of POJO classes. */
 	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
+	
+	/** Logger object. */
+	private static final Log log = LogFactory.getLog(FormServiceImpl.class);
 	
 	
 	
 	/**
-	 * Initializes the FormGenerator object.
+	 * Loads the data model and transforms it to defined form-layouts.
+	 * Generated form-layouts are updated in the persistent storage.
 	 * 
 	 * @see org.springframework.beans.factory.InitializingBean#afterPropertiesSet()
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public void afterPropertiesSet() throws Exception {
+	public void afterPropertiesSet() {
 		LayoutGenerator generator = new SimpleLayoutGenerator(new OdmlFormProvider());
-		generator.loadPackage(POJO_BASE);
-		
-		// TODO aktualizace layoutu v databazi
-		// metoda volana 3x ???
+		try {
+			generator.loadPackage(POJO_BASE);
+			OdmlWriter writer = new OdmlWriter();
+			for (Form form : generator.getForms()) {
+				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				writer.write(form, stream);
+				FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
+							stream.toByteArray(), null);
+				formLayoutDao.createOrUpdateByName(layout);
+			}
+		} catch (FormNotFoundException e) {
+			log.warn("Could not transform the data model to form-layouts.", e);
+		}
 	}
 	
 	
@@ -180,6 +200,9 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 */
 	@Override
 	public void saveLayout(String formName, String layoutName, byte[] content) {
+		
+		// TODO kontrola, zda layout s danym jmenem nepatri jinemu uzivateli
+		
 		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson());
 		formLayoutDao.createOrUpdateByName(layout);
 	}
