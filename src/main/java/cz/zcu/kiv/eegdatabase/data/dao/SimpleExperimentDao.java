@@ -29,7 +29,6 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
-import cz.zcu.kiv.eegdatabase.data.nosql.repositories.SampleExperimentRepository;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -70,8 +69,6 @@ import org.springframework.data.elasticsearch.core.query.SearchQuery;
  */
 public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> implements ExperimentDao {
 
-	@Resource
-	private SampleExperimentRepository sampleExperimentRepository;
 	@Autowired
 	private ElasticsearchTemplate elasticsearchTemplate;
 
@@ -86,14 +83,6 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 	public void setElasticsearchTemplate(ElasticsearchTemplate elasticsearchTemplate) {
 		this.elasticsearchTemplate = elasticsearchTemplate;
-	}
-
-	public SampleExperimentRepository getSampleExperimentRepository() {
-		return sampleExperimentRepository;
-	}
-
-	public void setSampleExperimentRepository(SampleExperimentRepository sampleExperimentRepository) {
-		this.sampleExperimentRepository = sampleExperimentRepository;
 	}
 
 	public List<DataFile> getDataFilesWhereExpId(int experimentId) {

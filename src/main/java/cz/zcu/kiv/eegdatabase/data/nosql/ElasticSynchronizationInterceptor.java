@@ -30,7 +30,6 @@ package cz.zcu.kiv.eegdatabase.data.nosql;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
-import cz.zcu.kiv.eegdatabase.data.nosql.repositories.SampleExperimentRepository;
 import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
@@ -41,9 +40,16 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 import javax.annotation.Resource;
+import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.hibernate.EmptyInterceptor;
 import org.hibernate.type.Type;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 /**
  *
@@ -52,7 +58,7 @@ import org.hibernate.type.Type;
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 	@Resource
-	private SampleExperimentRepository sampleExperimentRepository;
+	private ElasticsearchTemplate elasticsearchTemplate;
 
 	@Override
 	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
@@ -61,7 +67,10 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 			Experiment e = (Experiment) entity;
 			this.syncExperimentParams(e);
 			e.getElasticExperiment().setExperimentId("" + id);
-			this.sampleExperimentRepository.index(e.getElasticExperiment());
+			IndexQuery indexQuery = new IndexQuery();
+			indexQuery.setObject(e.getElasticExperiment());
+			indexQuery.setId("" + id);
+			this.elasticsearchTemplate.index(indexQuery);
 
 		}
 
@@ -76,7 +85,11 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 			Experiment e = (Experiment) entity;
 			this.syncExperimentParams(e);
 			e.getElasticExperiment().setExperimentId("" + id);
-			this.sampleExperimentRepository.index(e.getElasticExperiment());
+			IndexQuery indexQuery = new IndexQuery();
+			indexQuery.setObject(e.getElasticExperiment());
+			indexQuery.setId("" + id);
+			this.elasticsearchTemplate.index(indexQuery);
+
 		}
 
 		return res;
@@ -87,7 +100,9 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 		super.onDelete(entity, id, state, propertyNames, types);
 		if (entity instanceof Experiment) {
 			Experiment e = (Experiment) entity;
-			this.sampleExperimentRepository.delete(e.getElasticExperiment());
+			DeleteQuery deleteQuery = new DeleteQuery();
+			deleteQuery.setQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId()));
+			this.elasticsearchTemplate.delete(deleteQuery);
 		}
 	}
 
@@ -97,9 +112,10 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 		if (entity instanceof Experiment) {
 			Experiment e = (Experiment) entity;
-			ExperimentElastic elastic = sampleExperimentRepository.findOne("" + e.getExperimentId());
-			if (elastic != null) {
-				e.setElasticExperiment(elastic);
+			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+			List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+			if (elastic.size() > 0 && elastic.get(0) != null) {
+				e.setElasticExperiment(elastic.get(0));
 			}
 		}
 
@@ -118,6 +134,8 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 		GenericParameter param;
 		e.setGenericParameters(new ArrayList<GenericParameter>());
+		e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
+		e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
 
 		for (Hardware hw : e.getHardwares()) {
 			param = new GenericParameter("hardware", hw.getTitle());

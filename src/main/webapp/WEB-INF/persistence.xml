@@ -41,8 +41,7 @@
        http://www.springframework.org/schema/util/spring-util-3.0.xsd
        http://www.nhprof.com/schema/hprof
        http://www.nhprof.com/schema/hprof/hprof.xsd
-       http://www.springframework.org/schema/data/elasticsearch
-       http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
+       http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
 
 	<!-- Enables the Spring MVC @Controller programming model -->
 	<context:annotation-config/>
@@ -53,7 +52,7 @@
 		<constructor-arg name="client" ref="client"/>
 	</bean>
 	
-	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.nosql.repositories" />
+<!--	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.nosql.repositories" />-->
 
 	
 	<!-- It is not sure whether this file will be used or not. -->
