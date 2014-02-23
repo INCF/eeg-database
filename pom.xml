@@ -85,15 +85,18 @@
             <version>1.0</version>
         </dependency>
         <dependency>
-        	<groupId>cz.zcu.kiv</groupId>
-        	<artifactId>layout-generator</artifactId>
-        	<version>0.0.6</version>
-        </dependency>
-        <dependency>
             <groupId>org.gnode</groupId>
             <artifactId>odml-java-lib</artifactId>
             <version>1.0.3</version>
         </dependency>
+        
+        <!-- ============================= In-house libs in Nexus repository =========================== -->
+        <dependency>
+            <groupId>cz.zcu.kiv</groupId>
+            <artifactId>layout-generator</artifactId>
+            <version>0.0.7</version>
+        </dependency>
+        
         <!--=================================== Test scoped libraries ================================== -->
         <dependency>
             <groupId>junit</groupId>
@@ -818,10 +821,17 @@
 	<repositories>
 
 		<!-- Local repository for in-house libs and jars not available in public repos -->
+		<!-- NOTE: this repository is going to be replaced by the following Nexus repo -->
 		<repository>
 			<id>cz.zcu.kiv.eegdatabase.repo.local</id>
 			<url>file://${basedir}/repo</url>
 		</repository>
+		
+		<!-- Nexus repository for in-house libs and jars not available in public repos -->
+        <repository>
+            <id>releases</id>
+            <url>http://eeg.kiv.zcu.cz:8081/nexus/content/repositories/releases/</url>
+        </repository>
 		
 		<!-- Spring data - elasticsearch -->
 		<repository>
