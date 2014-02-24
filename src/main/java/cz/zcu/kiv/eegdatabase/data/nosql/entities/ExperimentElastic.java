@@ -39,7 +39,7 @@ import org.springframework.data.elasticsearch.annotations.FieldType;
  *
  * @author bydga
  */
-@Document(indexName = "eegdatabase-dev", type = "experiment", replicas = 0, shards = 5)
+@Document(indexName = "eegdatabase", type = "experiment", replicas = 0, shards = 5)
 public class ExperimentElastic implements Serializable {
 
 	@Id
