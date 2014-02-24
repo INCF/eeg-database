@@ -204,6 +204,6 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 		e.getGenericParameters().add(param);
 
 
-		e.getGenericParameters().add(new GenericParameter("temperature", e.getTemperature()));
+		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
 	}
 }

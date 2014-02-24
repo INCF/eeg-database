@@ -50,11 +50,14 @@ import org.elasticsearch.index.query.AndFilterBuilder;
 import org.elasticsearch.index.query.BoolFilterBuilder;
 import org.elasticsearch.index.query.BoolQueryBuilder;
 import static org.elasticsearch.index.query.FilterBuilders.termFilter;
+import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import org.elasticsearch.index.query.NestedFilterBuilder;
 import org.elasticsearch.index.query.NestedQueryBuilder;
+import org.elasticsearch.index.query.OrFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -329,12 +332,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		return super.getAllRecordsFull();
 	}
 
-	public List<Experiment> findByGenericParameters(List<GenericParameter> params) {
-
-
-		return null;
-	}
-
+	@Transactional(readOnly = true)
 	private List<Experiment> transformEsResultToHibernate(List<ExperimentElastic> experiments) {
 		List<Integer> ids = new ArrayList<Integer>();
 		for (ExperimentElastic e : experiments) {
@@ -344,25 +342,36 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	}
 
 	private List<Experiment> getExperimentsById(List<Integer> ids) {
+		if (ids.isEmpty()){
+			return new ArrayList<Experiment>();
+		}
 		String query = "from Experiment e where e.experimentId IN ( :ids )";
 		return getSessionFactory().getCurrentSession().createQuery(query).setParameterList("ids", ids).list();
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> searchByParameter(String paramName, String paramValue) {
 		GenericParameter[] p = {new GenericParameter(paramName, paramValue)};
 		return this.searchByParameters(p);
 	}
 
 	@Override
-	public List<Experiment> searchByParameter(String paramName, int paramValue) {
+	@Transactional(readOnly = true)
+	public List<Experiment> searchByParameter(String paramName, double paramValue) {
 		GenericParameter[] p = {new GenericParameter(paramName, paramValue)};
 		return this.searchByParameters(p);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> searchByParameterRange(String paramName, int min, int max) {
-		throw new NotImplementedException();
+		NestedFilterBuilder b = new NestedFilterBuilder("params", rangeQuery("params.valueInteger").from(min).to(max));
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(b).build();
+		searchQuery.setPageable(new PageRequest(0, 1000));
+		System.out.println(searchQuery.getQuery());
+		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		return this.transformEsResultToHibernate(list);
 	}
 
 	@Override
@@ -372,6 +381,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> searchByParameters(GenericParameter[] contains, GenericParameter[] notContains) {
 
 		AndFilterBuilder and = new AndFilterBuilder();
@@ -398,11 +408,16 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> search(String value) {
 
-		MultiMatchQueryBuilder builder = new MultiMatchQueryBuilder(value, "params.valueString", "params.attributes.value");
-		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(builder).build();
+		OrFilterBuilder or = new OrFilterBuilder();
+		or.add(new NestedFilterBuilder("params", new MatchQueryBuilder("params.valueString", value)));
+		or.add(new NestedFilterBuilder("params.attributes", new MatchQueryBuilder("params.attributes.value", value)));
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(or).build();
 		searchQuery.setPageable(new PageRequest(0, 1000));
+				System.out.println(searchQuery.getFilter());
+
 		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
 		return this.transformEsResultToHibernate(list);
 	}

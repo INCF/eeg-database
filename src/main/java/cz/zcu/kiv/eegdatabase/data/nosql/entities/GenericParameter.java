@@ -43,15 +43,15 @@ public class GenericParameter implements Serializable {
 	private String name;
 	@Field(type = FieldType.String)
 	private String valueString;
-	@Field(type = FieldType.Integer)
-	private Integer valueInteger;
+	@Field(type = FieldType.Double)
+	private Double valueInteger;
 	@Field(type = FieldType.Nested)
 	private List<ParameterAttribute> attributes = new ArrayList<ParameterAttribute>();
 
 	public GenericParameter() {
 	}
 
-	public GenericParameter(String name, Integer valueInteger) {
+	public GenericParameter(String name, Double valueInteger) {
 		this.name = name;
 		this.valueInteger = valueInteger;
 	}
@@ -77,11 +77,11 @@ public class GenericParameter implements Serializable {
 		this.valueString = valueString;
 	}
 
-	public Integer getValueInteger() {
+	public Double getValueInteger() {
 		return valueInteger;
 	}
 
-	public void setValueInteger(Integer valueInteger) {
+	public void setValueInteger(Double valueInteger) {
 		this.valueInteger = valueInteger;
 	}
 

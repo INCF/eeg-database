@@ -67,16 +67,26 @@ public class Elastic extends BasePage {
 	GenericListDao<Artifact> artifactDao;
 	@SpringBean
 	DigitizationDao digitizationDao;
-	
 	@SpringBean
 	PersonFacade personFacade;
 
 	public Elastic() {
+
+		search();
+	}
+
+	@Transactional
+	void search() {
+		GenericParameter[] yes = {new GenericParameter("temperature", 22.0), new GenericParameter("weather", "standard")};
+		GenericParameter[] no = {new GenericParameter("hardware", "red")};
+		List<Experiment> searchByParameters = experimentDao.searchByParameters(yes, no);
+		System.out.println("got " + searchByParameters.size());
+		List<Experiment> search = experimentDao.search("device");
+		System.out.println("got2" + search.size());
 		
-		reinsert();
-//		personFacade.changeUserPassword("bydgam@gmail.com", "necum");
 		
-		
+		 search = experimentDao.searchByParameterRange("temperature", 10, 30);
+		System.out.println("got3" + search.size());
 	}
 
 	private void insertNew() {

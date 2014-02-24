@@ -78,7 +78,7 @@ public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 
 	public List<Experiment> searchByParameter(String paramName, String paramValue);
 
-	public List<Experiment> searchByParameter(String paramName, int paramValue);
+	public List<Experiment> searchByParameter(String paramName, double paramValue);
 
 	public List<Experiment> searchByParameterRange(String paramName, int min, int max);
 
