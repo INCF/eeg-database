@@ -77,16 +77,19 @@ public class Elastic extends BasePage {
 
 	@Transactional
 	void search() {
-		GenericParameter[] yes = {new GenericParameter("temperature", 22.0), new GenericParameter("weather", "standard")};
+
+//		GenericParameter[] yes = {new GenericParameter("hardware", "head CIRCUMFERENCEs"), new GenericParameter("hardware", "visionable"), new GenericParameter("hardware", "blue")};
+		GenericParameter[] yes = {};
 		GenericParameter[] no = {new GenericParameter("hardware", "red")};
 		List<Experiment> searchByParameters = experimentDao.searchByParameters(yes, no);
-		System.out.println("got " + searchByParameters.size());
-		List<Experiment> search = experimentDao.search("device");
-		System.out.println("got2" + search.size());
+		System.out.println("got1 " + searchByParameters.size());
 		
-		
-		 search = experimentDao.searchByParameterRange("temperature", 10, 30);
-		System.out.println("got3" + search.size());
+//		List<Experiment> search = experimentDao.search("device");
+//		System.out.println("got2 " + search.size());
+//
+//
+//		search = experimentDao.searchByParameterRange("temperature", 10, 30);
+//		System.out.println("got3 " + search.size());
 	}
 
 	private void insertNew() {

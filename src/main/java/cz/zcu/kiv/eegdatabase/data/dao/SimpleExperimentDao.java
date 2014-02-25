@@ -53,6 +53,7 @@ import static org.elasticsearch.index.query.FilterBuilders.termFilter;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.MultiMatchQueryBuilder;
 import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
 import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
 import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
 import org.elasticsearch.index.query.NestedFilterBuilder;
@@ -61,6 +62,7 @@ import org.elasticsearch.index.query.OrFilterBuilder;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
@@ -342,7 +344,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	}
 
 	private List<Experiment> getExperimentsById(List<Integer> ids) {
-		if (ids.isEmpty()){
+		if (ids.isEmpty()) {
 			return new ArrayList<Experiment>();
 		}
 		String query = "from Experiment e where e.experimentId IN ( :ids )";
@@ -369,12 +371,12 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		NestedFilterBuilder b = new NestedFilterBuilder("params", rangeQuery("params.valueInteger").from(min).to(max));
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(b).build();
 		searchQuery.setPageable(new PageRequest(0, 1000));
-		System.out.println(searchQuery.getQuery());
 		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
 		return this.transformEsResultToHibernate(list);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> searchByParameters(GenericParameter[] params) {
 		GenericParameter[] not = {};
 		return this.searchByParameters(params, not);
@@ -389,7 +391,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 			BoolQueryBuilder b = new BoolQueryBuilder();
 			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
 			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
-			b.must(termQuery("params.name", p.getName())).must(termQuery(fieldName, value));
+			b.must(termQuery("params.name", p.getName())).must(matchQuery(fieldName, value));
 			and.add(new NestedFilterBuilder("params", b));
 		}
 
@@ -397,8 +399,10 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 			BoolQueryBuilder b = new BoolQueryBuilder();
 			Object value = p.getValueString() == null ? p.getValueInteger() : p.getValueString();
 			String fieldName = p.getValueString() == null ? "params.valueInteger" : "params.valueString";
-			b.must(termQuery("params.name", p.getName())).mustNot(termQuery(fieldName, value));
-			and.add(new NestedFilterBuilder("params", b));
+			b.must(termQuery("params.name", p.getName())).must(matchQuery(fieldName, value));
+			BoolFilterBuilder not = new BoolFilterBuilder();
+			not.mustNot(new NestedFilterBuilder("params", b));
+			and.add(not);
 		}
 
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(and).build();
@@ -416,13 +420,13 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		or.add(new NestedFilterBuilder("params.attributes", new MatchQueryBuilder("params.attributes.value", value)));
 		SearchQuery searchQuery = new NativeSearchQueryBuilder().withFilter(or).build();
 		searchQuery.setPageable(new PageRequest(0, 1000));
-				System.out.println(searchQuery.getFilter());
 
 		List<ExperimentElastic> list = this.elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
 		return this.transformEsResultToHibernate(list);
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public List<Experiment> searchByAttribute(String attrName, String attrValue) {
 		throw new NotImplementedException();
 	}
