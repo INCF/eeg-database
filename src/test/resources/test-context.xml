@@ -22,21 +22,24 @@
 		test-context.xml, 2013/10/02 00:01 Jakub Rinkes
 -->
 <beans xmlns="http://www.springframework.org/schema/beans"
-			 xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-			 xmlns:util="http://www.springframework.org/schema/util"
-			 xmlns:context="http://www.springframework.org/schema/context"
-			 xsi:schemaLocation="http://www.springframework.org/schema/beans
-       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xmlns:hprof="http://www.nhprof.com/schema/hprof"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
 
 
 
 
        http://www.springframework.org/schema/context
        http://www.springframework.org/schema/context/spring-context-3.0.xsd
-
-
        http://www.springframework.org/schema/util
-       http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.nhprof.com/schema/hprof
+       http://www.nhprof.com/schema/hprof/hprof.xsd
+       http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
 
 	<context:annotation-config/>
 
@@ -65,22 +68,35 @@
 		<property name="password" value="${jdbc.password}"/>
 	</bean>
 
-	<!-- For tests a broad mapping config is used: "Get all .hbm.xml files in the data package" -->
-	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
-		<property name="dataSource" ref="dataSource"/>
-		<property name="hibernateProperties">
-			<props>
-				<prop key="hibernate.dialect">${db.dialect}</prop>
-				<prop key="autocommmit">true</prop>
-				<prop key="hibernate.show_sql">true</prop>
-				<prop key="hibernate.search.default.directory_provider">
-					org.hibernate.search.store.RAMDirectoryProvider
-				</prop>
+    <bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
 
-			</props>
-		</property>
-		<property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo"/>
-	</bean>
+    <elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+    		<constructor-arg name="client" ref="client"/>
+    	</bean>
+
+	<!-- For tests a broad mapping config is used: "Get all .hbm.xml files in the data package" -->
+    <bean id="sessionFactory" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+    		<property name="dataSource" ref="dataSource"/>
+
+    		<property name="entityInterceptor">
+    			<ref bean="elasticSynchronizationInterceptor"/>
+    		</property>
+
+    		<property name="hibernateProperties">
+    			<props>
+    				<prop key="hibernate.dialect">${db.dialect}</prop>
+    				<prop key="autocommmit">true</prop>
+    				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+    				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
+    				<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
+    				<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>
+    			</props>
+    		</property>
+    		<property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo"/>
+    		<hprof:profiler/>
+    	</bean>
 
 	<bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
 		<property name="basenames">
@@ -104,275 +120,323 @@
 
 	<!--============================== Bean mapping ==========================================-->
 
-	<bean name="licenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleLicenseDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
 
-	<bean name="experimentPackageConnectionDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageConnectionDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="experimentPackageDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="researchGroupMembershipDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="experimentPackageLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageLicenseDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<!--BEGIN packages and license -->
+    	<bean name="licenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleLicenseDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="personalLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonalLicenseDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	<bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="experimentPackageConnectionDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageConnectionDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="researchGroupMembershipDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="experimentPackageDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.Article</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="experimentPackageLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentPackageLicenseDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="personalLicenseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonalLicenseDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
-		<!--   <constructor-arg>
-				<value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
-		</constructor-arg>       -->
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<!-- packages and licenses END -->
+
+    	<bean name="articleDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+
+    	<bean name="simpleKeywordsDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleKeywordsDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+
+    	<bean name="articleCommentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArticleCommentDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+
+    	<bean name="digitizationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDigitizationDao">
+    		<!--   <constructor-arg>
+    				<value>cz.zcu.kiv.eegdatabase.data.pojo.Digitization</value>
+    		</constructor-arg>       -->
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
 
-	<bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.Experiment</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="experimentDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="historyDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.History</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="historyDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHistoryDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="groupPermissionRequestDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="groupPermissionRequestDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="artifactDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao">
+    		<!--  <constructor-arg>
+    				<value>cz.zcu.kiv.eegdatabase.data.pojo.Artifact</value>
+    		</constructor-arg>                             -->
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="diseaseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="analysisDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAnalysisDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="artifactRemovingMethodDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactRemovingDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="pharmaceuticalDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="diseaseDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="electrodeFixDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeFixDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="electrodeTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeTypeDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="electrodeLocationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeLocationDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="electrodeSystemDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeSystemDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="electrodeSystemDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeSystemDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="electrodeFixDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeFixDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="electrodeTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeTypeDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="electrodeLocationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleElectrodeLocationDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="pharmaceuticalDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="projectTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="scenarioDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="stimulusTypeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusTypeDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="scenarioSchemasDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioSchemasDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="softwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="educationLevelDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleEducationLevelDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="reservationDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleReservationDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>java.lang.Object</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="scenarioDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="hardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="scenarioSchemasDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioSchemasDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleStimulusDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="educationLevelDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleEducationLevelDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDataFileDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>java.lang.Object</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="subjectGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	<bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="hardwareDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleHardwareDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="fileMetadataDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="weatherDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleWeatherDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="dataFileDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleDataFileDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="personOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="subjectGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+    	<bean name="electrodeConfDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+    	<!--
+    	<bean name="stimulusDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    			<constructor-arg>
+    					<value>cz.zcu.kiv.eegdatabase.data.pojo.Stimulus</value>
+    			</constructor-arg>
+    			<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+    	-->
+    	<bean name="fileMetadataParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFileMetadataParamDefDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="experimentOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
-		<constructor-arg>
-			<value>cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal</value>
-		</constructor-arg>
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="fileMetadataDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
-	<bean name="serviceResultDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao">
-		<property name="sessionFactory" ref="sessionFactory"/>
-	</bean>
+    	<bean name="personOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonOptParamDefDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
-	<bean name="hardwareFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacadeImpl" autowire="byType" />
+    	<bean name="personOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean id="scenario" class="cz.zcu.kiv.eegdatabase.data.pojo.Scenario">
-		<property name="title" value="scenario title test"/>
-		<property name="scenarioName" value="scenario_name_test"/>
-		<property name="description" value="description test"/>
-		<property name="scenarioLength" value="123"/>
-	</bean>
+    	<bean name="experimentOptParamValDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+    		<constructor-arg>
+    			<value>cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal</value>
+    		</constructor-arg>
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean id="nonXmlContent" class="java.lang.String">
-		<constructor-arg type="java.lang.String" value="test test test"></constructor-arg>
-	</bean>
+    	<bean name="experimentOptParamDefDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentOptParamDefDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
+    	<bean name="serviceResultDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleServiceResultDao">
+    		<property name="sessionFactory" ref="sessionFactory"/>
+    	</bean>
 
-	<bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService"/>
+    	<bean name="formLayoutDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFormLayoutDao">
+            <property name="sessionFactory" ref="sessionFactory"/>
+        </bean>
 
-	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService"/>
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+    		<property name="decisionVoters">
+    			<list>
+    				<bean class="org.springframework.security.access.vote.RoleVoter">
+    					<property name="rolePrefix" value="ROLE_" />
+    				</bean>
+    				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
+    			</list>
+    		</property>
+    	</bean>
 
-	<context:component-scan base-package="cz.zcu.kiv.eegdatabase.webservices.rest"/>
+    	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
-	<bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
-		<property name="host" value="${email.smtp}"/>
-	</bean>
 
-	<bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
-		<property name="from" value="${email.from}"/>
-		<property name="subject" value="${email.subject}"/>
-	</bean>
 
-	<!--==================  Solr-related bean definitions ==================-->
 
-	<!-- Remote Solr test server -->
-	<bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
-		<constructor-arg name="baseURL" value="${solr.serverUrl}"/>
-		<constructor-arg name="client" ref="httpClient"/>
-		<property name="connectionTimeout" value="${solr.connectionTimeout}"/>
-	</bean>
+    	<!-- MAIL -->
+    	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
 
-	<!-- HttpClient Factory -->
-	<bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
-		<constructor-arg name="url"  value="${solr.serverUrl}"/>
-		<constructor-arg name="username"  value="${solr.username}"/>
-		<constructor-arg name="password" value="${solr.password}"/>
-		<constructor-arg name="connManager">
-			<bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
-				<property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
-				<property name="maxTotal" value="${solr.maxTotalConnections}" />
-			</bean>
-		</constructor-arg>
-	</bean>
+    	<bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+    		<property name="host" value="${email.smtp}" />
+    	</bean>
 
-	<!-- POJO indexer for Solr -->
-	<bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
+    	<bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+    		<property name="from" value="${email.from}" />
+    		<property name="subject" value="${email.subject}" />
+    	</bean>
 
-	<!-- LinkedIn indexer for Solr -->
-	<bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
 
-	<!-- LinkedIn indexer for Solr -->
-	<bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
+    	<!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
 
-	<!-- indexing service for database and LinkedIn indexing -->
-	<bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
+    	<bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
+    		<property name="sessionFactory" ref="sessionFactory" />
+    		<property name="personDao" ref="personDao" />
+    	</bean>
 
-	<bean name="fulltextSearchService"
-					class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
+    	<bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
 
-	<!--==================  LinkedIn template ==================-->
+    	<!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
+    	<!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
 
-	<bean id="linkedInTemplate" class="org.springframework.social.linkedin.api.impl.LinkedInTemplate">
-		<constructor-arg name="accessToken" value="${linkedin.accessToken}"/>
-		<constructor-arg name="accessTokenSecret" value="${linkedin.accessTokenSecret}"/>
-		<constructor-arg name="consumerKey" value="${linkedin.consumerKey}"/>
-		<constructor-arg name="consumerSecret" value="${linkedin.consumerSecret}"/>
-	</bean>
+
+    	<bean name="transformer" class="cz.zcu.kiv.eegdatabase.logic.xml.XMLTransformer">
+    		<!-- property -->
+    		<property name="encoding" value="${encoding}" />
+    		<property name="objects" value="${objects}" />
+    		<property name="measured" value="${measured}" />
+    		<property name="experimenter" value="${experimenter}" />
+    	</bean>
+
+    	<bean name="zipGenerator" class="cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator">
+    		<property name="metadata" value="${metadata.file}" />
+    		<property name="transformer" ref="transformer" />
+    		<property name="dataZip" value="${data.zip}" />
+
+    	</bean>
+
+
+    	<bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
+
+    	<!-- Solr POJO indexer -->
+    	<bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
+
+    	<!-- Solr indexer for LinkedIn articles -->
+    	<bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
+
+    	<!-- Solr autocomplete indexer -->
+    	<bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
+
+    	<!-- Solr indexing service -->
+    	<bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
+
+    	<!-- Solr Server instance (production server) -->
+    	<bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+    		<constructor-arg name="baseURL" value="${solr.serverUrl}"/>
+    		<constructor-arg name="client" ref="httpClient"/>
+    		<property name="connectionTimeout" value="${solr.connectionTimeout}"/>
+    	</bean>
+
+    	<!-- HttpClient Factory -->
+    	<bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
+    		<constructor-arg name="url"  value="${solr.serverUrl}"/>
+    		<constructor-arg name="username"  value="${solr.username}"/>
+    		<constructor-arg name="password" value="${solr.password}"/>
+    		<constructor-arg name="connManager">
+    			<bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
+    				<property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
+    				<property name="maxTotal" value="${solr.maxTotalConnections}" />
+    			</bean>
+    		</constructor-arg>
+    	</bean>
+
+    	<!-- Activates @Scheduled and @Async annotations for scheduling -->
+
+
 </beans>
