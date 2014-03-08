@@ -46,11 +46,10 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import cz.zcu.kiv.formgen.Form;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
-import cz.zcu.kiv.formgen.odml.OdmlFormProvider;
+import cz.zcu.kiv.formgen.model.Form;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
@@ -90,7 +89,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public void afterPropertiesSet() {
-		LayoutGenerator generator = new SimpleLayoutGenerator(new OdmlFormProvider());
+		LayoutGenerator generator = new SimpleLayoutGenerator();
 		try {
 			generator.loadPackage(POJO_BASE);
 			OdmlWriter writer = new OdmlWriter();

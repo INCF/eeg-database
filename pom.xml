@@ -84,17 +84,17 @@
             <artifactId>hibernate-profiler</artifactId>
             <version>1.0</version>
         </dependency>
-        <dependency>
-            <groupId>org.gnode</groupId>
-            <artifactId>odml-java-lib</artifactId>
-            <version>1.0.3</version>
-        </dependency>
         
         <!-- ============================= In-house libs in Nexus repository =========================== -->
         <dependency>
             <groupId>cz.zcu.kiv</groupId>
             <artifactId>layout-generator</artifactId>
-            <version>0.0.7</version>
+            <version>0.0.8</version>
+        </dependency>
+        <dependency>
+            <groupId>org.gnode</groupId>
+            <artifactId>odml-java-lib</artifactId>
+            <version>1.0.5</version>
         </dependency>
         
         <!--=================================== Test scoped libraries ================================== -->
