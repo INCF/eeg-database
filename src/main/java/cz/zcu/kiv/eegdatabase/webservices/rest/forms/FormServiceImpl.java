@@ -28,8 +28,8 @@ import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -40,7 +40,9 @@ import org.springframework.transaction.annotation.Transactional;
 import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
@@ -75,7 +77,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
 	
 	/** Logger object. */
-	private static final Log log = LogFactory.getLog(FormServiceImpl.class);
+	private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
 	
 	
 	
@@ -100,7 +102,7 @@ public class FormServiceImpl implements FormService, InitializingBean {
 				formLayoutDao.createOrUpdateByName(layout);
 			}
 		} catch (FormNotFoundException e) {
-			log.warn("Could not transform the data model to form-layouts.", e);
+			logger.warn("Could not transform the data model to form-layouts.", e);
 		}
 	}
 	
@@ -187,11 +189,15 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	
 	
 	/**
-	 * {@inheritDoc}
+	 * {@inheritDoc} 
 	 */
 	@Override
-	public FormLayout getLayout(String formName, String layoutName) {
-		return formLayoutDao.getLayout(formName, layoutName);
+	public FormLayout getLayout(String formName, String layoutName) throws FormServiceException {
+		FormLayout formLayout = formLayoutDao.getLayout(formName, layoutName);
+		if (formLayout == null)
+			throw new FormServiceException(Cause.NOT_FOUND);
+		else
+			return formLayout;
 	}
 	
 	
@@ -199,12 +205,71 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	 * {@inheritDoc}
 	 */
 	@Override
-	public void saveLayout(String formName, String layoutName, byte[] content) {
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public void createLayout(String formName, String layoutName, byte[] content) throws FormServiceException {
 		
-		// TODO kontrola, zda layout s danym jmenem nepatri jinemu uzivateli
+		// check whether the layout exists
+		if (formLayoutDao.getLayout(formName, layoutName) != null) {
+			logger.debug("Cannot create layout, key already exists [form: {}, layout: {}].", formName, layoutName);
+			throw new FormServiceException(Cause.CONFLICT);
+		}
 		
+		// create
 		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson());
-		formLayoutDao.createOrUpdateByName(layout);
+		formLayoutDao.create(layout);
+	}
+	
+	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public void updateLayout(String formName, String layoutName, byte[] content) throws FormServiceException {
+		FormLayout formLayout;
+		
+		// check whether the layout exists
+		if ((formLayout = formLayoutDao.getLayout(formName, layoutName)) == null) {
+			logger.debug("Layout not found [form: {}, layout: {}].", formName, layoutName);
+			throw new FormServiceException(Cause.NOT_FOUND);
+		}
+		
+		// check the owner
+		Person current = personDao.getLoggedPerson();
+		if (current == null  ||  !current.equals(formLayout.getPerson())) {
+			logger.debug("Missing permissions to update layout [form: {}, layout: {}].", formName, layoutName);
+			throw new FormServiceException(Cause.PERMISSION);
+		}
+		
+		// update
+		formLayout.setContent(content);
+		formLayoutDao.update(formLayout);
+	}
+	
+	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public void deleteLayout(String formName, String layoutName) throws FormServiceException {
+		FormLayout formLayout;
+		
+		// check whether the layout exists
+		if ((formLayout = formLayoutDao.getLayout(formName, layoutName)) == null) {
+			logger.debug("Layout not found [form: {}, layout: {}].", formName, layoutName);
+			throw new FormServiceException(Cause.NOT_FOUND);
+		}
+		
+		// check the owner
+		Person current = personDao.getLoggedPerson();
+		if (current == null  ||  !current.equals(formLayout.getPerson())) {
+			logger.debug("Missing permissions to delete layout [form: {}, layout: {}].", formName, layoutName);
+			throw new FormServiceException(Cause.PERMISSION);
+		}
+		
+		// delete
+		formLayoutDao.delete(formLayout);
 	}
 
 

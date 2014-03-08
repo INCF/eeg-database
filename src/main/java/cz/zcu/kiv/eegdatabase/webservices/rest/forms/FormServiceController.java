@@ -25,18 +25,23 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
-import java.sql.SQLException;
 import javax.servlet.http.HttpServletResponse;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.multipart.MultipartFile;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
@@ -53,6 +58,9 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
 @RequestMapping("/form-layouts")
 public class FormServiceController {
 	
+	/** Logger. */
+	private static final Logger logger = LoggerFactory.getLogger(FormServiceController.class);
+	
 	/** The service object providing data. */
 	@Autowired
 	private FormService service;
@@ -62,7 +70,7 @@ public class FormServiceController {
 	 * Gets the count of forms available.
 	 * @return count of forms available
 	 */
-	@RequestMapping(value = "/form/count")
+	@RequestMapping(value = "/form/count", method = RequestMethod.GET)
 	public @ResponseBody RecordCountData availableFormsCount() {
 		return service.availableFormsCount();
 	}
@@ -73,7 +81,7 @@ public class FormServiceController {
 	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of forms with available layouts
 	 */
-	@RequestMapping(value = "/form/available")
+	@RequestMapping(value = "/form/available", method = RequestMethod.GET)
 	public @ResponseBody AvailableFormsDataList availableForms (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly) {
 		
@@ -86,7 +94,7 @@ public class FormServiceController {
 	 * @param formName - name of a specific form, or null (any form)
 	 * @return count of form-layouts available
 	 */
-	@RequestMapping(value = "/count")
+	@RequestMapping(value = "/count", method = RequestMethod.GET)
 	public @ResponseBody RecordCountData availableLayoutsCount (
 					@RequestParam(value = "form", required = false) String formName) {
 		
@@ -103,7 +111,7 @@ public class FormServiceController {
 	 * @param formName - name of a specific form, or null (any form)
 	 * @return names of form layouts available
 	 */
-	@RequestMapping(value = "/available")
+	@RequestMapping(value = "/available", method = RequestMethod.GET)
 	public @ResponseBody AvailableLayoutsDataList availableLayouts (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
 					@RequestParam(value = "form", required = false) String formName) {
@@ -120,19 +128,32 @@ public class FormServiceController {
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
 	 * @param response - HTTP response object
-	 * @throws IOException if an error writing to response's output stream occured
-	 * @throws SQLException 
+	 * @throws IOException if an error occurs while writing to the response output stream
+	 * @throws FormServiceException if the specified layout cannot be found
 	 */
-	@RequestMapping(value = "/get/{formName}/{layoutName}", produces = "application/xml")
+	@Deprecated  // only for compatibility with older REST API
+	@RequestMapping(value = "/get/{formName}/{layoutName}", produces = MediaType.APPLICATION_XML_VALUE)
 	public void getFormLayout(@PathVariable String formName, @PathVariable String layoutName, 
-					HttpServletResponse response) throws IOException, SQLException {
+					HttpServletResponse response) throws IOException, FormServiceException {
+
+		getLayout(formName, layoutName, response);
+	}
+	
+	
+	/**
+	 * Retrieves an existing layout with the specified name.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @param response - HTTP response object
+	 * @throws IOException if an error occurs while writing to the response output stream
+	 * @throws FormServiceException if the specified layout cannot be found
+	 */
+	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+	public void getLayout(@RequestParam("form") String formName, @RequestParam("layout") String layoutName, 
+					HttpServletResponse response) throws FormServiceException, IOException {
 
 		FormLayout layout = service.getLayout(formName, layoutName);
-		if (layout == null) {
-			response.sendError(HttpServletResponse.SC_NOT_FOUND);
-			return;
-		}
-		response.setContentType("application/xml");
+		response.setContentType(MediaType.APPLICATION_XML_VALUE);
 		response.setContentLength(layout.getContent().length);
 		response.getOutputStream().write(layout.getContent());
 		response.flushBuffer();
@@ -140,20 +161,75 @@ public class FormServiceController {
 	
 	
 	/**
-	 * Saves an uploaded layout with the specified name.
-	 * @param response - HTTP response
+	 * Saves a new layout with the specified name.
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
-	 * @param file - document with the layout
-	 * @throws IOException
+	 * @param content - the layout in XML format
+	 * @throws FormServiceException if the create operation cannot be executed
 	 */
-	@RequestMapping(method = RequestMethod.POST)
+	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void uploadLayout(HttpServletResponse response, @RequestParam("form") String formName, 
-					@RequestParam("layout") String layoutName, @RequestParam("odml") MultipartFile file) throws IOException {
-		
-		service.saveLayout(formName, layoutName, file.getBytes());
+	public void createLayout(@RequestParam("form") String formName, 
+			@RequestParam("layout") String layoutName, @RequestBody byte[] content) throws FormServiceException {
+
+		service.createLayout(formName, layoutName, content);
 	}
+	
+	
+	/**
+	 * Updates an existing layout.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @param content - the layout in XML format
+	 * @throws FormServiceException if the update operation cannot be executed
+	 */
+	@RequestMapping(method = RequestMethod.PUT, consumes = MediaType.APPLICATION_XML_VALUE)
+	@ResponseStatus(HttpStatus.OK)
+	public void updateLayout(@RequestParam("form") String formName, 
+			@RequestParam("layout") String layoutName, @RequestBody byte[] content) throws FormServiceException {
+
+		service.updateLayout(formName, layoutName, content);
+	}
+	
+	
+	/**
+	 * Deletes an existing layout.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @throws FormServiceException if the delete operation cannot be executed
+	 */
+	@RequestMapping(method = RequestMethod.DELETE)
+	@ResponseStatus(HttpStatus.OK)
+	public void deleteLayout(@RequestParam("form") String formName, 
+			@RequestParam("layout") String layoutName) throws FormServiceException {
+
+		service.deleteLayout(formName, layoutName);
+	}
+	
+	
+	/**
+	 * Handles the {@link FormServiceException} exception.
+	 * @param exception - the exception
+	 * @param response - HTTP response
+	 * @throws IOException if an output exception occurs while writing to the response stream
+	 */
+	@ExceptionHandler(FormServiceException.class)
+    public void handleException(FormServiceException exception, HttpServletResponse response) throws IOException {
+		switch (exception.what()) {
+			case PERMISSION:
+				response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission for this operation.");
+				break;
+			case NOT_FOUND:
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "The specified layout was not found.");
+				break;
+			case CONFLICT:
+				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing layout.");
+				break;
+			default:
+				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
+		}
+		logger.debug("The requested operation was not successfull.", exception);
+    }
 	
 	
 }

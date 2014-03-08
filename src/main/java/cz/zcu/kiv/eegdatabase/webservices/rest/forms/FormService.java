@@ -89,16 +89,39 @@ public interface FormService {
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
 	 * @return requested form-layout
+	 * @throws FormServiceException if the specified layout cannot be found
 	 */
-	FormLayout getLayout(String formName, String layoutName);
+	FormLayout getLayout(String formName, String layoutName) throws FormServiceException;
 	
 	
 	/**
-	 * Saves the uploaded layout.
+	 * Saves a new layout.
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
 	 * @param content - byte array with the layout document
+	 * @throws FormServiceException if the specified layout already exists
 	 */
-	void saveLayout(String formName, String layoutName, byte[] content);
+	void createLayout(String formName, String layoutName, byte[] content) throws FormServiceException;
+	
+	
+	/**
+	 * Updates an existing layout.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @param content - byte array with the layout document
+	 * @throws FormServiceException if the specified layout cannot be found 
+	 * 					or the logged user does not have permission to do the operation
+	 */
+	void updateLayout(String formName, String layoutName, byte[] content) throws FormServiceException;
+	
+	
+	/**
+	 * Deletes an existing layout.
+	 * @param formName - name of the form
+	 * @param layoutName - name of the layout
+	 * @throws FormServiceException if the specified layout cannot be found 
+	 * 					or the logged user does not have permission to do the operation
+	 */
+	void deleteLayout(String formName, String layoutName) throws FormServiceException;
 
 }
