@@ -25,6 +25,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -32,6 +33,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -102,6 +104,15 @@ public class FormServiceController {
 			return service.availableLayoutsCount();
 		else
 			return service.availableLayoutsCount(formName);
+	}
+	
+	
+	// TODO pouze pro otestovani, pak odstranit
+	@Secured(value = "IS_AUTHENTICATED_FULLY")
+	@RequestMapping(value = "/count2", method = RequestMethod.GET)
+	public @ResponseBody RecordCountData availableLayoutsCount_test (
+					@RequestParam(value = "form", required = false) String formName) {
+		return availableLayoutsCount(formName);
 	}
 	
 	

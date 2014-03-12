@@ -54,7 +54,7 @@ import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
 /**
- * Service implementation for form layouts. Used in REST.
+ * Service implementation for form layouts. Used in RESTful API.
  * 
  * @author Jakub Krauz
  */
