@@ -72,7 +72,9 @@
 	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
 
 	<!-- CORE -->
-	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" />
+	<bean id="wicketApplication " class="cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication" >
+        <property name="development" value="${development}" />
+    </bean>
 
 	<bean id="securityFacade " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacadeImpl" autowire="byType" />
 	<bean id="securityService " class="cz.zcu.kiv.eegdatabase.wui.core.security.SecurityServiceImpl" autowire="byType" />

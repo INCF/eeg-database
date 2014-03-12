@@ -34,12 +34,12 @@ import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
-
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
@@ -53,6 +53,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.InternalErrorPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
@@ -154,6 +155,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private WeatherFacade weatherFacade;
     @Autowired
     private StimulusFacade stimulusFacade;
+    
+    private boolean development = true;
 
 
     public java.lang.Class<? extends Page> getHomePage() {
@@ -176,6 +179,10 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         // set access denied page inserted in menu content.
         getApplicationSettings().setAccessDeniedPage(AccessDeniedPage.class);
+        getApplicationSettings().setInternalErrorPage(InternalErrorPage.class);
+        if(!development)
+            getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
+        
         // set true for upload progress.
         getApplicationSettings().setUploadProgressUpdatesEnabled(true);
 
@@ -303,6 +310,10 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     protected Class<? extends WebPage> getSignInPageClass() {
         return HomePage.class;
+    }
+    
+    public void setDevelopment(boolean development) {
+        this.development = development;
     }
 
 }

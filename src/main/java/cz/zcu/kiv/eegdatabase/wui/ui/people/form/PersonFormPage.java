@@ -26,6 +26,7 @@ import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.yui.calendar.DatePicker;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
@@ -47,11 +48,10 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
-import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
@@ -139,7 +139,7 @@ public class PersonFormPage extends MenuPage {
             FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
             add(surname, surnameLabel);
 
-            DatePicker date = new DatePicker("dateOfBirth") {
+            DateTimeFieldPicker date = new DateTimeFieldPicker("dateOfBirth") {
 
                 private static final long serialVersionUID = 1L;
 
@@ -233,7 +233,7 @@ public class PersonFormPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     Person user = PersonForm.this.getModelObject();
-
+                    user.setEmail(user.getUsername().toLowerCase());
                     boolean isEdit = user.getPersonId() > 0;
 
                     if (validation(user, personFacade, isEdit)) {

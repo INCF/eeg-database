@@ -400,11 +400,17 @@
 			<version>${wicket.version}</version>
 		</dependency>
 
-		<dependency>
-			<groupId>com.googlecode.wicket-jquery-ui</groupId>
-			<artifactId>jquery-ui-core</artifactId>
-			<version>6.1.1</version>
-		</dependency>
+        <dependency>
+            <groupId>com.googlecode.wicket-jquery-ui</groupId>
+            <artifactId>wicket-jquery-ui-core</artifactId>
+            <version>6.14.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>com.googlecode.wicket-jquery-ui</groupId>
+            <artifactId>wicket-jquery-ui</artifactId>
+            <version>6.14.0</version>
+        </dependency>
 
 		<!--======================================= Hibernate ============================================= -->
 
@@ -877,7 +883,7 @@
 				<enabled>true</enabled>
 			</snapshots>
 		</repository>
-
+        
 	</repositories>
 
 	<pluginRepositories>

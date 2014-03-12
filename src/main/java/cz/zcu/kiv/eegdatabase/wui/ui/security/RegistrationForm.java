@@ -33,11 +33,10 @@ import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.EmailTextField;
 import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponentLabel;
 import org.apache.wicket.markup.html.form.PasswordTextField;
 import org.apache.wicket.markup.html.form.RadioChoice;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.image.Image;
+import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -47,11 +46,11 @@ import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
 
-import com.googlecode.wicket.jquery.ui.form.datepicker.DatePicker;
 import com.octo.captcha.service.image.ImageCaptchaService;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -71,7 +70,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 public class RegistrationForm extends Form<FullPersonDTO> {
 
     private static final long serialVersionUID = 4973918066620014022L;
-
+    
     @SpringBean
     EducationLevelFacade educationLevelFacade;
 
@@ -81,6 +80,8 @@ public class RegistrationForm extends Form<FullPersonDTO> {
     @SpringBean
     ImageCaptchaService captchaService;
 
+    private NonCachingImage captchaImage;
+
     public RegistrationForm(String id, final FeedbackPanel feedback) {
         super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
 
@@ -88,17 +89,15 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         name.setLabel(ResourceUtils.getModel("general.name"));
         name.setRequired(true);
         name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-        FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
-        add(name, nameLabel);
+        add(name);
 
         TextField<String> surname = new TextField<String>("surname");
         surname.setLabel(ResourceUtils.getModel("general.surname"));
         surname.setRequired(true);
         surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-        FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
-        add(surname, surnameLabel);
+        add(surname);
 
-        DatePicker date = new DatePicker("dateOfBirth") {
+        DateTimeFieldPicker date = new DateTimeFieldPicker("dateOfBirth") {
 
             private static final long serialVersionUID = 1L;
 
@@ -109,50 +108,38 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         };
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
         date.setRequired(true);
-        FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
-        add(date, dateLabel);
+        add(date);
 
         EmailTextField email = new EmailTextField("email");
         email.setLabel(ResourceUtils.getModel("general.email"));
         email.setRequired(true);
-        FormComponentLabel emailLabel = new FormComponentLabel("emailLb", email);
-        add(email, emailLabel);
+        add(email);
 
         PasswordTextField password = new PasswordTextField("password");
         password.setLabel(ResourceUtils.getModel("general.password"));
         password.setRequired(true);
         password.add(StringValidator.minimumLength(6));
-        FormComponentLabel passLabel = new FormComponentLabel("passLb", password);
-        add(password, passLabel);
+        add(password);
 
         PasswordTextField passwordVerify = new PasswordTextField("passwordVerify");
         passwordVerify.setLabel(ResourceUtils.getModel("general.password.verify"));
         passwordVerify.setRequired(true);
         passwordVerify.add(StringValidator.minimumLength(6));
-        FormComponentLabel pass2Label = new FormComponentLabel("passVerLb", passwordVerify);
-        add(passwordVerify, pass2Label);
+        add(passwordVerify);
 
-        String captcha = StringUtils.getCaptchaString();
-        getModelObject().setCaptcha(captcha);
-
-        BufferedImage image = captchaService.getImageChallengeForID(captcha, getLocale());
-        BufferedDynamicImageResource res = new BufferedDynamicImageResource();
-        res.setImage(image);
-        Image captchaImage = new Image("captchaImage", res );
+        generateCaptchaImageAndPrepareValidation();
         add(captchaImage);
 
         TextField<String> controlText = new TextField<String>("controlText");
         controlText.setLabel(ResourceUtils.getModel("general.controlText"));
         controlText.setRequired(true);
-        FormComponentLabel controlTextLabel = new FormComponentLabel("controlTextLb", controlText);
-        add(controlText, controlTextLabel);
+        add(controlText);
 
         RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
         gender.setSuffix("\n");
         gender.setRequired(true);
         gender.setLabel(ResourceUtils.getModel("general.gender"));
-        FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
-        add(gender, genderLabel);
+        add(gender);
 
         DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
                 new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
@@ -168,8 +155,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
         educationLevel.setRequired(true);
         educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
-        FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
-        add(educationLevel, educationLevelLabel);
+        add(educationLevel);
 
 
         AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("action.create.account"), this) {
@@ -183,7 +169,9 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                
                 FullPersonDTO user = RegistrationForm.this.getModelObject();
+                // validate captcha via service
                 if (captchaService.validateResponseForID(user.getCaptcha(), user.getControlText())) {
 
                     user.setRegistrationDate(new DateTime());
@@ -191,15 +179,37 @@ public class RegistrationForm extends Form<FullPersonDTO> {
                         personFacade.create(new PersonMapper().convertToEntity(user, new Person()));
                         setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
                     }
+                    // if captcha is valid but other validation fail - generate new captcha
+                    generateCaptchaImageAndPrepareValidation();
                 } else {
                     error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
                 }
+                target.add(captchaImage);
                 target.add(feedback);
             }
         };
         add(submit);
     }
+    
+    private void generateCaptchaImageAndPrepareValidation() {
+        
+        // TODO create own captcha component with using this captcha service.
+        String captcha = StringUtils.getCaptchaString();
+        getModelObject().setCaptcha(captcha);
 
+        BufferedImage image = captchaService.getImageChallengeForID(captcha, getLocale());
+        BufferedDynamicImageResource res = new BufferedDynamicImageResource();
+        res.setImage(image);
+        
+        if(captchaImage == null)
+            captchaImage = new NonCachingImage("captchaImage", res);
+        else
+            captchaImage.setImageResource(res);
+        
+        captchaImage.setOutputMarkupId(true);
+        
+    }
+    
     private boolean validation(FullPersonDTO user) {
 
         boolean validate = true;
