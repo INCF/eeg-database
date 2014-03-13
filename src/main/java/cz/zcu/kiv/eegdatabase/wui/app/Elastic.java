@@ -72,7 +72,8 @@ public class Elastic extends BasePage {
 
 	public Elastic() {
 
-		search();
+//		search();
+		reinsert();
 	}
 
 	@Transactional
