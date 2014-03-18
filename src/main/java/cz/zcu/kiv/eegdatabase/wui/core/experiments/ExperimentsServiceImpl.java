@@ -29,22 +29,27 @@ import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.dao.DigitizationDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageConnectionDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.HardwareDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleArtifactDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleDiseaseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimplePharmaceuticalDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleProjectTypeDao;
 import cz.zcu.kiv.eegdatabase.data.dao.SimpleSoftwareDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
+import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
+import cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 
 public class ExperimentsServiceImpl implements ExperimentsService {
@@ -59,6 +64,11 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     private SimplePharmaceuticalDao pharmDao;
     private SimpleProjectTypeDao projectTypesDao;
     private ExperimentPackageConnectionDao experimentPackageConnectionDao;
+    
+    private SimpleArtifactDao artifactDao;
+    private DigitizationDao digitizationDao;
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
+    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
 
     @Required
     public void setExperimentDao(ExperimentDao experimentDao) {
@@ -98,6 +108,26 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Required
     public void setDiseaseDao(SimpleDiseaseDao diseaseDao) {
         this.diseaseDao = diseaseDao;
+    }
+    
+    @Required
+    public void setSubjectGroupDao(GenericDao<SubjectGroup, Integer> subjectGroupDao) {
+        this.subjectGroupDao = subjectGroupDao;
+    }
+    
+    @Required
+    public void setElectrodeConfDao(GenericDao<ElectrodeConf, Integer> electrodeConfDao) {
+        this.electrodeConfDao = electrodeConfDao;
+    }
+    
+    @Required
+    public void setDigitizationDao(DigitizationDao digitizationDao) {
+        this.digitizationDao = digitizationDao;
+    }
+    
+    @Required
+    public void setArtifactDao(SimpleArtifactDao artifactDao) {
+        this.artifactDao = artifactDao;
     }
 
     @Override
@@ -197,6 +227,11 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         
         for(Software tmp : experiment.getSoftwares())
             softwareDao.read(tmp.getSoftwareId()).getExperiments().add(experiment);
+        
+        experiment.setArtifact(artifactDao.read(1));
+        experiment.setSubjectGroup(subjectGroupDao.read(1));
+        experiment.setDigitization(digitizationDao.read(1));
+        experiment.setElectrodeConf(electrodeConfDao.read(1));
         
         experimentDao.create(experiment);
 

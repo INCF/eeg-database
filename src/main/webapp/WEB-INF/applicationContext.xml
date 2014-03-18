@@ -98,7 +98,12 @@
 	<bean name="educationLevelService" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelServiceImpl" autowire="byType" />
 	<bean name="educationLevelFacade" class="cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacadeImpl" autowire="byType" />
 
-	<bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" />
+	<bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="digitizationDao" ref="digitizationDao"/>
+        <property name="subjectGroupDao" ref="subjectGroupDao"/>
+        <property name="electrodeConfDao" ref="electrodeConfDao"/>
+    </bean>
 	<bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
 
 	<bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />

@@ -45,13 +45,9 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Artifact;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
-import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.SubjectGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
@@ -137,22 +133,8 @@ public class ExperimentFormPage extends MenuPage {
                     log.error(ex.getMessage(), ex);
                 }
 
-                // TODO user must somehow insert this data instead of us.
                 Person logged = EEGDataBaseSession.get().getLoggedUser();
                 experiment.setPersonByOwnerId(logged);
-                Digitization digitization = new Digitization();
-                digitization.setDigitizationId(52);
-                experiment.setDigitization(digitization);
-                SubjectGroup subjectGroup = new SubjectGroup();
-                subjectGroup.setSubjectGroupId(11);
-                experiment.setSubjectGroup(subjectGroup);
-                Artifact artifact = new Artifact();
-                artifact.setArtifactId(5);
-                experiment.setArtifact(artifact);
-                ElectrodeConf conf = new ElectrodeConf();
-                conf.setElectrodeConfId(6);
-                experiment.setElectrodeConf(conf);
-                // TODO End of todo.
 
                 Integer id = experiment.getExperimentId();
                 if (experiment.getExperimentId() != 0)
