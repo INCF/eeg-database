@@ -30,6 +30,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.scenarios;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Blob;
 import java.sql.SQLException;
 import java.util.List;
@@ -78,8 +79,13 @@ public class ScenariosServiceImpl implements ScenariosService {
     public Integer create(Scenario newInstance) {
 
         try {
-            Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(newInstance.getFileContentStream(), newInstance.getFileContentStream().available());
-            newInstance.setScenarioFile(createBlob);
+            
+            InputStream fileContentStream = newInstance.getFileContentStream();
+            if (fileContentStream != null) {
+                Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(fileContentStream, fileContentStream.available());
+                newInstance.setScenarioFile(createBlob);
+            }
+            
             return scenarioDAO.create(newInstance);
 
         } catch (HibernateException e) {
@@ -109,8 +115,11 @@ public class ScenariosServiceImpl implements ScenariosService {
     public void update(Scenario transientObject) {
 
         try {
-            Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(transientObject.getFileContentStream(), transientObject.getFileContentStream().available());
-            transientObject.setScenarioFile(createBlob);
+            InputStream fileContentStream = transientObject.getFileContentStream();
+            if (fileContentStream != null) {
+                Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(fileContentStream, fileContentStream.available());
+                transientObject.setScenarioFile(createBlob);
+            }
             scenarioDAO.update(transientObject);
 
         } catch (HibernateException e) {

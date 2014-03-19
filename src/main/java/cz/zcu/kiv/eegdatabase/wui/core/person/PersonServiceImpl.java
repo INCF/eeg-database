@@ -252,13 +252,13 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public void forgottenPassword(Person person) {
-        Person user = personDAO.getPerson(person.getEmail());
+
         String plainPassword = ControllerUtils.getRandomPassword();
 
-        if (mailService.sendForgottenPasswordMail(user.getEmail(), plainPassword)) {
+        if (mailService.sendForgottenPasswordMail(person.getUsername(), plainPassword)) {
             log.debug("Updating new password into database");
-            user.setPassword(new BCryptPasswordEncoder().encode(plainPassword));
-            personDAO.update(user);
+            person.setPassword(new BCryptPasswordEncoder().encode(plainPassword));
+            personDAO.update(person);
             log.debug("Password updated");
         } else {
             log.debug("E-mail message was NOT sent");
