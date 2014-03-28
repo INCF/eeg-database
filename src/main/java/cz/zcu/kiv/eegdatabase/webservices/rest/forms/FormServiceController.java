@@ -55,7 +55,7 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
  *
  * @author Jakub Krauz
  */
-//@Secured("IS_AUTHENTICATED_FULLY")     // temporarily disabled for testing purposes
+@Secured("IS_AUTHENTICATED_FULLY")
 @Controller
 @RequestMapping("/form-layouts")
 public class FormServiceController {
@@ -104,15 +104,6 @@ public class FormServiceController {
 			return service.availableLayoutsCount();
 		else
 			return service.availableLayoutsCount(formName);
-	}
-	
-	
-	// TODO pouze pro otestovani, pak odstranit
-	@Secured(value = "IS_AUTHENTICATED_FULLY")
-	@RequestMapping(value = "/count2", method = RequestMethod.GET)
-	public @ResponseBody RecordCountData availableLayoutsCount_test (
-					@RequestParam(value = "form", required = false) String formName) {
-		return availableLayoutsCount(formName);
 	}
 	
 	
