@@ -36,7 +36,6 @@ import org.springframework.http.MediaType;
 import org.springframework.security.access.annotation.Secured;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -122,23 +121,6 @@ public class FormServiceController {
 			return service.availableLayouts(mineOnly);
 		else
 			return service.availableLayouts(formName, mineOnly);
-	}
-
-	
-	/**
-	 * Gets a form layouts with the specified name.
-	 * @param formName - name of the form
-	 * @param layoutName - name of the layout
-	 * @param response - HTTP response object
-	 * @throws IOException if an error occurs while writing to the response output stream
-	 * @throws FormServiceException if the specified layout cannot be found
-	 */
-	@Deprecated  // only for compatibility with older REST API
-	@RequestMapping(value = "/get/{formName}/{layoutName}", produces = MediaType.APPLICATION_XML_VALUE)
-	public void getFormLayout(@PathVariable String formName, @PathVariable String layoutName, 
-					HttpServletResponse response) throws IOException, FormServiceException {
-
-		getLayout(formName, layoutName, response);
 	}
 	
 	
