@@ -734,6 +734,7 @@
 	</dependencies>
 
 	<build>
+<finalName>EEGDatabase</finalName>
 		<resources>
 			<resource>
 				<filtering>false</filtering>
