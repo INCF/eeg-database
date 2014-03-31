@@ -356,6 +356,8 @@
     	</bean>
 
     	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
+    	
+    	<bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType" />
 
 
 
