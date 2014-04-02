@@ -123,5 +123,14 @@ public interface FormService {
 	 * 					or the logged user does not have permission to do the operation
 	 */
 	void deleteLayout(String formName, String layoutName) throws FormServiceException;
+	
+	
+	/**
+	 * Gets all records of given type (entity) in odML format.
+	 * @param entity - the entity's name
+	 * @return byte array with odML data
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	byte[] getOdmlData(String entity) throws FormServiceException;
 
 }

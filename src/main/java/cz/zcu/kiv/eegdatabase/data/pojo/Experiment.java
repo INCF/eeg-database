@@ -64,6 +64,7 @@ public class Experiment implements Serializable {
 	private Weather weather; //being transformed to GenericParameter
 	private Person personBySubjectPersonId;
 	private Scenario scenario;
+	@FormItem(label = "owner")
 	private Person personByOwnerId;
 	private ResearchGroup researchGroup;
 	private Digitization digitization;//being transformed to GenericParameter
@@ -81,6 +82,7 @@ public class Experiment implements Serializable {
 	@SolrField(name = IndexField.TEXT)
 	@FormItem
 	private String environmentNote;
+	@FormItem
 	private Set<Person> persons = new HashSet<Person>(0);
 	private Set<Hardware> hardwares = new HashSet<Hardware>(0);//being transformed to GenericParameter
 	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);//being transformed to GenericParameter

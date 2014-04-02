@@ -192,6 +192,24 @@ public class FormServiceController {
 	
 	
 	/**
+	 * Retrieves all records of given entity in odML data format.
+	 * @param entity - the requested entity name
+	 * @param response - HTTP response object
+	 * @throws IOException if an error occurs when writing to response stream
+	 * @throws FormServiceException if required odML data cannot be retrieved
+	 */
+	@RequestMapping(value = "/data", method = RequestMethod.GET)
+	@ResponseStatus(HttpStatus.OK)
+	public void getData(@RequestParam("entity") String entity, HttpServletResponse response) throws IOException, FormServiceException {
+		byte[] odml = service.getOdmlData(entity);
+		response.setContentType(MediaType.APPLICATION_XML_VALUE);
+		response.setContentLength(odml.length);
+		response.getOutputStream().write(odml);
+		response.flushBuffer();
+	}
+	
+	
+	/**
 	 * Handles the {@link FormServiceException} exception.
 	 * @param exception - the exception
 	 * @param response - HTTP response
@@ -204,16 +222,16 @@ public class FormServiceController {
 				response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission for this operation.");
 				break;
 			case NOT_FOUND:
-				response.sendError(HttpServletResponse.SC_NOT_FOUND, "The specified layout was not found.");
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "The requested resource was not found.");
 				break;
 			case CONFLICT:
-				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing layout.");
+				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing resource.");
 				break;
 			default:
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 		logger.debug("The requested operation was not successfull.", exception);
     }
-	
+
 	
 }

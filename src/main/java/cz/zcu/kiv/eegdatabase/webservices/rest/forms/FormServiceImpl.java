@@ -30,14 +30,18 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -48,6 +52,8 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
+import cz.zcu.kiv.formgen.Writer;
+import cz.zcu.kiv.formgen.core.SimpleFormDataGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.model.Form;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
@@ -60,7 +66,7 @@ import cz.zcu.kiv.formgen.odml.OdmlWriter;
  */
 @Service
 @Transactional(readOnly = true)
-public class FormServiceImpl implements FormService, InitializingBean {
+public class FormServiceImpl implements FormService, InitializingBean, ApplicationContextAware {
 	
 	/** The DAO object providing form-layout data. */
 	@Autowired
@@ -77,6 +83,8 @@ public class FormServiceImpl implements FormService, InitializingBean {
 	
 	/** Logger object. */
 	private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
+	
+	private ApplicationContext context;
 	
 	
 	
@@ -269,6 +277,65 @@ public class FormServiceImpl implements FormService, InitializingBean {
 		
 		// delete
 		formLayoutDao.delete(formLayout);
+	}
+	
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	public byte[] getOdmlData(String entity) throws FormServiceException {
+		
+		// get the DAO object from spring context
+		GenericDao<?, ?> dao;
+		try {
+			dao = context.getBean(daoName(entity), GenericDao.class);
+		} catch (BeansException e) {
+			logger.warn("Unable to get bean \"" + daoName(entity) + "\" from the application context.", e);
+			throw new FormServiceException(Cause.NOT_FOUND);
+		}
+		
+		// get all records
+		@SuppressWarnings("unchecked")
+		List<Object> list = (List<Object>) dao.getAllRecords();
+		
+		// transform data to odML
+		try {
+			SimpleFormDataGenerator generator = new SimpleFormDataGenerator();
+			generator.loadObjects(list);
+			Writer writer = new OdmlWriter();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			writer.writeData(generator.getFormData(), out);
+			return out.toByteArray();
+		} catch (FormNotFoundException e) {
+			logger.error("Unable to transform data to odML format.", e);
+			throw new FormServiceException(Cause.OTHER);
+		}
+	}
+
+
+	@Override
+	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+		this.context = applicationContext;
+	}
+	
+	
+	/**
+	 * Guess name of DAO object for given entity.
+	 * @param entityClassName - classname of the entity
+	 * @return name of the DAO object
+	 */
+	private String daoName(String entityClassName) {
+		// get simple name if the name is fully qualified
+		String[] split = entityClassName.split("\\.");
+		String entity = split[split.length - 1];
+		
+		// first character to lower case
+		char[] array = entity.toCharArray();
+		array[0] = Character.toLowerCase(array[0]);
+		entity = new String(array);
+		
+		// append the "Dao" suffix
+		return entity + "Dao";
 	}
 
 
