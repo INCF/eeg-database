@@ -284,6 +284,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc} 
 	 */
 	public byte[] getOdmlData(String entity) throws FormServiceException {
+		if (entity == null)
+			throw new NullPointerException("Entity cannot be null.");
 		
 		// get the DAO object from spring context
 		GenericDao<?, ?> dao;

@@ -198,8 +198,7 @@ public class FormServiceController {
 	 * @throws IOException if an error occurs when writing to response stream
 	 * @throws FormServiceException if required odML data cannot be retrieved
 	 */
-	@RequestMapping(value = "/data", method = RequestMethod.GET)
-	@ResponseStatus(HttpStatus.OK)
+	@RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
 	public void getData(@RequestParam("entity") String entity, HttpServletResponse response) throws IOException, FormServiceException {
 		byte[] odml = service.getOdmlData(entity);
 		response.setContentType(MediaType.APPLICATION_XML_VALUE);
