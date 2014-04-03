@@ -155,5 +155,27 @@ public class FormServiceTest {
 		assertEquals(originalCount, service.availableLayoutsCount().getPublicRecords());
 	}
 	
+	
+	@Test
+	public void testGetOdmlData() throws FormServiceException {
+		final byte[] data = service.getOdmlData(Person.class.getSimpleName());
+		assertNotNull(data);
+		assertTrue(data.length > 0);
+		
+		try {
+			service.getOdmlData(null);
+			fail("Got odml data for null entity, NullPointerException should be thrown.");
+		} catch (Exception e) {
+			assertTrue(e instanceof NullPointerException);
+		}
+		
+		try {
+			service.getOdmlData("xxxx");
+			fail("Got odml data for non-existing entity, FormServiceException should be thrown.");
+		} catch (Exception e) {
+			assertTrue(e instanceof FormServiceException);
+		}
+	}
+	
 
 }
