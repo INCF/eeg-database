@@ -74,8 +74,8 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     <jaxws:client id="eegService"
                   address="http://147.228.63.134:8080/eegdataprocessor/webservice/webservice/processService"
                   serviceClass="cz.zcu.kiv.eegdatabase.webservices.EDPClient.ProcessService"
-                  username="jan.stebetak@seznam.cz"
-                  password="stebjan" />
+                  username="EEGBase"
+                  password="eeg" />
 
     <bean id="userData" class="cz.zcu.kiv.eegdatabase.webservices.datadownload.UserDataImpl">
         <property name="personDao" ref="personDao"/>
