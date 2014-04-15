@@ -23,10 +23,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -43,40 +42,23 @@ import static org.junit.Assert.*;
 public class RegistrationTest extends AbstractDataAccessTest {
 
     @Autowired
-    protected PersonDao personDao;
+    private PersonDao personDao;
 
-    @Autowired
-    protected EducationLevelDao educationLevelDao;
-
-    protected BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-    protected Person person;
-    protected String password;
+    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+    private Person person;
+    private String password;
     private String username;
 
 
     @Before
     public void setUp() {
 
-        username = "test1@test.test";
-        password = ControllerUtils.getRandomPassword();
-        person = new Person();
-        person.setUsername(username);
-        person.setAuthority(Util.ROLE_ADMIN);
-        person.setPassword(encoder.encode(password));
-        person.setSurname("test-surname");
-        person.setGivenname("test-name");
-        person.setGender('M');
-        person.setLaterality('X');
-        Person personDB = personDao.getPerson(person.getUsername());
-        if (personDB != null) {
-            personDao.delete(personDB);
-        }
-    }
-
-
-    @Test
-    public void testVerifyPassword() {
-        assertTrue(encoder.matches(password, person.getPassword()));
+        person = TestUtils.createReaderPersonForTesting();
+        username = person.getUsername();
+        password = person.getPassword();
+       if (personDao.getPerson(username) != null) {
+            personDao.delete(personDao.getPerson(username));
+       }
     }
 
     @Test
@@ -85,7 +67,17 @@ public class RegistrationTest extends AbstractDataAccessTest {
         Person tmp = personDao.read(person.getPersonId());
         assertNotNull(tmp);
         assertEquals((username).toLowerCase(), tmp.getUsername());
+       }
+
+    @Test
+    public void testVerifyPassword() {
+        storePerson(person);
+        Person tmp = personDao.read(person.getPersonId());
+        assertNotNull(tmp);
+        assertEquals(password, tmp.getPassword());
     }
+
+
 
     @Test
     @Transactional
@@ -93,7 +85,8 @@ public class RegistrationTest extends AbstractDataAccessTest {
         try {
             person.setUsername(null);
             personDao.update(person);
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
+            assertTrue(e instanceof NullPointerException);
 
         } finally {
             Person tmp = personDao.read(person.getPersonId());
@@ -107,21 +100,13 @@ public class RegistrationTest extends AbstractDataAccessTest {
         Person clone = fork(personDao.read(person.getPersonId()));
         try {
             storePerson(clone);
-        } catch (DataIntegrityViolationException e) {
-
+        } catch (Exception e) {
+            assertTrue(e instanceof DataIntegrityViolationException);
         } finally {
             assertNotNull(personDao.read(person.getPersonId()));
             assertNull("Second person with the same username cannot be stored ",
                     personDao.read(clone.getPersonId()));
 
-        }
-    }
-
-    @After
-    public void clean() {
-        Person personDB = personDao.getPerson(person.getUsername());
-        if (personDB != null) {
-            personDao.delete(personDB);
         }
     }
 
@@ -139,7 +124,10 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
     @Transactional
     private void storePerson(Person person) {
-        personDao.create(person);
+       // if (personDao.getPerson(person.getUsername()) == null) {
+            personDao.create(person);
+      //  }
+
 
     }
 }

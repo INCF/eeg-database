@@ -24,84 +24,87 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import static org.junit.Assert.*;
+import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import org.junit.Before;
+import org.junit.Test;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.List;
 
-import org.junit.Before;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNotNull;
 
 /**
  * Contains test cases for form-layout DAO object.
- * 
+ *
  * @author Jakub Krauz
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:test-context.xml"})
-public class FormLayoutDaoTest {
-	
+
+public class FormLayoutDaoTest extends AbstractDataAccessTest {
+
 	@Autowired
 	private FormLayoutDao formLayoutDao;
-	
-	@Autowired
-	private PersonDao personDao;
-	
+    @Autowired
+    private PersonDao personDao;
+
 	private Person testPerson;
-	
-	
-	@Before
-	public void setUp() {
-		testPerson = personDao.getPerson("testaccountforeeg@seznam.cz"); // ROLE_ADMIN
-	}
-	
-	
-	@Test
+
+
+    @Before
+    public void setUp() {
+
+        testPerson = TestUtils.createAdminPersonForTesting();
+       if (personDao.getPerson(testPerson.getUsername()) == null) {
+            personDao.create(testPerson);
+        } else {
+            testPerson = personDao.getPerson(testPerson.getUsername());
+        }
+    }
+
+
+    @Test
 	public void testFormAccess() {
 		int count = formLayoutDao.getAllFormsCount();
 		List<String> names = formLayoutDao.getAllFormNames();
 		assertEquals(count, names.size());
-		
+
 		count = formLayoutDao.getFormsCount(testPerson);
 		names = formLayoutDao.getFormNames(testPerson);
 		assertEquals(count, names.size());
 	}
-	
-	
+
+
 	@Test
 	public void testLayoutCounts() {
 		int count = formLayoutDao.getAllLayoutsCount();
 		List<FormLayout> list = formLayoutDao.getAllLayouts();
 		assertNotNull(list);
 		assertEquals(count, list.size());
-		
+
 		count = formLayoutDao.getLayoutsCount(testPerson);
 		list = formLayoutDao.getLayouts(testPerson);
 		assertNotNull(list);
 		assertEquals(count, list.size());
-		
+
 		if (formLayoutDao.getAllFormsCount() > 0) {
 			String formName = formLayoutDao.getAllFormNames().get(0);
-			
+
 			count = formLayoutDao.getLayoutsCount(formName);
 			list = formLayoutDao.getLayouts(formName);
 			assertNotNull(list);
 			assertEquals(count, list.size());
-			
+
 			count = formLayoutDao.getLayoutsCount(testPerson, formName);
 			list = formLayoutDao.getLayouts(testPerson, formName);
 			assertNotNull(list);
 			assertEquals(count, list.size());
 		}
 	}
-	
-	
+
+
 	@Test
 	public void testGetLayout() {
 		List<FormLayout> list = formLayoutDao.getAllLayouts();

@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import org.junit.Before;
@@ -31,10 +32,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.sql.Timestamp;
 import java.util.Calendar;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.junit.Assert.*;
 
 /**
  * User: Tomas Pokryvka
@@ -49,20 +50,25 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
     @Autowired
     private ArticleDao articleDao;
 
+
     protected Article article;
-    protected Person person_reader;
-    protected Person person_admin;
+    protected Person personReader;
 
     @Before
     public void setUp() {
-        person_admin = personDao.getPerson("testaccountforeeg@seznam.cz"); // ROLE_ADMIN
-        person_reader = personDao.getPerson("testaccountforeeg3@seznam.cz"); // ROLE_EXPERIMENTER
+        personReader = TestUtils.createReaderPersonForTesting();
+        if (personDao.getPerson(personReader.getUsername()) == null) {
+            personDao.create(personReader);
+        } else {
+            personDao.update(personReader);
+        }
 
         article = new Article();
+
         article.setText("test-text");
         article.setTitle("test-title");
-        article.setTime(new java.sql.Timestamp(Calendar.getInstance().getTime().getTime()));
-        article.setPerson(person_reader);
+        article.setTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        article.setPerson(personReader);
     }
 
     @Test
@@ -71,23 +77,25 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
         int count = articleDao.getCountRecords();
         articleDao.create(article);
         assertEquals(count + 1, articleDao.getCountRecords());
-        articleDao.delete(article);
     }
 
     @Test
     @Transactional
     public void testNotNullTitle() {
         article.setTitle(null);
-        int count = articleDao.getCountRecords();
         try {
             articleDao.create(article);
-        } catch (DataIntegrityViolationException e) {
+        } catch (Exception e) {
+            assertTrue(e instanceof DataIntegrityViolationException);
 
         } finally {
             Article tmp = articleDao.read(article.getArticleId());
             assertNull("Article without title cannot be stored", tmp);
+
         }
+
     }
+
 
 //  @Test
 //  @Transactional
@@ -119,9 +127,9 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 //  @Test
 //  @Transactional
 //  public void testGetArticlesForUserReader() {
-//    int count = articleDao.getArticlesForUser(person_reader).size();
+//    int count = articleDao.getArticlesForUser(personReader).size();
 //    articleDao.create(article);
-//    assertEquals(count + 1, articleDao.getArticlesForUser(person_reader).size());
+//    assertEquals(count + 1, articleDao.getArticlesForUser(personReader).size());
 //  }
 //
 //  @Test
@@ -145,9 +153,9 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 //  @Test
 //  @Transactional
 //  public void testGetArticleCountForPersonReader() {
-//    int count = articleDao.getArticleCountForPerson(person_reader);
+//    int count = articleDao.getArticleCountForPerson(personReader);
 //    articleDao.create(article);
-//    assertEquals(count + 1, articleDao.getArticleCountForPerson(person_reader));
+//    assertEquals(count + 1, articleDao.getArticleCountForPerson(personReader));
 //  }
 //
 //  @Test
