@@ -22,41 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import java.io.InputStream;
-import java.util.Arrays;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.Radio;
-import org.apache.wicket.markup.html.form.RadioGroup;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidator;
-import org.apache.wicket.validation.validator.RangeValidator;
-import org.apache.wicket.validation.validator.StringValidator;
-import org.w3c.dom.Document;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
@@ -67,6 +32,32 @@ import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.IValidatable;
+import org.apache.wicket.validation.IValidator;
+import org.apache.wicket.validation.validator.RangeValidator;
+import org.w3c.dom.Document;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import java.io.IOException;
+import java.io.InputStream;
+import java.util.Arrays;
+import java.util.List;
 
 public class ScenarioForm extends Form<Scenario> {
 
@@ -118,7 +109,6 @@ public class ScenarioForm extends Form<Scenario> {
         TextArea<String> description = new TextArea<String>("description");
         description.setRequired(true);
         description.setLabel(ResourceUtils.getModel("label.scenarioDescription"));
-        description.add(StringValidator.maximumLength(255));
 
         final WebMarkupContainer fileContainer = new WebMarkupContainer("contailer");
         fileContainer.setVisibilityAllowed(false);
@@ -201,6 +191,10 @@ public class ScenarioForm extends Form<Scenario> {
                 target.add(ScenarioForm.this);
                 
                 // loading non-XML
+                if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
+                    error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                    return;
+                }
                 if ((fileUpload != null) && (!(fileUpload.getSize() == 0))) {
                     // File uploaded
                     String filename = fileUpload.getClientFileName().replace(" ", "_");
@@ -210,6 +204,12 @@ public class ScenarioForm extends Form<Scenario> {
                         scenario.setMimetype(filename.substring(index));
                     } else {
                         scenario.setMimetype(fileUpload.getContentType());
+                    }
+                    try {
+                        scenario.setFileContentStream(fileUpload.getInputStream());
+                    } catch (IOException e) {
+                        feedback.error(e.getMessage());
+                        target.add(feedback);
                     }
 
                 }
