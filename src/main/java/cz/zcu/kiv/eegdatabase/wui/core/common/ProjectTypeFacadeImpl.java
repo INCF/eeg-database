@@ -89,8 +89,8 @@ public class ProjectTypeFacadeImpl implements ProjectTypeFacade{
     }
 
     @Override
-    public boolean canSaveTitle(String title) {
-        return service.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int groupId, int projectId) {
+        return service.canSaveTitle(title, groupId, projectId);
     }
 
     @Override

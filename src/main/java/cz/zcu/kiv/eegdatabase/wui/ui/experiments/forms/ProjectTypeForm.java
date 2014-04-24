@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 import java.util.HashSet;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -47,6 +48,7 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import org.apache.wicket.validation.validator.StringValidator;
 
 public class ProjectTypeForm extends Form<ProjectType> {
 
@@ -78,12 +80,13 @@ public class ProjectTypeForm extends Form<ProjectType> {
         TextField<String> title = new TextField<String>("title");
         title.setRequired(true);
         title.setLabel(ResourceUtils.getModel("label.title"));
-        title.add(new TitleExistsValidator());
+       // title.add(new TitleExistsValidator());
         add(title);
 
         TextArea<String> description = new TextArea<String>("description");
         description.setRequired(true);
         description.setLabel(ResourceUtils.getModel("label.description"));
+        description.add(StringValidator.maximumLength(255));
         add(description);
 
         add(new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
@@ -93,13 +96,27 @@ public class ProjectTypeForm extends Form<ProjectType> {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-                ProjectType person = (ProjectType) form.getModelObject();
+                ProjectType project = (ProjectType) form.getModelObject();
+
                 ResearchGroup group = researchGroupChoice.getModelObject();
+                if (group.getResearchGroupId() == CoreConstants.DEFAULT_ITEM_ID) {
+                    if (!facade.canSaveDefaultTitle(project.getTitle(), project.getProjectTypeId())) {
+                        error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                        target.add(feedback);
+                        return;
+                    }
+                } else {
+                    if (!facade.canSaveTitle(project.getTitle(), group.getResearchGroupId(), project.getProjectTypeId())) {
+                        error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                        target.add(feedback);
+                        return;
+                    }
+                }
                 HashSet<ResearchGroup> groups = new HashSet<ResearchGroup>();
                 groups.add(group);
-                person.setResearchGroups(groups);
+                project.setResearchGroups(groups);
 
-                facade.create(person);
+                facade.create(project);
                 window.close(target);
             }
 
@@ -123,17 +140,17 @@ public class ProjectTypeForm extends Form<ProjectType> {
         setOutputMarkupId(true);
     }
 
-    private class TitleExistsValidator implements IValidator<String> {
-
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void validate(IValidatable<String> validatable) {
-            final String title = validatable.getValue();
-
-            if (!facade.canSaveTitle(title)) {
-                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
-            }
-        }
-    }
+//    private class TitleExistsValidator implements IValidator<String> {
+//
+//        private static final long serialVersionUID = 1L;
+//
+//        @Override
+//        public void validate(IValidatable<String> validatable) {
+//            final String title = validatable.getValue();
+//
+//            if (!facade.canSaveTitle(title)) {
+//                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+//            }
+//        }
+//    }
 }

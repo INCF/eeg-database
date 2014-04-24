@@ -83,10 +83,13 @@ public class SimpleProjectTypeDao extends SimpleGenericDao<ProjectType, Integer>
         researchGroup.getProjectTypes().remove(persistent);
     }
 
-    public boolean canSaveTitle(String title) {
-        String hqlQuery = "from ProjectType pr where pr.title = :title";
+    public boolean canSaveTitle(String title, int groupId, int projectId) {
+        String hqlQuery = "from ProjectType pr inner join fetch pr.researchGroups " +
+                "as rg where rg.researchGroupId =:groupId and pr.title =:title and pr.projectTypeId != :projectId ";
         List<ProjectType> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
                 .setParameter("title", title)
+                .setParameter("groupId", groupId)
+                .setParameter("projectId", projectId)
                 .list();
         return (list.size() == 0);
     }

@@ -106,8 +106,8 @@ public class ProjectTypeServiceImpl implements ProjectTypeService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean canSaveTitle(String title) {
-        return projectTypeDao.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int groupId, int projectId) {
+        return projectTypeDao.canSaveTitle(title, groupId, projectId);
     }
     
     @Override

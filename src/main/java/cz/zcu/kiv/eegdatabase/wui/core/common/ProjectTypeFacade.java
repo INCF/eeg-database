@@ -30,7 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
 public interface ProjectTypeFacade extends GenericFacade<ProjectType, Integer>{
 
-    boolean canSaveTitle(String title);
+    boolean canSaveTitle(String title, int groupId, int projectId);
     
     void createDefaultRecord(ProjectType project);
 
