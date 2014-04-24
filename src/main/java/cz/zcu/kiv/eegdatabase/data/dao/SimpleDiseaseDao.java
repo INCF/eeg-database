@@ -84,4 +84,14 @@ public class SimpleDiseaseDao extends SimpleGenericDao<Disease, Integer>
         researchGroup.getDiseases().remove(persistent);
     }
 
+    public boolean canSaveTitle(String title, int groupId, int diseaseId) {
+        String hqlQuery = "from Disease ds inner join fetch ds.researchGroups " +
+                "as rg where rg.researchGroupId =:groupId and ds.title =:title and ds.diseaseId != :diseaseId";
+        List<Disease> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                .setParameter("title", title)
+                .setParameter("groupId", groupId)
+                .setParameter("diseaseId", diseaseId)
+                .list();
+        return (list.size() == 0);
+    }
 }

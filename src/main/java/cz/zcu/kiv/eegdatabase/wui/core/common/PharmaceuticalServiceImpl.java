@@ -100,8 +100,8 @@ public class PharmaceuticalServiceImpl implements PharmaceuticalService {
 
     @Override
     @Transactional(readOnly = true)
-    public boolean canSaveTitle(String title) {
-        return pharmaceuticalDao.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int groupId, int pharmaceuticalId) {
+        return pharmaceuticalDao.canSaveTitle(title, groupId, pharmaceuticalId);
     }
 
     @Override

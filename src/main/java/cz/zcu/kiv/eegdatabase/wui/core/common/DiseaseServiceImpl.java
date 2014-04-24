@@ -136,4 +136,10 @@ public class DiseaseServiceImpl implements DiseaseService {
     public void deleteGroupRel(Disease persistent, ResearchGroup researchGroup) {
         diseaseDao.deleteGroupRel(persistent, researchGroup);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean canSaveTitle(String title, int groupId, int diseaseId) {
+        return diseaseDao.canSaveTitle(title, groupId, diseaseId);
+    }
 }

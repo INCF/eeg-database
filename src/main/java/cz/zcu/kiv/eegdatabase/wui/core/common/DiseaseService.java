@@ -43,4 +43,6 @@ public interface DiseaseService extends GenericService<Disease, Integer> {
     boolean hasGroupRel(int id);
 
     void deleteGroupRel(Disease persistent, ResearchGroup researchGroup);
+
+    boolean canSaveTitle(String title, int groupId, int diseaseId);
 }

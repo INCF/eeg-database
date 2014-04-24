@@ -88,8 +88,8 @@ public class PharmaceuticalFacadeImpl implements PharmaceuticalFacade {
     }
 
     @Override
-    public boolean canSaveTitle(String title) {
-        return service.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int groupId, int pharmaceuticalId) {
+        return service.canSaveTitle(title, groupId, pharmaceuticalId);
     }
 
     @Override

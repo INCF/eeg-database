@@ -100,7 +100,7 @@ public class ScenarioForm extends Form<Scenario> {
         TextField<String> title = new TextField<String>("title");
         title.setLabel(ResourceUtils.getModel("label.scenarioTitle"));
         title.setRequired(true);
-        title.add(new TitleExistsValidator());
+       // title.add(new TitleExistsValidator());
 
         TextField<Integer> length = new TextField<Integer>("scenarioLength", Integer.class);
         length.setRequired(true);
@@ -279,18 +279,5 @@ public class ScenarioForm extends Form<Scenario> {
 
         setOutputMarkupId(true);
     }
-    
-    private class TitleExistsValidator implements IValidator<String> {
 
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void validate(IValidatable<String> validatable) {
-            final String title = validatable.getValue();
-
-            if (scenariosFacade.existsScenario(title)) {
-                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
-            }
-        }
-    }
 }

@@ -86,11 +86,14 @@ public class SimplePharmaceuticalDao extends SimpleGenericDao<Pharmaceutical, In
     }
 
 
-    public boolean canSaveTitle(String title) {
-        String hqlQuery = "from Pharmaceutical p where p.title = :title";
-        List<Pharmaceutical> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
-                .setParameter("title", title)
-                .list();
+    public boolean canSaveTitle(String title, int groupId, int pharmaceuticalId) {
+        String hqlQuery = "from Pharmaceutical ph inner join fetch ph.researchGroups " +
+                        "as rg where rg.researchGroupId =:groupId and ph.title =:title and ph.pharmaceuticalId != :pharmaceuticalId";
+                List<Pharmaceutical> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
+                        .setParameter("title", title)
+                        .setParameter("groupId", groupId)
+                        .setParameter("pharmaceuticalId", pharmaceuticalId)
+                        .list();
         return (list.size() == 0);
     }
 }
