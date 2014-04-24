@@ -114,10 +114,13 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
         return (list.size() == 0);
     }
     
-    public boolean canSaveTitle(String title) {
-        String hqlQuery = "from Software sw where sw.title = :title";
+    public boolean canSaveTitle(String title, int groupId, int softwareId) {
+        String hqlQuery = "from Software sw inner join fetch sw.researchGroups " +
+                                "as rg where rg.researchGroupId =:groupId and sw.title =:title and sw.softwareId != :softwareId";
         List<Software> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery)
                 .setParameter("title", title)
+                .setParameter("groupId", groupId)
+                .setParameter("softwareId", softwareId)
                 .list();
         return (list.size() == 0);
     }

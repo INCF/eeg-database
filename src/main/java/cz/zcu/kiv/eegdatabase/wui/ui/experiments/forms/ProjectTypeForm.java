@@ -80,7 +80,6 @@ public class ProjectTypeForm extends Form<ProjectType> {
         TextField<String> title = new TextField<String>("title");
         title.setRequired(true);
         title.setLabel(ResourceUtils.getModel("label.title"));
-       // title.add(new TitleExistsValidator());
         add(title);
 
         TextArea<String> description = new TextArea<String>("description");
@@ -140,17 +139,4 @@ public class ProjectTypeForm extends Form<ProjectType> {
         setOutputMarkupId(true);
     }
 
-//    private class TitleExistsValidator implements IValidator<String> {
-//
-//        private static final long serialVersionUID = 1L;
-//
-//        @Override
-//        public void validate(IValidatable<String> validatable) {
-//            final String title = validatable.getValue();
-//
-//            if (!facade.canSaveTitle(title)) {
-//                error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
-//            }
-//        }
-//    }
 }

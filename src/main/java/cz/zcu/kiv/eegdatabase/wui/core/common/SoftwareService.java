@@ -51,5 +51,5 @@ public interface SoftwareService extends GenericService<Software, Integer>{
 
     void deleteGroupRel(Software persistent, ResearchGroup researchGroup);
     
-    boolean canSaveTitle(String title);
+    boolean canSaveTitle(String title, int groupId, int softwareId);
 }
