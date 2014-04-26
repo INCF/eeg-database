@@ -52,8 +52,9 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
+import cz.zcu.kiv.formgen.LayoutGeneratorException;
 import cz.zcu.kiv.formgen.Writer;
-import cz.zcu.kiv.formgen.core.SimpleFormDataGenerator;
+import cz.zcu.kiv.formgen.core.SimpleDataGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.model.Form;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
@@ -99,17 +100,20 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	public void afterPropertiesSet() {
 		LayoutGenerator generator = new SimpleLayoutGenerator();
 		try {
-			generator.loadPackage(POJO_BASE);
-			OdmlWriter writer = new OdmlWriter();
-			for (Form form : generator.getForms()) {
+			Writer writer = new OdmlWriter();
+			for (Form form : generator.loadPackage(POJO_BASE)) {
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
-				writer.write(form, stream);
-				FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
+				try {
+					writer.writeLayout(form, stream);
+					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
 							stream.toByteArray(), null);
-				formLayoutDao.createOrUpdateByName(layout);
+					formLayoutDao.createOrUpdateByName(layout);
+				} catch (LayoutGeneratorException e) {
+					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
+				}
 			}
 		} catch (FormNotFoundException e) {
-			logger.warn("Could not transform the data model to form-layouts.", e);
+			logger.error("Could not transform the data model to form-layouts.", e);
 		}
 	}
 	
@@ -302,13 +306,13 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		
 		// transform data to odML
 		try {
-			SimpleFormDataGenerator generator = new SimpleFormDataGenerator();
-			generator.loadObjects(list);
+			SimpleDataGenerator generator = new SimpleDataGenerator();
+			generator.load(list, false);
 			Writer writer = new OdmlWriter();
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			writer.writeData(generator.getFormData(), out);
+			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
-		} catch (FormNotFoundException e) {
+		} catch (LayoutGeneratorException e) {
 			logger.error("Unable to transform data to odML format.", e);
 			throw new FormServiceException(Cause.OTHER);
 		}

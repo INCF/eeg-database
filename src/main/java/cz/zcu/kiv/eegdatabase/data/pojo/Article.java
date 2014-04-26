@@ -32,11 +32,15 @@ import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.formgen.annotation.Form;
+import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
+import cz.zcu.kiv.formgen.annotation.PreviewLevel;
+
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -52,6 +56,7 @@ import java.util.Set;
 public class Article implements Serializable {
 
 	@SolrId
+	//@FormId
 	private int articleId;
 	@FormItem
 	private Person person;
@@ -61,7 +66,7 @@ public class Article implements Serializable {
 	@FormItem(required = true)
 	private String text;
 	@SolrField(name = IndexField.TITLE)
-	@FormItem(required = true)
+	@FormItem(required = true, preview = PreviewLevel.MAJOR)
 	private String title;
 	private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
 	@FormItem

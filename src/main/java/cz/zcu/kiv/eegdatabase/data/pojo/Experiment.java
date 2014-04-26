@@ -36,7 +36,9 @@ import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
 import cz.zcu.kiv.eegdatabase.logic.util.SignalProcessingUtils;
 import cz.zcu.kiv.formgen.annotation.Form;
+import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
+import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 
 import javax.persistence.*;
 
@@ -47,6 +49,7 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
+
 import org.hibernate.annotations.GenericGenerator;
 
 /**
@@ -59,6 +62,7 @@ import org.hibernate.annotations.GenericGenerator;
 public class Experiment implements Serializable {
 
 	@SolrId
+	@FormId
 	private int experimentId;
 	@Indexed
 	private Weather weather; //being transformed to GenericParameter
@@ -71,16 +75,17 @@ public class Experiment implements Serializable {
 	private SubjectGroup subjectGroup;
 	private Artifact artifact;
 	private ElectrodeConf electrodeConf;
-	@FormItem
+	@FormItem(preview = PreviewLevel.MAJOR)
 	private Timestamp startTime;
 	@FormItem
 	private Timestamp endTime;
 	@SolrField(name = IndexField.TEMPERATURE)
 	@FormItem
 	private int temperature;//being transformed to GenericParameter
+	@FormItem
 	private boolean privateExperiment;
 	@SolrField(name = IndexField.TEXT)
-	@FormItem
+	@FormItem(preview = PreviewLevel.MINOR)
 	private String environmentNote;
 	@FormItem
 	private Set<Person> persons = new HashSet<Person>(0);

@@ -26,11 +26,15 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 import cz.zcu.kiv.formgen.annotation.Form;
+import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
 import cz.zcu.kiv.formgen.annotation.FormItemRestriction;
+import cz.zcu.kiv.formgen.annotation.PreviewLevel;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
@@ -44,12 +48,14 @@ import java.util.Set;
 @Table(name = "PERSON")
 public class Person implements Serializable, Comparable<Person>, IAutoCompletable {
 
+	@FormId
 	private int personId;
 	private String facebookId;
+	@FormItem
 	private String email;
-	@FormItem(required = true)
+	@FormItem(required = true, preview = PreviewLevel.MINOR)
 	private String givenname;
-	@FormItem(required = true)
+	@FormItem(required = true, preview = PreviewLevel.MAJOR)
 	private String surname;
 	@FormItem
 	private Timestamp dateOfBirth;
