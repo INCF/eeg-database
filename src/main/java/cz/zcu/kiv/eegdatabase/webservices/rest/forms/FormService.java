@@ -132,5 +132,15 @@ public interface FormService {
 	 * @throws FormServiceException if the required data cannot be retrieved
 	 */
 	byte[] getOdmlData(String entity) throws FormServiceException;
+	
+	
+	/**
+	 * Gets the record determined by the given ID in odML format.
+	 * @param entity - the entity's name
+	 * @param id - the record's ID
+	 * @return byte array with odML data
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	byte[] getOdmlData(String entity, Integer id) throws FormServiceException;
 
 }

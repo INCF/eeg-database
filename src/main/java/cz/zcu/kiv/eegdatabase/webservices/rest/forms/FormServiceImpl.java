@@ -287,20 +287,13 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	/**
 	 * {@inheritDoc} 
 	 */
+	@Override
 	public byte[] getOdmlData(String entity) throws FormServiceException {
 		if (entity == null)
 			throw new NullPointerException("Entity cannot be null.");
 		
-		// get the DAO object from spring context
-		GenericDao<?, ?> dao;
-		try {
-			dao = context.getBean(daoName(entity), GenericDao.class);
-		} catch (BeansException e) {
-			logger.warn("Unable to get bean \"" + daoName(entity) + "\" from the application context.", e);
-			throw new FormServiceException(Cause.NOT_FOUND);
-		}
-		
 		// get all records
+		GenericDao<?, Integer> dao = daoForEntity(entity);
 		@SuppressWarnings("unchecked")
 		List<Object> list = (List<Object>) dao.getAllRecords();
 		
@@ -317,11 +310,57 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			throw new FormServiceException(Cause.OTHER);
 		}
 	}
+	
+	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public byte[] getOdmlData(String entity, Integer id) throws FormServiceException {
+		if (entity == null)
+			throw new NullPointerException("Entity cannot be null.");
+		
+		// get the record
+		GenericDao<?, Integer> dao = daoForEntity(entity);
+		Object data = dao.read(id);
+		
+		// transform data to odML
+		try {
+			SimpleDataGenerator generator = new SimpleDataGenerator();
+			generator.load(data, false);
+			Writer writer = new OdmlWriter();
+			ByteArrayOutputStream out = new ByteArrayOutputStream();
+			writer.writeData(generator.getLoadedModel(), out);
+			return out.toByteArray();
+		} catch (LayoutGeneratorException e) {
+			logger.error("Unable to transform data to odML format.", e);
+			throw new FormServiceException(Cause.OTHER);
+		}
+	}
 
 
 	@Override
 	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
 		this.context = applicationContext;
+	}
+	
+	
+	
+	/**
+	 * Retrieve DAO object for the given entity from Spring's context.
+	 * @param entityName - the name of the entity
+	 * @return the DAO object
+	 * @throws FormServiceException if the DAO object cannot be retrieved
+	 */
+	@SuppressWarnings("unchecked")
+	private GenericDao<?, Integer> daoForEntity(String entityName) throws FormServiceException {
+		try {
+			// get the DAO object from spring context
+			return (GenericDao<?, Integer>) context.getBean(daoName(entityName), GenericDao.class);
+		} catch (BeansException e) {
+			logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
+			throw new FormServiceException(Cause.NOT_FOUND);
+		}
 	}
 	
 	
