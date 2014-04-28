@@ -118,8 +118,10 @@ public class ExperimentsDetailPage extends MenuPage {
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> downloadExpLink = new BookmarkablePageLink<Void>("downloadExpLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), downloadExpLink);
-
-        final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
+        
+        /* XXX #66 Java Heap Space Exception : working with big data file in memory.
+            final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
+         */
 
         PropertyListView<Hardware> hardware = new PropertyListView<Hardware>("hardware", new ListModel<Hardware>(new ArrayList<Hardware>(experiment.getHardwares()))) {
 
@@ -132,7 +134,6 @@ public class ExperimentsDetailPage extends MenuPage {
 
             }
         };
-
         PropertyListView<ExperimentOptParamVal> addParameters = new PropertyListView<ExperimentOptParamVal>("addParameters", new ListModel<ExperimentOptParamVal>(new ArrayList<ExperimentOptParamVal>(
                 experiment.getExperimentOptParamVals()))) {
 
@@ -165,8 +166,11 @@ public class ExperimentsDetailPage extends MenuPage {
         container.setOutputMarkupId(true);
         container.setOutputMarkupPlaceholderTag(true);
         container.setVisibilityAllowed(true);
-        container.add(experimentViewPanel);
-
+        
+        /* XXX #66 Java Heap Space Exception : working with big data file in memory.
+            container.add(experimentViewPanel);
+         */
+        
         add(container);
     }
 
