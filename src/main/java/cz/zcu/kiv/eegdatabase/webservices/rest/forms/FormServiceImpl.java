@@ -50,6 +50,7 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.LayoutGeneratorException;
@@ -85,6 +86,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	/** Logger object. */
 	private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
 	
+	/** Spring's application context. */
 	private ApplicationContext context;
 	
 	
@@ -336,6 +338,37 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			logger.error("Unable to transform data to odML format.", e);
 			throw new FormServiceException(Cause.OTHER);
 		}
+	}
+	
+	
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public RecordCountData countDataRecords(String entity) throws FormServiceException {
+		if (entity == null)
+			throw new NullPointerException("Entity cannot be null.");
+		
+		// get the count
+		GenericDao<?, Integer> dao = daoForEntity(entity);
+		RecordCountData count = new RecordCountData();
+		count.setMyRecords(0);  // cannot determine own records
+		count.setPublicRecords(dao.getCountRecords());
+		return count;
+	}
+
+
+	/**
+	 * {@inheritDoc} 
+	 */
+	@Override
+	public RecordIdsDataList getRecordIds(String entity) throws FormServiceException {
+		if (entity == null)
+			throw new NullPointerException("Entity cannot be null.");
+		
+		// get IDs
+		GenericDao<?, Integer> dao = daoForEntity(entity);
+		return new RecordIdsDataList(dao.getAllIds());
 	}
 
 

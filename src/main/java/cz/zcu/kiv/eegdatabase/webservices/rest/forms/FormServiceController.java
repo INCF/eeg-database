@@ -25,7 +25,6 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
-
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -47,6 +46,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 
 
 /**
@@ -54,9 +54,9 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
  *
  * @author Jakub Krauz
  */
-@Secured("IS_AUTHENTICATED_FULLY")
 @Controller
 @RequestMapping("/form-layouts")
+@Secured("IS_AUTHENTICATED_FULLY")
 public class FormServiceController {
 	
 	/** Logger. */
@@ -72,7 +72,8 @@ public class FormServiceController {
 	 * @return count of forms available
 	 */
 	@RequestMapping(value = "/form/count", method = RequestMethod.GET)
-	public @ResponseBody RecordCountData availableFormsCount() {
+	@ResponseBody
+	public RecordCountData availableFormsCount() {
 		return service.availableFormsCount();
 	}
 	
@@ -83,7 +84,8 @@ public class FormServiceController {
 	 * @return names of forms with available layouts
 	 */
 	@RequestMapping(value = "/form/available", method = RequestMethod.GET)
-	public @ResponseBody AvailableFormsDataList availableForms (
+	@ResponseBody
+	public AvailableFormsDataList availableForms (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly) {
 		
 		return service.availableForms(mineOnly);
@@ -96,7 +98,8 @@ public class FormServiceController {
 	 * @return count of form-layouts available
 	 */
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
-	public @ResponseBody RecordCountData availableLayoutsCount (
+	@ResponseBody
+	public RecordCountData availableLayoutsCount (
 					@RequestParam(value = "form", required = false) String formName) {
 		
 		if (formName == null)
@@ -113,7 +116,8 @@ public class FormServiceController {
 	 * @return names of form layouts available
 	 */
 	@RequestMapping(value = "/available", method = RequestMethod.GET)
-	public @ResponseBody AvailableLayoutsDataList availableLayouts (
+	@ResponseBody
+	public AvailableLayoutsDataList availableLayouts (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
 					@RequestParam(value = "form", required = false) String formName) {
 		
@@ -213,6 +217,20 @@ public class FormServiceController {
         response.getOutputStream().write(odml);
         response.flushBuffer();
 	}
+    
+    
+    @RequestMapping(value = "/data/count", method = RequestMethod.GET)
+    @ResponseBody
+    public RecordCountData getDataCount(@RequestParam("entity") String entity) throws FormServiceException {
+    	return service.countDataRecords(entity);
+    }
+    
+    
+    @RequestMapping(value = "/data/ids", method = RequestMethod.GET)
+    @ResponseBody
+    public RecordIdsDataList getDataIds(@RequestParam("entity") String entity) throws FormServiceException {
+    	return service.getRecordIds(entity);
+    }
 	
 	
 	/**
