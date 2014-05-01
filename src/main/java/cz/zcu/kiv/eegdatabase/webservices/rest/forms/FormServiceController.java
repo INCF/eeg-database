@@ -25,6 +25,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.IOException;
+
 import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
@@ -46,6 +47,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 
 
@@ -219,6 +221,17 @@ public class FormServiceController {
 	}
     
     
+    @RequestMapping(value = "/data", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public RecordData createRecord(@RequestParam("entity") String entity, @RequestBody byte[] content) 
+    		throws FormServiceException {
+    	Integer id = service.createRecord(entity, content);
+    	RecordData record = new RecordData(id);
+    	return record;
+    }
+    
+    
     @RequestMapping(value = "/data/count", method = RequestMethod.GET)
     @ResponseBody
     public RecordCountData getDataCount(@RequestParam("entity") String entity) throws FormServiceException {
@@ -250,6 +263,9 @@ public class FormServiceController {
 				break;
 			case CONFLICT:
 				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing resource.");
+				break;
+			case OTHER:
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, exception.getMessage());
 				break;
 			default:
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);

@@ -161,5 +161,15 @@ public interface FormService {
 	 * @throws FormServiceException if the required data cannot be retrieved
 	 */
 	RecordIdsDataList getRecordIds(String entity) throws FormServiceException;
+	
+	
+	/**
+	 * Creates a new persistent object from the odML data document.
+	 * @param entity - the entity's name
+	 * @param odml - the odML document
+	 * @return ID of the created record
+	 * @throws FormServiceException if the record cannot be created
+	 */
+	Integer createRecord(String entity, byte[] odml) throws FormServiceException;
 
 }

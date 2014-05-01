@@ -19,61 +19,34 @@
  *
  ***********************************************************************************************************************
  *
- * FormServiceException.java, 8. 3. 2014 14:41:22, Jakub Krauz
+ * RecordData.java, 1. 5. 2014 12:34:45, Jakub Krauz
  *
  **********************************************************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
+package cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers;
+
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Exception that indicates that the required operation was rejected by the {@link FormService}.
- * 
+ *
  * @author Jakub Krauz
  */
-public class FormServiceException extends Exception {
+@XmlRootElement(name = "record")
+public class RecordData {
 	
-	/** Generated serial version UID. */
-	private static final long serialVersionUID = 3686549252972033330L;
+	private int id;
+	
+	public RecordData() { }
+	
+	public RecordData(int id) {
+		this.id = id;
+	}
 
+	public int getId() {
+		return id;
+	}
 
-	/**
-	 * Enumeration of possible causes of the operation refusal.
-	 */
-	public enum Cause {
-		PERMISSION,
-		CONFLICT,
-		NOT_FOUND,
-		OTHER
+	public void setId(int id) {
+		this.id = id;
 	}
-	
-	
-	/** The actual cause. */
-	private Cause cause;
-	
-	
-	/**
-	 * Creates a new exception with the specified cause of operation refusal.
-	 * @param cause - the cause
-	 */
-	public FormServiceException(Cause cause) {
-		this.cause = cause;
-	}
-	
-	
-	public FormServiceException(String message) {
-		super(message);
-		this.cause = Cause.OTHER;
-	}
-	
-	
-	/**
-	 * Retrieves the cause of the operation refusal.
-	 * @return the cause
-	 */
-	public Cause what() {
-		return cause;
-	}
-	
-	
-	
-	
+
 }

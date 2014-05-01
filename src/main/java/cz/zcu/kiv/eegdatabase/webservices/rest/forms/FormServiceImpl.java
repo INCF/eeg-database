@@ -24,9 +24,11 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,10 +56,17 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
 import cz.zcu.kiv.formgen.LayoutGeneratorException;
+import cz.zcu.kiv.formgen.ObjectBuilder;
+import cz.zcu.kiv.formgen.ObjectBuilderException;
+import cz.zcu.kiv.formgen.PersistentObjectException;
+import cz.zcu.kiv.formgen.PersistentObjectProvider;
 import cz.zcu.kiv.formgen.Writer;
+import cz.zcu.kiv.formgen.core.PersistentObjectBuilder;
 import cz.zcu.kiv.formgen.core.SimpleDataGenerator;
 import cz.zcu.kiv.formgen.core.SimpleLayoutGenerator;
 import cz.zcu.kiv.formgen.model.Form;
+import cz.zcu.kiv.formgen.model.FormData;
+import cz.zcu.kiv.formgen.odml.OdmlReader;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
 
 
@@ -386,10 +395,10 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * @throws FormServiceException if the DAO object cannot be retrieved
 	 */
 	@SuppressWarnings("unchecked")
-	private GenericDao<?, Integer> daoForEntity(String entityName) throws FormServiceException {
+	private GenericDao<Object, Integer> daoForEntity(String entityName) throws FormServiceException {
 		try {
 			// get the DAO object from spring context
-			return (GenericDao<?, Integer>) context.getBean(daoName(entityName), GenericDao.class);
+			return (GenericDao<Object, Integer>) context.getBean(daoName(entityName), GenericDao.class);
 		} catch (BeansException e) {
 			logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
 			throw new FormServiceException(Cause.NOT_FOUND);
@@ -414,6 +423,63 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		
 		// append the "Dao" suffix
 		return entity + "Dao";
+	}
+
+
+	@Override
+	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
+	public Integer createRecord(String entity, byte[] odml) throws FormServiceException {
+		if (entity == null)
+			throw new NullPointerException("Entity cannot be null.");
+		
+		// get entity's class
+		Class<?> cls;
+		try {
+			cls = Class.forName(POJO_BASE + "." + entity);
+		} catch (ClassNotFoundException e1) {
+			throw new FormServiceException(Cause.NOT_FOUND);
+		}
+		
+		// read the odml
+		Set<FormData> model;
+		try {
+			model = new OdmlReader().readData(new ByteArrayInputStream(odml));
+		} catch (LayoutGeneratorException e) {
+			throw new FormServiceException("Unable to read the odML document.");
+		}
+		
+		// check number of records
+		if (model.size() != 1)
+			throw new FormServiceException("OdML must contain just one record.");
+		
+		// build the persistent object
+		Object object = null;
+		try {
+			ObjectBuilder builder = new PersistentObjectBuilder<Integer>(new ObjectProvider());
+			object = builder.build(model.iterator().next(), cls);
+		} catch (ObjectBuilderException e) {
+			throw new FormServiceException("Unable to save the record, malformed odML data?");
+		}
+		
+		// save the object
+		GenericDao<Object, Integer> dao = daoForEntity(entity);
+		return dao.create(object);
+	}
+	
+	
+	
+	private class ObjectProvider implements PersistentObjectProvider<Integer> {
+
+		@Override
+		public Object getById(Class<?> type, Integer id) throws PersistentObjectException {
+			try {
+				GenericDao<?, Integer> dao = daoForEntity(type.getSimpleName());
+				return dao.read(id);
+			} catch (FormServiceException e) {
+				throw new PersistentObjectException("Cannot retrieve DAO object.", e);
+			}
+		}
+		
 	}
 
 
