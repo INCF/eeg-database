@@ -31,11 +31,6 @@ import cz.zcu.kiv.eegdatabase.data.annotation.Indexed;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
-import cz.zcu.kiv.formgen.annotation.Form;
-import cz.zcu.kiv.formgen.annotation.FormId;
-import cz.zcu.kiv.formgen.annotation.FormItem;
-import cz.zcu.kiv.formgen.annotation.PreviewLevel;
-
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
@@ -51,25 +46,19 @@ import java.util.Set;
  */
 @Entity
 @Indexed
-@Form
 @Table(name = "ARTICLES")
 public class Article implements Serializable {
 
 	@SolrId
-	//@FormId
 	private int articleId;
-	@FormItem
 	private Person person;
 	private ResearchGroup researchGroup;
 	private Timestamp time;
 	@SolrField(name = IndexField.TEXT)
-	@FormItem(required = true)
 	private String text;
 	@SolrField(name = IndexField.TITLE)
-	@FormItem(required = true, preview = PreviewLevel.MAJOR)
 	private String title;
 	private Set<ArticleComment> articleComments = new HashSet<ArticleComment>(0);
-	@FormItem
 	private Set<Person> subscribers = new HashSet<Person>(0);
 
 	public Article() {
