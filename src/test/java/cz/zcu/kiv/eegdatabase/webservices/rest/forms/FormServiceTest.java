@@ -29,6 +29,7 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
@@ -66,7 +67,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
     @Before
     public void setUp() throws Exception {
         // don't know another way to get logged-in
-        Person testPerson = TestUtils.createReaderPersonForTesting();
+        Person testPerson = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         if (personDao.getPerson(testPerson.getUsername()) == null) {
             personDao.create(testPerson);
         } else {

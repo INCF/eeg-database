@@ -28,6 +28,8 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.Util;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,7 +58,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
     @Before
     public void setUp() {
 
-        testPerson = TestUtils.createAdminPersonForTesting();
+        testPerson = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
        if (personDao.getPerson(testPerson.getUsername()) == null) {
             personDao.create(testPerson);
         } else {
@@ -119,5 +121,11 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 		assertEquals(layoutName, layout.getLayoutName());
 	}
 
+    @After
+    public void clean() {
+        if (testPerson.getUsername() != null) {
+            personDao.delete(testPerson);
+        }
+    }
 
 }

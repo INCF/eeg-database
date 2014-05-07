@@ -1,8 +1,37 @@
+/**
+ * *****************************************************************************
+ * This file is part of the EEG-database project
+ *
+ * ==========================================
+ *
+ * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
+ *  ***********************************************************************************************************************
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not
+ * use this file except in compliance with the License. You may obtain a copy of
+ * the License at
+ *
+ * http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
+ *
+ *  ***********************************************************************************************************************
+ *
+ * ScenariosServiceImpl.java, 2014/04/31 00:01 Jan Stebetak
+ *****************************************************************************
+ */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.Util;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -45,10 +74,10 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
     private Weather weather;
     private Scenario scenario;
     private Digitization digitization;
+    private Experiment experiment;
 
     @Before
     public void setUp() {
-        System.out.println(hardwareDao.getCountRecords());
         person = createPerson();
         group = createGroup();
         hw = createHardware();
@@ -61,39 +90,30 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
         digitization.setGain(1f);
         digitization.setSamplingRate(1000f);
         digitizationDao.create(digitization);
+        experiment = setUpExperiment();
 
     }
 
     @Test
     @Transactional
     public void testCreateExperiment() {
-        Experiment exp = new Experiment();
-        System.out.println(hardwareDao.getCountRecords());
-        System.out.println(softwareDao.getCountRecords());
-        exp.setScenario(scenario);
-        exp.setPersonByOwnerId(person);
-        exp.setResearchGroup(group);
-        exp.getHardwares().add(hw);
-        exp.getSoftwares().add(sw);
-        exp.setPersonBySubjectPersonId(person);
-        exp.setWeather(weather);
-        exp.setStartDate(new Date(10));
-        exp.setStartTime(new Timestamp(11));
-        exp.setEndTime(new Timestamp(13));
-        exp.setFinishDate(new Date(12));
-        exp.setDigitization(digitization);
-//        experimentDao.create(exp);
-//        assertNotNull(experimentDao.read(exp.getExperimentId()));
+
+//        experimentDao.create(experiment);
+//        assertNotNull(experimentDao.read(experiment.getExperimentId()));
 
     }
 
-    private Person createPerson() {
-        Person person = TestUtils.createReaderPersonForTesting();
-        if (personDao.getPerson(person.getUsername()) == null) {
-            personDao.create(person);
-        } else {
-            personDao.update(person);
+    @After
+    public void clean() {
+        if (person.getUsername() != null) {
+            personDao.delete(person);
         }
+    }
+
+    private Person createPerson() {
+        Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
+        personDao.create(person);
+
         return person;
     }
 
@@ -140,5 +160,22 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
         scenario.setResearchGroup(group);
         scenarioDao.create(scenario);
         return scenario;
+    }
+
+    private Experiment setUpExperiment() {
+        Experiment exp = new Experiment();
+        exp.setScenario(scenario);
+        exp.setPersonByOwnerId(person);
+        exp.setResearchGroup(group);
+        exp.getHardwares().add(hw);
+        exp.getSoftwares().add(sw);
+        exp.setPersonBySubjectPersonId(person);
+        exp.setWeather(weather);
+        exp.setStartDate(new Date(10));
+        exp.setStartTime(new Timestamp(11));
+        exp.setEndTime(new Timestamp(13));
+        exp.setFinishDate(new Date(12));
+        exp.setDigitization(digitization);
+        return exp;
     }
 }

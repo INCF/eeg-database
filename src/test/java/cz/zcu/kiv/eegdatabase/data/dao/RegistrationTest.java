@@ -26,11 +26,11 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
 import static org.junit.Assert.*;
@@ -44,7 +44,6 @@ public class RegistrationTest extends AbstractDataAccessTest {
     @Autowired
     private PersonDao personDao;
 
-    private BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
     private Person person;
     private String password;
     private String username;
@@ -53,12 +52,10 @@ public class RegistrationTest extends AbstractDataAccessTest {
     @Before
     public void setUp() {
 
-        person = TestUtils.createReaderPersonForTesting();
+        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         username = person.getUsername();
         password = person.getPassword();
-       if (personDao.getPerson(username) != null) {
-            personDao.delete(personDao.getPerson(username));
-       }
+
     }
 
     @Test
@@ -109,6 +106,12 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
         }
     }
+    @After
+    public void clean() {
+        if (personDao.getPerson(username) != null) {
+              personDao.delete(personDao.getPerson(username));
+        }
+    }
 
     private Person fork(Person person) {
         Person clone = new Person();
@@ -124,10 +127,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
     @Transactional
     private void storePerson(Person person) {
-       // if (personDao.getPerson(person.getUsername()) == null) {
-            personDao.create(person);
-      //  }
-
+    personDao.create(person);
 
     }
 }
