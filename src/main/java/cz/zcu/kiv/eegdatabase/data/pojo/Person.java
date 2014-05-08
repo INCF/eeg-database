@@ -261,7 +261,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.password = password;
 	}
 
-	@Column(name = "AUTHORITY", length = 50)
+	@Column(name = "AUTHORITY", length = 50, nullable = false)
 	public String getAuthority() {
 		return this.authority;
 	}
