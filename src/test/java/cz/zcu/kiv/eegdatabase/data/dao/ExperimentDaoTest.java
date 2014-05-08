@@ -31,17 +31,19 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsService;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.util.Date;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.junit.Assert.*;
 
 /**
  * Created by Honza on 1.5.14.
@@ -65,7 +67,18 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
     private WeatherDao weatherDao;
 
     @Autowired
+    private SimpleArtifactDao artifactDao;
+
+    @Autowired
     private ScenarioDao scenarioDao;
+
+    @Autowired
+    @Qualifier("electrodeConfDao")
+    private GenericDao<ElectrodeConf, Integer> electrodeConfDao;
+
+    @Autowired
+    @Qualifier("subjectGroupDao")
+    private GenericDao<SubjectGroup, Integer> subjectGroupDao;
 
     private Person person;
     private ResearchGroup group;
@@ -98,8 +111,9 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
     @Transactional
     public void testCreateExperiment() {
 
-//        experimentDao.create(experiment);
-//        assertNotNull(experimentDao.read(experiment.getExperimentId()));
+        experimentDao.create(experiment);
+        assertNotNull(experimentDao.read(experiment.getExperimentId()));
+        assertEquals(1, experimentDao.getCountRecords());
 
     }
 
@@ -176,6 +190,32 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
         exp.setEndTime(new Timestamp(13));
         exp.setFinishDate(new Date(12));
         exp.setDigitization(digitization);
+        exp.setArtifact(createArtifact());
+        exp.setElectrodeConf(createElectrodeConf());
+        exp.setSubjectGroup(createSubjectGroup());
         return exp;
+    }
+
+    private SubjectGroup createSubjectGroup() {
+        SubjectGroup subjectGroup = new SubjectGroup();
+        subjectGroup.setTitle("test-title");
+        subjectGroup.setDescription("desc");
+        subjectGroupDao.create(subjectGroup);
+        return subjectGroup;
+    }
+
+    private ElectrodeConf createElectrodeConf() {
+        ElectrodeConf conf = new ElectrodeConf();
+        conf.setImpedance(10);
+        electrodeConfDao.create(conf);
+        return conf;
+    }
+
+    private Artifact createArtifact() {
+        Artifact artifact = new Artifact();
+        artifact.setCompensation("test-comp");
+        artifact.setRejectCondition("test-rej");
+        artifactDao.create(artifact);
+        return artifact;
     }
 }
