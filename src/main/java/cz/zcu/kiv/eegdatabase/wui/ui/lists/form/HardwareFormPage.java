@@ -173,39 +173,40 @@ public class HardwareFormPage extends MenuPage {
                         // Editing one
                         log.debug("Editing existing hardware object.");
 
-                        if (facade.isDefault(hardwareId)) {
-
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new hardware
-                                Hardware newHw = new Hardware();
-                                newHw.setDefaultNumber(0);
-                                newHw.setDescription(hardware.getDescription());
-                                newHw.setTitle(hardware.getTitle());
-                                newHw.setType(hardware.getType());
-                                int newId = facade.create(newHw);
-                                HardwareGroupRel rel = facade.getGroupRel(hardwareId, researchGroupId);
-                                // delete old rel, create new one
-                                HardwareGroupRelId newRelId = new HardwareGroupRelId();
-                                HardwareGroupRel newRel = new HardwareGroupRel();
-                                newRelId.setHardwareId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setHardware(newHw);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(hardwareId) && facade.canDelete(hardwareId)) {
-                                    facade.update(hardware);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(hardware);
-                        }
+//                        if (facade.isDefault(hardwareId)) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new hardware
+//                                Hardware newHw = new Hardware();
+//                                newHw.setDefaultNumber(0);
+//                                newHw.setDescription(hardware.getDescription());
+//                                newHw.setTitle(hardware.getTitle());
+//                                newHw.setType(hardware.getType());
+//                                int newId = facade.create(newHw);
+//                                HardwareGroupRel rel = facade.getGroupRel(hardwareId, researchGroupId);
+//                                // delete old rel, create new one
+//                                HardwareGroupRelId newRelId = new HardwareGroupRelId();
+//                                HardwareGroupRel newRel = new HardwareGroupRel();
+//                                newRelId.setHardwareId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setHardware(newHw);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(hardwareId) && facade.canDelete(hardwareId)) {
+//                                    facade.update(hardware);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
+//
+//                        }
+                        facade.update(hardware);
                     } else {
 
                         // Creating new
