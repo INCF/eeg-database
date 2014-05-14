@@ -198,7 +198,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.surname = surname;
 	}
 
-	@Column(name = "DATE_OF_BIRTH", length = 7)
+	@Column(name = "DATE_OF_BIRTH", length = 7, nullable = false)
 	public Timestamp getDateOfBirth() {
 		return this.dateOfBirth;
 	}

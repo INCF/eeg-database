@@ -106,6 +106,20 @@ public class RegistrationTest extends AbstractDataAccessTest {
     }
 
     @Test
+    public void testNotNullDateOfBirth() {
+        try {
+            person.setDateOfBirth(null);
+            storePerson(person);
+        } catch (Exception e) {
+            assertTrue(e instanceof DataIntegrityViolationException);
+
+        } finally {
+            Person tmp = personDao.read(person.getPersonId());
+            assertNull(tmp);
+        }
+    }
+
+    @Test
     public void testUniqueUsername() {
         storePerson(person);
         Person clone = fork(personDao.read(person.getPersonId()));
