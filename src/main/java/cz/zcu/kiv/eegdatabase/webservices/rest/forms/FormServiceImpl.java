@@ -55,11 +55,11 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 import cz.zcu.kiv.formgen.FormNotFoundException;
 import cz.zcu.kiv.formgen.LayoutGenerator;
-import cz.zcu.kiv.formgen.LayoutGeneratorException;
 import cz.zcu.kiv.formgen.ObjectBuilder;
 import cz.zcu.kiv.formgen.ObjectBuilderException;
 import cz.zcu.kiv.formgen.PersistentObjectException;
 import cz.zcu.kiv.formgen.PersistentObjectProvider;
+import cz.zcu.kiv.formgen.TemplateGeneratorException;
 import cz.zcu.kiv.formgen.Writer;
 import cz.zcu.kiv.formgen.core.PersistentObjectBuilder;
 import cz.zcu.kiv.formgen.core.SimpleDataGenerator;
@@ -119,7 +119,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
 							stream.toByteArray(), null);
 					formLayoutDao.createOrUpdateByName(layout);
-				} catch (LayoutGeneratorException e) {
+				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
 				}
 			}
@@ -316,7 +316,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
-		} catch (LayoutGeneratorException e) {
+		} catch (TemplateGeneratorException e) {
 			logger.error("Unable to transform data to odML format.", e);
 			throw new FormServiceException(Cause.OTHER);
 		}
@@ -343,7 +343,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
-		} catch (LayoutGeneratorException e) {
+		} catch (TemplateGeneratorException e) {
 			logger.error("Unable to transform data to odML format.", e);
 			throw new FormServiceException(Cause.OTHER);
 		}
@@ -444,7 +444,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		Set<FormData> model;
 		try {
 			model = new OdmlReader().readData(new ByteArrayInputStream(odml));
-		} catch (LayoutGeneratorException e) {
+		} catch (TemplateGeneratorException e) {
 			throw new FormServiceException("Unable to read the odML document.");
 		}
 		
