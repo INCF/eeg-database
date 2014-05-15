@@ -307,12 +307,12 @@ public class ExperimentPackagePanel extends Panel {
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
                 "personBySubjectPersonId.dateOfBirth", "yyyy"));
-		// TODO service page missing.
+
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
 
-            @Override
+            @Override      // TODO make me visible.
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, MethodListPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")));
+                item.add(new ViewLinkPanel(componentId, MethodListPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")).setVisible(false));
             }
         });
 		columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {

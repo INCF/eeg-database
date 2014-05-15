@@ -22,17 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
-import java.io.Serializable;
-
-import org.apache.wicket.markup.head.CssHeaderItem;
-import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.ExternalLink;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.util.string.StringValue;
-
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
@@ -42,6 +31,16 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
+import org.apache.wicket.markup.head.CssHeaderItem;
+import org.apache.wicket.markup.head.IHeaderResponse;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.ExternalLink;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.util.string.StringValue;
+
+import java.io.Serializable;
 
 /**
  * MenuPage for EEGDatabase portal, added header section with information about logged user,
@@ -96,7 +95,8 @@ public class MenuPage extends BasePage {
 
         }
         cart.add(new Label("cartLabel", cartLabel));
-        cart.setVisibilityAllowed(signedIn);
+        //cart.setVisibilityAllowed(signedIn);     TODO set me visible
+        cart.setVisible(false);
         add(cart);
 
         Link<Void> link = new Link<Void>("logout") {
