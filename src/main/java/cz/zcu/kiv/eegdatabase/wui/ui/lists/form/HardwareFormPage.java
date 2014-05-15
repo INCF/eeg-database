@@ -30,6 +30,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -136,7 +137,7 @@ public class HardwareFormPage extends MenuPage {
             type.setLabel(ResourceUtils.getModel("label.type"));
             type.setRequired(true);
 
-            TextField<String> description = new TextField<String>("description");
+            TextArea<String> description = new TextArea<String>("description");
             description.setLabel(ResourceUtils.getModel("label.description"));
             description.setRequired(true);
 
