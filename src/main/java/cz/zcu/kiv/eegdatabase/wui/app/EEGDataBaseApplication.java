@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.wui.app;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
@@ -167,8 +168,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     @Override
     public void init() {
         super.init();
-      	getDebugSettings().setOutputComponentPath(true);
 
+        getDebugSettings().setOutputComponentPath(development);
         getMarkupSettings().setStripWicketTags(true);
         // getMarkupSettings().setCompressWhitespace(true);
         getMarkupSettings().setStripComments(true);
@@ -180,9 +181,11 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // set access denied page inserted in menu content.
         getApplicationSettings().setAccessDeniedPage(AccessDeniedPage.class);
         getApplicationSettings().setInternalErrorPage(InternalErrorPage.class);
-        if(!development)
-            getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
         
+        if(!development){
+            
+            getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
+        }
         // set true for upload progress.
         getApplicationSettings().setUploadProgressUpdatesEnabled(true);
 
@@ -196,6 +199,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // mount pages in wicket application for better working with pages.
         mountPages();
 
+    }
+    
+    @Override
+    public RuntimeConfigurationType getConfigurationType() {
+        
+        return development ? RuntimeConfigurationType.DEVELOPMENT : RuntimeConfigurationType.DEPLOYMENT;
     }
     
     /**
