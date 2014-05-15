@@ -99,6 +99,8 @@ public class AddExperimentScenarioForm extends WizardStep {
     private DateTimeField startDate;
     private ModalWindow window;
     private IModel<Experiment> model;
+    private ListMultipleChoice<Person> coexperimenters;
+    private DropDownChoice<ResearchGroup> researchGroupChoice;
 
     public AddExperimentScenarioForm(IModel<Experiment> model) {
         setOutputMarkupId(true);
@@ -230,7 +232,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         // added dropdown choice for research group
         ChoiceRenderer<ResearchGroup> renderer = new ChoiceRenderer<ResearchGroup>("title", "researchGroupId");
         List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
-        DropDownChoice<ResearchGroup> researchGroupChoice = new DropDownChoice<ResearchGroup>("researchGroup", new PropertyModel<ResearchGroup>(model.getObject(), "researchGroup"), choices, renderer);
+        researchGroupChoice = new DropDownChoice<ResearchGroup>("researchGroup", new PropertyModel<ResearchGroup>(model.getObject(), "researchGroup"), choices, renderer);
 
         researchGroupChoice.setRequired(true);
         researchGroupChoice.setLabel(ResourceUtils.getModel("label.group"));
@@ -374,7 +376,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         ChoiceRenderer<Person> renderer = new ChoiceRenderer<Person>("fullName", "personId");
         List<Person> choices = personFacade.getAllRecords();
         Collections.sort(choices);
-        ListMultipleChoice<Person> coexperimenters = new ListMultipleChoice<Person>("persons", new PropertyModel<List<Person>>(model.getObject(), "persons"), choices, renderer);
+        coexperimenters = new ListMultipleChoice<Person>("persons", new PropertyModel<List<Person>>(model.getObject(), "persons"), choices, renderer);
         coexperimenters.setMaxRows(10);
         coexperimenters.setLabel(ResourceUtils.getModel("label.coExperimenters"));
         add(coexperimenters);
@@ -387,16 +389,6 @@ public class AddExperimentScenarioForm extends WizardStep {
         window.setAutoSize(true);
         window.setMinimalHeight(600);
         window.setMinimalWidth(600);
-        window.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClose(AjaxRequestTarget target) {
-                target.add(AddExperimentScenarioForm.this);
-            }
-        });
-
         add(window);
 
         addModalWindowAndButton(this, "add-group",
@@ -428,6 +420,28 @@ public class AddExperimentScenarioForm extends WizardStep {
 
     private void addModalWindowAndButton(MarkupContainer container, final String cookieName,
             final String buttonName, final String targetClass, final ModalWindow window) {
+        window.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClose(AjaxRequestTarget target) {
+                ChoiceRenderer<Person> renderer = new ChoiceRenderer<Person>("fullName", "personId");
+                List<Person> choices = personFacade.getAllRecords();
+                Collections.sort(choices);
+                coexperimenters.setChoiceRenderer(renderer);
+                coexperimenters.setChoices(choices);
+
+                ChoiceRenderer<ResearchGroup> groupRenderer = new ChoiceRenderer<ResearchGroup>("title", "researchGroupId");
+                List<ResearchGroup> groupChoices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
+                researchGroupChoice.setChoiceRenderer(groupRenderer);
+                researchGroupChoice.setChoices(groupChoices);
+
+                target.add(AddExperimentScenarioForm.this);
+
+
+            }
+        });
 
         AjaxButton ajaxButton = new AjaxButton(buttonName)
         {

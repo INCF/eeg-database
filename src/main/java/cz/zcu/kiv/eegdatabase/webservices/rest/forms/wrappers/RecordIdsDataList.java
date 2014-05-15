@@ -19,61 +19,63 @@
  *
  ***********************************************************************************************************************
  *
- * FormServiceException.java, 8. 3. 2014 14:41:22, Jakub Krauz
+ * RecordIdsDataList.java, 1. 5. 2014 10:15:18, Jakub Krauz
  *
  **********************************************************************************************************************/
-package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
+package cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 
 /**
- * Exception that indicates that the required operation was rejected by the {@link FormService}.
+ * Data container for list of IDs of available data records.
+ * Required for XML marshaling, supports also JSON format.
  * 
  * @author Jakub Krauz
  */
-public class FormServiceException extends Exception {
+@XmlRootElement(name = "ids")
+public class RecordIdsDataList {
 	
-	/** Generated serial version UID. */
-	private static final long serialVersionUID = 3686549252972033330L;
+	/** List of IDs. */
+	private List<Integer> ids;
+	
+	
+	/**
+	 * Implicit constructor.
+	 */
+	public RecordIdsDataList() {
+		this(new ArrayList<Integer>());
+	}
+	
+	
+	/**
+	 * Initializing constructor.
+	 * @param ids - list of IDs
+	 */
+	public RecordIdsDataList(List<Integer> ids) {
+		this.ids = ids;
+	}
 
+	
+	/**
+	 * Gets the list of IDs.
+	 * @return list of IDs
+	 */
+	@XmlElement(name = "id")
+	public List<Integer> getIds() {
+		return ids;
+	}
 
-	/**
-	 * Enumeration of possible causes of the operation refusal.
-	 */
-	public enum Cause {
-		PERMISSION,
-		CONFLICT,
-		NOT_FOUND,
-		OTHER
-	}
-	
-	
-	/** The actual cause. */
-	private Cause cause;
-	
 	
 	/**
-	 * Creates a new exception with the specified cause of operation refusal.
-	 * @param cause - the cause
+	 * Sets the list of IDs.
+	 * @param ids - list of IDs
 	 */
-	public FormServiceException(Cause cause) {
-		this.cause = cause;
+	public void setIds(List<Integer> ids) {
+		this.ids = ids;
 	}
-	
-	
-	public FormServiceException(String message) {
-		super(message);
-		this.cause = Cause.OTHER;
-	}
-	
-	
-	/**
-	 * Retrieves the cause of the operation refusal.
-	 * @return the cause
-	 */
-	public Cause what() {
-		return cause;
-	}
-	
-	
-	
-	
+
 }

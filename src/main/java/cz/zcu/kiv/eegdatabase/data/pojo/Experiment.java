@@ -65,15 +65,23 @@ public class Experiment implements Serializable {
 	@FormId
 	private int experimentId;
 	@Indexed
+	@FormItem(required = true)
 	private Weather weather; //being transformed to GenericParameter
+	@FormItem(required = true, label = "Subject person")
 	private Person personBySubjectPersonId;
+	@FormItem(required = true)
 	private Scenario scenario;
-	@FormItem(label = "owner")
+	@FormItem(required = true, label = "Owner")
 	private Person personByOwnerId;
+	@FormItem(required = true)
 	private ResearchGroup researchGroup;
+	@FormItem(required = true)
 	private Digitization digitization;//being transformed to GenericParameter
+	@FormItem(required = true)
 	private SubjectGroup subjectGroup;
+	@FormItem(required = true)
 	private Artifact artifact;
+	@FormItem(required = true)
 	private ElectrodeConf electrodeConf;
 	@FormItem(preview = PreviewLevel.MAJOR)
 	private Timestamp startTime;
@@ -87,7 +95,6 @@ public class Experiment implements Serializable {
 	@SolrField(name = IndexField.TEXT)
 	@FormItem(preview = PreviewLevel.MINOR)
 	private String environmentNote;
-	@FormItem
 	private Set<Person> persons = new HashSet<Person>(0);
 	private Set<Hardware> hardwares = new HashSet<Hardware>(0);//being transformed to GenericParameter
 	private Set<Pharmaceutical> pharmaceuticals = new HashSet<Pharmaceutical>(0);//being transformed to GenericParameter

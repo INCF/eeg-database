@@ -37,6 +37,8 @@ import org.apache.solr.client.solrj.SolrServerException;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
 import org.hibernate.criterion.DetachedCriteria;
+import org.hibernate.criterion.Order;
+import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -234,6 +236,16 @@ public class SimpleGenericDao<T, PK extends Serializable>
     @Override
     public List<T> findByExample(T example) {
         return getHibernateTemplate().findByExample(example);
+    }
+    
+    
+    @Override
+    public List<PK> getAllIds() {
+    	DetachedCriteria criteria = DetachedCriteria.forClass(type);
+		criteria.setProjection(Projections.id());
+		String idName = getHibernateTemplate().getSessionFactory().getClassMetadata(type).getIdentifierPropertyName();
+		criteria.addOrder(Order.asc(idName));
+		return (List<PK>) getHibernateTemplate().findByCriteria(criteria);
     }
     
     protected void initializeProperty(Object property) {

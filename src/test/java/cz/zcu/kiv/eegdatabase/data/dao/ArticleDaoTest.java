@@ -26,6 +26,8 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.Util;
+import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -56,12 +58,9 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 
     @Before
     public void setUp() {
-        personReader = TestUtils.createReaderPersonForTesting();
-        if (personDao.getPerson(personReader.getUsername()) == null) {
-            personDao.create(personReader);
-        } else {
-            personDao.update(personReader);
-        }
+        personReader = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
+        personDao.create(personReader);
+
 
         article = new Article();
 
@@ -87,6 +86,7 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
             articleDao.create(article);
         } catch (Exception e) {
             assertTrue(e instanceof DataIntegrityViolationException);
+            article.setTitle("test-title");
 
         } finally {
             Article tmp = articleDao.read(article.getArticleId());
@@ -94,6 +94,11 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 
         }
 
+    }
+    @After
+    public void clean() {
+        articleDao.delete(article);
+        personDao.delete(personReader);
     }
 
 

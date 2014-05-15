@@ -65,6 +65,6 @@ public class ServiceResultManager extends Thread {
         result.setContent(Hibernate.createBlob(output.getBytes()));
         result.setStatus("finished");
         result.setFilename(methodName + "_result.xml");
-        service.updateResult(result);
+        service.update(result);
     }
 }
