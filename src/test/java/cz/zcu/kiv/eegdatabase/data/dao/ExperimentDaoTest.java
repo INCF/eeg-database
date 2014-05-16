@@ -117,6 +117,54 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
+    @Test
+    @Transactional
+    public void testGetCountExperimentsWhereOwner() {
+        int count = experimentDao.getCountForExperimentsWhereOwner(person);
+        experimentDao.create(experiment);
+        Person person1 = TestUtils.createPersonForTesting("test2@test.com", Util.ROLE_READER);
+        personDao.create(person1);
+        Experiment exp = setUpExperiment();
+        exp.setPersonByOwnerId(person1);
+        experimentDao.create(exp);
+        assertEquals(count + 1, experimentDao.getCountForExperimentsWhereOwner(person));
+
+    }
+
+    @Test
+    @Transactional
+    public void testGetCountExperimentsWhereSubject() {
+        int countForOwner = experimentDao.getCountForExperimentsWhereOwner(person);
+        int countForSubject = experimentDao.getCountForExperimentsWhereSubject(person);
+        experimentDao.create(experiment);
+        Person person1 = TestUtils.createPersonForTesting("test2@test.com", Util.ROLE_READER);
+        personDao.create(person1);
+        Experiment exp = setUpExperiment();
+        exp.setPersonBySubjectPersonId(person1);
+        experimentDao.create(exp);
+        assertEquals(countForOwner + 2, experimentDao.getCountForExperimentsWhereOwner(person));
+        assertEquals(countForSubject + 1, experimentDao.getCountForExperimentsWhereSubject(person));
+
+    }
+
+    @Test
+    @Transactional
+    public void testGetExperimentForDetail() {
+
+        experimentDao.create(experiment);
+        Experiment exp = experimentDao.getExperimentForDetail(experiment.getExperimentId());
+        assertEquals("testTitle", exp.getResearchGroup().getTitle());
+        assertEquals("test@test.com", exp.getPersonBySubjectPersonId().getUsername());
+        assertEquals("testTitleWeather", exp.getWeather().getTitle());
+        for (Software sw: exp.getSoftwares()) {
+            assertEquals("testTitleSW", sw.getTitle());
+        }
+
+
+
+
+    }
+
     @After
     public void clean() {
         if (person.getUsername() != null) {
@@ -151,14 +199,14 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
     private Software createSoftware() {
         Software software = new Software();
         software.setDescription("testDesc");
-        software.setTitle("testTitle");
+        software.setTitle("testTitleSW");
         softwareDao.create(software);
         return software;
     }
 
     private Weather createWeather() {
         Weather weather = new Weather();
-        weather.setTitle("testTitle");
+        weather.setTitle("testTitleWeather");
         weather.setDescription("testDesc");
         weatherDao.create(weather);
         return weather;

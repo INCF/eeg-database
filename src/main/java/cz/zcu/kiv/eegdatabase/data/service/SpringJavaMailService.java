@@ -76,7 +76,8 @@ public class SpringJavaMailService implements MailService {
         sb.append(messageSource.getMessage("registration.email.body.clickToRegister", null, locale));
         sb.append("<br/>");
 
-        String confirmURL = PageParametersUtils.getUrlForPage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.CONFIRM_ACTIVATION, user.getAuthenticationHash()));
+        String confirmURL = PageParametersUtils.getUrlForPage(ConfirmPage.class, 
+                PageParametersUtils.getPageParameters(ConfirmPage.CONFIRM_ACTIVATION, user.getAuthenticationHash()), domain);
         sb.append("<a href=\"" + confirmURL + "\">" + confirmURL + "</a>");
         sb.append("</p>");
         sb.append("</body></html>");
@@ -119,7 +120,7 @@ public class SpringJavaMailService implements MailService {
         sb.append("<p>");
         sb.append(messageSource.getMessage("editgrouprole.email.body.clickToConfirm", null, locale));
         sb.append("<br/>");
-        String requestUrl = PageParametersUtils.getUrlForPage(GroupRoleAcceptPage.class, PageParametersUtils.getDefaultPageParameters(requestId));
+        String requestUrl = PageParametersUtils.getUrlForPage(GroupRoleAcceptPage.class, PageParametersUtils.getDefaultPageParameters(requestId), domain);
         sb.append("<a href=\"" + requestUrl + "\">" + requestUrl + "</a>");
         sb.append("</p>");
         sb.append("</body></html>");

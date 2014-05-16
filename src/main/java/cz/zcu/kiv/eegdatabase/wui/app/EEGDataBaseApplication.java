@@ -26,18 +26,21 @@ package cz.zcu.kiv.eegdatabase.wui.app;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
+import org.apache.wicket.RuntimeConfigurationType;
 import org.apache.wicket.Session;
 import org.apache.wicket.authroles.authentication.AbstractAuthenticatedWebSession;
 import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
@@ -134,6 +137,9 @@ import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
     private ApplicationContext appCtx;
+    
+    @Value("${app.domain}")
+    private String domain;
 
     @Autowired
     private DiseaseFacade diseaseFacade;
@@ -163,12 +169,17 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         return HomePage.class;
     };
+    
+    public static EEGDataBaseApplication get()
+    {
+        return (EEGDataBaseApplication) AuthenticatedWebApplication.get();
+    }
 
     @Override
     public void init() {
         super.init();
-      	getDebugSettings().setOutputComponentPath(true);
 
+        getDebugSettings().setOutputComponentPath(development);
         getMarkupSettings().setStripWicketTags(true);
         // getMarkupSettings().setCompressWhitespace(true);
         getMarkupSettings().setStripComments(true);
@@ -180,9 +191,11 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // set access denied page inserted in menu content.
         getApplicationSettings().setAccessDeniedPage(AccessDeniedPage.class);
         getApplicationSettings().setInternalErrorPage(InternalErrorPage.class);
-        if(!development)
-            getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
         
+        if(!development){
+            
+            getExceptionSettings().setUnexpectedExceptionDisplay(IExceptionSettings.SHOW_INTERNAL_ERROR_PAGE);
+        }
         // set true for upload progress.
         getApplicationSettings().setUploadProgressUpdatesEnabled(true);
 
@@ -196,6 +209,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         // mount pages in wicket application for better working with pages.
         mountPages();
 
+    }
+    
+    @Override
+    public RuntimeConfigurationType getConfigurationType() {
+        
+        return development ? RuntimeConfigurationType.DEVELOPMENT : RuntimeConfigurationType.DEPLOYMENT;
     }
     
     /**
@@ -315,6 +334,10 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     
     public void setDevelopment(boolean development) {
         this.development = development;
+    }
+    
+    public String getDomain() {
+        return domain;
     }
 
 }

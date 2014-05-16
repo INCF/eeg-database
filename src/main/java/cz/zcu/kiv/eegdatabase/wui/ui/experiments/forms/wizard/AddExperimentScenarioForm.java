@@ -283,11 +283,8 @@ public class AddExperimentScenarioForm extends WizardStep {
                     choices = new ArrayList<Scenario>(10);
                     for (Scenario t : allChoices) {
                         if ((t.getTitle() != null) &&
-                                t.getTitle().toLowerCase().startsWith(input.toLowerCase())) {
+                                t.getTitle().toLowerCase().contains(input.toLowerCase())) {
                             choices.add(t);
-                        }
-                        if (choices.size() >= 10) {
-                            break;
                         }
                     }
                 }
@@ -349,11 +346,8 @@ public class AddExperimentScenarioForm extends WizardStep {
                     choices = new ArrayList<Person>(10);
                     for (Person t : allChoices) {
                         if ((t.getFullName() != null) &&
-                                t.getFullName().toLowerCase().startsWith(input.toLowerCase())) {
+                                t.getFullName().toLowerCase().contains(input.toLowerCase())) {
                             choices.add(t);
-                        }
-                        if (choices.size() >= 10) {
-                            break;
                         }
                     }
                 }
@@ -410,11 +404,11 @@ public class AddExperimentScenarioForm extends WizardStep {
     private AutoCompleteSettings prepareAutoCompleteSettings() {
 
         AutoCompleteSettings settings = new AutoCompleteSettings();
-        settings.setShowCompleteListOnFocusGain(true);
         settings.setShowListOnEmptyInput(true);
-        settings.setPreselect(true);
-        settings.setShowListOnFocusGain(true);
+        settings.setShowCompleteListOnFocusGain(true);
         settings.setUseHideShowCoveredIEFix(false);
+        settings.setMaxHeightInPx(200);
+        settings.setAdjustInputWidth(false);
         return settings;
     }
 

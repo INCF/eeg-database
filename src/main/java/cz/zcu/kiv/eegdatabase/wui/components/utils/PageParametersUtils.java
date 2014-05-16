@@ -82,9 +82,14 @@ public class PageParametersUtils {
      * @param parameters
      * @return
      */
-    public static String getUrlForPage(Class page, PageParameters parameters) {
-
-        return RequestCycle.get().getUrlRenderer().renderFullUrl(
-                Url.parse(RequestCycle.get().urlFor(page, parameters).toString()));
+    public static String getUrlForPage(Class page, PageParameters parameters, String appDomain) {
+        
+        String url = appDomain;
+        boolean endWithSlash = url.endsWith("/");
+        
+        if(!endWithSlash)
+            url = url + "/";
+            
+        return url + RequestCycle.get().urlFor(page, parameters).toString().substring(2);
     }
 }

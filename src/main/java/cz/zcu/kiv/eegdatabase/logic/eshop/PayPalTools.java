@@ -22,12 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.eshop;
 
+import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.PayPalConfirmPaymentPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.PaymentErrorPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
+
 import org.apache.wicket.protocol.http.WebApplication;
+
 import urn.ebay.api.PayPalAPI.*;
 import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
 import urn.ebay.apis.eBLBaseComponents.*;
@@ -49,9 +52,9 @@ public class PayPalTools {
      */
     public static String setExpressCheckout(){
         // PayPal requires URL to redirect user upon successful payment authorization.
-        String confirmURL = PageParametersUtils.getUrlForPage(PayPalConfirmPaymentPage.class, null);
+        String confirmURL = PageParametersUtils.getUrlForPage(PayPalConfirmPaymentPage.class, null, EEGDataBaseApplication.get().getDomain());
         // PayPal requires URL to redirect user upon canceling the payment authorization.
-        String cancelURL = PageParametersUtils.getUrlForPage(ShoppingCartPage.class, null);
+        String cancelURL = PageParametersUtils.getUrlForPage(ShoppingCartPage.class, null, EEGDataBaseApplication.get().getDomain());
 
         try{
             // PayPal SDK requires property object as a constructor parameter.
@@ -100,7 +103,7 @@ public class PayPalTools {
                 return (PayPalProperties.getProperty("service.SetExpressCheckoutRedirectURL") + token);
             }
         } catch (Exception e) {}
-        return PageParametersUtils.getUrlForPage(PaymentErrorPage.class, null);
+        return PageParametersUtils.getUrlForPage(PaymentErrorPage.class, null, EEGDataBaseApplication.get().getDomain());
     }
 
     /**
