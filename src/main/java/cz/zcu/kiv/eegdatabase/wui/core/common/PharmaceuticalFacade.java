@@ -30,7 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
 public interface PharmaceuticalFacade extends GenericFacade<Pharmaceutical, Integer> {
 
-      boolean canSaveTitle(String title);
+      boolean canSaveTitle(String title, int groupId, int pharmaceuticalId);
       
       void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup);
 

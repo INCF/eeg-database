@@ -52,5 +52,5 @@ public interface SoftwareFacade extends GenericFacade<Software, Integer>{
 
     void deleteGroupRel(Software persistent, ResearchGroup researchGroup);
     
-    boolean canSaveTitle(String title);
+    boolean canSaveTitle(String title, int researchGroupId, int softwareId);
 }

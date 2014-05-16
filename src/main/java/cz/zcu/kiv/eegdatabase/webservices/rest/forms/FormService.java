@@ -28,6 +28,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 
 /**
  * Service interface providing form-layouts data and operations on REST service.
@@ -123,5 +124,52 @@ public interface FormService {
 	 * 					or the logged user does not have permission to do the operation
 	 */
 	void deleteLayout(String formName, String layoutName) throws FormServiceException;
+	
+	
+	/**
+	 * Gets all records of given type (entity) in odML format.
+	 * @param entity - the entity's name
+	 * @return byte array with odML data
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	byte[] getOdmlData(String entity) throws FormServiceException;
+	
+	
+	/**
+	 * Gets the record determined by the given ID in odML format.
+	 * @param entity - the entity's name
+	 * @param id - the record's ID
+	 * @return byte array with odML data
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	byte[] getOdmlData(String entity, Integer id) throws FormServiceException;
+	
+	
+	/**
+	 * Gets count of records of the given type (entity).
+	 * @param entity - the entity's name
+	 * @return count of records
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	RecordCountData countDataRecords(String entity) throws FormServiceException;
+	
+	
+	/**
+	 * Gets list of IDs of all records of the given type (entity).
+	 * @param entity - the entity's name
+	 * @return list of IDs
+	 * @throws FormServiceException if the required data cannot be retrieved
+	 */
+	RecordIdsDataList getRecordIds(String entity) throws FormServiceException;
+	
+	
+	/**
+	 * Creates a new persistent object from the odML data document.
+	 * @param entity - the entity's name
+	 * @param odml - the odML document
+	 * @return ID of the created record
+	 * @throws FormServiceException if the record cannot be created
+	 */
+	Integer createRecord(String entity, byte[] odml) throws FormServiceException;
 
 }

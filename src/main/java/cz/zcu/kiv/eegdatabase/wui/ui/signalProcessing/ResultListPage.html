@@ -31,32 +31,37 @@ This file is part of the EEG-database project
         <h1>
             <wicket:message key="pageTitle.servicesResult"/>
         </h1>
-
-
-      <!--  <table class="dataTable" style="width: 450px;">
+        <table class="dataTable" >
             <thead>
             <tr>
-                <th style="width: 250px;">
-                    <wicket:message key="dataTable.heading.methodName"/>
+                <th style="width: 200px;">
+                    <wicket:message key="dataTable.heading.title"/>
                 </th>
+                <th style="width: 100px;">
+                    <wicket:message key="dataTable.heading.resultStatus"/>
+                </th>
+                <th style="width: 200px;">
+                    <wicket:message key="dataTable.heading.fileName"/>
+                </th>
+                <th><wicket:message key="dataTable.heading.download"/></th>
+                <th><wicket:message key="dataTable.heading.delete"/></th>
             </tr>
             </thead>
-            <tr wicket:id="methods">
-                <td wicket:id="name"></td>
+            <tr wicket:id="results">
+                <td wicket:id="title"></td>
+                <td wicket:id="status"></td>
+                <td wicket:id="filename"></td>
+                <td><a href="#" wicket:id="download">
+                    <wicket:message key="link.download"/>
+                </a>
+                    </td>
+                <td>
+                <a href="#" wicket:id="delete">
+                    <wicket:message key="link.delete"/>
+                </a>
+                </td>
             </tr>
         </table>
-        <table class="dataTable" style="width: 450px;">
-            <thead>
-            <tr>
-                <th style="width: 250px;">
-                    <wicket:message key="dataTable.heading.suitableData"/>
-                </th>
-            </tr>
-            </thead>
-            <tr wicket:id="data">
-                <td wicket:id="name"></td>
-            </tr>
-        </table>     -->
 
 
     </div>

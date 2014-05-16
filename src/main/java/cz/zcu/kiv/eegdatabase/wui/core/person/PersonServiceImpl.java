@@ -80,8 +80,12 @@ public class PersonServiceImpl implements PersonService {
     @Override
     @Transactional
     public Integer create(Person person) {
-
-        person.setPassword(encodePassword(person.getPassword()));
+        String password = person.getPassword();
+        if (password == null) {
+            password = ControllerUtils.getRandomPassword();
+            mailService.sendForgottenPasswordMail(person.getUsername(), password);
+        }
+        person.setPassword(encodePassword(password));
 
         if (person.getLaterality() == '\u0000')
             person.setLaterality(DEFAULT_LATERALITY);

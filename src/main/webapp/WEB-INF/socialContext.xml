@@ -74,6 +74,7 @@
         <constructor-arg ref="SignInAdapter" />
         <property name="signUpUrl" value="/oauthcallback.html" />
         <property name="postSignInUrl" value="/home-page" />
+        <property name="applicationUrl" value="${app.appUrlForSocialSites}" />
     </bean>
 
     <bean id="connectController" class="org.springframework.social.connect.web.ConnectController">

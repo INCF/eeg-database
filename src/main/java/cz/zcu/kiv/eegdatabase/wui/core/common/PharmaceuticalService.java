@@ -30,7 +30,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
 public interface PharmaceuticalService extends GenericService<Pharmaceutical, Integer> {
 
-      boolean canSaveTitle(String title);
+      boolean canSaveTitle(String title, int groupId, int pharmaceuticalId);
       
       void createGroupRel(Pharmaceutical persistent, ResearchGroup researchGroup);
 

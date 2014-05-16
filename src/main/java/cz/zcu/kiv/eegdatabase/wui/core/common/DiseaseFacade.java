@@ -38,9 +38,13 @@ public interface DiseaseFacade extends GenericFacade<Disease, Integer> {
 
     List<Disease> getRecordsByGroup(int groupId);
 
+    boolean canSaveTitle(String title, int groupId, int diseaseId);
+
     boolean canDelete(int id);
 
     boolean hasGroupRel(int id);
 
     void deleteGroupRel(Disease persistent, ResearchGroup researchGroup);
+
+
 }

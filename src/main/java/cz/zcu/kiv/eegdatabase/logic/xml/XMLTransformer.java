@@ -166,10 +166,13 @@ public class XMLTransformer implements DataTransformer {
     p.writeName(per.getGivenname(), per.getSurname());
     }
     if (mc.isBirth()) {
-      pert.setDateOfBirth(per.getDateOfBirth().toString());
+        if (per.getDateOfBirth() != null) {
+            pert.setDateOfBirth(per.getDateOfBirth().toString());
+        }
+
     }
     if (mc.isEmail()) {
-    pert.setEmail(per.getEmail());
+    pert.setEmail(per.getUsername());
     }
     if (mc.isGender()) {
       pert.setGender("" + per.getGender());

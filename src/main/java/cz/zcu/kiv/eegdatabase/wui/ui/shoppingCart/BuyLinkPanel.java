@@ -55,8 +55,8 @@ public class BuyLinkPanel  extends Panel {
             public void onClick() {
                 EEGDataBaseSession.get().getShoppingCart().addToCart(experiment);
             }
-        }.add(new Label("label", ResourceUtils.getModel("link.addToCart")))
-         .setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isInCart(experiment)));
+        }.add(new Label("label", ResourceUtils.getModel("link.addToCart"))).setVisible(false)); //TODO set me visible
+        // .setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isInCart(experiment)));
         // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
     }
 }

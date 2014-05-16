@@ -47,6 +47,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordData;
+import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.RecordIdsDataList;
 
 
 /**
@@ -54,9 +56,9 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDa
  *
  * @author Jakub Krauz
  */
-@Secured("IS_AUTHENTICATED_FULLY")
 @Controller
 @RequestMapping("/form-layouts")
+@Secured("IS_AUTHENTICATED_FULLY")
 public class FormServiceController {
 	
 	/** Logger. */
@@ -72,7 +74,8 @@ public class FormServiceController {
 	 * @return count of forms available
 	 */
 	@RequestMapping(value = "/form/count", method = RequestMethod.GET)
-	public @ResponseBody RecordCountData availableFormsCount() {
+	@ResponseBody
+	public RecordCountData availableFormsCount() {
 		return service.availableFormsCount();
 	}
 	
@@ -83,7 +86,8 @@ public class FormServiceController {
 	 * @return names of forms with available layouts
 	 */
 	@RequestMapping(value = "/form/available", method = RequestMethod.GET)
-	public @ResponseBody AvailableFormsDataList availableForms (
+	@ResponseBody
+	public AvailableFormsDataList availableForms (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly) {
 		
 		return service.availableForms(mineOnly);
@@ -96,7 +100,8 @@ public class FormServiceController {
 	 * @return count of form-layouts available
 	 */
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
-	public @ResponseBody RecordCountData availableLayoutsCount (
+	@ResponseBody
+	public RecordCountData availableLayoutsCount (
 					@RequestParam(value = "form", required = false) String formName) {
 		
 		if (formName == null)
@@ -113,7 +118,8 @@ public class FormServiceController {
 	 * @return names of form layouts available
 	 */
 	@RequestMapping(value = "/available", method = RequestMethod.GET)
-	public @ResponseBody AvailableLayoutsDataList availableLayouts (
+	@ResponseBody
+	public AvailableLayoutsDataList availableLayouts (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
 					@RequestParam(value = "form", required = false) String formName) {
 		
@@ -192,6 +198,55 @@ public class FormServiceController {
 	
 	
 	/**
+	 * Retrieves all records of given entity in odML data format.
+	 * @param entity - the requested entity name
+	 * @param response - HTTP response object
+	 * @throws IOException if an error occurs when writing to response stream
+	 * @throws FormServiceException if required odML data cannot be retrieved
+	 */
+    @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
+    public void getData(@RequestParam("entity") String entity,
+                        @RequestParam(value = "id", required = false) Integer id,
+			            HttpServletResponse response) throws IOException, FormServiceException {
+    	byte[] odml;
+        if (id == null)
+        	odml = service.getOdmlData(entity);
+		else
+			odml = service.getOdmlData(entity, id);
+		
+        response.setContentType(MediaType.APPLICATION_XML_VALUE);
+        response.setContentLength(odml.length);
+        response.getOutputStream().write(odml);
+        response.flushBuffer();
+	}
+    
+    
+    @RequestMapping(value = "/data", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
+    @ResponseStatus(HttpStatus.CREATED)
+    @ResponseBody
+    public RecordData createRecord(@RequestParam("entity") String entity, @RequestBody byte[] content) 
+    		throws FormServiceException {
+    	Integer id = service.createRecord(entity, content);
+    	RecordData record = new RecordData(id);
+    	return record;
+    }
+    
+    
+    @RequestMapping(value = "/data/count", method = RequestMethod.GET)
+    @ResponseBody
+    public RecordCountData getDataCount(@RequestParam("entity") String entity) throws FormServiceException {
+    	return service.countDataRecords(entity);
+    }
+    
+    
+    @RequestMapping(value = "/data/ids", method = RequestMethod.GET)
+    @ResponseBody
+    public RecordIdsDataList getDataIds(@RequestParam("entity") String entity) throws FormServiceException {
+    	return service.getRecordIds(entity);
+    }
+	
+	
+	/**
 	 * Handles the {@link FormServiceException} exception.
 	 * @param exception - the exception
 	 * @param response - HTTP response
@@ -204,16 +259,19 @@ public class FormServiceController {
 				response.sendError(HttpServletResponse.SC_FORBIDDEN, "You do not have permission for this operation.");
 				break;
 			case NOT_FOUND:
-				response.sendError(HttpServletResponse.SC_NOT_FOUND, "The specified layout was not found.");
+				response.sendError(HttpServletResponse.SC_NOT_FOUND, "The requested resource was not found.");
 				break;
 			case CONFLICT:
-				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing layout.");
+				response.sendError(HttpServletResponse.SC_CONFLICT, "The specified name is in conflict with an existing resource.");
+				break;
+			case OTHER:
+				response.sendError(HttpServletResponse.SC_BAD_REQUEST, exception.getMessage());
 				break;
 			default:
 				response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 		}
 		logger.debug("The requested operation was not successfull.", exception);
     }
-	
+
 	
 }

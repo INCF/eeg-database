@@ -27,37 +27,6 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form;
 
-import java.io.IOException;
-import java.util.Arrays;
-import java.util.List;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
-import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
-import org.apache.wicket.markup.html.WebMarkupContainer;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.Radio;
-import org.apache.wicket.markup.html.form.RadioGroup;
-import org.apache.wicket.markup.html.form.SubmitLink;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.Strings;
-import org.apache.wicket.validation.validator.RangeValidator;
-import org.apache.wicket.validation.validator.StringValidator;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
@@ -69,6 +38,27 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.upload.FileUpload;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.model.util.ListModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.Strings;
+import org.apache.wicket.validation.validator.RangeValidator;
+
+import java.io.IOException;
+import java.util.Arrays;
+import java.util.List;
 
 public class ScenarioForm extends Form<Scenario> {
 
@@ -114,7 +104,6 @@ public class ScenarioForm extends Form<Scenario> {
         TextArea<String> description = new TextArea<String>("description");
         description.setRequired(true);
         description.setLabel(ResourceUtils.getModel("label.scenarioDescription"));
-        description.add(StringValidator.maximumLength(255));
 
         final WebMarkupContainer fileContainer = new WebMarkupContainer("contailer");
         fileContainer.setVisibilityAllowed(false);
@@ -206,11 +195,9 @@ public class ScenarioForm extends Form<Scenario> {
                     }
                 }
 
-                if (!dataAvailable.getModelObject()) {
-                }
-
                 if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
-                    error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
+                    error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                    return;
                 }
 
                 if (scenario.getScenarioId() > 0) {

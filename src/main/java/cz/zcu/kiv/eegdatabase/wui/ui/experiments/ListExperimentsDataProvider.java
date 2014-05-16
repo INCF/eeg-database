@@ -40,6 +40,8 @@ import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
  */
 public class ListExperimentsDataProvider extends BasicDataProvider<Experiment> {
 
+    private static final long serialVersionUID = 2580741571579801137L;
+
     /**
      * Specialized constructor which loads experiments based on given properties
      * @param facade ExperimentsFacade which will be used to load experiments

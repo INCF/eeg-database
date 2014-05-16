@@ -129,7 +129,7 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     }
     
     @Override
-    public boolean canSaveTitle(String title) {
-        return service.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int researchGroupId, int softwareId) {
+        return service.canSaveTitle(title, researchGroupId, softwareId);
     }
 }

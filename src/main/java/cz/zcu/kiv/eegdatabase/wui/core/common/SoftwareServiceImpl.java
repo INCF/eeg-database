@@ -149,7 +149,7 @@ public class SoftwareServiceImpl implements SoftwareService{
     
     @Override
     @Transactional(readOnly = true)
-    public boolean canSaveTitle(String title) {
-        return softwareDao.canSaveTitle(title);
+    public boolean canSaveTitle(String title, int groupId, int softwareId) {
+        return softwareDao.canSaveTitle(title, groupId, softwareId);
     }
 }

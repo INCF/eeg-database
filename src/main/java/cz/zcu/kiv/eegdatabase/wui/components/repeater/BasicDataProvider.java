@@ -82,7 +82,7 @@ public class BasicDataProvider<T extends Serializable> extends SortableDataProvi
 		}
 
         if (size() < first + count) {
-            listModel.getObject().subList((int) first, (int) (first + size() - first)).iterator();
+            return listModel.getObject().subList((int) first, (int) (first + size() - first)).iterator();
 		}
 
         return listModel.getObject().subList((int) first, (int) (first + count)).iterator();

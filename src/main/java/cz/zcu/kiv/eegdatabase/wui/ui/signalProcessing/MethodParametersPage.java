@@ -138,16 +138,11 @@ public class MethodParametersPage extends MenuPage {
                     result.setOwner(service.getLoggedPerson());
                     result.setStatus("running");
                     result.setTitle(file.getFileName().substring(0, index) + " " + methodName);
-                    service.createResult(result);
+                    service.create(result);
                     ServiceResultManager manager = new ServiceResultManager(files, SupportedFormat.KIV_FORMAT, methodName, test,
                             service, result);
                     manager.start();
-//                    String output = new String(service.processService(files, SupportedFormat.KIV_FORMAT, methodName, test));
-//                    DataFileDTO outputFile = new DataFileDTO();
-//                    outputFile.setFileName(methodName + "_result.xml");
-//                    outputFile.setFileContent(output.getBytes());
-//
-//                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
+
                     setResponsePage(MethodListPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                 }
             };

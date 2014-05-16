@@ -27,9 +27,6 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
-import java.util.Locale;
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -41,6 +38,10 @@ import org.springframework.mail.MailSendException;
 import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+import java.util.Locale;
 
 /**
  * Created by IntelliJ IDEA. User: Jiri Novotny Date: 11.3.12 Time: 23:57
@@ -81,7 +82,7 @@ public class SpringJavaMailService implements MailService {
         sb.append("</body></html>");
 
         String emailSubject = messageSource.getMessage("registration.email.subject", null, locale);
-        return sendEmail(user.getEmail(), emailSubject, sb.toString());
+        return sendEmail(user.getUsername(), emailSubject, sb.toString());
     }
 
     @Override

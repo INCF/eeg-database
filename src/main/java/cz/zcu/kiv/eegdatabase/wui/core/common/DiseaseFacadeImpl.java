@@ -104,6 +104,11 @@ public class DiseaseFacadeImpl implements DiseaseFacade {
     }
 
     @Override
+    public boolean canSaveTitle(String title, int groupId, int diseaseId) {
+        return diseaseService.canSaveTitle(title, groupId, diseaseId);
+    }
+
+    @Override
     public boolean canDelete(int id) {
         return diseaseService.canDelete(id);
     }

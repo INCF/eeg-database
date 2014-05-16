@@ -32,6 +32,8 @@ import cz.zcu.kiv.eegdatabase.webservices.EDPClient.DataFile;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -43,7 +45,7 @@ import java.util.List;
  * Time: 13:15
  * To change this template use File | Settings | File Templates.
  */
-public interface SignalProcessingService extends GenericService<Experiment, Integer> {
+public interface SignalProcessingService extends GenericService<ServiceResult, Integer> {
 
     public List<String> getAvailableMethods();
 
@@ -59,8 +61,8 @@ public interface SignalProcessingService extends GenericService<Experiment, Inte
 
     public Person getLoggedPerson();
 
-    public void updateResult(ServiceResult result);
+    public List<ServiceResult> getResults(Person person);
 
-    public void createResult(ServiceResult result);
-
+    @Transactional(readOnly = true)
+    FileDTO getResultFile(int resultId);
 }

@@ -30,6 +30,7 @@ import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -136,7 +137,7 @@ public class HardwareFormPage extends MenuPage {
             type.setLabel(ResourceUtils.getModel("label.type"));
             type.setRequired(true);
 
-            TextField<String> description = new TextField<String>("description");
+            TextArea<String> description = new TextArea<String>("description");
             description.setLabel(ResourceUtils.getModel("label.description"));
             description.setRequired(true);
 
@@ -173,39 +174,40 @@ public class HardwareFormPage extends MenuPage {
                         // Editing one
                         log.debug("Editing existing hardware object.");
 
-                        if (facade.isDefault(hardwareId)) {
-
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new hardware
-                                Hardware newHw = new Hardware();
-                                newHw.setDefaultNumber(0);
-                                newHw.setDescription(hardware.getDescription());
-                                newHw.setTitle(hardware.getTitle());
-                                newHw.setType(hardware.getType());
-                                int newId = facade.create(newHw);
-                                HardwareGroupRel rel = facade.getGroupRel(hardwareId, researchGroupId);
-                                // delete old rel, create new one
-                                HardwareGroupRelId newRelId = new HardwareGroupRelId();
-                                HardwareGroupRel newRel = new HardwareGroupRel();
-                                newRelId.setHardwareId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setHardware(newHw);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(hardwareId) && facade.canDelete(hardwareId)) {
-                                    facade.update(hardware);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(hardware);
-                        }
+//                        if (facade.isDefault(hardwareId)) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new hardware
+//                                Hardware newHw = new Hardware();
+//                                newHw.setDefaultNumber(0);
+//                                newHw.setDescription(hardware.getDescription());
+//                                newHw.setTitle(hardware.getTitle());
+//                                newHw.setType(hardware.getType());
+//                                int newId = facade.create(newHw);
+//                                HardwareGroupRel rel = facade.getGroupRel(hardwareId, researchGroupId);
+//                                // delete old rel, create new one
+//                                HardwareGroupRelId newRelId = new HardwareGroupRelId();
+//                                HardwareGroupRel newRel = new HardwareGroupRel();
+//                                newRelId.setHardwareId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setHardware(newHw);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(hardwareId) && facade.canDelete(hardwareId)) {
+//                                    facade.update(hardware);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
+//
+//                        }
+                        facade.update(hardware);
                     } else {
 
                         // Creating new

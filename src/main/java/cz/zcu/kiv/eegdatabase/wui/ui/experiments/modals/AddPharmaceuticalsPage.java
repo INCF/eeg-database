@@ -43,8 +43,6 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.validation.IValidatable;
-import org.apache.wicket.validation.IValidator;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -52,6 +50,7 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import org.apache.wicket.validation.validator.StringValidator;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class AddPharmaceuticalsPage extends WebPage {
@@ -93,13 +92,13 @@ public class AddPharmaceuticalsPage extends WebPage {
 
             TextField<String> title = new TextField<String>("title");
             title.setLabel(ResourceUtils.getModel("label.title"));
-            title.add(new TitleExistsValidator());
             title.setRequired(true);
             add(title);
 
             TextArea<String> description = new TextArea<String>("description");
             description.setLabel(ResourceUtils.getModel("label.pharmaceutical.description"));
             description.setRequired(true);
+            description.add(StringValidator.maximumLength(255));
             add(description);
 
             AjaxButton submit = new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {
@@ -117,6 +116,12 @@ public class AddPharmaceuticalsPage extends WebPage {
                     Pharmaceutical pharmaceutical = AddPharmaceuticalsForm.this.getModelObject();
 
                     ResearchGroup group = researchGroupChoice.getModelObject();
+                    if (!pharmaceuticalFacade.canSaveTitle(pharmaceutical.getTitle(),
+                            group.getResearchGroupId(), pharmaceutical.getPharmaceuticalId())) {
+                        error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                        target.add(feedback);
+                        return;
+                    }
                     HashSet<ResearchGroup> groups = new HashSet<ResearchGroup>();
                     groups.add(group);
                     pharmaceutical.setResearchGroups(groups);
@@ -152,17 +157,4 @@ public class AddPharmaceuticalsPage extends WebPage {
         super.renderHead(response);
     }
 
-    private class TitleExistsValidator implements IValidator<String> {
-
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void validate(IValidatable<String> validatable) {
-            final String title = validatable.getValue();
-
-            if (!pharmaceuticalFacade.canSaveTitle(title)) {
-                error(ResourceUtils.getString("error.valueAlreadyInDatabase"));
-            }
-        }
-    }
 }

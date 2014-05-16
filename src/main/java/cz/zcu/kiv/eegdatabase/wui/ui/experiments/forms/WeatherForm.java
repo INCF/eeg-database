@@ -22,22 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import java.util.List;
-
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.data.pojo.WeatherGroupRel;
@@ -47,6 +31,18 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.CoreConstants;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
+
+import java.util.List;
 
 public class WeatherForm extends Form<Weather> {
 
@@ -83,6 +79,7 @@ public class WeatherForm extends Form<Weather> {
         TextArea<String> description = new TextArea<String>("description");
         description.setRequired(true);
         description.setLabel(ResourceUtils.getModel("label.description"));
+        description.add(StringValidator.maximumLength(30));
         add(description);
 
         add(new AjaxButton("submitForm", ResourceUtils.getModel("button.save"), this) {

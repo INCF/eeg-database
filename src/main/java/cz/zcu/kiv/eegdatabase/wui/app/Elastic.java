@@ -46,7 +46,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import java.util.List;
+import javax.annotation.Resource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.elasticsearch.index.query.IdsQueryBuilder;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 import org.springframework.transaction.annotation.Transactional;
 
 /**
@@ -63,28 +68,67 @@ public class Elastic extends BasePage {
 	ExperimentDao experimentDao;
 	@SpringBean
 	PersonDao personDao;
-	@SpringBean(name = "artifactDao")
-	GenericListDao<Artifact> artifactDao;
 	@SpringBean
 	DigitizationDao digitizationDao;
 	@SpringBean
 	PersonFacade personFacade;
+	@Resource
+	ElasticsearchTemplate elasticsearchTemplate;
 
 	public Elastic() {
+		super();
+		System.out.println("IMHERE");
+		test();
 
-//		search();
-		reinsert();
+	}
+
+	@Transactional
+	void test() {
+		Experiment read = this.experimentDao.read(245);
+		Experiment newExperiment = new Experiment(read.getWeather(), read.getPersonBySubjectPersonId(), read.getScenario(), read.getPersonByOwnerId(), read.getResearchGroup(), read.getDigitization(), read.getSubjectGroup(), read.getArtifact(), read.getElectrodeConf());
+		newExperiment.getGenericParameters().add(new GenericParameter("test1", "value1"));
+		newExperiment.getGenericParameters().add(new GenericParameter("test2", "value2"));
+		int newId = experimentDao.create(newExperiment);
+
+		SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + newId)).build();
+		List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		if (elastic.size() != 1) {
+			throw new RuntimeException("Missing doc in Elastic");
+		}
+
+		ExperimentElastic exp = elastic.get(0);
+		if (exp.getParams().get(0).getName().compareTo("test1") != 0) {
+			throw new RuntimeException("Invalid param test1");
+		}
+		if (exp.getParams().get(0).getValueString().compareTo("value1") != 0) {
+			throw new RuntimeException("Invalid param value value1");
+		}
+
+		if (exp.getParams().get(1).getName().compareTo("test2") != 0) {
+			throw new RuntimeException("Invalid param test2");
+		}
+		if (exp.getParams().get(1).getValueString().compareTo("value2") != 0) {
+			throw new RuntimeException("Invalid param value value2");
+		}
+
+		experimentDao.delete(newExperiment);
+
+		searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + newId)).build();
+		elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+		if (elastic.size() != 0) {
+			throw new RuntimeException("Elastic doc should be missing and I found one.");
+		}
 	}
 
 	@Transactional
 	void search() {
 
 //		GenericParameter[] yes = {new GenericParameter("hardware", "head CIRCUMFERENCEs"), new GenericParameter("hardware", "visionable"), new GenericParameter("hardware", "blue")};
-		GenericParameter[] yes = {};
-		GenericParameter[] no = {new GenericParameter("hardware", "red")};
+		GenericParameter[] yes = {new GenericParameter("hardware", "red"), new GenericParameter("software", "blue")};
+		GenericParameter[] no = {new GenericParameter("nohardware", "xxx")};
 		List<Experiment> searchByParameters = experimentDao.searchByParameters(yes, no);
 		System.out.println("got1 " + searchByParameters.size());
-		
+
 //		List<Experiment> search = experimentDao.search("device");
 //		System.out.println("got2 " + search.size());
 //

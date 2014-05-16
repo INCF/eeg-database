@@ -14,9 +14,16 @@ import cz.zcu.kiv.eegdatabase.webservices.EDPClient.MethodParameters;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.ProcessService;
 import cz.zcu.kiv.eegdatabase.webservices.EDPClient.SupportedFormat;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,8 +37,10 @@ import java.util.logging.Logger;
  * Time: 14:11
  * To change this template use File | Settings | File Templates.
  */
-public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, Integer>
+public class SignalProcessingServiceImpl
         implements SignalProcessingService {
+
+    protected Log log = LogFactory.getLog(getClass());
     @Autowired
     private ExperimentDao experimentDao;
     @Autowired
@@ -41,7 +50,6 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
     @Autowired
     private ServiceResultDao resultDao;
     private ProcessService eegService;
-
 
     @Override
     public List<String> getAvailableMethods() {
@@ -119,18 +127,71 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
     }
 
     @Override
+    @Transactional
     public Person getLoggedPerson() {
         return personDao.getLoggedPerson();
     }
 
     @Override
-    public void updateResult(ServiceResult result) {
+    @Transactional
+    public void update(ServiceResult result) {
         resultDao.update(result);
     }
 
     @Override
-    public void createResult(ServiceResult result) {
-        resultDao.create(result);
+    @Transactional
+    public void delete(ServiceResult persistentObject) {
+        resultDao.delete(persistentObject);
+    }
+
+    @Override
+    @Transactional
+    public List<ServiceResult> getAllRecords() {
+        return resultDao.getAllRecords();
+    }
+
+    @Override
+    @Transactional
+    public List<ServiceResult> getRecordsAtSides(int first, int max) {
+        return resultDao.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional
+    public int getCountRecords() {
+        return resultDao.getCountRecords();
+    }
+
+    @Override
+    @Transactional
+    public List<ServiceResult> getUnique(ServiceResult example) {
+        return resultDao.findByExample(example);
+    }
+
+    @Override
+    @Transactional
+    public Integer create(ServiceResult result) {
+        return resultDao.create(result);
+    }
+
+
+
+    @Override
+    @Transactional
+    public List<ServiceResult> getResults(Person person) {
+        return resultDao.getResultByPerson(person.getPersonId());
+    }
+
+    @Override
+    @Transactional
+    public ServiceResult read(Integer resultId) {
+        return resultDao.read(resultId);
+    }
+
+    @Override
+    @Transactional
+    public List<ServiceResult> readByParameter(String parameterName, Object parameterValue) {
+        return resultDao.readByParameter(parameterName, parameterValue);
     }
 
     @Transactional
@@ -149,6 +210,34 @@ public class SignalProcessingServiceImpl extends GenericServiceImpl<Experiment, 
                 }
                 return;
             }
+        }
+
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public FileDTO getResultFile(int resultId) {
+        ServiceResult result = resultDao.read(resultId);
+        try {
+            FileDTO dto = new FileDTO();
+
+            File tmpFile;
+            tmpFile = File.createTempFile("result", ".xml");
+            tmpFile.deleteOnExit();
+            FileOutputStream out = new FileOutputStream(tmpFile);
+            IOUtils.copy(result.getContent().getBinaryStream(), out);
+            out.close();
+
+            dto.setFileName(result.getFilename());
+            dto.setFile(tmpFile);
+
+            return dto;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return null;
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            return null;
         }
 
     }

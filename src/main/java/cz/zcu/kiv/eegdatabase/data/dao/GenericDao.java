@@ -114,4 +114,10 @@ public interface GenericDao <T, PK extends Serializable>{
     public List<T> getAllRecordsFull();
 
     List<T> findByExample(T example);
+    
+    /**
+     * Gets list of IDs of all records.
+     * @return List of IDs of all records.
+     */
+    List<PK> getAllIds();
 }
