@@ -50,6 +50,22 @@
             <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
         </layout>
     </appender>
+    
+    <appender name="mail" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="40" />
+        <param name="SMTPHost" value="smtp.zcu.cz" />
+        <param name="From" value="eeg-base@kiv.zcu.cz" />
+        <param name="To" value="rinkesj@students.zcu.cz" />
+        <param name="Subject" value="EEGDatabase - exception in application" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %C %p - %m%n" />
+
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error" />
+            <param name="LevelMax" value="fatal" />
+        </filter>
+    </appender>
 
     <logger name="org.hibernate">
         <level value="warn" />
@@ -94,5 +110,7 @@
         <priority value="warn" />
         <appender-ref ref="logFile" />
         <appender-ref ref="console" />
+<!--         Allow this mail appender for production -->
+        <appender-ref ref="mail" />
     </root>
 </log4j:configuration>
