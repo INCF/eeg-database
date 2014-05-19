@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -35,6 +36,7 @@ import org.springframework.scheduling.annotation.Async;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
@@ -82,7 +84,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws SolrServerException
      */
     @Async
-    @Transactional
+    @Transactional(propagation=Propagation.MANDATORY)
     public void indexDatabase() throws IllegalAccessException, SolrServerException, IOException, NoSuchMethodException, InstantiationException {
 
         // get required dao beans
@@ -104,7 +106,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws IOException
      */
     @Async
-    @Transactional
+    @Transactional(propagation=Propagation.MANDATORY)
     public void indexLinkedIn() throws IllegalAccessException, SolrServerException, IOException {
 
         int startIndex = 0;
@@ -160,6 +162,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws ClassNotFoundException
      */
     @Scheduled(cron = "${solr.indexingPeriod}")
+    @Transactional(propagation=Propagation.REQUIRED)
     public void indexAll() {
         log.info("Starting indexing data");
         try {
