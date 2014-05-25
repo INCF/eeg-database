@@ -32,7 +32,7 @@ package cz.zcu.kiv.eegdatabase.logic.controller.history;
  *
  * @author pbruha
  */
-public class DownloadStatistic implements Comparable<DownloadStatistic> {
+public class DownloadStatistic implements Comparable<DownloadStatistic>, java.io.Serializable {
     private int scenarioId;
     private int experimentId;
     private String fileName;

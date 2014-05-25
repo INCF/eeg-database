@@ -18,25 +18,27 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  ManageResearchGroupPage.html, 2013/10/02 00:01 Jakub Rinkes
+  ManageResearchGroupPage.html, 2014/05/13 00:01 Jakub Rinkes
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
-  lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en" lang="en">
 <body>
-  <wicket:extend>
-    <div class="leftMenu" wicket:id="leftMenu"></div>
+    <wicket:extend>
+        <div class="leftMenu" wicket:id="leftMenu"></div>
 
-    <div class="mainContentWithMenu">
+        <div class="mainContentWithMenu">
 
-      <h1>
-        <wicket:message key="pageTitle.manageResearchGroup" />
-      </h1>
+            <h1>
+                <wicket:message key="pageTitle.manageResearchGroup" />
+            </h1>
 
-		<form wicket:id="groupSelect"><select wicket:id="groups"></select></form>
-		<div wicket:id="groupForm"></div>
-    </div>
-  </wicket:extend>
+            <form wicket:id="groupSelect" class="standardInputForm">
+                <label><wicket:message key="label.selectResearchGroup"></wicket:message></label>
+                <select wicket:id="groups" class="selectBox"></select>
+            </form>
+            <br />
+            <div wicket:id="groupForm"></div>
+        </div>
+    </wicket:extend>
 </body>
 </html>

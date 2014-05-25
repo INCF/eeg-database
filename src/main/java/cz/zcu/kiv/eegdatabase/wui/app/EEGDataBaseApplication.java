@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
-
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -70,8 +69,14 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManagePersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.ManageResearchGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleCommentFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesSettingsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
@@ -128,11 +133,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
 
 /**
- * Main class for wicket core. Initialization of wicket core, mounter pages on specific url,
- * prepare project settings: security policy, redirect policy.
+ * Main class for wicket core. Initialization of wicket core, mounter pages on specific url, prepare project settings: security policy, redirect policy.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class EEGDataBaseApplication extends AuthenticatedWebApplication implements ApplicationContextAware {
 
@@ -161,9 +165,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private WeatherFacade weatherFacade;
     @Autowired
     private StimulusFacade stimulusFacade;
-    
-    private boolean development = true;
 
+    private boolean development = true;
 
     public java.lang.Class<? extends Page> getHomePage() {
 
@@ -234,10 +237,16 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("account-overview", AccountOverViewPage.class);
         // mountPage("account-change-pass", ChangePasswordPage.class);
         mountPage("account-social", SocialNetworksPage.class);
-        
-        mountPage("administration-change-user-role", ChangeUserRolePage.class);
 
-        mountPage("articles-page", ArticlesPage.class);
+        mountPage("administration-manage-user-role", AdminManageUserRolePage.class);
+        mountPage("administration-manage-user", AdminManagePersonPage.class);
+        mountPage("administration-manage-group", ManageResearchGroupPage.class);
+
+        mountPage("articles-list", ArticlesPage.class);
+        mountPage("articles-form", ArticleFormPage.class);
+        mountPage("articles-view", ViewArticlePage.class);
+        mountPage("articles-comment-add", ArticleCommentFormPage.class);
+        mountPage("articles-settings", ArticlesSettingsPage.class);
 
         mountPage("experiments-list", ListExperimentsPage.class);
         mountPage("experiments-detail", ExperimentsDetailPage.class);
@@ -282,22 +291,21 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("search-page", SearchPage.class);
         mountPage("add-experiment-wizard-page", ExperimentFormPage.class);
 
-		mountPage("manage-packages", ManageExperimentPackagesPage.class);
-		mountPage("license-request", LicenseRequestPage.class);
-		mountPage("granted-licenses", GrantedLicensesPage.class);
-		mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
-		mountPage("revoked-licenses", RevokedRequestPage.class);
+        mountPage("manage-packages", ManageExperimentPackagesPage.class);
+        mountPage("license-request", LicenseRequestPage.class);
+        mountPage("granted-licenses", GrantedLicensesPage.class);
+        mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
+        mountPage("revoked-licenses", RevokedRequestPage.class);
 
-		
-		mountPage("elastic", Elastic.class);
+        mountPage("elastic", Elastic.class);
     }
 
     @Override
     protected IConverterLocator newConverterLocator() {
         ConverterLocator locator = (ConverterLocator) super.newConverterLocator();
-        
+
         // here should be added custom convertor for converting types.
-        
+
         locator.set(Disease.class, new DiseaseConverter(diseaseFacade));
         locator.set(Person.class, new PersonConverter(personFacade));
         locator.set(Pharmaceutical.class, new PharmaceuticalConverter(pharmaceuticalFacade));
@@ -331,7 +339,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     protected Class<? extends WebPage> getSignInPageClass() {
         return HomePage.class;
     }
-    
+
     public void setDevelopment(boolean development) {
         this.development = development;
     }

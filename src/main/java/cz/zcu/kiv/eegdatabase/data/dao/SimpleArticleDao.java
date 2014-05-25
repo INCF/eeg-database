@@ -27,14 +27,11 @@
 
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.util.Collections;
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import org.hibernate.Hibernate;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * @author Jiri Vlasimsky
@@ -54,23 +51,21 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
     @Override
     public List<Article> getArticlesForUser(Person person) {
         String query;
-        List articles = null;
+        List articles = Collections.EMPTY_LIST;
 
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
-            query = "from Article a left join fetch a.researchGroup r " +
-                    "order by a.time desc";
-            articles = getHibernateTemplate().find(query);
+            query = "select DISTINCT a from Article a left join fetch a.articleComments order by a.time desc";
+            articles = getSession().createQuery(query).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
-            query = "from Article a left join fetch a.researchGroup r " +
-                    "where " +
+            query = "select DISTINCT a from Article a left join fetch a.articleComments where " +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
                     "order by a.time desc";
-            articles = getHibernateTemplate().findByNamedParam(query, "personId", person.getPersonId());
+            articles = getSession().createQuery(query).setParameter("personId", person.getPersonId()).list();
         }
 
         return articles;
@@ -78,27 +73,40 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
 
     @Override
     public List<Article> getArticlesForUser(Person person, int limit) {
-        getHibernateTemplate().setMaxResults(limit);
-        List<Article> articles = getArticlesForUser(person);
-        getHibernateTemplate().setMaxResults(0);
+        String query;
+        List articles = Collections.EMPTY_LIST;
+
+        if (person.getAuthority().equals("ROLE_ADMIN")) {
+            // We can simply load the newest articles
+            query = "select DISTINCT a from Article a left join fetch a.articleComments order by a.time desc";
+            articles = getSession().createQuery(query).setMaxResults(limit).list();
+        } else {
+            // We need to load only articles which can be viewed by the logged user.
+            // That is, we need to load only public articles or articles from the groups the logged user is member of.
+            query = "select DISTINCT a from Article a left join fetch a.articleComments where " +
+                    "a.researchGroup.researchGroupId is null or " +
+                    "a.researchGroup.researchGroupId in " +
+                    "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
+                    "order by a.time desc";
+            articles = getSession().createQuery(query).setParameter("personId", person.getPersonId()).setMaxResults(limit).list();
+        }
+
         return articles;
     }
 
     @Override
     public List<Article> getArticlesForList(Person person, int min, int count) {
         String query;
-        List articles = null;
+        List articles = Collections.EMPTY_LIST;
 
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             // We can simply load the newest articles
-            query = "from Article a left join fetch a.researchGroup r join fetch a.person p " +
-                    "order by a.time desc";
+            query = "from Article a order by a.time desc";
             articles = getSession().createQuery(query).setFirstResult(min).setMaxResults(count).list();
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
-            query = "from Article a left join fetch a.researchGroup r join fetch a.person p " +
-                    "where " +
+            query = "from Article a where " +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
@@ -114,7 +122,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             return ((Long) getSession().createQuery("select count(*) from Article").uniqueResult()).intValue();
         }
-        String query = "select count(*) from Article a left join a.person p where " +
+        String query = "select count(*) from Article a where " +
                 "a.researchGroup.researchGroupId is null or " +
                 "a.researchGroup.researchGroupId in " +
                 "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId)";
@@ -133,14 +141,12 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
     public Article getArticleDetail(int id, Person loggedPerson) {
 
         if (loggedPerson.getAuthority().equals("ROLE_ADMIN")) {
-            String query = "from Article a join fetch a.person left join fetch a.researchGroup " +
-                    "where " +
-                    "a.articleId = :id";
+            String query = "from Article a left join fetch a.subscribers left join fetch a.articleComments "
+                    + "where a.articleId = :id";
             return (Article) getSession().createQuery(query).setParameter("id", id).uniqueResult();
         } else {
-            String query = "from Article a join fetch a.person left join fetch a.researchGroup " +
-                    "where " +
-                    "a.articleId = :id and (" +
+            String query = "from Article a left join fetch a.subscribers left join fetch a.articleComments "+
+                    "where a.articleId = :id and (" +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId))";

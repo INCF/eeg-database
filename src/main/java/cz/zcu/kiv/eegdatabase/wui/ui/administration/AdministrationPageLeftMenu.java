@@ -34,7 +34,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
  */
 public enum AdministrationPageLeftMenu implements IButtonPageMenu {
 
-    CHANGE_USER_ROLE_PAGE(ChangeUserRolePage.class, "menuItem.changeUserRole", null),
+    CHANGE_USER_ROLE_PAGE(AdminManageUserRolePage.class, "menuItem.manageRoles", null),
+    MANAGE_PERSON(AdminManagePersonPage.class, "menuItem.managePerson", null),
 	MANAGE_RESEARCH_GROUP_PAGE(ManageResearchGroupPage.class, "menuItem.manageResearchGroup", null)
     ;
 

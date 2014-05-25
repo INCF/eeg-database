@@ -23,7 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.app.menu;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.MenuDefinition;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.ChangeUserRolePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsByPackagePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
@@ -52,7 +52,7 @@ public enum EEGDatabaseMainMenu implements MenuDefinition {
     PeoplePage(ListPersonPage.class, "menuItem.people"),
     ListsPage(ListListsPage.class, "menuItem.lists"),
     HistoryPage(HistoryPage.class, "menuItem.history"),
-    Administration(ChangeUserRolePage.class, "menuItem.administration"),
+    Administration(AdminManageUserRolePage.class, "menuItem.administration"),
 
     Main(new EEGDatabaseMainMenu[] { HomePage, ArticlesPage, SearchPage, ExperimentsPage, ScenariosPage, GroupsPage,
     PeoplePage, ListsPage, HistoryPage, Administration }, ""),

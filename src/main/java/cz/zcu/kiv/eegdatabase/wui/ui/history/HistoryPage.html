@@ -22,11 +22,43 @@ This file is part of the EEG-database project
 -->
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
-  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
-  lang="en">
+	xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd"
+	xml:lang="en" lang="en">
 <body>
-  <wicket:extend>
+	<wicket:extend>
+		<div class="leftMenu" wicket:id="leftMenu"></div>
 
-  </wicket:extend>
+		<div class="mainContentWithMenu">
+
+			<div wicket:id="container">
+				<h1 wicket:id="title"></h1>
+
+				<form wicket:id="form">
+
+					<select name="groups" wicket:id="researchGroup">
+					</select>
+				</form>
+
+				<h2 wicket:id="timePeriodStatistic"></h2>
+
+				<h3>
+					<span wicket:id="downloadFiles"></span> <span wicket:id="count"></span>
+				</h3>
+
+				<h2 wicket:id="topDownloads"></h2>
+				<table class="dataTable" wicket:id="topDownloadedFilelist"></table>
+
+				<img wicket:id="chart" />
+				
+				<h2 wicket:id="lastDownloaded"></h2>
+				<table class="dataTable" wicket:id="lastDownloadedFilesHistoryList"></table>
+
+				<h2 wicket:id="allTimePeriodRecords"></h2>
+				<table class="dataTable" wicket:id="historyList"></table>
+
+			</div>
+
+		</div>
+	</wicket:extend>
 </body>
 </html>

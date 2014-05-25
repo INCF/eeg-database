@@ -57,4 +57,6 @@ public interface ResearchGroupDao extends GenericDao<ResearchGroup, Integer> {
     public int getCountForList();
 
     List<ResearchGroup> getGroupsForList(int start, int limit);
+    
+    ResearchGroup getResearchGroupById(int id);
 }

@@ -42,7 +42,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
@@ -52,6 +51,8 @@ import cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
@@ -114,7 +115,7 @@ public class WelcomePage extends MenuPage {
         else
             add(new Fragment("myGroups", "emptyFrag", this));
 
-        add(new BookmarkablePageLink<Void>("articlesList", UnderConstructPage.class));
+        add(new BookmarkablePageLink<Void>("articlesList", ArticlesPage.class));
         add(new BookmarkablePageLink<Void>("experimentList", ListExperimentsPage.class, PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_OWNER)));
         add(new BookmarkablePageLink<Void>("meAsSubjectList", ListExperimentsPage.class, PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_SUBJECT)));
         add(new BookmarkablePageLink<Void>("scenariosList", ListScenariosPage.class));
@@ -137,7 +138,7 @@ public class WelcomePage extends MenuPage {
                     item.add(new TimestampLabel("time", item.getModelObject().getTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
                     item.add(new Label("groupTitle", item.getModelObject().getResearchGroup() != null ? item.getModelObject().getResearchGroup().getTitle() : "Public Article"));
                     item.add(new Label("comments", item.getModelObject().getArticleComments().size() + ""));
-                    item.add(new ViewLinkPanel("articleTitle", UnderConstructPage.class, "articleId", item.getModel(), "title"));
+                    item.add(new ViewLinkPanel("articleTitle", ViewArticlePage.class, "articleId", item.getModel(), "title"));
                 }
             };
 

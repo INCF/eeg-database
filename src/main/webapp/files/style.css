@@ -187,16 +187,20 @@ while still visible in code, so it can be accessible without styles **/
     padding: 5px;
     text-align: center;
 }
-.paginator a {
+.paginator > a,
+.paginator > span {
     background: #666;
     color: #fff;
     text-decoration: none;
 }
+
+.paginator > span,
 .paginator .disabled {
     background: #ddd;
     color: #999;
 }
-.paginator a,
+.paginator > a,
+.paginator > span,
 .paginator .disabled {
     font-size: 1.3em;
     padding: 3px 10px;

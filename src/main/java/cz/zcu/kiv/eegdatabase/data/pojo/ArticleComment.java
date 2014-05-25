@@ -130,7 +130,8 @@ public class ArticleComment implements Serializable {
 		this.parent = parent;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "parent")
+	@OneToMany(fetch = FetchType.EAGER, mappedBy = "parent")
+	@OrderBy("time ASC")
 	public Set<ArticleComment> getChildren() {
 		return this.children;
 	}
@@ -148,7 +149,7 @@ public class ArticleComment implements Serializable {
 		this.time = time;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PERSON_ID", nullable = false)
 	public Person getPerson() {
 		return this.person;

@@ -170,4 +170,10 @@ public class SimpleResearchGroupDao
     public List<ResearchGroup> getAllRecordsFull() {
         return super.getAllRecordsFull();
     }
+    
+    @Override
+    public ResearchGroup getResearchGroupById(int id) {
+        String query = "from ResearchGroup g left join fetch g.articlesSubscribers where g.researchGroupId = :id";
+        return (ResearchGroup) getSessionFactory().getCurrentSession().createQuery(query).setParameter("id", id).uniqueResult();
+    }
 }

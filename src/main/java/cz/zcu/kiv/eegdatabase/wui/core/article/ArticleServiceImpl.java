@@ -22,24 +22,33 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.article;
 
-import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Article;
-import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.TreeSet;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ArticleDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.service.MailService;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 
 public class ArticleServiceImpl implements ArticleService {
-
+    
     protected Log log = LogFactory.getLog(getClass());
 
-    ArticleDao dao;
-    ArticleCommentDao commentDao;
+    private ArticleDao dao;
+    private ArticleCommentDao commentDao;
+    private MailService mailService;
+    private ResearchGroupDao groupDao;
 
     @Required
     public void setDao(ArticleDao dao) {
@@ -51,10 +60,32 @@ public class ArticleServiceImpl implements ArticleService {
         this.commentDao = commentDao;
     }
 
+    @Required
+    public void setMailService(MailService mailService) {
+        this.mailService = mailService;
+    }
+    
+    @Required
+    public void setGroupDao(ResearchGroupDao groupDao) {
+        this.groupDao = groupDao;
+    }
+
     @Override
     @Transactional
-    public Integer create(Article newInstance) {
-        return dao.create(newInstance);
+    public Integer create(Article article) {
+
+        Integer id = dao.create(article);
+
+        if (article.getResearchGroup() != null) {
+            ResearchGroup group = groupDao.read(article.getResearchGroup().getResearchGroupId());
+            for (Person subscriber : group.getArticlesSubscribers()) {
+                if (!subscriber.equals(article.getPerson())) {
+                    mailService.sendNotification(subscriber.getEmail(), article, EEGDataBaseSession.get().getLocale());
+                }
+            }
+        }
+
+        return id;
     }
 
     @Override
@@ -78,7 +109,15 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional
     public void delete(Article persistentObject) {
+
         dao.delete(persistentObject);
+
+        List<ArticleComment> comments = commentDao.getCommentsForArticle(persistentObject.getArticleId());
+
+        for (ArticleComment comment : comments) {
+            commentDao.delete(comment);
+        }
+
     }
 
     @Override
@@ -137,13 +176,30 @@ public class ArticleServiceImpl implements ArticleService {
     @Override
     @Transactional(readOnly = true)
     public Article getArticleDetail(int id, Person loggedPerson) {
-        return dao.getArticleDetail(id, loggedPerson);
+
+        Article detail = dao.getArticleDetail(id, loggedPerson);
+        List<ArticleComment> comments = commentDao.getCommentsForArticle(detail.getArticleId());
+        
+        detail.setArticleComments(new LinkedHashSet<ArticleComment>(comments));
+        
+        return detail;
     }
 
     @Override
     @Transactional
-    public Integer create(ArticleComment newInstance) {
-        return commentDao.create(newInstance);
+    public Integer create(ArticleComment comment) {
+
+        Integer id = commentDao.create(comment);
+        // logged user is that person who own this comment.
+        Person loggedUser = comment.getPerson();
+
+        Article article = dao.read(comment.getArticle().getArticleId());
+        for (Person subscriber : article.getSubscribers()) {
+            if (!loggedUser.equals(subscriber)) {
+                mailService.sendNotification(subscriber.getEmail(), comment, EEGDataBaseSession.get().getLocale());
+            }
+        }
+        return id;
     }
 
     @Override

@@ -85,6 +85,32 @@ public class ResourceUtils {
     }
     
     /**
+     * Get string with string from properties where his key is propertyExpression
+     * and params contains data for formatted string.
+     * 
+     * @param propertyExpression
+     * @param params
+     * @return
+     */
+    public static String getString(String propertyExpression, Object... params) {
+
+        return new StringResourceModel(propertyExpression, null, params).getString();
+    }
+    
+    /**
+     * Get IModel<String> with string from properties where his key is propertyExpression
+     * and params contains data for formatted string.
+     * 
+     * @param propertyExpression
+     * @param params
+     * @return
+     */
+    public static IModel<String> getModel(String propertyExpression, Object... params) {
+
+        return new StringResourceModel(propertyExpression, null, params);
+    }
+    
+    /**
      * Get image from directory images. Not tested.
      * 
      * @param id

@@ -69,7 +69,7 @@ public class ResearchGroupMembership implements java.io.Serializable {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "RESEARCH_GROUP_ID", nullable = false, insertable = false, updatable = false)
 	public ResearchGroup getResearchGroup() {
 		return this.researchGroup;
@@ -79,7 +79,7 @@ public class ResearchGroupMembership implements java.io.Serializable {
 		this.researchGroup = researchGroup;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
+	@ManyToOne(fetch = FetchType.EAGER)
 	@JoinColumn(name = "PERSON_ID", nullable = false, insertable = false, updatable = false)
 	public Person getPerson() {
 		return this.person;
