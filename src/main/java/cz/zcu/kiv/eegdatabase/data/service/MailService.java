@@ -22,9 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.service;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import java.util.Locale;
+
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.mail.MailException;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 /**
  * Created by IntelliJ IDEA.
@@ -113,4 +119,7 @@ public interface MailService {
                                      String researchGroupTitle, Locale locale) throws MailException;
     
     boolean sendForgottenPasswordMail(String email, String plainPassword);
+    
+    void sendNotification(String email, Article article, Locale locale);
+    void sendNotification(String email, ArticleComment comment, Locale locale);
 }

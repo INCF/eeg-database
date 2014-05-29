@@ -22,11 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.service;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+import java.util.Locale;
+
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -39,9 +39,15 @@ import org.springframework.mail.SimpleMailMessage;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 
-import javax.mail.MessagingException;
-import javax.mail.internet.MimeMessage;
-import java.util.Locale;
+import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.role.GroupRoleAcceptPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
+
+
 
 /**
  * Created by IntelliJ IDEA. User: Jiri Novotny Date: 11.3.12 Time: 23:57
@@ -152,6 +158,101 @@ public class SpringJavaMailService implements MailService {
     @Override
     public boolean sendEmail(String to, String subject, String emailBody) throws MailException {
         return sendEmail(mailMessage.getFrom(), to, subject, emailBody);
+    }
+    
+    @Override
+    public void sendNotification(String email, Article article, Locale locale) {
+
+        try {
+            String articleURL = "http://" + domain + "/articles/detail.html?articleId=" + article.getArticleId();
+            // System.out.println(articleURL);
+            String subject = messageSource.getMessage("articles.group.email.subscribtion.subject", new String[] { article.getTitle(), article.getPerson().getUsername() },
+                    locale);
+            // System.out.println(subject);
+            String emailBody = "<html><body>";
+
+            emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
+                    new String[] { article.getTitle() },
+                    locale) + "";
+            emailBody += "&nbsp;(<a href=\"" + articleURL + "\" target=\"_blank\">" + articleURL + "</a>)</p><br />";
+            emailBody += "<h3>" + article.getTitle() + "</h3> <p>" + article.getText() + "</p><br />";
+            emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part2", null, locale) + "</p>";
+            emailBody += "</body></html>";
+
+            // System.out.println(emailBody);
+            log.debug("email body: " + emailBody);
+
+            log.debug("Composing e-mail message");
+            MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+            MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+            message.setFrom(mailMessage.getFrom());
+
+            // message.setContent("text/html");
+            message.setTo(email);
+            // helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
+            message.setSubject(subject);
+            message.setText(emailBody, true);
+
+            log.debug("Sending e-mail" + message);
+            log.debug("mailSender" + mailSender);
+            mailSender.send(mimeMessage);
+            log.debug("E-mail was sent");
+            
+        } catch (MailException e) {
+            log.error("E-mail for subscribers was NOT sent");
+            log.error(e.getMessage(), e);
+        } catch (MessagingException e) {
+            log.error("E-mail for subscribers was NOT sent");
+            log.error(e.getMessage(), e);
+        }
+    }
+    
+    @Override
+    public void sendNotification(String email, ArticleComment comment, Locale locale) throws MailException {
+
+        try {
+        String articleURL = "http://" + domain + "/articles/detail.html?articleId=" + comment.getArticle().getArticleId();
+        //System.out.println(articleURL);
+        String subject = messageSource.getMessage("articles.group.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, locale);
+        //System.out.println(subject);
+        String emailBody = "<html><body>";
+
+        emailBody += "<p>" + messageSource.getMessage("articles.group.email.subscribtion.body.text.part1",
+                new String[]{comment.getArticle().getTitle()},
+                locale) + "";
+        emailBody += "&nbsp;(<a href=\"" + articleURL + "\" target=\"_blank\">" + articleURL + "</a>)</p><br />";
+        emailBody += "<h3>Text:</h3> <p>" + comment.getText() + "</p><br />";
+        emailBody += "<p>" + messageSource.getMessage("articles.group.email.subscribtion.body.text.part2", null, locale) + "</p>";
+        emailBody += "</body></html>";
+
+        //System.out.println(emailBody);
+        log.debug("email body: " + emailBody);
+
+
+        log.debug("Composing e-mail message");
+        MimeMessage mimeMessage = mailSender.createMimeMessage();
+
+        MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+        message.setFrom(mailMessage.getFrom());
+
+        //  message.setContent("text/html");
+        message.setTo(email);
+        //helper.setFrom(messageSource.getMessage("registration.email.from", null, RequestContextUtils.getLocale(request)));
+        message.setSubject(subject);
+        message.setText(emailBody, true);
+
+            log.debug("Sending e-mail" + message);
+            log.debug("mailSender" + mailSender);
+            mailSender.send(mimeMessage);
+            log.debug("E-mail was sent");
+        } catch (MailException e) {
+            log.error("E-mail for subscribers was NOT sent");
+            log.error(e.getMessage(), e);
+        } catch (MessagingException e) {
+            log.error("E-mail for subscribers was NOT sent");
+            log.error(e.getMessage(), e);
+        }
     }
 
     private boolean sendEmail(String from, String to, String subject, String emailBody) throws MailException {// make

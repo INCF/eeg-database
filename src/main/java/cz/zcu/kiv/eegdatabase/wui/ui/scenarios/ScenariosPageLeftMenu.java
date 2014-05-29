@@ -27,6 +27,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 
@@ -39,7 +40,12 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 public enum ScenariosPageLeftMenu implements IButtonPageMenu {
 
     LIST_OF_SCENARIOS(ListScenariosPage.class, "menuItem.listOfScenarios", null),
-    MY_SCENARIOS(UnderConstructPage.class, "menuItem.myScenarios", null),
+    
+    MY_SCENARIOS(ListScenariosPage.class, "menuItem.myScenarios", 
+            PageParametersUtils.getPageParameters(
+                    ListScenariosPage.MY_SCENARIOS_PARAM, 
+                    ListScenariosPage.MY_SCENARIOS_PARAM)),
+                    
     SEARCH_SCENARIOS(UnderConstructPage.class, "menuItem.searchScenario", null),
     ADD_SCENARIOS(ScenarioFormPage.class, "menuItem.addScenario", null),
     ADD_SCENARIOS_SCHEMA(ScenarioSchemaFormPage.class, "menuItem.addScenarioSchema", null), ;

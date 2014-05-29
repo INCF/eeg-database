@@ -61,6 +61,8 @@ public class ResearchGroup implements java.io.Serializable {
 	private String description;
 	@FormItem
 	private boolean paidAccount;
+	private boolean lock = true;
+	
 	private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(
 					0);
 	private Set<Keywords> keywords = new HashSet<Keywords>(0);
@@ -493,4 +495,13 @@ public class ResearchGroup implements java.io.Serializable {
 	public void setArtifacts(Set<Artifact> artifacts) {
 		this.artifacts = artifacts;
 	}
+	
+	@Column(name="LOCK" ,nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+	public boolean isLock() {
+        return lock;
+    }
+
+    public void setLock(boolean lock) {
+        this.lock = lock;
+    }
 }

@@ -38,6 +38,8 @@ public class PageParametersUtils {
     public static final String GROUP_PARAM = "GROUP";
     public static final String METHOD_NAME = "METHOD_NAME";
     public static final String DATA = "DATA";
+    public static final String ARTICLE = "ARTICLE";
+    public static final String COMMENT = "COMMENT";
 
     /**
      * Created page parameters with parameter key and object
@@ -74,7 +76,7 @@ public class PageParametersUtils {
         parameters.add(key, object);
         return parameters;
     }
-
+    
     /**
      * Get url for page and parameter from wicket. Wicket will generate absolute url for this page.
      * 

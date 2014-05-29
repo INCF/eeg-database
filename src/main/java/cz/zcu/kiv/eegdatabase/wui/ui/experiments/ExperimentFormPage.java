@@ -48,6 +48,7 @@ import org.apache.wicket.util.string.StringValue;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
@@ -113,7 +114,14 @@ public class ExperimentFormPage extends MenuPage {
             public void onFinish() {
 
                 Experiment experiment = model.getObject();
-
+                
+                ResearchGroup group = experiment.getResearchGroup();
+                if (group != null && group.isLock()) {
+                    this.error(ResourceUtils.getString("text.group.lock.experiment.create", group.getTitle()));
+                    setResponsePage(getPage());
+                    return;
+                }
+                
                 Set<DataFile> files = new HashSet<DataFile>();
                 try {
                     List<FileUpload> fileUploadList = fileModel.getObject();

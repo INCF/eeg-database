@@ -41,6 +41,7 @@ import org.springframework.security.core.userdetails.User;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 /**
@@ -110,6 +111,15 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
             authenticated = false;
         }
+        
+        if (getLoggedUser() != null && getLoggedUser().isLock()) {
+            this.setLoggedUser(null);
+            SecurityContextHolder.clearContext();
+            this.shoppingCart = null;
+            error(ResourceUtils.getString("text.user.lock.login", username));
+            return false;
+        }
+
         return authenticated;
     }
 

@@ -67,6 +67,10 @@ public class LinkedInManager {
 
     private Log log = LogFactory.getLog(getClass());
 
+    public LinkedInManager() {
+        // default contructor for spring IoC
+    }
+
     public LinkedInManager(String consumerKey, String consumerSecret, String accessToken, String accessTokenSecret, int groupId) {
         this.consumerKey = consumerKey;
         this.consumerSercet = consumerSecret;

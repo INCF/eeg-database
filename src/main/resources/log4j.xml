@@ -47,8 +47,25 @@
     <appender name="console" class="org.apache.log4j.ConsoleAppender">
         <param name="Target" value="System.out" />
         <layout class="org.apache.log4j.PatternLayout">
-            <param name="ConversionPattern" value="%-5p %c{1} - %m%n" />
+            <param name="ConversionPattern" value="%d{dd.MM.yyyy HH:mm:ss} %-5p %c{1} - %m%n" />
         </layout>
+    </appender>
+    
+    <appender name="mail" class="org.apache.log4j.net.SMTPAppender">
+        <param name="BufferSize" value="40" />
+        <param name="SMTPHost" value="smtp.zcu.cz" />
+        <param name="From" value="eeg-base@kiv.zcu.cz" />
+<!--         Comma separated target address -->
+        <param name="To" value="jezekp@kiv.zcu.cz,rinkesj@students.zcu.cz" />
+        <param name="Subject" value="EEGDatabase - exception in application" />
+        <layout class="org.apache.log4j.PatternLayout">
+            <param name="ConversionPattern" value="%d [%t] %C %p - %m%n" />
+
+        </layout>
+        <filter class="org.apache.log4j.varia.LevelRangeFilter">
+            <param name="LevelMin" value="error" />
+            <param name="LevelMax" value="fatal" />
+        </filter>
     </appender>
 
     <logger name="org.hibernate">
@@ -85,6 +102,14 @@
     <logger name="cz.zcu.kiv.eegdatabase.wui">
         <level value="info" />
     </logger>
+    
+    <logger name="cz.zcu.kiv.eegdatabase.logic.indexing">
+        <level value="error" />
+    </logger>
+
+    <logger name="org.elasticsearch.client.transport">
+        <level value="error" />
+    </logger>
 
     <logger name="cz.zcu.kiv.eegdatabase.Tests">
         <level value="warn" />
@@ -94,5 +119,7 @@
         <priority value="warn" />
         <appender-ref ref="logFile" />
         <appender-ref ref="console" />
+<!--         Allow this mail appender for production -->
+<!--         <appender-ref ref="mail" /> -->
     </root>
 </log4j:configuration>

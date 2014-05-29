@@ -44,7 +44,7 @@ public class SimpleArticleCommentDao extends SimpleGenericDao<ArticleComment, In
     public List<ArticleComment> getCommentsForArticle(int articleId) {
         String query = "select distinct c from ArticleComment c left join fetch c.children join fetch c.person " +
                 "where " +
-                "c.article.id = :id " +
+                "c.article.id = :id and c.parent is null " +
                 "order by c.time desc";
         return getSessionFactory().getCurrentSession().createQuery(query).setParameter("id", articleId).list();
     }

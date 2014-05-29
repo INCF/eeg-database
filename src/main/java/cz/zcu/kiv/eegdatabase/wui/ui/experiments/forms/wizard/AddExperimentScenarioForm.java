@@ -232,6 +232,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         // added dropdown choice for research group
         ChoiceRenderer<ResearchGroup> renderer = new ChoiceRenderer<ResearchGroup>("title", "researchGroupId");
         List<ResearchGroup> choices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
+
         researchGroupChoice = new DropDownChoice<ResearchGroup>("researchGroup", new PropertyModel<ResearchGroup>(model.getObject(), "researchGroup"), choices, renderer);
 
         researchGroupChoice.setRequired(true);
@@ -243,6 +244,11 @@ public class AddExperimentScenarioForm extends WizardStep {
 
             @Override
             protected void onUpdate(AjaxRequestTarget target) {
+                
+                ResearchGroup group = researchGroupChoice.getModelObject();
+                if (group != null && group.isLock()) {
+                    researchGroupChoice.error(ResourceUtils.getString("text.group.lock.experiment.create", group.getTitle()));
+                }
                 target.add(AddExperimentScenarioForm.this);
             }
         });

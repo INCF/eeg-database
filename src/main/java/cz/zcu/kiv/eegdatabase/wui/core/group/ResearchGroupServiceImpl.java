@@ -260,7 +260,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional(readOnly = true)
     public ResearchGroup getResearchGroupById(int id) {
-        return researchGroupDAO.read(id);
+        return researchGroupDAO.getResearchGroupById(id);
     }
 
     @Override

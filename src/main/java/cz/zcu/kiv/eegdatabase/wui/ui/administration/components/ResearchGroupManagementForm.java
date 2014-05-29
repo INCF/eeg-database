@@ -22,22 +22,26 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.administration.components;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
+import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.validation.validator.StringValidator;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 
 /**
  * Panel for research group management - payment settings,
@@ -47,20 +51,24 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  */
 public class ResearchGroupManagementForm extends Panel {
 
-	@SpringBean
+	private static final long serialVersionUID = -1188319159199447785L;
+
+    @SpringBean
 	private ResearchGroupFacade researchGroupFacade;
 	
 	private IModel<ResearchGroup> groupModel;
 	private Form form;
+    private FeedbackPanel feedback;
 
 	/**
 	 *
 	 * @param id component id
 	 * @param groupModel model with the group to display settings for
 	 */
-	public ResearchGroupManagementForm(String id, IModel<ResearchGroup> groupModel) {
+	public ResearchGroupManagementForm(String id, IModel<ResearchGroup> groupModel, final FeedbackPanel feedback) {
 		super(id);
 		this.groupModel = groupModel;
+        this.feedback = feedback;
 
 		this.form = new Form("form");
 		this.form.setOutputMarkupId(true);
@@ -79,6 +87,22 @@ public class ResearchGroupManagementForm extends Panel {
 		cmp.setLabel(ResourceUtils.getModel("label.paidAccount"));
 
 		f.add(cmp);
+		
+		final TextField<String> title = new TextField<String>("title", new PropertyModel<String>(this.groupModel, "title"));
+        title.setRequired(true);
+        title.setLabel(ResourceUtils.getModel("label.researchGroupTitle"));
+        title.add(StringValidator.maximumLength(100));
+
+        final TextArea<String> description = new TextArea<String>("description", new PropertyModel<String>(this.groupModel, "description"));
+        description.setRequired(true);
+        description.setLabel(ResourceUtils.getModel("label.researchGroupDescription"));
+        description.add(StringValidator.maximumLength(250));
+        
+        CheckBox lockCheckBox = new CheckBox("lock", new PropertyModel<Boolean>(this.groupModel, "lock"));
+        lockCheckBox.setLabel(ResourceUtils.getModel("label.lock"));
+        f.add(lockCheckBox);
+        
+        f.add(title, description);
 
 		this.addControls(f);
 	}
@@ -90,11 +114,15 @@ public class ResearchGroupManagementForm extends Panel {
 	private void addControls(WebMarkupContainer f) {
 		Button button = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
 
-			@Override
+			private static final long serialVersionUID = 1L;
+
+            @Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				super.onSubmit(target, form);
 				researchGroupFacade.update(groupModel.getObject());
-				target.add(form);
+				
+				info(ResourceUtils.getString("text.administration.group.changed", groupModel.getObject().getTitle()));
+				target.add(form, feedback);
 			}
 
 		};
@@ -103,7 +131,9 @@ public class ResearchGroupManagementForm extends Panel {
 
 		button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
 
-			@Override
+			private static final long serialVersionUID = 1L;
+
+            @Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				super.onSubmit(target, form);
 				form.clearInput();

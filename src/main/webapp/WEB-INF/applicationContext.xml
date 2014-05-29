@@ -153,7 +153,11 @@
     
 	<bean name="articlesService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
 	<bean name="articlesFacade" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleFacadeImpl" autowire="byType" />
-
+    
+    <bean name="keywordsService" class="cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsServiceImpl" autowire="byType" />
+    <bean name="keywordsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsFacadeImpl" autowire="byType" />
+    
+    
 	<bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
 		<property name="stimulusDao" ref="stimulusDao"/>
 	</bean>

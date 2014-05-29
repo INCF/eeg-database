@@ -25,14 +25,19 @@ package cz.zcu.kiv.eegdatabase.wui.ui.scenarios;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.ISortableDataProvider;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -55,6 +60,7 @@ public class ListScenariosPage extends MenuPage {
     private static final long serialVersionUID = -1967810037377960414L;
 
     private static final int ITEMS_PER_PAGE = 20;
+    public static final String MY_SCENARIOS_PARAM = "MY_SCENARIOS";
 
     @SpringBean
     ScenariosFacade scenariosFacade;
@@ -62,15 +68,29 @@ public class ListScenariosPage extends MenuPage {
     public ListScenariosPage() {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.listOfScenarios"));
-        setupComponents();
+        add(new Label("title", ResourceUtils.getModel("pageTitle.listOfScenarios")));
+        setupComponents(new ListScenariosDataProvider(scenariosFacade));
+    }
+    
+    public ListScenariosPage(PageParameters parameters)
+    {
+        StringValue paramValue = parameters.get(MY_SCENARIOS_PARAM);
+        if(paramValue.isNull() || paramValue.isEmpty())
+        {
+            throw new RestartResponseAtInterceptPageException(ListScenariosPage.class);
+        } else {
+            setPageTitle(ResourceUtils.getModel("menuItem.myScenarios"));
+            add(new Label("title", ResourceUtils.getModel("menuItem.myScenarios")));
+            setupComponents(new MyScenarioDataProvider(scenariosFacade));
+        }
     }
 
-    private void setupComponents() {
+    private void setupComponents(ISortableDataProvider<Scenario, String> provider) {
 
         add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
 
         DefaultDataTable<Scenario, String> list = new DefaultDataTable<Scenario, String>("list", createListColumns(),
-                new ListScenariosDataProvider(scenariosFacade), ITEMS_PER_PAGE);
+                provider, ITEMS_PER_PAGE);
 
         add(list);
 

@@ -78,11 +78,22 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
  * @return string left join for hql query
  */
   private String getLeftJoin(boolean isGroupAdmin, int groupId) {
+	
+	  String joinedTables = " left join fetch h.scenario left join fetch h.person as person left join fetch h.dataFile";
+	  
     if (isGroupAdmin && groupId > 0) {
-      return " left join h.person.researchGroupMemberships m";
+      return joinedTables + " left join person.researchGroupMemberships m";
     }
-    return "";
+    return joinedTables;
   }
+  
+  private String getLeftJoinForTopDownload(boolean isGroupAdmin, int groupId){
+	  if (isGroupAdmin && groupId > 0) {
+	      return " join h.person as person join person.researchGroupMemberships m";
+	    }
+	    return "";
+  }
+  
 /**
  * Returns group condition for hql query
  * @param isGroupAdmin - determined role GROUP_ADMIN
@@ -107,7 +118,7 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     List<DownloadStatistic> dCount = null;
     String leftJoin = "";
     String groupCondition = "";
-    leftJoin = getLeftJoin(isGroupAdmin, groupId);
+    leftJoin = getLeftJoinForTopDownload(isGroupAdmin, groupId);
     whereCondition = getWhereCondition(historyType);
     groupCondition = getGroupCondition(isGroupAdmin, groupId);
 
@@ -174,15 +185,15 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     String whereCondition = "";
     switch (historyType) {
       case DAILY:
-        whereCondition = " where h.dateOfDownload > trunc(sysdate)";
+        whereCondition = " where h.dateOfDownload >= date_trunc('day', current_date)";
         break;
 
       case WEEKLY:
-        whereCondition = " where h.dateOfDownload >= trunc(sysdate, 'iw')";
+        whereCondition = " where h.dateOfDownload >= date_trunc('week', current_date)";
         break;
 
       case MONTHLY:
-        whereCondition = " where h.dateOfDownload > trunc(sysdate,'mm')";
+        whereCondition = " where h.dateOfDownload >= date_trunc('month', current_date)";
         break;
 
       default:
@@ -207,7 +218,7 @@ public class SimpleHistoryDao extends SimpleGenericDao<History, Integer> impleme
     List<DownloadStatistic> topHistory = null;
     String leftJoin = "";
     String groupCondition = "";
-    leftJoin = getLeftJoin(isGroupAdmin, groupId);
+    leftJoin = getLeftJoinForTopDownload(isGroupAdmin, groupId);
     groupCondition = getGroupCondition(isGroupAdmin, groupId);
     String selectAndCreateObject = "select distinct new cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic";
     session = getHibernateTemplate().getSessionFactory().getCurrentSession();
