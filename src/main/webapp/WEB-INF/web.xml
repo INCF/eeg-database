@@ -160,22 +160,4 @@
         <servlet-name>CXFServlet</servlet-name>
         <url-pattern>/webservice/*</url-pattern>
     </servlet-mapping>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>SOAP CXF SSL</web-resource-name>
-            <url-pattern>/webservice/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
-    <security-constraint>
-        <web-resource-collection>
-            <web-resource-name>Spring REST SSL</web-resource-name>
-            <url-pattern>/rest/*</url-pattern>
-        </web-resource-collection>
-        <user-data-constraint>
-            <transport-guarantee>CONFIDENTIAL</transport-guarantee>
-        </user-data-constraint>
-    </security-constraint>
 </web-app>
