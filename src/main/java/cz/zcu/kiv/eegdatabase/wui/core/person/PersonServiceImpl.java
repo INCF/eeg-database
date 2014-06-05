@@ -33,8 +33,11 @@ import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+
 import org.apache.commons.logging.Log;
+
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -42,6 +45,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
 import java.text.ParseException;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -116,6 +121,10 @@ public class PersonServiceImpl implements PersonService {
         person.setGivenname(userFb.getFirstName());
         person.setSurname(userFb.getLastName());
         person.setGender('M');
+        
+        Calendar cal = Calendar.getInstance();
+        cal.set(1970, 1, 1);
+        person.setDateOfBirth(new Timestamp(cal.getTimeInMillis()));
 
         person.setLaterality(DEFAULT_LATERALITY);
         person.setEducationLevel(educationLevelId == null ? null : educationLevelDao.read(educationLevelId));
