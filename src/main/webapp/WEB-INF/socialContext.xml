@@ -85,7 +85,7 @@
 
             </list>
         </property>
-        <property name="applicationUrl" value="${app.domain}" />
+        <property name="applicationUrl" value="${app.appUrlForSocialSites}" />
 
     </bean>
 
