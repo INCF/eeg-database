@@ -418,6 +418,8 @@
     	<!-- Solr indexing service -->
     	<bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
 
+        <bean name="experimentGenerator" class="cz.zcu.kiv.eegdatabase.data.ExperimentGenerator" />
+
     	<!-- Solr Server instance (production server) -->
     	<bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
     		<constructor-arg name="baseURL" value="${solr.serverUrl}"/>
