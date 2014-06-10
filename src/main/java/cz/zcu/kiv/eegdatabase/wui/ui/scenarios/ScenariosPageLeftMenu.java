@@ -47,8 +47,8 @@ public enum ScenariosPageLeftMenu implements IButtonPageMenu {
                     ListScenariosPage.MY_SCENARIOS_PARAM)),
                     
     SEARCH_SCENARIOS(UnderConstructPage.class, "menuItem.searchScenario", null),
-    ADD_SCENARIOS(ScenarioFormPage.class, "menuItem.addScenario", null),
-    ADD_SCENARIOS_SCHEMA(ScenarioSchemaFormPage.class, "menuItem.addScenarioSchema", null), ;
+    ADD_SCENARIOS(ScenarioFormPage.class, "menuItem.addScenario", null),;
+   // ADD_SCENARIOS_SCHEMA(ScenarioSchemaFormPage.class, "menuItem.addScenarioSchema", null), ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;
