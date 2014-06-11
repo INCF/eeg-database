@@ -48,7 +48,7 @@ import java.io.*;
 import java.sql.Blob;
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
@@ -71,34 +71,30 @@ public class LargeDataTest extends AbstractDataAccessTest {
     @Autowired
     private SessionFactory factory;
 
-
     private File tmpFile;
     private Experiment experiment;
     private DataFile dataFile;
 
     private final int KB = 1024;
-    private final int MEGABYTES = 300;
     private final int KB_IN_MB = 1024;
     private long startTime;
 
 
     @Before
     public void setUp() {
-
-        try {
-            createFile();
+        if (experiment == null) {
             experiment = experimentGenerator.generateExperiment(createPerson());
             experimentDao.create(experiment);
-        } catch (IOException e) {
-            tmpFile = null;
         }
 
     }
 
     @Test
     @Transactional
-    public void SaveDataTest() {
-        if (tmpFile == null) {
+    public void saveDataTest() throws IOException {
+        try {
+            createFile(100);
+        } catch (IOException e) {
             fail("Data file is null");
             return;
         }
@@ -111,7 +107,7 @@ public class LargeDataTest extends AbstractDataAccessTest {
         dataFile.setFilename(tmpFile.getName());
         dataFile.setMimetype("temp");
         dataFile.setExperiment(experiment);
-        InputStream ios;
+        InputStream ios = null;
         try {
             ios = new FileInputStream(tmpFile);
             dataFile.setFileContentStream(ios);
@@ -124,16 +120,52 @@ public class LargeDataTest extends AbstractDataAccessTest {
         } catch (IOException e) {
             fail("Unreadable data file");
         } finally {
-            tmpFile.delete();
+            if (ios != null) ios.close();
 
         }
+    }
+
+    @Transactional
+    @Test
+    public void saveDataRepeatTest() throws IOException {
+        int count = dataFileDao.getCountRecords();
+        int repeatLimit = 10;
+        startTime = System.currentTimeMillis();
+        InputStream ios = null;
+        try {
+            createFile(30);
+
+        } catch (IOException e) {
+            fail("Data file is null");
+            return;
+        }
+        for (int i = 0; i < repeatLimit; i++) {
+            dataFile = new DataFile();
+            dataFile.setDescription("testDesc");
+            dataFile.setFilename(tmpFile.getName() + "" + i);
+            dataFile.setMimetype("temp");
+            dataFile.setExperiment(experiment);
+
+            try {
+                ios = new FileInputStream(tmpFile);
+                dataFile.setFileContentStream(ios);
+                Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(dataFile.getFileContentStream(), dataFile.getFileContentStream().available());
+                dataFile.setFileContent(createBlob);
+                dataFileDao.create(dataFile);
+            } catch (IOException e) {
+                fail("Unreadable data file");
+
+            }
+        }
+        assertEquals(count + repeatLimit, dataFileDao.getCountRecords());
     }
 
     @After
     public void stopTime() {
         System.out.println(("Data File was stored in " + (System.currentTimeMillis() - startTime) / 1000) + " seconds");
+        tmpFile.delete();
     }
-    private void createFile() throws IOException {
+    private void createFile(int megabytes) throws IOException {
         if ((tmpFile == null) || (!tmpFile.exists())) {
             FileOutputStream fos = null;
             try {
@@ -141,7 +173,7 @@ public class LargeDataTest extends AbstractDataAccessTest {
                 fos = new FileOutputStream(tmpFile);
                 byte[] buffer = new byte[KB];
                 Arrays.fill(buffer, (byte) 0x0C);
-                for (int i = 0; i < MEGABYTES * KB_IN_MB; i++) {
+                for (int i = 0; i < megabytes * KB_IN_MB; i++) {
                     fos.write(buffer);
                 }
             } catch (IOException e) {
