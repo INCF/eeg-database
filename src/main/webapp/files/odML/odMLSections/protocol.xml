@@ -1,0 +1,58 @@
+<?xml version="1.1" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.1</version>
+        <date>2014-03-01</date>
+<!-- ********************************************************* -->
+<!--                     Protocol section                        -->
+<!-- ********************************************************* -->
+   <section>
+		<type>protocol</type>
+		<name>Protocol</name>
+      <definition>Information about experiment</definition>
+
+      <property>
+         <name>Description</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>Description of the experiment</definition>
+      </property>
+      
+      <property>
+         <name>Author</name>
+	      <value>
+			<type>person</type>
+	      </value>
+         <definition>The person, who created this protocol.</definition>
+      </property> 
+      
+      <property>
+         <name>ProtocolFile</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition>Protocol File</definition>
+      </property>
+      
+      <property>
+         <name>ProtocolFileURL</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>URL for protocol file</definition>
+      </property> 
+      
+      <property>
+         <name>Version</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition> Version of the protocol</definition>
+      </property> 
+      
+     
+   
+   </section> 
+</odML>

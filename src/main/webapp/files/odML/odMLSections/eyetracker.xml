@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1"> 
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	<section>
+		<type>hardware/eyetracker</type>
+         <name>Eyetracker</name>
+	      <definition>Properties of an eyetracker.</definition>
+         
+          <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property> 
+         
+         <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+         
+         <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+      	</property> 
+	      
+	  <property>
+        <name>Manufacturer</name>
+	    <value>
+			<type>string</type>
+	    </value>
+		<definition>The Manufacturer of this hardware item.</definition>
+	  </property> 
+	      
+	  <property>
+         <name>Comment</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>Space for some comments.</definition>
+      </property>
+	  
+       <property>
+         <name>Type</name>
+	      <value>tabletop
+			<type>string</type>
+	      </value>
+		  <value>head mounted
+			<type>string</type>
+		  </value>
+         <definition>The kind of eyetracker.</definition>
+      </property> 
+	  
+	   <property>
+         <name>SampleRate</name>
+	      <value>
+			<type>float</type>
+			<unit>Hz</unit>
+		 </value>
+         <definition>The rate with which eye positions are sampled.</definition>
+      </property>
+	   
+	   <property>
+         <name>DetektorType</name>
+	      <value>Infrared
+			<type>string</type>
+	      </value>
+		  <value>Dual Purkinje
+			<type>string</type>
+		  </value>
+		  <value>Coil
+			<type>string</type>
+		  </value>
+         <definition>The kind of detektor used in this eyetracker.</definition>
+      </property>
+	  
+	   <property>
+         <name>Filter</name>
+	      <value>
+			<type>string</type>
+	      </value>
+		  <definition>The kind of filter applied to the data.</definition>
+      </property>
+	  
+	   <property>
+         <name>Calibration</name>
+	      <value>
+			<type>string</type>
+	      </value>
+		  <definition>The calibration procedure.</definition>
+      </property>
+	  
+	   <property>
+         <name>Fixation</name>
+	      <value>Bitebar
+			<type>string</type>
+	      </value>
+		  <value>Chinrest
+			<type>string</type>
+		  </value>
+		  <dependency>Type</dependency>
+		  <dependencyValue>Tabletop</dependencyValue>
+		  <definition>The way the head was fixed. Makes no sense if the eytracker is head mounted.</definition>
+      </property>
+
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+
+   </section>
+
+</odML>

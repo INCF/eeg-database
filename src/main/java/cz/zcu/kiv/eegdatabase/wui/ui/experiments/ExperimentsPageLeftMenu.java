@@ -49,6 +49,7 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
 	LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
     SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
     ADD_EXPERIMENTS(ExperimentFormPage.class, "menuItem.experiments.addExperiment", null),
+    ADD_EXPERIMENTS_TEST(ExperimentFormPageTest.class, "menuItem.experiments.addExperiment_test", null),
     RESULT(ResultListPage.class, "menuItem.serviceResult", null),
 
     ;

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                     Psychophysics Experiment	                       -->
+<!-- ********************************************************* --> 
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	
+	<section>
+		<type>experiment/psychophysics</type>
+		<name>Psychophysics</name>
+		<definition>Properties for describing an psychophysical experiment.</definition>
+	      
+		<property>
+            <name>Task</name>
+	         <value>
+				<type>string</type> 
+	         </value>
+            <definition>The task the subjects have to do like "discrimination" between different stimuli, "detection" of a stimulus etc... </definition>
+		</property>
+      
+         <property>
+            <name>Paradigm</name>
+	         <value>
+				<type>string</type> 
+	         </value>
+            <definition>The experimental paradigm e.g. Two-alternative-forced-choice, Three-alternative-forced-choice.</definition>
+         </property> 
+         
+         <property>
+            <name>SubjectKnowledge</name>
+	         <value>
+				<type>string</type> 
+	         </value>
+            <definition>Was the subject "naive", "trained", or "instructed"?</definition>
+         </property> 
+         
+         <property>
+            <name>TrainingTrials</name>
+	         <value>
+				<type>int</type> 
+	         </value>
+            <definition>The number of trials used for training of the experimental subject.</definition>
+         </property> 
+         
+         <property>
+            <name>TrainingDuration</name>
+	         <value>
+				<type>float</type> 
+				<unit>h</unit> 
+			 </value>
+            <definition>The training duration.</definition>
+         </property> 
+      
+         <property>
+            <name>SubjectInstruction</name>
+	         <value>
+				<type>text</type> 
+	         </value>
+            <definition>The instructions given to the subjects.</definition>
+         </property> 
+      
+         <property>
+            <name>definition</name>
+	         <value>
+				<type>text</type> 
+	         </value>
+	         <definition>A definition of the conducted experiment.</definition>
+         </property>
+      </section>
+</odML>

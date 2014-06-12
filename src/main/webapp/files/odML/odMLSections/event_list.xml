@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+  <version>1.0</version>
+        <date>2011-01-21</date>
+<!-- ********************************************************* -->
+<!--                   EventList Section                        -->
+<!-- ********************************************************* -->
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	<section>
+		<type>collection/event_list</type>
+		<name>EventList</name>
+		<definition>Section for grouping short annotations that are taken during
+     an experiment, preparation etc..</definition>
+      
+		<property>
+			<name>Timestamp</name>
+			<value>
+				<type>datetime</type> 
+			</value>
+			<definition>The local datetime entry of the moment the event was
+         taken (YYYY-MM-DD hh:mm:ss format).</definition>
+		</property> 
+     
+		<property>
+			<name>Description</name>
+			<value>
+				<type>text</type> 
+			</value>
+			<definition>A description of the event.</definition>
+		</property> 
+	</section> 
+</odML>

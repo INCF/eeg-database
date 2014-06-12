@@ -1,0 +1,117 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                   movie stimulus                    -->
+<!-- ********************************************************* -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+    <section>
+		<type>stimulus/movie</type>
+		<name>Movie</name>
+		<definition>Properties to describe a movie (or image sequence) stimulus.</definition>
+      
+      
+      <property>
+	      <name>Modality</name>
+	      <value>visual
+			<type>string</type>
+	      </value>
+	      <definition>The stimulus modality like acoustic, haptic, visual etc.</definition>
+      </property>
+      
+      <property>
+	      <name>Duration</name>
+	      <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+	      <definition>The duration of the stimulus in seconds.</definition>
+      </property>
+     
+      <property>
+	      <name>TemporalOffset</name>
+	      <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+	      <definition>The temporal offset (with respect to the begin of the recorded trial) with which this stimulus was presented.</definition>
+      </property> 
+      
+      <property>
+      	<name>FrameRate</name>
+	      <value>
+			<type>float</type>
+			<unit>Hz</unit>
+		 </value>
+	      <definition>The framerate with which the movie was presented.</definition>
+      </property>
+
+      <property>
+      	<name>SpatialResolution</name>
+	      <value>
+			<type>2-tuple</type>
+			<unit>pixel</unit>
+		 </value>
+	      <definition>The image resolution e.g. (640;480) pixel.</definition>
+      </property>
+      
+      <property>
+	      <name>ColorSpace</name>
+	      <value>monochrome
+			<type>string</type>
+	      </value>
+	      <value>color
+			<type>string</type>
+	      </value>
+	      <definition>Defines whether the movie is a monochrome, black and white, or a color movie.</definition>
+      </property>
+      
+      <property>
+	      <name>ColorDepth</name>
+	      <value>
+			<type>int</type>
+			<unit>bit</unit>
+		 </value>
+	      <definition>The color resolution in bit.</definition>
+      </property>
+      
+      <property>
+      	<name>OutputChannel</name>
+	      <value>
+			<type>string</type>
+	      </value>
+	      <definition>The physical output device (e.g. an analog output channel, a monitor screen, the same loudspeaker, etc.). This information can be used to explicitely express that several stimuli (that share the same OutputChannel) are jointly	presented.</definition>
+      </property>
+    <property>
+	      <name>Position</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>
+	      <definition>The position of the stimulus on e.g the screen. Specified as a 2-tuple (x;y). By default this position refers to the top-left corner of the object or its bounding box.</definition>
+      </property>
+      
+	   <property>
+         <name>PositionReference</name>
+	      <value>top-left
+			<type>string</type>
+	      </value>
+	      <value>center
+			<type>string</type>
+	      </value>
+	      <value>bottom-right
+			<type>string</type>
+	      </value>
+         <definition>By default stimulus positions are specified by the coordinates of the top-left corner (or of the bounding box). Use this property for other definitions.</definition>
+      </property>  
+	  
+	  <property>
+         <name>SpatialExtent</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>
+         <definition>The spatial extend of the presented stimulus (width;height) e.g. (1024;768).</definition>
+      </property>
+    </section>
+</odML>

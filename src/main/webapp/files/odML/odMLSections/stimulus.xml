@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl"  xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+  <version>1.0</version>
+        <date>2011-01-21</date>
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+  <!-- ********************************************************* -->
+  <!--                  stimulation section                      -->
+  <!-- ********************************************************* -->
+	<section>
+		<type>stimulus</type>
+		<name>Stimulus</name>
+		<definition>General description of an applied stimulus. This
+      section is basis of various related sections that specify
+      more specific stimuli.</definition>
+      
+    
+      <property>
+        <name>Description</name>
+         <value>
+		      <type>text</type>
+	      </value>
+        <definition>A textual description of the stimulus.</definition>
+      </property>  
+   
+      <property>
+        <name>Comment</name>
+	      <value>
+		      <type>text</type>
+	      </value>
+        <definition>A comment on this specific stimulus.</definition>
+      </property>  
+    
+      <property>
+         <name>Author</name>
+         <value>
+			<type>person</type>
+         </value>
+         <definition>Who is the author of this stimulus.</definition>
+      </property>
+    
+      <property>
+         <name>Duration</name>
+         <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+         <definition>The duration of the stimulus.</definition>
+      </property> 
+    
+	 <property>
+         <name>StartTime</name>
+         <value>
+			<type>time</type>
+         </value>
+         <definition>The time the stimulus started.</definition>
+      </property> 
+	
+      <property>
+         <name>EndTime</name>
+         <value>
+			<type>time</type>
+         </value>
+         <definition>The time the stimulus ended.</definition>
+      </property> 
+    
+      <property>
+         <name>Intensity</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>like the current in case of electrical stimulation.</definition>
+      </property>
+      
+      <property>
+         <name>Location</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>Describes the site of the stimulus application.</definition>
+      </property> 
+    
+      <property>
+         <name>Modality</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>Visual, acoustic, haptic, electrical, etc. stimulation.</definition>
+      </property> 
+       
+	   <property>
+         <name>Repetitions</name>
+         <value>
+			<type>int</type>
+         </value>
+         <definition>The number of repetitions of the described stimulation.</definition>
+      </property> 
+	  
+	  <property>
+         <name>InterstimulusInterval</name>
+         <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+         <definition>The time between two subsequent stimulations.</definition>
+      </property> 
+    
+      <property>
+         <name>StimulusFile</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition> The stimulus file used. Using it will blow
+         up the the size of the metadatafile and we recommend to
+         rather define the URL of underlying stimulus
+         file.</definition>
+      </property> 
+     
+      <property>
+         <name>StimulusFileURL</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>The URL of a an applied stimulus file. This
+         is the recommended alternative to explicitely including the
+         actual stimulus via StimulusFile.</definition>
+      </property>  
+      
+      <property>
+	      <name>Position</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>	      
+	      <definition>The position of the stimulus on e.g the screen. Specified as a 2-tuple (x;y). By default this position refers to the top-left corner of the object or its bounding box.</definition>
+      </property>
+      
+	   <property>
+         <name>PositionReference</name>
+	      <value>top-left
+			<type>string</type>
+	      </value>
+	      <value>center
+			<type>string</type>
+	      </value>
+	      <value>bottom-right
+			<type>string</type>
+	      </value>
+         <definition>By default stimulus positions are specified by the coordinates of the top-left corner (or of the bounding box). Use this property for other definitions.</definition>
+      </property>  
+	  
+	  <property>
+         <name>SpatialExtent</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>
+         <definition>The spatial extend of the presented stimulus (width;height) e.g. (1024;768).</definition>
+      </property>
+    </section>
+</odML>

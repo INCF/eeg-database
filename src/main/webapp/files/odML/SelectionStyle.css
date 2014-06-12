@@ -1,0 +1,159 @@
+@charset "utf-8";
+
+/** This file contains definitions for overall data tables used when listing data from database **/
+
+@media screen, projection {
+  table.dataTable {
+    border: none;
+    background: #fff;
+    border-collapse: collapse;
+    width: 50%;
+    margin: 10px 0;
+  }
+   
+  table.dataTable caption h2{
+	margin-left: 10px;
+  }
+  
+  table.dataTable tr {
+  }
+
+  table.dataTable th, table.dataTable th.header, table.dataTable caption  {
+    background: #dcf2f5 url(../images/datatable-header-bg.gif) left bottom repeat-x; height: inherit;
+    text-align: center;
+    border-bottom: solid 1px #ccc;
+  }
+  table.dataTable th, table.dataTable th.header {
+    padding: 7px 10px 1px;
+    text-align: left;
+    cursor: pointer;
+  }
+  table#monthlyHistory th  {
+    cursor: pointer;
+  }
+  table.dataTable td.tableArticleTitle {
+      display: block;
+      width: 322px;
+      word-wrap: break-word;
+  }
+  table.dataTable tr td
+  {
+    padding: 3px 5px 1px;
+  }
+
+  table.dataTable tr td {
+    border-bottom: solid 1px #ebebeb;
+    background-color: #fafafa;
+  }
+  table.dataTable tr:hover td {
+    background-color: #f3f3f3;
+    background-color: inherit\9;  /** this line is correct - it uses ie8 hack because ie8 does not display the hover effect correctly **/
+  }
+
+  div.emptyDataTable {
+    text-align: center;
+    border: solid 1px #d5d5d5;
+    padding: 20px;
+    margin: 10px 0;
+    background: url(../images/value-table-title-bg.gif) left top repeat-x;
+    color: #666;
+  }
+
+  .listOfPersonsDataTable  {
+
+  }
+  table.tablesorter {
+    font-family:arial;
+    background-color: #CDCDCD;
+    margin:10px 0pt 15px;
+    font-size: 8pt;
+    width: 100%;
+    text-align: left;
+  }
+  table.tablesorter thead tr th, table.tablesorter tfoot tr th {
+    background-color: #e6EEEE;
+    border: 1px solid #FFF;
+    font-size: 8pt;
+    padding: 4px;
+  }
+  table.tablesorter thead tr .header {
+    background-image: url(../images/bg.gif);
+    background-repeat: no-repeat;
+    background-position: center right;
+    cursor: pointer;
+  }
+  table.tablesorter tbody td {
+    color: #3D3D3D;
+    padding: 4px;
+    background-color: #FFF;
+    vertical-align: top;
+  }
+  table.tablesorter tbody tr.odd td {
+    background-color:#F0F0F6;
+  }
+  table.tablesorter thead tr .headerSortUp {
+    background-image: url(../images/asc.gif);
+  }
+  table.tablesorter thead tr .headerSortDown {
+    background-image: url(../images/desc.gif);
+  }
+  table.tablesorter thead tr .headerSortDown, table.tablesorter thead tr .headerSortUp {
+    background-color: #8dbdd8;
+  }
+}
+
+@media print {
+  table.dataTable {
+    border: solid 2px #000;
+    background: #fff;
+    border-collapse: collapse;
+    width: 100%;
+    margin: 10px 0;
+  }
+
+  table.dataTable tr {
+  }
+
+  table.dataTable thead {
+    background: #eee;
+    text-align: left;
+    border: solid 2px #000;
+  }
+  table.dataTable thead th {
+    padding: 7px 5px 1px;
+    text-align: left;
+  }
+
+  table.dataTable tr {
+    border: solid 1px #000;
+  }
+
+  table.dataTable tr td {
+    padding: 3px 5px 1px;
+    background-color: #fff;
+  }
+  
+  table .width30 {
+  	width: 30px;
+  }
+  
+  table .width50 {
+  	width: 50px;
+  }
+  
+  table .width80 {
+  	width: 80px;
+  }
+  
+  table .width100 {
+  	width: 100px;
+  }
+  
+  table .width300 {
+  	width: 300px;
+  }
+
+
+
+
+}

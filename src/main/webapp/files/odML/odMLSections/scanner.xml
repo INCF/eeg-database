@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************** -->
+<!--              Scanner               -->
+<!-- ********************************** -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	
+    <section>
+		<type>hardware/scanner</type>
+         <name>Scanner</name>
+         <definition>The Scanner used to scan microscope images.</definition>
+	      	      
+         <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the FilterSet.</definition>
+	      </property> 
+	      
+         <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the FilterSet.</definition>
+	      </property> 
+	    
+	      <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+	         <definition>The scanner model name.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Manufacturer</name>
+	         <value>
+				<type>string</type>
+	         </value>
+	         <definition>The Manufacturer providing the scanner.</definition>
+	      </property> 
+	      
+         <property>
+            <name>Type</name>
+	         <value>
+				<type>string</type>
+	         </value>
+	         <definition>The type of scanner used in a scanning microscope. (e.g. Galvanometer, electro-optic-deflector etc.)</definition>
+	      </property>
+	      
+	      
+	      <property>
+            <name>ImageWidth</name>
+	         <value>
+				<type>int</type>
+				<unit>pixel</unit>
+			 </value>
+            <definition>The width of the scanned image.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>ImageHeight</name>
+	         <value>
+				<type>int</type>
+				<unit>pixel</unit>
+			 </value>
+            <definition>The height of the scanned image.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>PixelSize</name>
+	         <value>
+				<type>float</type>
+				<unit>nm</unit>
+			 </value>
+            <definition>The size of each pixel.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>DwellTime</name>
+	         <value>
+				<type>float</type>
+				<unit>&#181;m</unit>
+			 </value>
+            <definition></definition>
+	      </property> 
+	      
+	      <property>
+            <name>ScanRate</name>
+	         <value>
+				<type>float</type>
+				<unit>nm</unit>
+			 </value>
+            <definition>The size of each pixel.</definition>
+	      </property> 
+	      
+	       <property>
+            <name>ScanMode</name>
+	         <value>
+				<type>string</type>
+	         </value>
+	         <definition>The scanning mode e.g. line or xy.</definition>
+	      </property> 
+	      
+	       <property>
+            <name>StackZRange</name>
+	         <value>
+				<type>float</type>
+				<unit>&#181;m</unit>
+			 </value>
+            <definition>The depth scanned.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>StackZStepSize</name>
+	         <value>
+				<type>float</type>
+				<unit>&#181;m</unit>
+			 </value>
+            <definition>The step size with which the range is scanned.</definition>
+	      </property> 
+
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+
+      </section>
+
+</odML>
