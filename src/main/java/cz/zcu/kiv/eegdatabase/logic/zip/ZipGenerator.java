@@ -94,6 +94,7 @@ public class ZipGenerator implements Generator {
                     log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");
                     entry = new ZipEntry("Scenario/" + scen.getScenarioName());
                     zipOutputStream.putNextEntry(entry);
+                    IOUtils.copyLarge(scen.getScenarioFile().getBinaryStream(), zipOutputStream);
                     zipOutputStream.closeEntry();
 
                 } catch (Exception ex) {
