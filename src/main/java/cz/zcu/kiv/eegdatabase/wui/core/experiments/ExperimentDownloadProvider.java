@@ -150,8 +150,6 @@ public class ExperimentDownloadProvider {
             log.debug("Saving download history");
             historyService.create(history);
 
-            log.error("files count " + newFiles.size());
-            
             // TODO generator create zip file in memory - problem with heap size. Throw exception with memory allocation problem.
             File file = zipGenerator.generate(experiment, mc, newFiles);
 
