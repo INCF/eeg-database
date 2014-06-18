@@ -72,7 +72,6 @@
         <constructor-arg ref="connectionFactoryLocator" />
         <constructor-arg ref="usersConnectionRepository" />
         <constructor-arg ref="SignInAdapter" />
-        <property name="signUpUrl" value="/oauthcallback.html" />
         <property name="postSignInUrl" value="/home-page" />
         <property name="applicationUrl" value="${app.appUrlForSocialSites}" />
     </bean>
@@ -86,7 +85,7 @@
 
             </list>
         </property>
-        <property name="applicationUrl" value="${app.domain}" />
+        <property name="applicationUrl" value="${app.appUrlForSocialSites}" />
 
     </bean>
 
@@ -102,7 +101,7 @@
 
                 <prop key="/signin">providerSignInController</prop>
                 <prop key="/signin/*">providerSignInController</prop>
-
+                
                 <prop key="/oauthcallback.html">oAuthCallbackController</prop>
             </props>
         </property>

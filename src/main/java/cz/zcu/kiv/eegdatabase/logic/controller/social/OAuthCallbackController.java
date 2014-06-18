@@ -55,7 +55,7 @@ public class OAuthCallbackController extends MultiActionController {
     private Log log = LogFactory.getLog(getClass());
     
    
-   
+   // XXX This redirect on some hello world jsp..why what is it ? I think its garbage. Remove ???
     public ModelAndView oauthcallback(HttpServletRequest request, HttpServletResponse response) { 
         ModelAndView mav = new ModelAndView("social/oauthcallback");
         return mav;

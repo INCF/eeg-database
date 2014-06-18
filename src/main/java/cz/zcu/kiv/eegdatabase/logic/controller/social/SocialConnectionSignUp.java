@@ -22,15 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.springframework.social.connect.Connection;
 import org.springframework.social.connect.ConnectionSignUp;
 import org.springframework.social.connect.UserProfile;
-import org.springframework.social.linkedin.api.LinkedIn;
-import org.springframework.social.linkedin.api.LinkedInProfileFull;
 
-import javax.inject.Inject;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 
 /**
  * Class for signing in in via social networks. Invoked when no such
@@ -39,10 +38,10 @@ import javax.inject.Inject;
  * 
  */
 public final class SocialConnectionSignUp implements ConnectionSignUp {
+    
+    protected Log log = LogFactory.getLog(getClass());
 
     private PersonService personService;
-    private @Inject LinkedIn linkedin;
-   
 
     public SocialConnectionSignUp(PersonService personService) {
         this.personService = personService;
@@ -50,23 +49,12 @@ public final class SocialConnectionSignUp implements ConnectionSignUp {
 
     @Override
     public String execute(Connection<?> connection) {
+        
         UserProfile profile = connection.fetchUserProfile();
-        String email = profile.getEmail();
-
-        if (email == null) {
-           LinkedIn ln = (LinkedIn) connection.getApi();
-           LinkedInProfileFull full = ln.profileOperations().getUserProfileFull();
-           System.out.println("xxxx " + full.getId());
-           linkedin.profileOperations().getUserProfile().getId();
-
-        }
-
-
         SocialUser user = new SocialUser(profile.getEmail(),
                 profile.getFirstName(), profile.getLastName());
-      
         Person person = personService.createPerson(user, null);
-
+        
         return person.getUsername();
 
     }

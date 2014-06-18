@@ -55,6 +55,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
@@ -114,7 +115,7 @@ public class ExperimentsDetailPage extends MenuPage {
         // TODO action box pages
         boolean coexperiment = security.userIsOwnerOrCoexperimenter(experimentId);
         BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
-        BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+        BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> downloadExpLink = new BookmarkablePageLink<Void>("downloadExpLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), downloadExpLink);
