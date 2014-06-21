@@ -32,6 +32,7 @@ import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.sql.Timestamp;
@@ -43,7 +44,8 @@ import static org.junit.Assert.*;
  * User: Tomas Pokryvka
  * Date: 20.4.13
  */
-
+@Transactional
+@TransactionConfiguration(defaultRollback = true)
 public class ArticleDaoTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -71,7 +73,6 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Transactional
     public void testCreateArticleReader() {
         int count = articleDao.getCountRecords();
         articleDao.create(article);
@@ -79,7 +80,6 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Transactional
     public void testNotNullTitle() {
         article.setTitle(null);
         try {
@@ -94,11 +94,6 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 
         }
 
-    }
-    @After
-    public void clean() {
-        articleDao.delete(article);
-        personDao.delete(personReader);
     }
 
 

@@ -129,12 +129,6 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @After
-    public void clean() {
-        if (person.getUsername() != null) {
-            personDao.delete(person);
-        }
-    }
     private Person createPerson() {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         personDao.create(person);

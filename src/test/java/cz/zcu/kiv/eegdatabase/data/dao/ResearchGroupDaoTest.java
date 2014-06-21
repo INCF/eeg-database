@@ -31,10 +31,12 @@ import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
 import static net.sf.ezmorph.test.ArrayAssertions.assertEquals;
-
+@Transactional
+@TransactionConfiguration(defaultRollback = true)
 public class ResearchGroupDaoTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -59,7 +61,6 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Transactional
     public void testCreateResearchGroup() {
         int count = researchGroupDao.getCountForList();
         researchGroupDao.create(researchGroup);
@@ -70,7 +71,6 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Transactional
     public void testGetGroupsWhereOwner() {
         int count = researchGroupDao.getResearchGroupsWhereOwner(person).size();
         researchGroupDao.create(researchGroup);
@@ -84,17 +84,10 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
     }
 
     @Test
-    @Transactional
     public void testGetMembership() {
         researchGroupDao.create(researchGroup);
         assertEquals(0, researchGroupDao.getResearchGroupsWhereMember(person).size());
 
     }
 
-    @After
-    public void clean() {
-    if (person.getUsername() != null) {
-        personDao.delete(person);
-        }
-    }
 }
