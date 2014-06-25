@@ -19,6 +19,7 @@
 				<type>string</type>
 	         </value>
             <definition>The software's name.</definition>
+			<required>yes</required>
 	      </property> 
          
          <property>
@@ -43,6 +44,7 @@
 				<type>string</type>
 	         </value>
             <definition>Version of the software.</definition>
+			<required>yes</required>
 	      </property> 
 	      
 	      <property>
@@ -92,6 +94,7 @@
 	         </value>
             <definition>Distribution type</definition>
 	      </property>  
+		  
         <property>
             <name>Decsription</name>
 	         <value>

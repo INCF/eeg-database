@@ -26,6 +26,7 @@
 			<type>person</type>
 	      </value>
          <definition>The person, who created this protocol.</definition>
+		 <required>yes</required>
       </property> 
       
       <property>
@@ -51,8 +52,5 @@
 	      </value>
          <definition> Version of the protocol</definition>
       </property> 
-      
-     
-   
    </section> 
 </odML>

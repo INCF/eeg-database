@@ -27,6 +27,7 @@
 			<type>person</type>
 	      </value>
          <definition>The name of the person actually performing the recordings.</definition>
+		 <required>yes</required>
       </property> 
       
       <property>

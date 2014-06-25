@@ -125,6 +125,7 @@
 				<type>float</type>
 			 </value>
             <definition>The amplifier gain.</definition>
+			<required>yes</required>
 	      </property>
 	      
 	      <property>

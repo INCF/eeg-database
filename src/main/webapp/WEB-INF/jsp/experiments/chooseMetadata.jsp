@@ -95,10 +95,10 @@
         <fmt:message key="label.data"/>
       </h2>
       <c:forEach var="fileItem" items="${measurationDetail.dataFiles}" varStatus="fileCounter">
-        <table id="measurationTable${fileCounter.count}" class="standardValueTable">
+        <table id="measurationTable${fileCounter.maxCount}" class="standardValueTable">
           <tr>
               <th colspan="3"><c:out value="${fileItem.filename}"/></th>
-            <td><input id="measuration${fileCounter.count}Id" type="checkbox" name="dataFile" value="${fileItem.dataFileId}" onclick="checkedAll('measurationTable${fileCounter.count}', document.getElementById('measuration${fileCounter.count}Id').checked);"/></td>
+            <td><input id="measuration${fileCounter.maxCount}Id" type="checkbox" name="dataFile" value="${fileItem.dataFileId}" onclick="checkedAll('measurationTable${fileCounter.maxCount}', document.getElementById('measuration${fileCounter.maxCount}Id').checked);"/></td>
           </tr>
           <tr>
             <th colspan="3"><fmt:message key="label.datafile.content"/></th>

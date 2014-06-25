@@ -6,7 +6,24 @@
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
-    <div wicket:id="testContent" class="test"></div>
+    <div class="test">
+        <form wicket:id="form">
+            <input type="text" wicket:id="textField"/>
+            <div wicket:id="checkGroup">
+                <input type="checkbox"/>
+            </div>
+            <input type="submit" value="set message" />
+
+            <table>
+                <th><h3>Section</h3></th>
+                <th><h3>Subsection</h3></th>
+                <tr wicket:id="row">
+                    <td><span wicket:id="col1"></span></td>
+                    <td><span wicket:id="col2"></span></td>
+                </tr>
+            </table>
+        </form>
+    </div>
 </wicket:extend>
 </body>
 </html>

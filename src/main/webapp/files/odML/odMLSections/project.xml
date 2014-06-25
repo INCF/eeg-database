@@ -17,8 +17,7 @@
 			<value>
 				<type>text</type> 
 			</value>
-			<definition>A descriptive text of the 
-         project topic.</definition>
+			<definition>A descriptive text of the project topic.</definition>
 		</property>
       
 		<property>

@@ -42,6 +42,7 @@
 				<type>string</type> 
 			</value>
 			<definition>Intracellular recording of single cell responses with sharp microelectrodes.</definition>
+			<required>yes</required>
 		</property>
       			
 		<property>

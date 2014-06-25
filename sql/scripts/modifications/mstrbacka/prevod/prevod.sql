@@ -53,7 +53,7 @@ BEGIN
   LOOP  
     FETCH experiment_cur INTO experiment_row;
     EXIT WHEN experiment_cur%NOTFOUND;
-    SELECT count(d.SAMPLING_RATE) INTO sr_count FROM DATA_FILE d WHERE d.EXPERIMENT_ID=experiment_row.EXPERIMENT_ID AND ROWNUM <= 1;
+    SELECT maxCount(d.SAMPLING_RATE) INTO sr_count FROM DATA_FILE d WHERE d.EXPERIMENT_ID=experiment_row.EXPERIMENT_ID AND ROWNUM <= 1;
     if sr_count > 0 then
       SELECT d.SAMPLING_RATE INTO sampling_rate_type FROM DATA_FILE d WHERE d.EXPERIMENT_ID=experiment_row.EXPERIMENT_ID AND ROWNUM <= 1;
       UPDATE EXPERIMENT e SET DIGITIZATION_ID=(SELECT DIGITIZATION_ID FROM digitization dig WHERE dig.SAMPLING_RATE=sampling_rate_type) WHERE e.experiment_id=experiment_row.EXPERIMENT_ID; 
@@ -130,7 +130,7 @@ BEGIN
       loop
         fetch experiment_cur into experiment_id_type;
         EXIT WHEN experiment_cur%NOTFOUND;
-        select count(*) into tmp from disease_rel where disease_id=disease_id_type and experiment_id=experiment_id_type;
+        select maxCount(*) into tmp from disease_rel where disease_id=disease_id_type and experiment_id=experiment_id_type;
         if tmp = 0 then
           INSERT into disease_rel(disease_id, experiment_id) VALUES (disease_id_type, experiment_id_type);
         end if;

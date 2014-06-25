@@ -111,7 +111,7 @@ xmlns:fn="http://www.w3.org/2005/02/xpath-functions">
 						</td>
 						<td width="10%">
 							<xsl:choose>
-								  <xsl:when test="count(value) &gt; 1">
+								  <xsl:when test="maxCount(value) &gt; 1">
 									<select name="{$anchor}Select">
 										<xsl:for-each select="value">
 											<xsl:variable name="selectVal" select="value" />

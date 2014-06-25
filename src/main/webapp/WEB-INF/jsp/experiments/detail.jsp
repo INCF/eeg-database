@@ -176,15 +176,15 @@
                 tree.deleteChildItems(0);
                 tree.insertNewChild(0, 1, "Channels");
                 <c:forEach items="${channels}" var="channel" varStatus="counter">
-                    tree.insertNewChild(1,10 + <c:out value="${counter.count}"/>,"<c:out value="${channel.name}"/>");
+                    tree.insertNewChild(1,10 + <c:out value="${counter.maxCount}"/>,"<c:out value="${channel.name}"/>");
                 </c:forEach>
             </script>
             <script type="text/javascript">
             <c:forEach items="${signalData}" varStatus="index">
-                createArray(<c:out value="${index.count}" />);
-                <c:forEach items="${signalData[index.count]}" varStatus="index2">
-                    <c:if test="${not empty signalData[index.count][index2.count]}">
-                        addToArray(<c:out value="${index.count}"/>, <c:out value="${index2.count}"/>, <c:out value="${signalData[index.count][index2.count]}" />);
+                createArray(<c:out value="${index.maxCount}" />);
+                <c:forEach items="${signalData[index.maxCount]}" varStatus="index2">
+                    <c:if test="${not empty signalData[index.maxCount][index2.maxCount]}">
+                        addToArray(<c:out value="${index.maxCount}"/>, <c:out value="${index2.maxCount}"/>, <c:out value="${signalData[index.maxCount][index2.maxCount]}" />);
                     </c:if>
                 </c:forEach>
             </c:forEach>

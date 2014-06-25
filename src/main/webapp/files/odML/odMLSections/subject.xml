@@ -29,6 +29,7 @@
 	      </value>
          <definition>The scientific name of the species e.g. Apis
          mellifera, Homo sapiens.</definition>
+		 <required>yes</required>
       </property> 
       
       <property>
@@ -38,6 +39,7 @@
 	      </value>
          <definition>The Genus of the studied
          subject.</definition>
+		 <required>yes</required>
       </property>
       
       <property>
@@ -55,6 +57,7 @@
 			<type>string</type>
 	      </value>
          <definition>Male or female?</definition>
+		 <required>yes</required>
       </property> 
       
       <property>
@@ -64,6 +67,7 @@
 	      </value>	
          <definition> The birthday. Age can be inferred from the
          date of recording.</definition>
+		 <required>yes</required>
       </property> 
       
       <property>
@@ -118,6 +122,7 @@
 	      </value>	      
          <definition>Information about the health status of this
          subject.</definition>
+		 <required>yes</required>
       </property>
       
       <property>
