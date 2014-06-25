@@ -10,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.FirstCell;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.RowData;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvironmentForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
@@ -23,6 +24,7 @@ import org.apache.wicket.extensions.wizard.WizardModel;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.markup.ComponentTag;
 import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
@@ -64,12 +66,12 @@ public class ExperimentFormPageTest extends MenuPage {
             @Override
             protected void populateItem(ListItem item) {
                 RowData data = (RowData)item.getModelObject();
-                
+                add(new FirstCell(data,"cell1"));
+                //add(new FirstCell(data,"cell2"));
+                add(new Label("cell2", Model.of("Some text")));
             }
         };
-
-
-
+        form.add(view);
         add(form);
     }
 
