@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
@@ -11,16 +13,14 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class FirstCell extends Panel {
 
-    private RowData data;
     private String id;
 
-    public FirstCell(final RowData data, final String id) {
+    public FirstCell(final String id, IModel model) {
         super(id);
         this.id = id;
-        this.data = data;
 
         CheckBox box = new CheckBox("check", Model.of(Boolean.TRUE));
         add(box);
-        add(new Label("name", data.getName()));
+        add(new Label("name"));
     }
 }

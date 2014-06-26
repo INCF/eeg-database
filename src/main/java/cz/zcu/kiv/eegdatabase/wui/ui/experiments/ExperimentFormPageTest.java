@@ -32,13 +32,16 @@ import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.include.Include;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.markup.transformer.XsltOutputTransformerContainer;
 import org.apache.wicket.markup.transformer.XsltTransformer;
 import org.apache.wicket.markup.transformer.XsltTransformerBehavior;
+import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.http.WebResponse;
 import org.jdom.transform.XSLTransformer;
@@ -54,21 +57,21 @@ public class ExperimentFormPageTest extends MenuPage {
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-
-        Form form = new Form("form");
+        List<RowData> rowData = generateData();
+        Form form = new Form("form", new CompoundPropertyModel(rowData));
+        //form.setDefaultModel(new CompoundPropertyModel()
         List<String> list = Arrays.asList("Subsec1", "Subsec2", "Subsec3");
         CheckBoxMultipleChoice cbmc = new CheckBoxMultipleChoice("checkGroup",
                 new ListModel<String>(new ArrayList<String>()), list);
         form.add(new TextField("textField", Model.of("")));
         form.add(cbmc);
 
-        ListView view = new ListView("row", generateData()) {
+        PropertyListView view = new PropertyListView("row") {
             @Override
             protected void populateItem(ListItem item) {
-                RowData data = (RowData)item.getModelObject();
-                add(new FirstCell(data,"cell1"));
-                //add(new FirstCell(data,"cell2"));
-                add(new Label("cell2", Model.of("Some text")));
+                //RowData data = (RowData)item.getModelObject();
+                item.add(new FirstCell("cell1", new PropertyModel<String>(item.getModel(), "name")));
+                item.add(new FirstCell("cell2", new PropertyModel<String>(item.getModel(), "name")));
             }
         };
         form.add(view);
