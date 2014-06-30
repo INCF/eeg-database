@@ -1,50 +1,23 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.FirstCell;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.RowData;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvironmentForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
-import org.apache.wicket.Component;
-import org.apache.wicket.Page;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.wizard.Wizard;
-import org.apache.wicket.extensions.wizard.WizardModel;
-import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
-import org.apache.wicket.markup.ComponentTag;
-import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
 import org.apache.wicket.markup.html.include.Include;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.markup.parser.XmlTag;
 import org.apache.wicket.markup.transformer.XsltOutputTransformerContainer;
-import org.apache.wicket.markup.transformer.XsltTransformer;
-import org.apache.wicket.markup.transformer.XsltTransformerBehavior;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
-import org.apache.wicket.request.http.WebResponse;
-import org.jdom.transform.XSLTransformer;
 
 import java.util.*;
 
@@ -58,20 +31,19 @@ public class ExperimentFormPageTest extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
         List<RowData> rowData = generateData();
-        Form form = new Form("form", new CompoundPropertyModel(rowData));
-        //form.setDefaultModel(new CompoundPropertyModel()
+        Form<List<RowData>> form = new Form<List<RowData>>("form", new CompoundPropertyModel<List<RowData>>(rowData));
         List<String> list = Arrays.asList("Subsec1", "Subsec2", "Subsec3");
-        CheckBoxMultipleChoice cbmc = new CheckBoxMultipleChoice("checkGroup",
+        CheckBoxMultipleChoice<String> cbmc = new CheckBoxMultipleChoice<String>("checkGroup",
                 new ListModel<String>(new ArrayList<String>()), list);
-        form.add(new TextField("textField", Model.of("")));
+        form.add(new TextField<String>("textField", Model.of("")));
         form.add(cbmc);
 
-        PropertyListView view = new PropertyListView("row", rowData) {
+        ListView view = new PropertyListView("row", rowData) {
             @Override
             protected void populateItem(ListItem item) {
-                FirstCell firstCell= new FirstCell("cell1", item.getModel());
-                FirstCell secondCell= new FirstCell("cell2", item.getModel());
-                item.add(firstCell);
+                SectionCell sectionCell = new SectionCell("cell1", item.getModel());
+                SectionCell secondCell= new SectionCell("cell2", item.getModel());
+                item.add(sectionCell);
                 item.add(secondCell);
             }
         };

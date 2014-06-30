@@ -1,11 +1,12 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
 
+import java.io.Serializable;
 import java.util.List;
 
 /**
  * Created by Prokop on 25.6.2014.
  */
-public class RowData {
+public class RowData implements Serializable{
 
     private String name;
     private Boolean required;
