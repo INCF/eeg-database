@@ -66,19 +66,20 @@ public class ExperimentFormPageTest extends MenuPage {
         form.add(new TextField("textField", Model.of("")));
         form.add(cbmc);
 
-        PropertyListView view = new PropertyListView("row") {
+        PropertyListView view = new PropertyListView("row", rowData) {
             @Override
             protected void populateItem(ListItem item) {
-                //RowData data = (RowData)item.getModelObject();
-                item.add(new FirstCell("cell1", new PropertyModel<String>(item.getModel(), "name")));
-                item.add(new FirstCell("cell2", new PropertyModel<String>(item.getModel(), "name")));
+                FirstCell firstCell= new FirstCell("cell1", item.getModel());
+                FirstCell secondCell= new FirstCell("cell2", item.getModel());
+                item.add(firstCell);
+                item.add(secondCell);
             }
         };
         form.add(view);
         add(form);
     }
 
-    private List<RowData> generateData(){
+    private List<RowData> generateData() {
         List<RowData> list = new ArrayList<RowData>();
         RowData data;
         RowData subsec;
@@ -90,7 +91,7 @@ public class ExperimentFormPageTest extends MenuPage {
         for(int i = 0; i<10; i++){
             name = "name " + i;
             required = i%2==0;
-            maxCount = i%4;
+            maxCount = i%4 + 1;
             subsections = new ArrayList<RowData>();
 
             for(int j = i; j < 6; j++){
