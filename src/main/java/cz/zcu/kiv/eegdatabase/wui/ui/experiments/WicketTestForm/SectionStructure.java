@@ -27,83 +27,67 @@ import java.util.List;
  * ${NAME}, 2014/07/01 11:57 Prokop
  *
  **********************************************************************************************************************/
-public class RowData implements Serializable{
+public class SectionStructure implements Serializable{
 
-    private String name;
-    private Boolean required;
-    private int maxCount;
-    private List<RowData> subsections;
+    //section name
+    private final String name;
+    //is section required?
+    private final Boolean required;
+    //Max section count
+    private final int maxCount;
+    //Min section count
+    private final int minCount;
+    //List of possible subsections
+    private final List<SectionStructure> subsections;
+    //Selected count of sections
+    private int selectedCount;
+    //Is section selected?
+    private boolean selected;
 
-    public RowData(String name, Boolean required, int maxCount, List<RowData> subsections) {
+    public SectionStructure(String name, Boolean required, int maxCount, List<SectionStructure> subsections, int minCount,
+                            int selectedCount, boolean selected) {
         this.name = name;
         this.required = required;
         this.maxCount = maxCount;
         this.subsections = subsections;
+        this.minCount = minCount;
+        this.selectedCount = selectedCount;
+        this.selected = selected;
     }
 
     public String getName() {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
     public Boolean getRequired() {
         return required;
-    }
-
-    public void setRequired(Boolean required) {
-        this.required = required;
     }
 
     public int getMaxCount() {
         return maxCount;
     }
 
-    public void setMaxCount(int maxCount) {
-        this.maxCount = maxCount;
-    }
-
-    public List<RowData> getSubsections() {
+    public List<SectionStructure> getSubsections() {
         return subsections;
     }
 
-    public void setSubsections(List<RowData> subsections) {
-        this.subsections = subsections;
+    public int getMinCount() {
+        return minCount;
     }
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof RowData)) return false;
-
-        RowData row = (RowData) o;
-
-        if (maxCount != row.maxCount) return false;
-        if (!name.equals(row.name)) return false;
-        if (!required.equals(row.required)) return false;
-        if (!subsections.equals(row.subsections)) return false;
-
-        return true;
+    public void setSelected(boolean selected) {
+        this.selected = selected;
     }
 
-    @Override
-    public int hashCode() {
-        int result = name.hashCode();
-        result = 31 * result + required.hashCode();
-        result = 31 * result + maxCount;
-        result = 31 * result + subsections.hashCode();
-        return result;
+    public boolean isSelected() {
+        return selected;
     }
 
-    @Override
-    public String toString() {
-        return "RowData{" +
-                "name='" + name + '\'' +
-                ", required=" + required +
-                ", maxCount=" + maxCount +
-                ", subsections=" + subsections +
-                '}';
+    public void setSelectedCount(int selectedCount) {
+        this.selectedCount = selectedCount;
+    }
+
+    public int getSelectedCount() {
+        return selectedCount;
     }
 }

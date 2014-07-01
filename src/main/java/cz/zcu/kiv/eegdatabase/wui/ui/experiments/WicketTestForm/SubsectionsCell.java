@@ -6,8 +6,6 @@ import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 
-import java.util.List;
-
 /***********************************************************************************************************************
  *
  * This file is part of the ${PROJECT_NAME} project
@@ -37,7 +35,7 @@ import java.util.List;
         public SubsectionsCell(String id, IModel model)
         {
             super(id, model);
-            RowData subsections = (RowData) model.getObject();
+            SectionStructure subsections = (SectionStructure) model.getObject();
             ListView view = new PropertyListView("row", subsections.getSubsections()) {
                 @Override
                 protected void populateItem(ListItem item) {

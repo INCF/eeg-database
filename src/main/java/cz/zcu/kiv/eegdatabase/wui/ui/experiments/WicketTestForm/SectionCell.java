@@ -45,22 +45,29 @@ public class SectionCell extends Panel {
 
     private void addCell(IModel model)
     {
-        RowData data = (RowData)model.getObject();
+        SectionStructure data = (SectionStructure)model.getObject();
         List<Integer> dropDownVals = new ArrayList<Integer>();
         final int maxCount = data.getMaxCount();
-        dropDownVals.add(1);
+        final int minCount = data.getMinCount();
 
-        for(int i = 2; i <= maxCount; i++)
+        for(int i = minCount; i <= maxCount; i++)
         {
             dropDownVals.add(i);
         }
-        final DropDownChoice dropDownChoice = new DropDownChoice("maxCount", new Model(dropDownVals.get(0)), dropDownVals);
-        dropDownChoice.setOutputMarkupId(true);
-        add(dropDownChoice);
 
-        final CheckBox box = new CheckBox("check", Model.of(Boolean.TRUE));
-
+        final CheckBox box = new CheckBox("selected");
         box.setEnabled(!data.getRequired());
+
+        final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("sectionCount",
+                new Model<Integer>(((SectionStructure) model.getObject()).getSelectedCount()), dropDownVals){
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                
+                this.setEnabled(box.getModelObject());
+            }
+        };
+        dropDownChoice.setOutputMarkupId(true);
 
         OnChangeAjaxBehavior onChangeBehavior = new OnChangeAjaxBehavior() {
             protected void onUpdate(AjaxRequestTarget target) {
@@ -70,6 +77,7 @@ public class SectionCell extends Panel {
         };
 
         box.add(onChangeBehavior);
+        add(dropDownChoice);
         add(box);
         add(new Label("name"));
     }
