@@ -54,13 +54,14 @@ public class ExperimentFormPageTest extends MenuPage {
         List<RowData> rowData = generateData();
         Form<List<RowData>> form = new Form<List<RowData>>("form", new CompoundPropertyModel<List<RowData>>(rowData));
 
+        //one table row
         ListView view = new PropertyListView("row", rowData) {
             @Override
             protected void populateItem(ListItem item) {
                 SectionCell sectionCell = new SectionCell("cell1", item.getModel());
-                SubsectionsCell secondCell= new SubsectionsCell("cell2", item.getModel());
+                SubsectionsCell subsectionsCell= new SubsectionsCell("cell2", item.getModel());
                 item.add(sectionCell);
-                item.add(secondCell);
+                item.add(subsectionsCell);
             }
         };
         form.add(view);
@@ -91,17 +92,5 @@ public class ExperimentFormPageTest extends MenuPage {
         }
 
         return list;
-    }
-
-    private void setupComponents(final Model<Experiment> model) {
-        XsltOutputTransformerContainer xsltCon = new XsltOutputTransformerContainer("testContent", model,
-                "files/odML/Selection.xsl");
-
-
-        Include inc = new Include("testContent", "files/odML/Sections.xml");
-        inc.setEscapeModelStrings(false);
-
-        add(new XsltOutputTransformerContainer("testContent", model,
-                "files/odML/Selection.xsl"));
     }
 }
