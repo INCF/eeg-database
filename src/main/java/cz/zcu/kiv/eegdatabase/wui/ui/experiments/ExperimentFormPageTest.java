@@ -6,6 +6,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.RowData;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SubsectionsCell;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.CheckBoxMultipleChoice;
 import org.apache.wicket.markup.html.form.Form;
@@ -21,28 +22,43 @@ import org.apache.wicket.model.util.ListModel;
 
 import java.util.*;
 
-/**
- * Created by Prokop on 11.6.2014.
- */
+/***********************************************************************************************************************
+ *
+ * This file is part of the ${PROJECT_NAME} project
+
+ * ==========================================
+ *
+ * Copyright (C) 2014 by University of West Bohemia (http://www.zcu.cz/en/)
+ *
+ ***********************************************************************************************************************
+ *
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ * the License. You may obtain a copy of the License at
+ *
+ *     http://www.apache.org/licenses/LICENSE-2.0
+ *
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ * specific language governing permissions and limitations under the License.
+ *
+ ***********************************************************************************************************************
+ *
+ * ${NAME}, 2014/07/01 11:57 Prokop
+ *
+ **********************************************************************************************************************/
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPageTest extends MenuPage {
 
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
-        add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
         List<RowData> rowData = generateData();
         Form<List<RowData>> form = new Form<List<RowData>>("form", new CompoundPropertyModel<List<RowData>>(rowData));
-        List<String> list = Arrays.asList("Subsec1", "Subsec2", "Subsec3");
-        CheckBoxMultipleChoice<String> cbmc = new CheckBoxMultipleChoice<String>("checkGroup",
-                new ListModel<String>(new ArrayList<String>()), list);
-        form.add(new TextField<String>("textField", Model.of("")));
-        form.add(cbmc);
 
         ListView view = new PropertyListView("row", rowData) {
             @Override
             protected void populateItem(ListItem item) {
                 SectionCell sectionCell = new SectionCell("cell1", item.getModel());
-                SectionCell secondCell= new SectionCell("cell2", item.getModel());
+                SubsectionsCell secondCell= new SubsectionsCell("cell2", item.getModel());
                 item.add(sectionCell);
                 item.add(secondCell);
             }

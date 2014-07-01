@@ -1,5 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
 
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.panel.Panel;
+import org.apache.wicket.model.IModel;
+
+import java.util.List;
+
 /***********************************************************************************************************************
  *
  * This file is part of the ${PROJECT_NAME} project
@@ -21,8 +29,22 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
  *
  ***********************************************************************************************************************
  *
- * ${NAME}, 2014/06/30 15:38 Nocturno
+ * ${NAME}, 2014/06/30 15:38 Prokop
  *
  **********************************************************************************************************************/
-     public class SubsectionsCell {
+     public class SubsectionsCell extends Panel {
+
+        public SubsectionsCell(String id, IModel model)
+        {
+            super(id, model);
+            RowData subsections = (RowData) model.getObject();
+            ListView view = new PropertyListView("row", subsections.getSubsections()) {
+                @Override
+                protected void populateItem(ListItem item) {
+                    SectionCell subCell = new SectionCell("subCell", item.getModel());
+                    item.add(subCell);
+                }
+            };
+            add(view);
+        }
 }
