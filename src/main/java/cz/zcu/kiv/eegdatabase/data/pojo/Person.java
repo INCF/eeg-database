@@ -105,6 +105,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 					0);
 	private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
 	private Set<PersonalLicense> personalLicenses = new HashSet<PersonalLicense>(0);
+    private Set<Template> templates = new HashSet<Template>(0);
 
 	public Person() {
 	}
@@ -440,6 +441,15 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.articlesGroupSubscribtions = articlesGroupSubscribtions;
 	}
 
+    @OneToMany(fetch = FetchType.LAZY)
+    public Set<Template> getTemplates() {
+        return templates;
+    }
+
+    public void setTemplates(Set<Template> templates) {
+        this.templates = templates;
+    }
+
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	public Set<ServiceResult> getResults() {
 		return this.results;
@@ -518,4 +528,5 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	public int hashCode() {
 	    return getPersonId();
 	}
+
 }
