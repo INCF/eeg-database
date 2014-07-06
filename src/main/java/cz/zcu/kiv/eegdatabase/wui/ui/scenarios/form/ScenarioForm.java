@@ -63,6 +63,7 @@ import java.util.List;
 public class ScenarioForm extends Form<Scenario> {
 
     private static final long serialVersionUID = 1L;
+
     protected Log log = LogFactory.getLog(getClass());
 
     @SpringBean
@@ -73,6 +74,7 @@ public class ScenarioForm extends Form<Scenario> {
     private ResearchGroupFacade researchGroupFacade;
 
     public ScenarioForm(String id, IModel<Scenario> model, final FeedbackPanel feedback) {
+
         super(id, new CompoundPropertyModel<Scenario>(model));
 
         setMultiPart(true);
@@ -174,47 +176,47 @@ public class ScenarioForm extends Form<Scenario> {
                 FileUpload uploadedFile = file.getFileUpload();
                 Scenario scenario = ScenarioForm.this.getModelObject();
 
-                // loading non-XML
-                if ((uploadedFile != null) && (!(uploadedFile.getSize() == 0))) {
-
-                    String name = uploadedFile.getClientFileName();
-                    // when uploading from localhost some browsers will specify the entire path, we strip it
-                    // down to just the file name
-                    name = Strings.lastPathComponent(name, '/');
-                    name = Strings.lastPathComponent(name, '\\');
-
-                    // File uploaded
-                    String filename = name.replace(" ", "_");
-                    scenario.setScenarioName(filename);
-
-                    scenario.setMimetype(uploadedFile.getContentType());
-                    try {
-                        scenario.setFileContentStream(uploadedFile.getInputStream());
-                    } catch (IOException e) {
-                        log.error(e.getMessage(), e);
-                    }
-                }
-
                 if (!scenariosFacade.canSaveTitle(scenario.getTitle(), scenario.getScenarioId())) {
                     error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
                     return;
-                }
-
-                if (scenario.getScenarioId() > 0) {
-                    // Editing existing
-                    // scenarioTypeDao.update(scenarioType);
-                    scenariosFacade.update(scenario);
                 } else {
-                    // Creating new
-                    scenariosFacade.create(scenario);
+                    // loading non-XML scenario file
+                    if ((uploadedFile != null) && (!(uploadedFile.getSize() == 0))) {
+
+                        String name = uploadedFile.getClientFileName();
+                        // when uploading from localhost some browsers will specify the entire path, we strip it
+                        // down to just the file name
+                        name = Strings.lastPathComponent(name, '/');
+                        name = Strings.lastPathComponent(name, '\\');
+
+                        // File uploaded
+                        String filename = name.replace(" ", "_");
+                        scenario.setScenarioName(filename);
+
+                        scenario.setMimetype(uploadedFile.getContentType());
+                        try {
+                            scenario.setFileContentStream(uploadedFile.getInputStream());
+                        } catch (IOException e) {
+                            log.error(e.getMessage(), e);
+                        }
+                    }
+
+                    if (scenario.getScenarioId() > 0) {
+                        // Editing existing
+                        // scenarioTypeDao.update(scenarioType);
+                        scenariosFacade.update(scenario);
+                    } else {
+                        // Creating new
+                        scenariosFacade.create(scenario);
+                    }
+                    /*
+                     * clean up after upload file, and set model to null or will be problem with page serialization when redirect start - DON'T DELETE IT !
+                     */
+                    ScenarioForm.this.setModelObject(null);
+
+                    setResponsePage(ScenarioDetailPage.class, PageParametersUtils.getDefaultPageParameters(scenario.getScenarioId()));
                 }
 
-                /*
-                 * clean up after upload file, and set model to null or will be problem with page serialization when redirect start - DON'T DELETE IT !
-                 */
-                ScenarioForm.this.setModelObject(null);
-
-                setResponsePage(ScenarioDetailPage.class, PageParametersUtils.getDefaultPageParameters(scenario.getScenarioId()));
             }
         };
 
