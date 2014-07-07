@@ -1,11 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import cz.zcu.kiv.formgen.annotation.FormId;
-import cz.zcu.kiv.formgen.annotation.FormItem;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
-import java.io.File;
+import java.util.Arrays;
 
 /**
  * ********************************************************************************************************************
@@ -29,25 +27,20 @@ import java.io.File;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * Template, 2014/07/02 10:48 Prokop
+ * Template, 2014/07/07 13:23 Prokop
  * <p/>
  * ********************************************************************************************************************
  */
 @Entity
-@Table(name = "TEMPLATES")
 public class Template {
-
-    @FormId
     private int templateId;
-    @FormItem
-    private File template;
-    private Person owner;
-    private Experiment experiment;
+    private byte[] template;
+    private Person personByPersonId;
 
-    @GeneratedValue(generator = "generator")
-    @Id
     @GenericGenerator(name = "generator", strategy = "increment")
-    @Column(name = "TEMPLATE_ID", nullable = false, precision = 22, scale = 0)
+    @Id
+    @GeneratedValue(generator = "generator")
+    @Column(name = "template_id", nullable = false, insertable = true, updatable = true)
     public int getTemplateId() {
         return templateId;
     }
@@ -56,32 +49,46 @@ public class Template {
         this.templateId = templateId;
     }
 
-    @Column(name = "TEMPLATE")
-    public File getTemplate() {
+    @Basic
+    @Column(name = "template", nullable = false, insertable = true, updatable = true)
+    public byte[] getTemplate() {
         return template;
     }
 
-    public void setTemplate(File template) {
+    public void setTemplate(byte[] template) {
         this.template = template;
     }
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "PERSON_ID")
-    public Person getOwner() {
-        return owner;
-    }
-
-    public void setOwner(Person owner) {
-        this.owner = owner;
-    }
-
     @ManyToOne
-    @JoinColumn(name = "EXPERIMENT_ID")
-    public Experiment getExperiment() {
-        return experiment;
+    @JoinColumn(name = "person_id", referencedColumnName = "person_id")
+    public Person getPersonByPersonId() {
+        return personByPersonId;
     }
 
-    public void setExperiment(Experiment experiment) {
-        this.experiment = experiment;
+    public void setPersonByPersonId(Person personByPersonId) {
+        this.personByPersonId = personByPersonId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Template)) return false;
+
+        Template template1 = (Template) o;
+
+        if (templateId != template1.templateId) return false;
+        if (personByPersonId != null ? !personByPersonId.equals(template1.personByPersonId) : template1.personByPersonId != null)
+            return false;
+        if (!Arrays.equals(template, template1.template)) return false;
+
+        return true;
+    }
+
+    @Override
+    public int hashCode() {
+        int result = templateId;
+        result = 31 * result + (template != null ? Arrays.hashCode(template) : 0);
+        result = 31 * result + (personByPersonId != null ? personByPersonId.hashCode() : 0);
+        return result;
     }
 }

@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
 
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -35,7 +36,7 @@ import org.apache.wicket.model.IModel;
         public SubsectionsCell(String id, IModel model)
         {
             super(id, model);
-            SectionStructure subsections = (SectionStructure) model.getObject();
+            SectionType subsections = (SectionType) model.getObject();
             ListView view = new PropertyListView("row", subsections.getSubsections()) {
                 @Override
                 protected void populateItem(ListItem item) {

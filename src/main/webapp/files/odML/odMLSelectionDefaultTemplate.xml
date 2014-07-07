@@ -1,563 +1,562 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <odML version="1">
-<?xml-stylesheet type="text/xsl" href="Selection.xsl"?>
 	<section>
         <type>analysis/generic</type>
 		<name>Analysis</name>
-		<required>n</required>
+		<required>false</required>
         <maxCount>10</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
 		<section>
             <type>analysis/psth</type>
 			<name>PSTH</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 	</section>
 
 	<section>
 		<type>electrode/generic</type>
 		<name>Electrode</name>
-		<required>y</required>
+		<required>true</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
         <section>
             <type>hardware/generic</type>
             <name>Hardware</name>
-            <required>n</required>
+            <required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
         </section>
 	</section>
 
 	<section>
 		<type>experiment/generic</type>
 		<name>Experiment</name>
-		<required>y</required>
+		<required>true</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
 		<section>
 			<type>experiment/behavior</type>
 			<name>Behavior</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>experiment/electrophysiology</type>
 			<name>Electrophysiology</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>experiment/imaging</type>
 			<name>Imaging</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>experiment/modeling</type>
 			<name>Modeling</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>experiment/pschophysics</type>
 			<name>Psychophysics</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>	
 	</section>
 
 	<section>
         <type>collection/hardwareProperties</type>
 		<name>HardwareProperties</name>
-		<required>n</required>
+		<required>false</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
 		<section>
 			<type>hardware/generic</type>
 			<name>Hardware</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>15</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/attenuator</type>
 			<name>Attenuator</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/cameraObjective</type>
 			<name>CameraObjective</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/daq</type>
 			<name>DataAcquisition</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/eyetracker</type>
 			<name>Eyetracker</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/filter</type>
 			<name>Filter</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/filterSet</type>
 			<name>Filterset</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/iaq</type>
 			<name>ImageAcquisition</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/lightSource</type>
 			<name>Lightsource</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/microscope</type>
 			<name>Microscope</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/microscopeObjective</type>
 			<name>MicroscopeObjective</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/scanner</type>
 			<name>Scanner</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/stimulusIsolator</type>
 			<name>StimulusIsolator</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 	</section>
 
 	<section>
 		<type>collection/hardwareSettings</type>
         <name>HardwareSettings</name>
-		<required>n</required>
+		<required>false</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
 		<section>
 			<type>hardware/generic</type>
 			<name>Hardware</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/amplifier</type>
 			<name>Amplifier</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/attenuator</type>
 			<name>Attenuator</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/cameraObjective</type>
 			<name>CameraObjective</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/daq</type>
 			<name>DataAcquisition</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/eyetracker</type>
 			<name>Eyetracker</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/filter</type>
 			<name>Filter</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/filterSet</type>
 			<name>Filterset</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/iaq</type>
 			<name>ImageAcquisition</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/lightSource</type>
 			<name>Lightsource</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/microscope</type>
 			<name>Microscope</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/microscopeObjective</type>
 			<name>MicroscopeObjective</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/scanner</type>
 			<name>Scanner</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>hardware/stimulusIsolator</type>
 			<name>StimulusIsolator</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 	</section>
 
 	<section>
 		<type>person/generic</type>
 		<name>Person</name>
-		<required>y</required>
+		<required>true</required>
         <maxCount>20</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 	</section>
 
 	<section>
 		<type>preparation/generic</type>
 		<name>Preparation</name>
-		<required>n</required>
+		<required>false</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 	</section>
 
 	<section>
 		<type>recording/generic</type>
 		<name>Recording</name>
-		<required>y</required>
+		<required>true</required>
         <maxCount>1</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 	</section>
 
 	<section>
 		<type>stimulus/generic</type>
 		<name>Stimulus</name>
-		<required>n</required>
+		<required>false</required>
         <maxCount>20</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
       	<section>
 			<type>stimulus/dc</type>
 			<name>DC</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/gabor</type>
 			<name>Gabor</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/grating</type>
 			<name>Grating</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/pulse</type>
 			<name>Pulse</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/movie</type>
 			<name>Movie</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/ramp</type>
 			<name>Ramp</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/randomDot</type>
 			<name>RandomDot</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/sawtooth</type>
 			<name>Sawtooth</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/sinewave</type>
 			<name>Sinewave</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/squarewave</type>
 			<name>Squarewave</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 
 		<section>
 			<type>stimulus/whitenoise</type>
 			<name>WhiteNoise</name>
-			<required>n</required>
+			<required>false</required>
             <maxCount>10</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
 		</section>
 	</section>
 
 	<section>
 		<type>subject/generic</type>
 		<name>Subject</name>
-		<required>y</required>
+		<required>true</required>
         <maxCount>20</maxCount>
         <minCount>1</minCount>
         <selectedCount>1</selectedCount>
-        <selected>y</selected>
+        <selected>true</selected>
 
         <section>
             <type>person/generic</type>
             <name>Person</name>
-            <required>y</required>
+            <required>true</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>
-            <selected>y</selected>
+            <selected>true</selected>
         </section>
 	</section>
 

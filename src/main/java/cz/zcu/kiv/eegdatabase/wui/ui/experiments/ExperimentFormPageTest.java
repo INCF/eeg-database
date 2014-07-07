@@ -1,10 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateReader;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionStructure;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SubsectionsCell;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
@@ -13,6 +14,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 
+import javax.xml.stream.XMLStreamException;
+import java.io.*;
 import java.util.*;
 
 /**
@@ -48,11 +51,11 @@ public class ExperimentFormPageTest extends MenuPage {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
-        List<SectionStructure> sectionStructure = generateData();
-        Form<List<SectionStructure>> form = new Form<List<SectionStructure>>("form", new CompoundPropertyModel<List<SectionStructure>>(sectionStructure));
+        List<SectionType> sectionType = generateData();
+        Form<List<SectionType>> form = new Form<List<SectionType>>("form", new CompoundPropertyModel<List<SectionType>>(sectionType));
 
         //one table row
-        ListView view = new PropertyListView("row", sectionStructure) {
+        ListView view = new PropertyListView("row", sectionType) {
             @Override
             protected void populateItem(ListItem item) {
                 SectionCell sectionCell = new SectionCell("cell1", item.getModel());
@@ -61,18 +64,34 @@ public class ExperimentFormPageTest extends MenuPage {
                 item.add(subsectionsCell);
             }
         };
+
         form.add(view);
         add(form);
+        File file = new File("C:/Users/Prokop/Dropbox/Skola/EEG_ERP_Database/eeg-database/src/main/webapp/files/odML/odMLSelectionDefaultTemplate.xml");
+        try {
+            InputStream is = new FileInputStream(file);
+            int len = (int)file.length();
+            byte[] data = new byte[len];
+            is.read(data,0,len);
+            XMLTemplateReader reader = new XMLTemplateReader();
+            List<SectionType> sections = reader.readTemplate(data);
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
     }
 
-    private List<SectionStructure> generateData() {
-        List<SectionStructure> list = new ArrayList<SectionStructure>();
-        SectionStructure section;
-        SectionStructure subsection;
+    private List<SectionType> generateData() {
+        List<SectionType> list = new ArrayList<SectionType>();
+        SectionType section;
+        SectionType subsection;
         String name;
         Boolean required;
         int maxCount;
-        List<SectionStructure> subsections;
+        List<SectionType> subsections;
         boolean selected;
         int minCount = 1;
         int selectedCount = 1;
@@ -81,15 +100,15 @@ public class ExperimentFormPageTest extends MenuPage {
             name = "name " + i;
             required = i % 3 == 0;
             maxCount = i % 4 + 1;
-            subsections = new ArrayList<SectionStructure>();
+            subsections = new ArrayList<SectionType>();
             if (required) selected = required;
             else selected = i % 2 == 0;
 
             for (int j = i; j < 6; j++) {
-                subsection = new SectionStructure("subsection" + j, j % 2 == 0, i % 4, null, minCount, selectedCount, selected);
+                subsection = new SectionType("subsection" + j, j % 2 == 0, i % 4, null, minCount, selectedCount, selected);
                 subsections.add(subsection);
             }
-            section = new SectionStructure(name, required, maxCount, subsections, minCount, selectedCount, selected);
+            section = new SectionType(name, required, maxCount, subsections, minCount, selectedCount, selected);
             list.add(section);
         }
 

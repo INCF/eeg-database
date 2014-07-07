@@ -40,33 +40,9 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
 
     @Override
     public List<Template> getTemplatesByPerson(int personId) {
-        String hqlQuery = "from Template t where t.owner.personId = :personId";
+        String hqlQuery = "from Template t where t.personId = :personId";
         List<Template> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", personId).list();
 
         return list;
-    }
-
-    @Override
-    public List<Template> getTemplatesByExperiment(int experimentId) {
-        String hqlQuery = "from Template t where t.experiment.experimentId = :experimentId";
-        List<Template> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("experimentId", experimentId).list();
-
-        return list;
-    }
-
-    @Override
-    public Person getOwner(int templateId) {
-        String hqlQuery = "select Person from Template t where t.templateId = :templateId";
-        Person owner = (Person)getSessionFactory().getCurrentSession().createQuery(hqlQuery);
-
-        return owner;
-    }
-
-    @Override
-    public Experiment getExperiment(int templateId) {
-        String hqlQuery = "select Experiment from Template t where t.templateId = :templateId";
-        Experiment experiment = (Experiment)getSessionFactory().getCurrentSession().createQuery(hqlQuery);
-
-        return experiment;
     }
 }

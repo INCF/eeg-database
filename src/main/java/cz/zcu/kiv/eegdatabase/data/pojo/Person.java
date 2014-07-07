@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
 import java.sql.Timestamp;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -105,9 +106,9 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 					0);
 	private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
 	private Set<PersonalLicense> personalLicenses = new HashSet<PersonalLicense>(0);
-    private Set<Template> templates = new HashSet<Template>(0);
+    private Collection<Template> templatesByPersonId;
 
-	public Person() {
+    public Person() {
 	}
 
 	public Person(String surname, char gender, char laterality) {
@@ -441,16 +442,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.articlesGroupSubscribtions = articlesGroupSubscribtions;
 	}
 
-    @OneToMany(fetch = FetchType.LAZY)
-    public Set<Template> getTemplates() {
-        return templates;
-    }
-
-    public void setTemplates(Set<Template> templates) {
-        this.templates = templates;
-    }
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "owner")
 	public Set<ServiceResult> getResults() {
 		return this.results;
 	}
@@ -458,7 +450,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	public void setResults(Set<ServiceResult> results) {
 		this.results = results;
 	}
-
+	
 	@OneToMany(mappedBy = "person")
 	public Set<PersonalLicense> getPersonalLicenses() {
 		return personalLicenses;
@@ -467,7 +459,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
 		this.personalLicenses = personalLicenses;
 	}
-	
+
 	@Column(name="LOCK" ,nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     public boolean isLock() {
         return lock;
@@ -488,12 +480,12 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		fullName += (getGivenname() != null) ? " " + getGivenname() : "";
 		return fullName;
 	}
-
+	
 	@Override
 	public int compareTo(Person person) {
 		return this.surname.compareTo(person.getSurname());
 	}
-
+	
 	@Transient
 	@Override
 	public String getAutoCompleteData() {
@@ -507,26 +499,34 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		fullName += (getUsername() != null) ? " " + getUsername() : "";
 		return fullName;
 	}
-	
+
 	@Override
 	public boolean equals(Object obj) {
-	    
+
 	    if (obj == null) {
 	        return false;
 	    }
-	    
+
 	    if(!obj.getClass().equals(this.getClass())) {
 	        return false;
 	    }
-	    
+
 	    Person other = (Person) obj;
-	    
+
 	    return getPersonId() == other.getPersonId();
 	}
-	
+
 	@Override
 	public int hashCode() {
 	    return getPersonId();
 	}
 
+    @OneToMany(mappedBy = "personByPersonId")
+    public Collection<Template> getTemplatesByPersonId() {
+        return templatesByPersonId;
+    }
+
+    public void setTemplatesByPersonId(Collection<Template> templatesByPersonId) {
+        this.templatesByPersonId = templatesByPersonId;
+    }
 }

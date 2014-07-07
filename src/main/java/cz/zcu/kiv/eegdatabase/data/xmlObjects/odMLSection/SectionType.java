@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
+package cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection;
 
 import java.io.Serializable;
 import java.util.List;
@@ -27,7 +27,7 @@ import java.util.List;
  * ${NAME}, 2014/07/01 11:57 Prokop
  *
  **********************************************************************************************************************/
-public class SectionStructure implements Serializable{
+public class SectionType implements Serializable{
 
     //section name
     private final String name;
@@ -38,14 +38,14 @@ public class SectionStructure implements Serializable{
     //Min section count
     private final int minCount;
     //List of possible subsections
-    private final List<SectionStructure> subsections;
+    private final List<SectionType> subsections;
     //Selected count of sections
     private int selectedCount;
     //Is section selected?
     private boolean selected;
 
-    public SectionStructure(String name, Boolean required, int maxCount, List<SectionStructure> subsections, int minCount,
-                            int selectedCount, boolean selected) {
+    public SectionType(String name, Boolean required, int maxCount, List<SectionType> subsections, int minCount,
+                       int selectedCount, boolean selected) {
         this.name = name;
         this.required = required;
         this.maxCount = maxCount;
@@ -67,7 +67,7 @@ public class SectionStructure implements Serializable{
         return maxCount;
     }
 
-    public List<SectionStructure> getSubsections() {
+    public List<SectionType> getSubsections() {
         return subsections;
     }
 

@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
 
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.basic.Label;
@@ -46,7 +47,7 @@ public class SectionCell extends Panel {
     }
 
     private void addCell(IModel model) {
-        SectionStructure data = (SectionStructure) model.getObject();
+        SectionType data = (SectionType) model.getObject();
         List<Integer> dropDownVals = new ArrayList<Integer>();
         final int maxCount = data.getMaxCount();
         final int minCount = data.getMinCount();
@@ -59,7 +60,7 @@ public class SectionCell extends Panel {
         box.setEnabled(!data.getRequired());
 
         final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("sectionCount",
-                new Model<Integer>(((SectionStructure) model.getObject()).getSelectedCount()), dropDownVals) {
+                new Model<Integer>(((SectionType) model.getObject()).getSelectedCount()), dropDownVals) {
             @Override
             protected void onConfigure() {
                 super.onConfigure();

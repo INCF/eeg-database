@@ -35,7 +35,4 @@ import java.util.List;
 public interface TemplateDao extends GenericDao<Template, Integer> {
 
     public List<Template> getTemplatesByPerson(int personId);
-    public List<Template> getTemplatesByExperiment(int experimentId);
-    public Person getOwner(int templateId);
-    public Experiment getExperiment(int templateId);
 }
