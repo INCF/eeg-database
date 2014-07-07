@@ -18,15 +18,15 @@
  *
  *  ***********************************************************************************************************************
  *
- *   SoftwareDaoTest.java, 2014/30/06 00:01 Jan Stebetak
+ *   PharmaceuticalDaoTest.java, 2014/07/07 00:01 Jan Stebetak
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
 import org.junit.Test;
@@ -39,18 +39,18 @@ import static org.junit.Assert.assertEquals;
 
 /**
  * User: Jan Stebetak
- * Date: 30.6.14
+ * Date: 7.7.14
  */
-public class SoftwareDaoTest extends AbstractDataAccessTest {
+public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
 
 
     @Autowired
-    private SimpleSoftwareDao softwareDao;
+    private SimplePharmaceuticalDao pharmaceuticalDao;
     @Autowired
     private ResearchGroupDao researchGroupDao;
     @Autowired
     private PersonDao personDao;
-    private Software software;
+    private Pharmaceutical pharmaceutical;
     private ResearchGroup researchGroup;
 
     @Before
@@ -64,41 +64,34 @@ public class SoftwareDaoTest extends AbstractDataAccessTest {
         researchGroup.setTitle("test-title");
         researchGroup.setPerson(person);
         researchGroupDao.create(researchGroup);
-        software = new Software();
-        software.setTitle("SW_test");
-        software.setDescription("This is new testing SW");
-        software.setDefaultNumber(0);
+        pharmaceutical = new Pharmaceutical();
+        pharmaceutical.setTitle("New HW");
+        pharmaceutical.setDescription("This is new testing HW");
     }
 
 
     @Test
     @Transactional
-    public void testCreateSoftware() {
-        int softwareCountBefore = softwareDao.getAllRecords().size();
-        int softwareID = softwareDao.create(software);
-        assertEquals(softwareCountBefore + 1, softwareDao.getAllRecords().size());
-        assertEquals(softwareID, software.getSoftwareId());
+    public void testCreatePharmaceutical() {
+        int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
+        int pharmaceuticalID = pharmaceuticalDao.create(pharmaceutical);
+        assertEquals(pharmaceuticalCountBefore + 1, pharmaceuticalDao.getAllRecords().size());
+        assertEquals(pharmaceuticalID, pharmaceutical.getPharmaceuticalId());
     }
+
 
 
     @Test
     @Transactional
-    public void testCreateDefaultRecord() throws Exception {
-        int expectedValue = softwareDao.getDefaultRecords().size();
-        softwareDao.createDefaultRecord(software);
-        assertEquals(expectedValue + 1, softwareDao.getDefaultRecords().size());
-    }
+    public void testCreateGroupPharmaceutical() {
+        int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
+        int pharmaceuticalGroupBefore = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
+        pharmaceuticalDao.createGroupRel(pharmaceutical, researchGroup);
+        pharmaceuticalDao.create(pharmaceutical);
+        assertEquals(pharmaceuticalCountBefore + 1, pharmaceuticalDao.getAllRecords().size());
 
-    @Test
-    @Transactional
-    public void testCreateGroupSoftware() {
-        int softwareCountBefore = softwareDao.getAllRecords().size();
-        int softwareGroupBefore = softwareDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
-        softwareDao.createGroupRel(software, researchGroup);
-        softwareDao.create(software);
-        assertEquals(softwareCountBefore + 1, softwareDao.getAllRecords().size());
-
-        List<Software> list = softwareDao.getRecordsByGroup(researchGroup.getResearchGroupId());
-        assertEquals(softwareGroupBefore + 1, list.size());
+        List<Pharmaceutical> list = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId());
+        assertEquals(pharmaceuticalGroupBefore + 1, list.size());
     }
 }
+
