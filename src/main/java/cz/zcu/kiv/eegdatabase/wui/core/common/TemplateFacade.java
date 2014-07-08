@@ -1,8 +1,7 @@
-package cz.zcu.kiv.eegdatabase.data.dao;
+package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 
 import java.util.List;
 
@@ -28,21 +27,11 @@ import java.util.List;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * SimpleTemplateDao, 2014/07/02 11:34 Prokop
+ * TemplateFacade, 2014/07/08 14:44 Prokop
  * <p/>
  * ********************************************************************************************************************
  */
-public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> implements TemplateDao {
+public interface TemplateFacade extends GenericFacade<Template, Integer> {
 
-    public SimpleTemplateDao(){
-        super(Template.class);
-    }
-
-    @Override
-    public List<Template> getTemplatesByPerson(int personId) {
-        String hqlQuery = "from Template t where t.personByPersonId.personId = :personId";
-        List<Template> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", personId).list();
-
-        return list;
-    }
+    public List<Template> getTemplatesByPerson(int personId);
 }

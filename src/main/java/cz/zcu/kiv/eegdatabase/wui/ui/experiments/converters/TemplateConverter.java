@@ -1,10 +1,13 @@
-package cz.zcu.kiv.eegdatabase.data.dao;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
+import cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacade;
+import org.apache.wicket.util.convert.ConversionException;
+import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.string.Strings;
 
 import java.util.List;
+import java.util.Locale;
 
 /**
  * ********************************************************************************************************************
@@ -28,21 +31,30 @@ import java.util.List;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * SimpleTemplateDao, 2014/07/02 11:34 Prokop
+ * TemplateConverter, 2014/07/08 15:53 Prokop
  * <p/>
  * ********************************************************************************************************************
  */
-public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> implements TemplateDao {
+public class TemplateConverter implements IConverter<Template> {
 
-    public SimpleTemplateDao(){
-        super(Template.class);
+    private TemplateFacade templateFacade;
+
+    public TemplateConverter(TemplateFacade templateFacade) {
+        this.templateFacade = templateFacade;
     }
 
     @Override
-    public List<Template> getTemplatesByPerson(int personId) {
-        String hqlQuery = "from Template t where t.personByPersonId.personId = :personId";
-        List<Template> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", personId).list();
+    public Template convertToObject(String s, Locale locale) throws ConversionException {
+        if (Strings.isEmpty(s)) {
+            return null;
+        }
+        int id = Integer.parseInt(s);
+        List<Template> templates = templateFacade.readByParameter("templateId", s);
+        return (templates != null && templates.size() > 0) ? templates.get(0) : new Template();
+    }
 
-        return list;
+    @Override
+    public String convertToString(Template template, Locale locale) {
+        return ""+template.getTemplateId();
     }
 }

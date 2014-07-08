@@ -168,6 +168,11 @@
 	</bean>
 	<bean name="pharmaceuticalFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacadeImpl" autowire="byType" />
 
+    <bean name="templateService" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateServiceImpl" autowire="byType">
+        <property name="templateDao" ref="templateDao"/>
+    </bean>
+    <bean name="templateFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacadeImpl" autowire="byType" />
+
 	<bean name="scenariosXmlProvider" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenarioXMLProvider" autowire="byType" />
 
 	<bean name="fulltextSearchService" class="cz.zcu.kiv.eegdatabase.logic.search.FulltextSearchService" />
@@ -289,7 +294,7 @@
 		</constructor-arg>
 	</bean>
 
-	<!-- Activates @Scheduled and @Async annotations for scheduling -->
+    <!-- Activates @Scheduled and @Async annotations for scheduling -->
 	<task:annotation-driven executor="indexingExecutor" scheduler="indexingScheduler"/>
 	<task:executor id="indexingExecutor" pool-size="5"/>
 	<task:scheduler id="indexingScheduler" pool-size="1"/>

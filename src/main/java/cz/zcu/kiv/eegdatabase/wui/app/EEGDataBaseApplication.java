@@ -22,6 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.common.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.*;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -43,27 +46,10 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
-import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.page.AccessDeniedPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.InternalErrorPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
-import cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
@@ -83,16 +69,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.HardwareConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PersonConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PharmaceuticalConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ProjectTypeConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ResearchGroupConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ScenarioConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.SoftwareConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.StimulusConverter;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.WeatherConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -165,6 +141,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private WeatherFacade weatherFacade;
     @Autowired
     private StimulusFacade stimulusFacade;
+    @Autowired
+    private TemplateFacade templateFacade;
 
     private boolean development = true;
 
@@ -316,6 +294,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         locator.set(Software.class, new SoftwareConverter(softwareFacade));
         locator.set(Weather.class, new WeatherConverter(weatherFacade));
         locator.set(Stimulus.class, new StimulusConverter(stimulusFacade));
+        locator.set(Template.class, new TemplateConverter(templateFacade));
 
         return locator;
     }

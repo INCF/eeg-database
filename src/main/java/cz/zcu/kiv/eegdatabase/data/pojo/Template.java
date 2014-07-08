@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.Arrays;
 
 /**
@@ -32,10 +33,19 @@ import java.util.Arrays;
  * ********************************************************************************************************************
  */
 @Entity
-public class Template {
+public class Template implements Serializable {
     private int templateId;
     private byte[] template;
     private Person personByPersonId;
+
+    public Template() {
+    }
+
+    public Template(int templateId, byte[] template, Person personByPersonId) {
+        this.templateId = templateId;
+        this.template = template;
+        this.personByPersonId = personByPersonId;
+    }
 
     @GenericGenerator(name = "generator", strategy = "increment")
     @Id

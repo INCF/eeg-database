@@ -460,6 +460,15 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.personalLicenses = personalLicenses;
 	}
 
+    @OneToMany(mappedBy = "personByPersonId")
+    public Collection<Template> getTemplatesByPersonId() {
+        return templatesByPersonId;
+    }
+
+    public void setTemplatesByPersonId(Collection<Template> templatesByPersonId) {
+        this.templatesByPersonId = templatesByPersonId;
+    }
+
 	@Column(name="LOCK" ,nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     public boolean isLock() {
         return lock;
@@ -520,13 +529,4 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	public int hashCode() {
 	    return getPersonId();
 	}
-
-    @OneToMany(mappedBy = "personByPersonId")
-    public Collection<Template> getTemplatesByPersonId() {
-        return templatesByPersonId;
-    }
-
-    public void setTemplatesByPersonId(Collection<Template> templatesByPersonId) {
-        this.templatesByPersonId = templatesByPersonId;
-    }
 }
