@@ -18,14 +18,14 @@
  *
  *  ***********************************************************************************************************************
  *
- *   PharmaceuticalDaoTest.java, 2014/07/07 00:01 Jan Stebetak
+ *   ElectrodeSystemDaoTest.java, 2014/07/08 00:01 Jan Stebetak
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
@@ -38,19 +38,17 @@ import java.util.List;
 import static org.junit.Assert.assertEquals;
 
 /**
- * User: Jan Stebetak
- * Date: 7.7.14
+ * Created by stebjan on 8.7.14.
  */
-public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
-
-
+@Transactional
+public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
     @Autowired
-    private SimplePharmaceuticalDao pharmaceuticalDao;
+    private SimpleElectrodeSystemDao electrodeSystemDao;
     @Autowired
     private ResearchGroupDao researchGroupDao;
     @Autowired
     private PersonDao personDao;
-    private Pharmaceutical pharmaceutical;
+    private ElectrodeSystem electrodeSystem;
     private ResearchGroup researchGroup;
 
     @Before
@@ -64,34 +62,38 @@ public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
         researchGroup.setTitle("test-title");
         researchGroup.setPerson(person);
         researchGroupDao.create(researchGroup);
-        pharmaceutical = new Pharmaceutical();
-        pharmaceutical.setTitle("New pharmaceutical");
-        pharmaceutical.setDescription("This is new testing pharmaceutical");
+        electrodeSystem = new ElectrodeSystem();
+        electrodeSystem.setTitle("New System");
+        electrodeSystem.setDescription("This is new testing system");
+        electrodeSystem.setDefaultNumber(0);
     }
 
 
     @Test
-    @Transactional
-    public void testCreatePharmaceutical() {
-        int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
-        int pharmaceuticalID = pharmaceuticalDao.create(pharmaceutical);
-        assertEquals(pharmaceuticalCountBefore + 1, pharmaceuticalDao.getAllRecords().size());
-        assertEquals(pharmaceuticalID, pharmaceutical.getPharmaceuticalId());
+    public void testCreateDisease() {
+        int countBefore = electrodeSystemDao.getAllRecords().size();
+        int id = electrodeSystemDao.create(electrodeSystem);
+        assertEquals(countBefore + 1, electrodeSystemDao.getCountRecords());
+        assertEquals(id, electrodeSystem.getElectrodeSystemId());
     }
 
 
+    @Test
+    public void testCreateGroupDisease() {
+        int countBefore = electrodeSystemDao.getAllRecords().size();
+        int croupBefore = electrodeSystemDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
+        electrodeSystemDao.createGroupRel(electrodeSystem, researchGroup);
+        electrodeSystemDao.create(electrodeSystem);
+        assertEquals(countBefore + 1, electrodeSystemDao.getAllRecords().size());
+
+        List<ElectrodeSystem> list = electrodeSystemDao.getRecordsByGroup(researchGroup.getResearchGroupId());
+        assertEquals(croupBefore + 1, list.size());
+    }
 
     @Test
-    @Transactional
-    public void testCreateGroupPharmaceutical() {
-        int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
-        int pharmaceuticalGroupBefore = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
-        pharmaceuticalDao.createGroupRel(pharmaceutical, researchGroup);
-        pharmaceuticalDao.create(pharmaceutical);
-        assertEquals(pharmaceuticalCountBefore + 1, pharmaceuticalDao.getAllRecords().size());
-
-        List<Pharmaceutical> list = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId());
-        assertEquals(pharmaceuticalGroupBefore + 1, list.size());
+    public void testCreateDefaultRecord() {
+        int count = electrodeSystemDao.getCountRecords();
+        electrodeSystemDao.createDefaultRecord(electrodeSystem);
+        assertEquals(count + 1, electrodeSystemDao.getCountRecords());
     }
 }
-

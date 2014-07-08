@@ -65,8 +65,8 @@ public class DiseaseDaoTest extends AbstractDataAccessTest {
         researchGroup.setPerson(person);
         researchGroupDao.create(researchGroup);
         disease = new Disease();
-        disease.setTitle("New HW");
-        disease.setDescription("This is new testing HW");
+        disease.setTitle("New Disease");
+        disease.setDescription("This is new testing disease");
     }
 
 
