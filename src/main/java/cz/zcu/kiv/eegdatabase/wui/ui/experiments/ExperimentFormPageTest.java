@@ -1,11 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateReader;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SubsectionsCell;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.Form;
@@ -14,9 +13,8 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 
-import javax.xml.stream.XMLStreamException;
-import java.io.*;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -67,21 +65,6 @@ public class ExperimentFormPageTest extends MenuPage {
 
         form.add(view);
         add(form);
-        File file = new File("C:/Users/Prokop/Dropbox/Skola/EEG_ERP_Database/eeg-database/src/main/webapp/files/odML/odMLSelectionDefaultTemplate.xml");
-        try {
-            InputStream is = new FileInputStream(file);
-            int len = (int)file.length();
-            byte[] data = new byte[len];
-            is.read(data,0,len);
-            XMLTemplateReader reader = new XMLTemplateReader();
-            List<SectionType> sections = reader.readTemplate(data);
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
     }
 
     private List<SectionType> generateData() {

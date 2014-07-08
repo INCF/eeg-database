@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate;
 
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTags;
 
 import javax.xml.stream.XMLEventReader;
 import javax.xml.stream.XMLInputFactory;
@@ -39,16 +40,8 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class XMLTemplateReader {
-    private final String SECTION = "section";
-    private final String NAME = "name";
-    private final String REQUIRED = "required";
-    private final String MAX_COUNT = "maxCount";
-    private final String MIN_COUNT = "minCount";
-    private final String SELECTED_COUNT = "selectedCount";
-    private final String SELECTED = "selected";
+public class XMLTemplateReader implements IXMLTemplateReader {
 
-    private XMLInputFactory inputFactory;
     private XMLEventReader eventReader;
 
     public XMLTemplateReader() {
@@ -56,16 +49,16 @@ public class XMLTemplateReader {
 
     public List<SectionType> readTemplate(byte[] template) throws XMLStreamException {
         List<SectionType> sections = new ArrayList<SectionType>();
-        inputFactory = XMLInputFactory.newInstance();
+        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         InputStream is = new ByteArrayInputStream(template);
         eventReader = inputFactory.createXMLEventReader(is);
 
-        SectionType section = null;
+        SectionType section;
         while (eventReader.hasNext()) {
             XMLEvent event = eventReader.nextEvent();
             if (event.isStartElement()) {
                 String name = event.asStartElement().getName().toString();
-                if (name.equals(SECTION)) {
+                if (name.equalsIgnoreCase(XMLTags.SECTION)) {
                     section = readSection();
                     sections.add(section);
                 }
@@ -76,7 +69,7 @@ public class XMLTemplateReader {
 
     private SectionType readSection() throws XMLStreamException {
         SectionType section = null;
-        SectionType subsection = null;
+        SectionType subsection;
         //------section attributes-------
         String name = "";
         Boolean required = false;
@@ -94,7 +87,7 @@ public class XMLTemplateReader {
             if (event.isStartElement()) {
                 StartElement startElement = event.asStartElement();
                 //section inside section => subsection
-                if (startElement.getName().getLocalPart().equals(SECTION)) {
+                if (startElement.getName().getLocalPart().equalsIgnoreCase(XMLTags.SECTION)) {
                     subsection = readSection();
                     subsections.add(subsection);
 
@@ -102,49 +95,48 @@ public class XMLTemplateReader {
                 }
 
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(NAME)) {
+                        .equalsIgnoreCase(XMLTags.NAME)) {
                     event = eventReader.nextEvent();
                     name = event.asCharacters().getData();
                     continue;
                 }
 
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(REQUIRED)) {
+                        .equalsIgnoreCase(XMLTags.REQUIRED)) {
                     event = eventReader.nextEvent();
                     required = Boolean.parseBoolean(event.asCharacters().getData());
                     continue;
                 }
 
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(MAX_COUNT)) {
+                        .equalsIgnoreCase(XMLTags.MAX_COUNT)) {
                     event = eventReader.nextEvent();
                     maxCount = Integer.parseInt(event.asCharacters().getData());
                     continue;
                 }
 
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(MIN_COUNT)) {
+                        .equalsIgnoreCase(XMLTags.MIN_COUNT)) {
                     event = eventReader.nextEvent();
                     minCount = Integer.parseInt(event.asCharacters().getData());
                     continue;
                 }
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(SELECTED_COUNT)) {
+                        .equalsIgnoreCase(XMLTags.SELECTED_COUNT)) {
                     event = eventReader.nextEvent();
                     selectedCount = Integer.parseInt(event.asCharacters().getData());
                     continue;
                 }
                 if (event.asStartElement().getName().getLocalPart()
-                        .equals(SELECTED)) {
+                        .equalsIgnoreCase(XMLTags.SELECTED)) {
                     event = eventReader.nextEvent();
                     selected = Boolean.parseBoolean(event.asCharacters().getData());
-                    continue;
                 }
             }
             // If we reach the end of an section element, we end loop and return new section
             else if (event.isEndElement()) {
                 EndElement endElement = event.asEndElement();
-                if (endElement.getName().getLocalPart() == (SECTION)) {
+                if (endElement.getName().getLocalPart().equalsIgnoreCase(XMLTags.SECTION)) {
                     section = new SectionType(name, required, maxCount, subsections,
                             minCount, selectedCount, selected);
                     readNext = false;

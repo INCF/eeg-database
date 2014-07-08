@@ -57,7 +57,7 @@ public class SectionCell extends Panel {
         }
 
         final CheckBox box = new CheckBox("selected");
-        box.setEnabled(!data.getRequired());
+        box.setEnabled(!data.isRequired());
 
         final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("sectionCount",
                 new Model<Integer>(((SectionType) model.getObject()).getSelectedCount()), dropDownVals) {

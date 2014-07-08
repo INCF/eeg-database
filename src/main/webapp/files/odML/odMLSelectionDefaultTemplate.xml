@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <odML version="1">
+
 	<section>
-        <type>analysis/generic</type>
 		<name>Analysis</name>
 		<required>false</required>
         <maxCount>10</maxCount>
@@ -10,7 +10,6 @@
         <selected>true</selected>
 
 		<section>
-            <type>analysis/psth</type>
 			<name>PSTH</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -21,7 +20,6 @@
 	</section>
 
 	<section>
-		<type>electrode/generic</type>
 		<name>Electrode</name>
 		<required>true</required>
         <maxCount>1</maxCount>
@@ -30,7 +28,6 @@
         <selected>true</selected>
 
         <section>
-            <type>hardware/generic</type>
             <name>Hardware</name>
             <required>false</required>
             <maxCount>10</maxCount>
@@ -41,7 +38,6 @@
 	</section>
 
 	<section>
-		<type>experiment/generic</type>
 		<name>Experiment</name>
 		<required>true</required>
         <maxCount>1</maxCount>
@@ -50,7 +46,6 @@
         <selected>true</selected>
 
 		<section>
-			<type>experiment/behavior</type>
 			<name>Behavior</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -60,7 +55,6 @@
 		</section>
 
 		<section>
-			<type>experiment/electrophysiology</type>
 			<name>Electrophysiology</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -70,7 +64,6 @@
 		</section>
 
 		<section>
-			<type>experiment/imaging</type>
 			<name>Imaging</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -80,7 +73,6 @@
 		</section>
 
 		<section>
-			<type>experiment/modeling</type>
 			<name>Modeling</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -90,7 +82,6 @@
 		</section>
 
 		<section>
-			<type>experiment/pschophysics</type>
 			<name>Psychophysics</name>
 			<required>false</required>
             <maxCount>1</maxCount>
@@ -101,7 +92,6 @@
 	</section>
 
 	<section>
-        <type>collection/hardwareProperties</type>
 		<name>HardwareProperties</name>
 		<required>false</required>
         <maxCount>1</maxCount>
@@ -110,7 +100,6 @@
         <selected>true</selected>
 
 		<section>
-			<type>hardware/generic</type>
 			<name>Hardware</name>
 			<required>false</required>
             <maxCount>15</maxCount>
@@ -120,7 +109,6 @@
 		</section>
 
 		<section>
-			<type>hardware/attenuator</type>
 			<name>Attenuator</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -130,7 +118,6 @@
 		</section>
 
 		<section>
-			<type>hardware/cameraObjective</type>
 			<name>CameraObjective</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -140,7 +127,6 @@
 		</section>
 
 		<section>
-			<type>hardware/daq</type>
 			<name>DataAcquisition</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -150,7 +136,6 @@
 		</section>
 
 		<section>
-			<type>hardware/eyetracker</type>
 			<name>Eyetracker</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -160,7 +145,6 @@
 		</section>
 
 		<section>
-			<type>hardware/filter</type>
 			<name>Filter</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -170,7 +154,6 @@
 		</section>
 
 		<section>
-			<type>hardware/filterSet</type>
 			<name>Filterset</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -180,7 +163,6 @@
 		</section>
 
 		<section>
-			<type>hardware/iaq</type>
 			<name>ImageAcquisition</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -190,7 +172,6 @@
 		</section>
 
 		<section>
-			<type>hardware/lightSource</type>
 			<name>Lightsource</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -200,7 +181,6 @@
 		</section>
 
 		<section>
-			<type>hardware/microscope</type>
 			<name>Microscope</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -210,7 +190,6 @@
 		</section>
 
 		<section>
-			<type>hardware/microscopeObjective</type>
 			<name>MicroscopeObjective</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -220,7 +199,6 @@
 		</section>
 
 		<section>
-			<type>hardware/scanner</type>
 			<name>Scanner</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -230,7 +208,6 @@
 		</section>
 
 		<section>
-			<type>hardware/stimulusIsolator</type>
 			<name>StimulusIsolator</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -241,7 +218,6 @@
 	</section>
 
 	<section>
-		<type>collection/hardwareSettings</type>
         <name>HardwareSettings</name>
 		<required>false</required>
         <maxCount>1</maxCount>
@@ -250,7 +226,6 @@
         <selected>true</selected>
 
 		<section>
-			<type>hardware/generic</type>
 			<name>Hardware</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -260,7 +235,6 @@
 		</section>
 
 		<section>
-			<type>hardware/amplifier</type>
 			<name>Amplifier</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -270,7 +244,6 @@
 		</section>
 
 		<section>
-			<type>hardware/attenuator</type>
 			<name>Attenuator</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -280,7 +253,6 @@
 		</section>
 
 		<section>
-			<type>hardware/cameraObjective</type>
 			<name>CameraObjective</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -290,7 +262,6 @@
 		</section>
 
 		<section>
-			<type>hardware/daq</type>
 			<name>DataAcquisition</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -300,7 +271,6 @@
 		</section>
 
 		<section>
-			<type>hardware/eyetracker</type>
 			<name>Eyetracker</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -310,7 +280,6 @@
 		</section>
 
 		<section>
-			<type>hardware/filter</type>
 			<name>Filter</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -320,7 +289,6 @@
 		</section>
 
 		<section>
-			<type>hardware/filterSet</type>
 			<name>Filterset</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -330,7 +298,6 @@
 		</section>
 
 		<section>
-			<type>hardware/iaq</type>
 			<name>ImageAcquisition</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -340,7 +307,6 @@
 		</section>
 
 		<section>
-			<type>hardware/lightSource</type>
 			<name>Lightsource</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -350,7 +316,6 @@
 		</section>
 
 		<section>
-			<type>hardware/microscope</type>
 			<name>Microscope</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -360,7 +325,6 @@
 		</section>
 
 		<section>
-			<type>hardware/microscopeObjective</type>
 			<name>MicroscopeObjective</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -370,7 +334,6 @@
 		</section>
 
 		<section>
-			<type>hardware/scanner</type>
 			<name>Scanner</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -380,7 +343,6 @@
 		</section>
 
 		<section>
-			<type>hardware/stimulusIsolator</type>
 			<name>StimulusIsolator</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -391,7 +353,6 @@
 	</section>
 
 	<section>
-		<type>person/generic</type>
 		<name>Person</name>
 		<required>true</required>
         <maxCount>20</maxCount>
@@ -401,7 +362,6 @@
 	</section>
 
 	<section>
-		<type>preparation/generic</type>
 		<name>Preparation</name>
 		<required>false</required>
         <maxCount>1</maxCount>
@@ -411,7 +371,6 @@
 	</section>
 
 	<section>
-		<type>recording/generic</type>
 		<name>Recording</name>
 		<required>true</required>
         <maxCount>1</maxCount>
@@ -421,7 +380,6 @@
 	</section>
 
 	<section>
-		<type>stimulus/generic</type>
 		<name>Stimulus</name>
 		<required>false</required>
         <maxCount>20</maxCount>
@@ -430,7 +388,6 @@
         <selected>true</selected>
 
       	<section>
-			<type>stimulus/dc</type>
 			<name>DC</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -440,7 +397,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/gabor</type>
 			<name>Gabor</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -450,7 +406,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/grating</type>
 			<name>Grating</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -460,7 +415,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/pulse</type>
 			<name>Pulse</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -470,7 +424,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/movie</type>
 			<name>Movie</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -480,7 +433,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/ramp</type>
 			<name>Ramp</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -490,7 +442,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/randomDot</type>
 			<name>RandomDot</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -500,7 +451,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/sawtooth</type>
 			<name>Sawtooth</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -510,7 +460,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/sinewave</type>
 			<name>Sinewave</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -520,7 +469,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/squarewave</type>
 			<name>Squarewave</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -530,7 +478,6 @@
 		</section>
 
 		<section>
-			<type>stimulus/whitenoise</type>
 			<name>WhiteNoise</name>
 			<required>false</required>
             <maxCount>10</maxCount>
@@ -541,7 +488,6 @@
 	</section>
 
 	<section>
-		<type>subject/generic</type>
 		<name>Subject</name>
 		<required>true</required>
         <maxCount>20</maxCount>
@@ -550,7 +496,6 @@
         <selected>true</selected>
 
         <section>
-            <type>person/generic</type>
             <name>Person</name>
             <required>true</required>
             <maxCount>1</maxCount>
