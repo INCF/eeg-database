@@ -37,15 +37,15 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class XMLTemplateWriter implements IXMLTemplateWriter {
+public class XMLTemplateWriter {
 
-    private XMLEventFactory eventFactory;
-    private XMLEventWriter eventWriter;
+    private static XMLEventFactory eventFactory;
+    private static XMLEventWriter eventWriter;
 
     public XMLTemplateWriter() {
     }
 
-    public byte[] writeTemplate(List<SectionType> sections) throws XMLStreamException {
+    public static byte[] writeTemplate(List<SectionType> sections) throws XMLStreamException {
         // create an XMLOutputFactory
         XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
         // create XMLEventWriter
@@ -81,7 +81,7 @@ public class XMLTemplateWriter implements IXMLTemplateWriter {
         return byteOut.toByteArray();
     }
 
-    private void writeSection(SectionType section, int level) throws XMLStreamException {
+    private static void writeSection(SectionType section, int level) throws XMLStreamException {
         int nextLevel = level + 1;
         addTab(level);
         eventWriter.add(eventFactory.createStartElement("", "", XMLTags.SECTION));
@@ -108,7 +108,7 @@ public class XMLTemplateWriter implements IXMLTemplateWriter {
         addLineBreak();
     }
 
-    private void writeNode(String name, String value, int level) throws XMLStreamException {
+    private static void writeNode(String name, String value, int level) throws XMLStreamException {
         // create Start node
         StartElement sElement = eventFactory.createStartElement("", "", name);
         addTab(level);
@@ -122,14 +122,14 @@ public class XMLTemplateWriter implements IXMLTemplateWriter {
         addLineBreak();
     }
 
-    private void addTab(int level) throws XMLStreamException {
+    private static void addTab(int level) throws XMLStreamException {
         XMLEvent tab = eventFactory.createCharacters("\t");
         for (int i = 0; i < level; i++) {
             eventWriter.add(tab);
         }
     }
     
-    private void addLineBreak() throws XMLStreamException {
+    private static void addLineBreak() throws XMLStreamException {
         eventWriter.add(eventFactory.createCharacters("\n"));
     }
 }

@@ -1,8 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
+import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.IXMLTemplateReader;
+import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateReader;
+import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateWriter;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.model.LoadableListModel;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -10,21 +13,22 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SubsectionsCell;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.ListMultipleChoice;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import javax.xml.stream.XMLStreamException;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -56,23 +60,45 @@ import java.util.List;
 @AuthorizeInstantiation(value = {"ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN"})
 public class ExperimentFormPageTest extends MenuPage {
 
+    protected static Log log = LogFactory.getLog(ExperimentFormPageTest.class);
+
     @SpringBean
     private TemplateFacade templateFacade;
-
-    IModel<Template> model;
-    final int SELECT_ROWS = 5;
 
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        model = new Model<Template>();
-        addTemplateSelect();
 
-        List<SectionType> sectionType = generateData();
-        Form<List<SectionType>> form = new Form<List<SectionType>>("form", new CompoundPropertyModel<List<SectionType>>(sectionType));
+        //----------dropdown---------
+        ChoiceRenderer<Template> renderer = new ChoiceRenderer<Template>("name", "templateId");
+        LoadableListModel<Template> choiceModel = new LoadableListModel<Template>() {
 
-        //one table row
-        ListView view = new PropertyListView("row", sectionType) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected List<Template> load() {
+                return getTemplates();
+            }
+
+        };
+        final DropDownChoice<Template> dropDownChoice = new DropDownChoice<Template>("templateDD",
+                new Model<Template>((choiceModel.getObject().get(0))), choiceModel, renderer);
+        //---------form---------
+        final List<SectionType> sections = readTemplate(dropDownChoice.getModelObject());
+
+        IModel<List<SectionType>> formModel
+                = new CompoundPropertyModel<List<SectionType>>(sections);
+        final Form<List<SectionType>> form = new Form<List<SectionType>>("form", formModel){
+            @Override
+            protected void onSubmit() {
+                //todo submit
+                super.onSubmit();
+            }
+        };
+
+        form.setOutputMarkupId(true);
+        //--------listView-------
+        final ListView<SectionType> view = new PropertyListView<SectionType>("row", form.getModel()) {
             @Override
             protected void populateItem(ListItem item) {
                 SectionCell sectionCell = new SectionCell("cell1", item.getModel());
@@ -81,65 +107,80 @@ public class ExperimentFormPageTest extends MenuPage {
                 item.add(subsectionsCell);
             }
         };
+        view.setOutputMarkupId(true);
+        //-----save components-----
+        final TextField<String> saveName = new TextField<String>("saveText",
+                Model.of(dropDownChoice.getModelObject().getName()));
+        saveName.setOutputMarkupId(true);
 
-        form.add(view);
-        add(form);
-    }
-
-    private void addTemplateSelect(){
-        ChoiceRenderer<Template> renderer = new ChoiceRenderer<Template>("templateId", "personByPersonId");
-        LoadableListModel<Template> choiceModel = new LoadableListModel<Template>() {
-
-            private static final long serialVersionUID = 1L;
-
+        final Button save = new Button("saveButton"){
             @Override
-            protected List<Template> load() {
+            public void onSubmit() {
+                List<SectionType> sections = form.getModelObject();
 
-                Template template = model.getObject();
-                Person person = template.getPersonByPersonId();
-
-                if (person != null)
-                    return templateFacade.getTemplatesByPerson(person.getPersonId());
-                else
-                    return Collections.EMPTY_LIST;
             }
-
         };
-        ListMultipleChoice<Template> templateChoice = new ListMultipleChoice<Template>("template", new PropertyModel<List<Template>>(model.getObject(), "diseases"), choiceModel, renderer);
-        templateChoice.setMaxRows(SELECT_ROWS);
-        templateChoice.setLabel(Model.of("Test Template Select"));
+        //---------behavior---------
+        OnChangeAjaxBehavior onChangeBehavior = new OnChangeAjaxBehavior() {
+            protected void onUpdate(AjaxRequestTarget target) {
+                form.setDefaultModel(
+                        new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
+                view.setDefaultModel(form.getModel());
+                form.add(view);
+                saveName.setDefaultModel(Model.of(dropDownChoice.getModelObject().getName()));
+                target.add(form);
+                target.add(saveName);
+            }
+        };
+        //---------------------------
 
-        add(templateChoice);
+        dropDownChoice.add(onChangeBehavior);
+        form.add(view);
+        add(dropDownChoice);
+        add(form);
+        add(save);
+        add(saveName);
     }
 
-    private List<SectionType> generateData() {
-        List<SectionType> list = new ArrayList<SectionType>();
-        SectionType section;
-        SectionType subsection;
-        String name;
-        Boolean required;
-        int maxCount;
-        List<SectionType> subsections;
-        boolean selected;
-        int minCount = 1;
-        int selectedCount = 1;
+    /**
+     * Loads default and user's templates from database
+     * @return templates
+     */
+    private List<Template> getTemplates(){
+        int loggedUserId = EEGDataBaseSession.get().getLoggedUser().getPersonId();
+        List<Template> userTemplates = templateFacade.getUsableTemplates(loggedUserId);
+        if (userTemplates == null) userTemplates = new ArrayList<Template>();
 
-        for (int i = 0; i < 10; i++) {
-            name = "name " + i;
-            required = i % 3 == 0;
-            maxCount = i % 4 + 1;
-            subsections = new ArrayList<SectionType>();
-            if (required) selected = required;
-            else selected = i % 2 == 0;
+        return userTemplates;
+    }
 
-            for (int j = i; j < 6; j++) {
-                subsection = new SectionType("subsection" + j, j % 2 == 0, i % 4, null, minCount, selectedCount, selected);
-                subsections.add(subsection);
-            }
-            section = new SectionType(name, required, maxCount, subsections, minCount, selectedCount, selected);
-            list.add(section);
+    /**
+     * Reads xml template into list of sections
+     * @param template selected template
+     * @return list of sections
+     */
+    private List<SectionType> readTemplate(Template template)
+    {
+        List<SectionType> sections = new ArrayList<SectionType>();
+
+        try {
+            sections = XMLTemplateReader.readTemplate(template.getTemplate());
+        } catch (XMLStreamException e) {
+            log.error(e.getMessage(), e);
         }
 
-        return list;
+        return sections;
+    }
+
+    private Template createTemplate(List<SectionType> sections){
+        Template template = null;
+        try {
+            byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+            //template = new Template()
+        } catch (XMLStreamException e) {
+            e.printStackTrace();
+        }
+
+        return null;
     }
 }

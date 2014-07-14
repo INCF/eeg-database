@@ -1,7 +1,5 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 
 import java.util.List;
@@ -44,5 +42,56 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
         List<Template> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("personId", personId).list();
 
         return list;
+    }
+
+    @Override
+    public List<Template> getDefaultTemplates() {
+        String hqlQuery = "from Template t where t.isDefault = true";
+        List<Template> list = getHibernateTemplate().find(hqlQuery);
+
+        return list;
+    }
+
+    /**
+     * Finds all default and user's templates
+     *
+     * @param personId id of a user
+     * @return default + user's templates
+     */
+    @Override
+    public List<Template> getUsableTemplates(int personId) {
+        String hqlQuery = "select distinct  t from Template t where t.personByPersonId.personId = :personId or t.isDefault = true";
+        List<Template> list = getSessionFactory().getCurrentSession().
+                createQuery(hqlQuery).
+                setParameter("personId", personId).list();
+        return list;
+    }
+
+    @Override
+    public Template getTemplateByPersonAndName(int personId, String name) {
+        String hqlQuery = "from Template t where t.personByPersonId.personId = :personId and t.name=:name";
+        List<Template> list = getSessionFactory().getCurrentSession().
+                createQuery(hqlQuery).
+                setParameter("personId", personId).
+                setParameter("name", name).list();
+
+        if (list != null && !list.isEmpty()){
+            return list.get(0);
+        }
+        return null;
+    }
+
+    @Override
+    public boolean isDefault(int id) {
+        String hqlQuery = "select t.isDefault from Template t where t.templateId = :id";
+        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
+        if (list.isEmpty()) {
+            return false;
+        }
+        if (list.get(0) == 1) {
+            return true;
+        } else {
+            return false;
+        }
     }
 }

@@ -48,13 +48,12 @@ public class TemplateConverter implements IConverter<Template> {
         if (Strings.isEmpty(s)) {
             return null;
         }
-        int id = Integer.parseInt(s);
-        List<Template> templates = templateFacade.readByParameter("templateId", s);
+        List<Template> templates = templateFacade.readByParameter("name", s);
         return (templates != null && templates.size() > 0) ? templates.get(0) : new Template();
     }
 
     @Override
     public String convertToString(Template template, Locale locale) {
-        return ""+template.getTemplateId();
+        return template.getName();
     }
 }

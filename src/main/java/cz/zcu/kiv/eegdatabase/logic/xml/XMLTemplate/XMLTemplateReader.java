@@ -11,6 +11,7 @@ import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -40,14 +41,14 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class XMLTemplateReader implements IXMLTemplateReader {
+public class XMLTemplateReader {
 
-    private XMLEventReader eventReader;
+    private static XMLEventReader eventReader;
 
     public XMLTemplateReader() {
     }
 
-    public List<SectionType> readTemplate(byte[] template) throws XMLStreamException {
+    public static List<SectionType> readTemplate(byte[] template) throws XMLStreamException {
         List<SectionType> sections = new ArrayList<SectionType>();
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         InputStream is = new ByteArrayInputStream(template);
@@ -67,7 +68,7 @@ public class XMLTemplateReader implements IXMLTemplateReader {
         return sections;
     }
 
-    private SectionType readSection() throws XMLStreamException {
+    private static SectionType readSection() throws XMLStreamException {
         SectionType section = null;
         SectionType subsection;
         //------section attributes-------

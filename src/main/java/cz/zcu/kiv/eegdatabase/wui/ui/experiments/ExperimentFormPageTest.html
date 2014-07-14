@@ -6,10 +6,9 @@
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
-    <div class="form-item">
-        <label for="template"><wicket:message key="label.disease"></wicket:message></label>
-        <select wicket:id="template"></select>
-        <input type="button" wicket:id="addTemplate" value="Add" />
+   <div class="form-item">
+        <label><wicket:message key="label.selectTemplate"></wicket:message></label>
+        <select wicket:id="templateDD"></select>
     </div>
 
     <div class="test">
@@ -24,7 +23,12 @@
                     <td wicket:id="cell2"></td>
                 </tr>
             </table>
+            <input type="submit" value="Next"/>
         </form>
+    </div>
+    <div>
+        <input type="text" wicket:id="saveText"/>
+        <input type="button" value="Save Template" wicket:id="saveButton"/>
     </div>
 </wicket:extend>
 </body>

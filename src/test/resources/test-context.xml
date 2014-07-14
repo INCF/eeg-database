@@ -90,7 +90,11 @@
     				<prop key="autocommmit">true</prop>
     				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
     				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
-    				<!--<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>-->
+                    <prop key="hibernate.connection.url">jdbc:postgresql://eeg2.kiv.zcu.cz:5432/eeg</prop>
+                    <prop key="hibernate.connection.driver_class">org.postgresql.Driver</prop>
+                    <prop key="hibernate.connection.username">eeg</prop>
+                    <prop key="hibernate.connection.password">eeg</prop>
+                    <!--<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>-->
     				<!--<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>-->
     			</props>
     		</property>

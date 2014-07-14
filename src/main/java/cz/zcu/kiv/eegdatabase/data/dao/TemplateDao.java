@@ -1,7 +1,5 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 
 import java.util.List;
@@ -35,4 +33,17 @@ import java.util.List;
 public interface TemplateDao extends GenericDao<Template, Integer> {
 
     public List<Template> getTemplatesByPerson(int personId);
+
+    public List<Template> getDefaultTemplates();
+
+    /**
+    * Finds all default and user's templates
+    * @param personId id of a user
+    * @return default + user's templates
+    */
+    public List<Template> getUsableTemplates(int personId);
+
+    public Template getTemplateByPersonAndName(int personId, String name);
+
+    public boolean isDefault(int id);
 }

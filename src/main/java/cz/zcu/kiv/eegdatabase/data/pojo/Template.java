@@ -37,6 +37,8 @@ public class Template implements Serializable {
     private int templateId;
     private byte[] template;
     private Person personByPersonId;
+    private Boolean isDefault;
+    private String name;
 
     public Template() {
     }
@@ -100,5 +102,25 @@ public class Template implements Serializable {
         result = 31 * result + (template != null ? Arrays.hashCode(template) : 0);
         result = 31 * result + (personByPersonId != null ? personByPersonId.hashCode() : 0);
         return result;
+    }
+
+    @Basic
+    @Column(name = "is_default", nullable = true, insertable = true, updatable = true)
+    public Boolean getIsDefault() {
+        return isDefault;
+    }
+
+    public void setIsDefault(Boolean isDefault) {
+        this.isDefault = isDefault;
+    }
+
+    @Basic
+    @Column(name = "name", nullable = false, insertable = true, updatable = true, length = 240)
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

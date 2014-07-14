@@ -46,6 +46,32 @@ public class TemplateFacadeImpl implements TemplateFacade {
     }
 
     @Override
+    public List<Template> getDefaultTemplates() {
+        return service.getDefaultTemplates();
+    }
+
+    /**
+     * Finds all default and user's templates
+     *
+     * @param personId id of a user
+     * @return default + user's templates
+     */
+    @Override
+    public List<Template> getUsableTemplates(int personId) {
+        return service.getUsableTemplates(personId);
+    }
+
+    @Override
+    public Template getTemplateByPersonAndName(int personId, String name) {
+        return service.getTemplateByPersonAndName(personId, name);
+    }
+
+    @Override
+    public boolean isDefault(int id) {
+        return service.isDefault(id);
+    }
+
+    @Override
     public Integer create(Template newInstance) {
         return service.create(newInstance);
     }
