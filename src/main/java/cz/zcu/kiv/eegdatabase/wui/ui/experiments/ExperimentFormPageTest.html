@@ -6,12 +6,12 @@
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
-   <div class="form-item">
-        <label><wicket:message key="label.selectTemplate"></wicket:message></label>
-        <select wicket:id="templateDD"></select>
-    </div>
-
     <div class="test">
+        <div class="form-item">
+            <label><wicket:message key="label.selectTemplate"></wicket:message></label>
+            <select wicket:id="templateDD"></select>
+        </div>
+
         <form wicket:id="form">
             <table rules="all">
                 <tr>
@@ -25,12 +25,15 @@
             </table>
             <input type="submit" value="Next"/>
         </form>
-    </div>
-    <div>
-        <form wicket:id="saveForm">
-            <input type="text" wicket:id="saveText"/>
-            <input type="submit" value="Save Template" wicket:id="saveButton"/>
-        </form>
+        
+        <div>
+            <form wicket:id="saveForm">
+                <input type="text" wicket:id="saveText"/>
+                <label><wicket:message key="label.isTemplateDefault"></wicket:message></label>
+                <input type="checkbox" wicket:id="defBox">
+                <input type="submit" wicket:id="saveButton">
+            </form>
+        </div>
     </div>
 </wicket:extend>
 </body>

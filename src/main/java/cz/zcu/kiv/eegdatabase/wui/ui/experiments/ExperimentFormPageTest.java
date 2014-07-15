@@ -88,7 +88,7 @@ public class ExperimentFormPageTest extends MenuPage {
 
         IModel<List<SectionType>> formModel
                 = new CompoundPropertyModel<List<SectionType>>(sections);
-        final Form<List<SectionType>> form = new Form<List<SectionType>>("form", formModel){
+        final Form<List<SectionType>> form = new Form<List<SectionType>>("form", formModel) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
@@ -108,37 +108,42 @@ public class ExperimentFormPageTest extends MenuPage {
         };
         view.setOutputMarkupId(true);
         //-----save components-----
-        Form saveForm = new Form("saveForm");
+        final Form saveForm = new Form("saveForm");
+        final CheckBox defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
+        defBox.setVisible(false);
+        //visible for admin
+        if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_EXPERIMENTER")) {
+            defBox.setVisible(true);
+        }
         final TextField<String> saveName = new TextField<String>("saveText",
                 Model.of(dropDownChoice.getModelObject().getName()));
         saveName.setOutputMarkupId(true);
 
-        final Button save = new Button("saveButton"){
+        final Button save = new Button("saveButton", ResourceUtils.getModel("label.saveTemplate")) {
             @Override
             public void onSubmit() {
                 List<SectionType> sections = form.getModelObject();
                 String name = saveName.getModelObject();
                 Person user = EEGDataBaseSession.get().getLoggedUser();
                 Template template = templateFacade.getTemplateByPersonAndName(user.getPersonId(), name);
+                boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
                 //template with same name exists => update
-                if(template != null){
+                if (template != null) {
                     try {
-                        template = createTemplate(sections, template);
+                        template = createTemplate(sections, template, isDefault);
                         templateFacade.update(template);
                     } catch (XMLStreamException e) {
                         log.error(e.getMessage(), e);
                         error(ResourceUtils.getString("error.writingTemplate"));
-                        return;
                     }
 
                 } else { //template does not exists => create
                     try {
-                        template = createTemplate(sections, name);
+                        template = createTemplate(sections, name, isDefault);
                         templateFacade.create(template);
                     } catch (XMLStreamException e) {
                         log.error(e.getMessage(), e);
                         error(ResourceUtils.getString("error.writingTemplate"));
-                        return;
                     }
                 }
             }
@@ -163,14 +168,16 @@ public class ExperimentFormPageTest extends MenuPage {
         add(form);
         saveForm.add(save);
         saveForm.add(saveName);
+        saveForm.add(defBox);
         add(saveForm);
     }
 
     /**
      * Loads default and user's templates from database
+     *
      * @return templates
      */
-    private List<Template> getTemplates(){
+    private List<Template> getTemplates() {
         int loggedUserId = EEGDataBaseSession.get().getLoggedUser().getPersonId();
         List<Template> userTemplates = templateFacade.getUsableTemplates(loggedUserId);
         if (userTemplates == null) userTemplates = new ArrayList<Template>();
@@ -180,11 +187,11 @@ public class ExperimentFormPageTest extends MenuPage {
 
     /**
      * Reads xml template into list of sections
+     *
      * @param template selected template
      * @return list of sections
      */
-    private List<SectionType> readTemplate(Template template)
-    {
+    private List<SectionType> readTemplate(Template template) {
         List<SectionType> sections = new ArrayList<SectionType>();
 
         try {
@@ -196,21 +203,21 @@ public class ExperimentFormPageTest extends MenuPage {
         return sections;
     }
 
-    private Template createTemplate(List<SectionType> sections, String name) throws XMLStreamException {
+    private Template createTemplate(List<SectionType> sections, String name, boolean isDefault) throws XMLStreamException {
         Template template = new Template();
-            byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
-            template.setTemplate(xmlData);
-            template.setIsDefault(false);
-            template.setName(name);
-            template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+        template.setTemplate(xmlData);
+        template.setIsDefault(isDefault);
+        template.setName(name);
+        template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
 
         return template;
     }
 
-    private Template createTemplate(List<SectionType> sections, Template template) throws XMLStreamException {
-            byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
-            template.setTemplate(xmlData);
-
+    private Template createTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+        template.setTemplate(xmlData);
+        template.setIsDefault(isDefault);
         return template;
     }
 }
