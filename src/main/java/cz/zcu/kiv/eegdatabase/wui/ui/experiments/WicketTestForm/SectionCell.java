@@ -8,7 +8,6 @@ import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -41,13 +40,13 @@ import java.util.List;
  */
 public class SectionCell extends Panel {
 
-    public SectionCell(final String id, IModel model) {
+    public SectionCell(final String id, IModel<SectionType> model) {
         super(id, model);
         addCell(model);
     }
 
-    private void addCell(IModel model) {
-        SectionType data = (SectionType) model.getObject();
+    private void addCell(IModel<SectionType> model) {
+        SectionType data = model.getObject();
         List<Integer> dropDownVals = new ArrayList<Integer>();
         final int maxCount = data.getMaxCount();
         final int minCount = data.getMinCount();
@@ -56,11 +55,16 @@ public class SectionCell extends Panel {
             dropDownVals.add(i);
         }
 
-        final CheckBox box = new CheckBox("selected");
+        final CheckBox box = new CheckBox("selected"){
+            @Override
+            protected boolean wantOnSelectionChangedNotifications() {
+                return true;
+            }
+        };
         box.setEnabled(!data.isRequired());
 
-        final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("sectionCount",
-                new Model<Integer>(((SectionType) model.getObject()).getSelectedCount()), dropDownVals) {
+        final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("selectedCount",
+                dropDownVals) {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
@@ -73,6 +77,7 @@ public class SectionCell extends Panel {
             protected void onUpdate(AjaxRequestTarget target) {
                 dropDownChoice.setEnabled(box.getModelObject());
                 target.add(dropDownChoice);
+
             }
         };
 

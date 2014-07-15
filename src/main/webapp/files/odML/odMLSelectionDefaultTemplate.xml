@@ -497,7 +497,7 @@
 
         <section>
             <name>Person</name>
-            <required>true</required>
+            <required>false</required>
             <maxCount>1</maxCount>
             <minCount>1</minCount>
             <selectedCount>1</selectedCount>

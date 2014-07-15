@@ -99,9 +99,21 @@ public class ExperimentFormPageTest extends MenuPage {
         //--------listView-------
         final ListView<SectionType> view = new PropertyListView<SectionType>("row", form.getModel()) {
             @Override
-            protected void populateItem(ListItem item) {
-                SectionCell sectionCell = new SectionCell("cell1", item.getModel());
-                SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel());
+            protected void populateItem(final ListItem<SectionType> item) {
+                final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel()){
+                    @Override
+                    public boolean isEnabled() {
+                        boolean selected = item.getModelObject().isSelected();
+                        for(SectionType section : item.getModelObject().getSubsections()){
+                            if(!selected) {
+                                section.setSelected(false);
+                            }
+                        }
+                        return selected;
+                    }
+                };
+                final SectionCell sectionCell = new SectionCell("cell1", item.getModel());
+                subsectionsCell.setOutputMarkupId(true);
                 item.add(sectionCell);
                 item.add(subsectionsCell);
             }
@@ -149,7 +161,7 @@ public class ExperimentFormPageTest extends MenuPage {
             }
         };
         //---------behavior---------
-        OnChangeAjaxBehavior onChangeBehavior = new OnChangeAjaxBehavior() {
+        OnChangeAjaxBehavior onChangeFormBehavior = new OnChangeAjaxBehavior() {
             protected void onUpdate(AjaxRequestTarget target) {
                 form.setDefaultModel(
                         new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
@@ -162,7 +174,7 @@ public class ExperimentFormPageTest extends MenuPage {
         };
         //---------------------------
 
-        dropDownChoice.add(onChangeBehavior);
+        dropDownChoice.add(onChangeFormBehavior);
         form.add(view);
         add(dropDownChoice);
         add(form);
