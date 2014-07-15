@@ -94,4 +94,14 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
             return false;
         }
     }
+
+    @Override
+    public boolean canSaveName(String name, int personId) {
+        String hqlQuery = "from Template t where t.personByPersonId.personId = :personId and t.name=:name";
+        List<Template> list = getSessionFactory().getCurrentSession().
+                createQuery(hqlQuery).
+                setParameter("personId", personId).
+                setParameter("name", name).list();
+        return (list.size() == 0);
+    }
 }

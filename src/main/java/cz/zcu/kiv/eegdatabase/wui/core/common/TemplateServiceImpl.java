@@ -80,6 +80,12 @@ public class TemplateServiceImpl implements TemplateService {
 
     @Override
     @Transactional
+    public boolean canSaveName(String name, int personId){
+        return templateDao.canSaveName(name, personId);
+    }
+
+    @Override
+    @Transactional
     public Integer create(Template newInstance) {
         return templateDao.create(newInstance);
     }

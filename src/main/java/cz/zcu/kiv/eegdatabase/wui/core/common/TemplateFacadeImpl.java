@@ -72,6 +72,11 @@ public class TemplateFacadeImpl implements TemplateFacade {
     }
 
     @Override
+    public boolean canSaveName(String name, int personId) {
+        return service.canSaveName(name, personId);
+    }
+
+    @Override
     public Integer create(Template newInstance) {
         return service.create(newInstance);
     }

@@ -1,8 +1,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
-import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.IXMLTemplateReader;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateReader;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateWriter;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -91,7 +91,6 @@ public class ExperimentFormPageTest extends MenuPage {
         final Form<List<SectionType>> form = new Form<List<SectionType>>("form", formModel){
             @Override
             protected void onSubmit() {
-                //todo submit
                 super.onSubmit();
             }
         };
@@ -109,6 +108,7 @@ public class ExperimentFormPageTest extends MenuPage {
         };
         view.setOutputMarkupId(true);
         //-----save components-----
+        Form saveForm = new Form("saveForm");
         final TextField<String> saveName = new TextField<String>("saveText",
                 Model.of(dropDownChoice.getModelObject().getName()));
         saveName.setOutputMarkupId(true);
@@ -117,7 +117,30 @@ public class ExperimentFormPageTest extends MenuPage {
             @Override
             public void onSubmit() {
                 List<SectionType> sections = form.getModelObject();
+                String name = saveName.getModelObject();
+                Person user = EEGDataBaseSession.get().getLoggedUser();
+                Template template = templateFacade.getTemplateByPersonAndName(user.getPersonId(), name);
+                //template with same name exists => update
+                if(template != null){
+                    try {
+                        template = createTemplate(sections, template);
+                        templateFacade.update(template);
+                    } catch (XMLStreamException e) {
+                        log.error(e.getMessage(), e);
+                        error(ResourceUtils.getString("error.writingTemplate"));
+                        return;
+                    }
 
+                } else { //template does not exists => create
+                    try {
+                        template = createTemplate(sections, name);
+                        templateFacade.create(template);
+                    } catch (XMLStreamException e) {
+                        log.error(e.getMessage(), e);
+                        error(ResourceUtils.getString("error.writingTemplate"));
+                        return;
+                    }
+                }
             }
         };
         //---------behavior---------
@@ -138,8 +161,9 @@ public class ExperimentFormPageTest extends MenuPage {
         form.add(view);
         add(dropDownChoice);
         add(form);
-        add(save);
-        add(saveName);
+        saveForm.add(save);
+        saveForm.add(saveName);
+        add(saveForm);
     }
 
     /**
@@ -172,15 +196,21 @@ public class ExperimentFormPageTest extends MenuPage {
         return sections;
     }
 
-    private Template createTemplate(List<SectionType> sections){
-        Template template = null;
-        try {
+    private Template createTemplate(List<SectionType> sections, String name) throws XMLStreamException {
+        Template template = new Template();
             byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
-            //template = new Template()
-        } catch (XMLStreamException e) {
-            e.printStackTrace();
-        }
+            template.setTemplate(xmlData);
+            template.setIsDefault(false);
+            template.setName(name);
+            template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
 
-        return null;
+        return template;
+    }
+
+    private Template createTemplate(List<SectionType> sections, Template template) throws XMLStreamException {
+            byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+            template.setTemplate(xmlData);
+
+        return template;
     }
 }

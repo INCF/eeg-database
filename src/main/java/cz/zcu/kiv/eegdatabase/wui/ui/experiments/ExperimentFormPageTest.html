@@ -27,8 +27,10 @@
         </form>
     </div>
     <div>
-        <input type="text" wicket:id="saveText"/>
-        <input type="button" value="Save Template" wicket:id="saveButton"/>
+        <form wicket:id="saveForm">
+            <input type="text" wicket:id="saveText"/>
+            <input type="submit" value="Save Template" wicket:id="saveButton"/>
+        </form>
     </div>
 </wicket:extend>
 </body>

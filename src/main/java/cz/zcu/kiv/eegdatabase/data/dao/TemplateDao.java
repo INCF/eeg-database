@@ -46,4 +46,6 @@ public interface TemplateDao extends GenericDao<Template, Integer> {
     public Template getTemplateByPersonAndName(int personId, String name);
 
     public boolean isDefault(int id);
+
+    public boolean canSaveName(String name, int personId);
 }
