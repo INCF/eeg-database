@@ -53,14 +53,15 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
     }
 
     /**
-     * Finds all default and user's templates
+     * Finds all default and user's templates.
+     * Distinct select and ordered by isDefault param (default templates first).
      *
      * @param personId id of a user
      * @return default + user's templates
      */
     @Override
     public List<Template> getUsableTemplates(int personId) {
-        String hqlQuery = "select distinct  t from Template t where t.personByPersonId.personId = :personId or t.isDefault = true";
+        String hqlQuery = "select distinct  t from Template t where t.isDefault = true or t.personByPersonId.personId = :personId order by t.isDefault asc";
         List<Template> list = getSessionFactory().getCurrentSession().
                 createQuery(hqlQuery).
                 setParameter("personId", personId).list();

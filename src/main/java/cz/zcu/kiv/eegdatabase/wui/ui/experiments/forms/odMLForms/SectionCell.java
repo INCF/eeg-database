@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms;
 
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import org.apache.wicket.ajax.AjaxRequestTarget;

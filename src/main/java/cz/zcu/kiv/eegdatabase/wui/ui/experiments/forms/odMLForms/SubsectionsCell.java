@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms;
 
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -6,8 +6,6 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-
-import java.util.List;
 
 /**
  * ********************************************************************************************************************

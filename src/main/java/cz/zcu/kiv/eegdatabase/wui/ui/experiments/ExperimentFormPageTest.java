@@ -11,8 +11,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.model.LoadableListModel;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SectionCell;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.WicketTestForm.SubsectionsCell;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms.SectionCell;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms.SubsectionsCell;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -84,7 +84,12 @@ public class ExperimentFormPageTest extends MenuPage {
         final DropDownChoice<Template> dropDownChoice = new DropDownChoice<Template>("templateDD",
                 new Model<Template>((choiceModel.getObject().get(0))), choiceModel, renderer);
         //---------form---------
-        final List<SectionType> sections = readTemplate(dropDownChoice.getModelObject());
+        List<SectionType> sections = new ArrayList<SectionType>();
+        try {
+            sections = readTemplate(dropDownChoice.getModelObject());
+        } catch (XMLStreamException e) {
+            log.error(e.getMessage());
+        }
 
         IModel<List<SectionType>> formModel
                 = new CompoundPropertyModel<List<SectionType>>(sections);
@@ -163,8 +168,12 @@ public class ExperimentFormPageTest extends MenuPage {
         //---------behavior---------
         OnChangeAjaxBehavior onChangeFormBehavior = new OnChangeAjaxBehavior() {
             protected void onUpdate(AjaxRequestTarget target) {
-                form.setDefaultModel(
-                        new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
+                try {
+                    form.setDefaultModel(
+                            new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
+                } catch (XMLStreamException e) {
+                    log.error(e.getMessage());
+                }
                 view.setDefaultModel(form.getModel());
                 form.add(view);
                 saveName.setDefaultModel(Model.of(dropDownChoice.getModelObject().getName()));
@@ -202,15 +211,11 @@ public class ExperimentFormPageTest extends MenuPage {
      *
      * @param template selected template
      * @return list of sections
+     * @throws XMLStreamException XML template reading error
      */
-    private List<SectionType> readTemplate(Template template) {
-        List<SectionType> sections = new ArrayList<SectionType>();
-
-        try {
-            sections = XMLTemplateReader.readTemplate(template.getTemplate());
-        } catch (XMLStreamException e) {
-            log.error(e.getMessage(), e);
-        }
+    private List<SectionType> readTemplate(Template template) throws XMLStreamException {
+        List<SectionType> sections;
+        sections = XMLTemplateReader.readTemplate(template.getTemplate());
 
         return sections;
     }
