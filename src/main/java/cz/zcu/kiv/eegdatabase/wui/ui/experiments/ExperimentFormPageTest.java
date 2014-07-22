@@ -13,12 +13,21 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms.SectionCell;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms.SubsectionsCell;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddSaveAsPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.MarkupContainer;
+import org.apache.wicket.Page;
+import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.*;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.Button;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -28,6 +37,8 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import javax.xml.stream.XMLStreamException;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -64,6 +75,10 @@ public class ExperimentFormPageTest extends MenuPage {
 
     @SpringBean
     private TemplateFacade templateFacade;
+    private ModalWindow window;
+    private final Form saveForm;
+    private final Form<List<SectionType>> form;
+    private final CheckBox defBox;
 
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
@@ -93,7 +108,7 @@ public class ExperimentFormPageTest extends MenuPage {
 
         IModel<List<SectionType>> formModel
                 = new CompoundPropertyModel<List<SectionType>>(sections);
-        final Form<List<SectionType>> form = new Form<List<SectionType>>("form", formModel) {
+        form = new Form<List<SectionType>>("form", formModel) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
@@ -125,18 +140,21 @@ public class ExperimentFormPageTest extends MenuPage {
         };
         view.setOutputMarkupId(true);
         //-----save components-----
-        final Form saveForm = new Form("saveForm");
-        final CheckBox defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
+        saveForm = new Form("saveForm");
+        defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
         defBox.setVisible(false);
+        final Label defLabel = new Label("defLabel");
+        defLabel.setVisible(false);
         //visible only for admin
         if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_ADMIN")) {
             defBox.setVisible(true);
+            defLabel.setVisible(true);
         }
         final TextField<String> saveName = new TextField<String>("saveText",
                 Model.of(dropDownChoice.getModelObject().getName()));
         saveName.setOutputMarkupId(true);
 
-        final Button save = new Button("saveButton", ResourceUtils.getModel("label.saveTemplate")) {
+        final Button save = new Button("saveBT", ResourceUtils.getModel("label.saveTemplate")) {
             @Override
             public void onSubmit() {
                 List<SectionType> sections = form.getModelObject();
@@ -147,8 +165,7 @@ public class ExperimentFormPageTest extends MenuPage {
                 //template with same name exists => update
                 if (template != null) {
                     try {
-                        template = updateTemplate(sections, template, isDefault);
-                        templateFacade.update(template);
+                        updateTemplate(sections, template, isDefault);
                     } catch (XMLStreamException e) {
                         log.error(e.getMessage(), e);
                         error(ResourceUtils.getString("error.writingTemplate"));
@@ -165,6 +182,7 @@ public class ExperimentFormPageTest extends MenuPage {
                 }
             }
         };
+
         //---------behavior---------
         OnChangeAjaxBehavior onChangeFormBehavior = new OnChangeAjaxBehavior() {
             protected void onUpdate(AjaxRequestTarget target) {
@@ -190,7 +208,9 @@ public class ExperimentFormPageTest extends MenuPage {
         saveForm.add(save);
         saveForm.add(saveName);
         saveForm.add(defBox);
+        saveForm.add(defLabel);
         add(saveForm);
+        createModalWindow();
     }
 
     /**
@@ -246,13 +266,79 @@ public class ExperimentFormPageTest extends MenuPage {
      * @param sections Sections to write to XML - new Template content
      * @param template Original Template
      * @param isDefault true if updated template is default for all users
-     * @return Template that can be updated in database
      * @throws XMLStreamException XML writing exception
      */
-    private Template updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
+    private void updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
         byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
-        return template;
+        templateFacade.update(template);
+    }
+
+    private void createModalWindow() {
+
+        window = new ModalWindow("modalWindow");
+        window.setResizable(true);
+        window.setAutoSize(true);
+        window.setMinimalHeight(300);
+        window.setMinimalWidth(600);
+        window.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClose(AjaxRequestTarget target) {
+                //target.add(AddExperimentEnvironmentForm.this);
+            }
+        });
+
+        add(window);
+        addModalWindowAndButton(saveForm, "save-as",
+                "saveAsBT", AddSaveAsPage.class.getName(), window);
+    }
+
+    private void addModalWindowAndButton(MarkupContainer container, final String cookieName,
+                                         final String buttonName, final String targetClass, final ModalWindow window) {
+
+        AjaxButton ajaxButton = new AjaxButton(buttonName, ResourceUtils.getModel("label.saveAsTemplate"))
+        {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, final Form<?> f) {
+
+                window.setCookieName(cookieName);
+                window.setPageCreator(new ModalWindow.PageCreator() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Page createPage() {
+                        try {
+                            Constructor<?> cons = null;
+                            cons = Class.forName(targetClass).getConstructor(
+                                    PageReference.class, ModalWindow.class, Form.class, CheckBox.class);
+
+                            return (Page) cons.newInstance(
+                                    getPage().getPageReference(), window, form, defBox);
+                        } catch (NoSuchMethodException e) {
+                            log.error(e.getMessage(), e);
+                        } catch (IllegalAccessException e) {
+                            log.error(e.getMessage(), e);
+                        } catch (InstantiationException e) {
+                            log.error(e.getMessage(), e);
+                        } catch (InvocationTargetException e) {
+                            log.error(e.getMessage(), e);
+                        } catch (ClassNotFoundException e) {
+                            log.error(e.getMessage(), e);
+                        }
+                        return null;
+                    }
+                });
+                window.show(target);
+            }
+        };
+        ajaxButton.setDefaultFormProcessing(false);
+        container.add(ajaxButton);
     }
 }

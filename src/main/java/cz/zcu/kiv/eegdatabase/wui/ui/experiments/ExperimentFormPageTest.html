@@ -5,6 +5,7 @@
 <body>
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
+    <div wicket:id="modalWindow"></div>
 
     <div class="test">
         <div class="form-item">
@@ -29,9 +30,10 @@
         <div>
             <form wicket:id="saveForm">
                 <input type="text" wicket:id="saveText"/>
-                <label><wicket:message key="label.isTemplateDefault"></wicket:message></label>
+                <label wicket:id="defLabel"><wicket:message key="label.isTemplateDefault"></wicket:message></label>
                 <input type="checkbox" wicket:id="defBox">
-                <input type="submit" wicket:id="saveButton">
+                <input type="submit" wicket:id="saveBT">
+                <input type="submit" wicket:id="saveAsBT">
             </form>
         </div>
     </div>
