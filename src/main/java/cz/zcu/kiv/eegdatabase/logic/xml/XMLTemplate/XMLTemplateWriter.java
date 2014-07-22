@@ -45,6 +45,12 @@ public class XMLTemplateWriter {
     public XMLTemplateWriter() {
     }
 
+    /**
+     * Writes list of sections into XML and returns it as array of bytes
+     * @param sections list of sections
+     * @return sections written in XML
+     * @throws XMLStreamException Error during XML writing
+     */
     public static byte[] writeTemplate(List<SectionType> sections) throws XMLStreamException {
         // create an XMLOutputFactory
         XMLOutputFactory outputFactory = XMLOutputFactory.newInstance();
@@ -81,6 +87,12 @@ public class XMLTemplateWriter {
         return byteOut.toByteArray();
     }
 
+    /**
+     * Writes one section into xml
+     * @param section section
+     * @param level level of this section - 1 for sections, 2 for subsections etc. Necessary only for formatting reasons.
+     * @throws XMLStreamException Error during XML writing a section
+     */
     private static void writeSection(SectionType section, int level) throws XMLStreamException {
         int nextLevel = level + 1;
         addTab(level);
@@ -108,6 +120,13 @@ public class XMLTemplateWriter {
         addLineBreak();
     }
 
+    /**
+     * Writes one node into XML
+     * @param name node name
+     * @param value node value
+     * @param level node level
+     * @throws XMLStreamException Error during XML writing a node
+     */
     private static void writeNode(String name, String value, int level) throws XMLStreamException {
         // create Start node
         StartElement sElement = eventFactory.createStartElement("", "", name);
@@ -122,13 +141,22 @@ public class XMLTemplateWriter {
         addLineBreak();
     }
 
+    /**
+     * Padding with tab
+     * @param level number of inserted "tabs"
+     * @throws XMLStreamException Error during XML writing
+     */
     private static void addTab(int level) throws XMLStreamException {
         XMLEvent tab = eventFactory.createCharacters("\t");
         for (int i = 0; i < level; i++) {
             eventWriter.add(tab);
         }
     }
-    
+
+    /**
+     * Adds new line char into XML
+     * @throws XMLStreamException Error during XML writing
+     */
     private static void addLineBreak() throws XMLStreamException {
         eventWriter.add(eventFactory.createCharacters("\n"));
     }

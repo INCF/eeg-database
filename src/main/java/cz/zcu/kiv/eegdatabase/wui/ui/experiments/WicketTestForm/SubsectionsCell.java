@@ -37,6 +37,11 @@ import java.util.List;
  */
 public class SubsectionsCell extends Panel {
 
+    /**
+     * Constructor creates content of one cell in table that represents one subsection in form
+     * @param id id if this cell
+     * @param model model of this cell
+     */
     public SubsectionsCell(String id, IModel<SectionType> model) {
         super(id, model);
         ListView<SectionType> view = new PropertyListView<SectionType>("row",

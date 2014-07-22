@@ -48,6 +48,14 @@ public class XMLTemplateReader {
     public XMLTemplateReader() {
     }
 
+    /**
+     * Reads XML template into list of sections
+     *
+     * @param template template content
+     * @return list of sections
+     * @throws XMLStreamException Error during XML reading
+     * @see cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType
+     */
     public static List<SectionType> readTemplate(byte[] template) throws XMLStreamException {
         List<SectionType> sections = new ArrayList<SectionType>();
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -68,6 +76,12 @@ public class XMLTemplateReader {
         return sections;
     }
 
+    /**
+     * Reads one section from XML
+     *
+     * @return section
+     * @throws XMLStreamException Error during XML reading
+     */
     private static SectionType readSection() throws XMLStreamException {
         SectionType section = null;
         SectionType subsection;

@@ -45,6 +45,10 @@ public class SectionCell extends Panel {
         addCell(model);
     }
 
+    /**
+     * Creates content of one cell in table that represents one section in form
+     * @param model model of this cell
+     */
     private void addCell(IModel<SectionType> model) {
         SectionType data = model.getObject();
         List<Integer> dropDownVals = new ArrayList<Integer>();

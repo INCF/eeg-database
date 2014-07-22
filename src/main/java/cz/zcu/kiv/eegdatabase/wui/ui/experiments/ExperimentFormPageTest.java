@@ -123,8 +123,8 @@ public class ExperimentFormPageTest extends MenuPage {
         final Form saveForm = new Form("saveForm");
         final CheckBox defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
         defBox.setVisible(false);
-        //visible for admin
-        if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_EXPERIMENTER")) {
+        //visible only for admin
+        if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_ADMIN")) {
             defBox.setVisible(true);
         }
         final TextField<String> saveName = new TextField<String>("saveText",
@@ -142,7 +142,7 @@ public class ExperimentFormPageTest extends MenuPage {
                 //template with same name exists => update
                 if (template != null) {
                     try {
-                        template = createTemplate(sections, template, isDefault);
+                        template = updateTemplate(sections, template, isDefault);
                         templateFacade.update(template);
                     } catch (XMLStreamException e) {
                         log.error(e.getMessage(), e);
@@ -215,6 +215,15 @@ public class ExperimentFormPageTest extends MenuPage {
         return sections;
     }
 
+    /**
+     * Writes sections into xml and returns it as Template
+     *
+     * @param sections Sections to write to XML
+     * @param name Template name
+     * @param isDefault true if this template is default for all users
+     * @return Template that can be saved to database
+     * @throws XMLStreamException XML writing exception
+     */
     private Template createTemplate(List<SectionType> sections, String name, boolean isDefault) throws XMLStreamException {
         Template template = new Template();
         byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
@@ -226,7 +235,16 @@ public class ExperimentFormPageTest extends MenuPage {
         return template;
     }
 
-    private Template createTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
+    /**
+     * Updates existing template
+     *
+     * @param sections Sections to write to XML - new Template content
+     * @param template Original Template
+     * @param isDefault true if updated template is default for all users
+     * @return Template that can be updated in database
+     * @throws XMLStreamException XML writing exception
+     */
+    private Template updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
         byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
