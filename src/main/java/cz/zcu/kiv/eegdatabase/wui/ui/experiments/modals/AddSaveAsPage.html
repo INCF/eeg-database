@@ -4,27 +4,30 @@
     <title><wicket:message key="pageTitle.saveAs" /></title>
 </head>
 <body class="tabpanel wizard">
-<form wicket:id="addForm">
-    <div class="form-item">
+    <form wicket:id="addForm">
+        <div class="form-item">
 
-        <h1 wicket:id="saveAsHeader"></h1>
+            <h1 wicket:id="saveAsHeader"></h1>
 
-        <div class="error" wicket:id="feedback"></div>
+            <div class="error" wicket:id="feedback"></div>
 
-        <div class="form-sub-item">
-            <label>
-                <wicket:message key="label.templateName">Name</wicket:message>
-            </label>
-            <input type="text" wicket:id="nameField" />
+            <div class="form-sub-item">
+                <label>
+                    <wicket:message key="label.templateName">Name</wicket:message>
+                </label>
+                <input type="text" wicket:id="Name" />
+            </div>
+
+            <div class="close"></div>
+
+            <div class="modal-buttons">
+                <input type="button" wicket:id="closeForm" value="Cancel" class="cancel-button">
+                <input type="button" wicket:id="submitForm" value="Create">
+            </div>
         </div>
-
-        <div class="close"></div>
-
-        <div class="modal-buttons">
-            <input type="button" wicket:id="closeForm" value="Cancel" class="cancel-button">
-            <input type="button" wicket:id="submitForm" value="Create">
+        <div wicket:id="modalWindow">
+            <div wicket:id="dialog">[dialog]</div>
         </div>
-    </div>
-</form>
+    </form>
 </body>
 </html>

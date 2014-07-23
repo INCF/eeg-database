@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
+import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
+import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateWriter;
@@ -68,9 +72,35 @@ public class SaveAsForm extends Form {
         add(feedback);
         add(new Label("saveAsHeader", ResourceUtils.getModel("pageTitle.saveAs")));
 
-        final RequiredTextField<String> name = new RequiredTextField<String>("nameField",
+        final RequiredTextField<String> name = new RequiredTextField<String>("Name",
                 Model.of("New Template"));
         add(name);
+
+        final MessageDialog dialog = new MessageDialog("dialog", "Warning", "Is it ok?",
+                DialogButtons.OK_CANCEL, DialogIcon.WARN) {
+            @Override
+            public void onClose(AjaxRequestTarget target, DialogButton dialogButton) {
+                if(dialogButton != null && dialogButton.equals(LBL_OK))
+                {
+                    List<SectionType> sections = form.getModelObject();
+                    boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
+                    Template template = templateFacade.getTemplateByPersonAndName(
+                            EEGDataBaseSession.get().getLoggedUser().getPersonId(),
+                            name.getModelObject());
+                    try {
+                        updateTemplate(sections, template, isDefault);
+                        window.close(target);
+                    } catch (XMLStreamException e) {
+                        log.error(e.getMessage(), e);
+                        feedback.error(ResourceUtils.getString("error.writingTemplate"));
+                        target.add(feedback);
+                        return;
+                    }
+                }
+            }
+        };
+        add(dialog);
+
         add(new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
 
             private static final long serialVersionUID = -975100666951875819L;
@@ -78,13 +108,24 @@ public class SaveAsForm extends Form {
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> f) {
                 try {
-                    List<SectionType> sections = form.getModelObject();
-                    boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
-                    Template template = createTemplate(sections, name.getModelObject(), isDefault);
-                    templateFacade.create(template);
+                    String templateName = name.getModelObject();
+                    if(templateFacade.canSaveName(templateName,
+                            EEGDataBaseSession.get().getLoggedUser().getPersonId())){
+                        List<SectionType> sections = form.getModelObject();
+                        boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
+                        Template template = createTemplate(sections, templateName, isDefault);
+                        templateFacade.create(template);
+                    } else{
+                        dialog.open(target);
+                        feedback.error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
+                        target.add(feedback);
+                        return;
+                    }
                 } catch (XMLStreamException e) {
                     log.error(e.getMessage(), e);
-                    error(ResourceUtils.getString("error.writingTemplate"));
+                    feedback.error(ResourceUtils.getString("error.writingTemplate"));
+                    target.add(feedback);
+                    return;
                 }
                 window.close(target);
             }
@@ -127,5 +168,20 @@ public class SaveAsForm extends Form {
         template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
 
         return template;
+    }
+
+    /**
+     * Updates existing template
+     *
+     * @param sections Sections to write to XML - new Template content
+     * @param template Original Template
+     * @param isDefault true if updated template is default for all users
+     * @throws XMLStreamException XML writing exception
+     */
+    private void updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+        template.setTemplate(xmlData);
+        template.setIsDefault(isDefault);
+        templateFacade.update(template);
     }
 }
