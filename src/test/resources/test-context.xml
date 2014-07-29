@@ -359,6 +359,8 @@
     	
     	<bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType" />
 
+        <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
+
 
 
 
