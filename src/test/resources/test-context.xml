@@ -345,21 +345,33 @@
         </bean>
 
     <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-    		<property name="decisionVoters">
-    			<list>
-    				<bean class="org.springframework.security.access.vote.RoleVoter">
-    					<property name="rolePrefix" value="ROLE_" />
-    				</bean>
-    				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-    			</list>
-    		</property>
-    	</bean>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter">
+                    <property name="rolePrefix" value="ROLE_"/>
+                </bean>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
 
-    	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-    	
-    	<bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType" />
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
-        <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType" />
+    <bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType"/>
+
+    <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType"/>
+
+    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl"
+          autowire="byType">
+        <property name="membershipDao" ref="researchGroupMembershipDao"/>
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="permRequestDao" ref="groupPermissionRequestDao"/>
+    </bean>
+
+    <bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl"
+          autowire="byType">
+        <constructor-arg ref="personalLicenseDao"/>
+    </bean>
 
 
 
