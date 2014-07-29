@@ -60,7 +60,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         } else {
             // We need to load only articles which can be viewed by the logged user.
             // That is, we need to load only public articles or articles from the groups the logged user is member of.
-            query = "select DISTINCT a from Article a left join fetch a.articleComments where " +
+            query = "select DISTINCT a from Article a left join fetch a.articleComments where a.person.personId = :personId or " +
                     "a.researchGroup.researchGroupId is null or " +
                     "a.researchGroup.researchGroupId in " +
                     "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId) " +
@@ -122,7 +122,7 @@ public class SimpleArticleDao extends SimpleGenericDao<Article, Integer> impleme
         if (person.getAuthority().equals("ROLE_ADMIN")) {
             return ((Long) getSession().createQuery("select count(*) from Article").uniqueResult()).intValue();
         }
-        String query = "select count(*) from Article a where " +
+        String query = "select count(*) from Article a where a.person.personId = :personId or " +
                 "a.researchGroup.researchGroupId is null or " +
                 "a.researchGroup.researchGroupId in " +
                 "(select rm.id.researchGroupId from ResearchGroupMembership rm where rm.id.personId = :personId)";

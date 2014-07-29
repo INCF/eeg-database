@@ -26,6 +26,7 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
+import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
@@ -58,6 +59,7 @@ public class ArticleServiceTest extends AbstractServicesTest {
 
     private Article article;
     private Person person;
+    private ArticleComment articleComment;
 
 
     @Before
@@ -106,9 +108,10 @@ public class ArticleServiceTest extends AbstractServicesTest {
         articleService.create(newArticle);
 
         assertEquals(countAll + 2, articleService.getAllArticles().size());
+        assertEquals(countAll + 2, articleService.getArticleCountForPerson(tmp));
         //the person "person" should see only one article (the second one is not public and belongs to the person "tmp").
         assertEquals(count + 1, articleService.getArticlesForUser(person).size());
-//        assertEquals(count + 2, articleService.getArticlesForUser(tmp).size()); TODO fix the articleDao - owners should see their articles
+        assertEquals(count + 2, articleService.getArticlesForUser(tmp).size());
     }
 
     @Test
@@ -119,6 +122,56 @@ public class ArticleServiceTest extends AbstractServicesTest {
         assertNotNull(fromDB);
         assertEquals("test-text", fromDB.getText());
         assertEquals("test-title", fromDB.getTitle());
+    }
+
+    @Test
+    public void testCreateComment() {
+        int id = articleService.create(article);
+        int count = articleService.read(id).getArticleComments().size();
+        articleComment = createComment(article);
+        int commentId = articleService.create(articleComment);
+//        article.getArticleComments().add(articleComment);
+//        articleService.update(article);
+
+        assertEquals(count + 1, articleService.read(id).getArticleComments().size());
+        assertEquals("text-comment", articleService.readComment(commentId).getText());
+        assertEquals(count + 1, articleService.getCountCommentRecords());
+    }
+
+    @Test
+    public void testGetCommentsForArticle() {
+
+        articleService.create(article);
+        Article newArticle = new Article();
+
+        int countAll = articleService.getCountCommentRecords();
+        int countCommentForArticle = articleService.getCommentsForArticle(article.getArticleId()).size();
+
+        newArticle.setText("test-text2");
+        newArticle.setTitle("test-title2");
+        newArticle.setTime(new Timestamp(Calendar.getInstance().getTime().getTime()));
+        newArticle.setPerson(person);
+        articleService.create(newArticle);
+        articleComment = createComment(article);
+        articleService.create(articleComment);
+
+        ArticleComment newComment = createComment(newArticle);
+        articleService.create(newComment);
+
+        assertEquals(countAll + 2, articleService.getCountCommentRecords());
+        assertEquals(countCommentForArticle + 1, articleService.getCommentsForArticle(article.getArticleId()).size());
+    }
+
+    private ArticleComment createComment(Article article) {
+        ArticleComment newComment = new ArticleComment();
+        newComment.setPerson(person);
+        newComment.setArticle(article);
+        article.getArticleComments().add(newComment);
+        articleService.update(article);
+        newComment.setTime(new Timestamp(System.currentTimeMillis()));
+        newComment.setText("text-comment");
+        return newComment;
+
     }
 
 }
