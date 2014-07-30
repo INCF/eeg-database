@@ -26,6 +26,8 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupService;
 import org.junit.Before;
@@ -34,6 +36,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by stebjan on 29.7.2014.
@@ -56,7 +59,6 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
         personDao.create(person);
-
 
         researchGroup = new ResearchGroup();
         researchGroup.setDescription("test-description");
@@ -84,6 +86,62 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         group2.setPerson(person);
         researchGroupService.create(group2);
         assertEquals(count + 2, researchGroupService.getResearchGroupsWhereOwner(person).size());
+
+    }
+    @Test
+    public void testCreateMembership() {
+
+        int id = researchGroupService.create(researchGroup);
+        int count = researchGroupService.getListOfGroupMembers(id).size();
+        int membershipCount = researchGroupService.getCountMemberhipRecords();
+        ResearchGroupMembership membership = new ResearchGroupMembership();
+
+        Person tmp = TestUtils.createPersonForTesting("test@test2.com", Util.ROLE_ADMIN);
+        personDao.create(tmp);
+        membership.setPerson(tmp);
+        membership.setResearchGroup(researchGroup);
+        membership.setAuthority(Util.GROUP_ADMIN);
+        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
+        membershipId.setPersonId(tmp.getPersonId());
+        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
+
+        membership.setId(membershipId);
+        researchGroupService.createMemberhip(membership);
+        assertTrue(count > 0);
+        assertEquals(count + 1, researchGroupService.getListOfGroupMembers(id).size());
+        assertEquals(membershipCount + 1, researchGroupService.getCountMemberhipRecords());
+        assertEquals(membershipCount + 1, researchGroupService.getAllMemberhipRecords().size());
+
+    }
+
+    @Test
+    public void testGetResearchGroupsWhereUserIsGroupAdmin() {
+        int count = researchGroupService.getResearchGroupsWhereUserIsGroupAdmin(person).size();
+        researchGroupService.create(researchGroup);
+
+        ResearchGroupMembership membership = new ResearchGroupMembership();
+
+        Person tmp = TestUtils.createPersonForTesting("test@test2.com", Util.ROLE_ADMIN);
+        personDao.create(tmp);
+        int tmpCount = researchGroupService.getResearchGroupsWhereUserIsGroupAdmin(tmp).size();
+
+        membership.setPerson(tmp);
+        membership.setResearchGroup(researchGroup);
+        membership.setAuthority(Util.GROUP_ADMIN);
+        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
+        membershipId.setPersonId(tmp.getPersonId());
+        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
+
+        membership.setId(membershipId);
+        researchGroupService.createMemberhip(membership);
+
+        ResearchGroup newGroup = new ResearchGroup();
+        newGroup.setPerson(person);
+        newGroup.setTitle("new title");
+        newGroup.setDescription("desc");
+        researchGroupService.create(newGroup);
+        assertEquals(count + 2, researchGroupService.getResearchGroupsWhereUserIsGroupAdmin(person).size());
+        assertEquals(tmpCount + 1, researchGroupService.getResearchGroupsWhereUserIsGroupAdmin(tmp).size());
 
     }
 }
