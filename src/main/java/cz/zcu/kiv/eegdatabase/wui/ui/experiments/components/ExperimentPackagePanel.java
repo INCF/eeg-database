@@ -223,9 +223,6 @@ public class ExperimentPackagePanel extends Panel {
 
 		cont.add(ddc);
 		cont.add(licenseBuyLink);
-		
-		// XXX HIDE LICENSE DROP DOWN CHOICE FOR NOW. FIX EXCEPTION !!!
-		cont.setVisibilityAllowed(false);
 	}
 
 
