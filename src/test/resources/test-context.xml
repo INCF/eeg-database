@@ -361,6 +361,10 @@
 
     <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType"/>
 
+    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
+        <property name="scenarioDAO" ref="scenarioDao"/>
+    </bean>
+
     <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl"
           autowire="byType">
         <property name="membershipDao" ref="researchGroupMembershipDao"/>
