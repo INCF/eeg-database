@@ -1,8 +1,0 @@
-#dev PG database
-jdbc.url=jdbc:postgresql://localhost/eeg
-jdbc.username=eeg
-jdbc.password=eeg
-
-#dev ES database
-elasticsearch.url=localhost:9300
-elasticsearch.clusterName=es-eeg-dev
