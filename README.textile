@@ -24,7 +24,7 @@ h2. Getting Started
 ** Installed PostgreSQL v9.2 (http://www.postgresql.org/)
 ** Installed Jetty 	web server and servlet container v7.5.0 (http://www.eclipse.org/jetty/)
 ** Installed Java SE 6 JDK (http://www.oracle.com/technetwork/java/javase/downloads/index.html) 
-** Installed Elasticsearch v1.0 (http://www.elasticsearch.org/)
+** Installed and "configured":https://github.com/INCF/eeg-database/wiki Elasticsearch v1.0 (http://www.elasticsearch.org/);
 ** Installed your favourite IDE (Eclipse, Netbeans, IntelliJ etc.) with configured GIT
 * EEG Database
 ** Create new database in PostgreSQL (default name is "eeg"); tables will be created automatically by Hibernate framework
