@@ -28,6 +28,7 @@ import java.util.Locale;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.util.convert.ConversionException;
 import org.apache.wicket.util.convert.IConverter;
 
 import com.ibm.icu.text.SimpleDateFormat;
@@ -67,11 +68,13 @@ public class TimestampConverter implements IConverter<Timestamp> {
     @Override
     public Timestamp convertToObject(String value, Locale locale) {
         try {
-            return new Timestamp(new SimpleDateFormat(getParsePattern()).parse(value).getTime());
+            
+            long time = new SimpleDateFormat(getParsePattern()).parse(value).getTime();
+            return new Timestamp(time);
+        
         } catch (ParseException e) {
-
-            log.error(e.getMessage(), e);
-            return null;
+            log.info(e.getMessage(), e);
+            throw new ConversionException("Wrong Date Format: " + parsePattern);
         }
     }
 

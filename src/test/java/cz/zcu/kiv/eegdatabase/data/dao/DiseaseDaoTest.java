@@ -18,76 +18,79 @@
  *
  *  ***********************************************************************************************************************
  *
- *   ResearchGroupDaoTest.java, 2014/06/05 00:01 Jan Stebetak
+ *   DiseaseDaoTest.java, 2014/07/07 00:01 Jan Stebetak
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
 
-import static net.sf.ezmorph.test.ArrayAssertions.assertEquals;
-@Transactional
-@TransactionConfiguration(defaultRollback = true)
-public class ResearchGroupDaoTest extends AbstractDataAccessTest {
+import java.util.List;
+
+import static org.junit.Assert.assertEquals;
+
+/**
+ * User: Jan Stebetak
+ * Date: 7.7.14
+ */
+public class DiseaseDaoTest extends AbstractDataAccessTest {
+
 
     @Autowired
-    protected ResearchGroupDao researchGroupDao;
+    private SimpleDiseaseDao diseaseDao;
     @Autowired
-    protected PersonDao personDao;
-
-    protected ResearchGroup researchGroup;
-    protected Person person;
+    private ResearchGroupDao researchGroupDao;
+    @Autowired
+    private PersonDao personDao;
+    private Disease disease;
+    private ResearchGroup researchGroup;
 
     @Before
-    public void setUp() {
-        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
+    public void setUp() throws Exception {
+        Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
         personDao.create(person);
-
 
         researchGroup = new ResearchGroup();
         researchGroup.setDescription("test-description");
         researchGroup.setTitle("test-title");
         researchGroup.setPerson(person);
+        researchGroupDao.create(researchGroup);
+        disease = new Disease();
+        disease.setTitle("New Disease");
+        disease.setDescription("This is new testing disease");
     }
+
 
     @Test
-    public void testCreateResearchGroup() {
-        int count = researchGroupDao.getCountForList();
-        researchGroupDao.create(researchGroup);
-        assertEquals(count + 1, researchGroupDao.getCountRecords());
-        assertEquals("test-title", researchGroupDao.getResearchGroupTitle(researchGroup.getResearchGroupId()));
-        assertEquals("test@test.com", researchGroupDao.read(researchGroup.getResearchGroupId()).getPerson().getUsername());
-
+    @Transactional
+    public void testCreateDisease() {
+        int diseaseCountBefore = diseaseDao.getAllRecords().size();
+        int diseaseID = diseaseDao.create(disease);
+        assertEquals(diseaseCountBefore + 1, diseaseDao.getAllRecords().size());
+        assertEquals(diseaseID, disease.getDiseaseId());
     }
+
+
 
     @Test
-    public void testGetGroupsWhereOwner() {
-        int count = researchGroupDao.getResearchGroupsWhereOwner(person).size();
-        researchGroupDao.create(researchGroup);
-        ResearchGroup group2 = new ResearchGroup();
-        group2.setDescription("desc");
-        group2.setTitle("test");
-        group2.setPerson(person);
-        researchGroupDao.create(group2);
-        assertEquals(count + 2, researchGroupDao.getResearchGroupsWhereOwner(person).size());
+    @Transactional
+    public void testCreateGroupDisease() {
+        int diseaseCountBefore = diseaseDao.getAllRecords().size();
+        int diseaseGroupBefore = diseaseDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
+        diseaseDao.createGroupRel(disease, researchGroup);
+        diseaseDao.create(disease);
+        assertEquals(diseaseCountBefore + 1, diseaseDao.getAllRecords().size());
 
+        List<Disease> list = diseaseDao.getRecordsByGroup(researchGroup.getResearchGroupId());
+        assertEquals(diseaseGroupBefore + 1, list.size());
     }
-
-    @Test
-    public void testGetMembership() {
-        researchGroupDao.create(researchGroup);
-        assertEquals(0, researchGroupDao.getResearchGroupsWhereMember(person).size());
-
-    }
-
 }

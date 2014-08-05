@@ -60,6 +60,7 @@
 		<property name="locations">
 			<list>
 				<value>/WEB-INF/project.properties</value>
+                <value>/WEB-INF/db.properties</value>
 				<value>/WEB-INF/facebook.properties</value>
 				<value>/WEB-INF/linkedin.properties</value>
 			</list>

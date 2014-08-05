@@ -88,7 +88,7 @@ public class ZipGenerator implements Generator {
 
             ZipEntry entry;
 
-            if (mc.isScenFile()) {
+            if (mc.isScenFile() && scen.getScenarioFile() != null) {
                 try {
 
                     log.debug("saving scenario file (" + scen.getScenarioName() + ") into a zip file");

@@ -22,7 +22,7 @@
  *
  *  ***********************************************************************************************************************
  *
- * LargeDataTest.java, 2014/06/10 20:01 Jan Stebetak
+ * DataPerformanceTest.java, 2014/06/10 20:01 Jan Stebetak
  *****************************************************************************
  */
 package cz.zcu.kiv.eegdatabase.data.performance;
@@ -54,7 +54,7 @@ import static org.junit.Assert.fail;
 /**
  * Created by Honza on 10.6.14.
  */
-public class LargeDataTest extends AbstractDataAccessTest {
+public class DataPerformanceTest extends AbstractDataAccessTest {
 
     @Autowired
     private ExperimentDao experimentDao;
@@ -93,7 +93,7 @@ public class LargeDataTest extends AbstractDataAccessTest {
     @Transactional
     public void saveDataTest() throws IOException {
         try {
-            createFile(100);
+            createFile(20);
         } catch (IOException e) {
             fail("Data file is null");
             return;
@@ -133,7 +133,7 @@ public class LargeDataTest extends AbstractDataAccessTest {
         startTime = System.currentTimeMillis();
         InputStream ios = null;
         try {
-            createFile(30);
+            createFile(100);
 
         } catch (IOException e) {
             fail("Data file is null");
