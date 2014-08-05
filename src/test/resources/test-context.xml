@@ -361,7 +361,7 @@
 
     <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType"/>
 
-    <bean name="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
+    <bean id="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
         <property name="scenarioDAO" ref="scenarioDao"/>
     </bean>
 
@@ -372,11 +372,20 @@
         <property name="permRequestDao" ref="groupPermissionRequestDao"/>
     </bean>
 
-    <bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl"
+    <bean id="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl"
           autowire="byType">
         <constructor-arg ref="personalLicenseDao"/>
     </bean>
 
+    <bean id="personService" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
+
+    <bean id="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
+        <constructor-arg ref="licenseDao"/>
+    </bean>
+
+    <bean id="licenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseFacadeImpl" autowire="byType">
+        <constructor-arg ref="licenseService"/>
+    </bean>
 
 
 

@@ -171,10 +171,12 @@ public class SimplePersonDao
 
     public boolean userNameInGroup(String userName, int groupId) {
         String hqlQuery = "select p.personId from Person p left join p.researchGroupMemberships rgm where p.username = :userName and rgm.researchGroup.researchGroupId = :groupId";
+        String ownerGroupQuery = "from ResearchGroup r where r.researchGroupId = :groupId and r.person.username = :userName";
         String[] paramNames = {"userName", "groupId"};
         Object[] values = {userName, groupId};
         List list = getHibernateTemplate().findByNamedParam(hqlQuery, paramNames, values);
-        return (list.size() > 0);
+        List ownerList = getHibernateTemplate().findByNamedParam(ownerGroupQuery, paramNames,values);
+        return (list.size() > 0 || ownerList.size() > 0);
     }
 
     public List<Person> getPersonSearchResults(List<SearchRequest> requests) throws NumberFormatException {
