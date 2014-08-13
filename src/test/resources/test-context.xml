@@ -365,6 +365,34 @@
         <property name="scenarioDAO" ref="scenarioDao"/>
     </bean>
 
+    <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
+
+    <bean name="softwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareServiceImpl" autowire="byType" >
+        <property name="softwareDao" ref="softwareDao"/>
+    </bean>
+
+    <bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
+
+    <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
+
+    <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
+        <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
+    </bean>
+
+    <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
+        <property name="projectTypeDao" ref="projectTypeDao"/>
+    </bean>
+
+    <bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+    </bean>
+
+    <bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
+        <property name="stimulusDao" ref="stimulusDao"/>
+    </bean>
+
+    <bean name="keywordsService" class="cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsServiceImpl" autowire="byType" />
+
     <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl"
           autowire="byType">
         <property name="membershipDao" ref="researchGroupMembershipDao"/>

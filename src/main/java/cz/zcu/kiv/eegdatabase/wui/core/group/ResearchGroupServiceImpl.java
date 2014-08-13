@@ -302,6 +302,10 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
     @Override
     @Transactional
     public ResearchGroupMembershipId createMemberhip(ResearchGroupMembership newInstance) {
+        if (newInstance.getId() == null) {
+            ResearchGroupMembershipId id = new ResearchGroupMembershipId(newInstance.getPerson().getPersonId(), newInstance.getResearchGroup().getResearchGroupId());
+            newInstance.setId(id);
+        }
         return membershipDao.create(newInstance);
     }
 

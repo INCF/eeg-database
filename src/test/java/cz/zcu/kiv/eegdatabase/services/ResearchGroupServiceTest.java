@@ -101,11 +101,11 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         membership.setPerson(tmp);
         membership.setResearchGroup(researchGroup);
         membership.setAuthority(Util.GROUP_ADMIN);
-        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
-        membershipId.setPersonId(tmp.getPersonId());
-        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
-
-        membership.setId(membershipId);
+//        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
+//        membershipId.setPersonId(tmp.getPersonId());
+//        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
+//
+//        membership.setId(membershipId);
         researchGroupService.createMemberhip(membership);
         assertTrue(count > 0);
         assertEquals(count + 1, researchGroupService.getListOfGroupMembers(id).size());
@@ -128,11 +128,11 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         membership.setPerson(tmp);
         membership.setResearchGroup(researchGroup);
         membership.setAuthority(Util.GROUP_ADMIN);
-        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
-        membershipId.setPersonId(tmp.getPersonId());
-        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
-
-        membership.setId(membershipId);
+//        ResearchGroupMembershipId membershipId = new ResearchGroupMembershipId();
+//        membershipId.setPersonId(tmp.getPersonId());
+//        membershipId.setResearchGroupId(researchGroup.getResearchGroupId());
+//
+//        membership.setId(membershipId);
         researchGroupService.createMemberhip(membership);
 
         ResearchGroup newGroup = new ResearchGroup();
