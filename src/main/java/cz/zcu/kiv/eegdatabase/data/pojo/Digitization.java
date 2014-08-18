@@ -28,6 +28,7 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 
+import cz.zcu.kiv.formgen.annotation.Form;
 import org.hibernate.annotations.GenericGenerator;
 
 import cz.zcu.kiv.formgen.annotation.FormId;

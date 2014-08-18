@@ -35,6 +35,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import cz.zcu.kiv.formgen.annotation.Form;
 import org.hibernate.annotations.GenericGenerator;
 
 import cz.zcu.kiv.formgen.annotation.FormId;

@@ -44,6 +44,7 @@ import javax.persistence.Transient;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
 
+import cz.zcu.kiv.formgen.annotation.Form;
 import org.hibernate.annotations.GenericGenerator;
 import org.hibernate.annotations.Type;
 
