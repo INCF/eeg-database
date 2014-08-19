@@ -54,6 +54,16 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     }
 
     @Override
+    public void createDefaultRecord(Software software) {
+        service.createDefaultRecord(software);
+    }
+
+    @Override
+    public List<Software> getDefaultRecords() {
+        return service.getDefaultRecords();
+    }
+
+    @Override
     public Integer create(Software newInstance) {
         return service.create(newInstance);
     }
@@ -131,5 +141,10 @@ public class SoftwareFacadeImpl implements SoftwareFacade{
     @Override
     public boolean canSaveTitle(String title, int researchGroupId, int softwareId) {
         return service.canSaveTitle(title, researchGroupId, softwareId);
+    }
+
+    @Override
+    public boolean isDefault(int swId) {
+        return service.isDefault(swId);
     }
 }

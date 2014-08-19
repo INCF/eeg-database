@@ -58,6 +58,18 @@ public class SoftwareServiceImpl implements SoftwareService{
 
     @Override
     @Transactional
+    public void createDefaultRecord(Software software) {
+        softwareDao.createDefaultRecord(software);
+    }
+
+    @Override
+    @Transactional
+    public List<Software> getDefaultRecords() {
+        return softwareDao.getDefaultRecords();
+    }
+
+    @Override
+    @Transactional
     public Integer create(Software newInstance) {
         return softwareDao.create(newInstance);
     }
@@ -151,5 +163,11 @@ public class SoftwareServiceImpl implements SoftwareService{
     @Transactional(readOnly = true)
     public boolean canSaveTitle(String title, int groupId, int softwareId) {
         return softwareDao.canSaveTitle(title, groupId, softwareId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isDefault(int swId) {
+        return softwareDao.isDefault(swId);
     }
 }
