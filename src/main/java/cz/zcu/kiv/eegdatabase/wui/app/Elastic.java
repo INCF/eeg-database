@@ -78,9 +78,10 @@ public class Elastic extends BasePage {
 	public Elastic() {
 		super();
 		System.out.println("IMHERE");
-		test();
+		//test();
+        reinsert();
 
-	}
+    }
 
 	@Transactional
 	void test() {
