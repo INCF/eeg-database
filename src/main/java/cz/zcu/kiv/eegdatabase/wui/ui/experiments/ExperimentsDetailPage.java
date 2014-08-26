@@ -25,6 +25,10 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import java.util.ArrayList;
 
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.EnumLabel;
@@ -54,10 +58,10 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 
@@ -74,6 +78,9 @@ public class ExperimentsDetailPage extends MenuPage {
 
     @SpringBean
     ExperimentsFacade facade;
+    
+    @SpringBean
+    FileFacade fileFacade;
 
     @SpringBean
     SecurityFacade security;
@@ -85,7 +92,7 @@ public class ExperimentsDetailPage extends MenuPage {
         setupComponents(experimentId);
     }
 
-    private void setupComponents(int experimentId) {
+    private void setupComponents(final int experimentId) {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
@@ -153,10 +160,38 @@ public class ExperimentsDetailPage extends MenuPage {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<DataFile> item) {
+            protected void populateItem(final ListItem<DataFile> item) {
+                
                 item.add(new Label("filename"));
                 item.add(new Label("description"));
                 item.add(new ViewLinkPanel("detail", DataFileDetailPage.class, "dataFileId", item.getModel(), ResourceUtils.getModel("link.detail")));
+                item.add(new AjaxLink<Void>("deleteLink") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+
+                        fileFacade.delete(item.getModelObject());
+
+                        setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    }
+
+                    @Override
+                    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                        super.updateAjaxAttributes(attributes);
+
+                        AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.datafile", item.getModelObject().getFilename()) + "');");
+                        attributes.getAjaxCallListeners().add(ajaxCallListener);
+                    }
+                    
+                    @Override
+                    public boolean isVisible() {
+                        return security.isAdmin();
+                    }
+
+                });
 
             }
         };
