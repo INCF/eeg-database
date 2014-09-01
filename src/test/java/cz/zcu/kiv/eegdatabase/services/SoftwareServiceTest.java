@@ -80,12 +80,12 @@ public class SoftwareServiceTest extends AbstractServicesTest {
     }
     @Test
     public void testCreateDefaultSoftware() {
-        //TODO add this method to the Service class
-//        int softwareCountBefore = softwareService.getAllRecords().size();
-//        software.setDefaultNumber(1);
-//        int softwareID = softwareService.createDefaultRecord(software);
-//        assertEquals(softwareCountBefore + 1, softwareService.getAllRecords().size());
-//        assertEquals(softwareID, software.getSoftwareId());
+        int softwareCountBefore = softwareService.getAllRecords().size();
+        software.setDefaultNumber(1);
+        softwareService.createDefaultRecord(software);
+        assertEquals(softwareCountBefore + 1, softwareService.getAllRecords().size());
+
+        assertTrue(softwareService.isDefault(software.getSoftwareId()));
     }
 
 

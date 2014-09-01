@@ -145,6 +145,9 @@ This file is part of the EEG-database project
             <th>
               <!-- column with link for detail -->
             </th>
+            <th>
+              <!-- column with link for delete -->
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -152,6 +155,7 @@ This file is part of the EEG-database project
             <td wicket:id="filename"></td>
             <td wicket:id="description"></td>
             <td wicket:id="detail"></td>
+            <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
           </tr>
         </tbody>
       </table>
