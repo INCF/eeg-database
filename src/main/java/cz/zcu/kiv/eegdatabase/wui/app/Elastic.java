@@ -176,6 +176,7 @@ public class Elastic extends BasePage {
 
 	}
 
+        @Transactional
 	private void reinsert() {
 
 		List<Experiment> exps = experimentDao.getAllRecords();
