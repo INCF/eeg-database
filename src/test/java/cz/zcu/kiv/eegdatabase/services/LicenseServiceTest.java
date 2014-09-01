@@ -22,11 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
 import org.junit.Before;
@@ -54,11 +57,16 @@ public class LicenseServiceTest extends AbstractServicesTest {
     @Autowired
     private PersonDao personDao;
     private ResearchGroup researchGroup;
+    private Person person;
 
     private License license;
 
     @Before
     public void setUp() {
+
+        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
+
+        personDao.create(person);
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
@@ -73,6 +81,52 @@ public class LicenseServiceTest extends AbstractServicesTest {
         int id = licenseService.create(license);
         assertNotNull(licenseService.read(id));
         assertEquals(count + 1, licenseService.getCountRecords());
+    }
+
+    @Test
+    public void testGetPublicLicense() {
+        int count = licenseService.getCountRecords();
+        int id = licenseService.create(license);
+        assertNotNull(licenseService.read(id));
+
+
+        License newLicense = new License();
+        newLicense.setDescription("desc");
+        newLicense.setPrice(1000f);
+        newLicense.setTitle("test-title");
+        newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
+        licenseService.create(newLicense);
+
+        assertEquals("test-title", licenseService.getPublicLicense().getTitle());
+        assertEquals(count + 2, licenseService.getCountRecords());
+
+    }
+
+    @Test
+    public void testGetLicensesForGroup() {
+        int count = licenseService.getCountRecords();
+        int id = licenseService.create(license);
+        assertNotNull(licenseService.read(id));
+
+        researchGroup = new ResearchGroup();
+        researchGroup.setDescription("test-description");
+        researchGroup.setTitle("test-title");
+        researchGroup.setPerson(person);
+        researchGroupDao.create(researchGroup);
+
+        int groupCount = licenseService.getLicensesForGroup(researchGroup, LicenseType.OPEN_DOMAIN).size();
+
+        License newLicense = new License();
+        newLicense.setDescription("desc");
+        newLicense.setPrice(1000f);
+        newLicense.setTitle("test-title");
+        newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
+        newLicense.setResearchGroup(researchGroup);
+        licenseService.create(newLicense);
+
+        assertEquals(groupCount + 1, licenseService.getLicensesForGroup(researchGroup, LicenseType.OPEN_DOMAIN).size());
+        assertEquals(count + 2, licenseService.getCountRecords());
+
     }
 
 }
