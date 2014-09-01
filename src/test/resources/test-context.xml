@@ -425,6 +425,13 @@
         <constructor-arg ref="experimentPackageDao"/>
     </bean>
 
+    <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="digitizationDao" ref="digitizationDao"/>
+        <property name="subjectGroupDao" ref="subjectGroupDao"/>
+        <property name="electrodeConfDao" ref="electrodeConfDao"/>
+    </bean>
+
 
 
     	<!-- MAIL -->

@@ -227,11 +227,18 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         
         for(Software tmp : experiment.getSoftwares())
             softwareDao.read(tmp.getSoftwareId()).getExperiments().add(experiment);
-        
-        experiment.setArtifact(artifactDao.read(1));
-        experiment.setSubjectGroup(subjectGroupDao.read(1));
-        experiment.setDigitization(digitizationDao.read(1));
-        experiment.setElectrodeConf(electrodeConfDao.read(1));
+        if (experiment.getArtifact() == null) {
+            experiment.setArtifact(artifactDao.read(1));
+        }
+        if (experiment.getSubjectGroup() == null) {
+            experiment.setSubjectGroup(subjectGroupDao.read(1));
+        }
+        if (experiment.getDigitization() == null) {
+            experiment.setDigitization(digitizationDao.read(1));
+        }
+        if (experiment.getElectrodeConf() == null) {
+            experiment.setElectrodeConf(electrodeConfDao.read(1));
+        }
         
         experimentDao.create(experiment);
 
