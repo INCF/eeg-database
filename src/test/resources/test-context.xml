@@ -70,7 +70,7 @@
 
     <bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
 
-    <elasticsearch:transport-client id="client" cluster-name="eegdatabase-dev" cluster-nodes="eeg2.kiv.zcu.cz:9300" />
+    <elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
 
     <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
     		<constructor-arg name="client" ref="client"/>
