@@ -58,6 +58,7 @@ public class SaveAsForm extends Form {
 
     @SpringBean
     private TemplateFacade templateFacade;
+    private boolean update = false;
     /**
      * Constructs a form with no validation.
      *
@@ -68,6 +69,7 @@ public class SaveAsForm extends Form {
         super(id, Model.of("New Template"));
 
         final FeedbackPanel feedback = new FeedbackPanel("feedback");
+        final FeedbackPanel warningFeedback = new FeedbackPanel("warning");
         feedback.setOutputMarkupId(true);
         add(feedback);
         add(new Label("saveAsHeader", ResourceUtils.getModel("pageTitle.saveAs")));
@@ -76,55 +78,48 @@ public class SaveAsForm extends Form {
                 Model.of("New Template"));
         add(name);
 
-        final MessageDialog dialog = new MessageDialog("dialog", "Warning", "Is it ok?",
-                DialogButtons.OK_CANCEL, DialogIcon.WARN) {
-            @Override
-            public void onClose(AjaxRequestTarget target, DialogButton dialogButton) {
-                if(dialogButton != null && dialogButton.equals(LBL_OK))
-                {
-                    List<SectionType> sections = form.getModelObject();
-                    boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
-                    Template template = templateFacade.getTemplateByPersonAndName(
-                            EEGDataBaseSession.get().getLoggedUser().getPersonId(),
-                            name.getModelObject());
-                    try {
-                        updateTemplate(sections, template, isDefault);
-                        window.close(target);
-                    } catch (XMLStreamException e) {
-                        log.error(e.getMessage(), e);
-                        feedback.error(ResourceUtils.getString("error.writingTemplate"));
-                        target.add(feedback);
-                        return;
-                    }
-                }
-            }
-        };
-        add(dialog);
-
         add(new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
 
-            private static final long serialVersionUID = -975100666951875819L;
+            private static final long serialVersionUID = -97510066651875819L;
 
             @Override
             protected void onSubmit(AjaxRequestTarget target, Form<?> f) {
                 try {
-                    String templateName = name.getModelObject();
-                    if(templateFacade.canSaveName(templateName,
-                            EEGDataBaseSession.get().getLoggedUser().getPersonId())){
+                    if(!update) {
+                        String templateName = name.getModelObject();
+                        if (templateFacade.canSaveName(templateName,
+                                EEGDataBaseSession.get().getLoggedUser().getPersonId())) {
+                            List<SectionType> sections = form.getModelObject();
+                            boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
+                            Template template = createTemplate(sections, templateName, isDefault);
+                            templateFacade.create(template);
+                        } else {
+                            update = true;
+                            warningFeedback.warn(ResourceUtils.getString("warning.overrideTemplate"));
+                            target.add(warningFeedback);
+                            this.setModelObject("Update");
+                            return;
+                        }
+                    } else {
+                        String templateName = name.getModelObject();
                         List<SectionType> sections = form.getModelObject();
                         boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
-                        Template template = createTemplate(sections, templateName, isDefault);
-                        templateFacade.create(template);
-                    } else{
-                        dialog.open(target);
-                        feedback.error(ResourceUtils.getString("error.titleAlreadyInDatabase"));
-                        target.add(feedback);
-                        return;
+                        if (templateFacade.canSaveName(templateName,
+                                EEGDataBaseSession.get().getLoggedUser().getPersonId())) {
+                            Template template = createTemplate(sections, templateName, isDefault);
+                            templateFacade.create(template);
+                        } else {
+                            Template template = templateFacade.getTemplateByPersonAndName(
+                                    EEGDataBaseSession.get().getLoggedUser().getPersonId(), templateName);
+                            updateTemplate(sections, template, isDefault);
+                            update = false;
+                        }
                     }
                 } catch (XMLStreamException e) {
                     log.error(e.getMessage(), e);
                     feedback.error(ResourceUtils.getString("error.writingTemplate"));
                     target.add(feedback);
+                    update = false;
                     return;
                 }
                 window.close(target);
@@ -135,7 +130,7 @@ public class SaveAsForm extends Form {
                 target.add(feedback);
             }
 
-        });
+        }.setOutputMarkupId(true));
 
         add(new AjaxButton("closeForm", ResourceUtils.getModel("button.close"), this) {
 
