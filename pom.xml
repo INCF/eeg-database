@@ -632,7 +632,40 @@
 			<version>2.1.96</version>
 		</dependency>
 
-		<!--======================================= Other libraries ============================================= -->
+        <!--======================================= Web testing ============================================= -->
+
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-htmlunit-plugin</artifactId>
+            <version>3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-core</artifactId>
+            <version>3.2</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-commons-tests</artifactId>
+            <version>2.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-selenium-plugin</artifactId>
+            <version>3.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>net.sourceforge.jwebunit</groupId>
+            <artifactId>jwebunit-webdriver-plugin</artifactId>
+            <version>3.2</version>
+        </dependency>
+
+
+        <!--======================================= Other libraries ============================================= -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-oxm</artifactId>
@@ -889,6 +922,12 @@
 			<name>java.net Repository for Maven</name>
 			<url>http://download.java.net/maven/2/</url>
 		</repository>
+
+        <repository>
+            <id>mvnrepository</id>
+            <name>JWebUnit Repository</name>
+            <url>central.maven.org/maven2</url>
+        </repository>
 
 		<!-- Wicket base repository -->
 		<repository>
