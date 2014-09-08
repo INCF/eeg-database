@@ -223,8 +223,6 @@ public class ExperimentPackagePanel extends Panel {
 
 		cont.add(ddc);
 		cont.add(licenseBuyLink);
-
-		
 	}
 
 

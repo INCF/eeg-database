@@ -193,24 +193,26 @@ public class FulltextSearchService {
         for(String id : foundIds) {
 
             List<String> resultsPerDocument = response.getHighlighting().get(id).get(IndexField.AUTOCOMPLETE.getValue());
-            for (String result : resultsPerDocument) {
-                String resultValue;
-                int resultFrequency;
-                int delimiterPosition = result.lastIndexOf('#');
-                if (delimiterPosition == -1) { // autocomplete phrase was copied from title
-                    resultValue = result;
-                    resultFrequency = 0;
-                }
-                else {
-                    resultValue = result.substring(0, delimiterPosition);
-                    try {
-                        resultFrequency = Integer.valueOf(result.substring(delimiterPosition + 1, result.length()));
-                    } catch (NumberFormatException e) {
+            if (resultsPerDocument != null) {
+                for (String result : resultsPerDocument) {
+                    String resultValue;
+                    int resultFrequency;
+                    int delimiterPosition = result.lastIndexOf('#');
+                    if (delimiterPosition == -1) { // autocomplete phrase was copied from title
+                        resultValue = result;
                         resultFrequency = 0;
                     }
-                }
+                    else {
+                        resultValue = result.substring(0, delimiterPosition);
+                        try {
+                            resultFrequency = Integer.valueOf(result.substring(delimiterPosition + 1, result.length()));
+                        } catch (NumberFormatException e) {
+                            resultFrequency = 0;
+                        }
+                    }
 
-                map.put(resultValue.toLowerCase(), resultFrequency);
+                    map.put(resultValue.toLowerCase(), resultFrequency);
+                }
             }
 
             if(map.size() == FullTextSearchUtils.AUTOCOMPLETE_ROWS) {

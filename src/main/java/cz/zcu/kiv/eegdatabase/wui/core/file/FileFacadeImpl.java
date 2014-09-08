@@ -27,18 +27,35 @@ import java.util.List;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamService;
+import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryService;
 
 public class FileFacadeImpl implements FileFacade {
 
     protected Log log = LogFactory.getLog(getClass());
 
     FileService fileService;
+    HistoryService historyService;
+    FileMetadataParamService fileMetadataService;
 
     @Required
     public void setFileService(FileService fileService) {
         this.fileService = fileService;
+    }
+    
+    @Required
+    public void setHistoryService(HistoryService historyService) {
+        this.historyService = historyService;
+    }
+    
+    @Required
+    public void setFileMetadataService(FileMetadataParamService fileMetadataService) {
+        this.fileMetadataService = fileMetadataService;
     }
 
     @Override
@@ -62,8 +79,28 @@ public class FileFacadeImpl implements FileFacade {
     }
 
     @Override
+    @Transactional
     public void delete(DataFile persistentObject) {
+        // In one transaction for fails.
+        // delete all history records for that datafile
+        List<History> historyForDataFile = historyService.readByParameter("dataFile.dataFileId", persistentObject.getDataFileId());
+        if (historyForDataFile != null) {
+            log.trace("delete History records: " + historyForDataFile.size());
+            for (History tmp : historyForDataFile) {
+                historyService.delete(tmp);
+            }
+        }
+        // delete all file metadada parameter value for that datafile
+        List<FileMetadataParamVal> metadataParamForDataFile = fileMetadataService.readValueByParameter("dataFile.dataFileId", persistentObject.getDataFileId());
+        if (metadataParamForDataFile != null) {
+            log.trace("delete FileMetadataParamVal records: " + metadataParamForDataFile.size());
+            for (FileMetadataParamVal tmp : metadataParamForDataFile) {
+                fileMetadataService.delete(tmp);
+            }
+        }
+        // delete datafile
         fileService.delete(persistentObject);
+
     }
 
     @Override

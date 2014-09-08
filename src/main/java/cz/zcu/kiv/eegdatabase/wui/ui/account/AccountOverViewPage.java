@@ -45,6 +45,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ResearchGroupsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 
 /**
  * Account overview page with logged user information
@@ -99,6 +100,9 @@ public class AccountOverViewPage extends MenuPage {
             }
         };
         groups.setVisibilityAllowed(!emptyGroups);
-        add(groups, noGroups);
+        
+        BookmarkablePageLink<Void> editAccount = new BookmarkablePageLink<Void>("editLink", PersonFormPage.class, PageParametersUtils.getDefaultPageParameters(user.getPersonId()));
+
+        add(groups, noGroups, editAccount);
     }
 }

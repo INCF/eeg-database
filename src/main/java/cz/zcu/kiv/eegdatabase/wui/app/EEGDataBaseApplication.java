@@ -35,7 +35,6 @@ import org.apache.wicket.authroles.authentication.AuthenticatedWebApplication;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AnnotationsRoleAuthorizationStrategy;
 import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.markup.html.WebPage;
-import org.apache.wicket.protocol.http.WebApplication;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
 import org.apache.wicket.settings.IExceptionSettings;
@@ -63,6 +62,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesSettingsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
@@ -230,6 +230,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("experiments-detail", ExperimentsDetailPage.class);
         mountPage("experiments-form", ExperimentFormPage.class);
         mountPage("experiments-download", ExperimentsDownloadPage.class);
+        mountPage("experiments-add-file", AddDataFilePage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);

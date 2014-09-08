@@ -39,6 +39,10 @@ public interface SoftwareFacade extends GenericFacade<Software, Integer>{
 
 
     boolean canSaveDefaultTitle(String title, int swId);
+
+    void createDefaultRecord(Software software);
+
+    List<Software> getDefaultRecords();
     
     void createGroupRel(Software persistent, ResearchGroup researchGroup);
 
@@ -53,4 +57,7 @@ public interface SoftwareFacade extends GenericFacade<Software, Integer>{
     void deleteGroupRel(Software persistent, ResearchGroup researchGroup);
     
     boolean canSaveTitle(String title, int researchGroupId, int softwareId);
+
+    boolean isDefault(int swId);
+
 }

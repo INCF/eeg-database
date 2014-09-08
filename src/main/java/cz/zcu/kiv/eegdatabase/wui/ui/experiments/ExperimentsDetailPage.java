@@ -25,6 +25,10 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 import java.util.ArrayList;
 
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.EnumLabel;
@@ -43,6 +47,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -54,9 +59,10 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.canvas.ExperimentSignalViewCanvasPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 
@@ -73,6 +79,9 @@ public class ExperimentsDetailPage extends MenuPage {
 
     @SpringBean
     ExperimentsFacade facade;
+    
+    @SpringBean
+    FileFacade fileFacade;
 
     @SpringBean
     SecurityFacade security;
@@ -84,13 +93,13 @@ public class ExperimentsDetailPage extends MenuPage {
         setupComponents(experimentId);
     }
 
-    private void setupComponents(int experimentId) {
+    private void setupComponents(final int experimentId) {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
-        Experiment experiment = facade.getExperimentForDetail(experimentId);
+        final Experiment experiment = facade.getExperimentForDetail(experimentId);
 
         add(new Label("experimentId", experiment.getExperimentId()+""));
         add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
@@ -114,7 +123,7 @@ public class ExperimentsDetailPage extends MenuPage {
         // TODO action box pages
         boolean coexperiment = security.userIsOwnerOrCoexperimenter(experimentId);
         BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
-        BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+        BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> downloadExpLink = new BookmarkablePageLink<Void>("downloadExpLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), downloadExpLink);
@@ -152,10 +161,41 @@ public class ExperimentsDetailPage extends MenuPage {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<DataFile> item) {
+            protected void populateItem(final ListItem<DataFile> item) {
+                
                 item.add(new Label("filename"));
                 item.add(new Label("description"));
                 item.add(new ViewLinkPanel("detail", DataFileDetailPage.class, "dataFileId", item.getModel(), ResourceUtils.getModel("link.detail")));
+                item.add(new AjaxLink<Void>("deleteLink") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+
+                        fileFacade.delete(item.getModelObject());
+
+                        setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    }
+
+                    @Override
+                    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                        super.updateAjaxAttributes(attributes);
+
+                        AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.datafile", item.getModelObject().getFilename()) + "');");
+                        attributes.getAjaxCallListeners().add(ajaxCallListener);
+                    }
+                    
+                    @Override
+                    public boolean isVisible() {
+                        boolean isOwner = experiment.getPersonByOwnerId().getPersonId() == EEGDataBaseSession.get().getLoggedUser().getPersonId();
+                        boolean isAdmin = security.isAdmin();
+                        boolean isGroupAdmin = security.userIsAdminInGroup(experiment.getResearchGroup().getResearchGroupId());
+                        return isAdmin || isOwner || isGroupAdmin;
+                    }
+
+                });
 
             }
         };

@@ -5,6 +5,7 @@ target
 *.iml
 bin
 .project
+src/main/webapp/WEB-INF/db.properties
 .classpath
 .settings
 src/main/webapp/files/js/messages-en.json

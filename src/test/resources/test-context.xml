@@ -70,7 +70,7 @@
 
     <bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
 
-    <elasticsearch:transport-client id="client" cluster-name="eegdatabase-dev" cluster-nodes="eeg2.kiv.zcu.cz:9300" />
+    <elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
 
     <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
     		<constructor-arg name="client" ref="client"/>
@@ -349,20 +349,92 @@
         </bean>
 
     <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
-    		<property name="decisionVoters">
-    			<list>
-    				<bean class="org.springframework.security.access.vote.RoleVoter">
-    					<property name="rolePrefix" value="ROLE_" />
-    				</bean>
-    				<bean class="org.springframework.security.access.vote.AuthenticatedVoter" />
-    			</list>
-    		</property>
-    	</bean>
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter">
+                    <property name="rolePrefix" value="ROLE_"/>
+                </bean>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
 
-    	<bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder" />
-    	
-    	<bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType" />
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
 
+    <bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType"/>
+
+    <bean id="articleService" class="cz.zcu.kiv.eegdatabase.wui.core.article.ArticleServiceImpl" autowire="byType"/>
+
+    <bean id="scenariosService" class="cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosServiceImpl" autowire="byType" >
+        <property name="scenarioDAO" ref="scenarioDao"/>
+    </bean>
+
+    <bean name="hardwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.HardwareServiceImpl" autowire="byType" />
+
+    <bean name="softwareService" class="cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareServiceImpl" autowire="byType" >
+        <property name="softwareDao" ref="softwareDao"/>
+    </bean>
+
+    <bean name="weatherService" class="cz.zcu.kiv.eegdatabase.wui.core.common.WeatherServiceImpl" autowire="byType" />
+
+    <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
+
+    <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
+        <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
+    </bean>
+
+    <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
+        <property name="projectTypeDao" ref="projectTypeDao"/>
+    </bean>
+
+    <bean name="artifactService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+    </bean>
+
+    <bean name="stimulusService" class="cz.zcu.kiv.eegdatabase.wui.core.common.StimulusServiceImpl" autowire="byType">
+        <property name="stimulusDao" ref="stimulusDao"/>
+    </bean>
+
+    <bean name="keywordsService" class="cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsServiceImpl" autowire="byType" />
+
+    <bean id="researchGroupService " class="cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupServiceImpl"
+          autowire="byType">
+        <property name="membershipDao" ref="researchGroupMembershipDao"/>
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="permRequestDao" ref="groupPermissionRequestDao"/>
+    </bean>
+
+    <bean id="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl"
+          autowire="byType">
+        <constructor-arg ref="personalLicenseDao"/>
+    </bean>
+
+    <bean id="personService" class="cz.zcu.kiv.eegdatabase.wui.core.person.PersonServiceImpl" autowire="byType" />
+
+    <bean id="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
+        <constructor-arg ref="licenseDao"/>
+    </bean>
+
+    <bean id="licenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseFacadeImpl" autowire="byType">
+        <constructor-arg ref="licenseService"/>
+    </bean>
+
+    <bean name="experimentPackageConnectionService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageConnectionServiceImpl" autowire="byType">
+        <constructor-arg ref="experimentPackageConnectionDao"/>
+    </bean>
+    <bean name="experimentPackageLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseServiceImpl" autowire="byType">
+        <constructor-arg ref="experimentPackageLicenseDao"/>
+    </bean>
+    <bean name="experimentPackageService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageServiceImpl" autowire="byType">
+        <constructor-arg ref="experimentPackageDao"/>
+    </bean>
+
+    <bean name="experimentsService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsServiceImpl" autowire="byType" >
+        <property name="artifactDao" ref="artifactDao"/>
+        <property name="digitizationDao" ref="digitizationDao"/>
+        <property name="subjectGroupDao" ref="subjectGroupDao"/>
+        <property name="electrodeConfDao" ref="electrodeConfDao"/>
+    </bean>
 
 
 
@@ -421,6 +493,8 @@
 
     	<!-- Solr indexing service -->
     	<bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
+
+        <bean name="experimentGenerator" class="cz.zcu.kiv.eegdatabase.data.ExperimentGenerator" />
 
     	<!-- Solr Server instance (production server) -->
     	<bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">

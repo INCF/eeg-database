@@ -204,6 +204,9 @@ public class PersonForm extends Form<Person> {
 
         CheckBox lockCheckBox = new CheckBox("lock");
         add(lockCheckBox);
+        
+        CheckBox confirmCheckBox = new CheckBox("confirmed");
+        add(confirmCheckBox);
 
         AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.save"), this) {
 
