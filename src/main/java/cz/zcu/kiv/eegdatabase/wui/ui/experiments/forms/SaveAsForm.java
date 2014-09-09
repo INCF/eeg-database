@@ -59,6 +59,7 @@ public class SaveAsForm extends Form {
     @SpringBean
     private TemplateFacade templateFacade;
     private boolean update = false;
+
     /**
      * Constructs a form with no validation.
      *
@@ -71,6 +72,8 @@ public class SaveAsForm extends Form {
         final FeedbackPanel feedback = new FeedbackPanel("feedback");
         final FeedbackPanel warningFeedback = new FeedbackPanel("warning");
         feedback.setOutputMarkupId(true);
+        warningFeedback.setOutputMarkupId(true);
+        add(warningFeedback);
         add(feedback);
         add(new Label("saveAsHeader", ResourceUtils.getModel("pageTitle.saveAs")));
 
@@ -78,7 +81,7 @@ public class SaveAsForm extends Form {
                 Model.of("New Template"));
         add(name);
 
-        add(new AjaxButton("submitForm", ResourceUtils.getModel("button.submitForm"), this) {
+        add(new AjaxButton("submitBtn", ResourceUtils.getModel("button.save"), this) {
 
             private static final long serialVersionUID = -97510066651875819L;
 
@@ -97,7 +100,6 @@ public class SaveAsForm extends Form {
                             update = true;
                             warningFeedback.warn(ResourceUtils.getString("warning.overrideTemplate"));
                             target.add(warningFeedback);
-                            this.setModelObject("Update");
                             return;
                         }
                     } else {

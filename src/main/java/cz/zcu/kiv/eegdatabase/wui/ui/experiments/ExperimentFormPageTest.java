@@ -1,5 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import com.google.common.io.Files;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
@@ -24,10 +25,8 @@ import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.basic.*;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.form.Button;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
@@ -37,6 +36,9 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import javax.xml.stream.XMLStreamException;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
@@ -104,6 +106,8 @@ public class ExperimentFormPageTest extends MenuPage {
             sections = readTemplate(dropDownChoice.getModelObject());
         } catch (XMLStreamException e) {
             log.error(e.getMessage());
+        } catch (IOException e) {
+            log.error(e.getMessage());
         }
 
         IModel<List<SectionType>> formModel
@@ -120,12 +124,12 @@ public class ExperimentFormPageTest extends MenuPage {
         final ListView<SectionType> view = new PropertyListView<SectionType>("row", form.getModel()) {
             @Override
             protected void populateItem(final ListItem<SectionType> item) {
-                final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel()){
+                final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel()) {
                     @Override
                     public boolean isEnabled() {
                         boolean selected = item.getModelObject().isSelected();
-                        for(SectionType section : item.getModelObject().getSubsections()){
-                            if(!selected) {
+                        for (SectionType section : item.getModelObject().getSubsections()) {
+                            if (!selected) {
                                 section.setSelected(false);
                             }
                         }
@@ -191,6 +195,8 @@ public class ExperimentFormPageTest extends MenuPage {
                             new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
                 } catch (XMLStreamException e) {
                     log.error(e.getMessage());
+                } catch (IOException e) {
+                    log.error(e.getMessage());
                 }
                 view.setDefaultModel(form.getModel());
                 form.add(view);
@@ -233,7 +239,7 @@ public class ExperimentFormPageTest extends MenuPage {
      * @return list of sections
      * @throws XMLStreamException XML template reading error
      */
-    private List<SectionType> readTemplate(Template template) throws XMLStreamException {
+    private List<SectionType> readTemplate(Template template) throws XMLStreamException, IOException {
         List<SectionType> sections;
         sections = XMLTemplateReader.readTemplate(template.getTemplate());
 
@@ -243,8 +249,8 @@ public class ExperimentFormPageTest extends MenuPage {
     /**
      * Writes sections into xml and returns it as Template
      *
-     * @param sections Sections to write to XML
-     * @param name Template name
+     * @param sections  Sections to write to XML
+     * @param name      Template name
      * @param isDefault true if this template is default for all users
      * @return Template that can be saved to database
      * @throws XMLStreamException XML writing exception
@@ -263,8 +269,8 @@ public class ExperimentFormPageTest extends MenuPage {
     /**
      * Updates existing template
      *
-     * @param sections Sections to write to XML - new Template content
-     * @param template Original Template
+     * @param sections  Sections to write to XML - new Template content
+     * @param template  Original Template
      * @param isDefault true if updated template is default for all users
      * @throws XMLStreamException XML writing exception
      */
@@ -273,6 +279,21 @@ public class ExperimentFormPageTest extends MenuPage {
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
         templateFacade.update(template);
+    }
+
+    private void loadTemplateFromFile(String path) throws IOException {
+        File file = new File(path);
+        if (!file.exists()) {
+            throw new FileNotFoundException();
+        }
+
+        Template def = new Template();
+        def.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
+        def.setName("DEF_TEMPLATE");
+        def.setIsDefault(false);
+        byte[] data = Files.toByteArray(file);
+        def.setTemplate(data);
+        templateFacade.create(def);
     }
 
     private void createModalWindow() {
@@ -300,8 +321,7 @@ public class ExperimentFormPageTest extends MenuPage {
     private void addModalWindowAndButton(MarkupContainer container, final String cookieName,
                                          final String buttonName, final String targetClass, final ModalWindow window) {
 
-        AjaxButton ajaxButton = new AjaxButton(buttonName, ResourceUtils.getModel("label.saveAsTemplate"))
-        {
+        AjaxButton ajaxButton = new AjaxButton(buttonName, ResourceUtils.getModel("label.saveAsTemplate")) {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -315,8 +335,7 @@ public class ExperimentFormPageTest extends MenuPage {
                     @Override
                     public Page createPage() {
                         try {
-                            Constructor<?> cons = null;
-                            cons = Class.forName(targetClass).getConstructor(
+                            Constructor<?> cons = Class.forName(targetClass).getConstructor(
                                     PageReference.class, ModalWindow.class, Form.class, CheckBox.class);
 
                             return (Page) cons.newInstance(

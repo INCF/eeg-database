@@ -1,0 +1,508 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<odML version="1">
+
+	<section>
+		<name>Analysis</name>
+		<required>false</required>
+        <maxCount>10</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>false</selected>
+
+		<section>
+			<name>PSTH</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+	</section>
+
+	<section>
+		<name>Electrode</name>
+		<required>true</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+
+        <section>
+            <name>Hardware</name>
+            <required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+        </section>
+	</section>
+
+	<section>
+		<name>Experiment</name>
+		<required>true</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+
+		<section>
+			<name>Behavior</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Electrophysiology</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Imaging</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Modeling</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Psychophysics</name>
+			<required>false</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>	
+	</section>
+
+	<section>
+		<name>HardwareProperties</name>
+		<required>false</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+
+		<section>
+			<name>Hardware</name>
+			<required>false</required>
+            <maxCount>15</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Attenuator</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>3</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>CameraObjective</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>DataAcquisition</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Eyetracker</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Filter</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Filterset</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>ImageAcquisition</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Lightsource</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Microscope</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>MicroscopeObjective</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Scanner</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>StimulusIsolator</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+	</section>
+
+	<section>
+        <name>HardwareSettings</name>
+		<required>false</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>false</selected>
+
+		<section>
+			<name>Hardware</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Amplifier</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Attenuator</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>CameraObjective</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>DataAcquisition</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Eyetracker</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Filter</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Filterset</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>ImageAcquisition</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Lightsource</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Microscope</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>MicroscopeObjective</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Scanner</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>StimulusIsolator</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+	</section>
+
+	<section>
+		<name>Person</name>
+		<required>true</required>
+        <maxCount>20</maxCount>
+        <minCount>4</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+	</section>
+
+	<section>
+		<name>Preparation</name>
+		<required>false</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>false</selected>
+	</section>
+
+	<section>
+		<name>Recording</name>
+		<required>true</required>
+        <maxCount>1</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+	</section>
+
+	<section>
+		<name>Stimulus</name>
+		<required>false</required>
+        <maxCount>20</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+
+      	<section>
+			<name>DC</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Gabor</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Grating</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Pulse</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Movie</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+		</section>
+
+		<section>
+			<name>Ramp</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>RandomDot</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Sawtooth</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Sinewave</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>Squarewave</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+
+		<section>
+			<name>WhiteNoise</name>
+			<required>false</required>
+            <maxCount>10</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>false</selected>
+		</section>
+	</section>
+
+	<section>
+		<name>Subject</name>
+		<required>true</required>
+        <maxCount>20</maxCount>
+        <minCount>1</minCount>
+        <selectedCount>1</selectedCount>
+        <selected>true</selected>
+
+        <section>
+            <name>Person</name>
+            <required>true</required>
+            <maxCount>1</maxCount>
+            <minCount>1</minCount>
+            <selectedCount>1</selectedCount>
+            <selected>true</selected>
+        </section>
+	</section>
+
+</odML>

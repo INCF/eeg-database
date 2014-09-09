@@ -10,6 +10,7 @@ import javax.xml.stream.events.EndElement;
 import javax.xml.stream.events.StartElement;
 import javax.xml.stream.events.XMLEvent;
 import java.io.ByteArrayInputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -55,22 +56,26 @@ public class XMLTemplateReader {
      * @throws XMLStreamException Error during XML reading
      * @see cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType
      */
-    public static List<SectionType> readTemplate(byte[] template) throws XMLStreamException {
+    public static List<SectionType> readTemplate(byte[] template) throws XMLStreamException, IOException {
         List<SectionType> sections = new ArrayList<SectionType>();
         XMLInputFactory inputFactory = XMLInputFactory.newInstance();
         InputStream is = new ByteArrayInputStream(template);
         eventReader = inputFactory.createXMLEventReader(is);
 
-        SectionType section;
-        while (eventReader.hasNext()) {
-            XMLEvent event = eventReader.nextEvent();
-            if (event.isStartElement()) {
-                String name = event.asStartElement().getName().toString();
-                if (name.equalsIgnoreCase(XMLTags.SECTION)) {
-                    section = readSection();
-                    sections.add(section);
+        try {
+            SectionType section;
+            while (eventReader.hasNext()) {
+                XMLEvent event = eventReader.nextEvent();
+                if (event.isStartElement()) {
+                    String name = event.asStartElement().getName().toString();
+                    if (name.equalsIgnoreCase(XMLTags.SECTION)) {
+                        section = readSection();
+                        sections.add(section);
+                    }
                 }
             }
+        } finally {
+            is.close();
         }
         return sections;
     }
