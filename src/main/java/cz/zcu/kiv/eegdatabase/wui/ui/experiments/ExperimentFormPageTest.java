@@ -354,6 +354,7 @@ public class ExperimentFormPageTest extends MenuPage {
                         return null;
                     }
                 });
+                
                 window.show(target);
             }
         };
