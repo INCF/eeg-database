@@ -255,6 +255,10 @@
           class="cz.zcu.kiv.eegdatabase.logic.controller.nif.NIFMultiController">
     </bean>
 
+    <bean name="semanticMultiController"
+          class="cz.zcu.kiv.eegdatabase.logic.controller.semantic.SemanticMultiController">
+    </bean>
+
 	<bean id="dataTransformer" class="cz.zcu.kiv.eegdatabase.logic.signal.EEGDataTransformer" />
 
 	<!-- Solr POJO indexer -->
