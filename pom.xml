@@ -110,24 +110,32 @@
             <version>1.07</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-java</artifactId>
-            <version>2.7.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium.core</groupId>
-            <artifactId>selenium-core</artifactId>
-            <version>1.0</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium.client-drivers</groupId>
-            <artifactId>selenium-java-client-driver</artifactId>
-            <version>1.0</version>
-            <scope>test</scope>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>org.testng</groupId>-->
+            <!--<artifactId>testng</artifactId>-->
+            <!--<version>6.3.1</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium</groupId>-->
+            <!--<artifactId>selenium-java</artifactId>-->
+            <!--<version>2.7.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium.core</groupId>-->
+            <!--<artifactId>selenium-core</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+        <!--<dependency>-->
+            <!--<groupId>org.seleniumhq.selenium.client-drivers</groupId>-->
+            <!--<artifactId>selenium-java-client-driver</artifactId>-->
+            <!--<version>1.0</version>-->
+            <!--<scope>test</scope>-->
+        <!--</dependency>-->
+
+
 
 		<!-- ====================================== Slf4j ============================================== -->
 
@@ -647,22 +655,45 @@
         </dependency>
 
         <dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-commons-tests</artifactId>
-            <version>2.4</version>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>3.9</version>
+            <exclusions>
+                <exclusion>
+                    <artifactId>xml-apis</artifactId>
+                    <groupId>xml-apis</groupId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-selenium-plugin</artifactId>
-            <version>3.0</version>
+            <groupId>xml-apis</groupId>
+            <artifactId>xml-apis</artifactId>
+            <version>1.4.01</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpclient</artifactId>
+            <version>4.3.5</version>
         </dependency>
 
-        <dependency>
-            <groupId>net.sourceforge.jwebunit</groupId>
-            <artifactId>jwebunit-webdriver-plugin</artifactId>
-            <version>3.2</version>
-        </dependency>
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge.jwebunit</groupId>-->
+            <!--<artifactId>jwebunit-commons-tests</artifactId>-->
+            <!--<version>2.4</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge.jwebunit</groupId>-->
+            <!--<artifactId>jwebunit-selenium-plugin</artifactId>-->
+            <!--<version>3.0</version>-->
+        <!--</dependency>-->
+
+        <!--<dependency>-->
+            <!--<groupId>net.sourceforge.jwebunit</groupId>-->
+            <!--<artifactId>jwebunit-webdriver-plugin</artifactId>-->
+            <!--<version>3.2</version>-->
+        <!--</dependency>-->
 
 
         <!--======================================= Other libraries ============================================= -->
