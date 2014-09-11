@@ -47,6 +47,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -98,7 +99,7 @@ public class ExperimentsDetailPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
-        Experiment experiment = facade.getExperimentForDetail(experimentId);
+        final Experiment experiment = facade.getExperimentForDetail(experimentId);
 
         add(new Label("experimentId", experiment.getExperimentId()+""));
         add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
@@ -188,7 +189,10 @@ public class ExperimentsDetailPage extends MenuPage {
                     
                     @Override
                     public boolean isVisible() {
-                        return security.isAdmin();
+                        boolean isOwner = experiment.getPersonByOwnerId().getPersonId() == EEGDataBaseSession.get().getLoggedUser().getPersonId();
+                        boolean isAdmin = security.isAdmin();
+                        boolean isGroupAdmin = security.userIsAdminInGroup(experiment.getResearchGroup().getResearchGroupId());
+                        return isAdmin || isOwner || isGroupAdmin;
                     }
 
                 });
