@@ -35,7 +35,6 @@ import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.concurrent.TimeUnit;
 
 import static org.junit.Assert.*;
 import static org.junit.Assert.assertTrue;
@@ -52,21 +51,13 @@ public class LoginTest extends AbstractUITest {
 
     private WebTester tester;
 
-//    private static WebDriver driver;
-
-    private static String baseURL;
-    private static final int DRIVER_IMPLICIT_WAITING_TIME = 300;
-
-
-
     @Before
     @Transactional
     public void createPerson() {
-        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_USER);
-        person.setConfirmed(true);
-        personDao.create(person);
+//        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_USER);
+//        person.setConfirmed(true);
+//        personDao.create(person);
 
-        //System.out.println("creating driver");
         tester = new WebTester();
         tester.setBaseUrl("http://www.google.com");
     }
@@ -76,15 +67,8 @@ public class LoginTest extends AbstractUITest {
 
 
         tester.beginAt("/");
-
-//        driver.get(baseURL + "/home-page?0");
-//        assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*No user logged[\\s\\S]*$"));
-      tester.assertTitleEquals("Google");
+        tester.assertTitleEquals("Google");
 
     }
 
-//    @AfterClass
-//    public static void tearDown() throws Exception {
-//        driver.quit();
-//    }
 }
