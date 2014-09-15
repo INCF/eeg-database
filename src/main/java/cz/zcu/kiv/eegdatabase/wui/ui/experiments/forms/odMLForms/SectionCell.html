@@ -2,15 +2,20 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
       lang="en">
+
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
 </head>
 <body>
 <wicket:panel>
-    <input type="checkbox" wicket:id="selected"/><label wicket:id="name"></label>
+    <h3><label wicket:id="name"/></h3>
+    Enabled:  <input type="checkbox" wicket:id="selected"/>
     <br/>
-    <select wicket:id="selectedCount"></select>
+    Required: <input type="checkbox" wicket:id="required"/>
+    <br/>
+    Min <input  style="width: 50px" type="text" wicket:id="minCount"/>
+        Max <input style="width: 50px" type="text" wicket:id="maxCount"/>
 </wicket:panel>
 </body>
 </html>

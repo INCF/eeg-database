@@ -30,6 +30,7 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -78,13 +79,17 @@ public class ExperimentFormPageTest extends MenuPage {
     @SpringBean
     private TemplateFacade templateFacade;
     private ModalWindow window;
-    private final Form saveForm;
+    //private final Form saveForm;
     private final Form<List<SectionType>> form;
     private final CheckBox defBox;
+    private final FeedbackPanel feedback;
 
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
+
+        feedback = new FeedbackPanel("feedback");
+        feedback.setOutputMarkupId(true);
 
         //----------dropdown---------
         ChoiceRenderer<Template> renderer = new ChoiceRenderer<Template>("name", "templateId");
@@ -117,6 +122,12 @@ public class ExperimentFormPageTest extends MenuPage {
             protected void onSubmit() {
                 super.onSubmit();
             }
+
+            @Override
+            protected void onError() {
+                add(feedback);
+                super.onError();
+            }
         };
 
         form.setOutputMarkupId(true);
@@ -124,30 +135,19 @@ public class ExperimentFormPageTest extends MenuPage {
         final ListView<SectionType> view = new PropertyListView<SectionType>("row", form.getModel()) {
             @Override
             protected void populateItem(final ListItem<SectionType> item) {
-                final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel()) {
-                    @Override
-                    public boolean isEnabled() {
-                        boolean selected = item.getModelObject().isSelected();
-                        for (SectionType section : item.getModelObject().getSubsections()) {
-                            if (!selected) {
-                                section.setSelected(false);
-                            }
-                        }
-                        return selected;
-                    }
-                };
+                final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel());
                 final SectionCell sectionCell = new SectionCell("cell1", item.getModel());
-                subsectionsCell.setOutputMarkupId(true);
                 item.add(sectionCell);
                 item.add(subsectionsCell);
             }
         };
-        view.setOutputMarkupId(true);
+
         //-----save components-----
-        saveForm = new Form("saveForm");
+        //saveForm = new Form("saveForm");
+        //saveForm.setOutputMarkupId(true);
         defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
         defBox.setVisible(false);
-        final Label defLabel = new Label("defLabel");
+        final Label defLabel = new Label("defLabel", "hhhhhhhh");
         defLabel.setVisible(false);
         //visible only for admin
         if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_ADMIN")) {
@@ -158,9 +158,9 @@ public class ExperimentFormPageTest extends MenuPage {
                 Model.of(dropDownChoice.getModelObject().getName()));
         saveName.setOutputMarkupId(true);
 
-        final Button save = new Button("saveBT", ResourceUtils.getModel("label.saveTemplate")) {
+        final AjaxButton save = new AjaxButton("saveBT", ResourceUtils.getModel("label.saveTemplate")) {
             @Override
-            public void onSubmit() {
+            public void onSubmit(AjaxRequestTarget target, Form<?> f) {
                 List<SectionType> sections = form.getModelObject();
                 String name = saveName.getModelObject();
                 Person user = EEGDataBaseSession.get().getLoggedUser();
@@ -184,6 +184,12 @@ public class ExperimentFormPageTest extends MenuPage {
                         error(ResourceUtils.getString("error.writingTemplate"));
                     }
                 }
+                target.add(feedback);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(feedback);
             }
         };
 
@@ -210,12 +216,13 @@ public class ExperimentFormPageTest extends MenuPage {
         dropDownChoice.add(onChangeFormBehavior);
         form.add(view);
         add(dropDownChoice);
+        form.add(feedback);
         add(form);
-        saveForm.add(save);
-        saveForm.add(saveName);
-        saveForm.add(defBox);
-        saveForm.add(defLabel);
-        add(saveForm);
+        form.add(save);
+        form.add(saveName);
+        form.add(defBox);
+        form.add(defLabel);
+        //add(saveForm);
         createModalWindow();
     }
 
@@ -314,7 +321,7 @@ public class ExperimentFormPageTest extends MenuPage {
         });
 
         add(window);
-        addModalWindowAndButton(saveForm, "save-as",
+        addModalWindowAndButton(form, "save-as",
                 "saveAsBT", AddSaveAsPage.class.getName(), window);
     }
 
@@ -356,6 +363,11 @@ public class ExperimentFormPageTest extends MenuPage {
                 });
                 
                 window.show(target);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(feedback);
             }
         };
         ajaxButton.setDefaultFormProcessing(false);

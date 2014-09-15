@@ -5,8 +5,6 @@
 <body>
 <wicket:extend>
     <div class="leftMenu" wicket:id="leftMenu"></div>
-    <div wicket:id="modalWindow"></div>
-
     <div class="test">
         <div class="form-item">
             <label><wicket:message key="label.selectTemplate"></wicket:message></label>
@@ -25,17 +23,19 @@
                 </tr>
             </table>
             <input type="submit" value="Next"/>
-        </form>
 
-        <div>
-            <form wicket:id="saveForm">
+            <div>
                 <input type="text" wicket:id="saveText"/>
                 <label wicket:id="defLabel"/><wicket:message key="label.isTemplateDefault"></wicket:message>
                 <input type="checkbox" wicket:id="defBox">
                 <input type="submit" wicket:id="saveBT">
                 <input type="submit" wicket:id="saveAsBT">
-            </form>
-        </div>
+            </div>
+            <div class="error" wicket:id="feedback"></div>
+        </form>
+
+        <div wicket:id="modalWindow"></div>
+
     </div>
 </wicket:extend>
 </body>

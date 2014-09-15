@@ -1,16 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.odMLForms;
 
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.OnChangeAjaxBehavior;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.RequiredTextField;
+import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
-
-import java.util.ArrayList;
-import java.util.List;
+import org.apache.wicket.validation.validator.RangeValidator;
 
 /**
  * ********************************************************************************************************************
@@ -50,44 +47,17 @@ public class SectionCell extends Panel {
      * @param model model of this cell
      */
     private void addCell(IModel<SectionType> model) {
-        SectionType data = model.getObject();
-        List<Integer> dropDownVals = new ArrayList<Integer>();
-        final int maxCount = data.getMaxCount();
-        final int minCount = data.getMinCount();
+        final CheckBox requiredBox = new CheckBox("required");
+        final CheckBox enabledBox = new CheckBox("selected");
+        final TextField<Integer> min = new RequiredTextField<Integer>("minCount");
+        final TextField<Integer> max = new RequiredTextField<Integer>("maxCount");
 
-        for (int i = minCount; i <= maxCount; i++) {
-            dropDownVals.add(i);
-        }
-
-        final CheckBox box = new CheckBox("selected"){
-            @Override
-            protected boolean wantOnSelectionChangedNotifications() {
-                return true;
-            }
-        };
-        box.setEnabled(!data.isRequired());
-
-        final DropDownChoice<Integer> dropDownChoice = new DropDownChoice<Integer>("selectedCount",
-                dropDownVals) {
-            @Override
-            protected void onConfigure() {
-                super.onConfigure();
-                this.setEnabled(box.getModelObject());
-            }
-        };
-        dropDownChoice.setOutputMarkupId(true);
-
-        OnChangeAjaxBehavior onChangeBehavior = new OnChangeAjaxBehavior() {
-            protected void onUpdate(AjaxRequestTarget target) {
-                dropDownChoice.setEnabled(box.getModelObject());
-                target.add(dropDownChoice);
-
-            }
-        };
-
-        box.add(onChangeBehavior);
-        add(dropDownChoice);
-        add(box);
+        min.add(RangeValidator.<Integer>range(0, 50));
+        max.add(RangeValidator.<Integer>range(0, 50));
+        add(requiredBox);
+        add(enabledBox);
+        add(min);
+        add(max);
         add(new Label("name"));
     }
 }
