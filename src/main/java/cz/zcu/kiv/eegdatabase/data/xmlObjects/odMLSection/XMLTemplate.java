@@ -1,11 +1,8 @@
-package cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate;
+package cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection;
 
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTemplate;
-
-import javax.xml.bind.JAXBContext;
-import javax.xml.bind.JAXBException;
-import javax.xml.bind.Marshaller;
-import java.io.ByteArrayOutputStream;
+import javax.xml.bind.annotation.*;
+import java.io.Serializable;
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -29,25 +26,41 @@ import java.io.ByteArrayOutputStream;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * XMLTemplateWriter, 2014/07/08 10:16 Prokop
+ * XMLTemplate, 2014/09/16 10:01 administrator
  * <p/>
  * ********************************************************************************************************************
  */
-public class XMLTemplateWriter {
+@XmlRootElement
+@XmlAccessorType(XmlAccessType.FIELD)
+public class XMLTemplate implements Serializable {
 
-    public XMLTemplateWriter() {
+    private String name;
+
+    @XmlElementWrapper(name="Sections")
+    @XmlElement(name="Section")
+    private List<SectionType> sections;
+
+    public XMLTemplate() { }
+
+    public XMLTemplate(List<SectionType> sections, String name) {
+        this.sections = sections;
+        this.name = name;
     }
 
-    public static byte[] writeTemplate(XMLTemplate template) throws JAXBException {
-        JAXBContext context = JAXBContext.newInstance(XMLTemplate.class);
-        Marshaller marshaller = context.createMarshaller();
-        marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+    public List<SectionType> getSections() {
+        return sections;
+    }
 
-        ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
-        marshaller.marshal(template, byteOut);
+    public String getName() {
+        return name;
+    }
 
-        marshaller.marshal(template, System.out);
+    public void setSections(List<SectionType> sections) {
 
-        return byteOut.toByteArray();
+        this.sections = sections;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 }

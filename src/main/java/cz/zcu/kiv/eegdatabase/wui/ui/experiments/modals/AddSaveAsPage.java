@@ -1,6 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTemplate;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.SaveAsForm;
 import org.apache.wicket.PageReference;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -9,8 +9,6 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.Form;
-
-import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -40,7 +38,7 @@ import java.util.List;
  */
 public class AddSaveAsPage extends WebPage {
     public AddSaveAsPage(final PageReference modalWindowPage,
-                         final ModalWindow window, final Form<List<SectionType>> form,
+                         final ModalWindow window, final Form<XMLTemplate> form,
                          final CheckBox defBox) {
 
         add(new SaveAsForm("addForm", window, form, defBox));

@@ -1,19 +1,12 @@
 package cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate;
 
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTags;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTemplate;
 
-import javax.xml.stream.XMLEventReader;
-import javax.xml.stream.XMLInputFactory;
-import javax.xml.stream.XMLStreamException;
-import javax.xml.stream.events.EndElement;
-import javax.xml.stream.events.StartElement;
-import javax.xml.stream.events.XMLEvent;
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import java.io.ByteArrayInputStream;
-import java.io.IOException;
 import java.io.InputStream;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -43,126 +36,15 @@ import java.util.List;
  */
 public class XMLTemplateReader {
 
-    private static XMLEventReader eventReader;
-
     public XMLTemplateReader() {
     }
 
-    /**
-     * Reads XML template into list of sections
-     *
-     * @param template template content
-     * @return list of sections
-     * @throws XMLStreamException Error during XML reading
-     * @see cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType
-     */
-    public static List<SectionType> readTemplate(byte[] template) throws XMLStreamException, IOException {
-        List<SectionType> sections = new ArrayList<SectionType>();
-        XMLInputFactory inputFactory = XMLInputFactory.newInstance();
-        InputStream is = new ByteArrayInputStream(template);
-        eventReader = inputFactory.createXMLEventReader(is);
+    public static XMLTemplate read(byte[] xml) throws JAXBException {
+        JAXBContext context = JAXBContext.newInstance(XMLTemplate.class);
+        Unmarshaller unmarshaller = context.createUnmarshaller();
+        InputStream is = new ByteArrayInputStream(xml);
+        XMLTemplate template = (XMLTemplate)unmarshaller.unmarshal(is);
 
-        try {
-            SectionType section;
-            while (eventReader.hasNext()) {
-                XMLEvent event = eventReader.nextEvent();
-                if (event.isStartElement()) {
-                    String name = event.asStartElement().getName().toString();
-                    if (name.equalsIgnoreCase(XMLTags.SECTION)) {
-                        section = readSection();
-                        sections.add(section);
-                    }
-                }
-            }
-        } finally {
-            is.close();
-        }
-        return sections;
-    }
-
-    /**
-     * Reads one section from XML
-     *
-     * @return section
-     * @throws XMLStreamException Error during XML reading
-     */
-    private static SectionType readSection() throws XMLStreamException {
-        SectionType section = null;
-        SectionType subsection;
-        //------section attributes-------
-        String name = "";
-        Boolean required = false;
-        int maxCount = 1;
-        List<SectionType> subsections = new ArrayList<SectionType>();
-        int minCount = 1;
-        int selectedCount = 1;
-        boolean selected = false;
-        //-------------------------------
-
-        boolean readNext = true;
-        while (readNext) {
-            XMLEvent event = eventReader.nextEvent();
-
-            if (event.isStartElement()) {
-                StartElement startElement = event.asStartElement();
-                //section inside section => subsection
-                if (startElement.getName().getLocalPart().equalsIgnoreCase(XMLTags.SECTION)) {
-                    subsection = readSection();
-                    subsections.add(subsection);
-
-                    continue;
-                }
-
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.NAME)) {
-                    event = eventReader.nextEvent();
-                    name = event.asCharacters().getData();
-                    continue;
-                }
-
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.REQUIRED)) {
-                    event = eventReader.nextEvent();
-                    required = Boolean.parseBoolean(event.asCharacters().getData());
-                    continue;
-                }
-
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.MAX_COUNT)) {
-                    event = eventReader.nextEvent();
-                    maxCount = Integer.parseInt(event.asCharacters().getData());
-                    continue;
-                }
-
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.MIN_COUNT)) {
-                    event = eventReader.nextEvent();
-                    minCount = Integer.parseInt(event.asCharacters().getData());
-                    continue;
-                }
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.SELECTED_COUNT)) {
-                    event = eventReader.nextEvent();
-                    selectedCount = Integer.parseInt(event.asCharacters().getData());
-                    continue;
-                }
-                if (event.asStartElement().getName().getLocalPart()
-                        .equalsIgnoreCase(XMLTags.SELECTED)) {
-                    event = eventReader.nextEvent();
-                    selected = Boolean.parseBoolean(event.asCharacters().getData());
-                }
-            }
-            // If we reach the end of an section element, we end loop and return new section
-            else if (event.isEndElement()) {
-                EndElement endElement = event.asEndElement();
-                if (endElement.getName().getLocalPart().equalsIgnoreCase(XMLTags.SECTION)) {
-                    section = new SectionType(name, required, maxCount, subsections,
-                            minCount, selectedCount, selected);
-                    readNext = false;
-                }
-            }
-        }
-
-        return section;
+        return  template;
     }
 }

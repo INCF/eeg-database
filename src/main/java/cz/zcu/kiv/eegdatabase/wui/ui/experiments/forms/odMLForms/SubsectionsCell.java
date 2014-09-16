@@ -42,8 +42,7 @@ public class SubsectionsCell extends Panel {
      */
     public SubsectionsCell(String id, IModel<SectionType> model) {
         super(id, model);
-        final ListView<SectionType> view = new PropertyListView<SectionType>("row",
-                model.getObject().getSubsections()) {
+        final ListView<SectionType> view = new PropertyListView<SectionType>("subsections") {
             @Override
             protected void populateItem(ListItem<SectionType> item) {
                 final SectionCell subCell = new SectionCell("subCell", item.getModel());
@@ -51,29 +50,6 @@ public class SubsectionsCell extends Panel {
             }
         };
 
-/*        List<String> data = new ArrayList<String>();
-        data.add("test 1");
-        data.add("test 2");
-
-        final DropDownChoice<String> dropDownChoice = new DropDownChoice<String>("sectionSelect", Model.of(data.get(0)),data);
-        dropDownChoice.setOutputMarkupId(true);
-
-        AjaxSubmitLink addLink = new AjaxSubmitLink("addRow", form) {
-            @Override
-            public void onSubmit(AjaxRequestTarget target, Form form) {
-                SectionType section = new SectionType(dropDownChoice.getModelObject(),false, 50,new ArrayList<SectionType>(),1,1, true);
-                view.getModelObject().add(section);
-                if (target != null)
-                    target.add(this);
-            }
-        };*/
-
-        //addLink.setDefaultFormProcessing(false);
-
-        //add(dropDownChoice);
-        //add(addLink);
-
-        //view.setOutputMarkupId(true);
         add(view);
     }
 }

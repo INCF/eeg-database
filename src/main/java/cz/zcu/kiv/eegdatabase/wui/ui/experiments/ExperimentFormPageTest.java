@@ -4,6 +4,7 @@ import com.google.common.io.Files;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTemplate;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateReader;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateWriter;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -32,11 +33,10 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import javax.xml.stream.XMLStreamException;
+import javax.xml.bind.JAXBException;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -79,10 +79,10 @@ public class ExperimentFormPageTest extends MenuPage {
     @SpringBean
     private TemplateFacade templateFacade;
     private ModalWindow window;
-    //private final Form saveForm;
-    private final Form<List<SectionType>> form;
+    private final Form<XMLTemplate> form;
     private final CheckBox defBox;
     private final FeedbackPanel feedback;
+    private final DropDownChoice<Template> dropDownChoice;
 
     public ExperimentFormPageTest() {
         setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
@@ -103,21 +103,19 @@ public class ExperimentFormPageTest extends MenuPage {
             }
 
         };
-        final DropDownChoice<Template> dropDownChoice = new DropDownChoice<Template>("templateDD",
+        dropDownChoice = new DropDownChoice<Template>("templateDD",
                 new Model<Template>((choiceModel.getObject().get(0))), choiceModel, renderer);
         //---------form---------
-        List<SectionType> sections = new ArrayList<SectionType>();
+        XMLTemplate xmlTemplate = new XMLTemplate();
         try {
-            sections = readTemplate(dropDownChoice.getModelObject());
-        } catch (XMLStreamException e) {
-            log.error(e.getMessage());
-        } catch (IOException e) {
+            xmlTemplate = readTemplate(dropDownChoice.getModelObject());
+        } catch (JAXBException e) {
             log.error(e.getMessage());
         }
 
-        IModel<List<SectionType>> formModel
-                = new CompoundPropertyModel<List<SectionType>>(sections);
-        form = new Form<List<SectionType>>("form", formModel) {
+        CompoundPropertyModel<XMLTemplate> formModel
+                = new CompoundPropertyModel<XMLTemplate>(xmlTemplate);
+        form = new Form<XMLTemplate>("form", formModel) {
             @Override
             protected void onSubmit() {
                 super.onSubmit();
@@ -132,7 +130,7 @@ public class ExperimentFormPageTest extends MenuPage {
 
         form.setOutputMarkupId(true);
         //--------listView-------
-        final ListView<SectionType> view = new PropertyListView<SectionType>("row", form.getModel()) {
+        final ListView<SectionType> view = new PropertyListView<SectionType>("sections") {
             @Override
             protected void populateItem(final ListItem<SectionType> item) {
                 final SubsectionsCell subsectionsCell = new SubsectionsCell("cell2", item.getModel());
@@ -143,25 +141,22 @@ public class ExperimentFormPageTest extends MenuPage {
         };
 
         //-----save components-----
-        //saveForm = new Form("saveForm");
-        //saveForm.setOutputMarkupId(true);
         defBox = new CheckBox("defBox", Model.of(Boolean.FALSE));
         defBox.setVisible(false);
-        final Label defLabel = new Label("defLabel", "hhhhhhhh");
+        final Label defLabel = new Label("defLabel", "");
         defLabel.setVisible(false);
         //visible only for admin
         if (EEGDataBaseSession.get().getLoggedUser().getAuthority().equalsIgnoreCase("ROLE_ADMIN")) {
             defBox.setVisible(true);
             defLabel.setVisible(true);
         }
-        final TextField<String> saveName = new TextField<String>("saveText",
-                Model.of(dropDownChoice.getModelObject().getName()));
+        final TextField<String> saveName = new TextField<String>("name");
         saveName.setOutputMarkupId(true);
 
         final AjaxButton save = new AjaxButton("saveBT", ResourceUtils.getModel("label.saveTemplate")) {
             @Override
             public void onSubmit(AjaxRequestTarget target, Form<?> f) {
-                List<SectionType> sections = form.getModelObject();
+                XMLTemplate xmlTemplate = form.getModelObject();
                 String name = saveName.getModelObject();
                 Person user = EEGDataBaseSession.get().getLoggedUser();
                 Template template = templateFacade.getTemplateByPersonAndName(user.getPersonId(), name);
@@ -169,22 +164,23 @@ public class ExperimentFormPageTest extends MenuPage {
                 //template with same name exists => update
                 if (template != null) {
                     try {
-                        updateTemplate(sections, template, isDefault);
-                    } catch (XMLStreamException e) {
+                        updateTemplate(xmlTemplate, template, isDefault);
+                    } catch (JAXBException e) {
                         log.error(e.getMessage(), e);
                         error(ResourceUtils.getString("error.writingTemplate"));
                     }
 
                 } else { //template does not exists => create
                     try {
-                        template = createTemplate(sections, name, isDefault);
+                        template = createTemplate(xmlTemplate, isDefault);
                         templateFacade.create(template);
-                    } catch (XMLStreamException e) {
+                    } catch (JAXBException e) {
                         log.error(e.getMessage(), e);
                         error(ResourceUtils.getString("error.writingTemplate"));
                     }
                 }
                 target.add(feedback);
+                target.add(dropDownChoice);
             }
 
             @Override
@@ -198,22 +194,19 @@ public class ExperimentFormPageTest extends MenuPage {
             protected void onUpdate(AjaxRequestTarget target) {
                 try {
                     form.setDefaultModel(
-                            new CompoundPropertyModel<List<SectionType>>(readTemplate(dropDownChoice.getModelObject())));
-                } catch (XMLStreamException e) {
-                    log.error(e.getMessage());
-                } catch (IOException e) {
+                            new CompoundPropertyModel<XMLTemplate>(readTemplate(dropDownChoice.getModelObject())));
+                } catch (JAXBException e) {
                     log.error(e.getMessage());
                 }
-                view.setDefaultModel(form.getModel());
                 form.add(view);
-                saveName.setDefaultModel(Model.of(dropDownChoice.getModelObject().getName()));
+                form.add(saveName);
                 target.add(form);
-                target.add(saveName);
             }
         };
         //---------------------------
 
         dropDownChoice.add(onChangeFormBehavior);
+        dropDownChoice.setOutputMarkupId(true);
         form.add(view);
         add(dropDownChoice);
         form.add(feedback);
@@ -222,7 +215,6 @@ public class ExperimentFormPageTest extends MenuPage {
         form.add(saveName);
         form.add(defBox);
         form.add(defLabel);
-        //add(saveForm);
         createModalWindow();
     }
 
@@ -244,30 +236,24 @@ public class ExperimentFormPageTest extends MenuPage {
      *
      * @param template selected template
      * @return list of sections
-     * @throws XMLStreamException XML template reading error
      */
-    private List<SectionType> readTemplate(Template template) throws XMLStreamException, IOException {
-        List<SectionType> sections;
-        sections = XMLTemplateReader.readTemplate(template.getTemplate());
-
-        return sections;
+    private XMLTemplate readTemplate(Template template) throws JAXBException {
+        return XMLTemplateReader.read(template.getTemplate());
     }
 
     /**
      * Writes sections into xml and returns it as Template
      *
-     * @param sections  Sections to write to XML
-     * @param name      Template name
+     * @param xmlTemplate  Template to write to XML
      * @param isDefault true if this template is default for all users
      * @return Template that can be saved to database
-     * @throws XMLStreamException XML writing exception
      */
-    private Template createTemplate(List<SectionType> sections, String name, boolean isDefault) throws XMLStreamException {
+    private Template createTemplate(XMLTemplate xmlTemplate, boolean isDefault) throws JAXBException {
         Template template = new Template();
-        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(xmlTemplate);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
-        template.setName(name);
+        template.setName(xmlTemplate.getName());
         template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
 
         return template;
@@ -276,13 +262,12 @@ public class ExperimentFormPageTest extends MenuPage {
     /**
      * Updates existing template
      *
-     * @param sections  Sections to write to XML - new Template content
+     * @param xmlTemplate  new Template content
      * @param template  Original Template
      * @param isDefault true if updated template is default for all users
-     * @throws XMLStreamException XML writing exception
      */
-    private void updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
-        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+    private void updateTemplate(XMLTemplate xmlTemplate, Template template, boolean isDefault) throws JAXBException {
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(xmlTemplate);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
         templateFacade.update(template);
@@ -316,7 +301,7 @@ public class ExperimentFormPageTest extends MenuPage {
 
             @Override
             public void onClose(AjaxRequestTarget target) {
-                //target.add(AddExperimentEnvironmentForm.this);
+                target.add(dropDownChoice);
             }
         });
 

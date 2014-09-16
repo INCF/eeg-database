@@ -1,5 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection;
 
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import java.io.Serializable;
 import java.util.List;
 
@@ -29,32 +33,34 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
+@XmlAccessorType(XmlAccessType.FIELD)
 public class SectionType implements Serializable {
 
-    //section name
-    private final String name;
-    //is section required?
-    private final boolean required;
-    //Max section count
-    private final int maxCount;
-    //Min section count
-    private final int minCount;
-    //List of possible subsections
-    private final List<SectionType> subsections;
-    //Selected count of sections
-    private int selectedCount;
-    //Is section selected?
-    private boolean selected;
+    private String name;
 
-    public SectionType(String name, boolean required, int maxCount, List<SectionType> subsections,
-                       int minCount, int selectedCount, boolean selected) {
+    private boolean required;
+
+    private boolean sectionUsed;
+
+    private int max;
+
+    private int min;
+
+    @XmlElementWrapper(name="Subsections")
+    @XmlElement(name="Subsection")
+    private List<SectionType> subsections;
+
+    public SectionType(String name, boolean required, List<SectionType> subsections,
+                       int min, int max, boolean sectionUsed) {
         this.name = name;
         this.required = required;
-        this.maxCount = maxCount;
+        this.max = max;
         this.subsections = subsections;
-        this.minCount = minCount;
-        this.selectedCount = selectedCount;
-        this.selected = selected;
+        this.min = min;
+        this.sectionUsed = sectionUsed;
+    }
+
+    public SectionType() {
     }
 
     /*
@@ -74,31 +80,43 @@ public class SectionType implements Serializable {
         return required;
     }
 
-    public int getMaxCount() {
-        return maxCount;
+    public int getMax() {
+        return max;
     }
 
     public List<SectionType> getSubsections() {
         return subsections;
     }
 
-    public int getMinCount() {
-        return minCount;
+    public int getMin() {
+        return min;
     }
 
-    public boolean isSelected() {
-        return selected;
+    public boolean isSectionUsed() {
+        return sectionUsed;
     }
 
-    public void setSelected(boolean selected) {
-        this.selected = selected;
+    public void setSectionUsed(boolean sectionUsed) {
+        this.sectionUsed = sectionUsed;
     }
 
-    public int getSelectedCount() {
-        return selectedCount;
+    public void setName(String name) {
+        this.name = name;
     }
 
-    public void setSelectedCount(int selectedCount) {
-        this.selectedCount = selectedCount;
+    public void setRequired(boolean required) {
+        this.required = required;
+    }
+
+    public void setMax(int max) {
+        this.max = max;
+    }
+
+    public void setMin(int min) {
+        this.min = min;
+    }
+
+    public void setSubsections(List<SectionType> subsections) {
+        this.subsections = subsections;
     }
 }

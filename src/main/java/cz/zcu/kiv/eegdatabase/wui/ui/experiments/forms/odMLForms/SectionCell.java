@@ -48,9 +48,9 @@ public class SectionCell extends Panel {
      */
     private void addCell(IModel<SectionType> model) {
         final CheckBox requiredBox = new CheckBox("required");
-        final CheckBox enabledBox = new CheckBox("selected");
-        final TextField<Integer> min = new RequiredTextField<Integer>("minCount");
-        final TextField<Integer> max = new RequiredTextField<Integer>("maxCount");
+        final CheckBox enabledBox = new CheckBox("sectionUsed");
+        final TextField<Integer> min = new RequiredTextField<Integer>("min");
+        final TextField<Integer> max = new RequiredTextField<Integer>("max");
 
         min.add(RangeValidator.<Integer>range(0, 50));
         max.add(RangeValidator.<Integer>range(0, 50));

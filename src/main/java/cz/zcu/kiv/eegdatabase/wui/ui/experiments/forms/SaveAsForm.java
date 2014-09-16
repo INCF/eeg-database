@@ -1,11 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms;
 
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButton;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogButtons;
-import com.googlecode.wicket.jquery.ui.widget.dialog.DialogIcon;
-import com.googlecode.wicket.jquery.ui.widget.dialog.MessageDialog;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.SectionType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.odMLSection.XMLTemplate;
 import cz.zcu.kiv.eegdatabase.logic.xml.XMLTemplate.XMLTemplateWriter;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -21,10 +17,10 @@ import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import javax.xml.stream.XMLStreamException;
-import java.util.List;
+import javax.xml.bind.JAXBException;
 
 /**
  * ********************************************************************************************************************
@@ -65,7 +61,7 @@ public class SaveAsForm extends Form {
      *
      * @param id See Component
      */
-    public SaveAsForm(String id, final ModalWindow window, final Form<List<SectionType>> form,
+    public SaveAsForm(String id, final ModalWindow window, final Form<XMLTemplate> form,
                       final CheckBox defBox) {
         super(id, Model.of("New Template"));
 
@@ -77,8 +73,7 @@ public class SaveAsForm extends Form {
         add(feedback);
         add(new Label("saveAsHeader", ResourceUtils.getModel("pageTitle.saveAs")));
 
-        final RequiredTextField<String> name = new RequiredTextField<String>("Name",
-                Model.of("New Template"));
+        final RequiredTextField<String> name = new RequiredTextField<String>("Name", new PropertyModel<String>(form.getModelObject(), "name"));
         add(name);
 
         add(new AjaxButton("submitBtn", ResourceUtils.getModel("button.save"), this) {
@@ -92,9 +87,10 @@ public class SaveAsForm extends Form {
                         String templateName = name.getModelObject();
                         if (templateFacade.canSaveName(templateName,
                                 EEGDataBaseSession.get().getLoggedUser().getPersonId())) {
-                            List<SectionType> sections = form.getModelObject();
+                            XMLTemplate xmlTemplate = form.getModelObject();
+                            xmlTemplate.setName(name.getModelObject());
                             boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
-                            Template template = createTemplate(sections, templateName, isDefault);
+                            Template template = createTemplate(xmlTemplate, isDefault);
                             templateFacade.create(template);
                         } else {
                             update = true;
@@ -104,20 +100,20 @@ public class SaveAsForm extends Form {
                         }
                     } else {
                         String templateName = name.getModelObject();
-                        List<SectionType> sections = form.getModelObject();
+                        XMLTemplate xmlTemplate = form.getModelObject();
                         boolean isDefault = (defBox.isVisible() && defBox.getModelObject());
                         if (templateFacade.canSaveName(templateName,
                                 EEGDataBaseSession.get().getLoggedUser().getPersonId())) {
-                            Template template = createTemplate(sections, templateName, isDefault);
+                            Template template = createTemplate(xmlTemplate, isDefault);
                             templateFacade.create(template);
                         } else {
                             Template template = templateFacade.getTemplateByPersonAndName(
                                     EEGDataBaseSession.get().getLoggedUser().getPersonId(), templateName);
-                            updateTemplate(sections, template, isDefault);
+                            updateTemplate(xmlTemplate, template, isDefault);
                             update = false;
                         }
                     }
-                } catch (XMLStreamException e) {
+                } catch (JAXBException e) {
                     log.error(e.getMessage(), e);
                     feedback.error(ResourceUtils.getString("error.writingTemplate"));
                     target.add(feedback);
@@ -150,18 +146,16 @@ public class SaveAsForm extends Form {
     /**
      * Writes sections into xml and returns it as Template
      *
-     * @param sections Sections to write to XML
-     * @param name Template name
+     * @param xmlTemplate  Template to write to XML
      * @param isDefault true if this template is default for all users
      * @return Template that can be saved to database
-     * @throws XMLStreamException XML writing exception
      */
-    private Template createTemplate(List<SectionType> sections, String name, boolean isDefault) throws XMLStreamException {
+    private Template createTemplate(XMLTemplate xmlTemplate, boolean isDefault) throws JAXBException {
         Template template = new Template();
-        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(xmlTemplate);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
-        template.setName(name);
+        template.setName(xmlTemplate.getName());
         template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
 
         return template;
@@ -170,13 +164,12 @@ public class SaveAsForm extends Form {
     /**
      * Updates existing template
      *
-     * @param sections Sections to write to XML - new Template content
-     * @param template Original Template
+     * @param xmlTemplate  new Template content
+     * @param template  Original Template
      * @param isDefault true if updated template is default for all users
-     * @throws XMLStreamException XML writing exception
      */
-    private void updateTemplate(List<SectionType> sections, Template template, boolean isDefault) throws XMLStreamException {
-        byte[] xmlData = XMLTemplateWriter.writeTemplate(sections);
+    private void updateTemplate(XMLTemplate xmlTemplate, Template template, boolean isDefault) throws JAXBException {
+        byte[] xmlData = XMLTemplateWriter.writeTemplate(xmlTemplate);
         template.setTemplate(xmlData);
         template.setIsDefault(isDefault);
         templateFacade.update(template);
