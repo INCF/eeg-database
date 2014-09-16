@@ -23,21 +23,18 @@
 package cz.zcu.kiv.eegdatabase.ui;
 
 
-import cz.zcu.kiv.eegdatabase.data.TestUtils;
+import com.gargoylesoftware.htmlunit.BrowserVersion;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.Util;
+
 import net.sourceforge.jwebunit.junit.WebTester;
-import org.junit.AfterClass;
+
+
 import org.junit.Before;
-import org.junit.BeforeClass;
+
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
-
-
-import static org.junit.Assert.*;
-import static org.junit.Assert.assertTrue;
 
 /**
  * Created by stebjan on 10.9.2014.
@@ -53,21 +50,47 @@ public class LoginTest extends AbstractUITest {
 
     @Before
     @Transactional
-    public void createPerson() {
+    public void setUp() {
 //        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_USER);
 //        person.setConfirmed(true);
 //        personDao.create(person);
 
         tester = new WebTester();
-        tester.setBaseUrl("http://www.google.com");
+        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+        // tester.setBaseUrl("http://localhost:8080");
     }
 
     @Test
     public void testLogin() {
 
+        try {
+            tester.beginAt("/home-page");
+        } catch (Exception ex) {
+            System.out.println("text skipped");
+            return;
+        }
+        tester.assertTitleEquals("Home Page");
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.submit(":submit");
+        tester.assertTextPresent("Log out");
 
-        tester.beginAt("/");
-        tester.assertTitleEquals("Google");
+    }
+
+    @Test
+    public void testUnsuccesfullLogin() {
+
+        try {
+            tester.beginAt("/home-page");
+        } catch (Exception ex) {
+            System.out.println("text skipped");
+            return;
+        }
+        tester.assertTitleEquals("Home Page");
+        tester.setTextField("userName", "xxx");
+        tester.setTextField("password", "xxx");
+        tester.submit(":submit");
+        tester.assertTextPresent("User cannot be log in.");
 
     }
 
