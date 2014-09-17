@@ -46,8 +46,6 @@ public class XMLTemplateWriter {
         ByteArrayOutputStream byteOut = new ByteArrayOutputStream();
         marshaller.marshal(template, byteOut);
 
-        marshaller.marshal(template, System.out);
-
         return byteOut.toByteArray();
     }
 }

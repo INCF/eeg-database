@@ -348,6 +348,7 @@ public class ExperimentFormPageTest extends MenuPage {
                 });
                 
                 window.show(target);
+                //target.appendJavaScript("$('#modalWindow').css('top',  window.pageYOffset + 50+\"px\");"); //not working
             }
 
             @Override
