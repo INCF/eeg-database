@@ -51,7 +51,7 @@ import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 @Form
 @Entity
 @Table(name = "RESEARCH_GROUP")
-public class ResearchGroup implements java.io.Serializable {
+public class ResearchGroup implements java.io.Serializable, Comparable<ResearchGroup> {
 
 	@FormId
 	private int researchGroupId;
@@ -505,5 +505,21 @@ public class ResearchGroup implements java.io.Serializable {
 
     public void setLock(boolean lock) {
         this.lock = lock;
+    }
+
+    @Override
+    public int compareTo(ResearchGroup o) {
+        
+        // easy compare for titles.
+        if(o == null)
+            return 1;
+        
+        if(getTitle() == null)
+            return -1;
+        
+        if(o.getTitle() == null)
+            return 1;
+        
+        return getTitle().compareTo(o.getTitle());
     }
 }

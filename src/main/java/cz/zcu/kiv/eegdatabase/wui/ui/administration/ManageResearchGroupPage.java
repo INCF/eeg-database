@@ -35,7 +35,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.components.ResearchGroupManagementForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ResearchGroupSelectForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.AutocompleteResearchGroupSelecForm;
 
 /**
  * Page for research group management, payments etc.
@@ -86,7 +86,7 @@ public class ManageResearchGroupPage extends MenuPage {
 		managementComp.setOutputMarkupId(true);
 		this.add(managementComp);
 
-		this.add(new ResearchGroupSelectForm("groupSelect", selectedGroup, groupChoices, managementComp, false));
+		this.add(new AutocompleteResearchGroupSelecForm("groupSelect", selectedGroup, groupChoices, managementComp));
 	}
 	
 	private ListModel<ResearchGroup> loadGroups() {
