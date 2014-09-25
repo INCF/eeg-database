@@ -29,6 +29,7 @@ import org.junit.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 
 /**
  * Created by stebjan on 16.9.2014.
@@ -44,8 +45,7 @@ public class RegistrationTest extends AbstractUITest {
 //        tester = new WebTester();
 //        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         // tester.setBaseUrl("http://localhost:8080");
-        driver = new FirefoxDriver();
-        System.out.println("driver created");
+        driver = new HtmlUnitDriver();
         driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
     }
 
@@ -56,7 +56,7 @@ public class RegistrationTest extends AbstractUITest {
         Assert.assertEquals(driver.getTitle(), "Registration");
         driver.findElement(By.name(":submit")).click();
         Assert.assertEquals(driver.getTitle(), "Registration");
-        driver.close();
+        driver.quit();
 
     }
 }

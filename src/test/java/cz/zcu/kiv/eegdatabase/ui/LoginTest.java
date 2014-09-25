@@ -38,6 +38,7 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -62,8 +63,7 @@ public class LoginTest extends AbstractUITest {
 //        person.setConfirmed(true);
 //        personDao.create(person);
 
-        driver = new FirefoxDriver();
-        System.out.println("driver created");
+        driver = new HtmlUnitDriver();
         driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
     }
 
