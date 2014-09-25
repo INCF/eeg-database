@@ -22,9 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
+import junit.framework.Assert;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.junit.Before;
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.firefox.FirefoxDriver;
 
 /**
  * Created by stebjan on 16.9.2014.
@@ -33,23 +37,26 @@ public class RegistrationTest extends AbstractUITest {
 
     private WebTester tester;
 
+    private WebDriver driver;
+
     @Before
     public void setUp() {
-        tester = new WebTester();
-        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+//        tester = new WebTester();
+//        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         // tester.setBaseUrl("http://localhost:8080");
+        driver = new FirefoxDriver();
+        System.out.println("driver created");
+        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
     }
 
     @Test
     public void testRegistration() {
-        try {
-            tester.beginAt("/home-page");
-        } catch (Exception ex) {
-            System.out.println("text skipped");
-            return;
-        }
-        tester.clickLinkWithExactText("Register");
-        tester.assertTitleEquals("Registration");
+
+        driver.findElement(By.linkText("Register")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+        driver.findElement(By.name(":submit")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+        driver.close();
 
     }
 }

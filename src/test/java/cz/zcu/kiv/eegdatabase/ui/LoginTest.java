@@ -27,12 +27,17 @@ import com.gargoylesoftware.htmlunit.BrowserVersion;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
+import static junit.framework.Assert.*;
 import net.sourceforge.jwebunit.junit.WebTester;
 
 
 import org.junit.Before;
 
 import org.junit.Test;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -48,6 +53,8 @@ public class LoginTest extends AbstractUITest {
 
     private WebTester tester;
 
+    private WebDriver driver;
+
     @Before
     @Transactional
     public void setUp() {
@@ -55,42 +62,35 @@ public class LoginTest extends AbstractUITest {
 //        person.setConfirmed(true);
 //        personDao.create(person);
 
-        tester = new WebTester();
-        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
-        // tester.setBaseUrl("http://localhost:8080");
+        driver = new FirefoxDriver();
+        System.out.println("driver created");
+        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
     }
 
     @Test
     public void testLogin() {
 
-        try {
-            tester.beginAt("/home-page");
-        } catch (Exception ex) {
-            System.out.println("text skipped");
-            return;
-        }
-        tester.assertTitleEquals("Home Page");
-        tester.setTextField("userName", "jan.stebetak@seznam.cz");
-        tester.setTextField("password", "stebjan");
-        tester.submit(":submit");
-        tester.assertTextPresent("Log out");
+        assertEquals(driver.getTitle(), "Home Page");
+        WebElement name = driver.findElement(By.name("userName"));
+        name.sendKeys("jan.stebetak@seznam.cz");
+        driver.findElement(By.name("password")).sendKeys("stebjan");
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+        assertTrue(driver.getPageSource().contains("Log out"));
+        driver.quit();
 
     }
 
     @Test
     public void testUnsuccesfullLogin() {
-
-        try {
-            tester.beginAt("/home-page");
-        } catch (Exception ex) {
-            System.out.println("text skipped");
-            return;
-        }
-        tester.assertTitleEquals("Home Page");
-        tester.setTextField("userName", "xxx");
-        tester.setTextField("password", "xxx");
-        tester.submit(":submit");
-        tester.assertTextPresent("User cannot be log in.");
+        assertEquals(driver.getTitle(), "Home Page");
+        WebElement name = driver.findElement(By.name("userName"));
+        name.sendKeys("xxx");
+        driver.findElement(By.name("password")).sendKeys("xxx");
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+        assertTrue(driver.getPageSource().contains("User cannot be log in"));
+        driver.quit();
 
     }
 
