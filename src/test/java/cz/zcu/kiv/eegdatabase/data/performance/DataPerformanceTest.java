@@ -86,7 +86,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
 
     }
 
-    @Test(groups = "unit")
+    @Test(groups = "unit", enabled = false)
     public void saveDataTest() throws IOException {
         try {
             createFile(20);
