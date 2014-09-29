@@ -28,10 +28,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -53,7 +53,7 @@ public class SoftwareDaoTest extends AbstractDataAccessTest {
     private Software software;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,8 +71,7 @@ public class SoftwareDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateSoftware() {
         int softwareCountBefore = softwareDao.getAllRecords().size();
         int softwareID = softwareDao.create(software);
@@ -81,16 +80,14 @@ public class SoftwareDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateDefaultRecord() throws Exception {
         int expectedValue = softwareDao.getDefaultRecords().size();
         softwareDao.createDefaultRecord(software);
         assertEquals(expectedValue + 1, softwareDao.getDefaultRecords().size());
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateGroupSoftware() {
         int softwareCountBefore = softwareDao.getAllRecords().size();
         int softwareGroupBefore = softwareDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

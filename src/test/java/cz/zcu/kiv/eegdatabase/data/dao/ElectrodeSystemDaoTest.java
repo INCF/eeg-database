@@ -29,9 +29,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -40,7 +41,6 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by stebjan on 8.7.14.
  */
-@Transactional
 public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
     @Autowired
     private SimpleElectrodeSystemDao electrodeSystemDao;
@@ -51,7 +51,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
     private ElectrodeSystem electrodeSystem;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -69,7 +69,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDisease() {
         int countBefore = electrodeSystemDao.getAllRecords().size();
         int id = electrodeSystemDao.create(electrodeSystem);
@@ -78,7 +78,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateGroupDisease() {
         int countBefore = electrodeSystemDao.getAllRecords().size();
         int croupBefore = electrodeSystemDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -90,7 +90,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
         assertEquals(croupBefore + 1, list.size());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDefaultRecord() {
         int count = electrodeSystemDao.getCountRecords();
         electrodeSystemDao.createDefaultRecord(electrodeSystem);

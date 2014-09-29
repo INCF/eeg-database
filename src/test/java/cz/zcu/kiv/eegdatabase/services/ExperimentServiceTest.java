@@ -1,30 +1,30 @@
 /**
- * *****************************************************************************
- * This file is part of the EEG-database project
- *
- * ==========================================
- *
- * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *
- *  ***********************************************************************************************************************
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- *
- *  ***********************************************************************************************************************
- *
- * ExperimentServiceTest.java, 2014/09/01 00:01 Jan Stebetak
- *****************************************************************************
- */
+* *****************************************************************************
+* This file is part of the EEG-database project
+*
+* ==========================================
+*
+* Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+*
+*  ***********************************************************************************************************************
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy of
+* the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations under
+* the License.
+*
+*  ***********************************************************************************************************************
+*
+* ExperimentServiceTest.java, 2014/09/01 00:01 Jan Stebetak
+*****************************************************************************
+*/
 package cz.zcu.kiv.eegdatabase.services;
 
 import cz.zcu.kiv.eegdatabase.data.ExperimentGenerator;
@@ -35,18 +35,18 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
 
 /**
- * Created by stebjan on 1.9.2014.
- */
-@Transactional
+* Created by stebjan on 1.9.2014.
+*/
+
 public class ExperimentServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -60,7 +60,7 @@ public class ExperimentServiceTest extends AbstractServicesTest {
     private Person person;
     private Experiment experiment;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
@@ -69,7 +69,7 @@ public class ExperimentServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateExperiment() {
 
         experimentsService.create(experiment);
@@ -77,7 +77,7 @@ public class ExperimentServiceTest extends AbstractServicesTest {
         assertEquals(1, experimentsService.getCountRecords());
 
     }
-    @Test
+    @Test(groups = "unit")
     public void testGetCountExperimentsWhereOwner() {
         int count = experimentsService.getCountForExperimentsWhereOwner(person);
         experimentsService.create(experiment);
@@ -90,7 +90,7 @@ public class ExperimentServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetCountExperimentsWhereSubject() {
         int countForOwner = experimentsService.getCountForExperimentsWhereOwner(person);
         int countForSubject = experimentsService.getCountForExperimentsWhereSubject(person);
@@ -105,7 +105,7 @@ public class ExperimentServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetExperimentForDetail() {
 
         experimentsService.create(experiment);

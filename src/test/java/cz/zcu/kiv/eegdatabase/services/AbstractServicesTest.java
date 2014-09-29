@@ -25,28 +25,13 @@ package cz.zcu.kiv.eegdatabase.services;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 
 /**
  * Created by Honza on 18.7.14.
  */
-@RunWith(SpringJUnit4ClassRunner.class)
-@ContextConfiguration(locations = {"classpath:/test-context.xml"})
-public abstract class AbstractServicesTest {
 
-    public AbstractServicesTest() {
-        changeParserImplementationToXerces();
-    }
-    /**
-     * If not changed, oracle parser would try to parse hibernate configurations
-     * and fail with the following error:
-     * ERROR ErrorLogger - Error parsing XML (31) : http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd<Line 31, Column 2>:
-     * XML-20068: (Fatal Error) content model is not deterministic
-     * org.hibernate.InvalidMappingException: Unable to read XML
-     * Setting SAXParserFactory and DocumentBuilderFactory will change the parser
-     * to xerces, enabling Hibernate-based tests
-     */
-    private void changeParserImplementationToXerces() {
-        System.setProperty("javax.xml.parsers.SAXParserFactory","org.apache.xerces.jaxp.SAXParserFactoryImpl");
-        System.setProperty("javax.xml.parsers.DocumentBuilderFactory","org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
-    }
+@ContextConfiguration(locations = {"classpath:/test-context.xml"})
+public abstract class AbstractServicesTest extends AbstractTransactionalTestNGSpringContextTests {
+
 }

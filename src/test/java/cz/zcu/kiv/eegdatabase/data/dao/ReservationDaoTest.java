@@ -28,10 +28,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Reservation;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -47,7 +47,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by stebjan on 8.7.14.
  */
-@Transactional
 public class ReservationDaoTest extends AbstractDataAccessTest {
     @Autowired
     private ResearchGroupDao researchGroupDao;
@@ -63,7 +62,7 @@ public class ReservationDaoTest extends AbstractDataAccessTest {
     private final long TWO_HOURS_TO_MILLIS = 1000 * 60 * 60 * 2;
     private final String DATE = "01/01/2010";
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws ParseException {
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -80,14 +79,14 @@ public class ReservationDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateReservation() {
         int countBefore = reservationDao.getCountRecords();
         reservationDao.create(reservation);
         assertEquals(countBefore + 1, reservationDao.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testEndDateChecking() throws ParseException {
         int countBefore = reservationDao.getCountRecords();
         reservationDao.create(reservation);
@@ -102,7 +101,7 @@ public class ReservationDaoTest extends AbstractDataAccessTest {
         }
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testExistingReservation() {
         int countBefore = reservationDao.getCountRecords();
         reservationDao.create(reservation);
@@ -117,7 +116,7 @@ public class ReservationDaoTest extends AbstractDataAccessTest {
         }
 
     }
-    @Test
+    @Test(groups = "unit")
     public void testGetReservationBetween() throws ParseException {
         int countBefore = reservationDao.getCountRecords();
         try {
@@ -127,7 +126,7 @@ public class ReservationDaoTest extends AbstractDataAccessTest {
         reservation = createReservation(new Timestamp(0));
 
         reservationDao.createChecked(reservation);
-        } catch (Exception ex) {
+        } catch (Exception ignored) {
 
         }   finally {
             assertEquals(countBefore + 3, reservationDao.getCountRecords());

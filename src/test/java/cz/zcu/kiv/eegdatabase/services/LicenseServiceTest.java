@@ -32,10 +32,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotNull;
@@ -43,7 +43,6 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by stebjan on 25.8.2014.
  */
-@Transactional
 public class LicenseServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -61,7 +60,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
     private License license;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
@@ -75,7 +74,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license.setLicenseType(LicenseType.OWNER);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateLicense() {
         int count = licenseService.getCountRecords();
         int id = licenseService.create(license);
@@ -83,7 +82,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
         assertEquals(count + 1, licenseService.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetPublicLicense() {
         int count = licenseService.getCountRecords();
         int id = licenseService.create(license);
@@ -102,7 +101,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetLicensesForGroup() {
         int count = licenseService.getCountRecords();
         int id = licenseService.create(license);

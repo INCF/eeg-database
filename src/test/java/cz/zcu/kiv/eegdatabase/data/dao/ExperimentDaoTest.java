@@ -1,30 +1,30 @@
 /**
- * *****************************************************************************
- * This file is part of the EEG-database project
- *
- * ==========================================
- *
- * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *
- *  ***********************************************************************************************************************
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- *
- *  ***********************************************************************************************************************
- *
- * ExperimentDaoTest.java, 2014/04/31 00:01 Jan Stebetak
- *****************************************************************************
- */
+* *****************************************************************************
+* This file is part of the EEG-database project
+*
+* ==========================================
+*
+* Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+*
+*  ***********************************************************************************************************************
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy of
+* the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations under
+* the License.
+*
+*  ***********************************************************************************************************************
+*
+* ExperimentDaoTest.java, 2014/04/31 00:01 Jan Stebetak
+*****************************************************************************
+*/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
@@ -33,13 +33,10 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsService;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 import java.util.Date;
@@ -47,8 +44,8 @@ import java.util.Date;
 import static org.junit.Assert.*;
 
 /**
- * Created by Honza on 1.5.14.
- */
+* Created by Honza on 1.5.14.
+*/
 public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -63,7 +60,7 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
     private Person person;
     private Experiment experiment;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         person = createPerson();
@@ -71,8 +68,7 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateExperiment() {
 
         experimentDao.create(experiment);
@@ -81,8 +77,7 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testGetCountExperimentsWhereOwner() {
         int count = experimentDao.getCountForExperimentsWhereOwner(person);
         experimentDao.create(experiment);
@@ -95,8 +90,7 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testGetCountExperimentsWhereSubject() {
         int countForOwner = experimentDao.getCountForExperimentsWhereOwner(person);
         int countForSubject = experimentDao.getCountForExperimentsWhereSubject(person);
@@ -111,8 +105,7 @@ public class ExperimentDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testGetExperimentForDetail() {
 
         experimentDao.create(experiment);

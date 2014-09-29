@@ -122,12 +122,18 @@
             <version>2.43.1</version>
             <scope>test</scope>
         </dependency>
-        <!--<dependency>-->
-            <!--<groupId>org.testng</groupId>-->
-            <!--<artifactId>testng</artifactId>-->
-            <!--<version>6.3.1</version>-->
-            <!--<scope>test</scope>-->
-        <!--</dependency>-->
+
+        <dependency>
+            <groupId>org.seleniumhq.selenium.client-drivers</groupId>
+            <artifactId>selenium-java-client-driver</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.3.1</version>
+            <scope>test</scope>
+        </dependency>
         <!--<dependency>-->
             <!--<groupId>org.seleniumhq.selenium</groupId>-->
             <!--<artifactId>selenium-java</artifactId>-->
@@ -863,14 +869,44 @@
 				</configuration>
 			</plugin>
             <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>selenium-maven-plugin</artifactId>
+                <version>2.3</version>
+                <executions>
+                    <execution>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <goal>start-server</goal>
+                        </goals>
+                        <configuration>
+                            <background>true</background>
+                        </configuration>
+                    </execution>
+                </executions>
+            </plugin>
+            <plugin>
                     <groupId>org.apache.maven.plugins</groupId>
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.17</version>
                     <configuration>
+                        <!--<skip>true</skip>-->
+                        <groups>unit</groups>
                         <forkCount>1</forkCount>
                         <!--<reuseForks>false</reuseForks>-->
                         <argLine>-Xmx1024m</argLine>
                     </configuration>
+                <executions>
+                    <execution>
+                        <phase>integration-test</phase>
+                        <goals>
+                            <goal>test</goal>
+                        </goals>
+                        <configuration>
+                            <groups>web</groups>
+                            <skip>false</skip>
+                        </configuration>
+                    </execution>
+                </executions>
                   </plugin>
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>

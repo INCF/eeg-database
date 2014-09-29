@@ -30,17 +30,17 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageConnectionService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by stebjan on 20.8.2014.
  */
-@Transactional
+
 public class ExperimentPackageServiceTest extends AbstractServicesTest{
 
     @Autowired
@@ -62,7 +62,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
 
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -80,7 +80,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         experimentPackage.setResearchGroup(researchGroup);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateExperimentPackage() {
         License license = new License();
         license.setDescription("junit@test.description");

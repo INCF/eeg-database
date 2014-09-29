@@ -31,8 +31,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -55,7 +57,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 	private Person testPerson;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         testPerson = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
@@ -67,7 +69,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
 	public void testFormAccess() {
 		int count = formLayoutDao.getAllFormsCount();
 		List<String> names = formLayoutDao.getAllFormNames();
@@ -79,7 +81,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testLayoutCounts() {
 		int count = formLayoutDao.getAllLayoutsCount();
 		List<FormLayout> list = formLayoutDao.getAllLayouts();
@@ -107,7 +109,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testGetLayout() {
 		List<FormLayout> list = formLayoutDao.getAllLayouts();
 		assertNotNull(list);
@@ -121,7 +123,7 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 		assertEquals(layoutName, layout.getLayoutName());
 	}
 
-    @After
+    @AfterMethod(groups = "unit")
     public void clean() {
         if (testPerson.getUsername() != null) {
             personDao.delete(testPerson);

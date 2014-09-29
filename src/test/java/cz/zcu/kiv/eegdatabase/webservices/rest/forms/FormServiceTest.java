@@ -34,14 +34,14 @@ import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +64,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	private PersonDao personDao;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         // don't know another way to get logged-in
         Person testPerson = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
@@ -80,7 +80,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
     }
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testAvailableForms() {
 		RecordCountData count = service.availableFormsCount();
 		assertNotNull(count);
@@ -99,7 +99,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testAvailableLayouts() {
 		RecordCountData count = service.availableLayoutsCount();
 		assertNotNull(count);
@@ -118,7 +118,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testGetLayout() throws FormServiceException {
 		AvailableLayoutsDataList list = service.availableLayouts(false);
 		assertNotNull(list);
@@ -133,8 +133,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
-	@Transactional
+	@Test(groups = "unit")
 	public void testCRUDLayout() throws FormServiceException {
 		final String formName = "formNameTest";
 		final String layoutName = "layoutNameTest";
@@ -159,7 +158,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testGetOdmlData() throws FormServiceException {
 		final byte[] data = service.getOdmlData(Person.class.getSimpleName());
 		assertNotNull(data);

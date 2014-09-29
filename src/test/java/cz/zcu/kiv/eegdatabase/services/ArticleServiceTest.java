@@ -31,10 +31,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.article.ArticleService;
-import org.junit.Before;
-import org.junit.Test;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -45,7 +46,6 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by Honza on 18.7.14.
  */
-@Transactional
 public class ArticleServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -62,8 +62,7 @@ public class ArticleServiceTest extends AbstractServicesTest {
     private ArticleComment articleComment;
 
 
-    @Before
-
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         person = TestUtils.createPersonForTesting("test-article@test.com", Util.ROLE_READER);
         personDao.create(person);
@@ -77,14 +76,14 @@ public class ArticleServiceTest extends AbstractServicesTest {
         article.setPerson(person);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateArticle() {
         int count = articleService.getCountRecords();
         articleService.create(article);
         assertEquals(count + 1, articleService.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetArticlesForUser() {
         int countAll = articleService.getCountRecords();
         int count = articleService.getArticlesForUser(person).size();
@@ -114,7 +113,7 @@ public class ArticleServiceTest extends AbstractServicesTest {
         assertEquals(count + 2, articleService.getArticlesForUser(tmp).size());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetArticleDetails() {
 
         int id = articleService.create(article);
@@ -124,7 +123,7 @@ public class ArticleServiceTest extends AbstractServicesTest {
         assertEquals("test-title", fromDB.getTitle());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateComment() {
         int id = articleService.create(article);
         int count = articleService.read(id).getArticleComments().size();
@@ -138,7 +137,7 @@ public class ArticleServiceTest extends AbstractServicesTest {
         assertEquals(count + 1, articleService.getCountCommentRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetCommentsForArticle() {
 
         articleService.create(article);

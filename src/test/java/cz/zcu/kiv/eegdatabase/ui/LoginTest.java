@@ -23,7 +23,6 @@
 package cz.zcu.kiv.eegdatabase.ui;
 
 
-import com.gargoylesoftware.htmlunit.BrowserVersion;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
@@ -31,9 +30,7 @@ import static junit.framework.Assert.*;
 import net.sourceforge.jwebunit.junit.WebTester;
 
 
-import org.junit.Before;
-
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
@@ -41,6 +38,7 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * Created by stebjan on 10.9.2014.
@@ -56,8 +54,7 @@ public class LoginTest extends AbstractUITest {
 
     private WebDriver driver;
 
-    @Before
-    @Transactional
+    @BeforeMethod(groups = "web")
     public void setUp() {
 //        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_USER);
 //        person.setConfirmed(true);
@@ -65,9 +62,10 @@ public class LoginTest extends AbstractUITest {
 
         driver = new HtmlUnitDriver();
         driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+//        driver.get("http://localhost:8080/home-page");
     }
 
-    @Test
+    @Test(groups = "web")
     public void testLogin() {
 
         assertEquals(driver.getTitle(), "Home Page");
@@ -81,7 +79,7 @@ public class LoginTest extends AbstractUITest {
 
     }
 
-    @Test
+    @Test(groups = "web")
     public void testUnsuccesfullLogin() {
         assertEquals(driver.getTitle(), "Home Page");
         WebElement name = driver.findElement(By.name("userName"));

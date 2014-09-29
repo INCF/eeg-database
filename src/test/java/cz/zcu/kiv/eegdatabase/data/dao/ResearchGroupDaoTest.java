@@ -27,15 +27,15 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static net.sf.ezmorph.test.ArrayAssertions.assertEquals;
-@Transactional
+
 @TransactionConfiguration(defaultRollback = true)
 public class ResearchGroupDaoTest extends AbstractDataAccessTest {
 
@@ -47,7 +47,7 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
     protected ResearchGroup researchGroup;
     protected Person person;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -60,7 +60,7 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
         researchGroup.setPerson(person);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateResearchGroup() {
         int count = researchGroupDao.getCountForList();
         researchGroupDao.create(researchGroup);
@@ -70,7 +70,7 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetGroupsWhereOwner() {
         int count = researchGroupDao.getResearchGroupsWhereOwner(person).size();
         researchGroupDao.create(researchGroup);
@@ -83,7 +83,7 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetMembership() {
         researchGroupDao.create(researchGroup);
         assertEquals(0, researchGroupDao.getResearchGroupsWhereMember(person).size());

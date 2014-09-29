@@ -22,14 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
+import com.thoughtworks.selenium.DefaultSelenium;
 import junit.framework.Assert;
 import net.sourceforge.jwebunit.junit.WebTester;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import org.testng.annotations.BeforeMethod;
 
 /**
  * Created by stebjan on 16.9.2014.
@@ -40,23 +41,27 @@ public class RegistrationTest extends AbstractUITest {
 
     private WebDriver driver;
 
-    @Before
+    private DefaultSelenium selenium;
+
+    @BeforeMethod
     public void setUp() {
 //        tester = new WebTester();
 //        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         // tester.setBaseUrl("http://localhost:8080");
-        driver = new HtmlUnitDriver();
-        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+//        driver = new HtmlUnitDriver();
+//        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
+        selenium.start();
     }
 
     @Test
     public void testRegistration() {
 
-        driver.findElement(By.linkText("Register")).click();
-        Assert.assertEquals(driver.getTitle(), "Registration");
-        driver.findElement(By.name(":submit")).click();
-        Assert.assertEquals(driver.getTitle(), "Registration");
-        driver.quit();
-
+//        driver.findElement(By.linkText("Register")).click();
+//        Assert.assertEquals(driver.getTitle(), "Registration");
+//        driver.findElement(By.name(":submit")).click();
+//        Assert.assertEquals(driver.getTitle(), "Registration");
+//        driver.quit();
+selenium.stop();
     }
 }

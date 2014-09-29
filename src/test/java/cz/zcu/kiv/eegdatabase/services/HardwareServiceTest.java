@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.HardwareService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 7.8.14.
  */
-@Transactional
 public class HardwareServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +56,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
     private Hardware hardware;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +70,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
         hardware = createHW("new HW");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateHardware() {
         int hardwareCountBefore = hardwareService.getAllRecords().size();
         int hardwareID = hardwareService.create(hardware);
@@ -79,7 +78,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
         assertEquals(hardwareID, hardware.getHardwareId());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDefaultHardware() {
         int hardwareCountBefore = hardwareService.getAllRecords().size();
         hardware.setDefaultNumber(1);
@@ -88,7 +87,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
 
         assertTrue(hardwareService.isDefault(hardware.getHardwareId()));
     }
-    @Test
+    @Test(groups = "unit")
     public void testCreateHardwareGroupRel() {
         int hardwareCountBefore = hardwareService.getAllRecords().size();
         int hardwareGroupBefore = hardwareService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -101,7 +100,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
         assertTrue(hardwareService.hasGroupRel(id));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetDefaultRecords() {
         int hardwareCountBefore = hardwareService.getAllRecords().size();
         int hardwareDefaultBefore = hardwareService.getDefaultRecords().size();
@@ -118,7 +117,7 @@ public class HardwareServiceTest extends AbstractServicesTest {
         assertFalse(hardwareService.hasGroupRel(newHW.getHardwareId()));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         hardwareService.createGroupRel(hardware, researchGroup);
         int id = hardwareService.create(hardware);

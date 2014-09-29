@@ -29,7 +29,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -53,7 +54,7 @@ public class HardwareDaoTest extends AbstractDataAccessTest {
     private Hardware hardware;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -72,8 +73,7 @@ public class HardwareDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateHardware() {
         int hardwareCountBefore = hardwareDao.getAllRecords().size();
         int hardwareID = hardwareDao.create(hardware);
@@ -82,16 +82,14 @@ public class HardwareDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateDefaultRecord() throws Exception {
         int expectedValue = hardwareDao.getDefaultRecords().size();
         hardwareDao.createDefaultRecord(hardware);
         assertEquals(expectedValue + 1, hardwareDao.getDefaultRecords().size());
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateGroupHardware() {
         int hardwareCountBefore = hardwareDao.getAllRecords().size();
         int hardwareGroupBefore = hardwareDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

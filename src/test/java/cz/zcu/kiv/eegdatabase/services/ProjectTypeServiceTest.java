@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 8.8.14.
  */
-@Transactional
 public class ProjectTypeServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +56,7 @@ public class ProjectTypeServiceTest extends AbstractServicesTest {
     private ProjectType projectType;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +70,7 @@ public class ProjectTypeServiceTest extends AbstractServicesTest {
         projectType = createProjectType("new Disease");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateProjectType() {
         int pTCountBefore = projectTypeService.getAllRecords().size();
         int id = projectTypeService.create(projectType);
@@ -80,7 +79,7 @@ public class ProjectTypeServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateProjectGroupRel() {
         int pTCountBefore = projectTypeService.getAllRecords().size();
         int diseaseGroupBefore = projectTypeService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -94,7 +93,7 @@ public class ProjectTypeServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         projectTypeService.createGroupRel(projectType, researchGroup);
         int id = projectTypeService.create(projectType);

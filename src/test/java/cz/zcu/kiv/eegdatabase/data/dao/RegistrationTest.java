@@ -28,10 +28,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.*;
 
@@ -49,7 +51,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
     private String username;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
@@ -58,7 +60,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreatePerson() {
         storePerson(person);
         Person tmp = personDao.read(person.getPersonId());
@@ -66,7 +68,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
         assertEquals((username).toLowerCase(), tmp.getUsername());
        }
 
-    @Test
+    @Test(groups = "unit")
     public void testVerifyPassword() {
         storePerson(person);
         Person tmp = personDao.read(person.getPersonId());
@@ -76,8 +78,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testNotNullUsername() {
         try {
             person.setUsername(null);
@@ -91,7 +92,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
         }
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testNotNullAuthority() {
         try {
             person.setAuthority(null);
@@ -105,7 +106,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
         }
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testNotNullDateOfBirth() {
         try {
             person.setDateOfBirth(null);
@@ -119,7 +120,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
         }
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testUniqueUsername() {
         storePerson(person);
         Person clone = fork(personDao.read(person.getPersonId()));
@@ -134,12 +135,12 @@ public class RegistrationTest extends AbstractDataAccessTest {
 
         }
     }
-    @After
-    public void clean() {
-        if (personDao.getPerson(username) != null) {
-              personDao.delete(personDao.getPerson(username));
-        }
-    }
+//    @AfterMethod
+//    public void clean() {
+//        if (personDao.getPerson(username) != null) {
+//              personDao.delete(personDao.getPerson(username));
+//        }
+//    }
 
     private Person fork(Person person) {
         Person clone = new Person();

@@ -30,21 +30,20 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.ArtifactService;
-import org.junit.Before;
-import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
 
 import java.util.List;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
+
 
 /**
  * Created by Honza on 10.8.14.
  */
-@Transactional
 public class ArtifactServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +56,7 @@ public class ArtifactServiceTest extends AbstractServicesTest {
     private Artifact artifact;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -73,7 +72,7 @@ public class ArtifactServiceTest extends AbstractServicesTest {
         artifact.setRejectCondition("test condition");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateArtifact() {
         int artifactCountBefore = artifactService.getAllRecords().size();
         int id = artifactService.create(artifact);
@@ -82,7 +81,7 @@ public class ArtifactServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateArtifactGroupRel() {
         int artifactCountBefore = artifactService.getAllRecords().size();
         int artifactGroupBefore = artifactService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

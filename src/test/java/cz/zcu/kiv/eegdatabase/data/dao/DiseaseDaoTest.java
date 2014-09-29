@@ -29,9 +29,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class DiseaseDaoTest extends AbstractDataAccessTest {
     private Disease disease;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -70,8 +71,7 @@ public class DiseaseDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateDisease() {
         int diseaseCountBefore = diseaseDao.getAllRecords().size();
         int diseaseID = diseaseDao.create(disease);
@@ -81,8 +81,7 @@ public class DiseaseDaoTest extends AbstractDataAccessTest {
 
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateGroupDisease() {
         int diseaseCountBefore = diseaseDao.getAllRecords().size();
         int diseaseGroupBefore = diseaseDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

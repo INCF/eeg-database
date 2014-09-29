@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 7.8.14.
  */
-@Transactional
 public class WeatherServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +56,7 @@ public class WeatherServiceTest extends AbstractServicesTest {
     private Weather weather;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +70,7 @@ public class WeatherServiceTest extends AbstractServicesTest {
         weather = createWeather("new Weather");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateWeather() {
         int weatherCountBefore = weatherService.getAllRecords().size();
         int weatherID = weatherService.create(weather);
@@ -79,7 +78,7 @@ public class WeatherServiceTest extends AbstractServicesTest {
         assertEquals(weatherID, weather.getWeatherId());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDefaultWeather() {
         int weatherCountBefore = weatherService.getAllRecords().size();
         weather.setDefaultNumber(1);
@@ -88,7 +87,7 @@ public class WeatherServiceTest extends AbstractServicesTest {
 
         assertTrue(weatherService.isDefault(weather.getWeatherId()));
     }
-    @Test
+    @Test(groups = "unit")
     public void testCreateWeatherGroupRel() {
         int weatherCountBefore = weatherService.getAllRecords().size();
         int weatherGroupBefore = weatherService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -101,11 +100,11 @@ public class WeatherServiceTest extends AbstractServicesTest {
         assertTrue(weatherService.hasGroupRel(id));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetDefaultRecords() {
         int weatherCountBefore = weatherService.getAllRecords().size();
         int weatherDefaultBefore = weatherService.getDefaultRecords().size();
-        //This is not a default Weaher
+        //This is not a default Weather
         int id = weatherService.create(weather);
 
         Weather newWeather = createWeather("new weather2");
@@ -118,7 +117,7 @@ public class WeatherServiceTest extends AbstractServicesTest {
         assertFalse(weatherService.hasGroupRel(newWeather.getWeatherId()));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         weatherService.createGroupRel(weather, researchGroup);
         int id = weatherService.create(weather);

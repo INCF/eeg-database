@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -41,7 +41,6 @@ import static junit.framework.Assert.assertTrue;
 /**
  * Created by stebjan on 29.7.2014.
  */
-@Transactional
 public class ResearchGroupServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -53,8 +52,7 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
     private Person person;
     private ResearchGroup researchGroup;
 
-    @Before
-
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -66,7 +64,7 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         researchGroup.setPerson(person);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateResearchGroup() {
         int count = researchGroupService.getCountForList();
         researchGroupService.create(researchGroup);
@@ -76,7 +74,7 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetGroupsWhereOwner() {
         int count = researchGroupService.getResearchGroupsWhereOwner(person).size();
         researchGroupService.create(researchGroup);
@@ -88,7 +86,7 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
         assertEquals(count + 2, researchGroupService.getResearchGroupsWhereOwner(person).size());
 
     }
-    @Test
+    @Test(groups = "unit")
     public void testCreateMembership() {
 
         int id = researchGroupService.create(researchGroup);
@@ -114,7 +112,7 @@ public class ResearchGroupServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetResearchGroupsWhereUserIsGroupAdmin() {
         int count = researchGroupService.getResearchGroupsWhereUserIsGroupAdmin(person).size();
         researchGroupService.create(researchGroup);
