@@ -157,7 +157,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
         assertEquals(count + repeatLimit, dataFileDao.getCountRecords());
     }
 
-    @AfterMethod
+    @AfterMethod(groups = "unit")
     public void stopTime() {
         System.out.println(("Data File was stored in " + (System.currentTimeMillis() - startTime) / 1000) + " seconds");
         tmpFile.delete();
