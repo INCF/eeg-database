@@ -164,7 +164,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
             @Override
             protected void onError(AjaxRequestTarget target, Form<?> form) {
-                target.add(feedback);
+                //target.add(feedback);
             }
 
             @Override
@@ -185,7 +185,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
                     error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
                 }
                 target.add(captchaImage);
-                target.add(feedback);
+                //target.add(feedback);
             }
         };
         add(submit);

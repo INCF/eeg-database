@@ -25,9 +25,12 @@ package cz.zcu.kiv.eegdatabase.ui;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
 import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+
+import java.util.concurrent.TimeUnit;
 
 import static junit.framework.Assert.assertEquals;
 import static junit.framework.Assert.assertTrue;
@@ -44,19 +47,21 @@ public class AccountOverviewTest extends AbstractUITest {
 
 
         driver = new HtmlUnitDriver();
-        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        //driver = new FirefoxDriver();
+       // driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        driver.get("http://localhost:8080/home-page");
         WebElement name = driver.findElement(By.name("userName"));
         name.sendKeys("jan.stebetak@seznam.cz");
         driver.findElement(By.name("password")).sendKeys("stebjan");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
-//        driver.get("http://localhost:8080/home-page");
+//
     }
 
     @Test(groups = "web")
     public void testAccountOverview() {
 
-        driver.findElement(By.linkText("Account overview")).click();
+        driver.findElement(By.linkText("My account")).click();
         assertEquals(driver.getTitle(), "Account overview");
         assertTrue(driver.getPageSource().contains("E-mail (Login)"));
         assertTrue(driver.getPageSource().contains("Change password"));
@@ -65,16 +70,32 @@ public class AccountOverviewTest extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testChangePassword() {
+    public void testChangePassword() throws InterruptedException {
 
-        driver.findElement(By.linkText("Account overview")).click();
+        driver.findElement(By.linkText("My account")).click();
         assertEquals(driver.getTitle(), "Account overview");
         assertTrue(driver.getPageSource().contains("Change password"));
         driver.findElement(By.linkText("Change password")).click();
         driver.findElement(By.name("oldPassword")).sendKeys("stebjan");
         driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
         driver.findElement(By.name("verPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("submit")).click();
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+
+        assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Change password[\\s\\S]*$"));
+
+         //return changes
+        driver.findElement(By.linkText("Change password")).click();
+        driver.findElement(By.name("oldPassword")).clear();
+        driver.findElement(By.name("newPassword")).clear();
+        driver.findElement(By.name("verPassword")).clear();
+        driver.findElement(By.name("oldPassword")).sendKeys("stebjan2");
+        driver.findElement(By.name("newPassword")).sendKeys("stebjan");
+        driver.findElement(By.name("verPassword")).sendKeys("stebjan");
+        button = driver.findElement(By.name(":submit"));
+        button.click();
+
+        Thread.sleep(1000);
 
         driver.quit();
 
@@ -83,15 +104,16 @@ public class AccountOverviewTest extends AbstractUITest {
     @Test(groups = "web")
     public void testInvalidChangePassword() {
 
-        driver.findElement(By.linkText("Account overview")).click();
+        driver.findElement(By.linkText("My account")).click();
         assertEquals(driver.getTitle(), "Account overview");
         assertTrue(driver.getPageSource().contains("Change password"));
         driver.findElement(By.linkText("Change password")).click();
         driver.findElement(By.name("oldPassword")).sendKeys("stebjanxxx");
         driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
         driver.findElement(By.name("verPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("submit")).click();
-        //TODO invalid password message
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+        //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted password doesn't match current password\\.[\\s\\S]*$"));
         driver.quit();
 
     }
@@ -99,16 +121,17 @@ public class AccountOverviewTest extends AbstractUITest {
     @Test(groups = "web")
     public void testInvalidPasswordVerification() {
 
-        driver.findElement(By.linkText("Account overview")).click();
+        driver.findElement(By.linkText("My account")).click();
         assertEquals(driver.getTitle(), "Account overview");
         assertTrue(driver.getPageSource().contains("Change password"));
         driver.findElement(By.linkText("Change password")).click();
         driver.findElement(By.name("oldPassword")).sendKeys("stebjan");
         driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
         driver.findElement(By.name("verPassword")).sendKeys("stebjanxx");
-        //TODO invalid password message
-        driver.findElement(By.name("submit")).click();
 
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+        //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));
         driver.quit();
 
     }

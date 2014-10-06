@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertTrue;
 
 /**
  * Created by stebjan on 3.10.14.
@@ -42,18 +43,18 @@ public class MainMenuTest extends AbstractUITest {
 
 
         driver = new HtmlUnitDriver();
-        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
 
-//        driver.get("http://localhost:8080/home-page");
+        driver.get("http://localhost:8080/home-page");
     }
 
     @Test(groups = "web")
     public void testUsersMainMenu() {
         loginUser();
         driver.findElement(By.linkText("Articles")).click();
-        assertEquals(driver.getTitle(), "All articles");
+        assertEquals(driver.getTitle(), "Articles Page");
         driver.findElement(By.linkText("Experiments")).click();
-        assertEquals(driver.getTitle(), "Public Experiments");
+        assertTrue(driver.getPageSource().contains("All experiments"));
         driver.findElement(By.linkText("Scenarios")).click();
         assertEquals(driver.getTitle(), "List of scenarios");
         driver.findElement(By.linkText("Groups")).click();
@@ -73,9 +74,9 @@ public class MainMenuTest extends AbstractUITest {
     public void testAdminsMainMenu() {
         loginAdmin();
         driver.findElement(By.linkText("Articles")).click();
-        assertEquals(driver.getTitle(), "All articles");
+        assertEquals(driver.getTitle(), "Articles Page");
         driver.findElement(By.linkText("Experiments")).click();
-        assertEquals(driver.getTitle(), "Public Experiments");
+        assertTrue(driver.getPageSource().contains("All experiments"));
         driver.findElement(By.linkText("Scenarios")).click();
         assertEquals(driver.getTitle(), "List of scenarios");
         driver.findElement(By.linkText("Groups")).click();
