@@ -24,7 +24,7 @@ package cz.zcu.kiv.eegdatabase.ui;
 
 import com.thoughtworks.selenium.DefaultSelenium;
 import junit.framework.Assert;
-import net.sourceforge.jwebunit.junit.WebTester;
+//import net.sourceforge.jwebunit.junit.WebTester;
 import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -37,7 +37,6 @@ import org.testng.annotations.BeforeMethod;
  */
 public class RegistrationTest extends AbstractUITest {
 
-    private WebTester tester;
 
     private WebDriver driver;
 
@@ -48,20 +47,41 @@ public class RegistrationTest extends AbstractUITest {
 //        tester = new WebTester();
 //        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         // tester.setBaseUrl("http://localhost:8080");
-//        driver = new HtmlUnitDriver();
-//        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
-        selenium.start();
+        driver = new HtmlUnitDriver();
+        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+//        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
+//        selenium.start();
     }
 
     @Test
-    public void testRegistration() {
+    public void testEmptyFields() {
 
-//        driver.findElement(By.linkText("Register")).click();
-//        Assert.assertEquals(driver.getTitle(), "Registration");
-//        driver.findElement(By.name(":submit")).click();
-//        Assert.assertEquals(driver.getTitle(), "Registration");
-//        driver.quit();
-selenium.stop();
+        driver.findElement(By.linkText("Register")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+
+        driver.findElement(By.name(":submit")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+        driver.quit();
+
+    }
+
+    @Test
+    public void testEmailFormat() {
+
+        driver.findElement(By.linkText("Register")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+        driver.findElement(By.name("name")).sendKeys("testName");
+        driver.findElement(By.name("surname")).sendKeys("testSurname");
+        driver.findElement(By.name("dateOfBirth")).sendKeys("22/11/1998");
+        driver.findElement(By.name("gender")).sendKeys("M");
+        driver.findElement(By.name("email")).sendKeys("xxx");
+        driver.findElement(By.name("password")).sendKeys("password");
+        driver.findElement(By.name("passwordVerify")).sendKeys("password");
+        driver.findElement(By.name("educationLevel")).sendKeys("");
+
+        driver.findElement(By.name(":submit")).click();
+        Assert.assertEquals(driver.getTitle(), "Registration");
+        driver.quit();
+
     }
 }

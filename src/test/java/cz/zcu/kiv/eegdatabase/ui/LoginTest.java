@@ -27,7 +27,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 import static junit.framework.Assert.*;
-import net.sourceforge.jwebunit.junit.WebTester;
+
 
 
 import org.testng.annotations.Test;
@@ -50,7 +50,6 @@ public class LoginTest extends AbstractUITest {
     @Autowired
     private PersonDao personDao;
 
-    private WebTester tester;
 
     private WebDriver driver;
 
