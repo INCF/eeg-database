@@ -1,23 +1,23 @@
 /*******************************************************************************
  * This file is part of the EEG-database project
- * 
+ *
  *   ==========================================
- *  
+ *
  *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *  
+ *
  *  ***********************************************************************************************************************
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  *   the License. You may obtain a copy of the License at
- *  
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  *   specific language governing permissions and limitations under the License.
- *  
+ *
  *  ***********************************************************************************************************************
- *  
+ *
  *   RegistrationForm.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
@@ -28,14 +28,7 @@ import java.util.Date;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.EmailTextField;
-import org.apache.wicket.markup.html.form.EnumChoiceRenderer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.PasswordTextField;
-import org.apache.wicket.markup.html.form.RadioChoice;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
@@ -63,20 +56,20 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 
 /**
  * Form for registration new user.
- * 
+ *
  * @author Jakub Rinkes
  *
  */
 public class RegistrationForm extends Form<FullPersonDTO> {
 
     private static final long serialVersionUID = 4973918066620014022L;
-    
+
     @SpringBean
     EducationLevelFacade educationLevelFacade;
 
     @SpringBean
     PersonFacade personFacade;
-    
+
     @SpringBean
     ImageCaptchaService captchaService;
 
@@ -158,18 +151,18 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         add(educationLevel);
 
 
-        AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("action.create.account"), this) {
+        Button submit = new Button("submit", ResourceUtils.getModel("action.create.account")) {
 
             private static final long serialVersionUID = 1L;
 
-            @Override
-            protected void onError(AjaxRequestTarget target, Form<?> form) {
-                //target.add(feedback);
-            }
+//            @Override
+//            protected void onError(AjaxRequestTarget target, Form<?> form) {
+//                target.add(feedback);
+//            }
 
             @Override
-            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                
+            public void onSubmit() {
+
                 FullPersonDTO user = RegistrationForm.this.getModelObject();
                 // validate captcha via service
                 if (captchaService.validateResponseForID(user.getCaptcha(), user.getControlText())) {
@@ -184,15 +177,15 @@ public class RegistrationForm extends Form<FullPersonDTO> {
                 } else {
                     error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
                 }
-                target.add(captchaImage);
+                //target.add(captchaImage);
                 //target.add(feedback);
             }
         };
         add(submit);
     }
-    
+
     private void generateCaptchaImageAndPrepareValidation() {
-        
+
         // TODO create own captcha component with using this captcha service.
         String captcha = StringUtils.getCaptchaString();
         getModelObject().setCaptcha(captcha);
@@ -200,16 +193,16 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         BufferedImage image = captchaService.getImageChallengeForID(captcha, getLocale());
         BufferedDynamicImageResource res = new BufferedDynamicImageResource();
         res.setImage(image);
-        
+
         if(captchaImage == null)
             captchaImage = new NonCachingImage("captchaImage", res);
         else
             captchaImage.setImageResource(res);
-        
+
         captchaImage.setOutputMarkupId(true);
-        
+
     }
-    
+
     private boolean validation(FullPersonDTO user) {
 
         boolean validate = true;
