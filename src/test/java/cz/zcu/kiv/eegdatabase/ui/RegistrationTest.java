@@ -50,8 +50,8 @@ public class RegistrationTest extends AbstractUITest {
 
         // tester.setBaseUrl("http://localhost:8080");
         driver = new HtmlUnitDriver();
-        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        //driver.get("http://localhost:8080/home-page");
+        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        driver.get("http://localhost:8080/home-page");
 //        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
 //        selenium.start();
     }

@@ -44,9 +44,9 @@ public class MainMenuTest extends AbstractUITest {
 
 
         driver = new HtmlUnitDriver();
-        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
 
-        //driver.get("http://localhost:8080/home-page");
+        driver.get("http://localhost:8080/home-page");
     }
 
     @Test(groups = "web")
