@@ -61,7 +61,7 @@ public class LoginTest extends AbstractUITest {
 
         driver = new HtmlUnitDriver();
         driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-//        driver.get("http://localhost:8080/home-page");
+        //driver.get("http://localhost:8080/home-page");
     }
 
     @Test(groups = "web")
@@ -89,6 +89,19 @@ public class LoginTest extends AbstractUITest {
         assertTrue(driver.getPageSource().contains("User cannot be log in"));
         driver.quit();
 
+    }
+
+    @Test(groups = "web")
+    public void testEmptyFieldsLogin() {
+        assertEquals(driver.getTitle(), "Home Page");
+        WebElement name = driver.findElement(By.name("userName"));
+        name.sendKeys("");
+        driver.findElement(By.name("password")).sendKeys("");
+        WebElement button = driver.findElement(By.name(":submit"));
+        button.click();
+        assertTrue(driver.getPageSource().contains("Field 'userName' is required"));
+        assertTrue(driver.getPageSource().contains("Field 'password' is required"));
+        driver.quit();
     }
 
 }

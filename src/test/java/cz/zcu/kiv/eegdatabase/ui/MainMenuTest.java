@@ -30,6 +30,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import static junit.framework.Assert.assertEquals;
+import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
 
 /**
@@ -43,9 +44,9 @@ public class MainMenuTest extends AbstractUITest {
 
 
         driver = new HtmlUnitDriver();
-        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
+        driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
 
-        driver.get("http://localhost:8080/home-page");
+        //driver.get("http://localhost:8080/home-page");
     }
 
     @Test(groups = "web")
@@ -65,6 +66,8 @@ public class MainMenuTest extends AbstractUITest {
         assertEquals(driver.getTitle(), "Lists Page");
         driver.findElement(By.linkText("History")).click();
         assertEquals(driver.getTitle(), "History Page");
+
+        assertFalse(driver.getPageSource().contains("Administration"));
 
         driver.quit();
 
@@ -97,8 +100,8 @@ public class MainMenuTest extends AbstractUITest {
     private void loginUser() {
         //TODO find or create not-admin user
         WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("jan.stebetak@seznam.cz");
-        driver.findElement(By.name("password")).sendKeys("stebjan");
+        name.sendKeys("testAccountForEEG2@seznam.cz");
+        driver.findElement(By.name("password")).sendKeys("123456");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
 
