@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 
@@ -151,7 +152,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         add(educationLevel);
 
 
-        Button submit = new Button("submit", ResourceUtils.getModel("action.create.account")) {
+        SubmitLink submit = new SubmitLink("submit", ResourceUtils.getModel("action.create.account")) {
 
             private static final long serialVersionUID = 1L;
 
@@ -176,6 +177,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
                     generateCaptchaImageAndPrepareValidation();
                 } else {
                     error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
+                    generateCaptchaImageAndPrepareValidation();
                 }
                 //target.add(captchaImage);
                 //target.add(feedback);
