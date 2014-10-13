@@ -156,39 +156,39 @@ public class FileMetadataFormPage extends MenuPage {
                     if (fileMetadataParamDefId > 0) {
                         // Editing
                         log.debug("Editing existing fileMetadataParamDef object.");
+                        facade.update(fileMetadata);
+//                        if (facade.isDefault(fileMetadataParamDefId)) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new fileMetadataParamDef
+//                                FileMetadataParamDef newFileMetadataParamDef = new FileMetadataParamDef();
+//                                newFileMetadataParamDef.setDefaultNumber(0);
+//                                newFileMetadataParamDef.setParamName(fileMetadata.getParamName());
+//                                newFileMetadataParamDef.setParamDataType(fileMetadata.getParamDataType());
+//                                int newId = facade.create(newFileMetadataParamDef);
+//                                FileMetadataParamDefGroupRel rel = facade.getGroupRel(fileMetadataParamDefId, researchGroupId);
+//                                // delete old rel, create new one
+//                                FileMetadataParamDefGroupRelId newRelId = new FileMetadataParamDefGroupRelId();
+//                                FileMetadataParamDefGroupRel newRel = new FileMetadataParamDefGroupRel();
+//                                newRelId.setFileMetadataParamDefId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setFileMetadataParamDef(newFileMetadataParamDef);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(fileMetadataParamDefId) && facade.canDelete(fileMetadataParamDefId)) {
+//                                    facade.update(fileMetadata);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
 
-                        if (facade.isDefault(fileMetadataParamDefId)) {
-                            
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new fileMetadataParamDef
-                                FileMetadataParamDef newFileMetadataParamDef = new FileMetadataParamDef();
-                                newFileMetadataParamDef.setDefaultNumber(0);
-                                newFileMetadataParamDef.setParamName(fileMetadata.getParamName());
-                                newFileMetadataParamDef.setParamDataType(fileMetadata.getParamDataType());
-                                int newId = facade.create(newFileMetadataParamDef);
-                                FileMetadataParamDefGroupRel rel = facade.getGroupRel(fileMetadataParamDefId, researchGroupId);
-                                // delete old rel, create new one
-                                FileMetadataParamDefGroupRelId newRelId = new FileMetadataParamDefGroupRelId();
-                                FileMetadataParamDefGroupRel newRel = new FileMetadataParamDefGroupRel();
-                                newRelId.setFileMetadataParamDefId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setFileMetadataParamDef(newFileMetadataParamDef);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(fileMetadataParamDefId) && facade.canDelete(fileMetadataParamDefId)) {
-                                    facade.update(fileMetadata);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(fileMetadata);
-                        }
+//                        }
                     } else {
 
                         // Creating new

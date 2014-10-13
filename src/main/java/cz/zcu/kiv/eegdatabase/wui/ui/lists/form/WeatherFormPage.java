@@ -171,39 +171,39 @@ public class WeatherFormPage extends MenuPage {
                     if (weatherId > 0) {
                         // Editing one
                         log.debug("Editing existing weather object.");
+                        facade.update(weather);
+//                        if (facade.isDefault(weather.getWeatherId())) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new weather
+//                                Weather newWeather = new Weather();
+//                                newWeather.setDefaultNumber(0);
+//                                newWeather.setTitle(weather.getTitle());
+//                                newWeather.setDescription(weather.getDescription());
+//                                int newId = facade.create(newWeather);
+//                                WeatherGroupRel rel = facade.getGroupRel(weatherId, researchGroupId);
+//                                // delete old rel, create new one
+//                                WeatherGroupRelId newRelId = new WeatherGroupRelId();
+//                                WeatherGroupRel newRel = new WeatherGroupRel();
+//                                newRelId.setWeatherId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setWeather(newWeather);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(weatherId) && facade.canDelete(weatherId)) {
+//                                    facade.update(weather);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
 
-                        if (facade.isDefault(weather.getWeatherId())) {
-
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new weather
-                                Weather newWeather = new Weather();
-                                newWeather.setDefaultNumber(0);
-                                newWeather.setTitle(weather.getTitle());
-                                newWeather.setDescription(weather.getDescription());
-                                int newId = facade.create(newWeather);
-                                WeatherGroupRel rel = facade.getGroupRel(weatherId, researchGroupId);
-                                // delete old rel, create new one
-                                WeatherGroupRelId newRelId = new WeatherGroupRelId();
-                                WeatherGroupRel newRel = new WeatherGroupRel();
-                                newRelId.setWeatherId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setWeather(newWeather);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(weatherId) && facade.canDelete(weatherId)) {
-                                    facade.update(weather);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(weather);
-                        }
+//                        }
                     } else {
 
                         // Creating new
