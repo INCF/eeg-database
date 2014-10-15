@@ -139,8 +139,9 @@ public class FormServiceController {
 	 * @throws FormServiceException if the specified layout cannot be found
 	 */
 	@RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
-	public void getLayout(@RequestParam("form") String formName, @RequestParam("layout") String layoutName, 
-					HttpServletResponse response) throws FormServiceException, IOException {
+	public void getLayout(@RequestParam("form") String formName,
+	                      @RequestParam("layout") String layoutName,
+	                      HttpServletResponse response) throws FormServiceException, IOException {
 
 		FormLayout layout = service.getLayout(formName, layoutName);
 		response.setContentType(MediaType.APPLICATION_XML_VALUE);

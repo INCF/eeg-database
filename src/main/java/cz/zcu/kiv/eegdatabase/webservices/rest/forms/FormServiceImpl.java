@@ -46,6 +46,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
@@ -68,6 +69,7 @@ import cz.zcu.kiv.formgen.model.Form;
 import cz.zcu.kiv.formgen.model.FormData;
 import cz.zcu.kiv.formgen.odml.OdmlReader;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
+import cz.zcu.kiv.formgen.odml.TemplateStyle;
 
 
 /**
@@ -99,6 +101,9 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	private ApplicationContext context;
 	
 	
+	private TemplateStyle style = TemplateStyle.GUI_NAMESPACE;
+	
+	
 	
 	/**
 	 * Loads the data model and transforms it to defined form-layouts.
@@ -111,14 +116,22 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	public void afterPropertiesSet() {
 		LayoutGenerator generator = new SimpleLayoutGenerator();
 		try {
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(TemplateStyle.EEGBASE);
+			Writer writerGui = new OdmlWriter(TemplateStyle.GUI_NAMESPACE);
 			for (Form form : generator.loadPackage(POJO_BASE)) {
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				ByteArrayOutputStream streamGui = new ByteArrayOutputStream();
 				try {
 					writer.writeLayout(form, stream);
 					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
 							stream.toByteArray(), null);
+					layout.setType(FormLayoutType.ODML_EEGBASE);
 					formLayoutDao.createOrUpdateByName(layout);
+					writerGui.writeLayout(form, streamGui);
+					FormLayout layoutGui = new FormLayout(form.getName(), form.getName() + "-gui",
+                            streamGui.toByteArray(), null);
+                    layoutGui.setType(FormLayoutType.ODML_GUI);
+                    formLayoutDao.createOrUpdateByName(layoutGui);
 				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
 				}
@@ -312,7 +325,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		try {
 			SimpleDataGenerator generator = new SimpleDataGenerator();
 			generator.load(list, false);
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(style);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
@@ -339,7 +352,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		try {
 			SimpleDataGenerator generator = new SimpleDataGenerator();
 			generator.load(data, false);
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(style);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
@@ -443,7 +456,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		// read the odml
 		Set<FormData> model;
 		try {
-			model = new OdmlReader().readData(new ByteArrayInputStream(odml));
+			model = new OdmlReader(style).readData(new ByteArrayInputStream(odml));
 		} catch (TemplateGeneratorException e) {
 			throw new FormServiceException("Unable to read the odML document.");
 		}
