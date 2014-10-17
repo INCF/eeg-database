@@ -124,13 +124,11 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 				try {
 					writer.writeLayout(form, stream);
 					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
-							stream.toByteArray(), null);
-					layout.setType(FormLayoutType.ODML_EEGBASE);
+							stream.toByteArray(), null, FormLayoutType.ODML_EEGBASE);
 					formLayoutDao.createOrUpdateByName(layout);
 					writerGui.writeLayout(form, streamGui);
 					FormLayout layoutGui = new FormLayout(form.getName(), form.getName() + "-gui",
-                            streamGui.toByteArray(), null);
-                    layoutGui.setType(FormLayoutType.ODML_GUI);
+                            streamGui.toByteArray(), null, FormLayoutType.ODML_GUI);
                     formLayoutDao.createOrUpdateByName(layoutGui);
 				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
@@ -170,10 +168,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 */
 	@Override
 	public RecordCountData availableLayoutsCount() {
-		RecordCountData count = new RecordCountData();
-		count.setPublicRecords(formLayoutDao.getAllLayoutsCount());
-		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson()));
-		return count;
+		return availableLayoutsCount(null, null);
 	}
 	
 	
@@ -181,12 +176,10 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
      * {@inheritDoc}
 	 */
 	@Override
-	public RecordCountData availableLayoutsCount(String formName) {
-		if (formName == null)
-			return null;
+	public RecordCountData availableLayoutsCount(String formName, FormLayoutType type) {
 		RecordCountData count = new RecordCountData();
-		count.setPublicRecords(formLayoutDao.getLayoutsCount(formName));
-		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson(), formName));
+		count.setPublicRecords(formLayoutDao.getLayoutsCount(null, formName, type));
+		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson(), formName, type));
 		return count;
 	}
 	
@@ -195,15 +188,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts(boolean mineOnly) {
-		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson()) 
-					: formLayoutDao.getAllLayouts();
-		
-		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
-		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
-		
-		return new AvailableLayoutsDataList(dataList);
+	public AvailableLayoutsDataList availableLayouts() {
+		return availableLayouts(false, null, null);
 	}
 	
 	
@@ -211,9 +197,12 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
      * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly) {
-		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson(), formName) 
-				: formLayoutDao.getLayouts(formName);
+	public AvailableLayoutsDataList availableLayouts(boolean mineOnly, String formName, FormLayoutType type) {
+	    List<FormLayout> list;
+	    if (mineOnly)
+	        list = formLayoutDao.getLayouts(personDao.getLoggedPerson(), formName, type);
+	    else
+	        list = formLayoutDao.getLayouts(null, formName, type);
 		
 		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
 		for (FormLayout formLayout : list)
@@ -241,7 +230,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public void createLayout(String formName, String layoutName, byte[] content) throws FormServiceException {
+	public void createLayout(String formName, String layoutName, FormLayoutType type, byte[] content) throws FormServiceException {
 		
 		// check whether the layout exists
 		if (formLayoutDao.getLayout(formName, layoutName) != null) {
@@ -250,7 +239,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		}
 		
 		// create
-		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson());
+		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson(), type);
 		formLayoutDao.create(layout);
 	}
 	

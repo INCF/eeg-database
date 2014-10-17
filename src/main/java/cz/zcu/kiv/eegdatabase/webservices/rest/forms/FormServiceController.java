@@ -44,6 +44,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.ResponseStatus;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
@@ -102,12 +103,13 @@ public class FormServiceController {
 	@RequestMapping(value = "/count", method = RequestMethod.GET)
 	@ResponseBody
 	public RecordCountData availableLayoutsCount (
-					@RequestParam(value = "form", required = false) String formName) {
-		
-		if (formName == null)
-			return service.availableLayoutsCount();
+					@RequestParam(value = "form", required = false) String formName,
+					@RequestParam(value = "type", required = false) String type) {
+
+		if (type == null)
+			return service.availableLayoutsCount(formName, null);
 		else
-			return service.availableLayoutsCount(formName);
+			return service.availableLayoutsCount(formName, FormLayoutType.fromString(type));
 	}
 	
 	
@@ -121,12 +123,13 @@ public class FormServiceController {
 	@ResponseBody
 	public AvailableLayoutsDataList availableLayouts (
 					@RequestParam(value = "mineOnly", defaultValue = "false") boolean mineOnly,
-					@RequestParam(value = "form", required = false) String formName) {
+					@RequestParam(value = "form", required = false) String formName,
+					@RequestParam(value = "type", required = false) String type) {
 		
-		if (formName == null)
-			return service.availableLayouts(mineOnly);
-		else
-			return service.availableLayouts(formName, mineOnly);
+	    if (type == null)
+	        return service.availableLayouts(mineOnly, formName, null);
+	    else
+	        return service.availableLayouts(mineOnly, formName, FormLayoutType.fromString(type));
 	}
 	
 	
@@ -160,10 +163,12 @@ public class FormServiceController {
 	 */
 	@RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
 	@ResponseStatus(HttpStatus.CREATED)
-	public void createLayout(@RequestParam("form") String formName, 
-			@RequestParam("layout") String layoutName, @RequestBody byte[] content) throws FormServiceException {
+	public void createLayout(@RequestParam("form") String formName,
+	                         @RequestParam("layout") String layoutName,
+	                         @RequestParam(value = "type", required = false) String type,
+	                         @RequestBody byte[] content) throws FormServiceException {
 
-		service.createLayout(formName, layoutName, content);
+		service.createLayout(formName, layoutName, FormLayoutType.fromString(type), content);
 	}
 	
 	

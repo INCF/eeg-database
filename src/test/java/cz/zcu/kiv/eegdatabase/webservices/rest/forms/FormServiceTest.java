@@ -40,7 +40,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
@@ -105,13 +104,13 @@ public class FormServiceTest extends AbstractDataAccessTest {
 		assertNotNull(count);
 
 		// check all records
-		AvailableLayoutsDataList list = service.availableLayouts(false);
+		AvailableLayoutsDataList list = service.availableLayouts();
 		assertNotNull(list);
 		assertNotNull(list.getLayouts());
 		assertEquals(count.getPublicRecords(), list.getLayouts().size());
 
 		// check all records
-		list = service.availableLayouts(true);
+		list = service.availableLayouts(true, null, null);
 		assertNotNull(list);
 		assertNotNull(list.getLayouts());
 		assertEquals(count.getMyRecords(), list.getLayouts().size());
@@ -120,7 +119,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 
 	@Test(groups = "unit")
 	public void testGetLayout() throws FormServiceException {
-		AvailableLayoutsDataList list = service.availableLayouts(false);
+		AvailableLayoutsDataList list = service.availableLayouts();
 		assertNotNull(list);
 		if (list.getLayouts().isEmpty())
 			return;
@@ -143,7 +142,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 		int originalCount = service.availableLayoutsCount().getPublicRecords();
 
 		// create
-		service.createLayout(formName, layoutName, originalContent);
+		service.createLayout(formName, layoutName, null, originalContent);
 		assertEquals(originalCount + 1, service.availableLayoutsCount().getPublicRecords());
 		assertEquals(originalContent, service.getLayout(formName, layoutName).getContent());
 

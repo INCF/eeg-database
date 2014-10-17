@@ -28,7 +28,6 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
  * Enumeration of supported types of form templates.
  * 
  * @author Jakub Krauz
- *
  */
 public enum FormLayoutType {
     
@@ -39,6 +38,25 @@ public enum FormLayoutType {
     ODML_GUI,
     
     /** Unknown templates format. */
-    OTHER
+    OTHER;
+    
+    
+    /**
+     * Returns a type represented by the string.
+     * @param type - the string representation of a type
+     * @return the corresponding type
+     */
+    public static FormLayoutType fromString(String type) {
+        if (type == null || type.isEmpty())
+            return OTHER;
+        else if (type.equalsIgnoreCase(ODML_EEGBASE.name())
+                || type.equalsIgnoreCase(ODML_EEGBASE.name().replace('_', '-')))
+            return ODML_EEGBASE;
+        else if (type.equalsIgnoreCase(ODML_GUI.name())
+                || type.equalsIgnoreCase(ODML_GUI.name().replace('_', '-')))
+            return ODML_GUI;
+        else
+            return OTHER;
+    }
 
 }

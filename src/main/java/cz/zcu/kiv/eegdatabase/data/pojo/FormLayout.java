@@ -56,11 +56,12 @@ public class FormLayout implements Serializable {
     }
 
     public FormLayout(String formName, String layoutName, byte[] content,
-            Person person) {
+            Person person, FormLayoutType type) {
         this.formName = formName;
         this.layoutName = layoutName;
         this.content = content;
         this.person = person;
+        this.type = type;
     }
 
     @Id
