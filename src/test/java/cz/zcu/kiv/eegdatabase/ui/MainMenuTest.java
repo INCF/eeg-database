@@ -104,7 +104,7 @@ public class MainMenuTest extends AbstractUITest {
         driver.findElement(By.name("password")).sendKeys("123456");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
-
+        assertTrue("User 'testAccountForEEG2@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
     }
 
     private void loginAdmin() {
@@ -113,6 +113,6 @@ public class MainMenuTest extends AbstractUITest {
         driver.findElement(By.name("password")).sendKeys("stebjan");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
-
+        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
     }
 }

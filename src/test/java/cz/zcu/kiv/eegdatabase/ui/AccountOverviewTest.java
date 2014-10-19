@@ -55,6 +55,7 @@ public class AccountOverviewTest extends AbstractUITest {
         driver.findElement(By.name("password")).sendKeys("stebjan");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
+        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
 //
     }
 

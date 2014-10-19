@@ -73,7 +73,7 @@ public class LoginTest extends AbstractUITest {
         driver.findElement(By.name("password")).sendKeys("stebjan");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
-        assertTrue(driver.getPageSource().contains("Log out"));
+        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
         driver.quit();
 
     }
@@ -86,7 +86,7 @@ public class LoginTest extends AbstractUITest {
         driver.findElement(By.name("password")).sendKeys("xxx");
         WebElement button = driver.findElement(By.name(":submit"));
         button.click();
-        assertTrue(driver.getPageSource().contains("User cannot be log in"));
+        assertTrue("User 'jan.stebetak@seznam.cz' should not be logged in.", driver.getPageSource().contains("User cannot be log in"));
         driver.quit();
 
     }
