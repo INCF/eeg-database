@@ -58,5 +58,11 @@ public enum FormLayoutType {
         else
             return OTHER;
     }
+    
+    
+    @Override
+    public String toString() {
+        return this.name().replace('_', '-');
+    }
 
 }

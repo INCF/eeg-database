@@ -206,7 +206,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		
 		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
 		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), 
+			                                      formLayout.getType().toString()));
 		
 		return new AvailableLayoutsDataList(dataList);
 	}
