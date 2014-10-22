@@ -22,118 +22,121 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import net.sourceforge.jwebunit.junit.WebTester;
+import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.util.concurrent.TimeUnit;
-
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertTrue;
+import static org.testng.AssertJUnit.fail;
 
 /**
  * Created by stebjan on 3.10.14.
  */
 public class AccountOverviewTest extends AbstractUITest {
 
-    private WebDriver driver;
+    private WebTester tester;
 
     @BeforeMethod(groups = "web")
     public void setUp() {
 
+        tester = new WebTester();
+       // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+        tester.setBaseUrl("http://localhost:8080");
+        tester.beginAt("/home-page");
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("Log out");
 
-        driver = new HtmlUnitDriver();
-        //driver = new FirefoxDriver();
-       // driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        driver.get("http://localhost:8080/home-page");
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("jan.stebetak@seznam.cz");
-        driver.findElement(By.name("password")).sendKeys("stebjan");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
-//
     }
 
     @Test(groups = "web")
     public void testAccountOverview() {
 
-        driver.findElement(By.linkText("My account")).click();
-        assertEquals(driver.getTitle(), "Account overview");
-        assertTrue(driver.getPageSource().contains("E-mail (Login)"));
-        assertTrue(driver.getPageSource().contains("Change password"));
-        driver.quit();
+        tester.assertLinkPresentWithExactText("My account");
+        tester.clickLinkWithText("My account");
+
+        tester.assertTextPresent("E-mail (Login)");
+        tester.assertTextPresent("Change password");
+
 
     }
 
-    @Test(groups = "web")
+   @Test(groups = "web")
     public void testChangePassword() throws InterruptedException {
 
-        driver.findElement(By.linkText("My account")).click();
-        assertEquals(driver.getTitle(), "Account overview");
-        assertTrue(driver.getPageSource().contains("Change password"));
-        driver.findElement(By.linkText("Change password")).click();
-        driver.findElement(By.name("oldPassword")).sendKeys("stebjan");
-        driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("verPassword")).sendKeys("stebjan2");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
 
-        assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Change password[\\s\\S]*$"));
+       tester.assertLinkPresentWithExactText("My account");
+       tester.clickLinkWithText("My account");
 
-         //return changes
-        driver.findElement(By.linkText("Change password")).click();
-        driver.findElement(By.name("oldPassword")).clear();
-        driver.findElement(By.name("newPassword")).clear();
-        driver.findElement(By.name("verPassword")).clear();
-        driver.findElement(By.name("oldPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("newPassword")).sendKeys("stebjan");
-        driver.findElement(By.name("verPassword")).sendKeys("stebjan");
-        button = driver.findElement(By.name(":submit"));
-        button.click();
+       tester.assertTextPresent("Change password");
 
-        Thread.sleep(1000);
+       tester.clickLinkWithText("Change password");
+       tester.setTextField("oldPassword", "stebjan");
+       tester.setTextField("newPassword", "stebjan2");
+       tester.setTextField("verPassword", "stebjan2");
+       tester.clickButtonWithText("Change password");
+       Thread.sleep(2000);
 
-        driver.quit();
+       tester.assertTextPresent("Changes were made");
+
+
+       // test if the password was changed
+       tester.clickLinkWithText("Log out");
+       tester.setTextField("userName", "jan.stebetak@seznam.cz");
+       tester.setTextField("password", "stebjan2");
+       tester.clickButtonWithText("Log in");
+
+       tester.assertLinkPresentWithExactText("My account");
+
+       tester.clickLinkWithText("My account");
+
+       // return changes
+       tester.clickLinkWithText("Change password");
+       tester.setTextField("oldPassword", "stebjan2");
+       tester.setTextField("newPassword", "stebjan");
+       tester.setTextField("verPassword", "stebjan");
+       tester.clickButtonWithText("Change password");
+       Thread.sleep(2000);
+
+       tester.assertTextPresent("Changes were made");
+
+   }
+
+    @Test(groups = "web")
+    public void testInvalidChangePassword() throws InterruptedException {
+
+        tester.assertLinkPresentWithExactText("My account");
+        tester.clickLinkWithText("My account");
+        tester.assertTextPresent("Change password");
+        tester.clickLinkWithText("Change password");
+        tester.setTextField("oldPassword", "stebjanxxx");
+        tester.setTextField("newPassword", "stebjan2");
+        tester.setTextField("verPassword", "stebjan2");
+        tester.clickButtonWithText("Change password");
+        Thread.sleep(2000);
+        tester.assertTextPresent("Inserted password doesn't match current password");
+
 
     }
 
     @Test(groups = "web")
-    public void testInvalidChangePassword() {
+    public void testInvalidPasswordVerification() throws InterruptedException {
 
-        driver.findElement(By.linkText("My account")).click();
-        assertEquals(driver.getTitle(), "Account overview");
-        assertTrue(driver.getPageSource().contains("Change password"));
-        driver.findElement(By.linkText("Change password")).click();
-        driver.findElement(By.name("oldPassword")).sendKeys("stebjanxxx");
-        driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("verPassword")).sendKeys("stebjan2");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted password doesn't match current password\\.[\\s\\S]*$"));
-        driver.quit();
-
-    }
-
-    @Test(groups = "web")
-    public void testInvalidPasswordVerification() {
-
-        driver.findElement(By.linkText("My account")).click();
-        assertEquals(driver.getTitle(), "Account overview");
-        assertTrue(driver.getPageSource().contains("Change password"));
-        driver.findElement(By.linkText("Change password")).click();
-        driver.findElement(By.name("oldPassword")).sendKeys("stebjan");
-        driver.findElement(By.name("newPassword")).sendKeys("stebjan2");
-        driver.findElement(By.name("verPassword")).sendKeys("stebjanxx");
-
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
+        tester.assertLinkPresentWithExactText("My account");
+        tester.clickLinkWithText("My account");
+        tester.assertTextPresent("Change password");
+        tester.clickLinkWithText("Change password");
+        tester.setTextField("oldPassword", "stebjan");
+        tester.setTextField("newPassword", "stebjan2");
+        tester.setTextField("verPassword", "stebjanxxx");
+        tester.clickButtonWithText("Change password");
+        Thread.sleep(2000);
+        //test if the form was not submitted
+        tester.assertTextPresent("Inserted passwords don't match");
         //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));
-        driver.quit();
+
 
     }
+
 }

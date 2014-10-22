@@ -22,97 +22,87 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
+import net.sourceforge.jwebunit.junit.WebTester;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static junit.framework.Assert.assertEquals;
-import static junit.framework.Assert.assertFalse;
-import static junit.framework.Assert.assertTrue;
+import static org.testng.Assert.assertTrue;
+
 
 /**
  * Created by stebjan on 3.10.14.
  */
 public class MainMenuTest extends AbstractUITest {
-    private WebDriver driver;
+    private WebTester tester;
 
     @BeforeMethod(groups = "web")
     public void setUp() {
 
+        tester = new WebTester();
+        tester.setScriptingEnabled(false);
 
-        driver = new HtmlUnitDriver();
-        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-
-        driver.get("http://localhost:8080/home-page");
+        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+        tester.setBaseUrl("http://localhost:8080");
+        tester.beginAt("/home-page");
     }
 
     @Test(groups = "web")
     public void testUsersMainMenu() {
         loginUser();
-        driver.findElement(By.linkText("Articles")).click();
-        assertEquals(driver.getTitle(), "Articles Page");
-        driver.findElement(By.linkText("Experiments")).click();
-        assertTrue(driver.getPageSource().contains("All experiments"));
-        driver.findElement(By.linkText("Scenarios")).click();
-        assertEquals(driver.getTitle(), "List of scenarios");
-        driver.findElement(By.linkText("Groups")).click();
-        assertEquals(driver.getTitle(), "List of groups");
-        driver.findElement(By.linkText("People")).click();
-        assertEquals(driver.getTitle(), "List of people");
-        driver.findElement(By.linkText("Lists")).click();
-        assertEquals(driver.getTitle(), "Lists Page");
-        driver.findElement(By.linkText("History")).click();
-        assertEquals(driver.getTitle(), "History Page");
+        tester.clickLinkWithText("Articles");
+        tester.assertTextPresent("All articles");
+        tester.clickLinkWithText("Experiments");
+        tester.assertTextPresent("All experiments");
+        tester.clickLinkWithText("Scenarios");
+        tester.assertTextPresent("List of scenarios");
+        tester.clickLinkWithText("Groups");
+        tester.assertTextPresent("List of groups");
+        tester.clickLinkWithText("People");
+        tester.assertTextPresent("List of people");
+        tester.clickLinkWithText("Lists");
+        tester.assertTitleEquals("Lists Page");
+        tester.clickLinkWithText("History");
+        tester.assertTitleEquals("History Page");
 
-        assertFalse(driver.getPageSource().contains("Administration"));
-
-        driver.quit();
+        tester.assertTextNotPresent("Administration");
 
     }
 
     @Test(groups = "web")
     public void testAdminsMainMenu() {
         loginAdmin();
-        driver.findElement(By.linkText("Articles")).click();
-        assertEquals(driver.getTitle(), "Articles Page");
-        driver.findElement(By.linkText("Experiments")).click();
-        assertTrue(driver.getPageSource().contains("All experiments"));
-        driver.findElement(By.linkText("Scenarios")).click();
-        assertEquals(driver.getTitle(), "List of scenarios");
-        driver.findElement(By.linkText("Groups")).click();
-        assertEquals(driver.getTitle(), "List of groups");
-        driver.findElement(By.linkText("People")).click();
-        assertEquals(driver.getTitle(), "List of people");
-        driver.findElement(By.linkText("Lists")).click();
-        assertEquals(driver.getTitle(), "Lists Page");
-        driver.findElement(By.linkText("History")).click();
-        assertEquals(driver.getTitle(), "History Page");
-        driver.findElement(By.linkText("Administration")).click();
-        assertEquals(driver.getTitle(), "Change user role");
-
-        driver.quit();
+        tester.clickLinkWithText("Articles");
+        tester.assertTextPresent("All articles");
+        tester.clickLinkWithText("Experiments");
+        tester.assertTextPresent("All experiments");
+        tester.clickLinkWithText("Scenarios");
+        tester.assertTextPresent("List of scenarios");
+        tester.clickLinkWithText("Groups");
+        tester.assertTextPresent("List of groups");
+        tester.clickLinkWithText("People");
+        tester.assertTextPresent("List of people");
+        tester.clickLinkWithText("Lists");
+        tester.assertTitleEquals("Lists Page");
+        tester.clickLinkWithText("History");
+        tester.assertTitleEquals("History Page");
+//        tester.clickLinkWithText("Administration");
+//        tester.assertTextPresent("Manage user roles");
 
     }
 
     private void loginUser() {
-        //TODO find or create not-admin user
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("testAccountForEEG2@seznam.cz");
-        driver.findElement(By.name("password")).sendKeys("123456");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue("User 'testAccountForEEG2@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("Log out");
+
     }
 
     private void loginAdmin() {
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("jan.stebetak@seznam.cz");
-        driver.findElement(By.name("password")).sendKeys("stebjan");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("Log out");
+
     }
 }

@@ -907,7 +907,7 @@
                             <goal>test</goal>
                         </goals>
                         <configuration>
-                            <skip>true</skip>
+                            <skip>false</skip>
                             <groups>web</groups>
                         </configuration>
                     </execution>
