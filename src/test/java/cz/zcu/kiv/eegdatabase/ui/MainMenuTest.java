@@ -41,7 +41,7 @@ public class MainMenuTest extends AbstractUITest {
         tester = new WebTester();
         tester.setScriptingEnabled(false);
 
-        tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+     //   tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         tester.setBaseUrl("http://localhost:8080");
         tester.beginAt("/home-page");
     }

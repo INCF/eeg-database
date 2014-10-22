@@ -48,10 +48,9 @@ public class RegistrationTest extends AbstractUITest {
     @BeforeMethod(groups = "web")
     public void setUp() {
 
-        // tester.setBaseUrl("http://localhost:8080");
         driver = new HtmlUnitDriver();
         //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        driver.get("http://localhost:8080/home-page");
+        driver.get("http://127.0.0.1:4444/wd/hub/home-page");
 //        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
 //        selenium.start();
     }
@@ -113,13 +112,13 @@ public class RegistrationTest extends AbstractUITest {
         driver.findElement(By.name("surname")).sendKeys("testSurname");
         driver.findElement(By.name("dateOfBirth")).sendKeys("22/11/1998");
         driver.findElement(By.name("gender")).sendKeys("M");
-        driver.findElement(By.name("email")).sendKeys("xxx");
+        driver.findElement(By.name("email")).sendKeys("xxx@xxx.com");
         driver.findElement(By.name("password")).sendKeys("password");
         driver.findElement(By.name("passwordVerify")).sendKeys("passwordxx");
 
         driver.findElement(By.xpath("//input[@wicketpath='registration_submit']")).click();
         Assert.assertEquals(driver.getTitle(), "Registration");
-//        assertTrue(driver.getPageSource().contains("Inserted passwords don't match."));
+        //assertTrue(driver.getPageSource().contains("Inserted passwords don't match."));
 
         driver.findElement(By.name("password")).clear();
         driver.findElement(By.name("password")).sendKeys("password");
