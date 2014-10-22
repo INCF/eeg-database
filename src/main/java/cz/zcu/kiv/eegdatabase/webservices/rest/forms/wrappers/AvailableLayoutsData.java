@@ -41,12 +41,15 @@ public class AvailableLayoutsData {
 	/** Name of the layout. */
 	private String layoutName;
 	
+	/** Type of the template. */
+	private String type;
+	
 	
 	/**
 	 * Implicit constructor.
 	 */
 	public AvailableLayoutsData() {
-		this(null, null);
+		this(null, null, null);
 	}
 	
 	
@@ -55,9 +58,10 @@ public class AvailableLayoutsData {
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
 	 */
-	public AvailableLayoutsData(String formName, String layoutName) {
+	public AvailableLayoutsData(String formName, String layoutName, String type) {
 		this.formName = formName;
 		this.layoutName = layoutName;
+		this.type = type;
 	}
 
 	
@@ -95,5 +99,23 @@ public class AvailableLayoutsData {
 	public void setLayoutName(String layoutName) {
 		this.layoutName = layoutName;
 	}
+
+
+    /**
+     * Gets the type of the template.
+     * @return the type
+     */
+    public String getType() {
+        return type;
+    }
+
+
+    /**
+     * Sets the type of the template.
+     * @param type - the type to set
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
 
 }

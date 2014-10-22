@@ -46,6 +46,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.FormLayoutDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
@@ -68,6 +69,7 @@ import cz.zcu.kiv.formgen.model.Form;
 import cz.zcu.kiv.formgen.model.FormData;
 import cz.zcu.kiv.formgen.odml.OdmlReader;
 import cz.zcu.kiv.formgen.odml.OdmlWriter;
+import cz.zcu.kiv.formgen.odml.TemplateStyle;
 
 
 /**
@@ -99,6 +101,9 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	private ApplicationContext context;
 	
 	
+	private TemplateStyle style = TemplateStyle.GUI_NAMESPACE;
+	
+	
 	
 	/**
 	 * Loads the data model and transforms it to defined form-layouts.
@@ -111,14 +116,20 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	public void afterPropertiesSet() {
 		LayoutGenerator generator = new SimpleLayoutGenerator();
 		try {
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(TemplateStyle.EEGBASE);
+			Writer writerGui = new OdmlWriter(TemplateStyle.GUI_NAMESPACE);
 			for (Form form : generator.loadPackage(POJO_BASE)) {
 				ByteArrayOutputStream stream = new ByteArrayOutputStream();
+				ByteArrayOutputStream streamGui = new ByteArrayOutputStream();
 				try {
 					writer.writeLayout(form, stream);
 					FormLayout layout = new FormLayout(form.getName(), form.getLayoutName(),
-							stream.toByteArray(), null);
+							stream.toByteArray(), null, FormLayoutType.ODML_EEGBASE);
 					formLayoutDao.createOrUpdateByName(layout);
+					writerGui.writeLayout(form, streamGui);
+					FormLayout layoutGui = new FormLayout(form.getName(), form.getName() + "-gui",
+                            streamGui.toByteArray(), null, FormLayoutType.ODML_GUI);
+                    formLayoutDao.createOrUpdateByName(layoutGui);
 				} catch (TemplateGeneratorException e) {
 					logger.error("Could not update the following layout: " + form.getLayoutName(), e);
 				}
@@ -157,10 +168,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 */
 	@Override
 	public RecordCountData availableLayoutsCount() {
-		RecordCountData count = new RecordCountData();
-		count.setPublicRecords(formLayoutDao.getAllLayoutsCount());
-		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson()));
-		return count;
+		return availableLayoutsCount(null, null);
 	}
 	
 	
@@ -168,12 +176,10 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
      * {@inheritDoc}
 	 */
 	@Override
-	public RecordCountData availableLayoutsCount(String formName) {
-		if (formName == null)
-			return null;
+	public RecordCountData availableLayoutsCount(String formName, FormLayoutType type) {
 		RecordCountData count = new RecordCountData();
-		count.setPublicRecords(formLayoutDao.getLayoutsCount(formName));
-		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson(), formName));
+		count.setPublicRecords(formLayoutDao.getLayoutsCount(null, formName, type));
+		count.setMyRecords(formLayoutDao.getLayoutsCount(personDao.getLoggedPerson(), formName, type));
 		return count;
 	}
 	
@@ -182,15 +188,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts(boolean mineOnly) {
-		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson()) 
-					: formLayoutDao.getAllLayouts();
-		
-		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
-		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
-		
-		return new AvailableLayoutsDataList(dataList);
+	public AvailableLayoutsDataList availableLayouts() {
+		return availableLayouts(false, null, null);
 	}
 	
 	
@@ -198,13 +197,17 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
      * {@inheritDoc}
 	 */
 	@Override
-	public AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly) {
-		List<FormLayout> list = mineOnly ? formLayoutDao.getLayouts(personDao.getLoggedPerson(), formName) 
-				: formLayoutDao.getLayouts(formName);
+	public AvailableLayoutsDataList availableLayouts(boolean mineOnly, String formName, FormLayoutType type) {
+	    List<FormLayout> list;
+	    if (mineOnly)
+	        list = formLayoutDao.getLayouts(personDao.getLoggedPerson(), formName, type);
+	    else
+	        list = formLayoutDao.getLayouts(null, formName, type);
 		
 		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
 		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName()));
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), 
+			                                      formLayout.getType().toString()));
 		
 		return new AvailableLayoutsDataList(dataList);
 	}
@@ -228,7 +231,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public void createLayout(String formName, String layoutName, byte[] content) throws FormServiceException {
+	public void createLayout(String formName, String layoutName, FormLayoutType type, byte[] content) throws FormServiceException {
 		
 		// check whether the layout exists
 		if (formLayoutDao.getLayout(formName, layoutName) != null) {
@@ -237,7 +240,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		}
 		
 		// create
-		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson());
+		FormLayout layout = new FormLayout(formName, layoutName, content, personDao.getLoggedPerson(), type);
 		formLayoutDao.create(layout);
 	}
 	
@@ -312,7 +315,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		try {
 			SimpleDataGenerator generator = new SimpleDataGenerator();
 			generator.load(list, false);
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(style);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
@@ -339,7 +342,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		try {
 			SimpleDataGenerator generator = new SimpleDataGenerator();
 			generator.load(data, false);
-			Writer writer = new OdmlWriter();
+			Writer writer = new OdmlWriter(style);
 			ByteArrayOutputStream out = new ByteArrayOutputStream();
 			writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
@@ -443,7 +446,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		// read the odml
 		Set<FormData> model;
 		try {
-			model = new OdmlReader().readData(new ByteArrayInputStream(odml));
+			model = new OdmlReader(style).readData(new ByteArrayInputStream(odml));
 		} catch (TemplateGeneratorException e) {
 			throw new FormServiceException("Unable to read the odML document.");
 		}

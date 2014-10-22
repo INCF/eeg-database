@@ -25,6 +25,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
@@ -63,26 +64,27 @@ public interface FormService {
 	/**
 	 * Gets the count of form-layouts available for the specified form.
 	 * @param formName - name of the form
+	 * @param type - required type of the template
 	 * @return count of form-layouts
 	 */
-	RecordCountData availableLayoutsCount(String formName);
+	RecordCountData availableLayoutsCount(String formName, FormLayoutType type);
 	
 	
 	/**
 	 * Gets names of all form layouts available.
-	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
 	 * @return names of form layouts
 	 */
-	AvailableLayoutsDataList availableLayouts(boolean mineOnly);
+	AvailableLayoutsDataList availableLayouts();
 	
 	
 	/**
 	 * Gets names of form layouts available for the specified form.
-	 * @param formName - name of the form
 	 * @param mineOnly - if true, processes only logged user's records, otherwise all records available
+	 * @param formName - name of the form
+	 * @param type - required type of the template
 	 * @return names of form layouts
 	 */
-	AvailableLayoutsDataList availableLayouts(String formName, boolean mineOnly);
+	AvailableLayoutsDataList availableLayouts(boolean mineOnly, String formName, FormLayoutType type);
 	
 	
 	/**
@@ -99,10 +101,11 @@ public interface FormService {
 	 * Saves a new layout.
 	 * @param formName - name of the form
 	 * @param layoutName - name of the layout
+	 * @param type - type of the template
 	 * @param content - byte array with the layout document
 	 * @throws FormServiceException if the specified layout already exists
 	 */
-	void createLayout(String formName, String layoutName, byte[] content) throws FormServiceException;
+	void createLayout(String formName, String layoutName, FormLayoutType type, byte[] content) throws FormServiceException;
 	
 	
 	/**
