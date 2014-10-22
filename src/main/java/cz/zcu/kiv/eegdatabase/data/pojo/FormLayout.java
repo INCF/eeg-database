@@ -29,7 +29,6 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 
-
 /**
  * Entity representing a form-layout object.
  *
@@ -39,78 +38,91 @@ import java.io.Serializable;
 @Table(name = "FORM_LAYOUT")
 public class FormLayout implements Serializable {
 
-	private static final long serialVersionUID = -1422069481513538122L;
+    private static final long serialVersionUID = -1422069481513538122L;
 
-	private int formLayoutId;
-	
-	private String formName;
-	
-	private String layoutName;
-	
-	private byte[] content;
-	
-	private Person person;
-	
-	public FormLayout() {
-	}
-	
-	public FormLayout(String formName, String layoutName, byte[] content, Person person) {
-		this.formName = formName;
-		this.layoutName = layoutName;
-		this.content = content;
-		this.person = person;
-	}
+    private int formLayoutId;
 
-	@GenericGenerator(name = "generator", strategy = "increment")
-	@Id
-	@GeneratedValue(generator = "generator")
-	@Column(name = "FORM_LAYOUT_ID", nullable = false, precision = 22, scale = 0)
-	public int getFormLayoutId() {
-		return formLayoutId;
-	}
+    private String formName;
 
-	public void setFormLayoutId(int formLayoutId) {
-		this.formLayoutId = formLayoutId;
-	}
+    private String layoutName;
 
-	@Column(name = "FORM_NAME", nullable = false, length = 50)
-	public String getFormName() {
-		return formName;
-	}
+    private byte[] content;
 
-	public void setFormName(String formName) {
-		this.formName = formName;
-	}
+    private Person person;
 
-	@Column(name = "LAYOUT_NAME", nullable = false, length = 50)
-	public String getLayoutName() {
-		return layoutName;
-	}
+    private FormLayoutType type;
 
-	public void setLayoutName(String layoutName) {
-		this.layoutName = layoutName;
-	}
+    public FormLayout() {
+    }
 
-	//@Lob
-	@Basic(fetch = FetchType.LAZY)
-	@Column(name = "CONTENT", nullable = false, columnDefinition = "bytea")
-	public byte[] getContent() {
-		return content;
-	}
+    public FormLayout(String formName, String layoutName, byte[] content,
+            Person person, FormLayoutType type) {
+        this.formName = formName;
+        this.layoutName = layoutName;
+        this.content = content;
+        this.person = person;
+        this.type = type;
+    }
 
-	public void setContent(byte[] content) {
-		this.content = content;
-	}
+    @Id
+    @GenericGenerator(name = "generator", strategy = "increment")
+    @GeneratedValue(generator = "generator")
+    @Column(name = "FORM_LAYOUT_ID", nullable = false, precision = 22, scale = 0)
+    public int getFormLayoutId() {
+        return formLayoutId;
+    }
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "PERSON_ID")
-	public Person getPerson() {
-		return person;
-	}
+    public void setFormLayoutId(int formLayoutId) {
+        this.formLayoutId = formLayoutId;
+    }
 
-	public void setPerson(Person person) {
-		this.person = person;
-	}
-	
+    @Column(name = "FORM_NAME", nullable = false, length = 50)
+    public String getFormName() {
+        return formName;
+    }
+
+    public void setFormName(String formName) {
+        this.formName = formName;
+    }
+
+    @Column(name = "LAYOUT_NAME", nullable = false, length = 50)
+    public String getLayoutName() {
+        return layoutName;
+    }
+
+    public void setLayoutName(String layoutName) {
+        this.layoutName = layoutName;
+    }
+
+    // @Lob
+    @Basic(fetch = FetchType.LAZY)
+    @Column(name = "CONTENT", nullable = false, columnDefinition = "bytea")
+    public byte[] getContent() {
+        return content;
+    }
+
+    public void setContent(byte[] content) {
+        this.content = content;
+    }
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "PERSON_ID")
+    public Person getPerson() {
+        return person;
+    }
+
+    public void setPerson(Person person) {
+        this.person = person;
+    }
+
+    @Column(name = "TYPE", nullable = true, precision = 22, scale = 0)
+    @Enumerated(EnumType.STRING)
+    public FormLayoutType getType() {
+        return this.type;
+    }
+
+    public void setType(FormLayoutType type) {
+        this.type = type;
+    }
 
 }

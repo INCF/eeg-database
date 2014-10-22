@@ -32,6 +32,7 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.dao.support.DataAccessUtils;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 
@@ -104,24 +105,32 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 	
 	@Override
 	public int getLayoutsCount(Person owner) {
-		return getLayoutsCount(owner, null);
+		return getLayoutsCount(owner, null, null);
 	}
 	
 	
 	@Override
 	public int getLayoutsCount(String formName) {
-		return getLayoutsCount(null, formName);
+		return getLayoutsCount(null, formName, null);
 	}
 	
 	
 	@Override
-	public int getLayoutsCount(Person owner, String formName) {
+    public int getLayoutsCount(FormLayoutType templateType) {
+        return getLayoutsCount(null, null, templateType);
+    }
+	
+	
+	@Override
+	public int getLayoutsCount(Person owner, String formName, FormLayoutType templateType) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(type);
 		criteria.setProjection(Projections.rowCount());
 		if (owner != null)
 			criteria.add(Restrictions.eq("person.personId", owner.getPersonId()));
 		if (formName != null)
 			criteria.add(Restrictions.eq("formName", formName));
+		if (templateType != null)
+		    criteria.add(Restrictions.eq("type", templateType));
 		
 		return DataAccessUtils.intResult(getHibernateTemplate().findByCriteria(criteria));
 	}
@@ -146,24 +155,32 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 	
 	@Override
 	public List<FormLayout> getLayouts(Person owner) {
-		return getLayouts(owner, null);
+		return getLayouts(owner, null, null);
 	}
 	
 	
 	@Override
 	public List<FormLayout> getLayouts(String formName) {
-		return getLayouts(null, formName);
+		return getLayouts(null, formName, null);
 	}
 	
 	
 	@Override
+    public List<FormLayout> getLayouts(FormLayoutType type) {
+        return getLayouts(null, null, type);
+    }
+	
+	
+	@Override
 	@SuppressWarnings("unchecked")
-	public List<FormLayout> getLayouts(Person owner, String formName) {
+	public List<FormLayout> getLayouts(Person owner, String formName, FormLayoutType templateType) {
 		DetachedCriteria criteria = DetachedCriteria.forClass(type);
 		if (owner != null)
 			criteria.add(Restrictions.eq("person.personId", owner.getPersonId()));
 		if (formName != null)
 			criteria.add(Restrictions.eq("formName", formName));
+		if (templateType != null)
+		    criteria.add(Restrictions.eq("type", templateType));
 		
         return getHibernateTemplate().findByCriteria(criteria);
 	}

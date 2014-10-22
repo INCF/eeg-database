@@ -27,6 +27,7 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 
@@ -90,12 +91,20 @@ public interface FormLayoutDao extends GenericDao<FormLayout, Integer> {
 	int getLayoutsCount(String formName);
 	
 	/**
+	 * Gets count of all layouts of the given type.
+	 * @param templateType the type of the template
+	 * @return count of layouts
+	 */
+	int getLayoutsCount(FormLayoutType templateType);
+	
+	/**
 	 * Gets count of all layouts for the given form and owned by the given person.
 	 * @param owner the owner
 	 * @param formName the name of the form
+	 * @param templateType the type of the template
 	 * @return count of layouts
 	 */
-	int getLayoutsCount(Person owner, String formName);
+	int getLayoutsCount(Person owner, String formName, FormLayoutType templateType);
 	
 	/**
 	 * Gets the layout for the given form and layout name.
@@ -126,12 +135,19 @@ public interface FormLayoutDao extends GenericDao<FormLayout, Integer> {
 	List<FormLayout> getLayouts(String formName);
 	
 	/**
+	 * Gets all layouts of the given type.
+	 * @param type the type of the template
+	 * @return list of layouts
+	 */
+	List<FormLayout> getLayouts(FormLayoutType type);
+	
+	/**
 	 * Gets all layouts for the given form and owned by the given person.
 	 * @param owner the owner
 	 * @param formName the name of the form
+	 * @param templateType the type of the template
 	 * @return list of layouts
 	 */
-	List<FormLayout> getLayouts(Person owner, String formName);
-	
+	List<FormLayout> getLayouts(Person owner, String formName, FormLayoutType templateType);
 
 }

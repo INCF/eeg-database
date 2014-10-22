@@ -29,8 +29,6 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
-import org.junit.Before;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -101,8 +99,8 @@ public class FormLayoutDaoTest extends AbstractDataAccessTest {
 			assertNotNull(list);
 			assertEquals(count, list.size());
 
-			count = formLayoutDao.getLayoutsCount(testPerson, formName);
-			list = formLayoutDao.getLayouts(testPerson, formName);
+			count = formLayoutDao.getLayoutsCount(testPerson, formName, null);
+			list = formLayoutDao.getLayouts(testPerson, formName, null);
 			assertNotNull(list);
 			assertEquals(count, list.size());
 		}
