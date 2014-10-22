@@ -50,10 +50,7 @@ public class RegistrationTest extends AbstractUITest {
     @BeforeMethod(groups = "web")
     public void setUp() {
 
-        DesiredCapabilities capabilities = new DesiredCapabilities();
-
-
-        driver = new RemoteWebDriver(capabilities);
+        driver = new RemoteWebDriver(DesiredCapabilities.htmlUnit());
         //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
         driver.get("http://127.0.0.1:4444/wd/hub/home-page");
 //        selenium = new DefaultSelenium("localhost", 4444, "*firefox","eeg2.kiv.zcu.cz:8080/home-page" );
