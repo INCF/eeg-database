@@ -57,6 +57,7 @@ public class SimpleFormLayoutDao extends SimpleGenericDao<FormLayout,Integer> im
 		} else {
 			savedLayout.setContent(layout.getContent());
 			savedLayout.setPerson(layout.getPerson());
+			savedLayout.setType(layout.getType());
 			update(savedLayout);
 		}
 	}

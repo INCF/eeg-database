@@ -205,9 +205,11 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	        list = formLayoutDao.getLayouts(null, formName, type);
 		
 		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
-		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), 
-			                                      formLayout.getType().toString()));
+		for (FormLayout formLayout : list) {
+		    String templType = (formLayout.getType() == null) 
+		            ? FormLayoutType.OTHER.toString() : formLayout.getType().toString();
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), templType));
+		}
 		
 		return new AvailableLayoutsDataList(dataList);
 	}
