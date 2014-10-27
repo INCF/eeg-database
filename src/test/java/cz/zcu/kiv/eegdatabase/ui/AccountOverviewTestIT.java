@@ -32,11 +32,11 @@ import static org.testng.AssertJUnit.fail;
 /**
  * Created by stebjan on 3.10.14.
  */
-public class AccountOverviewTest extends AbstractUITest {
+public class AccountOverviewTestIT extends AbstractUITest {
 
     private WebTester tester;
 
-    @BeforeMethod(groups = "web")
+    @BeforeMethod
     public void setUp() {
 
         tester = new WebTester();
@@ -50,7 +50,7 @@ public class AccountOverviewTest extends AbstractUITest {
 
     }
 
-    @Test(groups = "web")
+    @Test
     public void testAccountOverview() {
 
         tester.assertLinkPresentWithExactText("My account");
@@ -62,7 +62,7 @@ public class AccountOverviewTest extends AbstractUITest {
 
     }
 
-   @Test(groups = "web")
+   @Test
     public void testChangePassword() throws InterruptedException {
 
 
@@ -103,7 +103,7 @@ public class AccountOverviewTest extends AbstractUITest {
 
    }
 
-    @Test(groups = "web")
+    @Test
     public void testInvalidChangePassword() throws InterruptedException {
 
         tester.assertLinkPresentWithExactText("My account");
@@ -120,7 +120,7 @@ public class AccountOverviewTest extends AbstractUITest {
 
     }
 
-    @Test(groups = "web")
+    @Test
     public void testInvalidPasswordVerification() throws InterruptedException {
 
         tester.assertLinkPresentWithExactText("My account");

@@ -43,7 +43,7 @@ import org.testng.annotations.BeforeMethod;
 /**
  * Created by stebjan on 10.9.2014.
  */
-public class LoginTest extends AbstractUITest {
+public class LoginTestIT extends AbstractUITest {
 
     private Person person;
 

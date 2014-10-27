@@ -904,10 +904,13 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-failsafe-plugin</artifactId>
-                <version>2.12.2</version>
+                <version>2.12.1</version>
                 <configuration>
                     <skip>false</skip>
-                    <groups>web</groups>
+                    <includes>
+                        <include>**/*IT.java</include>
+                    </includes>
+
                     <argLine>-Xmx1024m</argLine>
                 </configuration>
                 <executions>

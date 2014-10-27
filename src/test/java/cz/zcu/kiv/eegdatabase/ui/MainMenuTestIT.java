@@ -32,7 +32,7 @@ import static org.testng.Assert.assertTrue;
 /**
  * Created by stebjan on 3.10.14.
  */
-public class MainMenuTest extends AbstractUITest {
+public class MainMenuTestIT extends AbstractUITest {
     private WebTester tester;
 
     @BeforeMethod(groups = "web")

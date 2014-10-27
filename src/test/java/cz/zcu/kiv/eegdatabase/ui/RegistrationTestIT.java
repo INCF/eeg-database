@@ -41,7 +41,7 @@ import static junit.framework.Assert.assertTrue;
 /**
 * Created by stebjan on 16.9.2014.
 */
-public class RegistrationTest extends AbstractUITest {
+public class RegistrationTestIT extends AbstractUITest {
 
 
     private WebDriver driver;
