@@ -213,13 +213,10 @@ public class FormServiceController {
     @RequestMapping(value = "/data", method = RequestMethod.GET, produces = MediaType.APPLICATION_XML_VALUE)
     public void getData(@RequestParam("entity") String entity,
                         @RequestParam(value = "id", required = false) Integer id,
+                        @RequestParam(value = "type", required = false) String type,
 			            HttpServletResponse response) throws IOException, FormServiceException {
-    	byte[] odml;
-        if (id == null)
-        	odml = service.getOdmlData(entity);
-		else
-			odml = service.getOdmlData(entity, id);
-		
+        
+    	byte[] odml = service.getOdmlData(entity, id, FormLayoutType.fromString(type));
         response.setContentType(MediaType.APPLICATION_XML_VALUE);
         response.setContentLength(odml.length);
         response.getOutputStream().write(odml);
@@ -230,9 +227,10 @@ public class FormServiceController {
     @RequestMapping(value = "/data", method = RequestMethod.POST, consumes = MediaType.APPLICATION_XML_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
     @ResponseBody
-    public RecordData createRecord(@RequestParam("entity") String entity, @RequestBody byte[] content) 
-    		throws FormServiceException {
-    	Integer id = service.createRecord(entity, content);
+    public RecordData createRecord(@RequestParam("entity") String entity,
+                                   @RequestParam(value = "type", required = false) String type,
+                                   @RequestBody byte[] content) throws FormServiceException {
+    	Integer id = service.createRecord(entity, content, FormLayoutType.fromString(type));
     	RecordData record = new RecordData(id);
     	return record;
     }

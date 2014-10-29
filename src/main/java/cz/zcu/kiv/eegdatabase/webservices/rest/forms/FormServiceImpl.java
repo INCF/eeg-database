@@ -103,11 +103,6 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	private ApplicationContext context;
 	
 	
-	// TODO temporary solution
-	private TemplateStyle style = TemplateStyle.GUI_NAMESPACE;
-	
-	
-	
 	/**
 	 * Loads the data model and transforms it to defined form-layouts.
 	 * Generated form-layouts are updated in the persistent storage.
@@ -307,27 +302,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public byte[] getOdmlData(String entity) throws FormServiceException {
-		if (entity == null)
-			throw new NullPointerException("Entity cannot be null.");
-		
-		// get all records
-		GenericDao<?, Integer> dao = daoForEntity(entity);
-		@SuppressWarnings("unchecked")
-		List<Object> list = (List<Object>) dao.getAllRecords();
-		
-		// transform data to odML
-		try {
-			SimpleDataGenerator generator = new SimpleDataGenerator();
-			generator.load(list, false);
-			Writer writer = new OdmlWriter(style);
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			writer.writeData(generator.getLoadedModel(), out);
-			return out.toByteArray();
-		} catch (TemplateGeneratorException e) {
-			logger.error("Unable to transform data to odML format.", e);
-			throw new FormServiceException(Cause.OTHER);
-		}
+	public byte[] getOdmlData(String entity, FormLayoutType type) throws FormServiceException {
+		return getOdmlData(entity, null, type);
 	}
 	
 	
@@ -335,21 +311,30 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public byte[] getOdmlData(String entity, Integer id) throws FormServiceException {
+	public byte[] getOdmlData(String entity, Integer id, FormLayoutType type) throws FormServiceException {
 		if (entity == null)
 			throw new NullPointerException("Entity cannot be null.");
 		
-		// get the record
-		GenericDao<?, Integer> dao = daoForEntity(entity);
-		Object data = dao.read(id);
+		// get and load required data
+		SimpleDataGenerator generator = new SimpleDataGenerator();
+		if (id == null) {
+		    // get all records
+		    GenericDao<?, Integer> dao = daoForEntity(entity);
+		    @SuppressWarnings("unchecked")
+		    List<Object> list = (List<Object>) dao.getAllRecords();
+		    generator.load(list, false);
+		} else {
+		    // get the specific record
+		    GenericDao<?, Integer> dao = daoForEntity(entity);
+		    Object data = dao.read(id);
+		    generator.load(data, false);
+		}
 		
-		// transform data to odML
+		// write the data in odML
+		Writer writer = new OdmlWriter(chooseStyle(type));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			SimpleDataGenerator generator = new SimpleDataGenerator();
-			generator.load(data, false);
-			Writer writer = new OdmlWriter(style);
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			writer.writeData(generator.getLoadedModel(), out);
+		    writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
 		} catch (TemplateGeneratorException e) {
 			logger.error("Unable to transform data to odML format.", e);
@@ -432,11 +417,23 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		// append the "Dao" suffix
 		return entity + "Dao";
 	}
+	
+	
+	private TemplateStyle chooseStyle(FormLayoutType type) {
+	    switch (type) {
+    	    case ODML_EEGBASE:
+    	        return TemplateStyle.EEGBASE;
+    	    case ODML_GUI:
+    	        return TemplateStyle.GUI_NAMESPACE;
+    	    default:
+    	        return TemplateStyle.EEGBASE;
+	    }
+	}
 
 
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public Integer createRecord(String entity, byte[] odml) throws FormServiceException {
+	public Integer createRecord(String entity, byte[] odml, FormLayoutType type) throws FormServiceException {
 		if (entity == null)
 			throw new NullPointerException("Entity cannot be null.");
 		
@@ -451,7 +448,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		// read the odml
 		Set<FormData> model;
 		try {
-			model = new OdmlReader(style).readData(new ByteArrayInputStream(odml));
+			model = new OdmlReader(chooseStyle(type)).readData(new ByteArrayInputStream(odml));
 		} catch (TemplateGeneratorException e) {
 			throw new FormServiceException("Unable to read the odML document.");
 		}

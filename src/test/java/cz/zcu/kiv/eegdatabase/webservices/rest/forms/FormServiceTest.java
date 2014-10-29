@@ -28,12 +28,14 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
+
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -159,19 +161,19 @@ public class FormServiceTest extends AbstractDataAccessTest {
 
 	@Test(groups = "unit")
 	public void testGetOdmlData() throws FormServiceException {
-		final byte[] data = service.getOdmlData(Person.class.getSimpleName());
+		final byte[] data = service.getOdmlData(Person.class.getSimpleName(), FormLayoutType.ODML_EEGBASE);
 		assertNotNull(data);
 		assertTrue(data.length > 0);
 
 		try {
-			service.getOdmlData(null);
+			service.getOdmlData(null, FormLayoutType.ODML_EEGBASE);
 			fail("Got odml data for null entity, NullPointerException should be thrown.");
 		} catch (Exception e) {
 			assertTrue(e instanceof NullPointerException);
 		}
 
 		try {
-			service.getOdmlData("xxxx");
+			service.getOdmlData("xxxx", FormLayoutType.ODML_EEGBASE);
 			fail("Got odml data for non-existing entity, FormServiceException should be thrown.");
 		} catch (Exception e) {
 			assertTrue(e instanceof FormServiceException);
