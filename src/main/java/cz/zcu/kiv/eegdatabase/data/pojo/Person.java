@@ -57,9 +57,9 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 
 	@FormId
 	private int personId;
-	//@FormItem  // problem with data (BUG in odml-java-lib)
-	private String facebookId;
 	@FormItem
+	private String facebookId;
+	@FormItem(required = true)
 	private String email;
 	@FormItem(preview = PreviewLevel.MINOR)
 	private String givenname;
@@ -73,6 +73,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	@FormItem(required = true)
 	@FormItemRestriction(values = {"L", "R", "X"})
 	private char laterality;
+	@FormItem
 	private String phoneNumber;
 	@FormItem
 	private String note;
@@ -83,7 +84,9 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private boolean confirmed;
 	private boolean lock = false;
 	private String authenticationHash;
+	//@FormItem    // contains reference to Person - cycle
 	private ResearchGroup defaultGroup;
+	@FormItem
 	private EducationLevel educationLevel;
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(

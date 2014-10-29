@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,7 +36,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Service;
@@ -48,6 +48,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
@@ -81,26 +82,28 @@ import cz.zcu.kiv.formgen.odml.TemplateStyle;
 @Transactional(readOnly = true)
 public class FormServiceImpl implements FormService, InitializingBean, ApplicationContextAware {
 	
+    /** Base package of POJO classes. */
+    private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
+    
+    /** Logger object. */
+    private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
+    
 	/** The DAO object providing form-layout data. */
 	@Autowired
-	@Qualifier("formLayoutDao")
 	private FormLayoutDao formLayoutDao;
 	
 	/** The DAO object providing person-related data - used for getting the logged user. */
     @Autowired
-    @Qualifier("personDao")
     private PersonDao personDao;
-	
-	/** Base package of POJO classes. */
-	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
-	
-	/** Logger object. */
-	private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
+    
+    @Autowired
+    private MailService mailService;
 	
 	/** Spring's application context. */
 	private ApplicationContext context;
 	
 	
+	// TODO temporary solution
 	private TemplateStyle style = TemplateStyle.GUI_NAMESPACE;
 	
 	
@@ -467,8 +470,22 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		}
 		
 		// save the object
-		GenericDao<Object, Integer> dao = daoForEntity(entity);
-		return dao.create(object);
+		if (object instanceof Person) {
+		    Person person = (Person) object;
+		    person.setUsername(person.getEmail());
+		    person.setAuthority(cz.zcu.kiv.eegdatabase.logic.Util.ROLE_READER);
+		    person.setRegistrationDate(new Timestamp(new java.util.Date().getTime()));
+		    
+		    // TODO generate password and send confirmation email to the new user
+		    //person.setPassword("generated-password");
+		    //mailService.sendRegistrationConfirmMail(person, locale);
+		    
+		    return personDao.create(person);
+		} else {
+		    GenericDao<Object, Integer> dao = daoForEntity(entity);
+		    return dao.create(object);
+		}
+		
 	}
 	
 	
