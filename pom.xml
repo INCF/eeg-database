@@ -949,6 +949,8 @@
 							<maxIdleTime>3600000</maxIdleTime>
 						</connector>
 					</connectors>
+                    <stopKey>STOP</stopKey>
+                    <stopPort>8005</stopPort>
 				</configuration>
                 <executions>
                     <execution>
@@ -962,7 +964,6 @@
                         <configuration>
                             <stopKey>STOP</stopKey>
                             <stopPort>8005</stopPort>
-                            <scanIntervalSeconds>0</scanIntervalSeconds>
                             <daemon>true</daemon>
                         </configuration>
                     </execution>
