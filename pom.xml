@@ -887,6 +887,13 @@
                             <background>true</background>
                         </configuration>
                     </execution>
+                    <execution>
+                        <id>stop-selenium</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop-server</goal>
+                        </goals>
+                    </execution>
                 </executions>
             </plugin>
             <plugin>
@@ -907,6 +914,7 @@
                 <version>2.12.1</version>
                 <configuration>
                     <skip>false</skip>
+                    <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>**/*IT.java</include>
                     </includes>
@@ -915,14 +923,14 @@
                 </configuration>
                 <executions>
                     <execution>
-                        <id>failsafe-integration-tests</id>
+                        <id>integration-tests</id>
                         <phase>integration-test</phase>
                         <goals>
                             <goal>integration-test</goal>
                         </goals>
                     </execution>
                     <execution>
-                        <id>failsafe-verify</id>
+                        <id>verify</id>
                         <phase>verify</phase>
                         <goals>
                             <goal>verify</goal>
@@ -942,7 +950,31 @@
 						</connector>
 					</connectors>
 				</configuration>
-			</plugin>
+                <executions>
+                    <execution>
+                        <id>start-jetty</id>
+                        <phase>pre-integration-test</phase>
+                        <goals>
+                            <!-- stop any previous instance to free up the port -->
+                            <goal>stop</goal>
+                            <goal>run-exploded</goal>
+                        </goals>
+                        <configuration>
+                            <stopKey>STOP</stopKey>
+                            <stopPort>8005</stopPort>
+                            <scanIntervalSeconds>0</scanIntervalSeconds>
+                            <daemon>true</daemon>
+                        </configuration>
+                    </execution>
+                    <execution>
+                        <id>stop-jetty</id>
+                        <phase>post-integration-test</phase>
+                        <goals>
+                            <goal>stop</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
