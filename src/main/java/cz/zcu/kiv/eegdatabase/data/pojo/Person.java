@@ -65,7 +65,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private String givenname;
 	@FormItem(required = true, preview = PreviewLevel.MAJOR)
 	private String surname;
-	@FormItem
+	@FormItem(required = true)
 	private Timestamp dateOfBirth;
 	@FormItem(required = true)
 	@FormItemRestriction(values = {"M", "F"})

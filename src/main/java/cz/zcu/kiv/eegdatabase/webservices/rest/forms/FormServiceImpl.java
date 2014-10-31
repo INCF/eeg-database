@@ -38,6 +38,7 @@ import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,7 +49,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.service.MailService;
+import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
@@ -96,8 +97,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
     @Autowired
     private PersonDao personDao;
     
-    @Autowired
-    private MailService mailService;
+    /*@Autowired
+    private MailService mailService;*/
 	
 	/** Spring's application context. */
 	private ApplicationContext context;
@@ -374,63 +375,9 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	}
 
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.context = applicationContext;
-	}
-	
-	
-	
 	/**
-	 * Retrieve DAO object for the given entity from Spring's context.
-	 * @param entityName - the name of the entity
-	 * @return the DAO object
-	 * @throws FormServiceException if the DAO object cannot be retrieved
-	 */
-	@SuppressWarnings("unchecked")
-	private GenericDao<Object, Integer> daoForEntity(String entityName) throws FormServiceException {
-		try {
-			// get the DAO object from spring context
-			return (GenericDao<Object, Integer>) context.getBean(daoName(entityName), GenericDao.class);
-		} catch (BeansException e) {
-			logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
-			throw new FormServiceException(Cause.NOT_FOUND);
-		}
-	}
-	
-	
-	/**
-	 * Guess name of DAO object for given entity.
-	 * @param entityClassName - classname of the entity
-	 * @return name of the DAO object
-	 */
-	private String daoName(String entityClassName) {
-		// get simple name if the name is fully qualified
-		String[] split = entityClassName.split("\\.");
-		String entity = split[split.length - 1];
-		
-		// first character to lower case
-		char[] array = entity.toCharArray();
-		array[0] = Character.toLowerCase(array[0]);
-		entity = new String(array);
-		
-		// append the "Dao" suffix
-		return entity + "Dao";
-	}
-	
-	
-	private TemplateStyle chooseStyle(FormLayoutType type) {
-	    switch (type) {
-    	    case ODML_EEGBASE:
-    	        return TemplateStyle.EEGBASE;
-    	    case ODML_GUI:
-    	        return TemplateStyle.GUI_NAMESPACE;
-    	    default:
-    	        return TemplateStyle.EEGBASE;
-	    }
-	}
-
-
+     * {@inheritDoc} 
+     */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
 	public Integer createRecord(String entity, byte[] odml, FormLayoutType type) throws FormServiceException {
@@ -455,7 +402,7 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		
 		// check number of records
 		if (model.size() != 1)
-			throw new FormServiceException("OdML must contain just one record.");
+			throw new FormServiceException("OdML document must contain just one record.");
 		
 		// build the persistent object
 		Object object = null;
@@ -466,38 +413,139 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			throw new FormServiceException("Unable to save the record, malformed odML data?");
 		}
 		
-		// save the object
+		// handling specific for Person entity
 		if (object instanceof Person) {
-		    Person person = (Person) object;
-		    person.setUsername(person.getEmail());
-		    person.setAuthority(cz.zcu.kiv.eegdatabase.logic.Util.ROLE_READER);
-		    person.setRegistrationDate(new Timestamp(new java.util.Date().getTime()));
-		    
-		    // TODO generate password and send confirmation email to the new user
-		    //person.setPassword("generated-password");
-		    //mailService.sendRegistrationConfirmMail(person, locale);
-		    
-		    return personDao.create(person);
-		} else {
-		    GenericDao<Object, Integer> dao = daoForEntity(entity);
-		    return dao.create(object);
+		    preparePersonForSaving((Person) object);
 		}
 		
+		// save the object
+	    GenericDao<Object, Integer> dao = daoForEntity(entity);
+	    return dao.create(object);
 	}
 	
 	
+	@Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
+    }
+    
+    
+    
+    /**
+     * Retrieve DAO object for the given entity from Spring's context.
+     * @param entityName - the name of the entity
+     * @return the DAO object
+     * @throws FormServiceException if the DAO object cannot be retrieved
+     */
+    @SuppressWarnings("unchecked")
+    private GenericDao<Object, Integer> daoForEntity(String entityName) throws FormServiceException {
+        try {
+            // get the DAO object from spring context
+            return (GenericDao<Object, Integer>) context.getBean(daoName(entityName), GenericDao.class);
+        } catch (BeansException e) {
+            logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
+            throw new FormServiceException(Cause.NOT_FOUND);
+        }
+    }
+    
+    
+    /**
+     * Guess name of DAO object for given entity.
+     * @param entityClassName - classname of the entity
+     * @return name of the DAO object
+     */
+    private String daoName(String entityClassName) {
+        // get simple name if the name is fully qualified
+        String[] split = entityClassName.split("\\.");
+        String entity = split[split.length - 1];
+        
+        // first character to lower case
+        char[] array = entity.toCharArray();
+        array[0] = Character.toLowerCase(array[0]);
+        entity = new String(array);
+        
+        // append the "Dao" suffix
+        return entity + "Dao";
+    }
+    
+    
+    /**
+     * Returns a {@link TemplateStyle} corresponding to the given {@link FormLayoutType}.
+     * @param type The FormLayoutType.
+     * @return corresponding TemplateStyle
+     */
+    private TemplateStyle chooseStyle(FormLayoutType type) {
+        switch (type) {
+            case ODML_EEGBASE:
+                return TemplateStyle.EEGBASE;
+            case ODML_GUI:
+                return TemplateStyle.GUI_NAMESPACE;
+            default:
+                return TemplateStyle.EEGBASE;
+        }
+    }
+    
+    
+    /**
+     * Prepares a new Person object to be persisted.
+     * @param person The new object.
+     */
+    private void preparePersonForSaving(Person person) {
+        person.setUsername(person.getEmail());
+        person.setAuthority(cz.zcu.kiv.eegdatabase.logic.Util.ROLE_READER);
+        person.setRegistrationDate(new Timestamp(new java.util.Date().getTime()));
+        
+        // generate random password
+        String password = ControllerUtils.getRandomPassword();
+        String encodedPassword = new BCryptPasswordEncoder().encode(password);
+        person.setPassword(encodedPassword);
+        
+        // confirmation email cannot be send via mailService as it is connected with a browser session
+        //mailService.sendRegistrationConfirmMail(person, null);
+    }
 	
+	
+    
+	
+    /**
+     * Provides acces to persistent objects needed by ObjectBuilder.
+     * 
+     * @author Jakub Krauz
+     *
+     */
 	private class ObjectProvider implements PersistentObjectProvider<Integer> {
 
+	    /**
+	     * Returns persisted object by its ID and type.
+	     */
 		@Override
 		public Object getById(Class<?> type, Integer id) throws PersistentObjectException {
 			try {
-				GenericDao<?, Integer> dao = daoForEntity(type.getSimpleName());
+				GenericDao<Object, Integer> dao = daoForEntity(type.getSimpleName());
 				return dao.read(id);
 			} catch (FormServiceException e) {
 				throw new PersistentObjectException("Cannot retrieve DAO object.", e);
 			}
 		}
+
+		/**
+		 * Creates a new persisted object.
+		 */
+        @Override
+        public Integer create(Object obj) throws PersistentObjectException {
+            
+            // specific handling of Person entity
+            if (obj instanceof Person)
+                preparePersonForSaving((Person) obj);
+            
+            // save the object to the persistent storage
+            try {
+                GenericDao<Object, Integer> dao = daoForEntity(obj.getClass().getSimpleName());
+                return dao.create(obj);
+            } catch (FormServiceException e) {
+                throw new PersistentObjectException("Cannot retrieve DAO object.", e);
+            }
+        }
 		
 	}
 
