@@ -22,7 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -35,6 +38,9 @@ import static org.testng.Assert.assertTrue;
 public class MainMenuTestIT extends AbstractUITest {
     private WebTester tester;
 
+    @Autowired
+    private PersonDao personDao;
+
     @BeforeMethod(groups = "web")
     public void setUp() {
 
@@ -42,13 +48,13 @@ public class MainMenuTestIT extends AbstractUITest {
         tester.setScriptingEnabled(false);
 
      //   tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
-        tester.setBaseUrl("http://localhost:8080");
+        tester.setBaseUrl(url);
         tester.beginAt("/home-page");
     }
 
     @Test(groups = "web")
     public void testUsersMainMenu() {
-        loginUser();
+        loginUser(Util.ROLE_USER);
         tester.clickLinkWithText("Articles");
         tester.assertTextPresent("All articles");
         tester.clickLinkWithText("Experiments");
@@ -70,7 +76,7 @@ public class MainMenuTestIT extends AbstractUITest {
 
     @Test(groups = "web")
     public void testAdminsMainMenu() {
-        loginAdmin();
+        loginUser(Util.ROLE_ADMIN);
         tester.clickLinkWithText("Articles");
         tester.assertTextPresent("All articles");
         tester.clickLinkWithText("Experiments");
@@ -90,15 +96,13 @@ public class MainMenuTestIT extends AbstractUITest {
 
     }
 
-    private void loginUser() {
-        tester.setTextField("userName", "jan.stebetak@seznam.cz");
-        tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
-
-    }
-
-    private void loginAdmin() {
+    private void loginUser(String role) {
+//        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+//            person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
+//            person.setPassword("stebjan");
+//            person.setConfirmed(true);
+//            personDao.create(person);
+//        }
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");

@@ -23,13 +23,14 @@
 package cz.zcu.kiv.eegdatabase.ui;
 
 
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
 import static junit.framework.Assert.*;
 
 
-
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -55,13 +56,16 @@ public class LoginTestIT extends AbstractUITest {
 
     @BeforeMethod(groups = "web")
     public void setUp() {
-//        person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_USER);
-//        person.setConfirmed(true);
-//        personDao.create(person);
+//        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+//            person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
+//            person.setPassword("stebjan");
+//            person.setConfirmed(true);
+//            personDao.create(person);
+//        }
 
         driver = new HtmlUnitDriver();
         //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        driver.get("http://localhost:8080/home-page");
+        driver.get(url + "/home-page");
     }
 
     @Test(groups = "web")

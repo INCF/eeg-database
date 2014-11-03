@@ -34,6 +34,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 @ContextConfiguration(locations = {"classpath:/test-context.xml"})
 public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
 
+    protected String url = "http://localhost:8082";
 
 }
 

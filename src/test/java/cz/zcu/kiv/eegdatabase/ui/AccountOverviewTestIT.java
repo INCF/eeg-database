@@ -22,7 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
+import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import net.sourceforge.jwebunit.junit.WebTester;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
@@ -36,12 +38,21 @@ public class AccountOverviewTestIT extends AbstractUITest {
 
     private WebTester tester;
 
+    @Autowired
+    private PersonDao personDao;
+
     @BeforeMethod
     public void setUp() {
+//        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+//            person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
+//            person.setPassword("stebjan");
+//            person.setConfirmed(true);
+//            personDao.create(person);
+//        }
 
         tester = new WebTester();
        // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
-        tester.setBaseUrl("http://localhost:8080");
+        tester.setBaseUrl(url);
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
