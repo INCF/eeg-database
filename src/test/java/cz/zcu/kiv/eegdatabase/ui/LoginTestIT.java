@@ -31,6 +31,7 @@ import static junit.framework.Assert.*;
 
 
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import net.sourceforge.jwebunit.junit.WebTester;
 import org.testng.annotations.Test;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
@@ -53,6 +54,7 @@ public class LoginTestIT extends AbstractUITest {
 
 
     private WebDriver driver;
+    private WebTester tester;
 
     @BeforeMethod(groups = "web")
     public void setUp() {
@@ -62,50 +64,45 @@ public class LoginTestIT extends AbstractUITest {
 //            person.setConfirmed(true);
 //            personDao.create(person);
 //        }
+        tester = new WebTester();
+        tester.setScriptingEnabled(false);
 
-        driver = new HtmlUnitDriver();
-        //driver.get("http://eeg2.kiv.zcu.cz:8080/home-page");
-        driver.get(url + "/home-page");
+        //   tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
+        tester.setBaseUrl(url);
+        tester.beginAt("/home-page");
     }
 
     @Test(groups = "web")
     public void testLogin() {
 
-        assertEquals(driver.getTitle(), "Home Page");
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("jan.stebetak@seznam.cz");
-        driver.findElement(By.name("password")).sendKeys("stebjan");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue("User 'jan.stebetak@seznam.cz' should be logged in but is not.", driver.getPageSource().contains("Log out"));
-        driver.quit();
+        tester.assertTitleEquals("Home Page");
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("Log out");
 
     }
 
     @Test(groups = "web")
     public void testUnsuccesfullLogin() {
-        assertEquals(driver.getTitle(), "Home Page");
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("xxx");
-        driver.findElement(By.name("password")).sendKeys("xxx");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue("User 'jan.stebetak@seznam.cz' should not be logged in.", driver.getPageSource().contains("User cannot be log in"));
-        driver.quit();
+
+        tester.assertTitleEquals("Home Page");
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "xxx");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("User cannot be log in");
 
     }
 
     @Test(groups = "web")
     public void testEmptyFieldsLogin() {
-        assertEquals(driver.getTitle(), "Home Page");
-        WebElement name = driver.findElement(By.name("userName"));
-        name.sendKeys("");
-        driver.findElement(By.name("password")).sendKeys("");
-        WebElement button = driver.findElement(By.name(":submit"));
-        button.click();
-        assertTrue(driver.getPageSource().contains("Field 'userName' is required"));
-        assertTrue(driver.getPageSource().contains("Field 'password' is required"));
-        driver.quit();
+
+        tester.assertTitleEquals("Home Page");
+        tester.setTextField("userName", "");
+        tester.setTextField("password", "");
+        tester.clickButtonWithText("Log in");
+        tester.assertTextPresent("Field 'userName' is required");
+        tester.assertTextPresent("Field 'password' is required");
     }
 
 }
