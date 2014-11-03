@@ -27,19 +27,10 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 
-import static junit.framework.Assert.*;
-
-
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.testng.annotations.Test;
-import org.openqa.selenium.By;
-import org.openqa.selenium.WebDriver;
-import org.openqa.selenium.WebElement;
-import org.openqa.selenium.firefox.FirefoxDriver;
-import org.openqa.selenium.htmlunit.HtmlUnitDriver;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 /**
@@ -53,7 +44,6 @@ public class LoginTestIT extends AbstractUITest {
     private PersonDao personDao;
 
 
-    private WebDriver driver;
     private WebTester tester;
 
     @BeforeMethod(groups = "web")
