@@ -132,20 +132,22 @@ public interface FormService {
 	/**
 	 * Gets all records of given type (entity) in odML format.
 	 * @param entity - the entity's name
+	 * @param type - the type of the odml template
 	 * @return byte array with odML data
 	 * @throws FormServiceException if the required data cannot be retrieved
 	 */
-	byte[] getOdmlData(String entity) throws FormServiceException;
+	byte[] getOdmlData(String entity, FormLayoutType type) throws FormServiceException;
 	
 	
 	/**
 	 * Gets the record determined by the given ID in odML format.
 	 * @param entity - the entity's name
 	 * @param id - the record's ID
+	 * @param type - the type of the odml template
 	 * @return byte array with odML data
 	 * @throws FormServiceException if the required data cannot be retrieved
 	 */
-	byte[] getOdmlData(String entity, Integer id) throws FormServiceException;
+	byte[] getOdmlData(String entity, Integer id, FormLayoutType type) throws FormServiceException;
 	
 	
 	/**
@@ -170,9 +172,10 @@ public interface FormService {
 	 * Creates a new persistent object from the odML data document.
 	 * @param entity - the entity's name
 	 * @param odml - the odML document
+	 * @param type - the type of the odml template
 	 * @return ID of the created record
 	 * @throws FormServiceException if the record cannot be created
 	 */
-	Integer createRecord(String entity, byte[] odml) throws FormServiceException;
+	Integer createRecord(String entity, byte[] odml, FormLayoutType type) throws FormServiceException;
 
 }

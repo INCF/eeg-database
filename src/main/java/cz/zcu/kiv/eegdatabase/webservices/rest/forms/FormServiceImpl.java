@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.webservices.rest.forms;
 
 import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -35,9 +36,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -48,6 +49,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceException.Cause;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
@@ -81,28 +83,25 @@ import cz.zcu.kiv.formgen.odml.TemplateStyle;
 @Transactional(readOnly = true)
 public class FormServiceImpl implements FormService, InitializingBean, ApplicationContextAware {
 	
+    /** Base package of POJO classes. */
+    private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
+    
+    /** Logger object. */
+    private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
+    
 	/** The DAO object providing form-layout data. */
 	@Autowired
-	@Qualifier("formLayoutDao")
 	private FormLayoutDao formLayoutDao;
 	
 	/** The DAO object providing person-related data - used for getting the logged user. */
     @Autowired
-    @Qualifier("personDao")
     private PersonDao personDao;
-	
-	/** Base package of POJO classes. */
-	private static final String POJO_BASE = "cz.zcu.kiv.eegdatabase.data.pojo";
-	
-	/** Logger object. */
-	private static final Logger logger = LoggerFactory.getLogger(FormServiceImpl.class);
+    
+    /*@Autowired
+    private MailService mailService;*/
 	
 	/** Spring's application context. */
 	private ApplicationContext context;
-	
-	
-	private TemplateStyle style = TemplateStyle.GUI_NAMESPACE;
-	
 	
 	
 	/**
@@ -205,9 +204,11 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	        list = formLayoutDao.getLayouts(null, formName, type);
 		
 		List<AvailableLayoutsData> dataList = new ArrayList<AvailableLayoutsData>(list.size());
-		for (FormLayout formLayout : list)
-			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), 
-			                                      formLayout.getType().toString()));
+		for (FormLayout formLayout : list) {
+		    String templType = (formLayout.getType() == null) 
+		            ? FormLayoutType.OTHER.toString() : formLayout.getType().toString();
+			dataList.add(new AvailableLayoutsData(formLayout.getFormName(), formLayout.getLayoutName(), templType));
+		}
 		
 		return new AvailableLayoutsDataList(dataList);
 	}
@@ -302,27 +303,8 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public byte[] getOdmlData(String entity) throws FormServiceException {
-		if (entity == null)
-			throw new NullPointerException("Entity cannot be null.");
-		
-		// get all records
-		GenericDao<?, Integer> dao = daoForEntity(entity);
-		@SuppressWarnings("unchecked")
-		List<Object> list = (List<Object>) dao.getAllRecords();
-		
-		// transform data to odML
-		try {
-			SimpleDataGenerator generator = new SimpleDataGenerator();
-			generator.load(list, false);
-			Writer writer = new OdmlWriter(style);
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			writer.writeData(generator.getLoadedModel(), out);
-			return out.toByteArray();
-		} catch (TemplateGeneratorException e) {
-			logger.error("Unable to transform data to odML format.", e);
-			throw new FormServiceException(Cause.OTHER);
-		}
+	public byte[] getOdmlData(String entity, FormLayoutType type) throws FormServiceException {
+		return getOdmlData(entity, null, type);
 	}
 	
 	
@@ -330,21 +312,30 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	 * {@inheritDoc} 
 	 */
 	@Override
-	public byte[] getOdmlData(String entity, Integer id) throws FormServiceException {
+	public byte[] getOdmlData(String entity, Integer id, FormLayoutType type) throws FormServiceException {
 		if (entity == null)
 			throw new NullPointerException("Entity cannot be null.");
 		
-		// get the record
-		GenericDao<?, Integer> dao = daoForEntity(entity);
-		Object data = dao.read(id);
+		// get and load required data
+		SimpleDataGenerator generator = new SimpleDataGenerator();
+		if (id == null) {
+		    // get all records
+		    GenericDao<?, Integer> dao = daoForEntity(entity);
+		    @SuppressWarnings("unchecked")
+		    List<Object> list = (List<Object>) dao.getAllRecords();
+		    generator.load(list, false);
+		} else {
+		    // get the specific record
+		    GenericDao<?, Integer> dao = daoForEntity(entity);
+		    Object data = dao.read(id);
+		    generator.load(data, false);
+		}
 		
-		// transform data to odML
+		// write the data in odML
+		Writer writer = new OdmlWriter(chooseStyle(type));
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
 		try {
-			SimpleDataGenerator generator = new SimpleDataGenerator();
-			generator.load(data, false);
-			Writer writer = new OdmlWriter(style);
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-			writer.writeData(generator.getLoadedModel(), out);
+		    writer.writeData(generator.getLoadedModel(), out);
 			return out.toByteArray();
 		} catch (TemplateGeneratorException e) {
 			logger.error("Unable to transform data to odML format.", e);
@@ -384,54 +375,12 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 	}
 
 
-	@Override
-	public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-		this.context = applicationContext;
-	}
-	
-	
-	
 	/**
-	 * Retrieve DAO object for the given entity from Spring's context.
-	 * @param entityName - the name of the entity
-	 * @return the DAO object
-	 * @throws FormServiceException if the DAO object cannot be retrieved
-	 */
-	@SuppressWarnings("unchecked")
-	private GenericDao<Object, Integer> daoForEntity(String entityName) throws FormServiceException {
-		try {
-			// get the DAO object from spring context
-			return (GenericDao<Object, Integer>) context.getBean(daoName(entityName), GenericDao.class);
-		} catch (BeansException e) {
-			logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
-			throw new FormServiceException(Cause.NOT_FOUND);
-		}
-	}
-	
-	
-	/**
-	 * Guess name of DAO object for given entity.
-	 * @param entityClassName - classname of the entity
-	 * @return name of the DAO object
-	 */
-	private String daoName(String entityClassName) {
-		// get simple name if the name is fully qualified
-		String[] split = entityClassName.split("\\.");
-		String entity = split[split.length - 1];
-		
-		// first character to lower case
-		char[] array = entity.toCharArray();
-		array[0] = Character.toLowerCase(array[0]);
-		entity = new String(array);
-		
-		// append the "Dao" suffix
-		return entity + "Dao";
-	}
-
-
+     * {@inheritDoc} 
+     */
 	@Override
 	@Transactional(readOnly = false, propagation = Propagation.REQUIRES_NEW)
-	public Integer createRecord(String entity, byte[] odml) throws FormServiceException {
+	public Integer createRecord(String entity, byte[] odml, FormLayoutType type) throws FormServiceException {
 		if (entity == null)
 			throw new NullPointerException("Entity cannot be null.");
 		
@@ -446,14 +395,14 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 		// read the odml
 		Set<FormData> model;
 		try {
-			model = new OdmlReader(style).readData(new ByteArrayInputStream(odml));
+			model = new OdmlReader(chooseStyle(type)).readData(new ByteArrayInputStream(odml));
 		} catch (TemplateGeneratorException e) {
 			throw new FormServiceException("Unable to read the odML document.");
 		}
 		
 		// check number of records
 		if (model.size() != 1)
-			throw new FormServiceException("OdML must contain just one record.");
+			throw new FormServiceException("OdML document must contain just one record.");
 		
 		// build the persistent object
 		Object object = null;
@@ -464,24 +413,139 @@ public class FormServiceImpl implements FormService, InitializingBean, Applicati
 			throw new FormServiceException("Unable to save the record, malformed odML data?");
 		}
 		
+		// handling specific for Person entity
+		if (object instanceof Person) {
+		    preparePersonForSaving((Person) object);
+		}
+		
 		// save the object
-		GenericDao<Object, Integer> dao = daoForEntity(entity);
-		return dao.create(object);
+	    GenericDao<Object, Integer> dao = daoForEntity(entity);
+	    return dao.create(object);
 	}
 	
 	
+	@Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        this.context = applicationContext;
+    }
+    
+    
+    
+    /**
+     * Retrieve DAO object for the given entity from Spring's context.
+     * @param entityName - the name of the entity
+     * @return the DAO object
+     * @throws FormServiceException if the DAO object cannot be retrieved
+     */
+    @SuppressWarnings("unchecked")
+    private GenericDao<Object, Integer> daoForEntity(String entityName) throws FormServiceException {
+        try {
+            // get the DAO object from spring context
+            return (GenericDao<Object, Integer>) context.getBean(daoName(entityName), GenericDao.class);
+        } catch (BeansException e) {
+            logger.warn("Unable to get bean \"" + daoName(entityName) + "\" from the application context.", e);
+            throw new FormServiceException(Cause.NOT_FOUND);
+        }
+    }
+    
+    
+    /**
+     * Guess name of DAO object for given entity.
+     * @param entityClassName - classname of the entity
+     * @return name of the DAO object
+     */
+    private String daoName(String entityClassName) {
+        // get simple name if the name is fully qualified
+        String[] split = entityClassName.split("\\.");
+        String entity = split[split.length - 1];
+        
+        // first character to lower case
+        char[] array = entity.toCharArray();
+        array[0] = Character.toLowerCase(array[0]);
+        entity = new String(array);
+        
+        // append the "Dao" suffix
+        return entity + "Dao";
+    }
+    
+    
+    /**
+     * Returns a {@link TemplateStyle} corresponding to the given {@link FormLayoutType}.
+     * @param type The FormLayoutType.
+     * @return corresponding TemplateStyle
+     */
+    private TemplateStyle chooseStyle(FormLayoutType type) {
+        switch (type) {
+            case ODML_EEGBASE:
+                return TemplateStyle.EEGBASE;
+            case ODML_GUI:
+                return TemplateStyle.GUI_NAMESPACE;
+            default:
+                return TemplateStyle.EEGBASE;
+        }
+    }
+    
+    
+    /**
+     * Prepares a new Person object to be persisted.
+     * @param person The new object.
+     */
+    private void preparePersonForSaving(Person person) {
+        person.setUsername(person.getEmail());
+        person.setAuthority(cz.zcu.kiv.eegdatabase.logic.Util.ROLE_READER);
+        person.setRegistrationDate(new Timestamp(new java.util.Date().getTime()));
+        
+        // generate random password
+        String password = ControllerUtils.getRandomPassword();
+        String encodedPassword = new BCryptPasswordEncoder().encode(password);
+        person.setPassword(encodedPassword);
+        
+        // confirmation email cannot be send via mailService as it is connected with a browser session
+        //mailService.sendRegistrationConfirmMail(person, null);
+    }
 	
+	
+    
+	
+    /**
+     * Provides acces to persistent objects needed by ObjectBuilder.
+     * 
+     * @author Jakub Krauz
+     *
+     */
 	private class ObjectProvider implements PersistentObjectProvider<Integer> {
 
+	    /**
+	     * Returns persisted object by its ID and type.
+	     */
 		@Override
 		public Object getById(Class<?> type, Integer id) throws PersistentObjectException {
 			try {
-				GenericDao<?, Integer> dao = daoForEntity(type.getSimpleName());
+				GenericDao<Object, Integer> dao = daoForEntity(type.getSimpleName());
 				return dao.read(id);
 			} catch (FormServiceException e) {
 				throw new PersistentObjectException("Cannot retrieve DAO object.", e);
 			}
 		}
+
+		/**
+		 * Creates a new persisted object.
+		 */
+        @Override
+        public Integer create(Object obj) throws PersistentObjectException {
+            
+            // specific handling of Person entity
+            if (obj instanceof Person)
+                preparePersonForSaving((Person) obj);
+            
+            // save the object to the persistent storage
+            try {
+                GenericDao<Object, Integer> dao = daoForEntity(obj.getClass().getSimpleName());
+                return dao.create(obj);
+            } catch (FormServiceException e) {
+                throw new PersistentObjectException("Cannot retrieve DAO object.", e);
+            }
+        }
 		
 	}
 
