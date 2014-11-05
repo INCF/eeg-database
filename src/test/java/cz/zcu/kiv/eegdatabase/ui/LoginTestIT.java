@@ -48,7 +48,6 @@ public class LoginTestIT extends AbstractUITest {
     public void setUp() {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
-            person.setPassword("stebjan");
             person.setConfirmed(true);
             personDao.create(person);
         }

@@ -42,7 +42,7 @@ public class TestUtils {
         person.setUsername(username);
         person.setAuthority(role);
         person.setDateOfBirth(new Timestamp(10));
-        person.setPassword(encoder.encode(ControllerUtils.getRandomPassword()));
+        person.setPassword(encoder.encode("stebjan"));
         person.setSurname("test-surname");
         person.setGivenname("test-name");
         person.setGender('M');

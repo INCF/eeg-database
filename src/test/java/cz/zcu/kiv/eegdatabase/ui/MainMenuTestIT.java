@@ -99,11 +99,13 @@ public class MainMenuTestIT extends AbstractUITest {
     }
 
     private void loginUser(String role) {
+        Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
+        person.setConfirmed(true);
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
-            Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
-            person.setPassword("stebjan");
-            person.setConfirmed(true);
+
             personDao.create(person);
+        } else {
+            personDao.update(person);
         }
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
