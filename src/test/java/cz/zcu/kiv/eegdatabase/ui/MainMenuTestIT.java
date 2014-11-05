@@ -104,8 +104,6 @@ public class MainMenuTestIT extends AbstractUITest {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
 
             personDao.create(person);
-        } else {
-            personDao.update(person);
         }
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
