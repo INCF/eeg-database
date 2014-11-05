@@ -179,7 +179,7 @@
         <property name="personDao" ref="personDao" />
     </bean>
 
-    <bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />
+    <!--<bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />-->
 
     <!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
     <!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
@@ -199,7 +199,7 @@
     <!-- Solr indexing service -->
     <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
 
-    <bean name="experimentGenerator" class="cz.zcu.kiv.eegdatabase.data.ExperimentGenerator" />
+    <!--<bean name="experimentGenerator" class="cz.zcu.kiv.eegdatabase.data.ExperimentGenerator" />-->
 
     <!-- Solr Server instance (production server) -->
     <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
