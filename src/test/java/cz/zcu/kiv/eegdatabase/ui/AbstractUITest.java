@@ -31,7 +31,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
  * Created by stebjan on 10.9.14.
  */
 
-@ContextConfiguration(locations = {"classpath:/test-context.xml"})
+@ContextConfiguration(locations = {"classpath:/web-test-context.xml"})
 public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
 
     protected String url = "http://localhost:8082";
