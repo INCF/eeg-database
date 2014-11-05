@@ -69,8 +69,8 @@ public class MainMenuTestIT extends AbstractUITest {
         tester.assertTextPresent("List of people");
         tester.clickLinkWithText("Lists");
         tester.assertTitleEquals("Lists Page");
-        tester.clickLinkWithText("History");
-        tester.assertTitleEquals("History Page");
+//        tester.clickLinkWithText("History");
+//        tester.assertTitleEquals("History Page");
 
         tester.assertTextNotPresent("Administration");
 
@@ -91,8 +91,8 @@ public class MainMenuTestIT extends AbstractUITest {
         tester.assertTextPresent("List of people");
         tester.clickLinkWithText("Lists");
         tester.assertTitleEquals("Lists Page");
-        tester.clickLinkWithText("History");
-        tester.assertTitleEquals("History Page");
+//        tester.clickLinkWithText("History");
+//        tester.assertTitleEquals("History Page");
 //        tester.clickLinkWithText("Administration");
 //        tester.assertTextPresent("Manage user roles");
 
