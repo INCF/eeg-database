@@ -38,8 +38,6 @@ import org.testng.annotations.BeforeMethod;
  */
 public class LoginTestIT extends AbstractUITest {
 
-    private Person person;
-
     @Autowired
     private PersonDao personDao;
 
@@ -48,12 +46,12 @@ public class LoginTestIT extends AbstractUITest {
 
     @BeforeMethod(groups = "web")
     public void setUp() {
-//        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
-//            person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
-//            person.setPassword("stebjan");
-//            person.setConfirmed(true);
-//            personDao.create(person);
-//        }
+        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
+            person.setPassword("stebjan");
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
         tester = new WebTester();
         tester.setScriptingEnabled(false);
 

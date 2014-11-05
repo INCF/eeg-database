@@ -22,7 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
+import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -97,12 +99,12 @@ public class MainMenuTestIT extends AbstractUITest {
     }
 
     private void loginUser(String role) {
-//        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
-//            person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
-//            person.setPassword("stebjan");
-//            person.setConfirmed(true);
-//            personDao.create(person);
-//        }
+        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
+            person.setPassword("stebjan");
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");
