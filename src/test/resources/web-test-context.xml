@@ -63,7 +63,7 @@
 
     <bean id="dataSourceTest" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
         <property name="driverClassName" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:target/db/testdb;TRACE_MAX_FILE_SIZE=10"/>
+        <property name="url" value="jdbc:h2:target/db/testwebdb;AUTO_SERVER=TRUE"/>
         <property name="username" value="sa"/>
         <property name="password" value=""/>
     </bean>
