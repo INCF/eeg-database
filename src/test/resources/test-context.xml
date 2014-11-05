@@ -89,7 +89,7 @@
     				<prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
     				<prop key="autocommmit">true</prop>
     				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
-    				<prop key="hibernate.hbm2ddl.auto">create-drop</prop>
+    				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
     				<!--<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>-->
     				<!--<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>-->
     			</props>
