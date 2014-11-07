@@ -199,6 +199,10 @@
 	<bean name="experimentPackageFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageFacadeImpl" autowire="byType">
 		<constructor-arg ref="experimentPackageService"/>
 	</bean>
+    
+    <bean name="electrodeConfService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ElectrodeConfServiceImpl" autowire="byType">
+        <constructor-arg ref="electrodeConfDao"/>
+    </bean>
 
 
 	<!-- MAIL -->
