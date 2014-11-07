@@ -42,10 +42,14 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
+import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -155,6 +159,58 @@ public class ExperimentsDetailPage extends MenuPage {
 
             }
         };
+        
+        PropertyListView<Software> software = new PropertyListView<Software>("software", new ListModel<Software>(new ArrayList<Software>(
+                experiment.getSoftwares()))) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<Software> item) {
+                item.add(new Label("title"));
+                item.add(new Label("description"));
+
+            }
+        };
+        
+        PropertyListView<Disease> diseases = new PropertyListView<Disease>("diseases", new ListModel<Disease>(new ArrayList<Disease>(
+                experiment.getDiseases()))) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<Disease> item) {
+                item.add(new Label("title"));
+                item.add(new Label("description"));
+
+            }
+        };
+        
+        PropertyListView<Pharmaceutical> pharmaceuticals = new PropertyListView<Pharmaceutical>("pharmaceuticals", new ListModel<Pharmaceutical>(new ArrayList<Pharmaceutical>(
+                experiment.getPharmaceuticals()))) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<Pharmaceutical> item) {
+                item.add(new Label("title"));
+                item.add(new Label("description"));
+
+            }
+        };
+        
+        PropertyListView<ProjectType> projectTypes = new PropertyListView<ProjectType>("projectTypes", new ListModel<ProjectType>(new ArrayList<ProjectType>(
+                experiment.getProjectTypes()))) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<ProjectType> item) {
+                item.add(new Label("title"));
+                item.add(new Label("description"));
+
+            }
+        };
 
         PropertyListView<DataFile> files = new PropertyListView<DataFile>("files", new ListModel<DataFile>(new ArrayList<DataFile>(experiment.getDataFiles()))) {
 
@@ -200,7 +256,7 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
-        add(hardware, addParameters, files);
+        add(hardware, addParameters, files, software, diseases, pharmaceuticals, projectTypes);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
