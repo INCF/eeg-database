@@ -113,7 +113,11 @@ public class MenuPage extends BasePage {
         add(link);
 
         StringValue searchString = EEGDataBaseSession.get().getSearchString();
-        add(new MenuSearchPanel("menuSearchPanel", searchString));
+        MenuSearchPanel panel = new MenuSearchPanel("menuSearchPanel", searchString);
+        add(panel);
+        if (!signedIn) {
+            panel.setVisible(false);
+        }
 
         add(new Label("userLogStatusLabel", labelMessage));
 
