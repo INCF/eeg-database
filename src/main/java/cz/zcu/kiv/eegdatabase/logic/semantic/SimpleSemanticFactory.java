@@ -88,7 +88,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         }
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TransformTask(), 10000, interval);
+        timer.scheduleAtFixedRate(new TransformTask(), delay, interval);
     }
 
 
@@ -210,7 +210,6 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
     public void transformModel() {
         JenaBeanExtension jbe;
         OutputStream out;
-
 
         try {
             loadData();
