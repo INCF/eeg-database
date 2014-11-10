@@ -24,10 +24,10 @@ package cz.zcu.kiv.eegdatabase.services;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
 import cz.zcu.kiv.eegdatabase.wui.core.common.StimulusService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -36,7 +36,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 12.8.14.
  */
-@Transactional
 public class StimulusServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -44,14 +43,14 @@ public class StimulusServiceTest extends AbstractServicesTest {
 
     private Stimulus stimulus;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
 
         stimulus = new Stimulus();
         stimulus.setDescription("test description");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateStimulus() {
         int stimulusCountBefore = stimulusService.getAllRecords().size();
         int id = stimulusService.create(stimulus);
@@ -59,7 +58,7 @@ public class StimulusServiceTest extends AbstractServicesTest {
         assertEquals(id, stimulus.getStimulusId());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveDescription() {
         stimulusService.create(stimulus);
         int id = stimulusService.create(stimulus);

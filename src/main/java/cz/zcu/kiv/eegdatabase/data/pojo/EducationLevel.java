@@ -25,8 +25,11 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrField;
 import cz.zcu.kiv.eegdatabase.data.annotation.SolrId;
 import cz.zcu.kiv.eegdatabase.logic.indexing.IndexField;
+import cz.zcu.kiv.formgen.annotation.FormId;
+import cz.zcu.kiv.formgen.annotation.FormItem;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
@@ -41,8 +44,10 @@ import org.hibernate.annotations.GenericGenerator;
 public class EducationLevel implements Serializable {
 
 	@SolrId
+	@FormId
 	private int educationLevelId;
 	@SolrField(name = IndexField.TITLE)
+	@FormItem(required = true)
 	private String title;
 	private int defaultNumber;
 	private Set<Person> persons = new HashSet<Person>(0);

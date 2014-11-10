@@ -18,20 +18,23 @@
  *
  * ***********************************************************************************************************************
  *
- * AbstractServicesTest.java, 2014/07/18 00:01 Jan Stebetak
+ * AbstractUITest.java, 2014/09/10 00:01 Jan Stebetak
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.services;
+package cz.zcu.kiv.eegdatabase.ui;
 
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
-import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 /**
- * Created by Honza on 18.7.14.
+ * Created by stebjan on 10.9.14.
  */
 
-@ContextConfiguration(locations = {"classpath:/test-context.xml"})
-public abstract class AbstractServicesTest extends AbstractTransactionalTestNGSpringContextTests {
+@ContextConfiguration(locations = {"classpath:/web-test-context.xml"})
+public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
+
+    protected String url = "http://localhost:8082";
 
 }
+

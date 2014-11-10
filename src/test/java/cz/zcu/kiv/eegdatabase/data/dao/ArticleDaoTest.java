@@ -29,11 +29,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.After;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.transaction.TransactionConfiguration;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
@@ -44,7 +45,6 @@ import static org.junit.Assert.*;
  * User: Tomas Pokryvka
  * Date: 20.4.13
  */
-@Transactional
 @TransactionConfiguration(defaultRollback = true)
 public class ArticleDaoTest extends AbstractDataAccessTest {
 
@@ -58,7 +58,7 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
     protected Article article;
     protected Person personReader;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         personReader = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         personDao.create(personReader);
@@ -72,14 +72,14 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
         article.setPerson(personReader);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateArticleReader() {
         int count = articleDao.getCountRecords();
         articleDao.create(article);
         assertEquals(count + 1, articleDao.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testNotNullTitle() {
         article.setTitle(null);
         try {

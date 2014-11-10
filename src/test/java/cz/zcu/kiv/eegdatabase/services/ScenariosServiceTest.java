@@ -30,17 +30,16 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.*;
 
 /**
  * Created by stebjan on 29.7.2014.
  */
-@Transactional
 public class ScenariosServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -54,7 +53,7 @@ public class ScenariosServiceTest extends AbstractServicesTest {
     private Person person;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
 
@@ -63,7 +62,7 @@ public class ScenariosServiceTest extends AbstractServicesTest {
         scenario = createScenario("test_title");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateScenario() {
         int count = scenariosService.getCountRecords();
         scenariosService.create(scenario);
@@ -71,7 +70,7 @@ public class ScenariosServiceTest extends AbstractServicesTest {
         assertNotNull(scenariosService.getScenarioByTitle("test_title"));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetScenariosWhereOwner() {
         int count = scenariosService.getCountRecords();
         int countOfOwner = scenariosService.getScenariosWhereOwner(person).size();
@@ -85,7 +84,7 @@ public class ScenariosServiceTest extends AbstractServicesTest {
         assertEquals(count + 2, scenariosService.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
 
         scenariosService.create(scenario);

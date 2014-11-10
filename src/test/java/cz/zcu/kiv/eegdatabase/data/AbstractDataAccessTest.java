@@ -22,13 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data;
 
-import org.hibernate.SessionFactory;
-import org.junit.runner.RunWith;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
-import org.springframework.test.AbstractTransactionalDataSourceSpringContextTests;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
+import org.springframework.test.context.testng.AbstractTransactionalTestNGSpringContextTests;
 
 import static org.junit.Assert.assertNotNull;
 
@@ -40,41 +35,7 @@ import static org.junit.Assert.assertNotNull;
  * Time: 16:45
  * Rewritten to support Spring 3 and JUnit 4 annotations by Jiri Novotny
  */
-@RunWith(SpringJUnit4ClassRunner.class)
+
 @ContextConfiguration(locations = {"classpath:/test-context.xml"})
-public abstract class AbstractDataAccessTest {
-    private SessionFactory sessionFactory;
-
-    public AbstractDataAccessTest() {
-        changeParserImplementationToXerces();//Important!
-    }
-
-    /**
-     * If not changed, oracle parser would try to parse hibernate configurations
-     * and fail with the following error:
-     * ERROR ErrorLogger - Error parsing XML (31) : http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd<Line 31, Column 2>:
-     * XML-20068: (Fatal Error) content model is not deterministic
-     * org.hibernate.InvalidMappingException: Unable to read XML
-     * Setting SAXParserFactory and DocumentBuilderFactory will change the parser
-     * to xerces, enabling Hibernate-based tests
-     */
-    private void changeParserImplementationToXerces() {
-        System.setProperty("javax.xml.parsers.SAXParserFactory","org.apache.xerces.jaxp.SAXParserFactoryImpl");
-        System.setProperty("javax.xml.parsers.DocumentBuilderFactory","org.apache.xerces.jaxp.DocumentBuilderFactoryImpl");
-    }
-
-    /**
-     * Can be used as universal DAO for entity manipulation, in case
-     * there is no specialized implementation available
-     */
-    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory){
-        assertNotNull("Session factory must exist",sessionFactory);
-        HibernateDaoSupport daoSupport = new HibernateDaoSupport() {};//empty impl
-        daoSupport.setSessionFactory(sessionFactory);
-        return daoSupport.getHibernateTemplate();
-    }
-
-    public void setSessionFactory(SessionFactory factory) {
-        this.sessionFactory = factory;
-    }
+public abstract class AbstractDataAccessTest extends AbstractTransactionalTestNGSpringContextTests {
 }

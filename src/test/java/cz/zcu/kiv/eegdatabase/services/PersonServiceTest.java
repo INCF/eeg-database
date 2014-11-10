@@ -32,12 +32,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
-import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static junit.framework.Assert.assertFalse;
 import static junit.framework.Assert.assertTrue;
@@ -47,7 +46,6 @@ import static org.junit.Assert.assertNotNull;
 /**
  * Created by stebjan on 1.8.2014.
  */
-@Transactional
 public class PersonServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -66,7 +64,7 @@ public class PersonServiceTest extends AbstractServicesTest {
     @Autowired
     private PersonDao personDao;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
 
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
@@ -81,7 +79,7 @@ public class PersonServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreatePerson() {
         int count = personService.getCountRecords();
         personDao.create(person);
@@ -90,7 +88,7 @@ public class PersonServiceTest extends AbstractServicesTest {
         assertNotNull(personService.getPerson("test@test.com"));
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetPersonForDetail() {
 
         int id = personDao.create(person);
@@ -102,7 +100,7 @@ public class PersonServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testChangeUserPassword() {
 
         personDao.create(person);
@@ -112,7 +110,7 @@ public class PersonServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testUsernameExists() {
 
         personDao.create(person);
@@ -122,7 +120,7 @@ public class PersonServiceTest extends AbstractServicesTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testUsernameInGroup() {
 
         personDao.create(person);

@@ -88,7 +88,7 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         }
 
         Timer timer = new Timer();
-        timer.scheduleAtFixedRate(new TransformTask(), delay, interval);
+        timer.scheduleAtFixedRate(new TransformTask(), 10000, interval);
     }
 
 
@@ -211,9 +211,9 @@ public class SimpleSemanticFactory implements InitializingBean, ApplicationConte
         JenaBeanExtension jbe;
         OutputStream out;
 
-        loadData();
 
         try {
+            loadData();
             jbe = creatingJenaBean();
             lock.writeLock().lock();
             out = new FileOutputStream(ontologyFile);

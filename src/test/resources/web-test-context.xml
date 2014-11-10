@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+  This file is part of the EEG-database project
+
+    ==========================================
+
+    Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+
+   ***********************************************************************************************************************
+
+    Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+    the License. You may obtain a copy of the License at
+
+        http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+    an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+    specific language governing permissions and limitations under the License.
+
+   ***********************************************************************************************************************
+
+		test-context.xml, 2013/10/02 00:01 Jakub Rinkes
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:util="http://www.springframework.org/schema/util"
+       xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
+       xmlns:hprof="http://www.nhprof.com/schema/hprof"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+              http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+
+
+
+
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context-3.0.xsd
+       http://www.springframework.org/schema/util
+       http://www.springframework.org/schema/util/spring-util-3.0.xsd
+       http://www.nhprof.com/schema/hprof
+       http://www.nhprof.com/schema/hprof/hprof.xsd
+       http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
+
+    <context:annotation-config/>
+
+    <!--================== System properties settings ==================-->
+
+    <bean id="systemProps" class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+        <property name="targetObject" value="#{@systemProperties}" />
+        <property name="targetMethod" value="putAll" />
+        <property name="arguments">
+            <util:properties>
+                <prop key="javax.xml.parsers.SAXParserFactory">org.apache.xerces.jaxp.SAXParserFactoryImpl</prop>
+                <prop key="javax.xml.parsers.DocumentBuilderFactory">org.apache.xerces.jaxp.DocumentBuilderFactoryImpl</prop>
+            </util:properties>
+        </property>
+    </bean>
+
+    <!--================== Persistence setup based on persistence.xml file contents ==================-->
+
+    <context:property-placeholder location="classpath:/project.test.properties,
+        classpath:/facebook.properties,classpath:/linkedin.properties"/>
+
+    <bean id="dataSourceTest" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+        <property name="driverClassName" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:target/db/testwebdb;AUTO_SERVER=TRUE"/>
+        <property name="username" value="sa"/>
+        <property name="password" value=""/>
+    </bean>
+
+    <bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
+
+    <elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
+
+    <bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
+        <constructor-arg name="client" ref="client"/>
+    </bean>
+
+    <!-- For tests a broad mapping config is used: "Get all .hbm.xml files in the data package" -->
+    <bean id="sessionFactoryTest" class="org.springframework.orm.hibernate3.annotation.AnnotationSessionFactoryBean">
+        <property name="dataSource" ref="dataSourceTest"/>
+
+        <property name="entityInterceptor">
+            <ref bean="elasticSynchronizationInterceptor"/>
+        </property>
+
+        <property name="hibernateProperties">
+            <props>
+                <prop key="hibernate.dialect">org.hibernate.dialect.H2Dialect</prop>
+                <prop key="autocommmit">true</prop>
+                <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+                <!--<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>-->
+                <!--<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>-->
+            </props>
+        </property>
+        <property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo"/>
+        <hprof:profiler/>
+    </bean>
+
+    <bean name="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource">
+        <property name="basenames">
+            <list>
+                <value>messages</value>
+                <value>errors</value>
+            </list>
+        </property>
+    </bean>
+
+
+    <bean id="transactionManager" class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
+
+    <bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">
+        <property name="dataSource">
+            <ref bean="dataSourceTest" />
+        </property>
+    </bean>
+
+    <!--============================== Bean mapping ==========================================-->
+
+
+
+    <bean name="personDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonDao">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
+
+
+
+    <bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
+        <constructor-arg>
+            <value>java.lang.Object</value>
+        </constructor-arg>
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
+
+
+    <bean name="formLayoutDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFormLayoutDao">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
+
+    <bean id="accessDecisionManager" class="org.springframework.security.access.vote.AffirmativeBased">
+        <property name="decisionVoters">
+            <list>
+                <bean class="org.springframework.security.access.vote.RoleVoter">
+                    <property name="rolePrefix" value="ROLE_"/>
+                </bean>
+                <bean class="org.springframework.security.access.vote.AuthenticatedVoter"/>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="encoder" class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder"/>
+
+    <bean id="formService " class="cz.zcu.kiv.eegdatabase.webservices.rest.forms.FormServiceImpl" autowire="byType"/>
+
+
+
+
+
+
+    <!-- MAIL -->
+    <bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
+
+    <bean name="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host" value="${email.smtp}" />
+    </bean>
+
+    <bean name="mailMessage" class="org.springframework.mail.SimpleMailMessage">
+        <property name="from" value="${email.from}" />
+        <property name="subject" value="${email.subject}" />
+    </bean>
+
+
+    <!-- // OLD trash  vse pod timto zatim nevim co dela nebo neni rozhodnuto zda to bude potreba-->
+
+    <bean name="authorizationManager" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleAuthorizationManager">
+        <property name="sessionFactory" ref="sessionFactoryTest" />
+        <property name="personDao" ref="personDao" />
+    </bean>
+
+    <!--<bean name="dataService" class="cz.zcu.kiv.eegdatabase.data.service.HibernateDatabaseService" />-->
+
+    <!-- <bean name="createGroupValidator" class="cz.zcu.kiv.eegdatabase.logic.controller.group.CreateGroupValidator" /> -->
+    <!-- <bean name="personService" class="cz.zcu.kiv.eegdatabase.data.service.HibernatePersonService" /> -->
+
+
+
+
+    <!-- Solr POJO indexer -->
+    <bean name="indexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.PojoIndexer" />
+
+    <!-- Solr indexer for LinkedIn articles -->
+    <bean name="linkedInIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.LinkedInIndexer" />
+
+    <!-- Solr autocomplete indexer -->
+    <bean name="autocompleteIndexer" class="cz.zcu.kiv.eegdatabase.logic.indexing.AutocompleteIndexer" />
+
+    <!-- Solr indexing service -->
+    <bean name="indexingService" class="cz.zcu.kiv.eegdatabase.logic.indexing.IndexingServiceImpl" />
+
+    <!--<bean name="experimentGenerator" class="cz.zcu.kiv.eegdatabase.data.ExperimentGenerator" />-->
+
+    <!-- Solr Server instance (production server) -->
+    <bean name="solrServer" class="org.apache.solr.client.solrj.impl.HttpSolrServer">
+        <constructor-arg name="baseURL" value="${solr.serverUrl}"/>
+        <constructor-arg name="client" ref="httpClient"/>
+        <property name="connectionTimeout" value="${solr.connectionTimeout}"/>
+    </bean>
+
+    <!-- HttpClient Factory -->
+    <bean id="httpClient" class="cz.zcu.kiv.eegdatabase.logic.util.BasicAuthHttpClient">
+        <constructor-arg name="url"  value="${solr.serverUrl}"/>
+        <constructor-arg name="username"  value="${solr.username}"/>
+        <constructor-arg name="password" value="${solr.password}"/>
+        <constructor-arg name="connManager">
+            <bean class="org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager">
+                <property name="defaultMaxPerRoute" value="${solr.defaultMaxConnectionsPerHost}" />
+                <property name="maxTotal" value="${solr.maxTotalConnections}" />
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- Activates @Scheduled and @Async annotations for scheduling -->
+
+
+</beans>

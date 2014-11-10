@@ -156,39 +156,39 @@ public class ExperimentOptParamFormPage extends MenuPage {
                     if (experimentOptParamId > 0) {
                         // Editing one
                         log.debug("Editing existing experimentOptParamDef object.");
+                        facade.update(experimentOptParam);
+//                        if (facade.isDefault(experimentOptParamId)) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new experimentOptParamDef
+//                                ExperimentOptParamDef newExperimentOptParamDef = new ExperimentOptParamDef();
+//                                newExperimentOptParamDef.setDefaultNumber(0);
+//                                newExperimentOptParamDef.setParamName(experimentOptParam.getParamName());
+//                                newExperimentOptParamDef.setParamDataType(experimentOptParam.getParamDataType());
+//                                int newId = facade.create(newExperimentOptParamDef);
+//                                ExperimentOptParamDefGroupRel rel = facade.getGroupRel(experimentOptParamId, researchGroupId);
+//                                // delete old rel, create new one
+//                                ExperimentOptParamDefGroupRelId newRelId = new ExperimentOptParamDefGroupRelId();
+//                                ExperimentOptParamDefGroupRel newRel = new ExperimentOptParamDefGroupRel();
+//                                newRelId.setExperimentOptParamDefId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setExperimentOptParamDef(newExperimentOptParamDef);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(experimentOptParamId) && facade.canDelete(experimentOptParamId)) {
+//                                    facade.update(experimentOptParam);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
 
-                        if (facade.isDefault(experimentOptParamId)) {
-
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new experimentOptParamDef
-                                ExperimentOptParamDef newExperimentOptParamDef = new ExperimentOptParamDef();
-                                newExperimentOptParamDef.setDefaultNumber(0);
-                                newExperimentOptParamDef.setParamName(experimentOptParam.getParamName());
-                                newExperimentOptParamDef.setParamDataType(experimentOptParam.getParamDataType());
-                                int newId = facade.create(newExperimentOptParamDef);
-                                ExperimentOptParamDefGroupRel rel = facade.getGroupRel(experimentOptParamId, researchGroupId);
-                                // delete old rel, create new one
-                                ExperimentOptParamDefGroupRelId newRelId = new ExperimentOptParamDefGroupRelId();
-                                ExperimentOptParamDefGroupRel newRel = new ExperimentOptParamDefGroupRel();
-                                newRelId.setExperimentOptParamDefId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setExperimentOptParamDef(newExperimentOptParamDef);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(experimentOptParamId) && facade.canDelete(experimentOptParamId)) {
-                                    facade.update(experimentOptParam);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(experimentOptParam);
-                        }
+//                        }
                     } else {
                         // Creating new
                         if (researchGroupId == CoreConstants.DEFAULT_ITEM_ID) {

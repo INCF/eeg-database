@@ -28,10 +28,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -56,7 +56,7 @@ public class WeatherDaoTest extends AbstractDataAccessTest {
 
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         weather = new Weather();
         weather.setTitle("Test-title");
@@ -74,8 +74,7 @@ public class WeatherDaoTest extends AbstractDataAccessTest {
         researchGroupDao.create(researchGroup);
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateWeather() throws Exception {
         int weatherCountBefore = weatherDao.getCountRecords();
         int weatherID = weatherDao.create(weather);
@@ -83,16 +82,14 @@ public class WeatherDaoTest extends AbstractDataAccessTest {
         assertEquals(weatherID, weather.getWeatherId());
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateDefaultRecord() throws Exception {
         int expectedValue = weatherDao.getDefaultRecords().size();
         weatherDao.createDefaultRecord(weather);
         assertEquals(expectedValue + 1, weatherDao.getDefaultRecords().size());
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateGroupWeather() {
         int weatherCountBefore = weatherDao.getAllRecords().size();
         int weatherGroupBefore = weatherDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

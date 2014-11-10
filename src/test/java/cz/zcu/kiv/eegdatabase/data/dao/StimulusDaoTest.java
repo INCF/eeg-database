@@ -24,10 +24,10 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.Random;
 
@@ -44,14 +44,13 @@ public class StimulusDaoTest extends AbstractDataAccessTest {
     private Stimulus stimulus;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         stimulus = new Stimulus();
         stimulus.setDescription("test-description");
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateStimulus() throws Exception {
         int count = stimulusDao.getCountRecords();
         System.out.println(count);
@@ -59,8 +58,7 @@ public class StimulusDaoTest extends AbstractDataAccessTest {
         assertEquals(count + 1, stimulusDao.getAllRecords().size());
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCanSaveDescription() throws Exception {
         stimulusDao.create(stimulus);
         assertFalse(stimulusDao.canSaveDescription("test-description"));

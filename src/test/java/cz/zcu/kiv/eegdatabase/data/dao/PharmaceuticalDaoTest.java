@@ -29,9 +29,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -53,7 +54,7 @@ public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
     private Pharmaceutical pharmaceutical;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -70,8 +71,7 @@ public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
     }
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreatePharmaceutical() {
         int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
         int pharmaceuticalID = pharmaceuticalDao.create(pharmaceutical);
@@ -81,8 +81,7 @@ public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
 
 
 
-    @Test
-    @Transactional
+    @Test(groups = "unit")
     public void testCreateGroupPharmaceutical() {
         int pharmaceuticalCountBefore = pharmaceuticalDao.getAllRecords().size();
         int pharmaceuticalGroupBefore = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();

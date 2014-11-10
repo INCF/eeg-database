@@ -26,6 +26,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import java.util.HashSet;
 import java.util.Set;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -39,10 +40,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cz.zcu.kiv.formgen.annotation.Form;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
+import cz.zcu.kiv.formgen.annotation.FormItemRestriction;
 import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 
 /**
@@ -51,15 +54,17 @@ import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 @Form
 @Entity
 @Table(name = "RESEARCH_GROUP")
-public class ResearchGroup implements java.io.Serializable {
+public class ResearchGroup implements java.io.Serializable, Comparable<ResearchGroup> {
 
 	@FormId
 	private int researchGroupId;
 	@FormItem(required = true, label = "Owner")
 	private Person person;
 	@FormItem(required = true, preview = PreviewLevel.MAJOR)
+	@FormItemRestriction(maxLength = 100)
 	private String title;
 	@FormItem(required = true, preview = PreviewLevel.MINOR)
+	@FormItemRestriction(maxLength = 250)
 	private String description;
 	@FormItem
 	private boolean paidAccount;
@@ -505,5 +510,21 @@ public class ResearchGroup implements java.io.Serializable {
 
     public void setLock(boolean lock) {
         this.lock = lock;
+    }
+
+    @Override
+    public int compareTo(ResearchGroup o) {
+        
+        // easy compare for titles.
+        if(o == null)
+            return 1;
+        
+        if(getTitle() == null)
+            return -1;
+        
+        if(o.getTitle() == null)
+            return 1;
+        
+        return getTitle().compareTo(o.getTitle());
     }
 }

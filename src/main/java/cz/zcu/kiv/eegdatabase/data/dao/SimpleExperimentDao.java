@@ -108,7 +108,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 	@Override
 	public List<Experiment> getExperimentsWhereOwner(Person person, int limit) {
-		return getExperimentsWhereOwner(person, 1, limit);
+		return getExperimentsWhereOwner(person, 0, limit);
 	}
 
 	@Override

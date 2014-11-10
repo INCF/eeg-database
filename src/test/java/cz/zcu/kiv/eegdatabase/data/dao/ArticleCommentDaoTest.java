@@ -28,10 +28,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.ArticleComment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 
@@ -40,7 +40,7 @@ import static org.junit.Assert.assertEquals;
 /**
  * Created by stebjan on 9.7.14.
  */
-@Transactional
+
 public class ArticleCommentDaoTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -57,7 +57,7 @@ public class ArticleCommentDaoTest extends AbstractDataAccessTest {
     private Person personReader;
     private ArticleComment comment;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         personReader = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         personDao.create(personReader);
@@ -72,7 +72,7 @@ public class ArticleCommentDaoTest extends AbstractDataAccessTest {
         articleDao.create(article);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateComment() {
         int commentNumber = articleDao.read(article.getArticleId()).getArticleComments().size();
         comment = createComment(article);
@@ -81,7 +81,7 @@ public class ArticleCommentDaoTest extends AbstractDataAccessTest {
         assertEquals(commentNumber + 1, articleDao.read(article.getArticleId()).getArticleComments().size());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetCommentsForArticle() {
         int commentNumber = articleDao.read(article.getArticleId()).getArticleComments().size();
         int allCommentNumber = commentDao.getCountRecords();

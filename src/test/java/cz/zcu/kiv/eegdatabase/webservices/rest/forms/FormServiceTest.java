@@ -28,20 +28,21 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.FormLayout;
+import cz.zcu.kiv.eegdatabase.data.pojo.FormLayoutType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.webservices.rest.common.wrappers.RecordCountData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableFormsDataList;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsData;
 import cz.zcu.kiv.eegdatabase.webservices.rest.forms.wrappers.AvailableLayoutsDataList;
-import org.junit.Before;
-import org.junit.Test;
+
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -64,7 +65,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	private PersonDao personDao;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         // don't know another way to get logged-in
         Person testPerson = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
@@ -80,7 +81,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
     }
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testAvailableForms() {
 		RecordCountData count = service.availableFormsCount();
 		assertNotNull(count);
@@ -99,28 +100,28 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testAvailableLayouts() {
 		RecordCountData count = service.availableLayoutsCount();
 		assertNotNull(count);
 
 		// check all records
-		AvailableLayoutsDataList list = service.availableLayouts(false);
+		AvailableLayoutsDataList list = service.availableLayouts();
 		assertNotNull(list);
 		assertNotNull(list.getLayouts());
 		assertEquals(count.getPublicRecords(), list.getLayouts().size());
 
 		// check all records
-		list = service.availableLayouts(true);
+		list = service.availableLayouts(true, null, null);
 		assertNotNull(list);
 		assertNotNull(list.getLayouts());
 		assertEquals(count.getMyRecords(), list.getLayouts().size());
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testGetLayout() throws FormServiceException {
-		AvailableLayoutsDataList list = service.availableLayouts(false);
+		AvailableLayoutsDataList list = service.availableLayouts();
 		assertNotNull(list);
 		if (list.getLayouts().isEmpty())
 			return;
@@ -133,8 +134,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
-	@Transactional
+	@Test(groups = "unit")
 	public void testCRUDLayout() throws FormServiceException {
 		final String formName = "formNameTest";
 		final String layoutName = "layoutNameTest";
@@ -144,7 +144,7 @@ public class FormServiceTest extends AbstractDataAccessTest {
 		int originalCount = service.availableLayoutsCount().getPublicRecords();
 
 		// create
-		service.createLayout(formName, layoutName, originalContent);
+		service.createLayout(formName, layoutName, null, originalContent);
 		assertEquals(originalCount + 1, service.availableLayoutsCount().getPublicRecords());
 		assertEquals(originalContent, service.getLayout(formName, layoutName).getContent());
 
@@ -159,21 +159,21 @@ public class FormServiceTest extends AbstractDataAccessTest {
 	}
 
 
-	@Test
+	@Test(groups = "unit")
 	public void testGetOdmlData() throws FormServiceException {
-		final byte[] data = service.getOdmlData(Person.class.getSimpleName());
+		final byte[] data = service.getOdmlData(Person.class.getSimpleName(), FormLayoutType.ODML_EEGBASE);
 		assertNotNull(data);
 		assertTrue(data.length > 0);
 
 		try {
-			service.getOdmlData(null);
+			service.getOdmlData(null, FormLayoutType.ODML_EEGBASE);
 			fail("Got odml data for null entity, NullPointerException should be thrown.");
 		} catch (Exception e) {
 			assertTrue(e instanceof NullPointerException);
 		}
 
 		try {
-			service.getOdmlData("xxxx");
+			service.getOdmlData("xxxx", FormLayoutType.ODML_EEGBASE);
 			fail("Got odml data for non-existing entity, FormServiceException should be thrown.");
 		} catch (Exception e) {
 			assertTrue(e instanceof FormServiceException);

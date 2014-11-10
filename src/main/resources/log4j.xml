@@ -114,6 +114,14 @@
     <logger name="cz.zcu.kiv.eegdatabase.Tests">
         <level value="warn" />
     </logger>
+    
+    <logger name="cz.zcu.kiv.formgen">
+        <level value="warn" />
+    </logger>
+    
+    <logger name="odml">
+        <level value="error" />
+    </logger>
 
     <root>
         <priority value="warn" />

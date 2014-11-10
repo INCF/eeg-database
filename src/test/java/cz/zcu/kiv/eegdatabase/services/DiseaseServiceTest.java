@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 8.8.14.
  */
-@Transactional
+
 public class DiseaseServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +57,7 @@ public class DiseaseServiceTest extends AbstractServicesTest {
     private Disease disease;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +71,7 @@ public class DiseaseServiceTest extends AbstractServicesTest {
         disease = createDisease("new Disease");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDisease() {
         int diseaseCountBefore = diseaseService.getAllRecords().size();
         int diseaseID = diseaseService.create(disease);
@@ -80,7 +80,7 @@ public class DiseaseServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateDiseaseGroupRel() {
         int diseaseCountBefore = diseaseService.getAllRecords().size();
         int diseaseGroupBefore = diseaseService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -94,7 +94,7 @@ public class DiseaseServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         diseaseService.createGroupRel(disease, researchGroup);
         int id = diseaseService.create(disease);

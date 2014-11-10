@@ -1,30 +1,30 @@
 /**
- * *****************************************************************************
- * This file is part of the EEG-database project
- *
- * ==========================================
- *
- * Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *
- *  ***********************************************************************************************************************
- *
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not
- * use this file except in compliance with the License. You may obtain a copy of
- * the License at
- *
- * http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
- * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
- * License for the specific language governing permissions and limitations under
- * the License.
- *
- *  ***********************************************************************************************************************
- *
- * DataPerformanceTest.java, 2014/06/10 20:01 Jan Stebetak
- *****************************************************************************
- */
+* *****************************************************************************
+* This file is part of the EEG-database project
+*
+* ==========================================
+*
+* Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+*
+*  ***********************************************************************************************************************
+*
+* Licensed under the Apache License, Version 2.0 (the "License"); you may not
+* use this file except in compliance with the License. You may obtain a copy of
+* the License at
+*
+* http://www.apache.org/licenses/LICENSE-2.0
+*
+* Unless required by applicable law or agreed to in writing, software
+* distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+* WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+* License for the specific language governing permissions and limitations under
+* the License.
+*
+*  ***********************************************************************************************************************
+*
+* DataPerformanceTest.java, 2014/06/10 20:01 Jan Stebetak
+*****************************************************************************
+*/
 package cz.zcu.kiv.eegdatabase.data.performance;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
@@ -37,12 +37,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.hibernate.SessionFactory;
 import org.junit.After;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.AfterMethod;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.io.*;
 import java.sql.Blob;
@@ -52,8 +52,8 @@ import static junit.framework.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
 /**
- * Created by Honza on 10.6.14.
- */
+* Created by Honza on 10.6.14.
+*/
 public class DataPerformanceTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -68,9 +68,6 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
     @Autowired
     private ExperimentGenerator experimentGenerator;
 
-    @Autowired
-    private SessionFactory factory;
-
     private File tmpFile;
     private Experiment experiment;
     private DataFile dataFile;
@@ -80,7 +77,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
     private long startTime;
 
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         if (experiment == null) {
             experiment = experimentGenerator.generateExperiment(createPerson());
@@ -89,8 +86,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
-    @Transactional
+    @Test(groups = "unit", enabled = false)
     public void saveDataTest() throws IOException {
         try {
             createFile(20);
@@ -111,7 +107,8 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
         try {
             ios = new FileInputStream(tmpFile);
             dataFile.setFileContentStream(ios);
-            Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(dataFile.getFileContentStream(), dataFile.getFileContentStream().available());
+            Blob createBlob = dataFileDao.getSessionFactory().getCurrentSession().getLobHelper().createBlob
+                    (dataFile.getFileContentStream(), dataFile.getFileContentStream().available());
             dataFile.setFileContent(createBlob);
 
             dataFileDao.create(dataFile);
@@ -125,8 +122,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
         }
     }
 
-    @Transactional
-    @Test
+    @Test(groups = "unit")
     public void saveDataRepeatTest() throws IOException {
         int count = dataFileDao.getCountRecords();
         int repeatLimit = 10;
@@ -149,7 +145,8 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
             try {
                 ios = new FileInputStream(tmpFile);
                 dataFile.setFileContentStream(ios);
-                Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(dataFile.getFileContentStream(), dataFile.getFileContentStream().available());
+                Blob createBlob = dataFileDao.getSessionFactory().getCurrentSession().getLobHelper().createBlob
+                        (dataFile.getFileContentStream(), dataFile.getFileContentStream().available());
                 dataFile.setFileContent(createBlob);
                 dataFileDao.create(dataFile);
             } catch (IOException e) {
@@ -160,7 +157,7 @@ public class DataPerformanceTest extends AbstractDataAccessTest {
         assertEquals(count + repeatLimit, dataFileDao.getCountRecords());
     }
 
-    @After
+    @AfterMethod(groups = "unit")
     public void stopTime() {
         System.out.println(("Data File was stored in " + (System.currentTimeMillis() - startTime) / 1000) + " seconds");
         tmpFile.delete();

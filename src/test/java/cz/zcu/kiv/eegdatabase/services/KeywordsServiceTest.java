@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -55,7 +55,7 @@ public class KeywordsServiceTest extends AbstractServicesTest {
     private Keywords keywords;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +71,7 @@ public class KeywordsServiceTest extends AbstractServicesTest {
         keywords.setResearchGroup(researchGroup);
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateArtifact() {
         int keywordsCountBefore = keywordsService.getAllRecords().size();
         int id = keywordsService.create(keywords);
@@ -80,7 +80,7 @@ public class KeywordsServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testGetKeywords() {
         int keywordsCountBefore = keywordsService.getAllRecords().size();
 

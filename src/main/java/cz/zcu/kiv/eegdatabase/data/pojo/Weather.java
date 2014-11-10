@@ -39,10 +39,12 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 import cz.zcu.kiv.formgen.annotation.Form;
+
 import org.hibernate.annotations.GenericGenerator;
 
 import cz.zcu.kiv.formgen.annotation.FormId;
 import cz.zcu.kiv.formgen.annotation.FormItem;
+import cz.zcu.kiv.formgen.annotation.FormItemRestriction;
 import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 
 /**
@@ -56,8 +58,10 @@ public class Weather implements java.io.Serializable {
 	@FormId
 	private int weatherId;
 	@FormItem
+	@FormItemRestriction(maxLength = 30)
 	private String description;
 	@FormItem(required = true, preview = PreviewLevel.MAJOR)
+	@FormItemRestriction(maxLength = 30)
 	private String title;
 	private int defaultNumber;
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);

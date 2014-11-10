@@ -30,13 +30,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import static org.junit.Assert.*;
 
-@Transactional
 public class LicenseDaoTest extends AbstractDataAccessTest {
 
     @Autowired
@@ -49,7 +49,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
 
     private License license;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() {
         license = new License();
         license.setDescription("junit@test.description");
@@ -60,7 +60,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateLicense() {
         int count = licenseDao.getCountRecords();
         int id = licenseDao.create(license);
@@ -68,7 +68,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         assertEquals(count + 1, licenseDao.getCountRecords());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testChangeLicenseType() {
         int id = licenseDao.create(license);
         assertNotNull(licenseDao.read(id));
@@ -82,7 +82,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         assertEquals(LicenseType.ACADEMIC, license.getLicenseType());
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testGetLicenseType() {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
         int count = licenseDao.getCountRecords();
@@ -108,7 +108,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
 
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testDeleteLicense() {
         int id = licenseDao.create(license);
         license = licenseDao.read(id);

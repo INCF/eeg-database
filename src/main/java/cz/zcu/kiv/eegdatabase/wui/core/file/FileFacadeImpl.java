@@ -30,8 +30,10 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ElectrodeConfService;
 import cz.zcu.kiv.eegdatabase.wui.core.file.metadata.FileMetadataParamService;
 import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryService;
 
@@ -42,6 +44,7 @@ public class FileFacadeImpl implements FileFacade {
     FileService fileService;
     HistoryService historyService;
     FileMetadataParamService fileMetadataService;
+    ElectrodeConfService electrodeConfService;
 
     @Required
     public void setFileService(FileService fileService) {
@@ -56,6 +59,11 @@ public class FileFacadeImpl implements FileFacade {
     @Required
     public void setFileMetadataService(FileMetadataParamService fileMetadataService) {
         this.fileMetadataService = fileMetadataService;
+    }
+    
+    @Required
+    public void setElectrodeConfService(ElectrodeConfService electrodeConfService) {
+        this.electrodeConfService = electrodeConfService;
     }
 
     @Override
@@ -81,6 +89,7 @@ public class FileFacadeImpl implements FileFacade {
     @Override
     @Transactional
     public void delete(DataFile persistentObject) {
+        
         // In one transaction for fails.
         // delete all history records for that datafile
         List<History> historyForDataFile = historyService.readByParameter("dataFile.dataFileId", persistentObject.getDataFileId());
@@ -98,6 +107,15 @@ public class FileFacadeImpl implements FileFacade {
                 fileMetadataService.delete(tmp);
             }
         }
+        
+        List<ElectrodeConf> electrodeConf = electrodeConfService.readByParameter("descImg.dataFileId", persistentObject.getDataFileId());
+        if(electrodeConf != null) {
+            for (ElectrodeConf eConf : electrodeConf) {
+                eConf.setDescImg(null);
+                electrodeConfService.update(eConf);
+            }
+        }
+        
         // delete datafile
         fileService.delete(persistentObject);
 

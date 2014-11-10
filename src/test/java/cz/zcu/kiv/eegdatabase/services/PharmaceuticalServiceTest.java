@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,7 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 8.8.14.
  */
-@Transactional
+
 public class PharmaceuticalServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +57,7 @@ public class PharmaceuticalServiceTest extends AbstractServicesTest {
     private Pharmaceutical pharmaceutical;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,7 +71,7 @@ public class PharmaceuticalServiceTest extends AbstractServicesTest {
         pharmaceutical = createPharmaceutical("new Disease");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreatePharmaceutical() {
         int pharmaCountBefore = pharmaceuticalService.getAllRecords().size();
         int pharmaceuticalID = pharmaceuticalService.create(pharmaceutical);
@@ -80,7 +80,7 @@ public class PharmaceuticalServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreatePharmaceuticalGroupRel() {
         int pharmaCountBefore = pharmaceuticalService.getAllRecords().size();
         int pharmaGroupBefore = pharmaceuticalService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -94,7 +94,7 @@ public class PharmaceuticalServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         pharmaceuticalService.createGroupRel(pharmaceutical, researchGroup);
         int id = pharmaceuticalService.create(pharmaceutical);

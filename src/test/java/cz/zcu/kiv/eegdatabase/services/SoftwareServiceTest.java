@@ -30,10 +30,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.common.SoftwareService;
-import org.junit.Before;
-import org.junit.Test;
+import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
+import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
@@ -44,7 +44,6 @@ import static org.junit.Assert.assertTrue;
 /**
  * Created by Honza on 7.8.14.
  */
-@Transactional
 public class SoftwareServiceTest extends AbstractServicesTest {
 
     @Autowired
@@ -57,7 +56,7 @@ public class SoftwareServiceTest extends AbstractServicesTest {
     private Software software;
     private ResearchGroup researchGroup;
 
-    @Before
+    @BeforeMethod(groups = "unit")
     public void setUp() throws Exception {
         Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
 
@@ -71,14 +70,14 @@ public class SoftwareServiceTest extends AbstractServicesTest {
         software = createSW("new SW");
     }
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateSoftware() {
         int softwareCountBefore = softwareService.getAllRecords().size();
         int softwareID = softwareService.create(software);
         assertEquals(softwareCountBefore + 1, softwareService.getAllRecords().size());
         assertEquals(softwareID, software.getSoftwareId());
     }
-    @Test
+    @Test(groups = "unit")
     public void testCreateDefaultSoftware() {
         int softwareCountBefore = softwareService.getAllRecords().size();
         software.setDefaultNumber(1);
@@ -90,7 +89,7 @@ public class SoftwareServiceTest extends AbstractServicesTest {
 
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCreateSoftwareGroupRel() {
         int SoftwareCountBefore = softwareService.getAllRecords().size();
         int SoftwareGroupBefore = softwareService.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
@@ -104,7 +103,7 @@ public class SoftwareServiceTest extends AbstractServicesTest {
     }
 
 
-    @Test
+    @Test(groups = "unit")
     public void testCanSaveTitle() {
         softwareService.createGroupRel(software, researchGroup);
         int id = softwareService.create(software);

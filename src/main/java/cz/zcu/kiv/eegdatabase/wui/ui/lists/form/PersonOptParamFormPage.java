@@ -156,39 +156,39 @@ public class PersonOptParamFormPage extends MenuPage {
                     if (personOptParamId > 0) {
                         // Editing
                         log.debug("Editing existing personOptParamDef object.");
+                        facade.update(personOptParam);
+//                        if (facade.isDefault(personOptParamId)) {
+//
+//                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
+//                                // new personOptParamDef
+//                                PersonOptParamDef newPersonOptParamDef = new PersonOptParamDef();
+//                                newPersonOptParamDef.setDefaultNumber(0);
+//                                newPersonOptParamDef.setParamName(personOptParam.getParamName());
+//                                newPersonOptParamDef.setParamDataType(personOptParam.getParamDataType());
+//                                int newId = facade.create(newPersonOptParamDef);
+//                                PersonOptParamDefGroupRel rel = facade.getGroupRel(personOptParamId, researchGroupId);
+//                                // delete old rel, create new one
+//                                PersonOptParamDefGroupRelId newRelId = new PersonOptParamDefGroupRelId();
+//                                PersonOptParamDefGroupRel newRel = new PersonOptParamDefGroupRel();
+//                                newRelId.setPersonOptParamDefId(newId);
+//                                newRelId.setResearchGroupId(researchGroupId);
+//                                newRel.setId(newRelId);
+//                                newRel.setPersonOptParamDef(newPersonOptParamDef);
+//                                newRel.setResearchGroup(group);
+//                                facade.deleteGroupRel(rel);
+//                                facade.createGroupRel(newRel);
+//                            } else {
+//                                if (!facade.hasGroupRel(personOptParamId) && facade.canDelete(personOptParamId)) {
+//                                    facade.update(personOptParam);
+//                                } else {
+//                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
+//                                    this.setEnabled(true);
+//                                    return;
+//                                }
+//                            }
+//                        } else {
 
-                        if (facade.isDefault(personOptParamId)) {
-                            
-                            if (researchGroupId != CoreConstants.DEFAULT_ITEM_ID) {
-                                // new personOptParamDef
-                                PersonOptParamDef newPersonOptParamDef = new PersonOptParamDef();
-                                newPersonOptParamDef.setDefaultNumber(0);
-                                newPersonOptParamDef.setParamName(personOptParam.getParamName());
-                                newPersonOptParamDef.setParamDataType(personOptParam.getParamDataType());
-                                int newId = facade.create(newPersonOptParamDef);
-                                PersonOptParamDefGroupRel rel = facade.getGroupRel(personOptParamId, researchGroupId);
-                                // delete old rel, create new one
-                                PersonOptParamDefGroupRelId newRelId = new PersonOptParamDefGroupRelId();
-                                PersonOptParamDefGroupRel newRel = new PersonOptParamDefGroupRel();
-                                newRelId.setPersonOptParamDefId(newId);
-                                newRelId.setResearchGroupId(researchGroupId);
-                                newRel.setId(newRelId);
-                                newRel.setPersonOptParamDef(newPersonOptParamDef);
-                                newRel.setResearchGroup(group);
-                                facade.deleteGroupRel(rel);
-                                facade.createGroupRel(newRel);
-                            } else {
-                                if (!facade.hasGroupRel(personOptParamId) && facade.canDelete(personOptParamId)) {
-                                    facade.update(personOptParam);
-                                } else {
-                                    getFeedback().error(ResourceUtils.getString("text.itemInUse"));
-                                    this.setEnabled(true);
-                                    return;
-                                }
-                            }
-                        } else {
-                            facade.update(personOptParam);
-                        }
+//                        }
                     } else {
                         
                         // Creating new
