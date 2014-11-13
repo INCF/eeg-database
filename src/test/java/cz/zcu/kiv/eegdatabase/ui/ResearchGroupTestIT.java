@@ -95,8 +95,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("new group");
 
         tester.clickLinkWithText("Detail");
-        tester.assertButtonNotPresentWithText("List of members");
-        tester.clickButtonWithText("List of members");
+        tester.assertLinkPresentWithText("List of members");
+        tester.clickLinkWithText("List of members");
         tester.assertTextPresent("jan.stebetak@seznam.cz");
 
         tester.clickLinkWithText("Log out");
