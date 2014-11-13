@@ -27,6 +27,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
     private WebTester tester;
 
+    private int time = 1000;
+
     @BeforeMethod(groups = "web")
     public void setUp() {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
@@ -46,7 +48,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testCreateResearchGroupValidation() {
+    public void testCreateResearchGroupValidation() throws InterruptedException {
 
         tester.clickLinkWithText("Groups");
         tester.assertTextPresent("Create group");
@@ -55,28 +57,28 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.setTextField("title", "");
         tester.setTextField("description", "");
         tester.clickButtonWithText("Save");
-
+        Thread.sleep(time);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "new group");
         tester.setTextField("description", "");
         tester.clickButtonWithText("Save");
-
+        Thread.sleep(time);
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "");
         tester.setTextField("description", "description");
         tester.clickButtonWithText("Save");
-
+        Thread.sleep(time);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.clickLinkWithText("Log out");
 
 
     }
     @Test(groups = "web")
-    public void testCreateResearchGroup() {
-        if (!groupExists("new group")) {
+    public void testCreateResearchGroup() throws InterruptedException {
+//        if (!groupExists("new group")) {
             tester.clickLinkWithText("Groups");
             tester.assertTextPresent("Create group");
             tester.clickLinkWithText("Create group");
@@ -84,7 +86,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
             tester.clickButtonWithText("Save");
-        }
+            Thread.sleep(time);
+//        }
 
         tester.assertTextPresent("My groups");
         tester.clickLinkWithText("My groups");
@@ -100,9 +103,9 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
     }
 
-    public boolean groupExists(String title) {
-        List<ResearchGroup> list = researchGroupDao.readByParameter("title", title);
-        return list.size() > 0;
-
-    }
+//    public boolean groupExists(String title) {
+//        List<ResearchGroup> list = researchGroupDao.readByParameter("title", title);
+//        return list.size() > 0;
+//
+//    }
 }
