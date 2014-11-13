@@ -56,7 +56,7 @@ public class MainMenuTestIT extends AbstractUITest {
 
     @Test(groups = "web")
     public void testUsersMainMenu() {
-        loginUser(Util.ROLE_USER);
+        loginUser("jan.stebetak@seznam.cz", Util.ROLE_USER);
         tester.clickLinkWithText("Articles");
         tester.assertTextPresent("All articles");
         tester.clickLinkWithText("Experiments");
@@ -78,7 +78,7 @@ public class MainMenuTestIT extends AbstractUITest {
 
     @Test(groups = "web")
     public void testAdminsMainMenu() {
-        loginUser(Util.ROLE_ADMIN);
+        loginUser("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
         tester.clickLinkWithText("Articles");
         tester.assertTextPresent("All articles");
         tester.clickLinkWithText("Experiments");
@@ -93,19 +93,19 @@ public class MainMenuTestIT extends AbstractUITest {
         tester.assertTitleEquals("Lists Page");
 //        tester.clickLinkWithText("History");
 //        tester.assertTitleEquals("History Page");
-//        tester.clickLinkWithText("Administration");
-//        tester.assertTextPresent("Manage user roles");
+        tester.clickLinkWithText("Administration");
+        tester.assertTextPresent("Manage user roles");
 
     }
 
-    private void loginUser(String role) {
-        Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", role);
+    private void loginUser(String username, String role) {
+        Person person = TestUtils.createPersonForTesting(username, role);
         person.setConfirmed(true);
-        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+        if (!personDao.usernameExists(username)) {
 
             personDao.create(person);
         }
-        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("userName", username);
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");
         tester.assertTextPresent("Log out");

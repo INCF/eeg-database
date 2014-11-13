@@ -125,7 +125,9 @@
         <property name="sessionFactory" ref="sessionFactoryTest"/>
     </bean>
 
-
+    <bean name="researchGroupDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupDao">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
 
     <bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
