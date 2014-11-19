@@ -153,7 +153,7 @@ public class ArticleTestIT extends AbstractUITest {
         tester.clickLinkWithText("Groups");
         try {
             tester.assertTextPresent("new group");
-        } catch (Exception ex) {
+        } catch (AssertionError ex) {
             tester.clickLinkWithText("Create group");
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
