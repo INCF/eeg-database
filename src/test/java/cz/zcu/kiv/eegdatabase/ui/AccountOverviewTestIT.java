@@ -89,7 +89,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan2");
        tester.setTextField("verPassword", "stebjan2");
        tester.clickButtonWithText("Change password");
-       Thread.sleep(waitForAjax);
+       Thread.sleep(2000);
 
        tester.assertTextPresent("Changes were made");
 
@@ -110,7 +110,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan");
        tester.setTextField("verPassword", "stebjan");
        tester.clickButtonWithText("Change password");
-       Thread.sleep(waitForAjax);
+       Thread.sleep(2000);
 
        tester.assertTextPresent("Changes were made");
 

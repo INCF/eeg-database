@@ -131,7 +131,7 @@ public class ArticleTestIT extends AbstractUITest {
 
         tester.clickLinkWithText("Log out");
 
-        //Creating new person which has no group and log-in
+        //Creating ADMIN which has no group and log-in
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
             person.setConfirmed(true);
@@ -143,7 +143,23 @@ public class ArticleTestIT extends AbstractUITest {
 
         tester.assertTextPresent("Articles");
         tester.clickLinkWithText("Articles");
-        tester.assertTextNotPresent("Test title3"); //The new person should not able to see a previously created article.
+        tester.assertTextPresent("Test title3"); //ADMIN should be able to see a previously created article.
+
+        tester.clickLinkWithText("Log out");
+
+        //Creating USER which has no group and log-in
+        if (!personDao.usernameExists("jan.stebetak3@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak3@seznam.cz", Util.ROLE_USER);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
+        tester.setTextField("userName", "jan.stebetak3@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText("Log in");
+
+        tester.assertTextPresent("Articles");
+        tester.clickLinkWithText("Articles");
+        tester.assertTextNotPresent("Test title3"); //USER should not be able to see a previously created article.
 
         tester.clickLinkWithText("Log out");
 
