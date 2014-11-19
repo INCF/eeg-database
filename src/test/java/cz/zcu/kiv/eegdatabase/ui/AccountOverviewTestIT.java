@@ -89,7 +89,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan2");
        tester.setTextField("verPassword", "stebjan2");
        tester.clickButtonWithText("Change password");
-       Thread.sleep(2000);
+       Thread.sleep(waitForAjax);
 
        tester.assertTextPresent("Changes were made");
 
@@ -110,7 +110,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan");
        tester.setTextField("verPassword", "stebjan");
        tester.clickButtonWithText("Change password");
-       Thread.sleep(2000);
+       Thread.sleep(waitForAjax);
 
        tester.assertTextPresent("Changes were made");
 
@@ -127,7 +127,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjan2");
         tester.clickButtonWithText("Change password");
-        Thread.sleep(2000);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Inserted password doesn't match current password");
 
 
@@ -144,7 +144,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjanxxx");
         tester.clickButtonWithText("Change password");
-        Thread.sleep(2000);
+        Thread.sleep(waitForAjax);
         //test if the form was not submitted
         tester.assertTextPresent("Inserted passwords don't match");
         //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));

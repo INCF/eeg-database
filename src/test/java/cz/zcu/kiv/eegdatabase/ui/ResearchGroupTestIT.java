@@ -22,12 +22,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
     @Autowired
     private PersonDao personDao;
 
-    @Autowired
-    private ResearchGroupDao researchGroupDao;
-
     private WebTester tester;
 
-    private int time = 1000;
 
     @BeforeMethod(groups = "web")
     public void setUp() {
@@ -57,20 +53,20 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.setTextField("title", "");
         tester.setTextField("description", "");
         tester.clickButtonWithText("Save");
-        Thread.sleep(time);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "new group");
         tester.setTextField("description", "");
         tester.clickButtonWithText("Save");
-        Thread.sleep(time);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "");
         tester.setTextField("description", "description");
         tester.clickButtonWithText("Save");
-        Thread.sleep(time);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.clickLinkWithText("Log out");
 
@@ -86,7 +82,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
             tester.clickButtonWithText("Save");
-            Thread.sleep(time);
+            Thread.sleep(waitForAjax);
 //        }
 
         tester.assertTextPresent("My groups");
