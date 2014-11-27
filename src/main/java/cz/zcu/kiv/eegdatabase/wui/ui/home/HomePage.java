@@ -32,6 +32,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ForgottenPasswordPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.Link;
 
 /**
@@ -64,5 +65,9 @@ public class HomePage extends MenuPage {
 
         add(new BookmarkablePageLink<Void>("forgottenPass", ForgottenPasswordPage.class));
         add(new BookmarkablePageLink<Void>("registerLink", RegistrationPage.class));
+        add(new ExternalLink("licenseLink1", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText1")));
+        add(new ExternalLink("EEGBaseLink", ResourceUtils.getString("homePage.license.EEGBaseLink"), ResourceUtils.getString("homePage.license.EEGBaseLink")));
+        add(new ExternalLink("licenseLink2", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText2") + "."));
+        add(new ExternalLink("githubLink", ResourceUtils.getString("homePage.license.githubLink"), ResourceUtils.getString("homePage.license.githubLink") + "."));
     }
 }
