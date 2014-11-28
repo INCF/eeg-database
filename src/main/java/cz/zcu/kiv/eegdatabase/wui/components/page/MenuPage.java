@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
+
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
@@ -124,6 +125,10 @@ public class MenuPage extends BasePage {
         add(new MainMenu("mainMenu"));
 
         add(new ExternalLink("footerLink", ResourceUtils.getString("general.footer.link"), ResourceUtils.getString("general.footer.link.title")));
+
+        int year = Calendar.getInstance().get(Calendar.YEAR);
+
+        add(new Label("year", ResourceUtils.getString("general.footer.year") + year));
     }
 
     public BaseFeedbackMessagePanel getFeedback() {
