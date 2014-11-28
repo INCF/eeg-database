@@ -65,7 +65,7 @@ public class HomePage extends MenuPage {
 
         add(new BookmarkablePageLink<Void>("forgottenPass", ForgottenPasswordPage.class));
         add(new BookmarkablePageLink<Void>("registerLink", RegistrationPage.class));
-        add(new ExternalLink("licenseLink1", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText1")));
+        add(new ExternalLink("licenseLink1", ResourceUtils.getString("homePage.license.link1")));
         add(new ExternalLink("EEGBaseLink", ResourceUtils.getString("homePage.license.EEGBaseLink"), ResourceUtils.getString("homePage.license.EEGBaseLink")));
         add(new ExternalLink("licenseLink2", ResourceUtils.getString("homePage.license.link1"), ResourceUtils.getString("homePage.license.linkText2") + "."));
         add(new ExternalLink("githubLink", ResourceUtils.getString("homePage.license.githubLink"), ResourceUtils.getString("homePage.license.githubLink") + "."));
