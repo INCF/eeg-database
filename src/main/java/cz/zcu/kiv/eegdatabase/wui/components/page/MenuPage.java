@@ -42,6 +42,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.util.string.StringValue;
 
 import java.io.Serializable;
+import java.util.Calendar;
 
 /**
  * MenuPage for EEGDatabase portal, added header section with information about logged user,
