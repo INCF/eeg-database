@@ -119,7 +119,7 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent(" Field 'Data file' is required. ");
+        tester.assertTextPresent("Field 'Data file' is required.");
         tester.setFormElement("contailer:file", file.getAbsolutePath());
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
