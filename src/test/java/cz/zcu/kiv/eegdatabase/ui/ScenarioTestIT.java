@@ -107,7 +107,7 @@ public class ScenarioTestIT extends AbstractUITest {
 
     }
 
-    @Test(groups = "web", enabled = false)
+    @Test(groups = "web")
     public void testAddScenarioWithFileValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
@@ -120,7 +120,7 @@ public class ScenarioTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent(" Field 'Data file' is required. ");
-        tester.setTextField("contailer:file", file.getAbsolutePath());
+        tester.setFormElement("contailer:file", file.getAbsolutePath());
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
