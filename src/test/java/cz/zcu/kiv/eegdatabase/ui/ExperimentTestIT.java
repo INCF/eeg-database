@@ -92,7 +92,7 @@ public class ExperimentTestIT extends AbstractUITest {
 
         tester.setTextField("view:scenario", "");
         tester.setTextField("view:personBySubjectPersonId", "");
-        tester.clickButtonWithText("Next");
+        tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group' is required.");
         tester.assertTextPresent("Field 'Scenario' is required.");
