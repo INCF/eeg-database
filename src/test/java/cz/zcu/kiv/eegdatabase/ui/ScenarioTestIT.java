@@ -126,7 +126,7 @@ public class ScenarioTestIT extends AbstractUITest {
 
         tester.assertTextPresent("Scenario detail");
         tester.assertTextPresent("testScenario2");
-        tester.assertButtonPresentWithText("Download scenario file");
+        tester.assertLinkPresentWithText("Download scenario file");
 
         tester.clickLinkWithText("Log out");
 
