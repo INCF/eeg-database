@@ -52,7 +52,7 @@ public class ListMenuTestIT extends AbstractUITest {
         // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         tester.setBaseUrl(url);
         tester.beginAt("/home-page");
-        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("userName", "jan.stebetak2@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");
         tester.assertTextPresent("Log out");
