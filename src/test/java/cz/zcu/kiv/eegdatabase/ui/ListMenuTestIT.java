@@ -76,22 +76,22 @@ public class ListMenuTestIT extends AbstractUITest {
         tester.clickLinkWithText("Lists");
         tester.assertTextPresent("List of definitions");
         tester.clickLinkWithText("Hardware definition");
-        tester.assertSelectOptionValuePresent("groups", "Default hardware");
+        tester.assertSelectOptionPresent("groups", "Default hardware");
 
         tester.clickLinkWithText("Optional parameters for people");
-        tester.assertSelectOptionValuePresent("groups", "Default optional parameters");
+        tester.assertSelectOptionPresent("groups", "Default optional parameters");
 
         tester.clickLinkWithText("Optional parameters for experiments");
-        tester.assertSelectOptionValuePresent("groups", "Default optional parameters");
+        tester.assertSelectOptionPresent("groups", "Default optional parameters");
 
         tester.clickLinkWithText("File metadata definitions");
-        tester.assertSelectOptionValuePresent("groups", "Default metadata parameters");
+        tester.assertSelectOptionPresent("groups", "Default metadata parameters");
 
         tester.clickLinkWithText("Weather definitions");
-        tester.assertSelectOptionValuePresent("groups", "Default weather");
+        tester.assertSelectOptionPresent("groups", "Default weather");
 
         tester.clickLinkWithText("Artifact definitions"); //Artifact do not have the Default group
-        tester.assertSelectOptionValueNotPresent("groups", "Default artifact");
+        tester.assertSelectOptionNotPresent("groups", "Default artifact");
 
         tester.clickLinkWithText("Log out");
     }
