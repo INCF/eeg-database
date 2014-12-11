@@ -129,6 +129,7 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText("Download scenario file");
 
         tester.clickLinkWithText("Log out");
+        file.delete();
 
     }
     @Test(groups = "web")
