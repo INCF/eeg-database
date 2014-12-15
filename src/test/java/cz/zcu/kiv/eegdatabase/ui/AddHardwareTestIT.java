@@ -71,7 +71,7 @@ public class AddHardwareTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add hardware definition");
         tester.clickLinkWithText("Add hardware definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "");
         tester.setTextField("type", "");
         tester.setTextField("description", "");
@@ -96,7 +96,7 @@ public class AddHardwareTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add hardware definition");
         tester.clickLinkWithText("Add hardware definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "HwTitle");
         tester.setTextField("type", "type");
         tester.setTextField("description", "desc");

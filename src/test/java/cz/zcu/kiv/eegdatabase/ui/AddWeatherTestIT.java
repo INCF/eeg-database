@@ -71,7 +71,7 @@ public class AddWeatherTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add weather definition");
         tester.clickLinkWithText("Add weather definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "");
         tester.setTextField("description", "");
         tester.clickButtonWithText("Save");
@@ -94,7 +94,7 @@ public class AddWeatherTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add weather definition");
         tester.clickLinkWithText("Add weather definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "WeatherTitle");
         tester.setTextField("description", "desc");
         tester.clickButtonWithText("Save");

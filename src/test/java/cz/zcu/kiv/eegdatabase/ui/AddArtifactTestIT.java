@@ -70,7 +70,7 @@ public class AddArtifactTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add artifact definition");
         tester.clickLinkWithText("Add artifact definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("compensation", "");
         tester.setTextField("rejectCondition", "");
         tester.clickButtonWithText("Save");
@@ -93,7 +93,7 @@ public class AddArtifactTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText("Add artifact definition");
         tester.clickLinkWithText("Add artifact definition");
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("compensation", "newCompensation");
         tester.setTextField("rejectCondition", "newCondition");
         tester.clickButtonWithText("Save");
