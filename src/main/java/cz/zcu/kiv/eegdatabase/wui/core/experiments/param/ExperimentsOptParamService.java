@@ -26,6 +26,8 @@ import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
@@ -52,4 +54,24 @@ public interface ExperimentsOptParamService extends GenericService<ExperimentOpt
     void createGroupRel(ExperimentOptParamDef experimentOptParamDef, ResearchGroup researchGroup);
 
     boolean isDefault(int id);
+
+    // ExperimentOptParamVal
+
+    ExperimentOptParamValId create(ExperimentOptParamVal newInstance);
+
+    ExperimentOptParamVal read(ExperimentOptParamValId id);
+
+    List<ExperimentOptParamVal> readValByParameter(String parameterName, Object parameterValue);
+
+    void update(ExperimentOptParamVal transientObject);
+
+    void delete(ExperimentOptParamVal persistentObject);
+
+    List<ExperimentOptParamVal> getAllValRecords();
+
+    List<ExperimentOptParamVal> getValRecordsAtSides(int first, int max);
+
+    int getCountRecords();
+
+    List<ExperimentOptParamVal> getUnique(ExperimentOptParamVal example);
 }

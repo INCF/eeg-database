@@ -111,7 +111,9 @@
 
 	<bean name="experimentDownloadProvider" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider" autowire="byType" />
     
-	<bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" />
+	<bean name="experimentsOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamServiceImpl" autowire="byType" >
+        <property name="experimentOptParamValDao" ref="experimentOptParamValDao"></property>
+    </bean>
 	<bean name="experimentsOptParamFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.param.ExperimentsOptParamFacadeImpl" autowire="byType" />
     
 	<bean name="fileService" class="cz.zcu.kiv.eegdatabase.wui.core.file.FileServiceImpl" autowire="byType" />

@@ -79,6 +79,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentOptParamValueFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
@@ -253,6 +254,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("experiments-form", ExperimentFormPage.class);
         mountPage("experiments-download", ExperimentsDownloadPage.class);
         mountPage("experiments-add-file", AddDataFilePage.class);
+        mountPage("experiments-add-param", ExperimentOptParamValueFormPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);

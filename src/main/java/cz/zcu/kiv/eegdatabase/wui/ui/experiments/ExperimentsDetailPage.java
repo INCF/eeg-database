@@ -126,7 +126,7 @@ public class ExperimentsDetailPage extends MenuPage {
         
         // TODO action box pages
         boolean coexperiment = security.userIsOwnerOrCoexperimenter(experimentId);
-        BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", UnderConstructPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+        BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", ExperimentOptParamValueFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> downloadExpLink = new BookmarkablePageLink<Void>("downloadExpLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));

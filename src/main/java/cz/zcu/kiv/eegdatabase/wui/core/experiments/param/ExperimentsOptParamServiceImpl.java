@@ -23,9 +23,13 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.param;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -37,11 +41,18 @@ public class ExperimentsOptParamServiceImpl implements ExperimentsOptParamServic
 
     protected Log log = LogFactory.getLog(getClass());
 
-    ExperimentOptParamDefDao dao;
+    private ExperimentOptParamDefDao dao;
+
+    private GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao;
 
     @Required
     public void setDao(ExperimentOptParamDefDao dao) {
         this.dao = dao;
+    }
+
+    @Required
+    public void setExperimentOptParamValDao(GenericDao<ExperimentOptParamVal, ExperimentOptParamValId> experimentOptParamValDao) {
+        this.experimentOptParamValDao = experimentOptParamValDao;
     }
 
     @Override
@@ -161,6 +172,54 @@ public class ExperimentsOptParamServiceImpl implements ExperimentsOptParamServic
     @Transactional(readOnly = true)
     public boolean isDefault(int id) {
         return dao.isDefault(id);
+    }
+
+    @Override
+    @Transactional
+    public ExperimentOptParamValId create(ExperimentOptParamVal newInstance) {
+        return experimentOptParamValDao.create(newInstance);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ExperimentOptParamVal read(ExperimentOptParamValId id) {
+        return experimentOptParamValDao.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> readValByParameter(String parameterName, Object parameterValue) {
+        return experimentOptParamValDao.readByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional
+    public void update(ExperimentOptParamVal transientObject) {
+        experimentOptParamValDao.update(transientObject);
+    }
+
+    @Override
+    @Transactional
+    public void delete(ExperimentOptParamVal persistentObject) {
+        experimentOptParamValDao.delete(persistentObject);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getAllValRecords() {
+        return experimentOptParamValDao.getAllRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getValRecordsAtSides(int first, int max) {
+        return experimentOptParamValDao.getRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getUnique(ExperimentOptParamVal example) {
+        return experimentOptParamValDao.findByExample(example);
     }
 
 }

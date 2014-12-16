@@ -24,19 +24,23 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments.param;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDefGroupRel;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamValId;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
 public class ExperimentsOptParamFacadeImpl implements ExperimentsOptParamFacade {
-    
+
     protected Log log = LogFactory.getLog(getClass());
-    
+
     ExperimentsOptParamService service;
-    
+
     @Required
     public void setService(ExperimentsOptParamService service) {
         this.service = service;
@@ -141,5 +145,53 @@ public class ExperimentsOptParamFacadeImpl implements ExperimentsOptParamFacade 
     public boolean isDefault(int id) {
         return service.isDefault(id);
     }
-    
+
+    @Override
+    @Transactional
+    public ExperimentOptParamValId create(ExperimentOptParamVal newInstance) {
+        return service.create(newInstance);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ExperimentOptParamVal read(ExperimentOptParamValId id) {
+        return service.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> readValByParameter(String parameterName, Object parameterValue) {
+        return service.readValByParameter(parameterName, parameterValue);
+    }
+
+    @Override
+    @Transactional
+    public void update(ExperimentOptParamVal transientObject) {
+        service.update(transientObject);
+    }
+
+    @Override
+    @Transactional
+    public void delete(ExperimentOptParamVal persistentObject) {
+        service.delete(persistentObject);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getAllValRecords() {
+        return service.getAllValRecords();
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getValRecordsAtSides(int first, int max) {
+        return service.getValRecordsAtSides(first, max);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentOptParamVal> getUnique(ExperimentOptParamVal example) {
+        return service.getUnique(example);
+    }
+
 }
