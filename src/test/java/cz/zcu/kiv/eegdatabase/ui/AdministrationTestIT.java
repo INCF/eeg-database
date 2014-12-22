@@ -70,12 +70,13 @@ public class AdministrationTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText("Manage user roles");
         tester.clickLinkWithText("Manage user roles");
         tester.setTextField("personField", "test@test.com");
-        tester.selectOptionByValue("authority", Util.ROLE_ADMIN);
+        tester.selectOptionByValue("authority", Util.ROLE_USER);
        // tester.selectOption("authority", "Administrator");
+       // tester.clickElementByXPath();
 
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("User role for user test@test.com changed to Administrator.");
+        tester.assertTextPresent("User role for user test@test.com changed to User.");
 
         tester.clickLinkWithText("Log out");
 
