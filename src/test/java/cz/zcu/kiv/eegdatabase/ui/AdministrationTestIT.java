@@ -70,7 +70,8 @@ public class AdministrationTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText("Manage user roles");
         tester.clickLinkWithText("Manage user roles");
         tester.setTextField("personField", "test@test.com");
-        tester.selectOption("authority", "Administrator");
+        tester.selectOptionByValue("authority", Util.ROLE_ADMIN);
+       // tester.selectOption("authority", "Administrator");
 
         Thread.sleep(waitForAjax);
 
