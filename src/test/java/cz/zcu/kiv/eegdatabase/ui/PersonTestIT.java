@@ -126,6 +126,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("givenname", "Test");
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
+        tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
