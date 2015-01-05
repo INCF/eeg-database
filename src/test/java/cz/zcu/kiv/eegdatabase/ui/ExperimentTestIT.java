@@ -24,27 +24,28 @@ package cz.zcu.kiv.eegdatabase.ui;
 
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
+import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.util.List;
+
 /**
  * Created by Honza on 4.12.14.
  */
 public class ExperimentTestIT extends AbstractUITest {
 
-    private WebTester tester;
-
     @Autowired
     private PersonDao personDao;
 
     @Autowired
-    private ScenarioDao scenarioDao;
-    private String scenarioTitle;
+    private ResearchGroupDao researchGroupDao;
 
     @BeforeMethod(groups = "web")
     public void setUp() throws InterruptedException {
@@ -56,7 +57,6 @@ public class ExperimentTestIT extends AbstractUITest {
 
 
         tester = new WebTester();
-        // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         tester.setBaseUrl(url);
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
@@ -64,27 +64,12 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickButtonWithText("Log in");
         tester.assertTextPresent("Log out");
 
-//        if (scenarioDao.getAllRecords().size() == 0) {
-//            createGroupIfNotExists();
-//            tester.clickLinkWithText("Scenarios");
-//            tester.assertLinkPresentWithText("Add scenario");
-//            tester.clickLinkWithText("Add scenario");
-//
-//            tester.selectOption("researchGroup", "new group");
-//            tester.setTextField("title", "new scenario");
-//            tester.setTextField("description", "description");
-//            tester.setTextField("scenarioLength", "10");
-//            tester.clickButtonWithText("Save");
-//            Thread.sleep(waitForAjax);
-//            scenarioTitle = "new scenario";
-//        } else {
-//            scenarioTitle = scenarioDao.getAllRecords().get(0).getTitle();
-//        }
     }
     @Test(groups = "web")
     public void testExperimentValidation() throws InterruptedException {
 
         createGroupIfNotExists();
+        prepareMetadata();
 
         tester.clickLinkWithText("Experiments");
         tester.assertLinkPresentWithText("Add experiments");
@@ -98,22 +83,54 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent("Field 'Scenario' is required.");
         tester.assertTextPresent("Field 'Subject person' is required.");
 
+        tester.selectOption("view:researchGroup", "new group");
+        Thread.sleep(waitForAjax);
+        tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
+
+        //unlockGroup();
+
+        tester.setTextField("view:scenario", "scenarioForExperiment");
+        tester.setTextField("view.personBySubjectPersonId", "jan.stebetak@seznam.cz");
+        tester.clickButtonWithText("Next >");
+        Thread.sleep(waitForAjax);
+        tester.setTextField("view:hardwares", "");
+        tester.setTextField("view:softwares", "");
+        tester.clickButtonWithText("Next >");
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent("Field 'Hardware' is required.");
+        tester.assertTextPresent("Field 'Software' is required.");
+        tester.assertTextPresent("Field 'Weather' is required.");
+
         tester.clickLinkWithText("Log out");
 
     }
 
+    private void prepareMetadata() throws InterruptedException {
+        tester.clickLinkWithText("Scenarios");
+        tester.assertLinkPresentWithText("Add scenario");
+        tester.clickLinkWithText("Add scenario");
 
-    private void createGroupIfNotExists() throws InterruptedException {
-        tester.clickLinkWithText("Groups");
-        try {
-            tester.assertTextPresent("new group");
-        } catch (AssertionError ex) {
-            tester.clickLinkWithText("Create group");
-            tester.setTextField("title", "new group");
-            tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
+        tester.selectOption("researchGroup", "new group");
+        tester.setTextField("title", "scenarioForExperiment");
+        tester.setTextField("description", "description");
+        tester.setTextField("scenarioLength", "10");
+
+        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
+    }
+
+    private void unlockGroup() {
+        List<ResearchGroup> groups = researchGroupDao.getAllRecords();
+        for (ResearchGroup group: groups) {
+            if (group.getTitle().equals("new group")) {
+                group.setLock(false);
+                researchGroupDao.update(group);
+                break;
+            }
+
         }
 
     }
+
 }

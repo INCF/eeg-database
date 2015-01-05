@@ -36,8 +36,6 @@ import org.testng.annotations.Test;
  */
 public class AddWeatherTestIT extends AbstractUITest {
 
-    private WebTester tester;
-
     @Autowired
     private PersonDao personDao;
 
@@ -50,7 +48,6 @@ public class AddWeatherTestIT extends AbstractUITest {
         }
 
         tester = new WebTester();
-        // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         tester.setBaseUrl(url);
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
@@ -106,16 +103,4 @@ public class AddWeatherTestIT extends AbstractUITest {
 
     }
 
-    private void createGroupIfNotExists() throws InterruptedException {
-        tester.clickLinkWithText("Groups");
-        try {
-            tester.assertTextPresent("new group");
-        } catch (AssertionError ex) {
-            tester.clickLinkWithText("Create group");
-            tester.setTextField("title", "new group");
-            tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
-        }
-    }
 }

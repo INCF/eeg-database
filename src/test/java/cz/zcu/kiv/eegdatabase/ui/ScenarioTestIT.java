@@ -38,10 +38,9 @@ import java.io.IOException;
 import java.util.Arrays;
 
 /**
- * Created by Honza on 30.11.14.
+ * Created by Honza on 25.11.14.
  */
 public class ScenarioTestIT extends AbstractUITest {
-    private WebTester tester;
 
     @Autowired
     private PersonDao personDao;
@@ -154,20 +153,6 @@ public class ScenarioTestIT extends AbstractUITest {
 
     }
 
-
-    private void createGroupIfNotExists() throws InterruptedException {
-        tester.clickLinkWithText("Groups");
-        try {
-            tester.assertTextPresent("new group");
-        } catch (AssertionError ex) {
-            tester.clickLinkWithText("Create group");
-            tester.setTextField("title", "new group");
-            tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
-        }
-
-    }
     private void createScenario(String title) {
         tester.clickLinkWithText("Scenarios");
         tester.assertLinkPresentWithText("Add scenario");

@@ -36,8 +36,6 @@ import org.testng.annotations.Test;
  */
 public class PersonTestIT extends AbstractUITest{
 
-    private WebTester tester;
-
     @Autowired
     private PersonDao personDao;
 
