@@ -36,6 +36,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 public enum ListsLeftPageMenu implements IButtonPageMenu {
     
     HARDWARE_DEFINITIONS(ListHardwareDefinitionsPage.class, "menuItem.hardwareDefinitions", null),
+    SOFTWARE_DEFINITIONS(ListSoftwareDefinitionsPage.class, "menuItem.softwareDefinitions", null),
     PEOPLE_OPT_PARAM(ListPersonOptParamPage.class, "menuItem.optionalParametersForPeople", null),
     EXPERIMENT_OPT_PARAM(ListExperimentOptParamPage.class, "menuItem.optionalParametersForExperiments", null),
     FILE_METADATA_DEFINITIONS(ListFileMetadataPage.class, "menuItem.fileMetadataDefinitions", null),
