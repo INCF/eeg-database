@@ -29,6 +29,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+import net.sourceforge.jwebunit.api.IElement;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
@@ -87,7 +88,6 @@ public class ExperimentTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
 
-        //unlockGroup();
 
         tester.setTextField("view:scenario", "scenarioForExperiment");
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
@@ -101,6 +101,47 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent("Field 'Software' is required.");
         tester.assertTextPresent("Field 'Weather' is required.");
 
+        tester.selectOption("view:hardwares", "HardwareForExperiment");
+        tester.selectOption("view:softwares", "SoftwareForExperiment");
+        tester.selectOption("view:weather", "WeatherForExperiment");
+        tester.clickButtonWithText("Next >");
+        Thread.sleep(waitForAjax);
+        tester.clickButtonWithText("Finish");
+        Thread.sleep(waitForAjax);
+        tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
+        tester.clickLinkWithText("Log out");
+
+    }
+    @Test(groups = "web", dependsOnMethods = {"testExperimentValidation"})
+    public void testAddExperiment() throws InterruptedException {
+
+        unlockGroup();
+
+        tester.clickLinkWithText("Experiments");
+        tester.assertLinkPresentWithText("Add experiments");
+        tester.clickLinkWithText("Add experiments");
+
+
+
+        tester.selectOption("view:researchGroup", "new group");
+        Thread.sleep(waitForAjax);
+        tester.assertTextNotPresent("Research group new group can't create or edit experiment. Research group is locked.");
+
+        tester.setTextField("view:scenario", "scenarioForExperiment");
+        tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
+        tester.clickButtonWithText("Next >");
+        Thread.sleep(waitForAjax);
+        //Next page with hw, sw, ...
+
+        tester.selectOption("view:hardwares", "HardwareForExperiment");
+        tester.selectOption("view:softwares", "SoftwareForExperiment");
+        tester.selectOption("view:weather", "WeatherForExperiment");
+        tester.clickButtonWithText("Next >");
+        Thread.sleep(waitForAjax);
+//        IElement element = tester.getElementByXPath("//input[@wicketpath='wizard_form_view_resultFile_upload']");
+//        element.setTextContent("");
+        tester.clickButtonWithText("Finish");
+        Thread.sleep(waitForAjax);
         tester.clickLinkWithText("Log out");
 
     }
@@ -117,6 +158,42 @@ public class ExperimentTestIT extends AbstractUITest {
 
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
+
+        tester.clickLinkWithText("Lists");
+        tester.assertLinkPresentWithText("Hardware definitions");
+        tester.clickLinkWithText("Hardware definitions");
+
+        tester.assertLinkPresentWithText("Add hardware definition");
+        tester.clickLinkWithText("Add hardware definition");
+        Thread.sleep(waitForAjax);
+        tester.setTextField("title", "HardwareForExperiment");
+        tester.setTextField("type", "type");
+        tester.setTextField("description", "desc");
+        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
+
+        tester.assertLinkPresentWithText("Software definitions");
+        tester.clickLinkWithText("Software definitions");
+
+        tester.assertLinkPresentWithText("Add software definition");
+        tester.clickLinkWithText("Add software definition");
+        Thread.sleep(waitForAjax);
+        tester.setTextField("title", "SoftwareForExperiment");
+        tester.setTextField("description", "desc");
+        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
+
+        tester.assertLinkPresentWithText("Weather definitions");
+        tester.clickLinkWithText("Weather definitions");
+
+        tester.assertLinkPresentWithText("Add weather definition");
+        tester.clickLinkWithText("Add weather definition");
+        Thread.sleep(waitForAjax);
+        tester.setTextField("title", "WeatherForExperiment");
+        tester.setTextField("description", "desc");
+        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
+
     }
 
     private void unlockGroup() {

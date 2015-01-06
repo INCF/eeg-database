@@ -57,7 +57,7 @@ public class AddSoftwareTestIT extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testHardwareValidation() throws InterruptedException {
+    public void testSoftwareValidation() throws InterruptedException {
 
         createGroupIfNotExists();
 
@@ -82,7 +82,7 @@ public class AddSoftwareTestIT extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testAddHardware() throws InterruptedException {
+    public void testAddSoftware() throws InterruptedException {
 
         createGroupIfNotExists();
 
@@ -94,7 +94,6 @@ public class AddSoftwareTestIT extends AbstractUITest {
         tester.clickLinkWithText("Add software definition");
         Thread.sleep(waitForAjax);
         tester.setTextField("title", "SwTitle");
-       // tester.setTextField("type", "type");
         tester.setTextField("description", "desc");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
