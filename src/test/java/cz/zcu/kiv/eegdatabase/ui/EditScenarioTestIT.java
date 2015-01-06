@@ -32,7 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.fail;
 
 /**
  * Created by Honza on 2.1.15.
@@ -77,7 +78,13 @@ public class EditScenarioTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText("Edit");
         tester.clickLinkWithText("Edit");
 
-        tester.assertTextNotInElement("title", "");
+        //tester.assertTextNotInElement("title", "");
+        try {
+            tester.assertTextFieldEquals("title", "");
+            fail("The field 'title' should not be empty!");
+        } catch (AssertionError e) {
+            //Its ok (there is no method for NotEquals)
+        }
         tester.setTextField("title", "newTitle");
 
         tester.clickButtonWithText("Save");
