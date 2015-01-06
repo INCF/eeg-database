@@ -93,9 +93,7 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
-        tester.assertFormElementPresent("view:hardwares");
-        tester.setTextField("view:hardwares", "");
-        tester.setTextField("view:softwares", "");
+       //Next page with hw, sw, ...
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
 
