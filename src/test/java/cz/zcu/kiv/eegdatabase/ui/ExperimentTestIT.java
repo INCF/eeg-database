@@ -90,7 +90,7 @@ public class ExperimentTestIT extends AbstractUITest {
         //unlockGroup();
 
         tester.setTextField("view:scenario", "scenarioForExperiment");
-        tester.setTextField("view.personBySubjectPersonId", "jan.stebetak@seznam.cz");
+        tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
         tester.setTextField("view:hardwares", "");
