@@ -42,7 +42,7 @@ public class PersonTestIT extends AbstractUITest{
     @BeforeMethod(groups = "web")
     public void setUp() {
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
-            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_USER);
+            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
             person.setConfirmed(true);
             personDao.create(person);
         }
