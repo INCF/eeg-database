@@ -35,6 +35,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.util.Arrays;
 import java.util.List;
 
 /**
@@ -113,7 +117,7 @@ public class ExperimentTestIT extends AbstractUITest {
 
     }
     @Test(groups = "web", dependsOnMethods = {"testExperimentValidation"})
-    public void testAddExperiment() throws InterruptedException {
+    public void testAddExperiment() throws InterruptedException, IOException {
 
         unlockGroup();
 
@@ -138,11 +142,17 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.selectOption("view:weather", "WeatherForExperiment");
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
-//        IElement element = tester.getElementByXPath("//input[@wicketpath='wizard_form_view_resultFile_upload']");
-//        element.setTextContent("");
+
+        tester.clickButtonWithText("Finish");
+        Thread.sleep(waitForAjax);
+        tester.assertTextPresent("No data file was inserted.");
+        File file = createFile();
+        IElement element = tester.getElementByXPath("//input[@wicketpath='wizard_form_view_resultFile_upload']");
+        element.setTextContent(file.getAbsolutePath());
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);
         tester.clickLinkWithText("Log out");
+        file.delete();
 
     }
 
@@ -207,6 +217,24 @@ public class ExperimentTestIT extends AbstractUITest {
 
         }
 
+    }
+    private File createFile() throws IOException {
+        File tmpFile = null;
+        FileOutputStream fos = null;
+        try {
+            tmpFile = File.createTempFile("tmpDataFile", null);
+            fos = new FileOutputStream(tmpFile);
+            byte[] buffer = new byte[1024];
+            Arrays.fill(buffer, (byte) 0x0C);
+            for (int i = 0; i < 1024; i++) {
+                fos.write(buffer);
+            }
+        } catch (IOException e) {
+            tmpFile = null;
+        } finally {
+            if (fos != null) fos.close();
+        }
+        return tmpFile;
     }
 
 }

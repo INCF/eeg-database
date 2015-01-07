@@ -180,7 +180,7 @@ public class ScenarioTestIT extends AbstractUITest {
             tmpFile = null;
         } finally {
             if (fos != null) fos.close();
-            return tmpFile;
         }
+        return tmpFile;
     }
 }
