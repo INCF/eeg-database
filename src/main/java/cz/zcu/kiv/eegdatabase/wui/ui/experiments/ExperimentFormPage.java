@@ -126,7 +126,7 @@ public class ExperimentFormPage extends MenuPage {
                 try {
                     List<FileUpload> fileUploadList = fileModel.getObject();
                     if (fileUploadList.isEmpty()) {
-                        this.error("required.dataFile");
+                        this.error(ResourceUtils.getString("required.dataFile"));
                         setResponsePage(getPage());
                         return;
                     }
