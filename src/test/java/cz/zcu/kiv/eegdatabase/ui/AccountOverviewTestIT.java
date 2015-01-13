@@ -60,7 +60,10 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setBaseUrl(url);
         tester.beginAt("/home-page");
         tester.setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
-        ((HtmlUnitTestingEngineImpl) tester.getTestingEngine()).getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
+        if (tester.getTestingEngine() instanceof HtmlUnitTestingEngineImpl) {
+            ((HtmlUnitTestingEngineImpl) tester.getTestingEngine()).getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
+        }
+        //((HtmlUnitTestingEngineImpl) tester.getTestingEngine()).getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");
