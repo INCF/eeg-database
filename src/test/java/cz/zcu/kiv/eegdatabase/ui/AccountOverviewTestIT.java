@@ -59,11 +59,6 @@ public class AccountOverviewTestIT extends AbstractUITest {
        // tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
         tester.setBaseUrl(url);
         tester.beginAt("/home-page");
-        tester.setTestingEngineKey(TestingEngineRegistry.TESTING_ENGINE_HTMLUNIT);
-        if (tester.getTestingEngine() instanceof HtmlUnitTestingEngineImpl) {
-            ((HtmlUnitTestingEngineImpl) tester.getTestingEngine()).getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
-        }
-        //((HtmlUnitTestingEngineImpl) tester.getTestingEngine()).getWebClient().setAjaxController(new NicelyResynchronizingAjaxController());
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText("Log in");
@@ -97,7 +92,9 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan2");
        tester.setTextField("verPassword", "stebjan2");
        tester.clickButtonWithText("Change password");
-       //Thread.sleep(2000);
+       System.out.println(tester.getPageSource());
+       Thread.sleep(2000);
+       System.out.println(tester.getPageSource());
 
        tester.assertTextPresent("Changes were made");
 
@@ -118,7 +115,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("newPassword", "stebjan");
        tester.setTextField("verPassword", "stebjan");
        tester.clickButtonWithText("Change password");
-      // Thread.sleep(2000);
+       Thread.sleep(2000);
 
        tester.assertTextPresent("Changes were made");
 
@@ -135,7 +132,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjan2");
         tester.clickButtonWithText("Change password");
-       // Thread.sleep(waitForAjax);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Inserted password doesn't match current password");
 
 
@@ -152,7 +149,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjanxxx");
         tester.clickButtonWithText("Change password");
-       // Thread.sleep(waitForAjax);
+        Thread.sleep(waitForAjax);
         //test if the form was not submitted
         tester.assertTextPresent("Inserted passwords don't match");
         //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));
