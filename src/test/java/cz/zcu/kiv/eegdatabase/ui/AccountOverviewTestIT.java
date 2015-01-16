@@ -91,13 +91,8 @@ public class AccountOverviewTestIT extends AbstractUITest {
        tester.setTextField("oldPassword", "stebjan");
        tester.setTextField("newPassword", "stebjan2");
        tester.setTextField("verPassword", "stebjan2");
-       String old = tester.getTestingEngine().getPageSource();
-       System.out.println(old);
        tester.clickButtonWithText("Change password");
-       System.out.println(old.equals(tester.getPageSource()));
-       System.out.println(tester.getPageSource());
        Thread.sleep(2000);
-       System.out.println(tester.getPageSource());
 
        tester.assertTextPresent("Changes were made");
 
@@ -140,6 +135,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         System.out.println(old.equals(tester.getTestingEngine().getPageText()));
         System.out.println(tester.getTestingEngine().getPageText());
         Thread.sleep(waitForAjax);
+        System.out.println(old.equals(tester.getTestingEngine().getPageText()));
         System.out.println(tester.getTestingEngine().getPageText());
         tester.assertTextPresent("Inserted password doesn't match current password");
 

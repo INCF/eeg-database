@@ -55,5 +55,38 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
 
     }
 
+    /**
+     * Method wait for ajax response by comparison of old and new page contents. The default timeout is 60 s.
+     * @param oldPage - old page content before an ajax operation was called.
+     * @throws InterruptedException
+     */
+    protected void waitForAjaxWithTimeout(String oldPage) throws InterruptedException {
+        waitForAjaxWithTimeout(oldPage, 60);
+    }
+
+    /**
+     *
+     * Method wait for ajax response by comparison of old and new page contents.
+     * @param oldPage - old page content before an ajax operation was called.
+     * @param timeoutSec - timeout in seconds
+     * @throws InterruptedException
+     */
+    protected void waitForAjaxWithTimeout(String oldPage, int timeoutSec) throws InterruptedException {
+        for (int i = 0; i < timeoutSec * 2; i++) {
+            if (!(oldPage.equals(tester.getTestingEngine().getPageText()))) {
+                System.out.println("Time spent [s]: " + timeoutSec*0.5);
+                break;
+            }
+            Thread.sleep(500);
+        }
+    }
+
+    protected void waitForAjax(String oldPage) throws InterruptedException {
+        while(oldPage.equals(tester.getTestingEngine().getPageText())) {
+            Thread.sleep(500);
+        }
+
+    }
+
 }
 
