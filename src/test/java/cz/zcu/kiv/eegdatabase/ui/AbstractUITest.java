@@ -73,9 +73,20 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
      */
     protected void waitForAjaxWithTimeout(String oldPage, int timeoutSec) throws InterruptedException {
         for (int i = 0; i < timeoutSec * 2; i++) {
+            try {
             if (!(oldPage.equals(tester.getTestingEngine().getPageText()))) {
-                System.out.println("Time spent [s]: " + timeoutSec*0.5);
+                System.out.println("Time spent [s]: " + timeoutSec * 0.5);
                 break;
+            }
+            }catch (NullPointerException npe) {
+                System.out.println(oldPage);
+                if (tester == null) {
+                    System.out.println("Tester is null");
+                } else if (tester.getTestingEngine() == null) {
+                    System.out.println("Tester engine is null");
+                } else if (tester.getTestingEngine().getPageText() == null) {
+                    System.out.println("Page text is null");
+                }
             }
             Thread.sleep(500);
         }
