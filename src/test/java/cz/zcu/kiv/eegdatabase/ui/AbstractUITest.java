@@ -49,8 +49,9 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
             tester.clickLinkWithText("Create group");
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
+            String oldPage = tester.getTestingEngine().getPageText();
             tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
+            waitForAjaxWithTimeout(oldPage);
         }
 
     }

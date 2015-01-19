@@ -67,12 +67,14 @@ public class AddWeatherTestIT extends AbstractUITest {
         tester.clickLinkWithText("Weather definitions");
 
         tester.assertLinkPresentWithText("Add weather definition");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add weather definition");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.setTextField("title", "");
         tester.setTextField("description", "");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Title' is required.");
         tester.assertTextPresent("Field 'Description' is required.");
 
@@ -90,12 +92,14 @@ public class AddWeatherTestIT extends AbstractUITest {
         tester.clickLinkWithText("Weather definitions");
 
         tester.assertLinkPresentWithText("Add weather definition");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add weather definition");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.setTextField("title", "WeatherTitle");
         tester.setTextField("description", "desc");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("WeatherTitle");
 

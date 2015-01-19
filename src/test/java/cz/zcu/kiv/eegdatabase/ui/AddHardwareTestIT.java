@@ -67,13 +67,15 @@ public class AddHardwareTestIT extends AbstractUITest {
         tester.clickLinkWithText("Hardware definitions");
 
         tester.assertLinkPresentWithText("Add hardware definition");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add hardware definition");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.setTextField("title", "");
         tester.setTextField("type", "");
         tester.setTextField("description", "");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Title' is required.");
         tester.assertTextPresent("Field 'Type' is required.");
         tester.assertTextPresent("Field 'Description' is required.");
@@ -92,13 +94,15 @@ public class AddHardwareTestIT extends AbstractUITest {
         tester.clickLinkWithText("Hardware definitions");
 
         tester.assertLinkPresentWithText("Add hardware definition");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add hardware definition");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.setTextField("title", "HwTitle");
         tester.setTextField("type", "type");
         tester.setTextField("description", "desc");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("HwTitle");
 
