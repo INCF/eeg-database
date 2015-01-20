@@ -81,7 +81,6 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
             }
             }catch (NullPointerException npe) {
                 System.out.println("NPE");
-                System.out.println(tester.getPageSource());
                 Thread.sleep(500);
                 continue;
             }
@@ -90,7 +89,16 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
     }
 
     protected void waitForAjax(String oldPage) throws InterruptedException {
-        while(oldPage.equals(tester.getTestingEngine().getPageText())) {
+        while(true) {
+            try {
+                if (oldPage.equals(tester.getTestingEngine().getPageText())) {
+                    break;
+                }
+            } catch (NullPointerException npe) {
+                System.out.println("NPE");
+                Thread.sleep(500);
+                continue;
+            }
             Thread.sleep(500);
         }
 
