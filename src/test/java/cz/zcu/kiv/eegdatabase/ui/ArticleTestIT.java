@@ -46,8 +46,9 @@ public class ArticleTestIT extends AbstractUITest {
 
         tester.setTextField("title", "");
         tester.setTextField("text", "");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Research group' is required.");
         tester.assertTextPresent("Field 'Title' is required.");
         tester.assertTextPresent("Field 'Text' is required.");
@@ -66,8 +67,9 @@ public class ArticleTestIT extends AbstractUITest {
         tester.selectOption("researchGroup", "new group");
         tester.setTextField("title", "Test title");
         tester.setTextField("text", "some text");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("Test title");
 
@@ -86,8 +88,9 @@ public class ArticleTestIT extends AbstractUITest {
         tester.selectOption("researchGroup", "new group");
         tester.setTextField("title", "Test title2");
         tester.setTextField("text", "some text");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.clickLinkWithText("All articles");
 
@@ -95,13 +98,15 @@ public class ArticleTestIT extends AbstractUITest {
         tester.clickLinkWithText("Test title2");
         tester.assertTextPresent("Post new comment");
         tester.setTextField("text", "");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Text' is required.");
 
         tester.setTextField("text", "new comment");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("new comment");
 
@@ -120,8 +125,9 @@ public class ArticleTestIT extends AbstractUITest {
         tester.selectOption("researchGroup", "new group");
         tester.setTextField("title", "Test title3");
         tester.setTextField("text", "some text");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("Test title3");
 

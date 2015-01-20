@@ -52,38 +52,43 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.setTextField("title", "");
         tester.setTextField("description", "");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "new group");
         tester.setTextField("description", "");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "");
         tester.setTextField("description", "description");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.clickLinkWithText("Log out");
 
 
     }
+
     @Test(groups = "web")
     public void testCreateResearchGroup() throws InterruptedException {
-//        if (!groupExists("new group")) {
-            tester.clickLinkWithText("Groups");
-            tester.assertTextPresent("Create group");
-            tester.clickLinkWithText("Create group");
 
-            tester.setTextField("title", "new group");
-            tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
-//        }
+        tester.clickLinkWithText("Groups");
+        tester.assertTextPresent("Create group");
+        tester.clickLinkWithText("Create group");
+
+        tester.setTextField("title", "new group");
+        tester.setTextField("description", "description");
+        String oldPage = tester.getTestingEngine().getPageText();
+        tester.clickButtonWithText("Save");
+        waitForAjaxWithTimeout(oldPage);
+
 
         tester.assertTextPresent("My groups");
         tester.clickLinkWithText("My groups");
@@ -98,10 +103,4 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText("Log out");
 
     }
-
-//    public boolean groupExists(String title) {
-//        List<ResearchGroup> list = researchGroupDao.readByParameter("title", title);
-//        return list.size() > 0;
-//
-//    }
 }

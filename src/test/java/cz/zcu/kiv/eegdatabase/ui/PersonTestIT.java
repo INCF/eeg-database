@@ -68,8 +68,9 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("surname", "");
         tester.setTextField("dateOfBirth", "");
         tester.setTextField("username", "");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("Field 'Name' is required.");
         tester.assertTextPresent("Field 'Surname' is required.");
@@ -92,20 +93,23 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
         tester.setTextField("username", "xxx");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
         tester.setTextField("username", "xxx@xxx");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
         tester.setTextField("username", "xxx@xxx.com");
+        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextNotPresent("'E-mail' is not a valid email address.");
 
@@ -126,8 +130,9 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("dateOfBirth", "10/10/2010");
         tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("Email is already used.");
 

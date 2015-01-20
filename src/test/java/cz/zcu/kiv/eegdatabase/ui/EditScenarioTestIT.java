@@ -87,8 +87,9 @@ public class EditScenarioTestIT extends AbstractUITest {
         }
         tester.setTextField("title", "newTitle");
 
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
         tester.assertTextPresent("newTitle");
         assertEquals(count, scenarioDao.getCountRecords());
@@ -109,8 +110,9 @@ public class EditScenarioTestIT extends AbstractUITest {
         tester.setTextField("description", "description");
         tester.setTextField("scenarioLength", "10");
 
+        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        Thread.sleep(waitForAjax);
+        waitForAjaxWithTimeout(oldPage);
 
     }
 }
