@@ -81,6 +81,7 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
             }
             }catch (NullPointerException npe) {
                 System.out.println("NPE");
+                System.out.println(tester.getPageSource());
                 Thread.sleep(500);
                 continue;
             }

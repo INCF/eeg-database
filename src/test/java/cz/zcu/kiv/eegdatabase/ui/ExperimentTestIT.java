@@ -92,9 +92,8 @@ public class ExperimentTestIT extends AbstractUITest {
 
         oldPage = tester.getTestingEngine().getPageText();
         tester.selectOption("view:researchGroup", "new group");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
-
 
         tester.setTextField("view:scenario", "scenarioForExperiment");
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
