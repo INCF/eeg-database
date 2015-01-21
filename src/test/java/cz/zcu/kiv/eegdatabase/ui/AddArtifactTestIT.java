@@ -66,14 +66,12 @@ public class AddArtifactTestIT extends AbstractUITest {
         tester.clickLinkWithText("Artifact definitions");
 
         tester.assertLinkPresentWithText("Add artifact definition");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add artifact definition");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.setTextField("compensation", "");
         tester.setTextField("rejectCondition", "");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Compensation' is required.");
         tester.assertTextPresent("Field 'Reject condition' is required.");
 
@@ -91,14 +89,12 @@ public class AddArtifactTestIT extends AbstractUITest {
         tester.clickLinkWithText("Artifact definitions");
 
         tester.assertLinkPresentWithText("Add artifact definition");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add artifact definition");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.setTextField("compensation", "newCompensation");
         tester.setTextField("rejectCondition", "newCondition");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("newCompensation");
 

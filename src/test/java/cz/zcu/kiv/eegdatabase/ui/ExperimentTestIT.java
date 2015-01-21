@@ -82,28 +82,24 @@ public class ExperimentTestIT extends AbstractUITest {
 
         tester.setTextField("view:scenario", "");
         tester.setTextField("view:personBySubjectPersonId", "");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
-
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group' is required.");
         tester.assertTextPresent("Field 'Scenario' is required.");
         tester.assertTextPresent("Field 'Subject person' is required.");
 
-        oldPage = tester.getTestingEngine().getPageText();
         tester.selectOption("view:researchGroup", "new group");
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
 
+
         tester.setTextField("view:scenario", "scenarioForExperiment");
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
-       //Next page with hw, sw, ...
-        oldPage = tester.getTestingEngine().getPageText();
+        Thread.sleep(waitForAjax);
+        //Next page with hw, sw, ...
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Field 'Hardware' is required.");
         tester.assertTextPresent("Field 'Software' is required.");
@@ -112,12 +108,10 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.selectOption("view:hardwares", "HardwareForExperiment");
         tester.selectOption("view:softwares", "SoftwareForExperiment");
         tester.selectOption("view:weather", "WeatherForExperiment");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
-        oldPage = tester.getTestingEngine().getPageText();
+        Thread.sleep(waitForAjax);
         tester.clickButtonWithText("Finish");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
         tester.clickLinkWithText("Log out");
 
@@ -132,35 +126,31 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickLinkWithText("Add experiments");
 
 
-        String oldPage = tester.getTestingEngine().getPageText();
+
         tester.selectOption("view:researchGroup", "new group");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextNotPresent("Research group new group can't create or edit experiment. Research group is locked.");
 
         tester.setTextField("view:scenario", "scenarioForExperiment");
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         //Next page with hw, sw, ...
 
         tester.selectOption("view:hardwares", "HardwareForExperiment");
         tester.selectOption("view:softwares", "SoftwareForExperiment");
         tester.selectOption("view:weather", "WeatherForExperiment");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Next >");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Finish");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("No data file was inserted.");
         File file = createFile();
         IElement element = tester.getElementByXPath("//input[@wicketpath='wizard_form_view_resultFile_upload']");
         element.setTextContent(file.getAbsolutePath());
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Finish");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.clickLinkWithText("Log out");
         file.delete();
 
@@ -176,53 +166,43 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.setTextField("description", "description");
         tester.setTextField("scenarioLength", "10");
 
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.clickLinkWithText("Lists");
         tester.assertLinkPresentWithText("Hardware definitions");
         tester.clickLinkWithText("Hardware definitions");
 
         tester.assertLinkPresentWithText("Add hardware definition");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickLinkWithText("Add hardware definition");
-        waitForAjaxWithTimeout(oldPage);
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "HardwareForExperiment");
         tester.setTextField("type", "type");
         tester.setTextField("description", "desc");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertLinkPresentWithText("Software definitions");
         tester.clickLinkWithText("Software definitions");
 
         tester.assertLinkPresentWithText("Add software definition");
         tester.clickLinkWithText("Add software definition");
-        oldPage = tester.getTestingEngine().getPageText();
-        waitForAjaxWithTimeout(oldPage);
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "SoftwareForExperiment");
         tester.setTextField("description", "desc");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertLinkPresentWithText("Weather definitions");
         tester.clickLinkWithText("Weather definitions");
 
         tester.assertLinkPresentWithText("Add weather definition");
         tester.clickLinkWithText("Add weather definition");
-        oldPage = tester.getTestingEngine().getPageText();
-        waitForAjaxWithTimeout(oldPage);
-
+        Thread.sleep(waitForAjax);
         tester.setTextField("title", "WeatherForExperiment");
         tester.setTextField("description", "desc");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
     }
 

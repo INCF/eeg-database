@@ -74,10 +74,8 @@ public class ScenarioTestIT extends AbstractUITest {
 
         tester.setTextField("title", "");
         tester.setTextField("description", "");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
-
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Research group' is required.");
         tester.assertTextPresent("Field 'Scenario title' is required.");
         tester.assertTextPresent("Field 'Description' is required.");
@@ -86,9 +84,8 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.setTextField("title", "test");
         tester.setTextField("description", "test");
         tester.setTextField("scenarioLength", "-1");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("'scenarioLength'");   //TODO validation message
         tester.clickLinkWithText("Log out");
 
@@ -99,9 +96,8 @@ public class ScenarioTestIT extends AbstractUITest {
         createGroupIfNotExists();
 
         createScenario("testScenario");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Scenario detail");
         tester.assertTextPresent("testScenario");
@@ -119,15 +115,13 @@ public class ScenarioTestIT extends AbstractUITest {
         Assert.assertNotNull(file, "Error while creating file for scenario");
         tester.checkCheckbox("dataAvailable");
 
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Field 'Data file' is required.");
         tester.setFormElement("contailer:file", file.getAbsolutePath());
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage, 100);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Scenario detail");
         tester.assertTextPresent("testScenario2");
@@ -146,15 +140,13 @@ public class ScenarioTestIT extends AbstractUITest {
             tester.assertTextPresent("testScenario");
         } catch (AssertionError er) {
             createScenario("testScenario"); //create if not exists
-            String oldPage = tester.getTestingEngine().getPageText();
             tester.clickButtonWithText("Save");
-            waitForAjaxWithTimeout(oldPage);
+            Thread.sleep(waitForAjax);
         }
 
         createScenario("testScenario");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Title already in database.");
         tester.clickLinkWithText("Log out");

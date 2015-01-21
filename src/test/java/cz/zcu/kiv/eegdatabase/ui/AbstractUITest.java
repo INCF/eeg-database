@@ -23,9 +23,7 @@
 package cz.zcu.kiv.eegdatabase.ui;
 
 import net.sourceforge.jwebunit.junit.WebTester;
-import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 /**
@@ -49,60 +47,9 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
             tester.clickLinkWithText("Create group");
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
-            String oldPage = tester.getTestingEngine().getPageText();
             tester.clickButtonWithText("Save");
-            waitForAjaxWithTimeout(oldPage);
-        }
-
-    }
-
-    /**
-     * Method wait for ajax response by comparison of old and new page contents. The default timeout is 60 s.
-     * @param oldPage - old page content before an ajax operation was called.
-     * @throws InterruptedException
-     */
-    protected void waitForAjaxWithTimeout(String oldPage) throws InterruptedException {
-        waitForAjaxWithTimeout(oldPage, 60);
-    }
-
-    /**
-     *
-     * Method wait for ajax response by comparison of old and new page contents.
-     * @param oldPage - old page content before an ajax operation was called.
-     * @param timeoutSec - timeout in seconds
-     * @throws InterruptedException
-     */
-    protected void waitForAjaxWithTimeout(String oldPage, int timeoutSec) throws InterruptedException {
-        for (int i = 0; i < timeoutSec * 2; i++) {
-            try {
-            if (!(oldPage.equals(tester.getTestingEngine().getPageText()))) {
-                System.out.println("Time spent [s]: " + i * 0.5);
-                break;
-            }
-            }catch (NullPointerException npe) {
-                System.out.println("NPE");
-                Thread.sleep(500);
-                continue;
-            }
-            Thread.sleep(500);
+            Thread.sleep(waitForAjax);
         }
     }
-
-    protected void waitForAjax(String oldPage) throws InterruptedException {
-        while(true) {
-            try {
-                if (oldPage.equals(tester.getTestingEngine().getPageText())) {
-                    break;
-                }
-            } catch (NullPointerException npe) {
-                System.out.println("NPE");
-                Thread.sleep(500);
-                continue;
-            }
-            Thread.sleep(500);
-        }
-
-    }
-
 }
 

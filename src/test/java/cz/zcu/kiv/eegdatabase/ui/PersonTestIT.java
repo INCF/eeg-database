@@ -68,16 +68,15 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("surname", "");
         tester.setTextField("dateOfBirth", "");
         tester.setTextField("username", "");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Field 'Name' is required.");
         tester.assertTextPresent("Field 'Surname' is required.");
         tester.assertTextPresent("Field 'Date of birth' is required.");
         tester.assertTextPresent("Field 'Gender' is required.");
         tester.assertTextPresent("Field 'E-mail' is required.");
-     //   tester.assertTextPresent("Field 'Education Level' is required");  TODO need to be fixed in form
+        //   tester.assertTextPresent("Field 'Education Level' is required");  TODO need to be fixed in form
 
         tester.clickLinkWithText("Log out");
 
@@ -93,23 +92,20 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
         tester.setTextField("username", "xxx");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
         tester.setTextField("username", "xxx@xxx");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
         tester.setTextField("username", "xxx@xxx.com");
-        oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextNotPresent("'E-mail' is not a valid email address.");
 
@@ -130,9 +126,8 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("dateOfBirth", "10/10/2010");
         tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
-        String oldPage = tester.getTestingEngine().getPageText();
         tester.clickButtonWithText("Save");
-        waitForAjaxWithTimeout(oldPage);
+        Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Email is already used.");
 
