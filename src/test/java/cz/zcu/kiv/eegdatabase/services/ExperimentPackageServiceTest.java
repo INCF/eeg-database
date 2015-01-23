@@ -22,20 +22,25 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
+import static junit.framework.Assert.assertEquals;
+
+import java.math.BigDecimal;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Test;
+
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageConnectionService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
-import org.testng.annotations.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
-import org.testng.annotations.BeforeMethod;
-
-import static junit.framework.Assert.assertEquals;
 
 /**
  * Created by stebjan on 20.8.2014.
@@ -85,7 +90,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         License license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(-1000f);
+        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
         license.setResearchGroup(researchGroup);

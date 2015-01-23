@@ -253,5 +253,10 @@ public class SimpleGenericDao<T, PK extends Serializable>
             getHibernateTemplate().initialize(property);
         }
     }
+    
+    @Override
+    public T merge(T transientObject){
+        return getHibernateTemplate().merge(transientObject);
+    }
 }
 

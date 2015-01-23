@@ -27,15 +27,18 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.MailException;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
+
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
@@ -65,6 +68,7 @@ import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
+
 import java.util.Date;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
@@ -368,7 +372,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         Person person = personDAO.read(newInstance.getPerson().getPersonId());
 
         boolean existMembership = membershipDao.read(new ResearchGroupMembershipId(person.getPersonId(), newInstance.getResearchGroup().getResearchGroupId())) != null;
-        Locale locale = EEGDataBaseSession.get().getLocale();
+        Locale locale = LocaleContextHolder.getLocale();
 
         if (existMembership)
             mailService.sendRequestForGroupRoleMail(emailAdmin, id, person.getUsername(), researchGroupTitle, locale);

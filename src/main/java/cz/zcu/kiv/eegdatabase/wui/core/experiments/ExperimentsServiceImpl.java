@@ -378,4 +378,11 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 		return experimentPackageConnectionDao.listExperimentsWithoutPackage();
 	}
 
+    @Override
+    @Transactional
+    public void changePrice(Experiment experiment) {
+        experimentDao.update(experiment);
+        
+    }
+
 }

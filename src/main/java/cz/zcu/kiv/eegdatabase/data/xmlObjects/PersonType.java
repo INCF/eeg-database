@@ -53,7 +53,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
  *         &lt;element name="email" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="phoneNumber" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="gender" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
- *         &lt;element name="dateOfBirth" type="{http://www.w3.org/2001/XMLSchema}date" minOccurs="0"/>
+ *         &lt;element name="age" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="note" type="{http://www.w3.org/2001/XMLSchema}string" minOccurs="0"/>
  *         &lt;element name="eyesDefect" type="{}EyesDefectType" maxOccurs="unbounded" minOccurs="0"/>
  *         &lt;element name="hearingDefect" type="{}HearingDefectType" maxOccurs="unbounded" minOccurs="0"/>
@@ -74,7 +74,7 @@ import javax.xml.datatype.XMLGregorianCalendar;
     "email",
     "phoneNumber",
     "gender",
-    "dateOfBirth",
+    "age",
     "note",
     "eyesDefect",
     "hearingDefect",
@@ -85,8 +85,7 @@ public class PersonType {
     protected String email;
     protected String phoneNumber;
     protected String gender;
-    @XmlSchemaType(name = "date")
-    protected String dateOfBirth;
+    protected String age;
     protected String note;
     protected List<EyesDefectType> eyesDefect;
     protected List<HearingDefectType> hearingDefect;
@@ -178,8 +177,8 @@ public class PersonType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public String getDateOfBirth() {
-        return dateOfBirth;
+    public String getAge() {
+        return age;
     }
 
     /**
@@ -190,8 +189,8 @@ public class PersonType {
      *     {@link XMLGregorianCalendar }
      *     
      */
-    public void setDateOfBirth(String value) {
-        this.dateOfBirth = value;
+    public void setAge(String value) {
+        this.age = value;
     }
 
     /**

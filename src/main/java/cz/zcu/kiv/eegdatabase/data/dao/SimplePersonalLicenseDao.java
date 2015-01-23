@@ -22,24 +22,31 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.hibernate.Criteria;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicenseState;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import java.util.ArrayList;
-import java.util.List;
-import org.hibernate.Criteria;
-import org.hibernate.criterion.Projections;
-import org.hibernate.criterion.Restrictions;
 
 /**
  *
  * @author bydga
  */
 public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, Integer> implements PersonalLicenseDao {
-
+    
+    protected Log log = LogFactory.getLog(getClass());
+    
 	public SimplePersonalLicenseDao() {
 		super(PersonalLicense.class);
 	}
@@ -97,8 +104,13 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 
 	@Override
 	public byte[] getAttachmentContent(int personalLicenseId) {
-		String query = "select attachmentContent from PersonalLicense pl where pl.personalLicenseId = :id";
-        List<byte[]> result =  this.getSession().createQuery(query).setInteger("id", personalLicenseId).list();
-        return result.isEmpty() ? null : result.get(0);
+		String query = "from PersonalLicense pl where pl.personalLicenseId = :id";
+        PersonalLicense result =  (PersonalLicense) this.getSession().createQuery(query).setInteger("id", personalLicenseId).uniqueResult();
+        try {
+            return result.getAttachmentContent().getBytes(1, (int) result.getAttachmentContent().length());
+        } catch (SQLException e) {
+            log.error(e.getMessage(), e);
+            return new byte[0];
+        }
 	}
 }

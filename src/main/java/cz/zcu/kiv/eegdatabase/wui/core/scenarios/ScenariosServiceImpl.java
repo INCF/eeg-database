@@ -115,12 +115,15 @@ public class ScenariosServiceImpl implements ScenariosService {
     public void update(Scenario transientObject) {
 
         try {
+            
+            // XXX WORKAROUND for Hibernate pre 4.0, update entity with blob this way.
+            Scenario merged = scenarioDAO.merge(transientObject);
             InputStream fileContentStream = transientObject.getFileContentStream();
             if (fileContentStream != null) {
                 Blob createBlob = factory.getCurrentSession().getLobHelper().createBlob(fileContentStream, fileContentStream.available());
-                transientObject.setScenarioFile(createBlob);
-            }
-            scenarioDAO.update(transientObject);
+                merged.setScenarioFile(createBlob);
+                scenarioDAO.update(merged);
+            } 
 
         } catch (HibernateException e) {
             log.error(e.getMessage(), e);

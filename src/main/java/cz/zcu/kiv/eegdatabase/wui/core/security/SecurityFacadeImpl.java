@@ -26,8 +26,6 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-
 /**
  * Security facade for working with some security and access policy. Login and logout action above session.
  * 
@@ -43,16 +41,6 @@ public class SecurityFacadeImpl implements SecurityFacade {
     @Required
     public void setService(SecurityService service) {
         this.service = service;
-    }
-
-    @Override
-    public boolean authorization(String userName, String password) {
-        return EEGDataBaseSession.get().signIn(userName, password);
-    }
-
-    @Override
-    public void logout() {
-        EEGDataBaseSession.get().invalidate();
     }
 
     @Override

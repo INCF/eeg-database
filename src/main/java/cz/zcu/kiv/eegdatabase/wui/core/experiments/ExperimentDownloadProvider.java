@@ -23,13 +23,21 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipOutputStream;
 
+import org.apache.activemq.util.ByteArrayInputStream;
+import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -37,14 +45,18 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileService;
 import cz.zcu.kiv.eegdatabase.wui.core.history.HistoryService;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 
 /**
@@ -67,7 +79,11 @@ public class ExperimentDownloadProvider {
 
     HistoryService historyService;
 
+    ExperimentPackageService packageService;
+
     ZipGenerator zipGenerator;
+    
+    LicenseService licenseService;
 
     @Required
     public void setService(ExperimentsService service) {
@@ -94,6 +110,16 @@ public class ExperimentDownloadProvider {
         this.historyService = historyService;
     }
 
+    @Required
+    public void setPackageService(ExperimentPackageService packageService) {
+        this.packageService = packageService;
+    }
+    
+    @Required
+    public void setLicenseService(LicenseService licenseService) {
+        this.licenseService = licenseService;
+    }
+
     /**
      * Method get data from web page, preprocess them for generator and generate zip file with content.
      * 
@@ -110,48 +136,12 @@ public class ExperimentDownloadProvider {
             Experiment experiment = service.getExperimentForDetail(exp.getExperimentId());
             String scenarioName = experiment.getScenario().getTitle();
 
-            Set<DataFile> newFiles = new HashSet<DataFile>();
-            // prepared files for generator
-            if (files != null || params != null) {
-                // list selected files and prepare new files which we use for generated zip file.
-                for (DataFile item : files) {
-                    // fill new file from selected file
-                    DataFile newItem = new DataFile();
-                    newItem.setDataFileId(item.getDataFileId());
-                    newItem.setExperiment(item.getExperiment());
-                    newItem.setFileContent(fileService.read(item.getDataFileId()).getFileContent());
-                    newItem.setFilename(item.getFilename());
-                    newItem.setMimetype(item.getMimetype());
-                    newItem.setDescription(item.getDescription());
-
-                    // create list of parameters which we use for generated zip file
-                    Set<FileMetadataParamVal> newVals = new HashSet<FileMetadataParamVal>();
-                    // get from map of selected parameters collection for actual file
-                    Set<FileMetadataParamVal> list = params.get(item.getDataFileId());
-                    for (FileMetadataParamVal paramVal : list) {
-                        newVals.add(paramVal);
-                    }
-
-                    newItem.setFileMetadataParamVals(newVals);
-                    newFiles.add(newItem);
-                }
-            }
+            Set<DataFile> newFiles = prepareDataFilesWithParameters(files, params);
 
             // prepared history log
-            Person user = personService.getLoggedPerson();
-            Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
-            History history = new History();
-            log.debug("Setting downloading metadata");
-            history.setExperiment(experiment);
-            log.debug("Setting user");
-            history.setPerson(user);
-            log.debug("Setting time of download");
-            history.setDateOfDownload(currentTimestamp);
-            log.debug("Saving download history");
-            historyService.create(history);
+            createHistoryRecordAboutDownload(experiment);
 
-            // TODO generator create zip file in memory - problem with heap size. Throw exception with memory allocation problem.
-            File file = zipGenerator.generate(experiment, mc, newFiles);
+            File file = zipGenerator.generate(experiment, mc, newFiles, licenseService.getPublicLicenseFile(), licenseService.getPublicLicenseFileName());
 
             FileDTO dto = new FileDTO();
             dto.setFile(file);
@@ -162,11 +152,125 @@ public class ExperimentDownloadProvider {
                 dto.setFileName("Experiment_data_" + exp.getExperimentId() + ".zip");
 
             return dto;
-            
+
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             return null;
         }
 
+    }
+
+    @Transactional
+    public FileDTO generatePackageFile(ExperimentPackage pckg, MetadataCommand mc, License license) {
+
+        ZipOutputStream zipOutputStream = null;
+        FileOutputStream fileOutputStream = null;
+        File tempZipFile = null;
+        ZipInputStream in = null;
+
+        try {
+            FileDTO dto = new FileDTO();
+            dto.setFileName(pckg.getName().replaceAll("\\s", "_") + ".zip");
+            
+            // create temp zip file
+            tempZipFile = File.createTempFile("experimentDownload_", ".zip");
+            // open stream to temp zip file
+            fileOutputStream = new FileOutputStream(tempZipFile);
+            // prepare zip stream
+            zipOutputStream = new ZipOutputStream(fileOutputStream);
+
+            for (Experiment exp : service.getExperimentsByPackage(pckg.getExperimentPackageId())) {
+
+                String experimentDirPrefix = "";
+
+                // create directory for each experiment.
+                String scenarioName = exp.getScenario().getTitle();
+                if (scenarioName != null) {
+                    experimentDirPrefix = "Experiment_" + exp.getExperimentId() + "_" + scenarioName.replaceAll("\\s", "_") + "/";
+                } else
+                    experimentDirPrefix = "Experiment_data_" + exp.getExperimentId() + "/";
+                // generate temp zip file with experiment
+                byte[] licenseFile = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFile(): licenseService.getLicenseAttachmentContent(license.getLicenseId());
+                String licenseFileName = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFileName() : license.getAttachmentFileName();
+                File file = zipGenerator.generate(exp, mc, exp.getDataFiles(), licenseFile, licenseFileName);
+                in = new ZipInputStream(new FileInputStream(file));
+                ZipEntry entryIn = null;
+                
+                // copy unziped experiment in package zip file.
+                // NOTE: its easier solution copy content of one zip in anoter instead create directory structure via java.io.File.
+                while ((entryIn = in.getNextEntry()) != null) {
+                    zipOutputStream.putNextEntry(new ZipEntry(experimentDirPrefix + entryIn.getName()));
+                    IOUtils.copyLarge(in, zipOutputStream);
+                    zipOutputStream.closeEntry();
+                }
+
+                createHistoryRecordAboutDownload(exp);
+            }
+
+            dto.setFile(tempZipFile);
+            return dto;
+        } catch (Exception e) {
+
+            log.error(e.getMessage(), e);
+            return null;
+
+        } finally {
+
+            try {
+                zipOutputStream.flush();
+                zipOutputStream.close();
+                fileOutputStream.flush();
+                fileOutputStream.close();
+            } catch (IOException e) {
+
+            }
+        }
+
+    }
+
+    private void createHistoryRecordAboutDownload(Experiment experiment) {
+        
+        Person user = personService.getLoggedPerson();
+        Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
+        History history = new History();
+        log.debug("Setting downloading metadata");
+        history.setExperiment(experiment);
+        log.debug("Setting user");
+        history.setPerson(user);
+        log.debug("Setting time of download");
+        history.setDateOfDownload(currentTimestamp);
+        log.debug("Saving download history");
+        historyService.create(history);
+    }
+
+    private Set<DataFile> prepareDataFilesWithParameters(Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
+
+        Set<DataFile> newFiles = new HashSet<DataFile>();
+        // prepared files for generator
+        if (files != null || params != null) {
+            // list selected files and prepare new files which we use for generated zip file.
+            for (DataFile item : files) {
+                // fill new file from selected file
+                DataFile newItem = new DataFile();
+                newItem.setDataFileId(item.getDataFileId());
+                newItem.setExperiment(item.getExperiment());
+                newItem.setFileContent(fileService.read(item.getDataFileId()).getFileContent());
+                newItem.setFilename(item.getFilename());
+                newItem.setMimetype(item.getMimetype());
+                newItem.setDescription(item.getDescription());
+
+                // create list of parameters which we use for generated zip file
+                Set<FileMetadataParamVal> newVals = new HashSet<FileMetadataParamVal>();
+                // get from map of selected parameters collection for actual file
+                Set<FileMetadataParamVal> list = params.get(item.getDataFileId());
+                for (FileMetadataParamVal paramVal : list) {
+                    newVals.add(paramVal);
+                }
+
+                newItem.setFileMetadataParamVals(newVals);
+                newFiles.add(newItem);
+            }
+        }
+        return newFiles;
     }
 }

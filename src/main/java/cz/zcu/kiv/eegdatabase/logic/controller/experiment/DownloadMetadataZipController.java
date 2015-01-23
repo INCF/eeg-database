@@ -153,7 +153,7 @@ public class DownloadMetadataZipController extends SimpleFormController {
         log.debug("Saving download history");
         historyDao.create(history);
 
-        File file = getZipGenerator().generate(fromDB, mc, newFiles);
+        File file = getZipGenerator().generate(fromDB, mc, newFiles, new byte[0], null);
         InputStream dataStream = new FileInputStream(file);
 
         response.setHeader("Content-Type", "application/zip");

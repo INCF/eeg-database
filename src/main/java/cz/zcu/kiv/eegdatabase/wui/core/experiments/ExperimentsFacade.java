@@ -76,4 +76,6 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
 	 * @return 
 	 */
 	List<Experiment> getExperimentsWithoutPackage();
+	
+	void changePrice(Experiment experiment);
 }

@@ -42,6 +42,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipException;
 import java.util.zip.ZipOutputStream;
 
+import org.apache.activemq.util.ByteArrayInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,7 +62,7 @@ public class ZipGenerator implements Generator {
     private Log log = LogFactory.getLog(getClass());
     private int fileCounter = 0;
 
-    public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles) throws Exception, SQLException, IOException {
+    public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> dataFiles, byte[] licenseFile, String licenseFileName) throws Exception, SQLException, IOException {
 
         ZipOutputStream zipOutputStream = null;
         FileOutputStream fileOutputStream = null;
@@ -87,6 +88,10 @@ public class ZipGenerator implements Generator {
             }
 
             ZipEntry entry;
+            
+            zipOutputStream.putNextEntry(entry = new ZipEntry("License/"+licenseFileName));
+            IOUtils.copyLarge(new ByteArrayInputStream(licenseFile), zipOutputStream);
+            zipOutputStream.closeEntry();
 
             if (mc.isScenFile() && scen.getScenarioFile() != null) {
                 try {

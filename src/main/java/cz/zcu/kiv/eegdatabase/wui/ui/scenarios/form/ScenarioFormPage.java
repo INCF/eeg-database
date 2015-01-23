@@ -75,7 +75,7 @@ public class ScenarioFormPage extends MenuPage {
 
         if (!security.userIsExperimenter() && !security.isAdmin()) {
             warn(ResourceUtils.getString("pageTitle.userNotExperimenter"));
-            warn(ResourceUtils.getString("pageTitle.youNeedExperimenterRole"));
+            warn(ResourceUtils.getString("text.youNeedExperimenterRole"));
             scenarioForm.setVisibilityAllowed(false);
         }
     }

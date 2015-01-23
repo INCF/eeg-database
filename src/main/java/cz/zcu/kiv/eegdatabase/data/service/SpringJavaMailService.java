@@ -172,7 +172,7 @@ public class SpringJavaMailService implements MailService {
             String emailBody = "<html><body>";
 
             emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
-                    new String[] { article.getTitle() },
+                    new String[] { article.getTitle(), article.getResearchGroup() != null ? article.getResearchGroup().getTitle() : "Public articles"},
                     locale) + "";
             emailBody += "&nbsp;(<a href=\"" + articleURL + "\" target=\"_blank\">" + articleURL + "</a>)</p><br />";
             emailBody += "<h3>" + article.getTitle() + "</h3> <p>" + article.getText() + "</p><br />";
@@ -214,11 +214,11 @@ public class SpringJavaMailService implements MailService {
         try {
         String articleURL = "http://" + domain + "/articles/detail.html?articleId=" + comment.getArticle().getArticleId();
         //System.out.println(articleURL);
-        String subject = messageSource.getMessage("articles.group.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, locale);
+        String subject = messageSource.getMessage("articles.comments.email.subscribtion.subject", new String[]{comment.getArticle().getTitle(), comment.getPerson().getUsername()}, locale);
         //System.out.println(subject);
         String emailBody = "<html><body>";
 
-        emailBody += "<p>" + messageSource.getMessage("articles.group.email.subscribtion.body.text.part1",
+        emailBody += "<p>" + messageSource.getMessage("articles.comments.email.subscribtion.body.text.part1",
                 new String[]{comment.getArticle().getTitle()},
                 locale) + "";
         emailBody += "&nbsp;(<a href=\"" + articleURL + "\" target=\"_blank\">" + articleURL + "</a>)</p><br />";

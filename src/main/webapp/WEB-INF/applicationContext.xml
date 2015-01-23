@@ -180,6 +180,7 @@
 	<!-- ACCESS CONTROL -->
 	<bean name="licenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.LicenseServiceImpl" autowire="byType">
 		<constructor-arg ref="licenseDao"/>
+        <property name="publicLicenseFileName" value="${public.license}"/>
 	</bean>
 	<bean name="personalLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.license.impl.PersonalLicenseServiceImpl" autowire="byType">
 		<constructor-arg ref="personalLicenseDao"/>
@@ -204,6 +205,14 @@
     
     <bean name="electrodeConfService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ElectrodeConfServiceImpl" autowire="byType">
         <constructor-arg ref="electrodeConfDao"/>
+    </bean>
+    
+    <bean name="orderService" class="cz.zcu.kiv.eegdatabase.wui.core.order.OrderServiceImpl" autowire="byType">
+        <constructor-arg ref="orderDao"/>
+    </bean>
+
+    <bean name="orderFacade" class="cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacadeImpl" autowire="byType">
+        <constructor-arg ref="orderService"/>
     </bean>
 
 

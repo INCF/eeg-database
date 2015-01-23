@@ -26,6 +26,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.ListOrderPage;
 
 /**
  * Enumeration of left page menu for account section.
@@ -37,7 +38,9 @@ public enum MyAccountPageLeftMenu implements IButtonPageMenu {
 
     ACCOUNT_OVERVIEW(AccountOverViewPage.class, "menuItem.myAccount.overview", null),
     CHANGE_PASSWORD(ChangePasswordPage.class, "menuItem.myAccount.changePassword", null),
-    SOCIAL(SocialNetworksPage.class, "menuItem.myAccount.social", null), ;
+    SOCIAL(SocialNetworksPage.class, "menuItem.myAccount.social", null),
+    MY_ORDERS(ListOrderPage.class, "pageTitle.order.myOrders", null),
+    ;
 
     private Class<? extends MenuPage> pageClass;
     private String pageTitleKey;

@@ -22,12 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import java.math.BigDecimal;
 import java.util.List;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -38,10 +35,18 @@ import org.apache.wicket.markup.html.form.Radio;
 import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
+import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.util.lang.Bytes;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 
 /**
  *
@@ -49,13 +54,16 @@ import org.apache.wicket.model.PropertyModel;
  */
 public class LicenseEditForm extends Panel {
 
-	private IModel<List<License>> blueprintsModel;
+	private static final long serialVersionUID = -3134581180799936781L;
+	
+    private IModel<List<License>> blueprintsModel;
 	protected IModel<License> licenseModel;
 	protected IModel<License> selectedBlueprintModel;
 	private Form form;
 	private boolean displayControls = true;
 	private IModel<Boolean> allowBusiness;
 	private boolean displayRemoveButton = true;
+    private FileUploadField fileUpload;
 
 	public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
 		this(id, model, null, allowBusiness);
@@ -87,7 +95,7 @@ public class LicenseEditForm extends Panel {
 		c.setRequired(true);
 		form.add(c);
 
-		c = new NumberTextField<Float>("price", new PropertyModel(licenseModel, "price"), Float.class).setMinimum(0f);
+		c = new NumberTextField<BigDecimal>("price", new PropertyModel(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
 		c.setRequired(true);
 		c.setLabel(ResourceUtils.getModel("label.license.price"));
 		form.add(c);
@@ -106,6 +114,12 @@ public class LicenseEditForm extends Panel {
 		form.add(c);
 
 		WicketUtils.addLabelsAndFeedback(form);
+		
+		fileUpload = new FileUploadField("licenseFile");
+		fileUpload.setLabel(ResourceUtils.getModel("label.license.attachment.file"));
+		
+		form.add(fileUpload);
+		form.setMaxSize(Bytes.megabytes(15));
 	}
 
 	/**
@@ -214,6 +228,10 @@ public class LicenseEditForm extends Panel {
 	public boolean isDisplayRemoveButton() {
 		return displayRemoveButton;
 	}
+	
+	public FileUploadField getFileUpload() {
+        return fileUpload;
+    }
 
 	public LicenseEditForm setDisplayRemoveButton(boolean displayRemoveButton) {
 		this.displayRemoveButton = displayRemoveButton;

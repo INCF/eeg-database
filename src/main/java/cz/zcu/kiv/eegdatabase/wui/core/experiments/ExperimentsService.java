@@ -75,4 +75,6 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
 	 * @return 
 	 */
 	List<Experiment> getExperimentsWithoutPackage();
+	
+	void changePrice(Experiment experiment);
 }

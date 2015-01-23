@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app.session;
 
+import java.util.Set;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Session;
@@ -42,6 +44,9 @@ import org.springframework.security.core.userdetails.User;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 
 /**
@@ -62,12 +67,27 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     @SpringBean
     PersonFacade facade;
 
+    @SpringBean
+    OrderFacade orderFacade;
+
+    @SpringBean
+    ExperimentPackageFacade epFacade;
+
+    @SpringBean
+    ExperimentsFacade eFacade;
+
     private Person loggedUser;
     private final String SOCIAL_PASSWD = "#SOCIAL#";
 
     private ShoppingCart shoppingCart;
 
     private StringValue searchString;
+
+    /*
+     * software cache with purchased experiments and packages. Cache is flushed after create new order.
+     */
+    private Set<Integer> purchasedExperiments;
+    private Set<Integer> purchasedExperimentPackages;
 
     public static EEGDataBaseSession get()
     {
@@ -96,6 +116,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         if (password.equalsIgnoreCase(SOCIAL_PASSWD)) {
             this.setLoggedUser(facade.getPerson(username));
             this.createShoppingCart();
+            reloadPurchasedItemCache();
             return true;
         }
 
@@ -105,13 +126,14 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             SecurityContextHolder.getContext().setAuthentication(authentication);
             authenticated = authentication.isAuthenticated();
             this.setLoggedUser(facade.getPerson(username));
+            reloadPurchasedItemCache();
             this.createShoppingCart();
 
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
             authenticated = false;
         }
-        
+
         if (getLoggedUser() != null && getLoggedUser().isLock()) {
             this.setLoggedUser(null);
             SecurityContextHolder.clearContext();
@@ -200,5 +222,30 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     public void setSearchString(StringValue searchString) {
         this.searchString = searchString;
+    }
+
+    /**
+     * Flush cache and reload new state.
+     */
+    public void reloadPurchasedItemCache() {
+
+        purchasedExperiments = orderFacade.getPurchasedExperimentId(getLoggedUser().getPersonId());
+        purchasedExperimentPackages = orderFacade.getPurchasedExperimentPackageId(getLoggedUser().getPersonId());
+    }
+
+    public boolean isExperimentPurchased(int experimentId) {
+
+        if (purchasedExperiments == null || purchasedExperiments.isEmpty())
+            return false;
+
+        return purchasedExperiments.contains(experimentId);
+    }
+
+    public boolean isExperimentPackagePurchased(int packageId) {
+
+        if (purchasedExperimentPackages == null || purchasedExperimentPackages.isEmpty())
+            return false;
+
+        return purchasedExperimentPackages.contains(packageId);
     }
 }

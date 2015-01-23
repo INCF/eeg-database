@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.math.BigDecimal;
+
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
@@ -29,6 +31,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
+
 import org.junit.Before;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -54,7 +57,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(-1000f);
+        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
 
@@ -97,7 +100,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         licenseDao.create(license);
         License license2 = new License();
         license2.setLicenseId(-231);
-        license2.setPrice(-1000f);
+        license2.setPrice(BigDecimal.valueOf(-1000f));
         license2.setTitle("title");
         license2.setLicenseType(LicenseType.ACADEMIC);
         license2.setResearchGroup(researchGroup);

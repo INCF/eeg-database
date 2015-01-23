@@ -22,11 +22,17 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
+import java.io.File;
+import java.io.IOException;
+
+import org.apache.velocity.runtime.resource.loader.ResourceLoaderFactory;
 import org.apache.wicket.markup.html.image.Image;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
 import org.apache.wicket.request.resource.ContextRelativeResource;
+import org.springframework.core.io.ClassPathResource;
+import org.springframework.core.io.ResourceLoader;
 
 /**
  * Utilities class for getting string from properties file.
@@ -120,6 +126,11 @@ public class ResourceUtils {
     public static Image getImage(String id, String imageFileName) {
 
         return new Image(id, new ContextRelativeResource("/images/" + imageFileName));
+    }
+    
+    public static File getFile(String filePath) throws IOException {
+
+        return new ClassPathResource(filePath).getFile();
     }
 
 }

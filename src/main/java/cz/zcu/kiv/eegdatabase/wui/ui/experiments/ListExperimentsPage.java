@@ -34,8 +34,9 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.BuyLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing.MethodListPage;
+
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
@@ -141,20 +142,12 @@ public class ListExperimentsPage extends MenuPage {
                 item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
             }
         });
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.download"), null, null) {
 
-            @Override
-            public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ExperimentsDownloadPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.download")));
-            }
-        });
-
-        //Add to cart
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.buy"), null, null) {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new BuyLinkPanel(componentId, rowModel));
+                item.add(new ExperimentBuyDownloadLinkPanel(componentId, rowModel));
             }
         });
         return columns;

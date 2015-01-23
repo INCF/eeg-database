@@ -26,10 +26,10 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import java.util.List;
 
 /**
  *
@@ -42,4 +42,12 @@ public interface LicenseDao extends GenericDao<License, Integer> {
 	public List<License> getLicensesByType(int reseachGroupId, List<LicenseType> licenseType);
 
 	public License getPublicLicense();
+	
+	public byte[] getLicenseAttachmentContent(int licenseId);
+	
+	public List<License> getLicenseForPackageAndOwnedByPerson(int personId, int packageId);
+	
+	public License getLicenseForPurchasedExperiment(int experimentId, int personId);
+	
+	public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId);
 }

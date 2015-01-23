@@ -22,29 +22,22 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
-import java.util.List;
-
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Order;
+import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.repeater.BasicDataProvider;
 
-/**
- * SortableDataProvider implementation for listing shopping cart's content.
- * User: jfronek
- * Date: 4.3.2013
- */
-public class CartDataProvider extends BasicDataProvider<Experiment> {
-    
-    private static final long serialVersionUID = -522604668938747907L;
-    
+public class CartDataProvider extends BasicDataProvider<OrderItem> {
 
-    public CartDataProvider(){
-        super("experimentId", SortOrder.ASCENDING);
-        
-        List<Experiment> list = EEGDataBaseSession.get().getShoppingCart().getOrder();
-        super.listModel.setObject(list);
+    private static final long serialVersionUID = -522604668938747907L;
+
+    public CartDataProvider() {
+        super("id", SortOrder.ASCENDING);
+
+        Order order = EEGDataBaseSession.get().getShoppingCart().getOrder();
+        super.listModel.setObject(order.getItems());
     }
 
 }
