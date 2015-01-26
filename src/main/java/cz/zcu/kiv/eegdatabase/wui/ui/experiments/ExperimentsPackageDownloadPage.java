@@ -55,7 +55,6 @@ import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.repeater.SelectObjectWrapper;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
