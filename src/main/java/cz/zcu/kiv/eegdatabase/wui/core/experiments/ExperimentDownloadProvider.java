@@ -30,13 +30,13 @@ import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import java.util.zip.ZipEntry;
 import java.util.zip.ZipInputStream;
 import java.util.zip.ZipOutputStream;
 
-import org.apache.activemq.util.ByteArrayInputStream;
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -61,8 +61,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 
 /**
  * Provider for experiment download. Provider get data from page and prepared file for download.
- * 
- * TODO this should be in facade ???
  * 
  * @author Jakub Rinkes
  * 
@@ -161,7 +159,7 @@ public class ExperimentDownloadProvider {
     }
 
     @Transactional
-    public FileDTO generatePackageFile(ExperimentPackage pckg, MetadataCommand mc, License license) {
+    public FileDTO generatePackageFile(ExperimentPackage pckg, MetadataCommand mc, License license, List<Experiment> selectList) {
 
         ZipOutputStream zipOutputStream = null;
         FileOutputStream fileOutputStream = null;
@@ -179,8 +177,9 @@ public class ExperimentDownloadProvider {
             // prepare zip stream
             zipOutputStream = new ZipOutputStream(fileOutputStream);
 
-            for (Experiment exp : service.getExperimentsByPackage(pckg.getExperimentPackageId())) {
+            for (Experiment tmp : selectList) {
 
+                Experiment exp = service.read(tmp.getExperimentId());
                 String experimentDirPrefix = "";
 
                 // create directory for each experiment.

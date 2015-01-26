@@ -22,6 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -29,9 +32,14 @@ import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckBox;
+import org.apache.wicket.markup.html.form.CheckGroup;
+import org.apache.wicket.markup.html.form.CheckGroupSelector;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.SubmitLink;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -39,6 +47,7 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -46,10 +55,12 @@ import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.repeater.SelectObjectWrapper;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
@@ -62,6 +73,9 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
     @SpringBean
     private ExperimentPackageFacade expPckFacade;
+    
+    @SpringBean
+    private ExperimentsFacade expFacade;
 
     @SpringBean
     private ExperimentDownloadProvider downloadProvider;
@@ -112,6 +126,32 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             if (personFacade.userNameInGroup(loggedPerson.getUsername(), expPackage.getResearchGroup().getResearchGroupId())) {
                 canSeePersonInfoAboutUser = true;
             }
+            
+            List<Experiment> experiments = expFacade.getExperimentsByPackage(expPackage.getExperimentPackageId());
+            final List<Experiment> selectList = new ArrayList<Experiment>(experiments);
+
+            CheckGroup<Experiment> group = new CheckGroup<Experiment>("group", selectList);
+
+            group.add(new CheckGroupSelector("selectedAll", group));
+
+            PageableListView<Experiment> experimentsList = new PageableListView<Experiment>("selectExp", experiments, 15) {
+
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void populateItem(ListItem<Experiment> item) {
+                    item.setModel(new CompoundPropertyModel<Experiment>(item.getModel()));
+                    item.add(new Check<Experiment>("selected", item.getModel()));
+                    item.add(new Label("experimentId"));
+                    item.add(new Label("scenario.title"));
+                    item.add(new Label("startTime"));
+                    item.add(new Label("personBySubjectPersonId.gender"));
+                    item.add(new Label("personBySubjectPersonId.dateOfBirth"));
+                }
+            };
+
+            group.add(experimentsList);
+            add(group);
 
             // checkbox for group of checkboxes about person
             add(new AjaxCheckBox("person") {
@@ -196,7 +236,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
                         command.setPhoneNumber(false);
                     }
 
-                    FileDTO outputFile = downloadProvider.generatePackageFile(expPackage, command, licenseModel.getObject());
+                    FileDTO outputFile = downloadProvider.generatePackageFile(expPackage, command, licenseModel.getObject(), selectList);
 
                     if (outputFile == null || outputFile.getFile() == null)
                         error("Error while file is generated. Can't be downloaded.");
