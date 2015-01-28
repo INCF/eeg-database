@@ -28,7 +28,6 @@
 			 xmlns:tx="http://www.springframework.org/schema/tx"
 			 xmlns:util="http://www.springframework.org/schema/util"
 			 xmlns:elasticsearch="http://www.springframework.org/schema/data/elasticsearch"
-			 xmlns:hprof="http://www.nhprof.com/schema/hprof"
 			 xsi:schemaLocation="http://www.springframework.org/schema/beans
        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
        http://www.springframework.org/schema/aop
@@ -39,8 +38,6 @@
        http://www.springframework.org/schema/context/spring-context-3.0.xsd
        http://www.springframework.org/schema/util
        http://www.springframework.org/schema/util/spring-util-3.0.xsd
-       http://www.nhprof.com/schema/hprof
-       http://www.nhprof.com/schema/hprof/hprof.xsd
        http://www.springframework.org/schema/data/elasticsearch http://www.springframework.org/schema/data/elasticsearch/spring-elasticsearch-1.0.xsd">
 
 	<!-- Enables the Spring MVC @Controller programming model -->
@@ -89,12 +86,19 @@
 	<bean id="textEncryptor" class="org.springframework.security.crypto.encrypt.Encryptors" 
 				factory-method="noOpText" />
 
-	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
-		<property name="driverClassName" value="${jdbc.driverClassName}"/>
-		<property name="url" value="${jdbc.url}"/>
-		<property name="username" value="${jdbc.username}"/>
+	<bean id="dataSource" class="com.mchange.v2.c3p0.ComboPooledDataSource">
+		<property name="driverClass" value="${jdbc.driverClassName}"/>
+		<property name="jdbcUrl" value="${jdbc.url}"/>
+		<property name="user" value="${jdbc.username}"/>
 		<property name="password" value="${jdbc.password}"/>
-
+        
+        <property name="minPoolSize" value="${hibernate.connection.min_pool_size}" />
+        <property name="initialPoolSize" value="${hibernate.connection.init_pool_size}" />
+        <property name="maxPoolSize" value="${hibernate.connection.max_pool_size}" />
+        
+<!--         debug option - show unclosed / zombie jdbc connection -->
+<!--         <property name="unreturnedConnectionTimeout" value="100" /> -->
+<!--         <property name="debugUnreturnedConnectionStackTraces" value="true" /> -->
 	</bean>
 	
 	<bean id="elasticSynchronizationInterceptor" class="cz.zcu.kiv.eegdatabase.data.nosql.ElasticSynchronizationInterceptor"/>
@@ -113,11 +117,9 @@
 				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
 				<prop key="hibernate.hbm2ddl.auto">${hibernate.hbm2ddl.auto}</prop>
 				<prop key="hibernate.cache.provider_class">${hibernate.cache.provider_class}</prop>
-				<prop key="hibernate.connection.pool_size">${hibernate.connection.pool_size}</prop>
 			</props>
 		</property>
 		<property name="packagesToScan" value="cz.zcu.kiv.eegdatabase.data.pojo"/>
-		<hprof:profiler/>
 	</bean>
 
 	<bean name="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
