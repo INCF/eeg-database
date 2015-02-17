@@ -162,5 +162,35 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	public List<License> getLicenseTemplates(ResearchGroup group) {
 		return this.licenseService.getLicenseTemplates(group);
 	}
+
+    @Override
+    public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId) {
+        return personalLicenseService.getPersonalLicenseAttachmentContent(personalLicenseId);
+    }
+
+    @Override
+    public byte[] getLicenseAttachmentContent(int licenseId) {
+        return licenseService.getLicenseAttachmentContent(licenseId);
+    }
+
+    @Override
+    public List<License> getLicenseForPackageAndOwnedByPerson(int personId, int packageId) {
+        return licenseService.getLicenseForPackageAndOwnedByPerson(personId, packageId);
+    }
+
+    @Override
+    public byte[] getPublicLicenseFile() {
+        return licenseService.getPublicLicenseFile();
+    }
+
+    @Override
+    public License getLicenseForPurchasedExperiment(int experimentId, int personId) {
+        return licenseService.getLicenseForPurchasedExperiment(experimentId, personId);
+    }
+
+    @Override
+    public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId) {
+        return licenseService.getLicenseForPurchasedExpPackage(experimentPackageId, personId);
+    }
 	
 }

@@ -29,6 +29,7 @@ import java.util.TreeSet;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ArticleCommentDao;
@@ -80,7 +81,7 @@ public class ArticleServiceImpl implements ArticleService {
             ResearchGroup group = groupDao.read(article.getResearchGroup().getResearchGroupId());
             for (Person subscriber : group.getArticlesSubscribers()) {
                 if (!subscriber.equals(article.getPerson())) {
-                    mailService.sendNotification(subscriber.getEmail(), article, EEGDataBaseSession.get().getLocale());
+                    mailService.sendNotification(subscriber.getEmail(), article, LocaleContextHolder.getLocale());
                 }
             }
         }
@@ -196,7 +197,7 @@ public class ArticleServiceImpl implements ArticleService {
         Article article = dao.read(comment.getArticle().getArticleId());
         for (Person subscriber : article.getSubscribers()) {
             if (!loggedUser.equals(subscriber)) {
-                mailService.sendNotification(subscriber.getEmail(), comment, EEGDataBaseSession.get().getLocale());
+                mailService.sendNotification(subscriber.getEmail(), comment, LocaleContextHolder.getLocale());
             }
         }
         return id;

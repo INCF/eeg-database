@@ -125,16 +125,20 @@ public class ExperimentFormPage extends MenuPage {
                 Set<DataFile> files = new HashSet<DataFile>();
                 try {
                     List<FileUpload> fileUploadList = fileModel.getObject();
-                    if (!fileUploadList.isEmpty()) {
-                        for (FileUpload fileUpload : fileUploadList) {
-
-                            DataFile file = new DataFile();
-                            file.setMimetype(fileUpload.getContentType());
-                            file.setFilename(fileUpload.getClientFileName());
-                            file.setFileContentStream(fileUpload.getInputStream());
-                            files.add(file);
-                        }
+                    if (fileUploadList.isEmpty()) {
+                        this.error(ResourceUtils.getString("required.dataFile"));
+                        setResponsePage(getPage());
+                        return;
                     }
+                    for (FileUpload fileUpload : fileUploadList) {
+
+                        DataFile file = new DataFile();
+                        file.setMimetype(fileUpload.getContentType());
+                        file.setFilename(fileUpload.getClientFileName());
+                        file.setFileContentStream(fileUpload.getInputStream());
+                        files.add(file);
+                    }
+
                 }
                 catch (Exception ex) {
                     error("File saving failed");

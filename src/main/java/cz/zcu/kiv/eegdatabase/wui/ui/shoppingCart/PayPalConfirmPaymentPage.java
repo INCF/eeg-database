@@ -22,12 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.logic.eshop.PayPalTools;
-import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
@@ -39,15 +37,21 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
+import cz.zcu.kiv.eegdatabase.logic.eshop.PayPalTools;
+import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.ListOrderPage;
 
 /**
  * Page for order confirmation after authorizing payment on PayPal server.
  * Part of the two-step confirmation process.
  * User: jfronek
  * Date: 21.3.2013
+ * 
+ * XXX paypal payments disabled for now - not necessary.
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class PayPalConfirmPaymentPage extends MenuPage{
@@ -69,7 +73,7 @@ public class PayPalConfirmPaymentPage extends MenuPage{
 
         add(new Label("orderHeader", ResourceUtils.getModel("label.yourOrder")));
 
-        DefaultDataTable<Experiment, String> list = new DefaultDataTable<Experiment, String>("list", createListColumns(),
+        DefaultDataTable<OrderItem, String> list = new DefaultDataTable<OrderItem, String>("list", createListColumns(),
                 new CartDataProvider(), ITEMS_PER_PAGE);
         add(list);
 
@@ -102,9 +106,7 @@ public class PayPalConfirmPaymentPage extends MenuPage{
                 boolean success = PayPalTools.doExpressCheckout(token);
                 if(success){
                     // Copies current order to match the purchased items. Security measure to ensure the user is given exactly what he paid for.
-                    EEGDataBaseSession.get().setAttribute("order", (ArrayList) ((ArrayList) EEGDataBaseSession.get().getShoppingCart().getOrder()).clone());
-                    EEGDataBaseSession.get().getShoppingCart().getOrder().clear();
-                    setResponsePage(MyDownloadsPage.class);
+                    setResponsePage(ListOrderPage.class);
                 }
                 else{
                     setResponsePage(PaymentErrorPage.class);
@@ -114,11 +116,11 @@ public class PayPalConfirmPaymentPage extends MenuPage{
 
     }
 
-    private List<? extends IColumn<Experiment, String>> createListColumns() {
-        List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
+    private List<? extends IColumn<OrderItem, String>> createListColumns() {
+        List<IColumn<OrderItem, String>> columns = new ArrayList<IColumn<OrderItem, String>>();
 
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
+        columns.add(new PropertyColumn<OrderItem, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
+        columns.add(new PropertyColumn<OrderItem, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
         return columns;
     }
 }

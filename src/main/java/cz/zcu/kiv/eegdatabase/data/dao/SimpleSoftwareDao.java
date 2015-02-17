@@ -44,7 +44,6 @@ public class SimpleSoftwareDao extends SimpleGenericDao<Software, Integer>
     @Override
     public void createGroupRel(Software persistent, ResearchGroup researchGroup) {
         persistent.getResearchGroups().add(researchGroup);
-        researchGroup.getSoftwares().add(persistent);
     }
 
     @Override

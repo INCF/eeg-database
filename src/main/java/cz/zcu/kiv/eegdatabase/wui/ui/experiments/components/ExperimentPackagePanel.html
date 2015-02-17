@@ -33,9 +33,11 @@ This file is part of the EEG-database project
 			<span class="subtitle"><wicket:message key="heading.license.list"/></span>
 			<select wicket:id="licenses"/>
 			<a href="#" wicket:id="buyLicense"><wicket:message key="link.license.buy"/></a>
+            <a href="#" wicket:id="viewLicenseLink"><wicket:message key="link.license.view"/></a>
 			
 		</div>
       </h2>
+      <div wicket:id="buyDownloadLinkPanel"></div>
       <div wicket:id="experimentListCont">
 		<table class="dataTable measurationListDataTable" wicket:id="list"></table>
       </div>
@@ -43,6 +45,7 @@ This file is part of the EEG-database project
 		<a wicket:id="showListLink"><wicket:container wicket:id="linkLabel"/></a>
 		<a wicket:id="hideListLink"><wicket:container wicket:id="linkLabel"/></a>
 	  </div>
+      <div wicket:id="viewLicenseWindow"></div>
   </wicket:panel>
 </body>
 </html>

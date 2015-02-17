@@ -1,0 +1,166 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+ 
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ 
+ ***********************************************************************************************************************
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+ 
+ ***********************************************************************************************************************
+ 
+  ExperimentsPackageDownloadPage.html, 2014/11/13 00:01 Jakub Rinkes
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+      <h1>
+        <wicket:message key="pageTitle.chooseMetadata" />
+      </h1>
+      
+      <h2>
+        <wicket:message key="label.experimentPackage.name"></wicket:message> <wicket:container wicket:id="packageName"></wicket:container>
+      </h2>
+
+      <h2 class="alert">
+        <wicket:message key="pageTitle.chooseMetadata.hint"></wicket:message>
+      </h2>
+      
+
+      <form class="standardInputForm" wicket:id="form">
+        <table style="width: 27%;" class="standardValueTable">
+          <tr>
+            <th class="multiple"><wicket:message key="label.chooseAll" /></th>
+            <td><input wicket:id="chooseAll" type="checkbox" /></td>
+          </tr>
+        </table>
+        <table id="personsTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.person" /></th>
+            <td><input wicket:id="person" type="checkbox" /></td>
+          </tr>
+          <wicket:enclosure child="name">
+            <tr>
+              <th><wicket:message key="label.name" /></th>
+              <td><input type="checkbox" wicket:id="name" /></td>
+              <th><wicket:message key="label.phoneNumber" /></th>
+              <td><input type="checkbox" wicket:id="phoneNumber" /></td>
+            </tr>
+            <tr>
+              <th><wicket:message key="label.email" /></th>
+              <td><input type="checkbox" wicket:id="email" /></td>
+              <th><wicket:message key="label.dateOfBirth" /></th>
+              <td><input type="checkbox" wicket:id="birth" /></td>
+            </tr>
+          </wicket:enclosure>
+          <tr>
+            <th><wicket:message key="label.gender" /></th>
+            <td><input type="checkbox" wicket:id="gender" /></td>
+            <th><wicket:message key="label.note" /></th>
+            <td><input type="checkbox" wicket:id="note" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.addParams" /></th>
+            <td><input type="checkbox" wicket:id="personAddParams" /></td>
+          </tr>
+        </table>
+
+        <table id="scenariosTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.scenario" /></th>
+            <td><input type="checkbox" wicket:id="scenario" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.scenarioTitle" /></th>
+            <td><input type="checkbox" wicket:id="title" /></td>
+            <th><wicket:message key="label.scenarioLength" /></th>
+            <td><input type="checkbox" wicket:id="length" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.scenarioDescription" /></th>
+            <td><input type="checkbox" wicket:id="description" /></td>
+            <th><wicket:message key="label.scenarioFile" /></th>
+            <td><input type="checkbox" wicket:id="scenFile" /></td>
+          </tr>
+        </table>
+        <table id="measurationTable" class="standardValueTable">
+          <tr>
+            <th class="multiple" colspan="3"><wicket:message key="label.measuration" /></th>
+            <td><input type="checkbox" wicket:id="measuration" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.times" /></th>
+            <td><input type="checkbox" wicket:id="times" /></td>
+            <th><wicket:message key="label.temperature" /></th>
+            <td><input type="checkbox" wicket:id="temperature" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.weather" /></th>
+            <td><input type="checkbox" wicket:id="weather" /></td>
+            <th><wicket:message key="label.weatherNote" /></th>
+            <td><input type="checkbox" wicket:id="weatherNote" /></td>
+          </tr>
+          <tr>
+            <th><wicket:message key="label.hardware" /></th>
+            <td><input type="checkbox" wicket:id="hardware" /></td>
+            <th><wicket:message key="label.addParams" /></th>
+            <td><input type="checkbox" wicket:id="measurationAddParams" /></td>
+          </tr>
+
+        </table>
+        
+        <h2>
+            <wicket:message key="label.chooseExperiments"></wicket:message>
+        </h2>
+        
+        <span wicket:id="group">
+        <span><input type="checkbox" wicket:id="selectedAll"/><wicket:message key="label.chooseAll"></wicket:message></span>
+        <table class="standardValueTable" style="width: auto;">
+            <thead>
+            <tr>
+                <th style="width: 30px;"></th>
+                <th><wicket:message key="dataTable.heading.number"></wicket:message></th>
+                <th><wicket:message key="dataTable.heading.scenarioTitle"></wicket:message></th>
+                <th><wicket:message key="dataTable.heading.date"></wicket:message></th>
+                <th><wicket:message key="dataTable.heading.gender"></wicket:message></th>
+                <th><wicket:message key="dataTable.heading.yearOfBirth"></wicket:message></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="selectExp">
+                <td><input type="checkbox" wicket:id="selected" /></td>
+                <td wicket:id="experimentId"></td>
+                <td wicket:id="scenario.title"></td>
+                <td wicket:id="startTime"></td>
+                <td wicket:id="personBySubjectPersonId.gender"></td>
+                <td wicket:id="personBySubjectPersonId.dateOfBirth"></td>
+            </tr>
+            </tbody>
+        </table>
+        </span>
+        
+        <div class="actionBox">
+          <input type="submit" wicket:id="submit" class="lightButtonLink" wicket:message="value:button.downloadPackage"/>
+            <a href="#" wicket:id="viewLicenseLink"><wicket:message key="link.license.view"/></a>
+        </div>
+        <div wicket:id="viewLicenseWindow"></div>
+      </form>
+    </div>
+  </wicket:extend>
+</body>
+</html>

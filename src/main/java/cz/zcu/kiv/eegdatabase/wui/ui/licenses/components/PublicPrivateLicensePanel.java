@@ -41,7 +41,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * @author Jakub Danek
  */
 public class PublicPrivateLicensePanel extends Panel {
-	@SpringBean
+    
+	private static final long serialVersionUID = -5439949824097279835L;
+
+    @SpringBean
 	private LicenseFacade licenseFacade;
 
 	private IModel<ExperimentPackage> epmodel;

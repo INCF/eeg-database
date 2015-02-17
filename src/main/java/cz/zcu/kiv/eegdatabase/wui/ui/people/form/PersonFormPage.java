@@ -73,7 +73,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
  * @author Jakub Rinkes
  *
  */
-@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+@AuthorizeInstantiation(value = {"ROLE_ADMIN" })
 public class PersonFormPage extends MenuPage {
 
     private static final long serialVersionUID = -7674071655686906138L;

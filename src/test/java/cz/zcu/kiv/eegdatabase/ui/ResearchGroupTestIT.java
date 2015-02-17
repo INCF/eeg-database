@@ -75,14 +75,14 @@ public class ResearchGroupTestIT extends AbstractUITest {
     @Test(groups = "web")
     public void testCreateResearchGroup() throws InterruptedException {
 //        if (!groupExists("new group")) {
-            tester.clickLinkWithText("Groups");
-            tester.assertTextPresent("Create group");
-            tester.clickLinkWithText("Create group");
+        tester.clickLinkWithText("Groups");
+        tester.assertTextPresent("Create group");
+        tester.clickLinkWithText("Create group");
 
-            tester.setTextField("title", "new group");
-            tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
-            Thread.sleep(waitForAjax);
+        tester.setTextField("title", "new group");
+        tester.setTextField("description", "description");
+        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
 //        }
 
         tester.assertTextPresent("My groups");
@@ -98,10 +98,4 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText("Log out");
 
     }
-
-//    public boolean groupExists(String title) {
-//        List<ResearchGroup> list = researchGroupDao.readByParameter("title", title);
-//        return list.size() > 0;
-//
-//    }
 }

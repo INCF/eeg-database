@@ -42,7 +42,9 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  */
 public class RejectLicensePanel extends Panel {
 
-	@SpringBean
+	private static final long serialVersionUID = 1687021633981394535L;
+
+    @SpringBean
 	private LicenseFacade licenseFacade;
 
 	private ModalWindow window;

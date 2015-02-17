@@ -42,5 +42,5 @@ import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
  */
 public interface Generator {
 
-  public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> datas) throws Exception, SQLException, IOException;
+  public File generate(Experiment exp, MetadataCommand mc, Set<DataFile> datas, byte[] licenseFile, String licenseFileName) throws Exception, SQLException, IOException;
 }

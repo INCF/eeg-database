@@ -65,8 +65,7 @@ public class MainMenuTestIT extends AbstractUITest {
         tester.assertTextPresent("List of scenarios");
         tester.clickLinkWithText("Groups");
         tester.assertTextPresent("List of groups");
-        tester.clickLinkWithText("People");
-        tester.assertTextPresent("List of people");
+        tester.assertTextNotPresent("People");
         tester.clickLinkWithText("Lists");
         tester.assertTitleEquals("Lists Page");
 //        tester.clickLinkWithText("History");

@@ -23,25 +23,38 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 
+import java.io.InputStream;
 import java.io.Serializable;
-import java.util.HashSet;
+import java.math.BigDecimal;
+import java.sql.Blob;
 import java.util.Set;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.Lob;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 /**
  *
  * @author bydga
  */
 @Entity
 @Table(name="LICENSE")
-public class License implements Serializable{
+public class License implements Serializable {
 	
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "LICENSE_ID")
     private int licenseId;
 	
-    @Column(name = "PRICE")
-    private Float price;
+    @Column(name = "PRICE", precision = 19, scale = 2)
+    private BigDecimal price;
 
 	@ManyToOne
 	@JoinColumn(name = "RESEARCH_GROUP_ID")
@@ -63,6 +76,16 @@ public class License implements Serializable{
 
 	@Column(name = "IS_TEMPLATE")
 	private boolean template;
+	
+	@Column(name = "ATTACHMENT_FILE_NAME")
+    private String attachmentFileName;
+    
+    @Lob
+    @Column(name = "ATTACHMENT_CONTENT")
+    private Blob attachmentContent;
+    
+    @Transient
+    private InputStream fileContentStream;
 
 	public int getLicenseId() {
 		return licenseId;
@@ -72,11 +95,11 @@ public class License implements Serializable{
 		this.licenseId = licenseId;
 	}
 
-	public Float getPrice() {
+	public BigDecimal getPrice() {
 		return price;
 	}
 
-	public void setPrice(Float price) {
+	public void setPrice(BigDecimal price) {
 		this.price = price;
 	}
 
@@ -126,6 +149,22 @@ public class License implements Serializable{
 	public void setExperimentPackageLicenses(Set<ExperimentPackageLicense> experimentPackageLicenses) {
 		this.experimentPackageLicenses = experimentPackageLicenses;
 	}
+	
+	public String getAttachmentFileName() {
+        return attachmentFileName;
+    }
+	
+	public void setAttachmentFileName(String attachmentFileName) {
+        this.attachmentFileName = attachmentFileName;
+    }
+	
+	public Blob getAttachmentContent() {
+        return attachmentContent;
+    }
+	
+	public void setAttachmentContent(Blob attachmentContent) {
+        this.attachmentContent = attachmentContent;
+    }
 
 	public boolean isTemplate() {
 		return template;
@@ -179,6 +218,19 @@ public class License implements Serializable{
 		}
 		return true;
 	}
-
+	
+	@Transient
+	public String getLicenseInfo(){
+	    return title + " price: " + (price == null || price.compareTo(BigDecimal.ZERO) == 0 ? "No" : price);
+	}
+	
+	public void setFileContentStream(InputStream inputStream) {
+        this.fileContentStream = inputStream;
+    }
+    
+    @Transient
+    public InputStream getFileContentStream() {
+        return fileContentStream;
+    }
 		
 }

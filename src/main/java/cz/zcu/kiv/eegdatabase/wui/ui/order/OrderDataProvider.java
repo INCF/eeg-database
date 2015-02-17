@@ -20,28 +20,35 @@
  *  
  *   OrderDataProvider.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
-
-import java.util.List;
+package cz.zcu.kiv.eegdatabase.wui.ui.order;
 
 import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.Order;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.repeater.BasicDataProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 
-/**
- * SortableDataProvider implementation for displaying current purchase content.
- * User: jfronek
- * Date: 4.3.2013
- */
-public class OrderDataProvider extends BasicDataProvider<Experiment> {
+public class OrderDataProvider extends BasicDataProvider<Order> {
 
     private static final long serialVersionUID = 7294045302100220472L;
 
-    public OrderDataProvider(List<Experiment> order){
-        super("experimentId", SortOrder.ASCENDING);
-        
-        super.listModel.setObject(order);
+    private OrderFacade facade;
+
+    public OrderDataProvider(OrderFacade facade) {
+        super("date", SortOrder.ASCENDING);
+        this.facade = facade;
+
+        int personId = EEGDataBaseSession.get().getLoggedUser().getPersonId();
+
+        super.listModel.setObject(this.facade.getAllOrdersForPerson(personId));
     }
-   
+
+    public OrderDataProvider(OrderFacade facade, int personId) {
+        super("date", SortOrder.ASCENDING);
+        this.facade = facade;
+
+        super.listModel.setObject(this.facade.getAllOrdersForPerson(personId));
+    }
+
 }

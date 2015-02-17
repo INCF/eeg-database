@@ -46,7 +46,9 @@ import org.apache.wicket.model.IModel;
  */
 public class PersonalLicenseListPanel extends Panel {
 
-	private static final int REQUESTS_PER_PAGE = 50;
+	private static final long serialVersionUID = 3469818705264835133L;
+
+    private static final int REQUESTS_PER_PAGE = 50;
 
 	private IModel<List<PersonalLicense>> requestModel;
 

@@ -22,9 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.ui;
 
-import org.junit.runner.RunWith;
+import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 /**
@@ -33,10 +32,24 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
 @ContextConfiguration(locations = {"classpath:/web-test-context.xml"})
 public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
+    protected WebTester tester;
 
     protected int waitForAjax = 5000;
 
     protected String url = "http://localhost:8082";
 
+
+    protected void createGroupIfNotExists() throws InterruptedException {
+        tester.clickLinkWithText("Groups");
+        try {
+            tester.assertTextPresent("new group");
+        } catch (AssertionError ex) {
+            tester.clickLinkWithText("Create group");
+            tester.setTextField("title", "new group");
+            tester.setTextField("description", "description");
+            tester.clickButtonWithText("Save");
+            Thread.sleep(waitForAjax);
+        }
+    }
 }
 

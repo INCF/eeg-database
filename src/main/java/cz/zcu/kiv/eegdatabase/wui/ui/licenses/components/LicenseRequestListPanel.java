@@ -40,7 +40,9 @@ import org.apache.wicket.model.IModel;
  */
 public class LicenseRequestListPanel extends PersonalLicenseListPanel {
 
-	public LicenseRequestListPanel(String id, IModel<List<PersonalLicense>> requestsModel) {
+	private static final long serialVersionUID = -3317292731775090580L;
+
+    public LicenseRequestListPanel(String id, IModel<List<PersonalLicense>> requestsModel) {
 		super(id, requestsModel);
 	}
 

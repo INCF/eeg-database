@@ -27,38 +27,41 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
-import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.resource.ByteArrayResource;
-import org.apache.wicket.request.resource.IResource;
-import org.apache.wicket.util.resource.FileResourceStream;
-import org.apache.wicket.util.resource.IResourceStream;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 
 /**
- * Panel with confirm link for the table (or any repeater) of PersonalLicense
- * objects.
- *
- * The link confirms the license request.
- *
+ * Panel with download link for download attachment in request.
+ * 
  * @author Jakub Danek
  */
 public class DownloadRequestAttachmentPanel extends Panel {
 
-	public DownloadRequestAttachmentPanel(String id, IModel<PersonalLicense> request) {
-		super(id);
-		ByteArrayResource res;
-		try {
-			res = new ByteArrayResource("", request.getObject().getAttachmentContent().getBytes(0, (int) request.getObject().getAttachmentContent().length()), request.getObject().getAttachmentFileName());
-			add(new ResourceLink("link", res));
-		} catch (SQLException ex) {
-			Logger.getLogger(DownloadRequestAttachmentPanel.class.getName()).log(Level.SEVERE, null, ex);
-			throw new RuntimeException(ex);
-		}
+    private static final long serialVersionUID = -3929422353082732773L;
+    
+    @SpringBean
+    private LicenseFacade facade;
 
-	}
+    public DownloadRequestAttachmentPanel(String id, IModel<PersonalLicense> model) {
+        super(id);
+
+        boolean isContent = model.getObject() != null && model.getObject().getAttachmentContent() != null;
+        ByteArrayResource res;
+        if (isContent) {
+                
+                byte[] attachmentContent = facade.getPersonalLicenseAttachmentContent(model.getObject().getPersonalLicenseId());
+                res = new ByteArrayResource("", attachmentContent, model.getObject()
+                        .getAttachmentFileName());
+        } else {
+            res = new ByteArrayResource("");
+        }
+        add(new ResourceLink<Void>("link", res).setVisibilityAllowed(isContent));
+
+    }
 }

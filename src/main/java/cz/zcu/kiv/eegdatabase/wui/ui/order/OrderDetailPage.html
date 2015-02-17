@@ -1,0 +1,76 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+ 
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ 
+ ***********************************************************************************************************************
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+ 
+ ***********************************************************************************************************************
+ 
+  OrderDetailPage.html, 2014/14/09 00:01 Jakub Rinkes
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<body>
+<wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+    
+        <h1 wicket:id="title"></h1>
+        
+        <table class="standardValueTable">
+            <tr>
+                <th><wicket:message key="label.order.id"></wicket:message>:</th>
+                <td wicket:id="id"></td>
+            </tr>
+            <tr>   
+                <th><wicket:message key="label.date"></wicket:message>:</th>
+                <td wicket:id="date"></td>
+            </tr>
+            <tr>
+                <th><wicket:message key="label.person"></wicket:message>:</th>
+                <td wicket:id="person"></td>
+            </tr>
+            <tr>
+                <th><wicket:message key="label.order.price"></wicket:message>:</th>
+                <td wicket:id="orderPrice"></td>
+            </tr>
+        </table>
+        
+        <table class="dataTable measurationListDataTable">
+            <thead>
+                <tr class="headers">
+                    <th><wicket:message key="dataTable.heading.order.item"></wicket:message></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr wicket:id="items">
+                   <td>
+                            <fieldset>
+                            <span wicket:id="item"></span><br />
+                            <span><wicket:message key="dataTable.heading.price"></wicket:message>:<span wicket:id="price"></span></span><br/>
+                            <span><wicket:message key="dataTable.heading.licenseTitle"></wicket:message>: <wicket:container wicket:id="license"></wicket:container></span>
+                            </fieldset>
+                        </td>
+                </tr>
+            </tbody>
+        </table>
+
+    </div>
+</wicket:extend>
+</body>
+</html>

@@ -38,7 +38,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  */
 public class ConfirmLicensePanel extends Panel {
 
-	@SpringBean
+	private static final long serialVersionUID = -4840427190700721562L;
+    @SpringBean
 	private LicenseFacade licenseFacade;
 
 	public ConfirmLicensePanel(String id, IModel<PersonalLicense> request) {
@@ -46,7 +47,9 @@ public class ConfirmLicensePanel extends Panel {
 
 		add(new Link<PersonalLicense>("link", request) {
 
-			@Override
+			private static final long serialVersionUID = 1L;
+
+            @Override
 			public void onClick() {
 				licenseFacade.confirmRequestForLicense(this.getModelObject());
 				setResponsePage(this.getPage().getPageClass(), this.getPage().getPageParameters());

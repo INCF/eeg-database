@@ -129,6 +129,10 @@
         <property name="sessionFactory" ref="sessionFactoryTest"/>
     </bean>
 
+    <bean name="scenarioDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleScenarioDao">
+        <property name="sessionFactory" ref="sessionFactoryTest"/>
+    </bean>
+
     <bean name="genericDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleGenericDao">
         <constructor-arg>
             <value>java.lang.Object</value>

@@ -22,121 +22,218 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.logic.eshop.PayPalTools;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
-import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
-import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.markup.html.pages.RedirectPage;
-import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-
-import java.io.Serializable;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
 import java.util.List;
 
-/**
- * Shopping cart page for displaying current order's content. Allows user to remove experiments from his order and
- * checkout his order using PayPal ExpressCheckout services.
- * Might be extended in the future to offer more payment methods.
- * User: jfronek
- * Date: 4.3.2013
- */
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.link.Link;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.convert.IConverter;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.Order;
+import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
+
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ShoppingCartPage extends MenuPage {
 
-    private static final int ITEMS_PER_PAGE = 20;
+    private static final long serialVersionUID = 1L;
 
-    public ShoppingCartPage(){
+    @SpringBean
+    private OrderFacade orderFacade;
+
+    @SpringBean
+    private LicenseFacade licenseFacade;
+
+    private Label totalPriceLabel;
+
+    public ShoppingCartPage() {
         setupComponents();
     }
 
-    private void setupComponents(){
+    private void setupComponents() {
+
         IModel<String> title = ResourceUtils.getModel("pageTitle.myCart");
+        final Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
         add(new Label("title", title));
         setPageTitle(title);
-
         add(new ButtonPageMenu("leftMenu", ShoppingCartPageLeftMenu.values()));
 
-        add(new Label("emptyCart", ResourceUtils.getModel("text.emptyCart")){
+        final ShoppingCart shoppingCart = EEGDataBaseSession.get().getShoppingCart();
+
+        // empty cart
+        add(new Label("emptyCart", ResourceUtils.getModel("text.emptyCart")) {
+
+            private static final long serialVersionUID = 1L;
+
             @Override
-            public boolean isVisible(){
-                return EEGDataBaseSession.get().getShoppingCart().isEmpty();
+            public boolean isVisible() {
+                return shoppingCart.isEmpty();
             }
         });
 
-        DefaultDataTable<Experiment, String> list = new DefaultDataTable<Experiment, String>("list", createListColumns(),
-                new CartDataProvider(), ITEMS_PER_PAGE);
-        add(list);
+        final WebMarkupContainer container = new WebMarkupContainer("itemsContainer") {
 
-        add(new Label("totalPriceMessage", ResourceUtils.getString("label.totalPrice") + " "));
-        add(new Label("totalPriceAmount", new Model(){
+            private static final long serialVersionUID = 1L;
+
             @Override
-            public Serializable getObject(){
-                String totalPrice =  "" + EEGDataBaseSession.get().getShoppingCart().getTotalPrice();
-                return totalPrice;
+            public boolean isVisible() {
+                return !shoppingCart.isEmpty();
             }
-        }));
-        add(new Label("totalPriceCurrency", " " + ResourceUtils.getString("currency.euro")));
+        };
+        container.setOutputMarkupId(true);
 
-        add(new Link<Void>("PayPalExpressCheckoutLink") {
+        PropertyListView<OrderItem> items = new PropertyListView<OrderItem>("items", shoppingCart.getOrder().getItems()) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(final ListItem<OrderItem> item) {
+
+                item.add(new OrderItemPanel("item", item.getModel()));
+
+                // XXX price hidden for now.
+                /*
+                 * item.add(new Label("price", item.getModel().getObject().getPrice()) {
+                 * 
+                 * @Override public <C> IConverter<C> getConverter(Class<C> type) { return new MoneyFormatConverter(Currency.getInstance("EUR"), 2); } });
+                 */
+                item.add(new RemoveLinkPanel("removeItemLink", item.getModel()));
+
+                List<License> licenses = new ArrayList<License>();
+                boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
+                if (isExpPackageLicenseChoiceShow) {
+                    int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
+                    licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                    licenses.add(0, licenseFacade.getPublicLicense());
+                }
+
+                ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("licenseInfo", "licenseId");
+                DropDownChoice<License> licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
+                
+                if (isExpPackageLicenseChoiceShow) {
+                    // preselect first license for dropdown choice component
+                    item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                }
+                
+                licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    protected void onUpdate(AjaxRequestTarget target) {
+
+                        OrderItem orderItem = item.getModelObject();
+                        if (orderItem.getLicense() != null) {
+                            orderItem.setPrice(orderItem.getLicense().getPrice());
+                        } else {
+                            orderItem.setPriceFromItem();
+                        }
+                        
+                        target.add(container);
+                        target.add(totalPriceLabel);
+                    }
+                });
+                licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
+                item.add(licenseChoice);
+
+            }
+        };
+        
+        items.setReuseItems(true);
+        container.add(items);
+        add(container);
+        add(new Label("totalPriceMessage", ResourceUtils.getString("label.totalPrice") + " "));
+
+        totalPriceLabel = new Label("totalPriceAmount", new PropertyModel<BigDecimal>(shoppingCart, "totalPrice")) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public <C> IConverter<C> getConverter(Class<C> type) {
+                return new MoneyFormatConverter(Currency.getInstance("EUR"), 2);
+            }
+        };
+        totalPriceLabel.setOutputMarkupId(true);
+        add(totalPriceLabel);
+
+        // XXX PAYPAL payment disabled - not necessary now.
+        /*
+         * add(new Link<Void>("PayPalExpressCheckoutLink") {
+         * 
+         * private static final long serialVersionUID = 1L;
+         * 
+         * @Override public void onClick() {
+         * 
+         * if (!shoppingCart.isEmpty()) { setResponsePage(new RedirectPage(PayPalTools.setExpressCheckout())); } else { // Partially fixes trouble with browser caching and back
+         * button setResponsePage(ShoppingCartPage.class); }
+         * 
+         * } }.setVisibilityAllowed(!shoppingCart.isEmpty()));
+         */
+        // For now just create order and show it.
+
+        add(new Link<Void>("createOrder") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {
-                if(!EEGDataBaseSession.get().getShoppingCart().isEmpty()){
-                    setResponsePage(new RedirectPage(PayPalTools.setExpressCheckout()));
+
+                Order order = shoppingCart.getOrder();
+                order.setDate(new Timestamp(new Date().getTime()));
+                order.setPerson(EEGDataBaseSession.get().getLoggedUser());
+                order.setOrderPrice(shoppingCart.getTotalPrice());
+                
+                License publicLicense = licenseFacade.getPublicLicense();
+                
+                for(OrderItem item : order.getItems()) {
+                    
+                    if(item.getLicense() == null) {
+                        item.setLicense(publicLicense);
+                    }
+                    
+                    if(item.getPrice() == null) {
+                        item.setPrice(BigDecimal.ZERO);
+                    }
                 }
-                //Partially fixes trouble with browser caching and back button
-                else {
-                    setResponsePage(ShoppingCartPage.class);
-                }
 
+                Integer orderId = orderFacade.create(order);
+
+                EEGDataBaseSession.get().getShoppingCart().clear();
+                // flush cache with purchased items from session
+                EEGDataBaseSession.get().reloadPurchasedItemCache();
+                setResponsePage(OrderDetailPage.class, PageParametersUtils.getDefaultPageParameters(orderId));
             }
-        }.setVisibilityAllowed(!EEGDataBaseSession.get().getShoppingCart().isEmpty()));
 
-    }
+        }.setVisibilityAllowed(!shoppingCart.isEmpty()));
 
-    private List<? extends IColumn<Experiment, String>> createListColumns() {
-        List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
-
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.date"), "startTime", "startTime"));
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
-        columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
-                "personBySubjectPersonId.dateOfBirth", "yyyy"));
-
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
-            @Override
-            public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new ViewLinkPanel(componentId, ExperimentsDetailPage.class, "experimentId", rowModel, ResourceUtils.getModel("link.detail")));
-            }
-        });
-
-        //Add to cart
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.remove"), null, null) {
-
-            @Override
-            public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                item.add(new RemoveLinkPanel(componentId, rowModel));
-            }
-        });
-        return columns;
     }
 
 }
-

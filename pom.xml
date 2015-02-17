@@ -48,7 +48,7 @@
 		<wicket.version>6.14.0</wicket.version>
 
 		<!-- Delete this line when the project tests are ready to use -->
-		<!--<skipTests>true</skipTests>  -->
+		<skipTests>false</skipTests>
 	</properties>
 
 	<dependencies>
@@ -476,6 +476,13 @@
 			<version>1.5.3</version>
 		</dependency>
 
+        <dependency>
+            <groupId>com.mchange</groupId>
+            <artifactId>c3p0</artifactId>
+            <version>0.9.5</version>
+        </dependency>
+
+
 		<!--======================================= Hibernate search ============================================= -->
 
 <!--		<dependency>
@@ -700,6 +707,12 @@
             <version>2.7.1</version>
         </dependency>
 
+        <dependency>
+            <groupId>org.apache.httpcomponents</groupId>
+            <artifactId>httpmime</artifactId>
+            <version>4.3.6</version>
+        </dependency>
+
         <!--<dependency>-->
             <!--<groupId>net.sourceforge.jwebunit</groupId>-->
             <!--<artifactId>jwebunit-commons-tests</artifactId>-->
@@ -884,7 +897,7 @@
                     <artifactId>maven-surefire-plugin</artifactId>
                     <version>2.17</version>
                     <configuration>
-                        <!--<skip>true</skip>-->
+                        <skip>${skipTests}</skip>
                         <groups>unit</groups>
                         <forkCount>1</forkCount>
                         <!--<reuseForks>false</reuseForks>-->
@@ -897,7 +910,7 @@
                 <version>2.12.1</version>
                 <configuration>
                     <!--<reportsDirectory>${project.build.directory}/surefire-reports</reportsDirectory>-->
-                    <skip>false</skip>
+                    <skip>${skipTests}</skip>
                     <testFailureIgnore>true</testFailureIgnore>
                     <includes>
                         <include>**/*IT.java</include>
@@ -940,6 +953,7 @@
                     <execution>
                         <id>start-jetty</id>
                         <phase>pre-integration-test</phase>
+
                         <goals>
                             <!-- stop any previous instance to free up the port -->
                             <goal>stop</goal>

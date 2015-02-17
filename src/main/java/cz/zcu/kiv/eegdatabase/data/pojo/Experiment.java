@@ -43,6 +43,7 @@ import cz.zcu.kiv.formgen.annotation.PreviewLevel;
 import javax.persistence.*;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Date;
@@ -107,6 +108,9 @@ public class Experiment implements Serializable {
 	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 	private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
 	private ExperimentElastic elasticExperiment = new ExperimentElastic();
+	
+	@Column(name = "PRICE", precision = 19, scale = 2)
+    private BigDecimal price;
 
 	public void setElasticExperiment(ExperimentElastic e) {
 		this.elasticExperiment = e;
@@ -450,6 +454,14 @@ public class Experiment implements Serializable {
 	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
 		this.experimentPackageConnections = experimentPackageConnections;
 	}
+	
+	public BigDecimal getPrice() {
+        return price;
+    }
+	
+	public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 
 	@Transient
 	public Date getFinishDate() {

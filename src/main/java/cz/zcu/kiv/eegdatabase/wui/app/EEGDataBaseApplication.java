@@ -79,8 +79,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentOptParamValueFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
@@ -120,10 +122,13 @@ import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.FileMetadataFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.HardwareFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.PersonOptParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.form.WeatherFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.ListOrderPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.pricing.PriceListPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
@@ -252,7 +257,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("experiments-detail", ExperimentsDetailPage.class);
         mountPage("experiments-form", ExperimentFormPage.class);
         mountPage("experiments-download", ExperimentsDownloadPage.class);
+        mountPage("experiments-package-download", ExperimentsPackageDownloadPage.class);
         mountPage("experiments-add-file", AddDataFilePage.class);
+        mountPage("experiments-add-param", ExperimentOptParamValueFormPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);
@@ -297,6 +304,12 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("granted-licenses", GrantedLicensesPage.class);
         mountPage("manage-license-requests", ManageLicenseRequestsPage.class);
         mountPage("revoked-licenses", RevokedRequestPage.class);
+        
+        mountPackage("order-list", ListOrderPage.class);
+        mountPackage("order-view", OrderDetailPage.class);
+        
+// XXX price list hidden for now.
+//        mountPage("pricelist", PriceListPage.class);
 
         mountPage("elastic", Elastic.class);
     }

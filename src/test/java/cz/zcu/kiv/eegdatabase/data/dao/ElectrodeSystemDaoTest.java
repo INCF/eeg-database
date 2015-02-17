@@ -70,7 +70,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
 
 
     @Test(groups = "unit")
-    public void testCreateDisease() {
+    public void testCreateElectrodeSystem() {
         int countBefore = electrodeSystemDao.getAllRecords().size();
         int id = electrodeSystemDao.create(electrodeSystem);
         assertEquals(countBefore + 1, electrodeSystemDao.getCountRecords());
@@ -79,7 +79,7 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
 
 
     @Test(groups = "unit")
-    public void testCreateGroupDisease() {
+    public void testCreateGroupElectrodeSystem() {
         int countBefore = electrodeSystemDao.getAllRecords().size();
         int croupBefore = electrodeSystemDao.getRecordsByGroup(researchGroup.getResearchGroupId()).size();
         electrodeSystemDao.createGroupRel(electrodeSystem, researchGroup);

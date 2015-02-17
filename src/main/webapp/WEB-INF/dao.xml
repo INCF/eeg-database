@@ -252,5 +252,9 @@
 	<bean name="formLayoutDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleFormLayoutDao">
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
+    
+    <bean name="orderDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleOrderDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
 
 </beans>

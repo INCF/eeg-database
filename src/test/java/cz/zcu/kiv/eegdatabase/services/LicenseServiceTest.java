@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
+import java.math.BigDecimal;
+
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
@@ -32,6 +34,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
+
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +72,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(-1000f);
+        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
     }
@@ -91,7 +94,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(1000f);
+        newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
         licenseService.create(newLicense);
@@ -117,7 +120,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(1000f);
+        newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
         newLicense.setResearchGroup(researchGroup);

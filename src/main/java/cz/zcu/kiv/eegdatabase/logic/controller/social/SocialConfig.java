@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.logic.controller.social;
 
 import javax.inject.Inject;
+import javax.sql.DataSource;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
@@ -54,7 +55,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
 public class SocialConfig {
 
     private @Inject
-    DriverManagerDataSource dataSource;
+    DataSource dataSource;
     private @Inject
     ConnectionFactoryLocator connectionFactoryLocator;
     private @Inject

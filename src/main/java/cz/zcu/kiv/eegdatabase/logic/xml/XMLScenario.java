@@ -46,7 +46,6 @@ class XMLScenario {
     }
 
     public void writeLength(String length){
-        if (Integer.parseInt(length) < 0) return;
         scType.setLenght(length);
     }
 

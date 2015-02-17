@@ -33,8 +33,10 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Check;
 import org.apache.wicket.markup.html.form.CheckBox;
@@ -46,33 +48,43 @@ import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
 
 /**
  * Page for download experiment file.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDownloadPage extends MenuPage {
@@ -92,6 +104,15 @@ public class ExperimentsDownloadPage extends MenuPage {
 
     @SpringBean
     ExperimentDownloadProvider downloadProvider;
+
+    @SpringBean
+    OrderFacade orderFacade;
+
+    @SpringBean
+    ExperimentPackageFacade expPcgFacade;
+
+    @SpringBean
+    LicenseFacade licenseFacade;
 
     public ExperimentsDownloadPage(PageParameters parameters) {
 
@@ -113,7 +134,7 @@ public class ExperimentsDownloadPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
         return value.toInt();
     }
-    
+
     // inner form for information used in generator.
     private class ExperimentDownloadForm extends Form<MetadataCommand> {
 
@@ -338,6 +359,37 @@ public class ExperimentsDownloadPage extends MenuPage {
             };
 
             add(submit);
+
+            final ModalWindow viewLicenseWindow = new ModalWindow("viewLicenseWindow");
+            viewLicenseWindow.setAutoSize(true);
+            viewLicenseWindow.setResizable(false);
+            viewLicenseWindow.setMinimalWidth(700);
+            viewLicenseWindow.setWidthUnit("px");
+            add(viewLicenseWindow);
+
+            final IModel<License> licenseModel = new Model<License>();
+            licenseModel.setObject(licenseFacade.getPublicLicense());
+
+            viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel));
+            viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
+            AjaxLink<License> viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
+
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void onClick(AjaxRequestTarget target) {
+                    viewLicenseWindow.show(target);
+                }
+
+                @Override
+                protected void onConfigure() {
+                    super.onConfigure();
+                    this.setVisible(licenseModel.getObject() != null);
+                }
+
+            };
+            viewLicenseLink.setOutputMarkupPlaceholderTag(true);
+            add(viewLicenseLink);
         }
     }
 

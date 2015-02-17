@@ -120,4 +120,6 @@ public interface GenericDao <T, PK extends Serializable>{
      * @return List of IDs of all records.
      */
     List<PK> getAllIds();
+    
+    T merge(T transientObject);
 }

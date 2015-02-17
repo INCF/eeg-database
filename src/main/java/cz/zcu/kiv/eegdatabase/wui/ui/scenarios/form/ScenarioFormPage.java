@@ -66,16 +66,16 @@ public class ScenarioFormPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", ScenariosPageLeftMenu.values()));
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.addScenarioSchema"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.addScenario"));
 
-        add(new Label("title", ResourceUtils.getModel("pageTitle.addScenarioSchema")));
+        add(new Label("title", ResourceUtils.getModel("pageTitle.addScenario")));
 
         ScenarioForm scenarioForm = new ScenarioForm("form", new Model<Scenario>(new Scenario()), getFeedback());
         add(scenarioForm);
 
         if (!security.userIsExperimenter() && !security.isAdmin()) {
             warn(ResourceUtils.getString("pageTitle.userNotExperimenter"));
-            warn(ResourceUtils.getString("pageTitle.youNeedExperimenterRole"));
+            warn(ResourceUtils.getString("text.youNeedExperimenterRole"));
             scenarioForm.setVisibilityAllowed(false);
         }
     }

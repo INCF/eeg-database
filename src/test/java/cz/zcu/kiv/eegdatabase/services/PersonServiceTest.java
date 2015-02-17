@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
+import java.math.BigDecimal;
+
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
@@ -32,6 +34,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonService;
+
+import org.apache.wicket.util.tester.WicketTester;
 import org.junit.Assert;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -71,7 +75,7 @@ public class PersonServiceTest extends AbstractServicesTest {
         License license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(-1000f);
+        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OPEN_DOMAIN);
         licenseDao.create(license);

@@ -40,6 +40,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
+import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -101,7 +102,7 @@ public class PersonServiceImpl implements PersonService {
 
         person = newPerson(person);
 
-        mailService.sendRegistrationConfirmMail(person, EEGDataBaseSession.get().getLocale());
+        mailService.sendRegistrationConfirmMail(person, LocaleContextHolder.getLocale());
 
         return person.getPersonId();
     }

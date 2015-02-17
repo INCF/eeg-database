@@ -72,7 +72,7 @@ public class KeywordsServiceTest extends AbstractServicesTest {
     }
 
     @Test(groups = "unit")
-    public void testCreateArtifact() {
+    public void testCreateKeywords() {
         int keywordsCountBefore = keywordsService.getAllRecords().size();
         int id = keywordsService.create(keywords);
         assertEquals(keywordsCountBefore + 1, keywordsService.getAllRecords().size());

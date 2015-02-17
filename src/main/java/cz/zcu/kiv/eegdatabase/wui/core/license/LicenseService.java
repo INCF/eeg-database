@@ -59,6 +59,8 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 * @return global shared public license.
 	 */
 	public License getPublicLicense();
+	public byte[] getPublicLicenseFile();
+	public String getPublicLicenseFileName();
 
 	/**
 	 * Returns all licenses of a given type for specified group.
@@ -96,4 +98,12 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 * @return list of licenses saved as templates for new
 	 */
 	public List<License> getLicenseTemplates(ResearchGroup group);
+	
+	public byte[] getLicenseAttachmentContent(int licenseId);
+	
+	public List<License> getLicenseForPackageAndOwnedByPerson(int personId, int packageId);
+	
+	public License getLicenseForPurchasedExperiment(int experimentId, int personId);
+    
+    public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId);
 }

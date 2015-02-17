@@ -92,4 +92,6 @@ public interface PersonalLicenseService extends GenericService<PersonalLicense, 
 	 * @return
 	 */
 	public List<License> getUsersLicenses(Person person);
+	
+	public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId);
 }

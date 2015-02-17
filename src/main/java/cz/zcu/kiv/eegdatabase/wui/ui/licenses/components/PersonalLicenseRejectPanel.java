@@ -48,7 +48,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
  * @author Jakub Danek
  */
 public class PersonalLicenseRejectPanel extends Panel {
-	@SpringBean
+    
+	private static final long serialVersionUID = -4950246183380647386L;
+
+    @SpringBean
 	private LicenseFacade licenseFacade;
 
 	private IModel<PersonalLicense> applicationModel;

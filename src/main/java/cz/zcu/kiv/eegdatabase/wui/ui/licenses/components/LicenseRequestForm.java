@@ -22,14 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import java.io.File;
+import java.io.IOException;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Button;
 import org.apache.wicket.markup.html.form.Form;
@@ -42,122 +38,141 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.validation.validator.EmailAddressValidator;
 import org.hibernate.Hibernate;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+
 /**
  * Form for license request.
- *
+ * 
  * @author Jakub Danek
  */
 public class LicenseRequestForm extends Panel {
-	@SpringBean
-	private LicenseFacade licenseFacade;
 
-	private IModel<License> licenseModel;
-	private PersonalLicense persLicense;
-	private boolean displayControls = true;
+    private static final long serialVersionUID = -5784676290092286346L;
+    
+    protected Log log = LogFactory.getLog(getClass());
 
-	private FileUploadField uploadField;
+    @SpringBean
+    private LicenseFacade licenseFacade;
 
-	private Form form;
+    private IModel<License> licenseModel;
+    private PersonalLicense persLicense;
+    private boolean displayControls = true;
 
-	public LicenseRequestForm(String id, IModel<License> license) {
-		super(id);
-		this.licenseModel = license;
-		form = new StatelessForm("form");
-		this.persLicense = new PersonalLicense();
-		this.add(form);
-		this.add(new Label("title", ResourceUtils.getModel("heading.license.request", licenseModel)));
+    private FileUploadField uploadField;
 
-		this.addComponents();
-		this.addControls();
-	}
+    private Form form;
 
-	@Override
-	protected void onConfigure() {
-		super.onConfigure();
-		//ugly hack to disable stupid global feedback
-		((MenuPage)this.getPage()).getFeedback().setEnabled(false);
-	}
+    public LicenseRequestForm(String id, IModel<License> license) {
+        super(id);
+        this.licenseModel = license;
+        form = new StatelessForm("form");
+        this.persLicense = new PersonalLicense();
+        this.add(form);
+        this.add(new Label("title", ResourceUtils.getModel("heading.license.request", licenseModel)));
 
-	private void addComponents() {
-		FormComponent c = new RequiredTextField("firstName", new PropertyModel(persLicense, "firstName"));
-		c.setLabel(ResourceUtils.getModel("label.license.request.firstname"));
-		form.add(c);
-		
-		c = new RequiredTextField("lastName", new PropertyModel(persLicense, "lastName"));
-		c.setLabel(ResourceUtils.getModel("label.license.request.lastname"));
-		form.add(c);
-		
-		c = new RequiredTextField("organisation", new PropertyModel(persLicense, "organisation"));
-		c.setLabel(ResourceUtils.getModel("label.license.request.organisation"));
-		form.add(c);
+        this.addComponents();
+        this.addControls();
+    }
 
-		c = new RequiredTextField("email", new PropertyModel(persLicense, "email"));
-		c.add(EmailAddressValidator.getInstance());
-		c.setLabel(ResourceUtils.getModel("label.license.request.email"));
-		form.add(c);
+    @Override
+    protected void onConfigure() {
+        super.onConfigure();
+        // ugly hack to disable stupid global feedback
+        ((MenuPage) this.getPage()).getFeedback().setEnabled(false);
+    }
 
-		uploadField = new FileUploadField("attachement");
-		uploadField.setLabel(ResourceUtils.getModel("label.license.request.attachement"));
-		form.add(uploadField);
+    private void addComponents() {
+        FormComponent c = new RequiredTextField("firstName", new PropertyModel(persLicense, "firstName"));
+        c.setLabel(ResourceUtils.getModel("label.license.request.firstname"));
+        form.add(c);
 
-		WicketUtils.addLabelsAndFeedback(form);
-	}
+        c = new RequiredTextField("lastName", new PropertyModel(persLicense, "lastName"));
+        c.setLabel(ResourceUtils.getModel("label.license.request.lastname"));
+        form.add(c);
 
-	private void addControls() {
-		Button b = new Button("submitButton", ResourceUtils.getModel("button.save")) {
+        c = new RequiredTextField("organisation", new PropertyModel(persLicense, "organisation"));
+        c.setLabel(ResourceUtils.getModel("label.license.request.organisation"));
+        form.add(c);
 
-			@Override
-			public void onSubmit() {
-				super.onSubmit();
-				LicenseRequestForm.this.onSubmitAction();
-			}
+        c = new RequiredTextField("email", new PropertyModel(persLicense, "email"));
+        c.add(EmailAddressValidator.getInstance());
+        c.setLabel(ResourceUtils.getModel("label.license.request.email"));
+        form.add(c);
 
-		};
-		form.add(b);
+        uploadField = new FileUploadField("attachement");
+        uploadField.setLabel(ResourceUtils.getModel("label.license.request.attachement"));
+        form.add(uploadField);
+        form.setMaxSize(Bytes.megabytes(15));
 
-		b = new Button("cancelButton", ResourceUtils.getModel("button.cancel")) {
+        WicketUtils.addLabelsAndFeedback(form);
+    }
 
-			@Override
-			public void onSubmit() {
-				super.onSubmit();
-				form.clearInput();
-				LicenseRequestForm.this.onCancelAction();
-			}
+    private void addControls() {
+        Button b = new Button("submitButton", ResourceUtils.getModel("button.save")) {
 
-		};
-		b.setDefaultFormProcessing(false);
-		form.add(b);
-	}
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                LicenseRequestForm.this.onSubmitAction();
+            }
 
-	/**
-	 * Sets license and person for the submited PersonalLicense object and creates
-	 * a request for the license.
-	 * Override to provide additional actions.
-	 */
-	protected void onSubmitAction() {
-		FileUpload f = uploadField.getFileUpload();
-		if(f != null) {
-			persLicense.setAttachmentFileName(f.getClientFileName());
-			persLicense.setAttachmentContent(Hibernate.createBlob(f.getBytes()));
-		}
-		persLicense.setLicense(licenseModel.getObject());
-		persLicense.setPerson(EEGDataBaseSession.get().getLoggedUser());
-		licenseFacade.createRequestForLicense(persLicense);
-	}
+        };
+        form.add(b);
 
-	protected void onCancelAction() {
-		//override this
-	}
+        b = new Button("cancelButton", ResourceUtils.getModel("button.cancel")) {
 
-	public boolean isDisplayControls() {
-		return displayControls;
-	}
+            @Override
+            public void onSubmit() {
+                super.onSubmit();
+                form.clearInput();
+                LicenseRequestForm.this.onCancelAction();
+            }
 
-	public void setDisplayControls(boolean displayControls) {
-		this.displayControls = displayControls;
-	}
+        };
+        b.setDefaultFormProcessing(false);
+        form.add(b);
+    }
+
+    /**
+     * Sets license and person for the submited PersonalLicense object and creates a request for the license. Override to provide additional actions.
+     */
+    protected void onSubmitAction() {
+        FileUpload f = uploadField.getFileUpload();
+        if (f != null) {
+            persLicense.setAttachmentFileName(f.getClientFileName());
+            try {
+                licenseModel.getObject().setFileContentStream(f.getInputStream());
+            } catch (IOException e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+        persLicense.setLicense(licenseModel.getObject());
+        persLicense.setPerson(EEGDataBaseSession.get().getLoggedUser());
+        licenseFacade.createRequestForLicense(persLicense);
+        
+        licenseModel.getObject().setFileContentStream(null);
+    }
+
+    protected void onCancelAction() {
+        // override this
+    }
+
+    public boolean isDisplayControls() {
+        return displayControls;
+    }
+
+    public void setDisplayControls(boolean displayControls) {
+        this.displayControls = displayControls;
+    }
 
 }

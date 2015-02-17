@@ -30,6 +30,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.validation.validator.StringValidator;
 
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.security.LoginUserDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
@@ -68,7 +69,7 @@ public class HomeLoginForm extends Form<LoginUserDTO> {
             @Override
             public void onSubmit() {
                 LoginUserDTO object = HomeLoginForm.this.getModelObject();
-                if (secFacade.authorization(object.getUserName().toLowerCase(), object.getPassword())) {
+                if (EEGDataBaseSession.get().signIn(object.getUserName().toLowerCase(), object.getPassword())) {
                     continueToOriginalDestination();
                     setResponsePage(WelcomePage.class);
 
