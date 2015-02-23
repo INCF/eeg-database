@@ -26,16 +26,13 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
-import org.junit.Before;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 /**
  * User: stebjan
@@ -130,8 +127,7 @@ public class RegistrationTest extends AbstractDataAccessTest {
             assertTrue(e instanceof DataIntegrityViolationException);
         } finally {
             assertNotNull(personDao.read(person.getPersonId()));
-            assertNull("Second person with the same username cannot be stored ",
-                    personDao.read(clone.getPersonId()));
+            assertNull(personDao.read(clone.getPersonId()), "Second person with the same username cannot be stored ");
 
         }
     }

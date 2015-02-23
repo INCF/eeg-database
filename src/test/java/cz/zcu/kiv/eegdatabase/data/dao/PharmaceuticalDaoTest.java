@@ -28,15 +28,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * User: Jan Stebetak
@@ -91,6 +89,17 @@ public class PharmaceuticalDaoTest extends AbstractDataAccessTest {
 
         List<Pharmaceutical> list = pharmaceuticalDao.getRecordsByGroup(researchGroup.getResearchGroupId());
         assertEquals(pharmaceuticalGroupBefore + 1, list.size());
+    }
+    @Test(groups = "unit")
+    public void testEditPharmaceutical() {
+        int count = pharmaceuticalDao.getCountRecords();
+        int id = pharmaceuticalDao.create(pharmaceutical);
+        assertEquals(count + 1, pharmaceuticalDao.getCountRecords());
+        pharmaceutical.setDescription("new desc");
+        pharmaceuticalDao.update(pharmaceutical);
+        assertEquals(count + 1, pharmaceuticalDao.getCountRecords());
+
+        assertEquals("new desc" , pharmaceuticalDao.read(id).getDescription());
     }
 }
 

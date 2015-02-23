@@ -31,10 +31,9 @@ import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
-import static net.sf.ezmorph.test.ArrayAssertions.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 @TransactionConfiguration(defaultRollback = true)
 public class ResearchGroupDaoTest extends AbstractDataAccessTest {
@@ -88,6 +87,17 @@ public class ResearchGroupDaoTest extends AbstractDataAccessTest {
         researchGroupDao.create(researchGroup);
         assertEquals(0, researchGroupDao.getResearchGroupsWhereMember(person).size());
 
+    }
+    @Test(groups = "unit")
+    public void testEditResearchGroup() {
+        int count = researchGroupDao.getCountRecords();
+        int id = researchGroupDao.create(researchGroup);
+        assertEquals(count + 1, researchGroupDao.getCountRecords());
+        researchGroup.setDescription("new desc");
+        researchGroupDao.update(researchGroup);
+        assertEquals(count + 1, researchGroupDao.getCountRecords());
+
+        assertEquals("new desc" , researchGroupDao.read(id).getDescription());
     }
 
 }

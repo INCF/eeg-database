@@ -28,15 +28,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 public class ScenarioDaoTest extends AbstractDataAccessTest {
 
@@ -131,16 +127,17 @@ public class ScenarioDaoTest extends AbstractDataAccessTest {
         assertEquals(1, scenarioDao.getScenariosForList(person, 0, 1).size());
         //scenarioDao.delete(clone);
     }
+    @Test(groups = "unit")
+    public void testEditScenario() {
+        int count = scenarioDao.getCountRecords();
+        int id = scenarioDao.create(scenario);
+        assertEquals(count + 1, scenarioDao.getCountRecords());
+        scenario.setDescription("new desc");
+        scenarioDao.update(scenario);
+        assertEquals(count + 1, scenarioDao.getCountRecords());
 
-//    @AfterMethod(groups = "unit")
-//    public void clean() {
-//        scenarioDao.delete(scenario);
-//        researchGroupDao.delete(group);
-//        if (person.getUsername() != null) {
-//            personDao.delete(person);
-//        }
-//
-//    }
+        assertEquals("new desc" , scenarioDao.read(id).getDescription());
+    }
 
     private Scenario fork(String title) {
         Scenario scenario = new Scenario();
