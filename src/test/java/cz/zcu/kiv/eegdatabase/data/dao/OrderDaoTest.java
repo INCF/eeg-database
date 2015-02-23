@@ -34,8 +34,7 @@ import org.testng.annotations.Test;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNull;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by stebjan on 10.2.2015.

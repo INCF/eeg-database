@@ -34,7 +34,7 @@ import org.testng.annotations.Test;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by stebjan on 4.2.2015.
@@ -109,5 +109,17 @@ public class EducationLevelDaoTest extends AbstractDataAccessTest {
         educationLevelDao.create(educationLevel);
         assertEquals(countBefore + 2, educationLevelDao.getEducationLevels("New level").size());
         assertEquals(0, educationLevelDao.getEducationLevels("xxx").size());
+    }
+
+    @Test(groups = "unit")
+    public void testEditEducationLevel() {
+        int count = educationLevelDao.getCountRecords();
+        int id = educationLevelDao.create(educationLevel);
+        assertEquals(count + 1, educationLevelDao.getCountRecords());
+        educationLevel.setTitle("new title");
+        educationLevelDao.update(educationLevel);
+        assertEquals(count + 1, educationLevelDao.getCountRecords());
+
+        assertEquals("new title" , educationLevelDao.read(id).getTitle());
     }
 }

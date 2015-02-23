@@ -30,12 +30,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by stebjan on 9.7.14.
@@ -100,6 +99,19 @@ public class ArticleCommentDaoTest extends AbstractDataAccessTest {
         assertEquals(commentNumber + 1, articleDao.read(article.getArticleId()).getArticleComments().size());
         assertEquals(allCommentNumber + 2, commentDao.getCountRecords());
 
+    }
+
+    @Test(groups = "unit")
+    public void testEditArticleComment() {
+        int count = commentDao.getCountRecords();
+        comment = createComment(article);
+        int id = commentDao.create(comment);
+        assertEquals(count + 1, commentDao.getCountRecords());
+        comment.setText("new text");
+        commentDao.update(comment);
+        assertEquals(count + 1, commentDao.getCountRecords());
+
+        assertEquals("new text", commentDao.read(id).getText());
     }
 
     private ArticleComment createComment(Article article) {

@@ -35,13 +35,9 @@ import cz.zcu.kiv.eegdatabase.logic.Util;
 
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 /**
 * Created by Honza on 1.5.14.

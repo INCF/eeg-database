@@ -30,9 +30,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
-import java.math.BigDecimal;
 
-import static junit.framework.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by stebjan on 11.2.2015.

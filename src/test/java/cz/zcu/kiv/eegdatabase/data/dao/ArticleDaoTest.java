@@ -27,19 +27,16 @@ import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.Article;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.After;
-import org.junit.Before;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.test.context.transaction.TransactionConfiguration;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.sql.Timestamp;
 import java.util.Calendar;
 
-import static org.junit.Assert.*;
+import static org.testng.Assert.*;
 
 /**
  * User: Tomas Pokryvka
@@ -90,10 +87,22 @@ public class ArticleDaoTest extends AbstractDataAccessTest {
 
         } finally {
             Article tmp = articleDao.read(article.getArticleId());
-            assertNull("Article without title cannot be stored", tmp);
+            assertNull(tmp, "Article without title cannot be stored");
 
         }
 
+    }
+
+    @Test(groups = "unit")
+    public void testEditArticle() {
+        int count = articleDao.getCountRecords();
+        int id = articleDao.create(article);
+        assertEquals(count + 1, articleDao.getCountRecords());
+        article.setText("new text");
+        articleDao.update(article);
+        assertEquals(count + 1, articleDao.getCountRecords());
+
+        assertEquals("new text", articleDao.read(id).getText());
     }
 
 
