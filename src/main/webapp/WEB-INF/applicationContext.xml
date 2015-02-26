@@ -222,6 +222,11 @@
         <constructor-arg ref="orderService"/>
     </bean>
 
+    <bean name="templateService" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateServiceImpl" autowire="byType">
+        <property name="templateDao" ref="templateDao" />
+    </bean>
+    <bean name="templateFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacadeImpl" autowire="byType" />
+
 
     <!-- MEMBERSHIP PLANS, LICENCE HISTORY -->
     <bean name="membershipPlanService" class="cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanServiceImpl" autowire="byType">
