@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                    	 Electrophysiology                   			   -->
+<!-- ********************************************************* -->  
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>	
+	<section>
+		<type>experiment/electrophysiology</type>
+		<name>Electrophysiology</name>
+		<definition>Properties for describing an electrophysiological experiment.</definition>
+			      
+		<property>
+			<name>Type</name>
+			<value>intracellular recording
+				<type>string</type> 
+			</value>
+			<value>extracellular recording
+				<type>string</type> 
+			</value>
+			<value>patch clamp
+				<type>string</type> 
+			</value>
+			<value>whole cell patch
+				<type>string</type> 
+			</value>
+			<value>loose patch
+				<type>string</type> 
+			</value>
+			<value>ERG
+				<type>string</type> 
+			</value>
+			<value>EEG
+				<type>string</type> 
+			</value>
+			<value>EKG
+				<type>string</type> 
+			</value>
+			<value>EMG
+				<type>string</type> 
+			</value>
+			<definition>Intracellular recording of single cell responses with sharp microelectrodes.</definition>
+			<required>yes</required>
+		</property>
+      			
+		<property>
+			<name>Subtype</name>
+			<value>single electrode recording
+				<type>string</type> 
+			</value>
+			<value>dual electrode recording
+				<type>string</type> 
+			</value>
+			<value>multi electrode recording
+				<type>string</type> 
+			</value>
+			<definition>Subtype of this electrophysiological experiment.</definition>
+		</property>
+      
+	</section>
+</odML>

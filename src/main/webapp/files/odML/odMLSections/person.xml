@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2014-03-02</date>
+<!-- ********************************************************* -->
+<!--                     Person section                        -->
+<!-- ********************************************************* -->
+   <section>
+		<type>person</type>
+		<name>Person</name>
+      <definition>Information about a person. E.g. as Experimenter, Author, etc.</definition>
+
+      <property>
+         <name>FirstName</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>The  persons first Name (John).</definition>
+		 <required>yes</required>
+         <gui:required>true</gui:required>
+      </property>
+      
+      <property>
+         <name>LastName</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The persons last name (Doe).</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>FullName</name>
+	      <value>
+			<type>person</type>
+	      </value>
+         <definition>The complete name of this person e.g. John
+         Doe.</definition>
+      </property>
+      
+      <property>
+         <name>Gender</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Male or female?</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>Birthday</name>
+	      <value>
+			<type>date</type>
+	      </value>
+         <definition> The birthday. YYYY-MM-dd</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>Role</name>
+	      <value>Author
+			<type>string</type>
+	      </value>
+	      <value>Experimenter
+			<type>string</type>
+	      </value>
+	      <value>Principle Investigator
+			<type>string</type>
+	      </value>
+	      <value>Responsible Investigator
+			<type>string</type>
+	      </value>
+         <value>Subject
+			<type>string</type>
+	      </value>
+         <definition> The role of this person e.g. when describing
+         a project (Responsible investigator), or a recording
+         (Experimenter).</definition>
+		 <required>yes</required>
+      </property> 
+   
+   <property>
+         <name>Email</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Person's e-mail.</definition>
+      </property> 
+      
+      <property>
+         <name>PhoneNumber</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Person's phone number.</definition>
+      </property> 
+      
+      <property>
+         <name>Laterality</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Handedness - the dominand hand of the subject</definition>
+      </property> 
+   </section> 
+</odML>

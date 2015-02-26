@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+
+<odML version="1"> 
+   <section>
+      <name>DC</name>
+      <type>stimulus/dc</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>Gabor</name>
+	   <type>stimulus/gabor</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+	
+	<section>
+	   <name>Grating</name>
+	   <type>stimulus/grating</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+	
+	<section>
+	   <name>Pulse</name>
+	   <type>stimulus/pulse</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>Movie</name>
+	   <type>stimulus/movie</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>Ramp</name>
+	   <type>stimulus/ramp</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>RandomDot</name>
+	   <type>stimulus/randomdot</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>Sawtooth</name>
+	   <type>stimulus/sawtooth</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+      <name>Sinewave</name>
+      <type>stimulus/sinewave</type>
+      <repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+		
+	<section>
+	   <name>Squarewave</name>
+	   <type>stimulus/squarewave</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+	
+	<section>
+	   <name>WhiteNoise</name>
+	   <type>stimulus/whitenoise</type>
+		<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+	</section>
+</odML>

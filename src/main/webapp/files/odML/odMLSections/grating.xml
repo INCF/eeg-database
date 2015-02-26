@@ -1,0 +1,154 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                      Grating stimulus                     -->
+<!-- ********************************************************* -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	<section>
+		<type>stimulus/grating</type>
+		<name>Grating</name>
+		<definition>Properties to describe Grating stimuli.</definition>
+      
+      
+		<property>
+			<name>Modality</name>
+			<value>
+				<type>string</type>
+			</value>
+			<definition>The stimulus modality like acoustic, haptic, visual etc.</definition>
+		</property>
+      
+      <property>
+	      <name>Type</name>
+	      <value>
+			<type>string</type>
+	      </value>
+	      <definition>The type of grating used. Commonly either Sinewave or Squarewave gratings are used.</definition>
+      </property>
+      
+      <property>
+	      <name>Duration</name>
+	      <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+	      <definition>The duration of the stimulus in seconds.</definition>
+      </property>
+      
+      <property>
+	      <name>TemporalOffset</name>
+	      <value>
+			<type>float</type>
+			<unit>s</unit>
+		 </value>
+	      <definition>The temporal offset (with respect to the begin of the recorded trial) with which this stimulus was	presented.</definition>
+      </property>
+      
+      <property>
+         <name>Contrast</name>
+	     <value>
+			<type>float</type>
+		 </value>
+         <definition>The contrast of the grating stimulus. </definition>
+      </property>
+      
+      <property>
+         <name>Intensity</name>
+	     <value>
+			<type>float</type>
+	     </value>
+         <definition>The mean intensity of the grating stimulus. </definition>
+      </property>
+      
+      <property>
+         <name>GratingType</name>
+	     <value>
+			<type>string</type>
+	     </value>
+         <definition>The type of  grating, i.e. 'sinewave' or 'sqaurewave'. </definition>
+      </property>
+      
+      <property>
+         <name>SpatialWavelength</name>
+	     <value>
+			<type>float</type>
+	     </value>
+         <definition>The spatial wavelength of the  grating. </definition>
+      </property>
+      
+      <property>
+         <name>SpatialFrequency</name>
+	     <value>
+			<type>float</type>
+	     </value>
+         <definition>the spatial frequency of the grating.</definition>
+      </property>
+       
+	   <property>
+         <name>SpatialExtent</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>
+         <definition>The spatial extend of the presented stimulus (width;height) e.g. (1024;768).</definition>
+      </property>
+      
+       <property>
+         <name>Orientation</name>
+	     <value>
+			<unit>°</unit>
+			<type>float</type>
+		 </value>
+		 <definition>The orientation of the grating in degrees.</definition>
+      </property>
+      
+      <property>
+         <name>DriftingVelocity</name>
+	     <value>
+			<unit>°/s</unit>
+			<type>float</type>
+		 </value>
+         <definition>In case of a constantly drifting grating, the velocity </definition>
+      </property>
+      
+	  <property>
+	      <name>Position</name>
+	      <value>
+			<type>2-tuple</type>
+	      </value>
+	      <definition>The position of the stimulus on e.g the screen. Specified as a 2-tuple (x;y). By default this position refers to the top-left corner of the object or its bounding box.</definition>
+      </property>
+      
+	   <property>
+         <name>PositionReference</name>
+	      <value>top-left
+			<type>string</type>
+	      </value>
+	      <value>center
+			<type>string</type>
+	      </value>
+	      <value>bottom-right
+			<type>string</type>
+	      </value>
+         <definition>By default stimulus positions are specified by the coordinates of the top-left corner (or of the bounding box). Use this property for other definitions.</definition>
+      </property>  
+	  
+	  <property>
+	      <name>Function</name>
+	      <value>
+			<type>string</type>
+	      </value>
+	      <definition>The function of the described stimulus. E.g. if the white noise constituted the carrier.</definition>
+      </property>
+      
+      <property>
+	      <name>OutputChannel</name>
+	      <value>
+			<type>string</type>
+	      </value>
+	      <definition>The physical output device (e.g. an analog output channel, a monitor screen, the same loudspeaker, etc.). This information can be used to explicitely express that several stimuli (that share the same OutputChannel) are jointly	presented.</definition>
+      </property>
+    </section>
+</odML>

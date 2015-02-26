@@ -1,0 +1,306 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************** -->
+<!-- Image Acquisition (IAQ) properties -->
+<!-- ********************************** -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+     <section>
+		<type>hardware/iaq</type>
+         <name>ImageAcquisition</name>
+         <definition>Properties to define an Image acquisition device. This can be a framegrabber, a camera etc.</definition>
+	          
+         <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+         </property> 
+         
+	      <property>
+            <name>Manufacturer</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The Manufacturer of this hardware item.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+	      
+		   <property>
+            <name>Type</name>
+	         <value>Digital Camera
+				<type>string</type>
+	         </value>
+			 <value>Analogue Camera
+				<type>string</type>
+			 </value>
+			 <value>Framegrabber
+				<type>string</type>
+			 </value>
+            <definition> The kind of image acquisiton device.</definition>
+	      </property>
+		  
+		  <property>
+            <name>Mount</name>
+	         <value>C-Mount
+				<type>string</type>
+	         </value>
+			 <value>CS-Mount
+				<type>string</type>
+			 </value>
+            <definition> The lens mount (there are many more).</definition>
+	      </property>
+		  
+		  <property>
+            <name>Colorspace</name>
+	         <value>Monochrome
+				<type>string</type>
+	         </value>
+			 <value>Color
+				<type>string</type>
+			 </value>
+            <definition> The kind of image acquisiton device.</definition>
+	      </property>
+		  
+		  
+		   <property>
+            <name>DetektorType</name>
+	         <value>CMOS
+				<type>string</type>
+	         </value>
+			 <value>CCD
+				<type>string</type>
+			 </value>
+			 <value>2 CCD
+				<type>string</type>
+			 </value>
+			 <value>3 CCD
+				<type>string</type>
+			 </value>
+			 <value>Framegrabber</value>
+            <definition> The kind of image acquisiton device.</definition>
+	      </property>
+		
+		  <property>
+            <name>SensitivityRange</name>
+	         <value>
+				<type>float</type>
+				<unit>nm</unit>
+			 </value>
+            <definition>The sensitivity range of the detektor (min - max).</definition>
+	      </property>
+		  
+		  <property>
+            <name>MinFramerate</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The minimal framerate of the image acquisition system (Camera, framegrabber, etc.).</definition>
+	      </property> 
+		  
+		  <property>
+            <name>MaxFramerate</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The maximum framerate of the image acquisition system (Camera, framegrabber, etc.).</definition>
+	      </property> 
+		  
+	       <property>
+            <name>Framerate</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The actual framerate of the image acquisition system (Camera, framegrabber, etc.).</definition>
+	      </property> 
+	      
+	      <property>
+            <name>SpatialRes</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The spatial resolution of the acquired images (width x height).</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Lens</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>This property can be used to specify which kind of optics have been used.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>ShutterSpeed</name>
+            <value>
+				<type>float</type>
+            </value>
+            <definition>The speed of the shutter, given in seconds or milliseconds.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Apperture</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The actual apperture (e.g. 5.6).</definition>
+	      </property> 
+	      
+	      <property>
+            <name>CCDGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The gain of a ccd chip.</definition>
+	      </property> 
+	
+	      <property>
+            <name>Depth</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The brightness resoltuion e.g. lower 8 bit.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>RoiPositionX</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The position of the region of interest on the CCD chip. Usually given in pixel describing the top left
+            corner relative to the chip origin (also the top left corner).</definition>
+	      </property> 
+	      
+	      <property>
+            <name>RoiPositionY</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The position of the region of interest on the CCD chip. Usually given in pixel describing the top left
+            corner relative to the chip origin (also the top left corner).</definition>
+	      </property> 
+	      
+	      <property>
+            <name>RoiWidth</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The width of the region of interest. Given in pixels.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>RoiHeight</name>
+	         <value>
+				<type>int</type>
+			</value>
+            <definition>The heigth of the region of interest. Given in pixels.</definition>
+         </property> 
+	      
+	      <property>
+            <name>PicRotation</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The rotation of the picture. (e.g. +180degrees).</definition>
+	      </property> 
+		  
+		  <property>
+            <name>Brightness</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The brightness adjustment.</definition>
+	      </property> 
+		  
+		  <property>
+            <name>Contrast</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The contrast adjustment.</definition>
+	      </property> 
+	      
+		  <property>
+            <name>Gamma</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The gamma value.</definition>
+	      </property> 
+		  
+		  <property>
+            <name>GammaFuntion</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The gamma calibration function.</definition>
+	      </property> 
+		  
+		   <property>
+            <name>PixelBinning</name>
+	         <value>
+				<type>string</type>
+			</value>
+            <definition>The type of pixel binning on the chip.</definition>
+	      </property> 
+		  
+		  <property>
+            <name>Subsampling</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The subsampling method used on the chip.</definition>
+	      </property> 
+		  
+		  <property>
+            <name>ColorTemperature</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The color temperature.</definition>
+	      </property>
+		  
+		  <property>
+            <name>ColorGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition></definition>
+	      </property> 
+		  
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+		  
+      </section> 
+</odML>

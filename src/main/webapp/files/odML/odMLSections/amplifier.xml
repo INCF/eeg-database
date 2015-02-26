@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************** -->
+<!--        Amplifier         		 -->
+<!-- ********************************** -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date> 
+     <section>
+		<type>hardware/amplifier</type>	
+        <name>Amplifier</name>
+        <definition>The amplifier section defines elements that can be used to describe amplifier properties and settings.</definition>
+        
+          <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+         
+         <property>
+	         <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>person</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Type</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The type of amplifier. E.g. extracellular, intracellular amplifier etc.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Manufacturer</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The Manufacturer of this hardware item.</definition>
+	      </property> 
+	      	      
+	      <property>
+            <name>MeasurementType</name>
+            <value>Bridge
+				<type>string</type>
+				<definition>Passive measurement in Bridge -Mode.</definition>
+            </value>
+            <value>CC
+				<type>string</type>
+				<definition>Current Clamp measurement.</definition>
+            </value>
+            <value>VC
+				<type>string</type>
+	            <definition>Voltage Clamp measurement.</definition>
+			</value>
+	         <value>VCcCC
+				<type>string</type>
+	            <definition>Voltage Clamp controlled Current Clamp measurement.</definition>
+	         </value>
+            <value>Dynamic Clamp
+				<type>string</type>
+	            <definition>Dynamic Clamp measurement.</definition>
+            </value>
+            <definition>The amplifier mode. Measurement in Voltage clamp controlled current clamp -mode.</definition>
+         </property> 
+         
+	      <property>
+            <name>OperationMode</name>
+	         <value>Bridged
+				<type>string</type>
+	            <definition>Passive measurement in Bridge -Mode.</definition>
+	         </value>
+	         <value>Discontinuous
+				<type>string</type>
+	            <definition>Measurement in Discontinuous (switched) -Mode.</definition>
+	         </value>
+            <definition>The amplifier mode.</definition>
+	      </property>
+
+	      <property>
+            <name>SwitchingFrequency</name>
+	         <value>
+				<type>float</type>
+				<unit>Hz</unit>
+			 </value>
+	         <dependency>OperationMode</dependency>
+	         <dependencyValue>Discontiuous</dependencyValue>
+            <definition>The amplifier switching frequency. This property is only meaningful in Discontinuos operation modes.</definition>
+	      </property>
+	  
+	      <property>
+            <name>DutyCycle</name>
+	         <value>
+				<type>float</type>
+			 </value>
+	         <dependency>OperationMode</dependency>
+	         <dependencyValue>Discontinuous</dependencyValue>
+            <definition>The amplifier duty cylce if in disconinuous mode (e.g. 0.25, 0.5).</definition>
+	      </property>  
+	  
+	      <property>
+            <name>Gain</name>
+	         <value>
+				<type>float</type>
+			 </value>
+            <definition>The amplifier gain.</definition>
+			<required>yes</required>
+	      </property>
+	      
+	      <property>
+            <name>HighpassCutoff</name>
+            <value>
+				<type>float</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The cutoff frequency of the amplifier's highpass filter.</definition>
+	      </property>
+	      
+	      <property>
+            <name>LowpassCutoff</name>
+	         <value>
+				<type>float</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The cutoff frequency of the amplifier's lowpass filter.</definition>
+	      </property>	 
+	      
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+            
+      </section>
+</odML>

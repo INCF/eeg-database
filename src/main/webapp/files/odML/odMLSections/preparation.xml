@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl"  xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+<!-- ********************************************************* -->
+<!--                  Preparation  section                     -->
+<!-- ********************************************************* -->
+	<section>
+		<type>preparation</type>
+		<name>Preparation</name>
+		<definition>Description of the preparation procedure.</definition>
+      
+      <property>
+         <name>Description</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>A textual description of the preparation.</definition>
+      </property>
+              
+      <property>
+         <name>Date</name>
+	      <value>
+			<type>date</type>
+	      </value>
+         <definition>Actual preparation date.</definition>
+      </property>              
+              
+      <property>
+         <name>Type</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>In vivo or in vitro?</definition>
+      </property> 
+      
+	   <property>
+         <name>RingersSolution</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The Ringer solution used during preparation.</definition>
+      </property>
+      
+      <property>
+         <name>SlicingMethod</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>How was the brain sliced: Microtome etc.</definition>
+      </property>
+      
+      <property>
+         <name>SliceThickness</name>
+	      <value>
+			<type>string</type>
+			<unit>&#181;m</unit>
+		 </value>
+         <definition>The thickness of the slice.</definition>
+      </property> 
+      
+      <property>
+         <name>SliceOrientation</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The slice orientation: horizontal, sagital etc.</definition>
+      </property> 
+      
+      <property>
+         <name>BathSolution</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The solution the slice is bathed in.</definition>
+      </property>
+      
+      <property>
+         <name>SolutionFlowSpeed</name>
+	      <value>
+			<type>string</type>
+			<unit>ml/min</unit>	      
+		 </value>
+         <definition>The flow speed of the bath solution.</definition>
+      </property>
+      
+      <property>	
+         <name>BathTemperature</name>
+	      <value>
+			<type>float</type>
+	      </value>
+         <definition>The temperature of the bath solution.</definition>
+      </property>
+      
+      <property>
+         <name>Anaestesia</name>
+	      <value>
+			<type>boolean</type>
+	      </value>
+         <definition>Is the animal under anaesthesia (true) or
+         awake (false)?</definition>
+      </property> 
+      
+      <property>
+         <name>Anaesthetic</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The drug used for anaesthesia.</definition>
+      </property> 
+      
+      <property>
+         <name>AnaestheticDose</name>
+	      <value>
+			<type>float</type>
+	      </value>
+         <definition>The dose of the used anaesthetic.</definition>
+      </property> 
+      
+      <property>
+         <name>LocalAnaesthesia</name>
+	      <value>
+			<type>boolean</type>
+	      </value>
+         <definition>Was there some local anaesthesia applied (true or false).</definition>
+      </property> 
+      
+      <property>
+         <name>LocalAnaesthetic</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The drug that was used for local
+         anaesthesia.</definition>
+      </property> 
+      
+      <property>
+         <name>LocalAnaestheticDose</name>
+	      <value>
+			<type>float</type>
+	      </value>
+         <definition>The dose of the used local anaesthetic.</definition>
+      </property>
+      
+      <property>
+         <name>LocalAnaestheticLocation</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Describes the place the local anaesthetic was applied.</definition>
+      </property>
+   </section>   
+</odML>
