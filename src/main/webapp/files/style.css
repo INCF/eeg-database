@@ -8,6 +8,7 @@
 @import "jquery-ui.css";
 @import "bookingRoom.css";
 @import "visualization.css";
+@import "metadata.css";
 
 @media screen, projection {
     .page {

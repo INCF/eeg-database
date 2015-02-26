@@ -1,0 +1,159 @@
+@charset "utf-8";
+/* Metadata template and dynamic forms styles */
+
+/* TODO remove this if it is not used  */
+/* body { */
+/* 	border-width: 0px; */
+/* 	padding: 0px; */
+/* 	margin: 0px; */
+/* 	font-size: 90%; */
+/* 	background-color: white; */
+/* } */
+
+/* input[type='text'] { */
+/* 	border: 1px solid black; */
+/* 	padding: 1px 1px 1px 1px; */
+/* } */
+
+/* TEMPLATE FORM CSS */
+.template-tree .tree,.template-tree .tree ul {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+}
+
+.template-tree .tree ul {
+	margin-left: 1em; /* indentation */
+	position: relative;
+}
+
+.template-tree .tree ul ul {
+	margin-left: .5em /* (indentation/2) */
+}
+
+.template-tree .tree ul:before {
+	content: "";
+	display: block;
+	width: 0;
+	position: absolute;
+	top: 0;
+	bottom: 0;
+	left: 0;
+	border-left: 1px solid;
+}
+
+.template-tree .tree li {
+	margin: 0;
+	padding: 0 1.5em; /* indentation + .5em */
+	line-height: 2em; /* default list item's `line-height` */
+	font-weight: bold;
+	position: relative;
+}
+
+.template-tree .tree ul li:before {
+	content: "";
+	display: block;
+	width: 10px; /* same with indentation */
+	height: 0;
+	border-top: 1px solid;
+	margin-top: -1px; /* border top width */
+	position: absolute;
+	top: 1em; /* (line-height/2) */
+	left: 0;
+}
+
+.template-tree .tree ul li:last-child:before {
+	/*   same with body background */
+	background: white;
+	height: auto;
+	top: 1em; /* (line-height/2) */
+	bottom: 0;
+}
+
+.template-tree .tree div.section p,.template-tree .tree div.property p {
+	display: block;
+	-webkit-margin-before: 0.3em;
+	-webkit-margin-after: 0.3em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+}
+
+.template-tree .tree div.section:first-child {
+	display: block;
+}
+
+.template-tree .tree div.section input[type='button'],.template-tree .tree div.section select
+	{
+	margin-left: 0.5em;
+	margin: 0.5em 0.5em 0.5em 0.5em;
+	padding: 0.3em 0.3em 0.3em 0.3em;
+}
+
+.template-tree span.editable,.template-tree div.editable,.template-tree-control p.editable
+	{
+	color: blue;
+	font-weight: bold;
+}
+
+.template-tree-control div.hints {
+	width: 50%;
+}
+
+.template-tree-control input {
+	margin: 0.5em 0.5em 0.5em 0.5em;
+	padding: 0.3em 0.3em 0.3em 0.3em;
+}
+
+.template-tree-control fieldset {
+	display: inline;
+	height: 100%;
+}
+
+.template-tree-control fieldset legend {
+	float: left;
+}
+
+/* VIEW TEMPLATE FORM CSS */
+.view-template-form label {
+	display: block;
+}
+
+.view-template-form div.section {
+	padding: 0.5em 0.5em 0.5em 0.5em;
+	margin-bottom: 1em;
+}
+
+.view-template-form div.property {
+	display: block;
+	margin-bottom: 0.5em;
+	margin-top: 0.5em;
+}
+
+.view-template-form div.property label:first-child {
+	font-weight: bold;
+}
+
+.view-template-form div.property input,.view-template-form div.property select
+	{
+	min-width: 200px;
+	min-height: 1.5em;
+}
+
+.view-template-form div.property select {
+	padding: 0.3em 0.3em 0.3em 0.3em;
+}
+
+.view-template-form div.property div.definition,.view-template-form div.section div.definition
+	{
+	display: block;
+	-webkit-margin-before: 0.3em;
+	-webkit-margin-after: 0.3em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+}
+
+.remove-button {
+	font-weight: bold;
+	font-style: italic;
+	color: red;
+}
