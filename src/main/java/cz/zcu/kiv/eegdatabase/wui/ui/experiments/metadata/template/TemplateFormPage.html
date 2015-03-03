@@ -28,6 +28,12 @@ This file is part of the EEG-database project
 <link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
 </head>
 <body>
-    <div wicket:id="template-panel"></div>
+    <wicket:extend>
+        <div class="leftMenu" wicket:id="leftMenu"></div>
+
+        <div class="mainContentWithMenu">
+            <div wicket:id="template-panel"></div>
+        </div>
+    </wicket:extend>
 </body>
 </html>

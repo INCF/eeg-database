@@ -26,6 +26,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.TemplateFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.GrantedLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ManageLicenseRequestsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.RevokedRequestPage;
@@ -51,6 +53,8 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
 	LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
     SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
     ADD_EXPERIMENTS(ExperimentFormPage.class, "menuItem.experiments.addExperiment", null),
+    ADD_TEMPLATE(TemplateFormPage.class, "menuItem.template.new", null),
+    ADD_METADATA(MetadataFormPage.class, "menuItem.metadata.new", null),
     RESULT(ResultListPage.class, "menuItem.serviceResult", null),
 // XXX price list hidden for now.
     //    PRICELIST(PriceListPage.class, "pageTitle.pricelist", null),

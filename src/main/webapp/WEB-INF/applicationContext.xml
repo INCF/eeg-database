@@ -222,10 +222,10 @@
         <constructor-arg ref="orderService"/>
     </bean>
 
-    <bean name="templateService" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateServiceImpl" autowire="byType">
+    <bean name="templateService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateServiceImpl" autowire="byType">
         <property name="templateDao" ref="templateDao" />
     </bean>
-    <bean name="templateFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.TemplateFacadeImpl" autowire="byType" />
+    <bean name="templateFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacadeImpl" autowire="byType" />
 
 
     <!-- MEMBERSHIP PLANS, LICENCE HISTORY -->

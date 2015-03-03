@@ -87,6 +87,8 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ScenarioConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.SoftwareConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.StimulusConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.WeatherConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.TemplateFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -251,6 +253,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("experiments-package-download", ExperimentsPackageDownloadPage.class);
         mountPage("experiments-add-file", AddDataFilePage.class);
         mountPage("experiments-add-param", ExperimentOptParamValueFormPage.class);
+        mountPage("experiments-add-template", TemplateFormPage.class);
+        mountPage("experiments-add-metadata", MetadataFormPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);

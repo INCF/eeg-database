@@ -22,13 +22,34 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
 
-import org.apache.wicket.markup.html.WebPage;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 
-public class TemplateFormPage extends WebPage {
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
+
+@AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
+public class TemplateFormPage extends MenuPage {
 
     private static final long serialVersionUID = 1L;
     
     public TemplateFormPage() {
+        
+        setPageTitle(ResourceUtils.getModel("pageTitle.template.new"));
+        add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
+        
         add(new TemplateForm("template-panel"));
     }
+    
+    public TemplateFormPage(PageParameters parameters) {
+        
+        setPageTitle(ResourceUtils.getModel("pageTitle.template.edit"));
+        add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
+        
+        add(new TemplateForm("template-panel"));
+    }
+    
+    
 }
