@@ -106,6 +106,9 @@
     </bean>
 	<bean name="experimentsFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacadeImpl" autowire="byType" />
 
+    <bean name="digitizationService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationServiceImpl" autowire="byType" />
+    <bean name="digitizationFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationFacadeImpl" autowire="byType" />
+
 	<bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
 	<bean name="diseaseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseFacadeImpl" autowire="byType" />
 

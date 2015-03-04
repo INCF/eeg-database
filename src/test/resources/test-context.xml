@@ -379,6 +379,8 @@
 
     <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
 
+    <bean name="digitizationService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationServiceImpl" autowire="byType" />
+
     <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
         <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
     </bean>
