@@ -30,12 +30,13 @@ import odml.core.Section;
 
 import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.form.AjaxFormChoiceComponentUpdatingBehavior;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableMultiLineLabel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.list.ListItem;
@@ -44,6 +45,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
 public class TemplateSectionPanel extends Panel {
 
@@ -82,7 +85,7 @@ public class TemplateSectionPanel extends Panel {
             }
         };
         content.add(properties);
-        
+
         PropertyListView<Section> sections = new PropertyListView<Section>("subsections") {
 
             private static final long serialVersionUID = 1L;
@@ -95,24 +98,41 @@ public class TemplateSectionPanel extends Panel {
         content.add(sections);
     }
 
-    private void setupHeadAndControlComponents(IModel<Section> model, final List<Section> choices) {
+    private void setupHeadAndControlComponents(final IModel<Section> model, final List<Section> choices) {
         // head + control
+        final boolean notRootSection = model.getObject().getParent() != null;
+        
         head.add(new AjaxEditableLabel<String>("name") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             protected String defaultNullLabel() {
-                return "text.template.empty.sectionName";
+
+                if (notRootSection) {
+                    return ResourceUtils.getString("text.template.empty.sectionName");
+                } else {
+                    return ResourceUtils.getString("text.template.empty.templateName");
+                }
             }
         });
+        
+        String key;
+        if(notRootSection){
+            key = "label.template.section";
+        } else {
+            key = "label.template.templateName";
+        }
+        
+        head.add(new Label("sectionNameLabel", ResourceUtils.getString(key)));
+
         head.add(new AjaxEditableMultiLineLabel<String>("definition") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             protected String defaultNullLabel() {
-                return "text.template.empty.definition";
+                return ResourceUtils.getString("text.template.empty.definition");
             }
 
             @Override
@@ -120,7 +140,7 @@ public class TemplateSectionPanel extends Panel {
                 super.onConfigure();
                 setVisible(viewModel.isDefinitionVisible());
             }
-        });
+        }.setVisibilityAllowed(notRootSection));
 
         final DropDownChoice<Section> sectionList = new DropDownChoice<Section>("addSubsectionList", new Model<Section>(), choices, new ChoiceRenderer<Section>("name"));
         sectionList.setOutputMarkupId(true);
@@ -160,7 +180,7 @@ public class TemplateSectionPanel extends Panel {
                 target.add(mainContainer);
             }
 
-        }.setVisibilityAllowed(model.getObject().getParent() != null));
+        }.setVisibilityAllowed(notRootSection));
 
         head.add(new AjaxLink<Void>("showhideSectionContent") {
 
@@ -191,7 +211,7 @@ public class TemplateSectionPanel extends Panel {
                 target.add(mainContainer);
             }
 
-        }.setVisibilityAllowed(model.getObject().getParent() != null));
+        }.setVisibilityAllowed(notRootSection));
     }
 
 }

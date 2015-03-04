@@ -1,0 +1,568 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                     Mini section                    				   -->
+<!-- ********************************************************* -->  
+<odML version="1">
+  <repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+  <version>1.0</version>
+  <date>2011-01-21</date>
+  
+  <section>
+    <type>carmen_mini</type>
+    <name>Carmen Mini</name>
+    <definition>This is a convenience section that lists the terms of the CARMEN MINI (Gibson et al. Nature Precedings, 2009 Version 0.6) and 
+    maps them to the odml "standard" terminologies.</definition>
+		
+    <section>
+      <type>carmen_mini/contact_and_context</type>
+      <name>ContactAndContext</name>
+      			
+      <property>
+        <name>DateAndTime</name>
+	<value>
+	 <type>datetime</type>
+	</value>
+	<definition>The date and time of work initiation in YYYY-MM-DD hh:mm:ss format. (TODO ISO 8601 requires the T lib has to able to deal with it!) </definition>
+	<mapping>http://portal.g-node.org/odml/terminologies/v1.0/recording/recording.xml#recording:Start</mapping>
+      </property>
+      
+      <property>
+        <name>ResponsiblePerson</name>
+	<value>
+	 <type>person</type> 
+	</value>
+        <definition>The (stable) primary contact person for this data set; this could
+be the experimenter, lab head, line manager etc. Where respon-
+sibility rests with an institutional role (e.g. one of a number of
+duty officers) rather than a person, give the official name of the
+role rather than any one person. In all cases give affliation and
+stable contact information, which consists of (i) Name, (ii) Postal address and (iii) Email address.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/project/project.xml#project:PrincipleInvestigator</mapping>
+      </property>
+      
+      <property>
+        <name>ExperimentalContext</name>
+	<value>
+          <type>text</type> 
+	</value>
+        <definition>The name of the project, study or wider investigation of which
+the 'experiment' is a part (if appropriate).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/project/project.xml#project:Description</mapping>
+      </property> 
+      
+      <property>
+        <name>ElectrophysiologyType</name>
+	<value>
+          <type>string</type>
+        </value>
+        <definition>The type of electrophysiology recording reported as 'extra cellular'
+or 'intra cellular'.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/experiment/experiment.xml#experiment:Type</mapping>
+      </property>
+    </section>
+      
+    <section>
+      <type>carmen_mini/study_subject</type>
+      <name>StudySubject</name>
+      <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject</mapping>
+
+      <property>
+        <name>Genus</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The genus classification of the study subject accoring to the NCBI taxonomy calssification.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Genus</mapping>
+      </property>
+      
+      <property>
+        <name>Species</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The species classification of the study subject accoring to the NCBI taxonomy calssification.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Species</mapping>
+      </property>
+      
+      <property>
+        <name>Strain</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The strain, genetic variation classification of the study subject, if appropriate. Note this is not the cell line.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Strain</mapping>
+      </property>
+      
+      <property>
+        <name>CellLine</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The identifier for the immortalized cell line, if appropriate.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:CellLine</mapping>
+      </property>
+      
+      <property>
+        <name>GeneticCharacteristics</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The genotype of the study stubject. Genetics characteristics include polymorphisms, disease alleles and haplotypes.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Comment</mapping>
+      </property>
+      
+      <property>
+        <name>GeneticVariation</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The genetic modification introduced in addition to strain, if appropriate.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Comment</mapping>
+      </property>
+      
+      <property>
+        <name>DeseaseState</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The name of the pathology diagnosed in the subject. The disease state is 'normal' if no disease state has been diagnosed.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:HealthStatus</mapping>
+      </property>
+      
+      <property>
+        <name>ClinicalInformation</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>A link, summary or reference to additional clinical information, if appropriate.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Comment</mapping>
+      </property>
+      
+      <property>
+        <name>Sex</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The sex of the subject, in terms of either male, female or hermaphrodite.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Gender</mapping>
+      </property>
+      
+      <property>
+        <name>Age</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The time period elapsed since an identifiable point in the life cycle of an organism. If a developmental stage is specified the indentifiable point would be the beginning of that stage. Otherwise the identifiable point must be specifies. For example, 2 hours post surgery.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Age</mapping>
+      </property>   
+      
+      <property>
+        <name>DevelopmentalStage</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The developmental stage of the of the study subect's life cycle.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:DevelopmentalStage</mapping>
+      </property>
+      
+      <property>
+        <name>SubjectLabel</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>If the subject has been chemically labeled or stained; state the label name.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Label</mapping>
+      </property> 
+      
+      <property>
+        <name>SubjectIdentifier</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The type and value of the identifier assigned to the subject.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Identifier</mapping>
+      </property>
+      
+      <property>
+        <name>SubjectIdentifierType</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The type and value of the identiﬁer assigned to the subject. For example, vendor or patient identifier. For patients, the identifier must be approved by an Institutional Review Board or appropriate body.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Comment</mapping>
+      </property>  
+      
+      <property>
+        <name>SubjectIdentifierValue</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The unique string which corresponds to the identifier type. TODO! How does this relate to the Identifier ?</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Identifier</mapping>
+      </property>  
+
+      <property>
+        <name>AssociatedSubjectDetails</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The organisation (e.g vendor) or individual repsonsible for the subject.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/subject/subject.xml#subject:Comment</mapping>
+      </property>  
+      
+      <property>
+        <name>PreparationProtocol</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The surgical procedure or the preparation protocol implmented to obtain the specific sample for recording.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparation:Description</mapping>
+      </property> 
+
+      <property>
+        <name>PreparationDate</name>
+        <value>
+          <type>date</type> 
+        </value>
+        <definition>The date the surgical procedure or the preparation protocol was performed to obtain the specific sample for recording. Given in the ISO:8601 representation. YYYY-MM-DDThh:mm:ss</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparation:Date</mapping>
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/recording_location</type>
+      <name>RecordingLocation</name>
+      
+      <property>
+        <name>LocationStructure</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The anatomical part or structure of the subject under investigation or recorded from. For example brain or cell culture.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/cell/cell.xml#cell:Structure</mapping>
+      </property>  
+      
+      <property>
+        <name>BrainArea</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>If the anatomical structure under study from 3.(a) is the brain then state the location. If the anatomical structure under study is the mammalian brain then state the location using Neuronames. (http://braininfo.rprc.washington.edu/aboutfolder/aboutbi.html).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/cell/cell.xml#cell:BrainArea</mapping>
+      </property>
+      
+      <property>
+        <name>SliceThickness</name>
+        <value>
+          <type>float</type> 
+          <unit>mm</unit>
+        </value>
+        <definition>The thickness of the recording slice in milimeters.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparation:SliceThickness</mapping>
+      </property>
+
+      <property>
+        <name>SliceOrientation</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>State the planes of the slice, in terms of either i) coronal (widthways), ii) saggital (lengthways parallel to midline) or iii) tangential (lengthways perpendicular to midline).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparationSliceOrientation</mapping>
+      </property>
+      
+      <property>
+        <name>CellType</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The cell type of the anatomical structure given in 3.(a) under investigation if non mixed. If mixed the target cell type should be provided.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/cell/cell.xml#cell:CellType</mapping>
+      </property>
+      
+      <property>
+        <name>TargetCellType</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The cell type of the anatomical structure given in 3.(a) under investigation if non mixed. If mixed the target cell type should be provided</definition>
+      </property>
+      
+      <property>
+        <name>ConfirmedCellType</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The method of coordinate assignment given in 2.3.1. Reported as 'anatomy confirmation', 'estimation' or chemical label (this includes antibodies and staining). The label used should be reported in section 2.(l). Additional information such as recodings or image files which also confirm the location can be referenced here.</definition>
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/task</type>
+      <name>Task</name>
+      
+      <property>
+        <name>Protocol</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>A description of the task protocol undertaken by the subject.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/experiment/bahavior.xml#experiment/behavior:Description</mapping>
+      </property>
+      
+      <property>
+        <name>SensoryConditions</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The sensory conditions during the task protocol.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Equipment</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The Model Name, Model Number and Manufacturer for equipment used in the task protocol.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Recording</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>If the task is recorded state how and what data types are being recorded.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/stimulus</type>
+      <name>Stimulus</name>
+      
+      <property>
+        <name>Protocol</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>A description of the stimulus protocol undertaken by the subject.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/stimulus/stimulus.xml#stimulus:Description</mapping>
+      </property>
+      
+      <property>
+        <name>SensoryConditions</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The sensory conditions during the stimulus protocol.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Solutions</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>Description of the solutions used in terms of name, components with concentrations,(if appropriate).</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Equipment</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The Model Name, Model Number and Manufacturer for specialised equipment used during the stimulus protocol. If electrode(s) are used then they should be described following the structure presented in ref x.x</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Recording</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>If the stimulus is recorded state how and what data types are being recorded.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/behavioural_event</type>
+      <name>BehaviouralEvent</name>
+      
+      <property>
+        <name>Event</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>A description of the behavioural event observed.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Equipment</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The equipment use to record the behavioural event, if recorded in terms of The Model Name, Model Number and Manufacturer.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>BehaviouralEventRecording</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The type of recording of the behavioural event, the file format and the format encoding.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/recording</type>
+      <name>Recording</name>
+      
+      <property>
+        <name>Protocol</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>A description of the recording protocol.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Conditions</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The subject conditions during the recording. Invivo or invitro preparation If invivo was it anethesitised or awake? If awake what was the stimulus condition.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>ContainingDevice</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>Containing device temperature of the subject or sample (for example, a bath): Include temperature if appropriate.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Solutions</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>Description of the solutions used in terms of name, components with concentrations,(if appropriate).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparation:BathSolution</mapping>
+      </property>
+      
+      <property>
+        <name>SolutionFlowSpeed</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The flow speed of the solution described in (ref x.x) in terms of ml/min.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/preparation/preparation.xml#preparation:SolutionFlowSpeed</mapping>
+      </property>
+      
+      <property>
+        <name>Electrode</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The type of electrode and the Model Name, Model Number and Manufacturer for specialised equipment.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>ElectrodeConfiguration</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The configuration or arrangement of the electrode. For example, a 2-dimensional array. Also state the distance between each electrode. If the study uses voltage clamp in a patch configuration, state the access resistance (the resistance of the cell membrane, which is in series with the electrode resistance).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/electrode/electrode.xml#electrode:Configuration</mapping>
+      </property>
+      
+      <property>
+        <name>ElectrodeImpedance</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The electrode range or impedance of the electrode.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/electrode/electrode.xml#electrode:Impedance</mapping>
+      </property>
+      
+      <property>
+        <name>Amplifier</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The Model Name, Model Number and Manufacturer of the amplifier.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>Filter</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The Model Name, Model Number and Manufacturer of the filter.</definition>
+<!--         <mapping>?</mapping> -->
+      </property>
+      
+      <property>
+        <name>FilterSettings</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The settings or the parameters of the filter.</definition>
+        <mapping>?</mapping>
+      </property>
+      
+      <property>
+        <name>Recorder</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The Model Name, Model Number and Manufacturer of the recorder.</definition>
+        <mapping>?</mapping>
+      </property>
+    </section>
+    
+    <section>
+      <type>carmen_mini/timeseries_data</type>
+      <name>TimeSeriesData</name>
+      
+      <property>
+        <name>DataFormat</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The name of the data format of the time series data and specific encoding. For example, ASCII or binary encoding.</definition>
+        <mapping>?</mapping>
+      </property>
+
+      <property>
+        <name>SamplingRate</name>
+        <value>
+          <type>string</type> 
+        </value>
+        <definition>The sampling rate of the recording.</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/hardware/daq.xml#hardware/daq:AISampleRate</mapping>
+      </property>
+      
+      <property>
+        <name>FileLocation</name>
+        <value>
+          <type>URL</type> 
+        </value>
+        <definition>The time series file location should be made available when the experiment is published, for example, using a Uniform Resource Identifier (URI) or a Digital Object Identifier (DOI). (Note this will be achieved automatically via submission to the CARMEN system).</definition>
+        <mapping>http://portal.g-node.org/odml/terminologies/v1.0/dataset/dataset.xml#dataset:FileURL</mapping>
+      </property>
+    </section>
+  </section> 
+</odML>

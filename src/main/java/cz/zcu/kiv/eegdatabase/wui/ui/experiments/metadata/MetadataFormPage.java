@@ -27,58 +27,77 @@ import java.io.InputStream;
 import odml.core.Reader;
 import odml.core.Section;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class MetadataFormPage extends MenuPage {
-    
-    private static final long serialVersionUID = 1L;
-    
+
+    private static final long serialVersionUID = -4170790197539589617L;
+    protected Log log = LogFactory.getLog(getClass());
+
+    @SpringBean
+    private TemplateFacade templateFacade;
+
     public MetadataFormPage() {
-        
+
         setPageTitle(ResourceUtils.getModel("pageTitle.metadata.new"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        
+
         InputStream template = EEGDataBaseApplication.get().getServletContext().getResourceAsStream("/files/odML/testtemplate.xml");
-        
+
         Section section = null;
         Reader reader = new Reader();
         try {
             section = reader.load(template);
-            
+
         } catch (Exception e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
-        
+
         add(new MetadataForm("metadata-form", new Model<Section>(section)));
     }
-    
+
     public MetadataFormPage(final PageParameters parameters) {
-        
+
         setPageTitle(ResourceUtils.getModel("pageTitle.metadata.new"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-        
-        InputStream template = EEGDataBaseApplication.get().getServletContext().getResourceAsStream("/files/odML/testtemplate.xml");
-        
-        Section section = null;
+
+        StringValue value = parameters.get(DEFAULT_PARAM_ID);
+        if (value.isEmpty() || value.isNull()) {
+            throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
+        }
+
+        int templateId = value.toInt();
+        Template template = templateFacade.read(templateId);
+
         Reader reader = new Reader();
         try {
-            section = reader.load(template);
-            
+            Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
+            add(new MetadataForm("metadata-form", new Model<Section>(section)));
+
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
+            throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
-        
-        add(new MetadataForm("metadata-form", new Model<Section>(section)));
+
     }
 }

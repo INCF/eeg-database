@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+  <!-- ********************************************************* -->
+  <!--                      Setup section                        -->
+  <!-- ********************************************************* -->
+   <section>
+		<type>setup</type>
+		<name>Setup</name>
+		<definition>The experimental setup used in the recordings. By
+      using HardwareProperties as a subsection, a very detailed
+      description of the setup can be given.</definition>
+      
+      <property>
+         <name>Description</name>
+         <value>
+			<type>text</type>
+         </value>
+         <definition>A description of the setup.</definition>
+      </property>
+      
+      <property>
+         <name>Location</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>The location of the setup (e.g. room).</definition>
+      </property> 
+        
+      <property>
+         <name>Department</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>The department where the setup is
+         located.</definition>
+      </property> 
+      
+      <property>
+         <name>Creator</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>The person who built the setup.</definition>
+      </property> 
+      
+      <property>
+        <name>Maintainer</name>
+        <value>
+			<type>person</type>
+        </value>
+        <definition>The person who is responsible for the setup
+          maintanance.</definition>
+      </property> 
+      
+      <property>
+         <name>Config</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>An identifier of the used setup
+         configuration, e.g. if variations of the same setup are
+         used.</definition>
+      </property> 
+      
+      <property>
+         <name>ConfigID</name>
+         <value>
+			<type>string</type>
+         </value>
+         <definition>The ID of a setup configuration stored e.g. in a database.</definition>
+      </property>
+
+   </section>
+</odML>

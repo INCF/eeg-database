@@ -1,9 +1,10 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
+import java.util.List;
+
+import odml.core.Section;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
-
-import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -49,4 +50,6 @@ public interface TemplateFacade extends GenericFacade<Template, Integer> {
     public boolean isDefault(int id);
 
     public boolean canSaveName(String name, int personId);
+    
+    public List<Section> getListOfAvailableODMLSections();
 }

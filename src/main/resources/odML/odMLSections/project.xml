@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                     Project section                    				   -->
+<!-- ********************************************************* -->  
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	<section>
+		<type>project</type>
+		<name>Project</name>
+		<definition>Information about the project.</definition>
+
+		<property>
+			<name>Topic</name>
+			<value>
+				<type>text</type> 
+			</value>
+			<definition>A descriptive text of the project topic.</definition>
+		</property>
+      
+		<property>
+			<name>Grant</name>
+			<value>
+				<type>string</type> 
+			</value>
+			<definition>The name or identifier of the grant funding this project.</definition>
+		</property> 
+      
+		<property>
+			<name>PrincipleInvestigator</name>
+			<value>
+				<type>person</type> 
+			</value>
+			<definition>The person responsible for this project.</definition>
+		</property>
+      
+		<property>
+			<name>Scientist</name>
+			<value>
+				<type>person</type> 
+			</value>
+			<definition>Additional involved person(s).</definition>
+		</property> 
+      
+		<property>
+			<name>Start</name>
+			<value>
+				<type>date</type> 
+			</value>	      
+			<definition>The day the project was begun.</definition>
+		</property> 
+      
+		<property>
+			<name>End</name>
+			<value>
+				<type>date</type> 
+			</value>
+			<definition>The date the project ended.</definition>
+		</property>      
+    </section> 
+</odML>

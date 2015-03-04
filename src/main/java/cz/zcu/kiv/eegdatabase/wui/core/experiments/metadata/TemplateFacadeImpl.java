@@ -1,9 +1,19 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Template;
-import org.springframework.beans.factory.annotation.Required;
-
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
+
+import odml.core.Reader;
+import odml.core.Section;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.springframework.beans.factory.annotation.Required;
+import org.springframework.core.io.ClassPathResource;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 
 /**
  * ********************************************************************************************************************
@@ -16,14 +26,12 @@ import java.util.List;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
- * the License. You may obtain a copy of the License at
+ * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with the License. You may obtain a copy of the License at
  * <p/>
  * http://www.apache.org/licenses/LICENSE-2.0
  * <p/>
- * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
- * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
- * specific language governing permissions and limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+ * KIND, either express or implied. See the License for the specific language governing permissions and limitations under the License.
  * <p/>
  * **********************************************************************************************************************
  * <p/>
@@ -33,7 +41,9 @@ import java.util.List;
  */
 public class TemplateFacadeImpl implements TemplateFacade {
 
-    TemplateService service;
+    protected Log log = LogFactory.getLog(getClass());
+
+    private TemplateService service;
 
     @Required
     public void setService(TemplateService service) {
@@ -52,8 +62,9 @@ public class TemplateFacadeImpl implements TemplateFacade {
 
     /**
      * Finds all default and user's templates
-     *
-     * @param personId id of a user
+     * 
+     * @param personId
+     *            id of a user
      * @return default + user's templates
      */
     @Override
@@ -119,5 +130,38 @@ public class TemplateFacadeImpl implements TemplateFacade {
     @Override
     public List<Template> getUnique(Template example) {
         return service.getUnique(example);
+    }
+
+    @Override
+    public List<Section> getListOfAvailableODMLSections() {
+
+        // TODO add this in project.properties
+        String odmlSectionsPath = "./odML/odMLSections";
+        List<File> filteredFiles = new ArrayList<File>();
+        File[] paths;
+        try {
+            paths = new ClassPathResource(odmlSectionsPath).getFile().listFiles();
+            for (File path : paths) {
+                if (path.getName().endsWith(".xml")) {
+                    filteredFiles.add(path);
+                }
+            }
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+        }
+
+        final List<Section> sections = new ArrayList<Section>();
+        Reader reader = new Reader();
+        for (File file : filteredFiles) {
+            Section section = null;
+            try {
+                section = reader.load(file.getAbsolutePath());
+                sections.addAll(section.getSections());
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+
+        return sections;
     }
 }

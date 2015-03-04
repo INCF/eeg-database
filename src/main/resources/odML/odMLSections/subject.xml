@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl"  xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                     Subject section                       -->
+<!-- ********************************************************* -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	<section>
+		<type>subject</type>
+		<name>Subject</name>
+		<definition>The investigated experimental subject (animal or person).
+      May contain the Cell and Preparation sections as subsections.</definition>
+
+      <property>
+         <name>Comment</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>A general comment on a specific
+         subject. </definition>
+      </property>
+      
+      <property>
+         <name>Species</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The scientific name of the species e.g. Apis
+         mellifera, Homo sapiens.</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>Genus</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The Genus of the studied
+         subject.</definition>
+		 <required>yes</required>
+      </property>
+      
+      <property>
+         <name>TrivialName</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The trivial name of the species like
+         Honeybee, Human.</definition>
+      </property> 
+      
+      <property>
+         <name>Gender</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Male or female?</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>Birthday</name>
+	      <value>
+			<type>date</type>
+	      </value>	
+         <definition> The birthday. Age can be inferred from the
+         date of recording.</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>Age</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The age of the subject since birth. E.g. P19,
+         or 5 days.</definition>
+      </property> 
+      
+      <property>
+         <name>Strain</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The strain the subject was taken from. E.g. a
+         specific genetic variation etc.</definition>
+      </property>
+      
+      <property>
+         <name>CellLine</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>.</definition>
+      </property>
+      
+      <property>
+         <name>Population</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The population this subject is offspring
+         of. This may be the bee hive, the ant colony,
+         etc.</definition>
+      </property>
+      
+      <property>
+         <name>Label</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>If the subject has been labled in a specific
+         way. The lable can be described here.</definition>
+      </property>
+      
+      <property>
+         <name>HealthStatus</name>
+	      <value>
+			<type>string</type>
+	      </value>	      
+         <definition>Information about the health status of this
+         subject.</definition>
+		 <required>yes</required>
+      </property>
+      
+      <property>
+         <name>DevelopmentalStage</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The developemtal stage of the subject. E.g. "embroyonal", "adult", "larval" etc.</definition>
+      </property>
+      
+      <property>
+         <name>ConactInformation</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>How to get in contact with this subject.</definition>
+      </property>
+      
+      <property>
+	      <name>Size</name>
+	      <value>
+			<type>float</type>
+	      </value>
+	      <definition>The size of the subject. This value may be used context dependent. Size could be length for a fish, heigth for a human subject, or shoulder height for a horse etc...</definition>
+      </property>
+      
+      <property>
+	      <name>Weight</name>
+	      <value>
+			<type>float</type>
+	      </value>
+	      <definition>The weigth of this subject.</definition>
+      </property>
+</section> 
+</odML>

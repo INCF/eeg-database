@@ -1,0 +1,200 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="From.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+<!-- ********************************************************* -->
+<!--                     Analysis section                       -->
+<!-- ********************************************************* -->
+	<section>
+			<type>analysis/power_spectrum</type>
+			<name>Power spectrum</name>
+			<definition>Properties of this section define the way a power spectrum was calculated.</definition>
+     
+	   
+	   <property>
+         <name>Author</name>
+	      <value>
+			<type>person</type>
+	      </value>
+         <definition>The name of the person who did the analysis, e.g. 'John Doe' or 'Doe, John'</definition>
+      </property>
+      
+      <property>
+         <name>Date</name>
+	      <value>
+			<type>date</type>
+	      </value>
+         <definition>The date of analysis.</definition>
+      </property>
+      
+      <property>
+         <name>Description</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>A general description of the analysis.</definition>
+      </property>
+      
+      <property>
+         <name>SegmentLength</name>
+	      <value>
+			<type>int</type>
+	      </value>
+         <definition>The length of the analysed data stretches. Given in samples.</definition>
+      </property>
+      
+      <property>
+         <name>WindowFunction</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The type of window used. E.g. Hamming, Hanning, etc.</definition>
+      </property>
+      
+      <property>
+         <name>Overlap</name>
+	      <value>
+	         <unit>%</unit>
+			   <type>float</type>
+	      </value>
+         <definition>The overlap between consecutive data segments. Given in percent of the SegmentLength.</definition>
+      </property>
+      
+      <property>
+         <name>Overlap</name>
+	      <value>
+	         <type>int</type>
+	      </value>
+         <definition>The overlap between consecutive data segments. Given in samples.</definition>
+      </property>
+            
+      <property>
+         <name>Method</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The name of a method used in this analysis. E.g. "power spectrum".</definition>
+      </property>
+      
+      <property>
+         <name>CommandlineCall</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>The command used to execute the analysis including the command line parameter.</definition>
+      </property> 
+      
+      <property>
+         <name>Comment</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>Specific comments on this analysis.</definition>
+      </property>
+      
+      <property>
+         <name>Code</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition> The program code to analyse the data can be transferred using this property. 
+         Using it will blow up the the size of the metadatafile and we recommend to rather define the URL of underlying code file.</definition>
+      </property> 
+      
+      <property>
+         <name>Code</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>The URL of the applied piece of program code to actually do the analysis.</definition>
+      </property> 
+       
+      <property>
+         <name>CodeRevision</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition> If the analysis code is under version control the revision number can be specified using this property.</definition>
+      </property> 
+       
+       
+      <property>
+         <name>ConfigFile</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition> The configurations used to analyse the data can be transferred using this property. 
+         Using it will blow up the the size of the metadatafile and we recommend to rather define the URL of underlying configuration file.</definition>
+      </property> 
+      
+      <property>
+         <name>ConfigFile</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>The URL of the used configuration file used to run the analysis.</definition>
+      </property>  
+      
+      <property>
+         <name>DatasetFile</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition> The data analysed ion the described way can be transferred using this property. 
+         Using it will blow up the the size of the metadatafile and we recommend to rather define the URL of underlying dataset file.</definition>
+      </property> 
+      
+      <property>
+         <name>DatasetFile</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>The URL of a analysed datasetFile.</definition>
+      </property>
+
+      <property>
+         <name>ResultFile</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition> The results of this analysis can be transferred using this property. 
+         Using it willblow up the the size of the metadatafile and we recommend to rather define the URL of the results file.</definition>
+      </property> 
+      
+      <property>
+         <name>ResultFile</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>The URL of a results file.</definition>
+      </property>  
+      
+      <property>
+         <name>ResultFigure</name>
+	      <value>
+			<type>binary</type>
+	      </value>
+         <definition>A figure showing the results. This property is meant to strore the real figure content. 
+         This will blow up the the size of the metadatafile and we recommend to rather define the URL of the figure.</definition>
+      </property> 
+      
+      <property>
+         <name>PaperDOI</name>
+	      <value>
+			<type>text</type>
+	      </value>
+         <definition>If the results of this analysis have been published one can store the doi of the paper.</definition>
+      </property> 
+      
+      <property>
+         <name>PaperURL</name>
+	      <value>
+			<type>URL</type>
+	      </value>
+         <definition>If the results of this analysis have been published the URL of the document can be given here</definition>
+      </property> 
+   
+   </section> 
+</odML>

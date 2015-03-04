@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--         Leaky integrate and fire	  	 	       -->
+<!-- ********************************************************* --> 
+<odML version="1">
+  <repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+  <version>1.0</version>
+  <date>2011-01-21</date>
+  <section>
+    <type>model/lif</type>
+    <name>Leaky integrate and fire</name>
+    <definition>Properties to describe a leaky integrate and fire neuron model.</definition>
+    
+    <property>
+      <name>Author</name>
+      <value>
+        <type>person</type> 
+      </value>
+      <definition>The author of this model.</definition>
+    </property>
+    
+    <property>
+      <name>Date</name>
+      <value>
+        <type>date</type> 
+      </value>
+      <definition>The simulation date.</definition>
+    </property>
+    
+    <property>
+      <name>Program</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The program name.</definition>
+    </property>
+    
+    <property>
+      <name>ProgramVersion</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The program version name.</definition>
+    </property>
+    
+    
+    <property>
+      <name>Description</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>A descriptive text.</definition>
+    </property>
+    <!--     Basics    -->
+    <property>
+      <name>RestingPotential</name>
+      <value>
+        <type>float</type> 
+        <unit>V</unit>
+      </value>
+      <definition>The resting voltage.</definition>
+    </property>
+    <property>
+      <name>ResetPotential</name>
+      <value>
+        <type>float</type> 
+        <unit>V</unit>
+      </value>
+      <definition>The potential to which the neuron's potential is set after a spike.</definition>
+    </property>
+    
+    <property>
+      <name>Resistance</name>
+      <value>
+        <type>float</type> 
+        <unit>Ohm</unit>
+      </value>
+      <definition>The membrane restisance.</definition>
+    </property>
+  
+    <property>
+      <name>Capacitance</name>
+      <value>
+        <type>float</type> 
+        <unit>F</unit>
+      </value>
+      <definition>The membrane restisance.</definition>
+    </property>
+  
+    
+    <property>
+      <name>MembraneTimeConstant</name>
+      <value>
+        <type>float</type> 
+        <unit>s</unit>
+      </value>
+      <definition>The membrane time constant.</definition>
+    </property>
+  
+    <property>
+      <name>BiasCurrent</name>
+      <value>
+        <type>float</type> 
+        <unit>A</unit>
+      </value>
+      <definition>The offset current.</definition>
+    </property>
+    
+    
+    <property>
+      <name>Timestep</name>
+      <value>
+        <type>float</type> 
+        <unit>s</unit>
+      </value>
+      <definition>The duration of a time step in the simulation.</definition>
+    </property>
+    
+    <property>
+      <name>VoltageEquation</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The equation to calculate the membrane voltage.</definition>
+    </property>
+    
+  
+    
+    <!--     Adaptation -->
+    <property>
+      <name>AdaptationIncrement</name>
+      <value>
+        <type>float</type> 
+        <unit>A</unit>
+      </value>
+      <definition>When an adaptation current is implemented the amount about which the adaptation is increased when a spike is fired.</definition>
+    </property>
+    
+    <property>
+      <name>AdaptationTimeConstant</name>
+      <value>
+        <type>float</type> 
+        <unit>s</unit>
+      </value>
+      <definition>The time constant with which the adaptation current returns back to zero.</definition>
+    </property>
+    
+    <property>
+      <name>AdaptationEquation</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The equation to calculate the adaptation currrent.</definition>
+    </property>
+    
+    <!--     Noise  -->
+    <property>
+      <name>NoiseAmplitude</name>
+      <value>
+        <type>float</type> 
+        <unit>A</unit>
+      </value>
+      <definition>The amount of noise added.</definition>
+    </property>
+    
+    <property>
+      <name>NoiseType</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The type of noise. For example Gaussian, Ohrnstein-Uhlenbeck etc.</definition>
+    </property>
+    
+    <property>
+      <name>NoiseCorrelation</name>
+      <value>
+        <type>float</type> 
+        <unit>s</unit>
+      </value>
+      <definition>The correlation time constant used e.g. with OU noise.</definition>
+    </property>
+    
+    
+    
+    
+    <!-- Threshold settings -->
+    <property>
+      <name>Threshold</name>
+      <value>
+        <type>float</type> 
+        <unit>V</unit>
+      </value>
+      <definition>The firing threshold.</definition>
+    </property>
+    
+    <property>
+      <name>ThresholdIncrement</name>
+      <value>
+        <type>float</type> 
+        <unit>V</unit>
+      </value>
+      <definition>The voltage about which the threshold is increased once a spike has been fired.</definition>
+    </property>
+    
+    <property>
+      <name>ThresholdTimeConstant</name>
+      <value>
+        <type>float</type> 
+        <unit>s</unit>
+      </value>
+      <definition>The time ocnstant with which the threshold returns back to baseline.</definition>
+    </property>
+    
+    <property>
+      <name>Threshold</name>
+      <value>
+        <type>float</type> 
+        <unit>V</unit>
+      </value>
+      <definition>The firing threshold.</definition>
+    </property>
+    
+    <property>
+      <name>ThresholdEquation</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The equation to calculate the threshold.</definition>
+    </property>
+    
+  </section>
+</odML> 

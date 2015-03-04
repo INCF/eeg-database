@@ -1,0 +1,127 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?xml-stylesheet type="text/xsl" href="odmlTerms.xsl"?>
+<?xml-stylesheet type="text/xsl" href="odml.xsl"?>
+<odML version="1">
+  <date>2015-02-24</date>
+  <section>
+    <type>experiment</type>
+    <name>Experiment</name>
+    <definition>Specification of an experiment. The Experiment is
+      part of a Project and the recorded data for a specific
+      Experiment are found in Datasets. Possible subsections are, for
+      example, Dataset and Stimulus.</definition>
+    <property>
+      <name>Description</name>
+      <definition>A description of the
+         experiment.</definition>
+      <value>
+        <type>text</type>
+      </value>
+    </property>
+    <property>
+      <name>Type</name>
+      <definition>The type of experiment.</definition>
+      <value>
+        electrophysiology
+        <type>string</type>
+      </value>
+      <value>
+        behavior
+        <type>string</type>
+      </value>
+      <value>
+        simulation
+        <type>string</type>
+      </value>
+      <value>
+        imaging
+        <type>string</type>
+      </value>
+      <value>
+        psychophysics
+        <type>string</type>
+      </value>
+    </property>
+    <property>
+      <name>Subtype</name>
+      <value>
+        <type>string</type>
+      </value>
+    </property>
+    <property>
+      <name>ProjectName</name>
+      <definition>The name of the project this experiment belongs to.</definition>
+      <value>
+        <type>string</type>
+      </value>
+    </property>
+    <property>
+      <name>ProjectID</name>
+      <definition>The ID of the project this experiment belongs
+         to.</definition>
+      <value>
+        <type>string</type>
+      </value>
+    </property>
+    <section>
+      <type>person</type>
+      <name>Person</name>
+      <definition>Information about a person. E.g. as Experimenter, Author, etc.</definition>
+      <property>
+        <name>FirstName</name>
+        <definition>The  persons first Name (John).</definition>
+        <value>
+          <type>string</type>
+        </value>
+      </property>
+      <property>
+        <name>LastName</name>
+        <definition>The persons last name (Doe).</definition>
+        <value>
+          <type>string</type>
+        </value>
+      </property>
+      <property>
+        <name>Gender</name>
+        <definition>Male or female?</definition>
+        <value>
+          <type>string</type>
+        </value>
+      </property>
+      <property>
+        <name>Role</name>
+        <definition>The role of this person e.g. when describing
+         a project (Responsible investigator), or a recording
+         (Experimenter).</definition>
+        <value>
+          Author
+          <type>string</type>
+        </value>
+        <value>
+          Experimenter
+          <type>string</type>
+        </value>
+        <value>
+          Principle Investigator
+          <type>string</type>
+        </value>
+        <value>
+          Responsible Investigator
+          <type>string</type>
+        </value>
+        <value>
+          Subject
+          <type>string</type>
+        </value>
+      </property>
+      <property>
+        <name>Email</name>
+        <definition>Person's e-mail.</definition>
+        <value>
+          <type>string</type>
+        </value>
+      </property>
+    </section>
+  </section>
+</odML>
+

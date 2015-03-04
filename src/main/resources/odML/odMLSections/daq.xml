@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+ <!-- ********************************** -->
+      <!-- Data  acquisition (DAQ) properties -->
+      <!-- ********************************** -->
+      <section>
+		<type>hardware/daq</type>
+        <name>DataAcquisition</name>
+         <definition>The hardware section describes the settings of the used hardware. There should be one hardware section for each hardware item that was used.</definition>
+                   
+	      <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property> 
+	      
+	   <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+      	   </property> 
+	
+	   <property>
+                <name>Manufacturer</name>
+	        <value>
+			<type>string</type>
+	        </value>
+                <definition>The Manufacturer of this hardware item.</definition>
+	   </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>AIResolution</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The voltage resolution of the analog input (AIN) subsystem given in bit.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>AIMaxSampleRate</name>
+	         <value>
+				<type>float</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The maximum sampling rate.</definition>
+	      </property>
+	      
+	      <property>
+            <name>AIChannelCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The number of input channels of the DAQ-device.</definition>
+	      </property>
+	      
+	      <property>
+            <name>AOResolution</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The voltage resolution of a data-acquisition
+             analog output (AO) subsystem given in bit.</definition>
+	      </property>
+	      
+         <property>
+            <name>AOMaxSampleRate</name>
+	         <value>
+				<type>float</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The maximum sampling rate.</definition>
+	      </property>
+	      
+	      <property>
+            <name>AOChannelCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The number of output channels of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>DIOLineCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The number of digital input/output lines (DIO) of the device.</definition>
+	      </property>
+  
+
+	      <property>
+            <name>AIUsedChannelCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The number of used analog input channels.</definition>
+	      </property>
+	      
+	      <property>
+            <name>AISampleRate</name>
+	         <value>
+				<type>int</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The sample rate with which an individual input
+            channel was sampled. Given in Hz. </definition>
+	      </property> 
+	      
+	      <property>
+            <name>AIChannelGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The gain of an input channel.</definition>
+	      </property>
+	      
+	      <property>
+            <name>AIReference</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The reference to which voltages were measured. Usually either "common ground" or "differential".</definition>
+	      </property> 
+	      
+	      <property>
+            <name>AIPolarity</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The polarity of the measurement "unipolar" or "bipolar".</definition>
+	      </property> 
+	      
+	      <property>
+            <name>AOUsedChannelCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+            <definition>The number of used analog output channels.
+	         </definition>
+	      </property>
+	      
+	      <property>
+            <name>AOSampleRate</name>
+	         <value>
+				<type>int</type>
+				<unit>Hz</unit>
+			 </value>
+            <definition>The sample rate with which an individual output
+            channel was sampled. Given in Hz.</definition>
+	      </property>  
+	      
+	      <property>
+            <name>AOChannelGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The gain of an output channel.</definition>
+	      </property> 
+
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+
+   </section>
+</odML>

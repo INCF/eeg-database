@@ -25,7 +25,7 @@ This file is part of the EEG-database project
 <body>
     <wicket:panel>
         <div wicket:id="head">
-            <label><wicket:message key="label.template.section"/>: <span wicket:id="name" class="editable"/></label><br />
+            <label><span wicket:id="sectionNameLabel">:</span> <span wicket:id="name" class="editable"></span></label><br />
             <label><wicket:message key="label.template.control.addSection"></wicket:message></label><select wicket:id="addSubsectionList"></select>
             <input type="button" wicket:id="removeSection" class="remove-button" wicket:message="value:button.template.section.remove" />
             <input type="button" wicket:id="addProperty" wicket:message="value:button.template.section.addProperty"/>
