@@ -27,7 +27,7 @@ This file is part of the EEG-database project
         <label><wicket:message key="label.template.property"/>: <span wicket:id="name" class="editable"/>
          - <wicket:message key="label.template.type"></wicket:message>: <span wicket:id="type" class="editable"/>
          - <wicket:message key="label.template.value"></wicket:message>: <span wicket:id="value" class="editable"/> </label>
-         - <input type="checkbox"/><label><wicket:message key="label.template.property.required"/></label>
+         - <input type="checkbox" wicket:id="required"/><label><wicket:message key="label.template.property.required"/></label>
          - <input type="button" wicket:id="remove-property" value="X" class="remove-button"/>
         <br />
         <wicket:enclosure child="definition">

@@ -127,7 +127,7 @@ public class TemplateForm extends Panel {
                 } else {
 
                     String templateName = section.getName();
-                    Writer writer = new Writer(section, true, false);
+                    Writer writer = new Writer(section, true, true);
                     ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
 
                     if (writer.write(byteStream)) {

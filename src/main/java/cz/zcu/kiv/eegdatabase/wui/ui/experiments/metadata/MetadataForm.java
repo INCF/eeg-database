@@ -72,7 +72,7 @@ public class MetadataForm extends Panel {
                 try {
                     FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\saveform.xml"));
 
-                    Writer writer = new Writer(MetadataForm.this.model.getObject(), true, false);
+                    Writer writer = new Writer(MetadataForm.this.model.getObject(), true, true);
                     if (writer.write(stream)) {
                         info("Save template done.");
                     } else {
