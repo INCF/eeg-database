@@ -31,6 +31,7 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataT
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -95,6 +96,16 @@ public class ListTemplatePage extends MenuPage {
             @Override
             public void populateItem(Item<ICellPopulator<Template>> item, String componentId, IModel<Template> rowModel) {
                 item.add(new ViewLinkPanel(componentId, MetadataFormPage.class, "templateId", rowModel, new Model<String>("test template")));
+            }
+        });
+        
+        columns.add(new PropertyColumn<Template, String>(null, null, null) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void populateItem(Item<ICellPopulator<Template>> item, String componentId, IModel<Template> rowModel) {
+                item.add(new RemoveTemplateLinkPanel(componentId, rowModel));
             }
         });
         return columns;

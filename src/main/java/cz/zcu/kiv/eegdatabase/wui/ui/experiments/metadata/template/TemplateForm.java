@@ -83,7 +83,7 @@ public class TemplateForm extends Panel {
         window = new ModalWindow("viewTemplateFormWindow");
         window.setMinimalHeight(500);
         window.setMinimalWidth(800);
-        window.setTitle("pageTitle.template.view");
+        window.setTitle(ResourceUtils.getString("pageTitle.template.view"));
         window.setHeightUnit("px");
         window.setWidthUnit("px");
 

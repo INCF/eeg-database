@@ -18,22 +18,13 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  TemplatePropertyPanel.html, 2013/02/27 00:01 Jakub Rinkes
+  RemoveTemplateLinkPanel.html, 2013/03/05 00:01 Jakub Rinkes
 -->
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
-    <wicket:panel>
-        <label><wicket:message key="label.template.property"/>: <span wicket:id="name" class="editable"/>
-         - <wicket:message key="label.template.type"></wicket:message>: <span wicket:id="type" class="editable"/>
-         - <wicket:message key="label.template.value"></wicket:message>: <span wicket:id="value" class="editable"/> </label>
-         - <input type="checkbox"/><label><wicket:message key="label.template.property.required"/></label>
-         - <input type="button" wicket:id="remove-property" value="X" class="remove-button"/>
-        <br />
-        <wicket:enclosure child="definition">
-        <div wicket:id="definition" class="definition editable">
-        </div>
-        </wicket:enclosure>
-    </wicket:panel>
+<wicket:panel>
+    <a href="#" wicket:id="link"><wicket:message key="label.delete"></wicket:message></a>
+</wicket:panel>
 </body>
 </html>

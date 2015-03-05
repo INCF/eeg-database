@@ -62,6 +62,16 @@ public class TemplatePropertyPanel extends Panel {
             }
             
         });
+        add(new AjaxEditableLabel<Object>("value"){
+            
+            private static final long serialVersionUID = 1L;
+            
+            @Override
+            protected String defaultNullLabel() {
+                return ResourceUtils.getString("text.template.empty.propertyValue");
+            }
+            
+        });
         add(new AjaxEditableMultiLineLabel<String>("definition") {
 
             private static final long serialVersionUID = 1L;
