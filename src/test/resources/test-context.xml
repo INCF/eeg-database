@@ -384,6 +384,9 @@
     <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
         <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
     </bean>
+    <bean name="orderService" class="cz.zcu.kiv.eegdatabase.wui.core.order.OrderServiceImpl" autowire="byType">
+        <constructor-arg ref="orderDao"/>
+    </bean>
 
     <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >
         <property name="projectTypeDao" ref="projectTypeDao"/>
