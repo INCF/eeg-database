@@ -74,6 +74,7 @@ public class SimplePersonDao
      * identical with searched hashCode. Search only one record,
      * because hashCode is unique.
      *
+     *
      * @param hashCode - hashCode of searched Person
      * @return Person with searched hashCode
      */
