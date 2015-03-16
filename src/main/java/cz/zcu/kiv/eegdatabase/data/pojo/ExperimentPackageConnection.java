@@ -47,7 +47,7 @@ public class ExperimentPackageConnection implements Serializable {
 	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "EPC_ID")
-	private int experimentPackgageConnectionId;
+	private int experimentPackageConnectionId;
 	
 	
 	@ManyToOne
@@ -58,12 +58,12 @@ public class ExperimentPackageConnection implements Serializable {
 	@JoinColumn(name = "EXPERIMENT_PACKAGE")
 	private ExperimentPackage experimentPackage;
 
-	public int getExperimentPackgageConnectionId() {
-		return experimentPackgageConnectionId;
+	public int getExperimentPackageConnectionId() {
+		return experimentPackageConnectionId;
 	}
 
-	public void setExperimentPackgageConnectionId(int experimentPackgageConnectionId) {
-		this.experimentPackgageConnectionId = experimentPackgageConnectionId;
+	public void setExperimentPackageConnectionId(int experimentPackageConnectionId) {
+		this.experimentPackageConnectionId = experimentPackageConnectionId;
 	}
 
 	public Experiment getExperiment() {
