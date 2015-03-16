@@ -381,6 +381,10 @@
 
     <bean name="digitizationService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationServiceImpl" autowire="byType" />
 
+    <bean name="personOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamServiceImpl" autowire="byType" >
+        <property name="valDAO" ref="personOptParamValDao"/>
+    </bean>
+
     <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
         <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
     </bean>
