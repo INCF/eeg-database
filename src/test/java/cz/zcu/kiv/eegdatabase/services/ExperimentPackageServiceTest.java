@@ -136,8 +136,10 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         experimentPackageService.create(experimentPackage, license);
         experimentDao.create(experiment);
 
-        int countBefore = experimentPackage.getExperimentPackageConnections().size();
-        System.out.println(countBefore);
+        if (experimentPackage.getExperimentPackageConnections() != null) {
+            int countBefore = experimentPackage.getExperimentPackageConnections().size();
+            System.out.println(countBefore);
+        }
         connection.setExperimentPackage(experimentPackage);
         connection.setExperiment(experiment);
         experimentPackageConnectionService.addExperimentToPackage(experiment, experimentPackage);
@@ -146,7 +148,9 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         experimentDao.create(experiment);
         experimentPackageConnectionService.addExperimentToPackage(experiment, experimentPackage);
 
-        System.out.println(experimentPackage.getExperimentPackageConnections().size());
+        if (experimentPackage.getExperimentPackageConnections() != null) {
+            System.out.println(experimentPackage.getExperimentPackageConnections().size());
+        }
     }
 
     @Test(groups = "unit", enabled = false)
