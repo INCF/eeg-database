@@ -68,7 +68,7 @@ public class ResearchGroup implements java.io.Serializable, Comparable<ResearchG
 	private String description;
 	@FormItem
 	private boolean paidAccount;
-	private boolean lock = true;
+	private boolean lock = false;
 	
 	private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(
 					0);
