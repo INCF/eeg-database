@@ -22,11 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.data.service.MailService;
-import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import java.math.BigDecimal;
+import java.util.List;
+import java.util.Locale;
+import java.util.Set;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -34,10 +33,6 @@ import org.springframework.beans.factory.annotation.Required;
 import org.springframework.context.i18n.LocaleContextHolder;
 import org.springframework.mail.MailException;
 import org.springframework.transaction.annotation.Transactional;
-
-import java.util.List;
-import java.util.Locale;
-import java.util.Set;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentOptParamDefDao;
 import cz.zcu.kiv.eegdatabase.data.dao.FileMetadataParamDefDao;
@@ -59,17 +54,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonalLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembership;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipId;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.data.service.MailService;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
-
-import java.util.Date;
 
 public class ResearchGroupServiceImpl implements ResearchGroupService {
 
@@ -245,6 +236,14 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         log.debug("Creating of research group done.");
 
         preparedDefaultListsForNewGroup(group);
+        
+        License privateLicense = new License();
+        privateLicense.setDescription("Default generated owner license");
+        privateLicense.setTitle("Owner License");
+        privateLicense.setLicenseType(LicenseType.OWNER);
+        privateLicense.setPrice(BigDecimal.ZERO);
+        privateLicense.setResearchGroup(group);
+        licenseDao.create(privateLicense);
 
         return groupId;
     }
