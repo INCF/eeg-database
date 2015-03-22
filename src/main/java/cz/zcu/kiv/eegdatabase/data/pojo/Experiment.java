@@ -108,6 +108,7 @@ public class Experiment implements Serializable {
 	private Set<ExperimentOptParamVal> experimentOptParamVals = new HashSet<ExperimentOptParamVal>(0);
 	private Set<ExperimentPackageConnection> experimentPackageConnections = new HashSet<ExperimentPackageConnection>(0);
 	private ExperimentElastic elasticExperiment = new ExperimentElastic();
+    private Set<ExperimentLicence> experimentLicences = new HashSet<ExperimentLicence>(0);
 	
 	@Column(name = "PRICE", precision = 19, scale = 2)
     private BigDecimal price;
@@ -418,7 +419,16 @@ public class Experiment implements Serializable {
 		this.artifactRemoveMethods = artifactRemoveMethods;
 	}
 
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
+    @OneToMany(mappedBy = "experiment")
+    public Set<ExperimentLicence> getExperimentLicences() {
+        return experimentLicences;
+    }
+
+    public void setExperimentLicences(Set<ExperimentLicence> experimentLicences) {
+        this.experimentLicences = experimentLicences;
+    }
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "experiment")
 	public Set<DataFile> getDataFiles() {
 		return this.dataFiles;
 	}
