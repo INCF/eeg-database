@@ -89,8 +89,8 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent("Field 'Subject person' is required.");
 
         tester.selectOption("view:researchGroup", "new group");
-        Thread.sleep(waitForAjax);
-        tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
+//        Thread.sleep(waitForAjax);
+//        tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
 
 
         tester.setTextField("view:scenario", "scenarioForExperiment");
@@ -112,7 +112,7 @@ public class ExperimentTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);
-        tester.assertTextPresent("Research group new group can't create or edit experiment. Research group is locked.");
+        tester.assertTextNotPresent("Research group new group can't create or edit experiment. Research group is locked.");
         tester.clickLinkWithText("Log out");
 
     }
