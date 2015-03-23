@@ -106,6 +106,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 					0);
 	private Set<ServiceResult> results = new HashSet<ServiceResult>(0);
 	private Set<PersonalLicense> personalLicenses = new HashSet<PersonalLicense>(0);
+    private Set<PersonMembershipPlan> personMembershipPlans = new HashSet<PersonMembershipPlan>(0);
 
 	public Person() {
 	}
@@ -458,8 +459,17 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
 		this.personalLicenses = personalLicenses;
 	}
-	
-	@Column(name="LOCK" ,nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
+
+    @OneToMany(mappedBy = "person")
+    public Set<PersonMembershipPlan> getPersonMembershipPlans() {
+        return personMembershipPlans;
+    }
+
+    public void setPersonMembershipPlans(Set<PersonMembershipPlan> personMembershipPlans) {
+        this.personMembershipPlans = personMembershipPlans;
+    }
+
+    @Column(name="LOCK" ,nullable=false, columnDefinition = "BOOLEAN DEFAULT FALSE")
     public boolean isLock() {
         return lock;
     }

@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
+import java.util.Set;
 
 /**
  * ********************************************************************************************************************
@@ -53,7 +54,10 @@ public class MembershipPlan implements Serializable {
     private long length;
 
     @Column(name="TYPE")
-    private boolean type;
+    private int type;
+
+    @OneToMany(mappedBy = "membershipPlan")
+    private Set<PersonMembershipPlan> personMembershipPlans;
 
     public int getMembershipId() {
         return membershipId;
@@ -75,8 +79,12 @@ public class MembershipPlan implements Serializable {
         return length;
     }
 
-    public boolean isType() {
+    public int getType() {
         return type;
+    }
+
+    public Set<PersonMembershipPlan> getPersonMembershipPlans() {
+        return personMembershipPlans;
     }
 
     public void setMembershipId(int membershipId) {
@@ -99,8 +107,12 @@ public class MembershipPlan implements Serializable {
         this.length = length;
     }
 
-    public void setType(boolean type) {
+    public void setType(int type) {
         this.type = type;
+    }
+
+    public void setPersonMembershipPlans(Set<PersonMembershipPlan> personMembershipPlans) {
+        this.personMembershipPlans = personMembershipPlans;
     }
 
     @Override
@@ -127,7 +139,7 @@ public class MembershipPlan implements Serializable {
         result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (price != null ? price.hashCode() : 0);
         result = 31 * result + (int) (length ^ (length >>> 32));
-        result = 31 * result + (type ? 1 : 0);
+        result = 31 * result + type;
         return result;
     }
 }
