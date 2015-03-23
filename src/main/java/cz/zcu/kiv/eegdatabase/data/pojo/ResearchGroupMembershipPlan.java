@@ -1,7 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import javax.persistence.*;
 import java.io.Serializable;
+import javax.persistence.*;
 import java.sql.Timestamp;
 
 /**
@@ -26,19 +26,19 @@ import java.sql.Timestamp;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * PersonMembershipPlan, 2015/03/23 09:40 administrator
+ * ResearchGroupMembershipPlan, 2015/03/23 18:06 administrator
  * <p/>
  * ********************************************************************************************************************
  */
 
 @Entity
-@Table(name = "PERSON_MEMBERSHIP_PLAN")
-public class PersonMembershipPlan implements Serializable {
+@Table(name = "RESEARCH_GROUP_MEMBERSHIP_PLAN")
+public class ResearchGroupMembershipPlan implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "PERSON_MEMBERSHIP_PLAN_ID")
-    private int personMembershipPlanId;
+    @Column(name = "RESEARCH_GROUP_MEMBERSHIP_PLAN_ID")
+    private int researchGroupMembershipPlanId;
 
     @Column(name="FROM")
     Timestamp from;
@@ -47,8 +47,8 @@ public class PersonMembershipPlan implements Serializable {
     Timestamp to;
 
     @ManyToOne
-    @JoinColumn(name = "PERSON")
-    private Person person;
+    @JoinColumn(name = "RESEARCH_GROUP")
+    private ResearchGroup researchGroup;
 
     @ManyToOne
     @JoinColumn(name = "MEMBERSHIP_PLAN")
@@ -58,42 +58,8 @@ public class PersonMembershipPlan implements Serializable {
     @JoinColumn(name = "PROMO_CODE")
     private PromoCode promoCode;
 
-
-
-    public void setPersonMembershipPlanId(int personMembershipPlanId) {
-        this.personMembershipPlanId = personMembershipPlanId;
-    }
-
-    public void setPerson(Person person) {
-        this.person = person;
-    }
-
-    public void setMembershipPlan(MembershipPlan membershipPlan) {
-        this.membershipPlan = membershipPlan;
-    }
-
-    public void setFrom(Timestamp from) {
-        this.from = from;
-    }
-
-    public void setTo(Timestamp to) {
-        this.to = to;
-    }
-
-    public void setPromoCode(PromoCode promoCode) {
-        this.promoCode = promoCode;
-    }
-
-    public int getPersonMembershipPlanId() {
-        return personMembershipPlanId;
-    }
-
-    public Person getPerson() {
-        return person;
-    }
-
-    public MembershipPlan getMembershipPlan() {
-        return membershipPlan;
+    public int getResearchGroupMembershipPlanId() {
+        return researchGroupMembershipPlanId;
     }
 
     public Timestamp getFrom() {
@@ -104,7 +70,39 @@ public class PersonMembershipPlan implements Serializable {
         return to;
     }
 
+    public ResearchGroup getResearchGroup() {
+        return researchGroup;
+    }
+
+    public MembershipPlan getMembershipPlan() {
+        return membershipPlan;
+    }
+
     public PromoCode getPromoCode() {
         return promoCode;
+    }
+
+    public void setResearchGroupMembershipPlanId(int researchGroupMembershipPlanId) {
+        this.researchGroupMembershipPlanId = researchGroupMembershipPlanId;
+    }
+
+    public void setFrom(Timestamp from) {
+        this.from = from;
+    }
+
+    public void setTo(Timestamp to) {
+        this.to = to;
+    }
+
+    public void setResearchGroup(ResearchGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
+
+    public void setMembershipPlan(MembershipPlan membershipPlan) {
+        this.membershipPlan = membershipPlan;
+    }
+
+    public void setPromoCode(PromoCode promoCode) {
+        this.promoCode = promoCode;
     }
 }

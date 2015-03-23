@@ -2,7 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.Date;
 import java.util.Set;
 
 /**
@@ -27,63 +27,70 @@ import java.util.Set;
  * <p/>
  * **********************************************************************************************************************
  * <p/>
- * MembershipPlan, 2015/03/22 18:38 administrator
+ * PromoCode, 2015/03/23 17:36 administrator
  * <p/>
  * ********************************************************************************************************************
  */
 
 @Entity
-@Table(name="MEMBERSHIP_PLAN")
-public class MembershipPlan implements Serializable {
+@Table(name="PROMO_CODE")
+public class PromoCode implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
-    @Column(name = "MEMBERSHIP_PLAN_ID")
-    private int membershipId;
+    @Column(name = "PROMO_CODE_ID")
+    private int promoCodeId;
 
-    @Column(name="NAME")
-    private String name;
+    @Column(name="KEYWORD")
+    String keyword;
 
-    @Column(name="DESCRIPTION")
-    private String description;
+    @Column(name="DISCOUNT")
+    String discount;
 
-    @Column(name = "PRICE", precision = 19, scale = 2)
-    private BigDecimal price;
+    @Column(name="FROM")
+    Date from;
 
-    @Column(name="LENGTH")
-    private long length;
+    @Column(name="TO")
+    Date to;
 
     @Column(name="TYPE")
-    private int type;
+    int type;
 
-    @OneToMany(mappedBy = "membershipPlan")
+    @Column(name="DESCRIPTION")
+    String description;
+
+    @OneToMany(mappedBy = "promoCode")
     private Set<PersonMembershipPlan> personMembershipPlans;
 
-    @OneToMany(mappedBy = "membershipPlan")
+    @OneToMany(mappedBy = "promoCode")
     private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans;
 
-    public int getMembershipId() {
-        return membershipId;
+    public int getPromoCodeId() {
+        return promoCodeId;
     }
 
-    public String getName() {
-        return name;
+    public String getKeyword() {
+        return keyword;
     }
 
-    public String getDescription() {
-        return description;
+    public String getDiscount() {
+        return discount;
     }
 
-    public BigDecimal getPrice() {
-        return price;
+    public Date getFrom() {
+        return from;
     }
 
-    public long getLength() {
-        return length;
+    public Date getTo() {
+        return to;
     }
 
     public int getType() {
         return type;
+    }
+
+    public String getDescription() {
+        return description;
     }
 
     public Set<PersonMembershipPlan> getPersonMembershipPlans() {
@@ -94,28 +101,32 @@ public class MembershipPlan implements Serializable {
         return researchGroupMembershipPlans;
     }
 
-    public void setMembershipId(int membershipId) {
-        this.membershipId = membershipId;
+    public void setPromoCodeId(int promoCodeId) {
+        this.promoCodeId = promoCodeId;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setKeyword(String keyword) {
+        this.keyword = keyword;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
+    public void setDiscount(String discount) {
+        this.discount = discount;
     }
 
-    public void setPrice(BigDecimal price) {
-        this.price = price;
+    public void setFrom(Date from) {
+        this.from = from;
     }
 
-    public void setLength(long length) {
-        this.length = length;
+    public void setTo(Date to) {
+        this.to = to;
     }
 
     public void setType(int type) {
         this.type = type;
+    }
+
+    public void setDescription(String description) {
+        this.description = description;
     }
 
     public void setPersonMembershipPlans(Set<PersonMembershipPlan> personMembershipPlans) {
@@ -131,26 +142,29 @@ public class MembershipPlan implements Serializable {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        MembershipPlan that = (MembershipPlan) o;
+        PromoCode promoCode = (PromoCode) o;
 
-        if (length != that.length) return false;
-        if (membershipId != that.membershipId) return false;
-        if (type != that.type) return false;
-        if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        if (promoCodeId != promoCode.promoCodeId) return false;
+        if (type != promoCode.type) return false;
+        if (description != null ? !description.equals(promoCode.description) : promoCode.description != null)
+            return false;
+        if (discount != null ? !discount.equals(promoCode.discount) : promoCode.discount != null) return false;
+        if (from != null ? !from.equals(promoCode.from) : promoCode.from != null) return false;
+        if (keyword != null ? !keyword.equals(promoCode.keyword) : promoCode.keyword != null) return false;
+        if (to != null ? !to.equals(promoCode.to) : promoCode.to != null) return false;
 
         return true;
     }
 
     @Override
     public int hashCode() {
-        int result = membershipId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
-        result = 31 * result + (int) (length ^ (length >>> 32));
+        int result = promoCodeId;
+        result = 31 * result + (keyword != null ? keyword.hashCode() : 0);
+        result = 31 * result + (discount != null ? discount.hashCode() : 0);
+        result = 31 * result + (from != null ? from.hashCode() : 0);
+        result = 31 * result + (to != null ? to.hashCode() : 0);
         result = 31 * result + type;
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
     }
 }
