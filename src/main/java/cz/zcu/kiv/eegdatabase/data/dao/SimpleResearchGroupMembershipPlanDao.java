@@ -30,4 +30,5 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
  */
 public class SimpleResearchGroupMembershipPlanDao extends SimpleGenericDao<ResearchGroupMembershipPlan,Integer> implements ResearchGroupMembershipPlanDao {
 
+
 }
