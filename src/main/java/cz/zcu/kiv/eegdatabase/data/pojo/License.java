@@ -71,7 +71,7 @@ public class License implements Serializable {
     @OneToMany(mappedBy = "license")
     private Set<ExperimentPackageLicense> experimentPackageLicenses;
 
-    @OneToMany(mappedBy = "licence")
+    @OneToMany(mappedBy = "license")
     private Set<ExperimentLicence> experimentLicences;
 
     @Column(name = "LICENSE_TYPE" )
