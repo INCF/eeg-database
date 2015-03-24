@@ -44,7 +44,7 @@ public class FormSectionPanel extends Panel {
     }
 
     private void setupLists() {
-        
+
         PropertyListView<Property> properties = new PropertyListView<Property>("properties") {
 
             private static final long serialVersionUID = 1L;
@@ -54,7 +54,7 @@ public class FormSectionPanel extends Panel {
                 item.add(new FormPropertyPanel("property", item.getModel()));
             }
         };
-        add(properties);
+        add(properties.setReuseItems(true));
 
         PropertyListView<Section> sections = new PropertyListView<Section>("sections") {
 
@@ -65,7 +65,7 @@ public class FormSectionPanel extends Panel {
                 item.add(new FormSectionPanel("section", item.getModel()));
             }
         };
-        add(sections);
+        add(sections.setReuseItems(true));
     }
 
     private void setupLabels() {

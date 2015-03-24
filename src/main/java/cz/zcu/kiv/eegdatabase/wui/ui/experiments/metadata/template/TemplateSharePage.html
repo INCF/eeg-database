@@ -18,22 +18,31 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  TemplateFormPage.html, 2013/02/27 00:01 Jakub Rinkes
+  TemplateSharePage.html, 2015/03/24 00:01 Jakub Rinkes
 -->
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-<head>
-<meta charset="utf-8" />
-<!-- <link href='http://fonts.googleapis.com/css?family=Yanone+Kaffeesatz:regular,bold' rel='stylesheet' type='text/css' /> -->
-<link rel="stylesheet" href="style.css" type="text/css" media="screen" title="Stylesheet" />
-</head>
 <body>
     <wicket:extend>
         <div class="leftMenu" wicket:id="leftMenu"></div>
 
         <div class="mainContentWithMenu">
-            <h1 wicket:id="title"></h1>
-            <div wicket:id="template-panel"></div>
+            
+            <h1><wicket:message key="pageTitle.template.share"></wicket:message></h1>
+            
+            <form wicket:id="form" class="standardInputForm">
+                <div class="itemBox">
+                    <label for=givenname class="textFieldLabel"><wicket:message key="label.selectTemplate"></wicket:message></label>
+                    <select wicket:id="template-choice" class="selectBox"></select>
+                </div>
+                <div class="itemBox">
+                    <label for=givenname class="textFieldLabel"><wicket:message key="label.selectPerson"></wicket:message></label>
+                    <input type="text" wicket:id="person-choice" />
+                </div>
+                <div class="itemBox">
+                    <input type="submit" wicket:id="share-button" class="submitButton lightButtonLink" />
+                </div>
+            </form>
         </div>
     </wicket:extend>
 </body>

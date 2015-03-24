@@ -67,6 +67,7 @@ public class ListTemplatePage extends MenuPage {
                 provider, ITEMS_PER_PAGE);
         
         add(new BookmarkablePageLink<Void>("addTemplateLink",TemplateFormPage.class));
+        add(new BookmarkablePageLink<Void>("shareTemplateLink", TemplateSharePage.class));
 
         add(list);
     }

@@ -31,6 +31,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -69,11 +70,11 @@ public class MetadataFormPage extends MenuPage {
             section = reader.load(template);
 
         } catch (Exception e) {
-            // TODO Auto-generated catch block
-            e.printStackTrace();
+            log.error(e.getMessage(), e);
         }
 
         add(new MetadataForm("metadata-form", new Model<Section>(section)));
+        getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
 
     public MetadataFormPage(final PageParameters parameters) {
@@ -92,12 +93,14 @@ public class MetadataFormPage extends MenuPage {
         Reader reader = new Reader();
         try {
             Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
+            section.setName(template.getName());
             add(new MetadataForm("metadata-form", new Model<Section>(section)));
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
-
+        
+        getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
 }

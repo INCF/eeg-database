@@ -29,6 +29,8 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -54,15 +56,19 @@ public class TemplateFormPage extends MenuPage {
 
     public TemplateFormPage() {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.template.new"));
+        IModel<String> title = ResourceUtils.getModel("pageTitle.template.new");
+        setPageTitle(title);
+        add(new Label("title", title));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-
+        
         add(new TemplateForm("template-panel"));
     }
 
     public TemplateFormPage(PageParameters parameters) {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.template.edit"));
+        IModel<String> title = ResourceUtils.getModel("pageTitle.template.edit");
+        setPageTitle(title);
+        add(new Label("title", title));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
         StringValue value = parameters.get(DEFAULT_PARAM_ID);
