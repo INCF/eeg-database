@@ -34,7 +34,7 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
     protected WebTester tester;
 
-    protected int waitForAjax = 5000;
+    protected int waitForAjax = 10000;
 
     protected String url = "http://localhost:8082";
 
