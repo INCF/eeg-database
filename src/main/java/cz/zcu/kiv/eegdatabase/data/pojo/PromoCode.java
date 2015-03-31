@@ -47,10 +47,10 @@ public class PromoCode implements Serializable {
     @Column(name="DISCOUNT")
     String discount;
 
-    @Column(name="FROM")
+    @Column(name="DATE_FROM")
     Date from;
 
-    @Column(name="TO")
+    @Column(name="DATE_TO")
     Date to;
 
     @Column(name="TYPE")

@@ -40,10 +40,10 @@ public class PersonMembershipPlan implements Serializable {
     @Column(name = "PERSON_MEMBERSHIP_PLAN_ID")
     private int personMembershipPlanId;
 
-    @Column(name="FROM")
+    @Column(name="DATE_FROM")
     Timestamp from;
 
-    @Column(name="TO")
+    @Column(name="DATE_TO")
     Timestamp to;
 
     @ManyToOne

@@ -40,10 +40,10 @@ public class ResearchGroupMembershipPlan implements Serializable {
     @Column(name = "RESEARCH_GROUP_MEMBERSHIP_PLAN_ID")
     private int researchGroupMembershipPlanId;
 
-    @Column(name="FROM")
+    @Column(name="DATE_FROM")
     Timestamp from;
 
-    @Column(name="TO")
+    @Column(name="DATE_TO")
     Timestamp to;
 
     @ManyToOne
