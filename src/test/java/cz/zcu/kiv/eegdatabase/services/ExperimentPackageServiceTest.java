@@ -22,7 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
-import static junit.framework.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 import java.math.BigDecimal;
 

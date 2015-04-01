@@ -90,9 +90,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjan2");
         tester.clickButtonWithText("Change password");
-        System.out.println(tester.getPageSource());
         Thread.sleep(waitForAjax);
-        System.out.println(tester.getPageSource());
 
         tester.assertTextPresent("Changes were made");
 
