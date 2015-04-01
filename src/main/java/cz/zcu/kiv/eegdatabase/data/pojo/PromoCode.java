@@ -32,6 +32,7 @@ import java.util.Set;
  * ********************************************************************************************************************
  */
 
+
 @Entity
 @Table(name="PROMO_CODE")
 public class PromoCode implements Serializable {
