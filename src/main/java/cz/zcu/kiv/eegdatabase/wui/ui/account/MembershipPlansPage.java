@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -34,16 +35,20 @@ public class MembershipPlansPage extends MenuPage {
 
     public MembershipPlansPage() {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.membershipPlanList"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.membershipPlans"));
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
         Person user = EEGDataBaseSession.get().getLoggedUser();
 
         if (user == null)
             throw new RestartResponseAtInterceptPageException(HomePage.class);
 
-        List<MembershipPlan> membershipPlanList = membershipPlanFacade.getAvailablePersonMembershipPlans();
 
-        ListView<MembershipPlan> plans = new ListView<MembershipPlan>("plans", membershipPlanList) {
+        List<MembershipPlan> personMembershipPlanList = membershipPlanFacade.getAvailablePersonMembershipPlans();
+        List<MembershipPlan> groupMembershipPlanList = membershipPlanFacade.getAvailableGroupMembershipPlans();
+
+
+
+        ListView<MembershipPlan> personPlans = new ListView<MembershipPlan>("personPlans", personMembershipPlanList) {
 
             private static final long serialVersionUID = 1L;
 
@@ -55,7 +60,19 @@ public class MembershipPlansPage extends MenuPage {
             }
         };
 
-        add(plans);
+        ListView<MembershipPlan> groupPlans = new ListView<MembershipPlan>("groupPlans", groupMembershipPlanList) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<MembershipPlan> item) {
+                MembershipPlan modelObject = item.getModelObject();
+                item.add(new Label("name", modelObject.getName()));
+                item.add(new Label("price", modelObject.getPrice()));
+            }
+        };
+
+        add(personPlans, groupPlans);
         //throw new RestartResponseAtInterceptPageException(UnderConstructPage.class);
     }
 }

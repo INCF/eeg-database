@@ -11,9 +11,12 @@
     <div class="mainContentWithMenu">
 
         <h1>
-            <wicket:message key='pageTitle.membershipPlanList'></wicket:message>
+            <wicket:message key='pageTitle.membershipPlans'></wicket:message>
         </h1>
 
+        <h2>
+            <wicket:message key='pageTitle.personMembershipPlanList'></wicket:message>
+        </h2>
 
         <br/>
 
@@ -26,7 +29,27 @@
             </tr>
             </thead>
             <tbody>
-            <tr wicket:id="plans">
+            <tr wicket:id="personPlans">
+                <td wicket:id="name"></td>
+                <td wicket:id="price"></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <h2>
+            <wicket:message key='pageTitle.groupMembershipPlanList'></wicket:message>
+        </h2>
+
+        <table class="dataTable membershipPlansList">
+            <thead>
+            <tr>
+                <th class="columnPlanName"><wicket:message key="dataTable.heading.membershipName" /></th>
+                <th class="columnPlanPrice"><wicket:message key="dataTable.heading.price" /></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="groupPlans">
                 <td wicket:id="name"></td>
                 <td wicket:id="price"></td>
             </tr>
