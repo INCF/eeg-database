@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.account.MembershipPlansPage;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -307,6 +308,8 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         
         mountPackage("order-list", ListOrderPage.class);
         mountPackage("order-view", OrderDetailPage.class);
+
+        mountPage("membership-plans-list", MembershipPlansPage.class);
         
 // XXX price list hidden for now.
 //        mountPage("pricelist", PriceListPage.class);

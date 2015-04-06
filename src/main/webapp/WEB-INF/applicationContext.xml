@@ -216,6 +216,16 @@
     </bean>
 
 
+    <!-- MEMBERSHIP PLANS, LICENCE HISTORY -->
+    <bean name="membershipPlanService" class="cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanServiceImpl" autowire="byType">
+        <constructor-arg ref="membershipPlanDao"/>
+    </bean>
+
+    <bean name="membershipPlanFacade" class="cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacadeImpl" autowire="byType">
+        <constructor-arg ref="membershipPlanService"/>
+    </bean>
+
+
 	<!-- MAIL -->
 	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />
 

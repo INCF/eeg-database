@@ -383,6 +383,13 @@ while still visible in code, so it can be accessible without styles **/
     width: 250px;
 }
 
+.membershipPlansList .columnPlanName {
+
+}
+.membershipPlansList .columnPlanPrice {
+
+}
+
 /* Login form definitions are used also for print */
 
 @media screen, projection, print {

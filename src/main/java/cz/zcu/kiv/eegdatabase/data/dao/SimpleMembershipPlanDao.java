@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlanType;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 
 import java.util.List;
 
@@ -34,12 +36,30 @@ import java.util.List;
 
 public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Integer> implements MembershipPlanDao {
 
-    @Override
-    public List<MembershipPlan> getMembershipPlansByType(MembershipPlanType membershipPlanType) {
 
+    @Override
+    public List<MembershipPlan> getAvailableGroupMembershipPlans() {
         String query = "select m from MembershipPlan m where m.type = :membershipPlanType";
 
-        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",membershipPlanType).list(); //set parameters
+        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",1).list(); //set parameters
         return ret;
+    }
+
+    @Override
+    public List<MembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
+        return null;
+    }
+
+    @Override
+    public List<MembershipPlan> getAvailablePersonMembershipPlans() {
+        String query = "select m from MembershipPlan m where m.type = :membershipPlanType";
+
+        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",0).list(); //set parameters
+        return ret;
+    }
+
+    @Override
+    public List<MembershipPlan> getPersonMembershipPlans(Person person) {
+        return null;
     }
 }
