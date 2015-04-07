@@ -26,6 +26,11 @@ import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import static org.testng.Assert.*;
+
 /**
  * Created by stebjan on 10.9.14.
  */
@@ -50,6 +55,14 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
             tester.clickButtonWithText("Save");
             Thread.sleep(waitForAjax);
         }
+    }
+
+    protected String getProperty(String key) throws IOException {
+        String propFile = "/EEGDataBaseApplication.properties";
+        Properties prop = new Properties();
+        assertNotNull(getClass().getResource(propFile));
+        prop.load(getClass().getResourceAsStream(propFile));
+        return prop.getProperty(key);
     }
 }
 
