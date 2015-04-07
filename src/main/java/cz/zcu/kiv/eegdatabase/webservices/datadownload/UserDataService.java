@@ -27,6 +27,7 @@
 package cz.zcu.kiv.eegdatabase.webservices.datadownload;
 
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers.*;
 
 import javax.activation.DataHandler;
@@ -50,6 +51,8 @@ public interface UserDataService {
      * @return true
      */
     public boolean isServiceAvailable();
+
+    public ExperimentMetadata getExperimentsMetadata(int id);
 
     /**
      * Method returning List of available weather information.
