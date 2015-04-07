@@ -863,6 +863,10 @@
 				<filtering>false</filtering>
 				<directory>src/test/resources</directory>
 			</testResource>
+            <testResource>
+                <filtering>false</filtering>
+                <directory>src/main/resources/cz/zcu/kiv/eegdatabase/wui/app</directory>
+            </testResource>
 			<testResource>
 				<filtering>false</filtering>
 				<directory>src/test/java/cz</directory>
