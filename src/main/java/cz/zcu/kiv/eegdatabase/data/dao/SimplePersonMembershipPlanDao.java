@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
+
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -29,5 +32,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
  * ********************************************************************************************************************
  */
 public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMembershipPlan,Integer> implements PersonMembershipPlanDao {
+
+    @Override
+    public List<PersonMembershipPlan> getPersonMembershipPlans(Person person) {
+        String query = "select m from PersonMembershipPlan m where m.person = :person";
+
+        List<PersonMembershipPlan> ret = this.getSession().createQuery(query).setParameter("person",person).list(); //set parameters
+        return ret;
+    }
 
 }

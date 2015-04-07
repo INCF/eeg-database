@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
+
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -29,5 +32,8 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
  * ********************************************************************************************************************
  */
 public interface ResearchGroupMembershipPlanDao extends GenericDao<ResearchGroupMembershipPlan,Integer> {
+
+
+    public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup);
 
 }

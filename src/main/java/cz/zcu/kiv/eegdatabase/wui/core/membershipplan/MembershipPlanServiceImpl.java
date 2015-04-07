@@ -6,8 +6,6 @@ package cz.zcu.kiv.eegdatabase.wui.core.membershipplan;
 
 import cz.zcu.kiv.eegdatabase.data.dao.MembershipPlanDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -31,20 +29,8 @@ public class MembershipPlanServiceImpl extends GenericServiceImpl<MembershipPlan
 
     @Override
     @Transactional(readOnly = true)
-    public List<MembershipPlan> getPersonMembershipPlans(Person person) {
-        return dao.getPersonMembershipPlans(person);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<MembershipPlan> getAvailablePersonMembershipPlans() {
         return dao.getAvailablePersonMembershipPlans();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<MembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
-        return dao.getGroupMembershipPlans(researchGroup);
     }
 
     @Override
@@ -52,4 +38,5 @@ public class MembershipPlanServiceImpl extends GenericServiceImpl<MembershipPlan
     public List<MembershipPlan> getAvailableGroupMembershipPlans() {
         return dao.getAvailableGroupMembershipPlans();
     }
+
 }

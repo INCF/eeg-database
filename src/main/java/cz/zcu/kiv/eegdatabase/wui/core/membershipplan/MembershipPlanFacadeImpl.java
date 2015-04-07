@@ -1,9 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.membershipplan;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
+import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -28,15 +26,6 @@ public class MembershipPlanFacadeImpl extends GenericFacadeImpl<MembershipPlan, 
         this.service = service;
     }
 
-    @Override
-    public List<MembershipPlan> getPersonMembershipPlans(Person person) {
-        return service.getPersonMembershipPlans(person);
-    }
-
-    @Override
-    public List<MembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
-        return service.getGroupMembershipPlans(researchGroup);
-    }
 
     @Override
     public List<MembershipPlan> getAvailablePersonMembershipPlans() {

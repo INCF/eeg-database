@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
+
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -30,5 +33,12 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
  */
 public class SimpleResearchGroupMembershipPlanDao extends SimpleGenericDao<ResearchGroupMembershipPlan,Integer> implements ResearchGroupMembershipPlanDao {
 
+    @Override
+    public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
+        String query = "select m from ResearchGroupMembershipPlan m where m.researchGroup = :group";
+
+        List<ResearchGroupMembershipPlan> ret = this.getSession().createQuery(query).setParameter("group",researchGroup).list(); //set parameters
+        return ret;
+    }
 
 }

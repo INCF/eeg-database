@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
+
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -29,5 +32,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
  * ********************************************************************************************************************
  */
 public interface PersonMembershipPlanDao extends GenericDao<PersonMembershipPlan,Integer> {
+
+    public List<PersonMembershipPlan> getPersonMembershipPlans(Person person);
 
 }

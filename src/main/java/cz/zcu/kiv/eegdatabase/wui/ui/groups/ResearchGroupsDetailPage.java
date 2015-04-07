@@ -22,23 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.groups;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.attributes.AjaxCallListener;
-import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
-import org.springframework.mail.MailException;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
@@ -53,6 +36,22 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.AddMemberToGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.ResearchGroupFormPage;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.attributes.AjaxCallListener;
+import org.apache.wicket.ajax.attributes.AjaxRequestAttributes;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+import org.springframework.mail.MailException;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Page of detail for research group.
@@ -129,6 +128,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
         BookmarkablePageLink<Void> listOfMembers = new BookmarkablePageLink<Void>("listOfMembers", ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
         BookmarkablePageLink<Void> addMember = new BookmarkablePageLink<Void>("addMember", AddMemberToGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
         BookmarkablePageLink<Void> editGroup = new BookmarkablePageLink<Void>("editGroup", ResearchGroupFormPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+        BookmarkablePageLink<Void> listOfPlans = new BookmarkablePageLink<Void>("listGroupMembershipPlans", ListOfMembershipPlansGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
 
         boolean userIsAdminInGroup = securityFacade.userIsAdminInGroup(groupId);
         listOfMembers.setVisibilityAllowed(securityFacade.userIsExperimenterInGroup(groupId));
@@ -136,7 +136,7 @@ public class ResearchGroupsDetailPage extends MenuPage {
 
         editGroup.setVisibilityAllowed(userIsAdminInGroup);
 
-        add(requestMembership, listOfMembers, addMember, editGroup);
+        add(requestMembership, listOfMembers, addMember, editGroup, listOfPlans);
     }
 
     private GroupPageLeftMenu[] prepareLeftMenu() {
