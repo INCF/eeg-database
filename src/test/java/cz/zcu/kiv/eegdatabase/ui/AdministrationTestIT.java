@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Honza on 19.12.14.
  */
@@ -42,7 +44,7 @@ public class AdministrationTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
             person.setConfirmed(true);
@@ -58,17 +60,17 @@ public class AdministrationTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak2@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testManageAccounts() throws InterruptedException {
+    public void testManageAccounts() throws InterruptedException, IOException {
 
 
-        tester.clickLinkWithText("Administration");
-        tester.assertLinkPresentWithText("Manage user roles");
-        tester.clickLinkWithText("Manage user roles");
+        tester.clickLinkWithText(getProperty("menuItem.administration"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.manageRoles"));
+        tester.clickLinkWithText(getProperty("menuItem.manageRoles"));
         tester.setTextField("personField", "test@test.com");
         tester.selectOptionByValue("authority", Util.ROLE_USER);
        // tester.selectOption("authority", "Administrator");
@@ -78,7 +80,7 @@ public class AdministrationTestIT extends AbstractUITest {
 
         tester.assertTextPresent("User role for user test@test.com changed to User.");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 }

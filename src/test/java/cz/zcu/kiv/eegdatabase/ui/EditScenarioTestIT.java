@@ -32,6 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static org.testng.Assert.assertEquals;
 import static org.testng.Assert.fail;
 
@@ -48,7 +50,7 @@ public class EditScenarioTestIT extends AbstractUITest {
 
     @BeforeMethod(groups = "web")
 
-    public void setUp() throws InterruptedException {
+    public void setUp() throws InterruptedException, IOException {
         Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
 
@@ -61,8 +63,8 @@ public class EditScenarioTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
         if (scenarioDao.getScenariosWhereOwner(person).size() == 0) {
             createScenario();
@@ -70,13 +72,13 @@ public class EditScenarioTestIT extends AbstractUITest {
 
     }
     @Test(groups = "web")
-    public void testEditScenario() throws InterruptedException {
+    public void testEditScenario() throws InterruptedException, IOException {
         int count = scenarioDao.getCountRecords();
-        tester.clickLinkWithText("Scenarios");
-        tester.assertLinkPresentWithText("Detail");
-        tester.clickLinkWithText("Detail");
-        tester.assertLinkPresentWithText("Edit");
-        tester.clickLinkWithText("Edit");
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertLinkPresentWithText(getProperty("link.detail"));
+        tester.clickLinkWithText(getProperty("link.detail"));
+        tester.assertLinkPresentWithText(getProperty("button.edit"));
+        tester.clickLinkWithText(getProperty("button.edit"));
 
         //tester.assertTextNotInElement("title", "");
         try {
@@ -87,29 +89,29 @@ public class EditScenarioTestIT extends AbstractUITest {
         }
         tester.setTextField("title", "newTitle");
 
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("newTitle");
         assertEquals(count, scenarioDao.getCountRecords());
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
 
 
     }
 
-    private void createScenario() throws InterruptedException {
+    private void createScenario() throws InterruptedException, IOException {
         createGroupIfNotExists();
-        tester.clickLinkWithText("Scenarios");
-        tester.assertLinkPresentWithText("Add scenario");
-        tester.clickLinkWithText("Add scenario");
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.addScenario"));
+        tester.clickLinkWithText(getProperty("menuItem.addScenario"));
 
         tester.selectOption("researchGroup", "new group");
         tester.setTextField("title", "scenarioForEditing");
         tester.setTextField("description", "description");
         tester.setTextField("scenarioLength", "10");
 
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
     }
