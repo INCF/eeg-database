@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Honza on 13.12.14.
  */
@@ -40,7 +42,7 @@ public class AddHardwareTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
@@ -52,57 +54,57 @@ public class AddHardwareTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testHardwareValidation() throws InterruptedException {
+    public void testHardwareValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
-        tester.clickLinkWithText("Lists");
-        tester.assertLinkPresentWithText("Hardware definitions");
-        tester.clickLinkWithText("Hardware definitions");
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.hardwareDefinitions"));
 
-        tester.assertLinkPresentWithText("Add hardware definition");
-        tester.clickLinkWithText("Add hardware definition");
+        tester.assertLinkPresentWithText(getProperty("link.addHardwareDefinition"));
+        tester.clickLinkWithText(getProperty("link.addHardwareDefinition"));
         Thread.sleep(waitForAjax);
         tester.setTextField("title", "");
         tester.setTextField("type", "");
         tester.setTextField("description", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Title' is required.");
         tester.assertTextPresent("Field 'Type' is required.");
         tester.assertTextPresent("Field 'Description' is required.");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testAddHardware() throws InterruptedException {
+    public void testAddHardware() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
-        tester.clickLinkWithText("Lists");
-        tester.assertLinkPresentWithText("Hardware definitions");
-        tester.clickLinkWithText("Hardware definitions");
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.hardwareDefinitions"));
 
-        tester.assertLinkPresentWithText("Add hardware definition");
-        tester.clickLinkWithText("Add hardware definition");
+        tester.assertLinkPresentWithText(getProperty("link.addHardwareDefinition"));
+        tester.clickLinkWithText(getProperty("link.addHardwareDefinition"));
         Thread.sleep(waitForAjax);
         tester.setTextField("title", "HwTitle");
         tester.setTextField("type", "type");
         tester.setTextField("description", "desc");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("HwTitle");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 }

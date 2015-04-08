@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Honza on 4.1.15.
  */
@@ -39,7 +41,7 @@ public class AddSoftwareTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
@@ -51,56 +53,56 @@ public class AddSoftwareTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testSoftwareValidation() throws InterruptedException {
+    public void testSoftwareValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
-        tester.clickLinkWithText("Lists");
-        tester.assertLinkPresentWithText("Software definitions");
-        tester.clickLinkWithText("Software definitions");
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.softwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.softwareDefinitions"));
 
-        tester.assertLinkPresentWithText("Add software definition");
-        tester.clickLinkWithText("Add software definition");
+        tester.assertLinkPresentWithText(getProperty("link.addSoftwareDefinition"));
+        tester.clickLinkWithText(getProperty("link.addSoftwareDefinition"));
         Thread.sleep(waitForAjax);
         tester.setTextField("title", "");
         // tester.setTextField("type", "");
         tester.setTextField("description", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Title' is required.");
         // tester.assertTextPresent("Field 'Type' is required.");
         tester.assertTextPresent("Field 'Description' is required.");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testAddSoftware() throws InterruptedException {
+    public void testAddSoftware() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
-        tester.clickLinkWithText("Lists");
-        tester.assertLinkPresentWithText("Software definitions");
-        tester.clickLinkWithText("Software definitions");
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.softwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.softwareDefinitions"));
 
-        tester.assertLinkPresentWithText("Add software definition");
-        tester.clickLinkWithText("Add software definition");
+        tester.assertLinkPresentWithText(getProperty("link.addSoftwareDefinition"));
+        tester.clickLinkWithText(getProperty("link.addSoftwareDefinition"));
         Thread.sleep(waitForAjax);
         tester.setTextField("title", "SwTitle");
         tester.setTextField("description", "desc");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("SwTitle");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 }

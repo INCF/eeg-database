@@ -26,14 +26,11 @@
  */
 package cz.zcu.kiv.eegdatabase.webservices.datadownload;
 
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.webservices.datadownload.wrappers.*;
 
 import javax.activation.DataHandler;
 import javax.jws.WebService;
 import javax.xml.bind.annotation.XmlMimeType;
-import java.io.InputStream;
 import java.util.List;
 
 /**
