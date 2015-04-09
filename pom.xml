@@ -919,7 +919,7 @@
                         <include>**/*IT.java</include>
                     </includes>
 
-                    <argLine>-Xmx1024m</argLine>
+                  <!--  <argLine>-Xmx1024m</argLine>-->
                 </configuration>
                 <executions>
                     <execution>
