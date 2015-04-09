@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static org.testng.Assert.assertTrue;
 
 
@@ -55,49 +57,49 @@ public class MainMenuTestIT extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testUsersMainMenu() {
+    public void testUsersMainMenu() throws IOException {
         loginUser("jan.stebetak@seznam.cz", Util.ROLE_USER);
-        tester.clickLinkWithText("Articles");
-        tester.assertTextPresent("All articles");
-        tester.clickLinkWithText("Experiments");
-        tester.assertTextPresent("All experiments");
-        tester.clickLinkWithText("Scenarios");
-        tester.assertTextPresent("List of scenarios");
-        tester.clickLinkWithText("Groups");
-        tester.assertTextPresent("List of groups");
-        tester.assertTextNotPresent("People");
-        tester.clickLinkWithText("Lists");
-        tester.assertTitleEquals("Lists Page");
+        tester.clickLinkWithText(getProperty("menuItem.articles"));
+        tester.assertTextPresent(getProperty("pageTitle.allArticles"));
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertTextPresent(getProperty("pageTitle.allExperiments"));
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfScenarios"));
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfGroups"));
+        tester.assertTextNotPresent(getProperty("menuItem.people"));
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertTitleEquals(getProperty("title.page.lists"));
 //        tester.clickLinkWithText("History");
 //        tester.assertTitleEquals("History Page");
 
-        tester.assertTextNotPresent("Administration");
+        tester.assertTextNotPresent(getProperty("menuItem.administration"));
 
     }
 
     @Test(groups = "web")
-    public void testAdminsMainMenu() {
+    public void testAdminsMainMenu() throws IOException {
         loginUser("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
-        tester.clickLinkWithText("Articles");
-        tester.assertTextPresent("All articles");
-        tester.clickLinkWithText("Experiments");
-        tester.assertTextPresent("All experiments");
-        tester.clickLinkWithText("Scenarios");
-        tester.assertTextPresent("List of scenarios");
-        tester.clickLinkWithText("Groups");
-        tester.assertTextPresent("List of groups");
-        tester.clickLinkWithText("People");
-        tester.assertTextPresent("List of people");
-        tester.clickLinkWithText("Lists");
-        tester.assertTitleEquals("Lists Page");
+        tester.clickLinkWithText(getProperty("menuItem.articles"));
+        tester.assertTextPresent(getProperty("pageTitle.allArticles"));
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertTextPresent(getProperty("pageTitle.allExperiments"));
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfScenarios"));
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfGroups"));
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfPeople"));
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertTitleEquals(getProperty("title.page.lists"));
 //        tester.clickLinkWithText("History");
 //        tester.assertTitleEquals("History Page");
-        tester.clickLinkWithText("Administration");
-        tester.assertTextPresent("Manage user roles");
+        tester.clickLinkWithText(getProperty("menuItem.administration"));
+        tester.assertTextPresent(getProperty("menuItem.manageRoles"));
 
     }
 
-    private void loginUser(String username, String role) {
+    private void loginUser(String username, String role) throws IOException {
         Person person = TestUtils.createPersonForTesting(username, role);
         person.setConfirmed(true);
         if (!personDao.usernameExists(username)) {
@@ -106,8 +108,8 @@ public class MainMenuTestIT extends AbstractUITest {
         }
         tester.setTextField("userName", username);
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 }
