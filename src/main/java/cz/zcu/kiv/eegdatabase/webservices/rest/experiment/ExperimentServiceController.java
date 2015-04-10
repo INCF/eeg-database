@@ -32,6 +32,9 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * Controller class mapping REST experiment service.
  *
@@ -318,4 +321,41 @@ public class ExperimentServiceController {
         return new ElectrodeSystemDataList(service.getElectrodeSystems());
     }
 
+    /**
+     * Adds/merges given general parameters for specified experiment, optionally appending/replacing their attributes.
+     *
+     * @param experimentId ID of experiment to edit parameters of.
+     * @param data General parameters data.
+     * @return Success confirmation.
+     */
+    @RequestMapping(value = "/addGeneralParameters/{experimentId}", method = RequestMethod.POST)
+    public AddExperimentDataResult addGeneralParameters(@PathVariable int experimentId, @RequestBody ExperimentParametersData data) {
+        service.addGeneralParameters(experimentId, data);
+        return new AddExperimentDataResult(true);
+    }
+
+    /**
+     * Getter of user's experiment list.
+     *
+     * @return user's experiment list
+     */
+    @RequestMapping(value = "/mineInfoList")
+    public ExperimentInfoList getMyExperimentInfoList() {
+        List<ExperimentData> experiments = service.getMyExperiments();
+
+        List<ExperimentInfo> infoList = new ArrayList<ExperimentInfo>(experiments.size());
+        for(ExperimentData experiment : experiments) {
+            infoList.add(new ExperimentInfo(
+                    String.valueOf(experiment.getExperimentId()),
+                    experiment.getScenario().getScenarioName(),
+                    experiment.getResearchGroup().getGroupName(),
+                    experiment.getStartTime().toString(),
+                    experiment.getEndTime().toString(),
+                    experiment.getSubject().getName(),
+                    experiment.getSubject().getSurname()
+            ));
+        }
+
+        return new ExperimentInfoList(infoList);
+    }
 }

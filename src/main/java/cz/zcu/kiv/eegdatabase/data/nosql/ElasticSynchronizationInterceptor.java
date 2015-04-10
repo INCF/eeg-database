@@ -40,7 +40,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import javax.annotation.Resource;
 import org.elasticsearch.index.query.IdsQueryBuilder;
 import org.hibernate.EmptyInterceptor;
@@ -132,78 +134,96 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 	 */
 	private void syncExperimentParams(Experiment e) {
 
+        List<GenericParameter> parameters = e.getGenericParameters();
+        Map<String, GenericParameter> parameterMap = new HashMap<String, GenericParameter>(parameters.size());
+
+        for(GenericParameter p : parameters) {
+            parameterMap.put(p.getName(), p);
+        }
+
+
 		GenericParameter param;
-		e.setGenericParameters(new ArrayList<GenericParameter>());
+        String paramName;
 		e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
-		e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
+        e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
 
-		for (Hardware hw : e.getHardwares()) {
-			param = new GenericParameter("hardware", hw.getTitle());
-			if (!"".equals(hw.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", hw.getDescription()));
-			}
+        for (Hardware hw : e.getHardwares()) {
+            paramName = "hardware";
+            param = new GenericParameter(paramName, hw.getTitle());
+            if (!"".equals(hw.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", hw.getDescription()));
+            }
 
-			if (!"".equals(hw.getType())) {
-				param.getAttributes().add(new ParameterAttribute("type", hw.getType()));
-			}
-			e.getGenericParameters().add(param);
-		}
+            if (!"".equals(hw.getType())) {
+                param.getAttributes().add(new ParameterAttribute("type", hw.getType()));
+            }
+            parameterMap.put(paramName, param);
+        }
 
-		for (Software sw : e.getSoftwares()) {
-			param = new GenericParameter("software", sw.getTitle());
-			if (!"".equals(sw.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", sw.getDescription()));
-			}
+        for (Software sw : e.getSoftwares()) {
+            paramName = "software";
+            param = new GenericParameter(paramName, sw.getTitle());
+            if (!"".equals(sw.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", sw.getDescription()));
+            }
 
-			e.getGenericParameters().add(param);
-		}
-
-
-		for (Disease dis : e.getDiseases()) {
-			param = new GenericParameter("diesease", dis.getTitle());
-			if (!"".equals(dis.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", dis.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
+            parameterMap.put(paramName, param);
+        }
 
 
-		for (ProjectType type : e.getProjectTypes()) {
-			param = new GenericParameter("projectType", type.getTitle());
-			if (!"".equals(type.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", type.getDescription()));
-			}
+        for (Disease dis : e.getDiseases()) {
+            paramName = "diesease";
+            param = new GenericParameter(paramName, dis.getTitle());
+            if (!"".equals(dis.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", dis.getDescription()));
+            }
 
-			e.getGenericParameters().add(param);
-		}
-
-
-		for (Pharmaceutical pharm : e.getPharmaceuticals()) {
-			param = new GenericParameter("pharmaceutical", pharm.getTitle());
-			if (!"".equals(pharm.getDescription())) {
-				param.getAttributes().add(new ParameterAttribute("description", pharm.getDescription()));
-			}
-
-			e.getGenericParameters().add(param);
-		}
+            parameterMap.put(paramName, param);
+        }
 
 
-		Digitization d = e.getDigitization();
-		param = new GenericParameter("digitization", d.getFilter());
-		param.getAttributes().add(new ParameterAttribute("gain", "" + d.getGain()));
-		param.getAttributes().add(new ParameterAttribute("samplingRate", "" + d.getSamplingRate()));
-		e.getGenericParameters().add(param);
+        for (ProjectType type : e.getProjectTypes()) {
+            paramName = "projectType";
+            param = new GenericParameter(paramName, type.getTitle());
+            if (!"".equals(type.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", type.getDescription()));
+            }
+
+            parameterMap.put(paramName, param);
+        }
 
 
-		Weather w = e.getWeather();
-		param = new GenericParameter("weather", w.getTitle());
-		if (!"".equals(w.getDescription())) {
-			param.getAttributes().add(new ParameterAttribute("description", "" + w.getDescription()));
-		}
-		e.getGenericParameters().add(param);
+        for (Pharmaceutical pharm : e.getPharmaceuticals()) {
+            paramName = "pharmaceutical";
+            param = new GenericParameter(paramName, pharm.getTitle());
+            if (!"".equals(pharm.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", pharm.getDescription()));
+            }
+
+            parameterMap.put(paramName, param);
+        }
 
 
-		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
-	}
+        Digitization d = e.getDigitization();
+        paramName = "digitization";
+        param = new GenericParameter(paramName, d.getFilter());
+        param.getAttributes().add(new ParameterAttribute("gain", "" + d.getGain()));
+        param.getAttributes().add(new ParameterAttribute("samplingRate", "" + d.getSamplingRate()));
+        parameterMap.put(paramName, param);
+
+
+        Weather w = e.getWeather();
+        paramName = "weather";
+        param = new GenericParameter(paramName, w.getTitle());
+        if (!"".equals(w.getDescription())) {
+            param.getAttributes().add(new ParameterAttribute("description", "" + w.getDescription()));
+        }
+        parameterMap.put(paramName, param);
+
+
+        paramName = "temperature";
+        parameterMap.put(paramName, new GenericParameter(paramName, (double) e.getTemperature()));
+
+        e.setGenericParameters(new ArrayList<GenericParameter>(parameterMap.values()));
+    }
 }

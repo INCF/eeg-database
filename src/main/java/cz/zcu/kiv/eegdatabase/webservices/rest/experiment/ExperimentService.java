@@ -190,4 +190,12 @@ public interface ExperimentService {
      * @return primary key
      */
     public Integer createWeather(WeatherData weatherData, int researchGroupId);
+
+    /**
+     * Adds/merges given general parameters for specified experiment, optionally appending/replacing their attributes.
+     *
+     * @param id ID of experiment to edit parameters of.
+     * @param data General parameters data.
+     */
+    public void addGeneralParameters(int id, ExperimentParametersData data);
 }

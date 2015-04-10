@@ -754,4 +754,49 @@ public class ExperimentServiceImpl implements ExperimentService {
         Collections.sort(experiments, idComparator);
         return experiments;
     }
+
+    @Override
+    @Transactional
+    public void addGeneralParameters(int id, ExperimentParametersData data) {
+        //TODO test privileges
+
+        Experiment experiment = experimentDao.read(id);
+        List<GenericParameter> params = experiment.getGenericParameters();
+
+        for(GenericParameterData paramData : data.getGenericParameters().getGenericParameters()) {
+            String paramName = paramData.getName();
+            GenericParameter parameter = null;
+
+            for(GenericParameter p : params) {
+                if(p.getName().equals(paramName)) {
+                    parameter = p;
+                    break;
+                }
+            }
+
+            if(parameter == null) {
+                parameter = new GenericParameter(paramName, (String) null);
+                params.add(parameter);
+            }
+
+            parameter.setValueString(paramData.getValueString());
+            parameter.setValueInteger(paramData.getValueInteger());
+
+            List<ParameterAttribute> attributes = parameter.getAttributes();
+
+            if(!data.isAppend()) {
+                attributes.clear();
+            }
+
+            for (ParameterAttributeData att : paramData.getParameterAttributes().getParameterAttributes()) {
+                attributes.add(new ParameterAttribute(att.getName(), att.getValue()));
+            }
+        }
+
+        //TODO to persist data to elasticsearch, the ElasticSynchronizationInterceptor must be triggered
+        // which doesn't happen if only collection elements are added/removed (bug of hibernate called feature)
+//        experiment.setEnvironmentNote("trigger flush for collection - different String from last time");
+
+        experimentDao.update(experiment);
+    }
 }
