@@ -40,7 +40,6 @@ public enum MyAccountPageLeftMenu implements IButtonPageMenu {
     CHANGE_PASSWORD(ChangePasswordPage.class, "menuItem.myAccount.changePassword", null),
     SOCIAL(SocialNetworksPage.class, "menuItem.myAccount.social", null),
     MY_ORDERS(ListOrderPage.class, "pageTitle.order.myOrders", null),
-    MEMBERSHIP_PLANS(MembershipPlansPage.class,"menuItem.myAccount.membershipPlan",null),
     ;
 
     private Class<? extends MenuPage> pageClass;

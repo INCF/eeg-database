@@ -22,7 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.account.MembershipPlansPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -129,7 +129,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.pricing.PriceListPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
@@ -309,7 +308,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPackage("order-list", ListOrderPage.class);
         mountPackage("order-view", OrderDetailPage.class);
 
-        mountPage("membership-plans-list", MembershipPlansPage.class);
+        mountPage("administration-manage-membership-plans", AdminManageMembershipPlansPage.class);
         
 // XXX price list hidden for now.
 //        mountPage("pricelist", PriceListPage.class);

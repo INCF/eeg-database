@@ -1,4 +1,4 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.account;
+package cz.zcu.kiv.eegdatabase.wui.ui.administration;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
@@ -10,7 +10,10 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPageLeftMenu;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.MembershipPlanManageFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
@@ -25,18 +28,18 @@ import java.util.List;
  * Created by Lichous on 6.4.15.
  */
 
-@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
-public class MembershipPlansPage extends MenuPage {
+@AuthorizeInstantiation(value = {"ROLE_ADMIN"})
+public class AdminManageMembershipPlansPage extends MenuPage {
 
     private static final long serialVersionUID = -5514198024012232250L;
 
     @SpringBean
     MembershipPlanFacade membershipPlanFacade;
 
-    public MembershipPlansPage() {
+    public AdminManageMembershipPlansPage() {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.membershipPlans"));
-        add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
+        add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
         Person user = EEGDataBaseSession.get().getLoggedUser();
 
         if (user == null)
@@ -72,7 +75,9 @@ public class MembershipPlansPage extends MenuPage {
             }
         };
 
-        add(personPlans, groupPlans);
+        BookmarkablePageLink<Void> addPlan = new BookmarkablePageLink<Void>("addPlan", MembershipPlanManageFormPage.class, PageParametersUtils.getDefaultPageParameters(user.getPersonId()));
+
+        add(personPlans, groupPlans,addPlan);
         //throw new RestartResponseAtInterceptPageException(UnderConstructPage.class);
     }
 }
