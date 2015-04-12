@@ -60,6 +60,7 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                 MembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getName()));
                 item.add(new Label("price", modelObject.getPrice()));
+                item.add(new Label("length",modelObject.getLength()));
             }
         };
 
@@ -72,6 +73,7 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                 MembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getName()));
                 item.add(new Label("price", modelObject.getPrice()));
+                item.add(new Label("length",modelObject.getLength()));
             }
         };
 

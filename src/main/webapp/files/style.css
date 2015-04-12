@@ -384,10 +384,14 @@ while still visible in code, so it can be accessible without styles **/
 }
 
 .membershipPlansList .columnPlanName {
-    width: 600px;
+    width: 400px;
 
 }
 .membershipPlansList .columnPlanPrice {
+    width: 100px;
+}
+
+.membershipPlansList .columnPlanLength {
     width: 100px;
 }
 
