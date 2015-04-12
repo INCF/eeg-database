@@ -26,28 +26,28 @@
 
                 <div class="itemBox">
                     <label for=length wicket:id="lengthLb" class="textFieldLabel"> <wicket:message
-                            key="label.length">[length]</wicket:message></label> <input wicket:id="length" class="textField" type="text" />
+                            key="label.length">[length]</wicket:message></label> <input wicket:id="length" class="textField" type="text" style="width: 80px;" /> <wicket:message key="label.days"/>
                 </div>
 
                 <div class="itemBox">
                     <label for=price wicket:id="priceLb" class="textFieldLabel"> <wicket:message
-                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" type="text" />
+                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" type="text" style="width: 80px;" /> <wicket:message key="label.price.currency"/>
                 </div>
-                <!--
-                                <div class="itemBox">
-                                    <label for="type" wicket:id="typeLb" class="radio2ButtonsLabel"> <wicket:message
-                                            key="label.type">[type]</wicket:message></label> <span wicket:id="type"></span>
-                                </div>
+
+                <div class="itemBox">
+                    <label for="type" wicket:id="typeLb" class="radio2ButtonsLabel"> <wicket:message
+                            key="label.type">[type]</wicket:message></label> <span wicket:id="type"></span>
+                </div>
 
 
 
-                                <div class="itemBox">
-                                    <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
-                                </div>
-                                -->
-                            </fieldset>
-                        </form>
-                    </div>
-                </wicket:extend>
-                </body>
-                </html>
+                <div class="itemBox">
+                    <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
+                </div>
+
+                </fieldset>
+        </form>
+    </div>
+</wicket:extend>
+</body>
+</html>

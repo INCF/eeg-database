@@ -1,20 +1,27 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.administration.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.validation.validator.PatternValidator;
+import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
 /**
@@ -31,7 +38,7 @@ public class MembershipPlanManageFormPage extends MenuPage {
     public MembershipPlanManageFormPage() {
         setPageTitle(ResourceUtils.getModel("pageTitle.addMembershipPlan"));
         add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
-        add(new MembershipPlanForm("form",new Model<MembershipPlan>(new MembershipPlan()),membershipPlanFacade));
+        add(new MembershipPlanForm("form",new Model<MembershipPlan>(new MembershipPlan()),membershipPlanFacade,getFeedback()));
 
     }
 
@@ -39,7 +46,7 @@ public class MembershipPlanManageFormPage extends MenuPage {
 
         private static final long serialVersionUID = 3335277334799636281L;
 
-        public MembershipPlanForm(String id, IModel<MembershipPlan> model,final MembershipPlanFacade membershipPlanFacade) {
+        public MembershipPlanForm(String id, IModel<MembershipPlan> model,final MembershipPlanFacade membershipPlanFacade, final FeedbackPanel feedback) {
 
             super(id,new CompoundPropertyModel <MembershipPlan>(model));
 
@@ -56,41 +63,71 @@ public class MembershipPlanManageFormPage extends MenuPage {
             FormComponentLabel descriptionLabel = new FormComponentLabel("descriptionLb", description);
             add(description,descriptionLabel);
 
-            TextField<String> length = new TextField<String>("length");
+            TextField<Integer> length = new TextField<Integer>("length",Integer.class);
             length.setLabel(ResourceUtils.getModel("label.length"));
             length.setRequired(true);
-            length.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
+            length.add(RangeValidator.minimum(1));
             FormComponentLabel lengthLabel = new FormComponentLabel("lengthLb", length);
             add(length,lengthLabel);
 
-            TextField<String> price = new TextField<String>("price");
+            TextField<Integer> price = new TextField<Integer>("price",Integer.class);
             price.setLabel(ResourceUtils.getModel("label.price"));
             price.setRequired(true);
-            price.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
+            price.add(RangeValidator.minimum(1));
             FormComponentLabel priceLabel = new FormComponentLabel("priceLb", price);
             add(price,priceLabel);
-/*
-            RadioChoice<Character> type = new RadioChoice<Character>("type", Gender.getShortcutList(), new ChoiceRenderer<Character>() {
+
+            RadioChoice<Integer> type = new RadioChoice<Integer>("type", MembershipPlanType.getMembershipPlanTypes(), new ChoiceRenderer<Integer>() {
 
                 private static final long serialVersionUID = 1L;
 
                 @Override
-                public Object getDisplayValue(Character object) {
-                    Gender enumValue = Gender.getGenderByShortcut(object);
+                public Object getDisplayValue(Integer object) {
+                    MembershipPlanType enumValue = MembershipPlanType.getMembershipPlanByType(object);
                     return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
                 }
 
             });
-            gender.setSuffix("\n");
-            gender.setRequired(true);
-            gender.setLabel(ResourceUtils.getModel("label.gender"));
-            FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
-            add(gender, genderLabel);
 
-*/
-
+            type.setSuffix("\n");
+            type.setRequired(true);
+            type.setLabel(ResourceUtils.getModel("label.type"));
+            FormComponentLabel typeLabel = new FormComponentLabel("typeLb", type);
+            add(type,typeLabel);
 
 
+            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.addMembershipPlan"), this) {
+
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                protected void onError(AjaxRequestTarget target, Form<?> form) {
+                    target.add(feedback);
+                }
+
+                @Override
+                protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                    MembershipPlan plan = MembershipPlanForm.this.getModelObject();
+                    boolean isEdit = plan.getMembershipId() > 0;
+
+                    if (validation(plan)) {
+                        if (isEdit) {
+                            membershipPlanFacade.update(plan);
+                        } else {
+
+                            membershipPlanFacade.create(plan);
+                        }
+                        setResponsePage(AdminManageMembershipPlansPage.class);
+                    }
+                    target.add(feedback);
+                }
+            };
+            add(submit);
+        }
+
+        private boolean validation (MembershipPlan plan) {
+
+            return true;
         }
     }
 }
