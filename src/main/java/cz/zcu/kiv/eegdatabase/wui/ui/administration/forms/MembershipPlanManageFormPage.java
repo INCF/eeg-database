@@ -53,6 +53,7 @@ public class MembershipPlanManageFormPage extends MenuPage {
             TextField<String> name = new TextField<String>("name");
             name.setLabel(ResourceUtils.getModel("label.name"));
             name.setRequired(true);
+            name.add(StringValidator.maximumLength(255));
             name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
             FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
             add(name, nameLabel);
