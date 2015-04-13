@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Honza on 19.12.14.
  */
@@ -40,7 +42,7 @@ public class PersonTestIT extends AbstractUITest{
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
             person.setConfirmed(true);
@@ -53,22 +55,22 @@ public class PersonTestIT extends AbstractUITest{
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak2@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testAddPersonValidationEmptyFields() throws InterruptedException {
+    public void testAddPersonValidationEmptyFields() throws InterruptedException, IOException {
 
 
-        tester.clickLinkWithText("People");
-        tester.assertLinkPresentWithText("Add person");
-        tester.clickLinkWithText("Add person");
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertLinkPresentWithText(getProperty("button.addPerson"));
+        tester.clickLinkWithText(getProperty("button.addPerson"));
         tester.setTextField("givenname", "");
         tester.setTextField("surname", "");
         tester.setTextField("dateOfBirth", "");
         tester.setTextField("username", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Field 'Name' is required.");
@@ -78,16 +80,16 @@ public class PersonTestIT extends AbstractUITest{
         tester.assertTextPresent("Field 'E-mail' is required.");
         //   tester.assertTextPresent("Field 'Education Level' is required");  TODO need to be fixed in form
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testAddPersonEmailValidation() throws InterruptedException {
+    public void testAddPersonEmailValidation() throws InterruptedException, IOException {
 
 
-        tester.clickLinkWithText("People");
-        tester.assertLinkPresentWithText("Add person");
-        tester.clickLinkWithText("Add person");
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertLinkPresentWithText(getProperty("button.addPerson"));
+        tester.clickLinkWithText(getProperty("button.addPerson"));
         tester.setTextField("givenname", "Test");
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
@@ -104,35 +106,35 @@ public class PersonTestIT extends AbstractUITest{
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
         tester.setTextField("username", "xxx@xxx.com");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextNotPresent("'E-mail' is not a valid email address.");
+        tester.assertTextNotPresent("'E-mail'" + getProperty("EmailAddressValidator"));
 
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testAddPersonUniqueUsernameValidation() throws InterruptedException {
+    public void testAddPersonUniqueUsernameValidation() throws InterruptedException, IOException {
 
 
-        tester.clickLinkWithText("People");
-        tester.assertLinkPresentWithText("Add person");
-        tester.clickLinkWithText("Add person");
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertLinkPresentWithText(getProperty("button.addPerson"));
+        tester.clickLinkWithText(getProperty("button.addPerson"));
         tester.setTextField("givenname", "Test");
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
         tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Email is already used.");
+        tester.assertTextPresent(getProperty("inUse.email"));
 
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 }

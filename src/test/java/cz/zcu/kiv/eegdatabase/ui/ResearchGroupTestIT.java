@@ -12,6 +12,7 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
 import java.util.List;
 
 /**
@@ -26,7 +27,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
@@ -39,49 +40,49 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
     }
 
     @Test(groups = "web")
-    public void testCreateResearchGroupValidation() throws InterruptedException {
+    public void testCreateResearchGroupValidation() throws InterruptedException, IOException {
 
-        tester.clickLinkWithText("Groups");
-        tester.assertTextPresent("Create group");
-        tester.clickLinkWithText("Create group");
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("menuItem.createGroup"));
+        tester.clickLinkWithText(getProperty("menuItem.createGroup"));
 
         tester.setTextField("title", "");
         tester.setTextField("description", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group title' is required.");
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "new group");
         tester.setTextField("description", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group description' is required.");
 
         tester.setTextField("title", "");
         tester.setTextField("description", "description");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group title' is required.");
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("action.logout"));
 
 
     }
     @Test(groups = "web")
-    public void testCreateResearchGroup() throws InterruptedException {
+    public void testCreateResearchGroup() throws InterruptedException, IOException {
 //        if (!groupExists("new group")) {
-        tester.clickLinkWithText("Groups");
-        tester.assertTextPresent("Create group");
-        tester.clickLinkWithText("Create group");
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("menuItem.createGroup"));
+        tester.clickLinkWithText(getProperty("menuItem.createGroup"));
 
         tester.setTextField("title", "new group");
         tester.setTextField("description", "description");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 //        }
 
@@ -90,12 +91,12 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent("new group");
 
-        tester.clickLinkWithText("Detail");
-        tester.assertLinkPresentWithText("List of members");
-        tester.clickLinkWithText("List of members");
+        tester.clickLinkWithText(getProperty("link.detail"));
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
         tester.assertTextPresent("jan.stebetak@seznam.cz");
 
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 }
