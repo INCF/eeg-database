@@ -78,6 +78,7 @@ public class ListMenuTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("menuItem.lists"));
         tester.assertTextPresent(getProperty("pageTitle.listOfDefinitions"));
         tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.hardwareDefinitions"));
         tester.assertSelectOptionPresent("groups", "Default hardware");
 
         tester.clickLinkWithText(getProperty("menuItem.optionalParametersForPeople"));
