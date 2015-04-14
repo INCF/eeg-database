@@ -44,15 +44,15 @@ public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
     protected String url = "http://localhost:8082";
 
 
-    protected void createGroupIfNotExists() throws InterruptedException {
-        tester.clickLinkWithText("Groups");
+    protected void createGroupIfNotExists() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
         try {
             tester.assertTextPresent("new group");
         } catch (AssertionError ex) {
-            tester.clickLinkWithText("Create group");
+            tester.clickLinkWithText(getProperty("menuItem.createGroup"));
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
+            tester.clickButtonWithText(getProperty("button.save"));
             Thread.sleep(waitForAjax);
         }
     }
