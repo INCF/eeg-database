@@ -39,4 +39,16 @@ public class MembershipPlanServiceImpl extends GenericServiceImpl<MembershipPlan
         return dao.getAvailableGroupMembershipPlans();
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public MembershipPlan read(Integer id) {
+        return dao.read(id);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public MembershipPlan getMembershipPlanById(Integer id) {
+        return dao.getMembershipPlanById(id);
+    }
+
 }

@@ -3,6 +3,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.administration;
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxConfirmLink;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
@@ -15,6 +16,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.MembershipPlanManageFo
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
@@ -56,11 +58,28 @@ public class AdminManageMembershipPlansPage extends MenuPage {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<MembershipPlan> item) {
+            protected void populateItem(final ListItem<MembershipPlan> item) {
                 MembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getName()));
                 item.add(new Label("price", modelObject.getPrice()));
                 item.add(new Label("length",modelObject.getLength()));
+                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.membershipplan")) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        item.getModel().getObject().setValid(false);
+                        membershipPlanFacade.update(item.getModel().getObject());
+                        setResponsePage(AdminManageMembershipPlansPage.class);
+                    }
+                };
+                deleteLink.setVisibilityAllowed(true);
+                item.add(deleteLink);
+
+                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
+                editLink.setVisibilityAllowed(true);
+                item.add(editLink);
             }
         };
 
@@ -69,15 +88,32 @@ public class AdminManageMembershipPlansPage extends MenuPage {
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<MembershipPlan> item) {
+            protected void populateItem(final ListItem<MembershipPlan> item) {
                 MembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getName()));
                 item.add(new Label("price", modelObject.getPrice()));
                 item.add(new Label("length",modelObject.getLength()));
+                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.membershipplan")) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        item.getModel().getObject().setValid(false);
+                        membershipPlanFacade.update(item.getModel().getObject());
+                        setResponsePage(AdminManageMembershipPlansPage.class);
+                    }
+                };
+                deleteLink.setVisibilityAllowed(true);
+                item.add(deleteLink);
+
+                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
+                editLink.setVisibilityAllowed(true);
+                item.add(editLink);
             }
         };
 
-        BookmarkablePageLink<Void> addPlan = new BookmarkablePageLink<Void>("addPlan", MembershipPlanManageFormPage.class, PageParametersUtils.getDefaultPageParameters(user.getPersonId()));
+        BookmarkablePageLink<Void> addPlan = new BookmarkablePageLink<Void>("addPlan", MembershipPlanManageFormPage.class);
 
         add(personPlans, groupPlans,addPlan);
         //throw new RestartResponseAtInterceptPageException(UnderConstructPage.class);

@@ -14,4 +14,6 @@ public interface MembershipPlanService extends GenericService<MembershipPlan, In
 
     List<MembershipPlan> getAvailableGroupMembershipPlans();
 
+    public MembershipPlan getMembershipPlanById(Integer id);
+
 }

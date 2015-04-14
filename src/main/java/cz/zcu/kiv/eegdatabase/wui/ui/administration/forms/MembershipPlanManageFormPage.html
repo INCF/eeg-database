@@ -7,9 +7,7 @@
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
     <div class="mainContentWithMenu">
-        <h1>
-            <wicket:message key='pageTitle.addMembershipPlan'></wicket:message>
-        </h1>
+        <h1 wicket:id="title"></h1>
 
         <form class="standardInputForm" wicket:id="form">
             <fieldset>
@@ -26,12 +24,12 @@
 
                 <div class="itemBox">
                     <label for=length wicket:id="lengthLb" class="textFieldLabel"> <wicket:message
-                            key="label.length">[length]</wicket:message></label> <input wicket:id="length" class="textField" type="text" style="width: 80px;" /> <wicket:message key="label.days"/>
+                            key="label.length">[length]</wicket:message></label> <input wicket:id="length" class="textField" value="" type="text" style="width: 80px;" /> <wicket:message key="label.days"/>
                 </div>
 
                 <div class="itemBox">
                     <label for=price wicket:id="priceLb" class="textFieldLabel"> <wicket:message
-                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" type="text" style="width: 80px;" /> <wicket:message key="label.price.currency"/>
+                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" value="" type="text" style="width: 80px;" /> <wicket:message key="label.price.currency"/>
                 </div>
 
                 <div class="itemBox">

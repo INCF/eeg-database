@@ -10,16 +10,20 @@ import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Classes;
+import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
@@ -36,9 +40,22 @@ public class MembershipPlanManageFormPage extends MenuPage {
     MembershipPlanFacade membershipPlanFacade;
 
     public MembershipPlanManageFormPage() {
-        setPageTitle(ResourceUtils.getModel("pageTitle.addMembershipPlan"));
+        add(new Label("title", ResourceUtils.getModel("pageTitle.addMembershipPlan")));
         add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
         add(new MembershipPlanForm("form",new Model<MembershipPlan>(new MembershipPlan()),membershipPlanFacade,getFeedback()));
+
+    }
+
+    public MembershipPlanManageFormPage(PageParameters parameters) {
+        StringValue membershipPlanId = parameters.get(DEFAULT_PARAM_ID);
+        if (membershipPlanId.isNull() || membershipPlanId.isEmpty())
+            throw new RestartResponseAtInterceptPageException(AdminManageMembershipPlansPage.class);
+
+        MembershipPlan membershipPlan = membershipPlanFacade.getMembershipPlanById(membershipPlanId.toInteger());
+
+        add(new Label("title", ResourceUtils.getModel("pageTitle.editMembershipPlan")));
+        add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
+        add(new MembershipPlanForm("form",new Model<MembershipPlan>(membershipPlan),membershipPlanFacade,getFeedback()));
 
     }
 
@@ -97,7 +114,7 @@ public class MembershipPlanManageFormPage extends MenuPage {
             add(type,typeLabel);
 
 
-            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.addMembershipPlan"), this) {
+            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.saveMembershipPlan"), this) {
 
                 private static final long serialVersionUID = 1L;
 
@@ -115,7 +132,7 @@ public class MembershipPlanManageFormPage extends MenuPage {
                         if (isEdit) {
                             membershipPlanFacade.update(plan);
                         } else {
-
+                            plan.setValid(true);
                             membershipPlanFacade.create(plan);
                         }
                         setResponsePage(AdminManageMembershipPlansPage.class);

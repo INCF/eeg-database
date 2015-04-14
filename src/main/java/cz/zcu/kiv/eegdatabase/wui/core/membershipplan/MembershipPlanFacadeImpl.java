@@ -36,4 +36,15 @@ public class MembershipPlanFacadeImpl extends GenericFacadeImpl<MembershipPlan, 
     public List<MembershipPlan> getAvailableGroupMembershipPlans() {
         return service.getAvailableGroupMembershipPlans();
     }
+
+    @Override
+    public MembershipPlan getMembershipPlanById(Integer id) {
+        return service.getMembershipPlanById(id);
+    }
+
+    @Override
+    public MembershipPlan read(Integer id) {
+        return service.read(id);
+    }
+
 }

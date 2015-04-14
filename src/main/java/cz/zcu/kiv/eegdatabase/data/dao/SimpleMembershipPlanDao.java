@@ -35,7 +35,7 @@ public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Int
 
     @Override
     public List<MembershipPlan> getAvailableGroupMembershipPlans() {
-        String query = "select m from MembershipPlan m where m.type = :membershipPlanType";
+        String query = "select m from MembershipPlan m where m.type = :membershipPlanType and m.valid = 'TRUE'";
 
         List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",1).list(); //set parameters
         return ret;
@@ -43,9 +43,16 @@ public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Int
 
     @Override
     public List<MembershipPlan> getAvailablePersonMembershipPlans() {
-        String query = "select m from MembershipPlan m where m.type = :membershipPlanType";
+        String query = "select m from MembershipPlan m where m.type = :membershipPlanType and m.valid = 'TRUE'";
 
         List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",0).list(); //set parameters
+        return ret;
+    }
+
+    @Override
+    public MembershipPlan getMembershipPlanById(Integer id) {
+        String query = "select m from MembershipPlan m where m.membershipId = :id";
+        MembershipPlan ret = (MembershipPlan) this.getSession().createQuery(query).setParameter("id",id).uniqueResult();
         return ret;
     }
 

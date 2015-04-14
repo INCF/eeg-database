@@ -13,4 +13,6 @@ public interface MembershipPlanFacade extends GenericFacade<MembershipPlan, Inte
     List<MembershipPlan> getAvailablePersonMembershipPlans();
 
     List<MembershipPlan> getAvailableGroupMembershipPlans();
+
+    public MembershipPlan getMembershipPlanById(Integer id);
 }

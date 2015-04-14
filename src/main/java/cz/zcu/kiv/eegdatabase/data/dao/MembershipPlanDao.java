@@ -37,4 +37,5 @@ public interface MembershipPlanDao extends GenericDao<MembershipPlan,Integer> {
 
     public List<MembershipPlan> getAvailablePersonMembershipPlans();
 
+    public MembershipPlan getMembershipPlanById(Integer id);
 }

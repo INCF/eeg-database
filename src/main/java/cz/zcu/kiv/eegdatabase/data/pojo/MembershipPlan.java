@@ -56,6 +56,9 @@ public class MembershipPlan implements Serializable {
     @Column(name="TYPE")
     private int type;
 
+    @Column(name="VALID")
+    private boolean valid;
+
     @OneToMany(mappedBy = "membershipPlan")
     private Set<PersonMembershipPlan> personMembershipPlans;
 
@@ -84,6 +87,14 @@ public class MembershipPlan implements Serializable {
 
     public int getType() {
         return type;
+    }
+
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
     }
 
     public Set<PersonMembershipPlan> getPersonMembershipPlans() {
@@ -136,9 +147,10 @@ public class MembershipPlan implements Serializable {
         if (length != that.length) return false;
         if (membershipId != that.membershipId) return false;
         if (type != that.type) return false;
+        if (valid != that.valid) return false;
         if (description != null ? !description.equals(that.description) : that.description != null) return false;
-        if (name != null ? !name.equals(that.name) : that.name != null) return false;
-        if (price != null ? !price.equals(that.price) : that.price != null) return false;
+        if (!name.equals(that.name)) return false;
+        if (!price.equals(that.price)) return false;
 
         return true;
     }
@@ -146,11 +158,12 @@ public class MembershipPlan implements Serializable {
     @Override
     public int hashCode() {
         int result = membershipId;
-        result = 31 * result + (name != null ? name.hashCode() : 0);
+        result = 31 * result + name.hashCode();
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (price != null ? price.hashCode() : 0);
+        result = 31 * result + price.hashCode();
         result = 31 * result + (int) (length ^ (length >>> 32));
         result = 31 * result + type;
+        result = 31 * result + (valid ? 1 : 0);
         return result;
     }
 }
