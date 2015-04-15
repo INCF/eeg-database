@@ -33,4 +33,10 @@ public class ResearchGroupMembershipPlanServiceImpl extends GenericServiceImpl<R
     public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup) {
         return dao.getGroupMembershipPlans(researchGroup);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public boolean isPlanUsed(int membershipPlanId) {
+        return dao.isPlanUsed(membershipPlanId);
+    }
 }

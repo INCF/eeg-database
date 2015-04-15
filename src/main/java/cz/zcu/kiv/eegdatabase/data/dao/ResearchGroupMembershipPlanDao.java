@@ -36,4 +36,6 @@ public interface ResearchGroupMembershipPlanDao extends GenericDao<ResearchGroup
 
     public List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }
