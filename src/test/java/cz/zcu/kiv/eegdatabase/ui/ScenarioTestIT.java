@@ -99,9 +99,9 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Scenario detail");
+        tester.assertTextPresent(getProperty("pageTitle.scenarioDetail"));
         tester.assertTextPresent("testScenario");
-        tester.assertTextPresent("This scenario contains no data file. ");
+        tester.assertTextPresent(getProperty("scenarioDetail.noFile"));
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
