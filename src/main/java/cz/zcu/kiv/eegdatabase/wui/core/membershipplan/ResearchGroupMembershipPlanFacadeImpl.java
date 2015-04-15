@@ -32,4 +32,9 @@ public class ResearchGroupMembershipPlanFacadeImpl extends GenericFacadeImpl<Res
         return service.getGroupMembershipPlans(researchGroup);
     }
 
+    @Override
+    public boolean isPlanUsed(int membershipPlanId) {
+        return service.isPlanUsed(membershipPlanId);
+    }
+
 }

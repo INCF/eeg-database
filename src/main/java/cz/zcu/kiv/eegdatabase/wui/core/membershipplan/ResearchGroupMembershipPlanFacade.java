@@ -13,4 +13,6 @@ public interface ResearchGroupMembershipPlanFacade extends GenericFacade<Researc
 
     List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }

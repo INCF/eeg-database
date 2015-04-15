@@ -13,4 +13,6 @@ public interface PersonMembershipPlanService extends GenericService<PersonMember
 
     List<PersonMembershipPlan> getPersonMembershipPlans(Person person);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }

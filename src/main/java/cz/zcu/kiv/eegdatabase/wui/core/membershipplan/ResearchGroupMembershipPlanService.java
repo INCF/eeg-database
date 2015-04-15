@@ -13,4 +13,6 @@ public interface ResearchGroupMembershipPlanService extends GenericService<Resea
 
     List<ResearchGroupMembershipPlan> getGroupMembershipPlans(ResearchGroup researchGroup);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }

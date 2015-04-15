@@ -10,10 +10,13 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.MembershipPlanManageFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -37,6 +40,12 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
     @SpringBean
     MembershipPlanFacade membershipPlanFacade;
+
+    @SpringBean
+    ResearchGroupMembershipPlanFacade researchGroupMembershipPlanFacade;
+
+    @SpringBean
+    PersonMembershipPlanFacade personMembershipPlanFacade;
 
     public AdminManageMembershipPlansPage() {
 
@@ -69,8 +78,13 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        item.getModel().getObject().setValid(false);
-                        membershipPlanFacade.update(item.getModel().getObject());
+                        if(personMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId())) {
+                            item.getModelObject().setValid(false);
+                            membershipPlanFacade.update(item.getModelObject());
+                        } else {
+                            membershipPlanFacade.delete(item.getModelObject());
+                        }
+
                         setResponsePage(AdminManageMembershipPlansPage.class);
                     }
                 };
@@ -80,6 +94,10 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                 BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
                 editLink.setVisibilityAllowed(true);
                 item.add(editLink);
+
+                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", MembershipPlansDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
+                detailLink.setVisibilityAllowed(true);
+                item.add(detailLink);
             }
         };
 
@@ -99,8 +117,13 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        item.getModel().getObject().setValid(false);
-                        membershipPlanFacade.update(item.getModel().getObject());
+                        if(researchGroupMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId()))  {
+                            item.getModelObject().setValid(false);
+                            membershipPlanFacade.update(item.getModelObject());
+                        } else {
+                            membershipPlanFacade.delete(item.getModelObject());
+                        }
+
                         setResponsePage(AdminManageMembershipPlansPage.class);
                     }
                 };
@@ -110,6 +133,10 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                 BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
                 editLink.setVisibilityAllowed(true);
                 item.add(editLink);
+
+                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", MembershipPlansDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
+                detailLink.setVisibilityAllowed(true);
+                item.add(detailLink);
             }
         };
 

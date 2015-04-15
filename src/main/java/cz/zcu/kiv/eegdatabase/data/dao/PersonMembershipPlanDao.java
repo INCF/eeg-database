@@ -35,4 +35,6 @@ public interface PersonMembershipPlanDao extends GenericDao<PersonMembershipPlan
 
     public List<PersonMembershipPlan> getPersonMembershipPlans(Person person);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }
