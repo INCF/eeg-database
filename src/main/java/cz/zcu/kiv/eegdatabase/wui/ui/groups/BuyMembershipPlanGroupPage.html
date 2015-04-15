@@ -18,18 +18,20 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  AddExperimentScenarioForm.html, 2013/10/17 00:01 Jakub Rinkes
+  ListOfMembersGroupPage.html, 2013/10/02 00:01 Jakub Rinkes
 -->
-<?xml version="1.0" encoding="UTF-8"?>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:wicket="http://wicket.apache.org">
-<wicket:panel>
-    <div class="form-item">
-        <label for="membershipPlan">
-            <wicket:message key="label.membershipPlan" />
-        </label>
-        <select wicket:id="membershipPlan"></select>
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
 
-        <span wicket:id="membershipPlanFeedback"></span>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+    <div wicket:id="wizard" class="tabpanel wizard"></div>
     </div>
-</wicket:panel>
+  </wicket:extend>
+</body>
 </html>

@@ -1,7 +1,7 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard;
+package cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
@@ -43,18 +43,18 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class BuyGroupMembershipPlanSelectionForm extends WizardStep {
+public class BuyPersonMembershipPlanSelectionForm extends WizardStep {
 
     @SpringBean
     private MembershipPlanFacade membershipPlanFacade;
     @SpringBean
     private SecurityFacade securityFacade;
 
-    private IModel<ResearchGroupMembershipPlan> model;
+    private IModel<PersonMembershipPlan> model;
 
     private DropDownChoice<MembershipPlan> membershipPlanDropDownChoice;
 
-    public BuyGroupMembershipPlanSelectionForm(IModel<ResearchGroupMembershipPlan> model)
+    public BuyPersonMembershipPlanSelectionForm(IModel<PersonMembershipPlan> model)
     {
 
         this.model = model;
@@ -65,7 +65,7 @@ public class BuyGroupMembershipPlanSelectionForm extends WizardStep {
 
     private void addPlanSelector() {
         ChoiceRenderer<MembershipPlan> renderer = new ChoiceRenderer<MembershipPlan>("name", "membershipId");
-        List<MembershipPlan> choices = membershipPlanFacade.getAvailableGroupMembershipPlans();
+        List<MembershipPlan> choices = membershipPlanFacade.getAvailablePersonMembershipPlans();
 
         membershipPlanDropDownChoice = new DropDownChoice<MembershipPlan>("membershipPlan", new PropertyModel<MembershipPlan>(model.getObject(), "membershipPlan"), choices, renderer);
 

@@ -1,21 +1,20 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.groups;
+package cz.zcu.kiv.eegdatabase.wui.ui.account;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard.BuyGroupMembershipPlanPaymentForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard.BuyGroupMembershipPlanSelectionForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard.BuyPersonMembershipPlanPaymentForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard.BuyPersonMembershipPlanSelectionForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupPageLeftMenu;
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.extensions.wizard.Wizard;
@@ -57,31 +56,30 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class BuyMembershipPlanPage extends MenuPage {
+public class BuyMembershipPlanPersonPage extends MenuPage {
 
 
     @SpringBean
     SecurityFacade securityFacade;
 
     @SpringBean
-    ResearchGroupMembershipPlanFacade planFacade;
+    PersonMembershipPlanFacade planFacade;
 
     @SpringBean
-    ResearchGroupFacade groupFacade;
+    PersonFacade personFacade;
 
-    public BuyMembershipPlanPage(PageParameters parameters) {
-        StringValue value = parseParameters(parameters);
-        final int groupId = value.toInt();
-        final ResearchGroup group = groupFacade.getResearchGroupById(groupId);
+    public BuyMembershipPlanPersonPage(PageParameters parameters) {
+        final Person person = personFacade.getLoggedPerson();
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.experimentDetail"));
-        add(new ButtonPageMenu("leftMenu", prepareLeftMenu()));
+        setPageTitle(ResourceUtils.getModel("pageTitle.buyPlan"));
 
-        final Model<ResearchGroupMembershipPlan> model = new Model<ResearchGroupMembershipPlan>(new ResearchGroupMembershipPlan());
+        add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
+
+        final Model<PersonMembershipPlan> model = new Model<PersonMembershipPlan>(new PersonMembershipPlan());
 
         WizardModel wizardModel = new WizardModel();
-        wizardModel.add(new BuyGroupMembershipPlanSelectionForm(model));
-        wizardModel.add(new BuyGroupMembershipPlanPaymentForm(model));
+        wizardModel.add(new BuyPersonMembershipPlanSelectionForm(model));
+        wizardModel.add(new BuyPersonMembershipPlanPaymentForm(model));
 
         Wizard wizard = new Wizard("wizard", wizardModel, false) {
 
@@ -90,17 +88,17 @@ public class BuyMembershipPlanPage extends MenuPage {
             @Override
             public void onFinish() {
 
-                ResearchGroupMembershipPlan plan = model.getObject();
+                PersonMembershipPlan plan = model.getObject();
                 plan.setFrom(new Timestamp(System.currentTimeMillis()));
                 plan.setTo(new Timestamp(System.currentTimeMillis() + (plan.getMembershipPlan().getLength() * 1000)));
                 //plan.setTo(new Timestamp(System.currentTimeMillis()*plan.getMembershipPlan().getLength()));
-                plan.setResearchGroup(group);
+                plan.setPerson(person);
 
                 Person logged = EEGDataBaseSession.get().getLoggedUser();
 
                 planFacade.create(plan);
 
-                setResponsePage(ListOfMembershipPlansGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+                setResponsePage(ListOfMembershipPlansPersonPage.class);
             }
 
             @Override
@@ -117,7 +115,7 @@ public class BuyMembershipPlanPage extends MenuPage {
 
             @Override
             public void onCancel() {
-                throw new RestartResponseAtInterceptPageException(ListOfMembershipPlansGroupPage.class, getPageParameters());
+                throw new RestartResponseAtInterceptPageException(ListOfMembershipPlansPersonPage.class, getPageParameters());
             }
 
         };

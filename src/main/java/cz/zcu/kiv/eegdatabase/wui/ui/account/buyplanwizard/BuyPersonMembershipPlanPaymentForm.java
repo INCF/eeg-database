@@ -1,21 +1,16 @@
-package cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard;
+package cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import org.apache.wicket.extensions.wizard.WizardStep;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-
-import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -43,39 +38,25 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
-public class BuyGroupMembershipPlanSelectionForm extends WizardStep {
+public class BuyPersonMembershipPlanPaymentForm extends WizardStep {
 
     @SpringBean
     private MembershipPlanFacade membershipPlanFacade;
     @SpringBean
     private SecurityFacade securityFacade;
 
-    private IModel<ResearchGroupMembershipPlan> model;
+    private IModel<PersonMembershipPlan> model;
 
     private DropDownChoice<MembershipPlan> membershipPlanDropDownChoice;
 
-    public BuyGroupMembershipPlanSelectionForm(IModel<ResearchGroupMembershipPlan> model)
+    public BuyPersonMembershipPlanPaymentForm(IModel<PersonMembershipPlan> model)
     {
 
         this.model = model;
         setOutputMarkupId(true);
 
-        addPlanSelector();
     }
 
-    private void addPlanSelector() {
-        ChoiceRenderer<MembershipPlan> renderer = new ChoiceRenderer<MembershipPlan>("name", "membershipId");
-        List<MembershipPlan> choices = membershipPlanFacade.getAvailableGroupMembershipPlans();
-
-        membershipPlanDropDownChoice = new DropDownChoice<MembershipPlan>("membershipPlan", new PropertyModel<MembershipPlan>(model.getObject(), "membershipPlan"), choices, renderer);
-
-        membershipPlanDropDownChoice.setRequired(true);
-        membershipPlanDropDownChoice.setLabel(ResourceUtils.getModel("label.membershipPlan"));
-        final FeedbackPanel membershipPlanChoiceFeedback = createFeedbackForComponent(membershipPlanDropDownChoice, "membershipPlanFeedback");
-
-        add(membershipPlanDropDownChoice, membershipPlanChoiceFeedback);
-
-    }
 
     private FeedbackPanel createFeedbackForComponent(FormComponent component, String id) {
 

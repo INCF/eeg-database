@@ -20,19 +20,18 @@
  *  
  *   ListOfMembersGroupPage.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.groups;
+package cz.zcu.kiv.eegdatabase.wui.ui.account;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroupMembershipPlan;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -57,7 +56,7 @@ import java.util.List;
  *
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
-public class ListOfMembershipPlansGroupPage extends MenuPage {
+public class ListOfMembershipPlansPersonPage extends MenuPage {
 
     private static final long serialVersionUID = 7280002331574740721L;
 
@@ -67,46 +66,38 @@ public class ListOfMembershipPlansGroupPage extends MenuPage {
     MembershipPlanFacade membershipPlanFacade;
 
     @SpringBean
-    ResearchGroupMembershipPlanFacade researchGroupMembershipPlanFacade;
+    PersonMembershipPlanFacade personMembershipPlanFacade;
 
     @SpringBean
     SecurityFacade securityFacade;
 
     @SpringBean
-    ResearchGroupFacade groupFacade;
+    PersonFacade personFacade;
 
 
 
-    public ListOfMembershipPlansGroupPage(PageParameters parameters) {
+    public ListOfMembershipPlansPersonPage(PageParameters parameters) {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.listGroupMembershipPlans"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.listPersonMembershipPlans"));
 
-        add(new ButtonPageMenu("leftMenu", prepareLeftMenu()));
+        add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
-        StringValue value = parseParameters(parameters);
-
-        int groupId = value.toInt();
-        
-        if (!securityFacade.userIsExperimenterInGroup(groupId))
-            throw new RestartResponseAtInterceptPageException(ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
-
-        setupComponents(groupId);
+        setupComponents();
     }
 
-    private void setupComponents(final int groupId) {
-        ResearchGroup group = groupFacade.getResearchGroupById(groupId);
-        final boolean isUserGroupAdmin = securityFacade.userIsAdminInGroup(groupId);
+    private void setupComponents() {
+        Person person = personFacade.getLoggedPerson();
 
         //add(new Label("title", groupFacade.getResearchGroupTitle(groupId)));
 
         //final WebMarkupContainer container = new WebMarkupContainer("container");
         //container.setOutputMarkupPlaceholderTag(true);
 
-        List<ResearchGroupMembershipPlan> plansList = researchGroupMembershipPlanFacade.getGroupMembershipPlans(group);
-        List<ResearchGroupMembershipPlan> activePlansList = new ArrayList<ResearchGroupMembershipPlan>();
-        List<ResearchGroupMembershipPlan> expiredPlansList = new ArrayList<ResearchGroupMembershipPlan>();
+        List<PersonMembershipPlan> plansList = personMembershipPlanFacade.getPersonMembershipPlans(person);
+        List<PersonMembershipPlan> activePlansList = new ArrayList<PersonMembershipPlan>();
+        List<PersonMembershipPlan> expiredPlansList = new ArrayList<PersonMembershipPlan>();
 
-        for(ResearchGroupMembershipPlan plan : plansList)
+        for(PersonMembershipPlan plan : plansList)
         {
             if(plan.getTo().after(new Date(System.currentTimeMillis())))
                   activePlansList.add(plan);
@@ -114,13 +105,13 @@ public class ListOfMembershipPlansGroupPage extends MenuPage {
 
         }
 
-        ListView<ResearchGroupMembershipPlan> groupPlansActive = new ListView<ResearchGroupMembershipPlan>("groupPlansActive", activePlansList) {
+        ListView<PersonMembershipPlan> personPlansActive = new ListView<PersonMembershipPlan>("personPlansActive", activePlansList) {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<ResearchGroupMembershipPlan> item) {
-                ResearchGroupMembershipPlan modelObject = item.getModelObject();
+            protected void populateItem(ListItem<PersonMembershipPlan> item) {
+                PersonMembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getMembershipPlan().getName()));
                 item.add(new Label("price", modelObject.getMembershipPlan().getPrice()));
                 item.add(new Label("from", modelObject.getFrom()));
@@ -128,13 +119,13 @@ public class ListOfMembershipPlansGroupPage extends MenuPage {
             }
         };
 
-        ListView<ResearchGroupMembershipPlan> groupPlansExpired = new ListView<ResearchGroupMembershipPlan>("groupPlansExpired", expiredPlansList) {
+        ListView<PersonMembershipPlan> personPlansExpired = new ListView<PersonMembershipPlan>("personPlansExpired", expiredPlansList) {
 
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(ListItem<ResearchGroupMembershipPlan> item) {
-                ResearchGroupMembershipPlan modelObject = item.getModelObject();
+            protected void populateItem(ListItem<PersonMembershipPlan> item) {
+                PersonMembershipPlan modelObject = item.getModelObject();
                 item.add(new Label("name", modelObject.getMembershipPlan().getName()));
                 item.add(new Label("price", modelObject.getMembershipPlan().getPrice()));
                 item.add(new Label("from", modelObject.getFrom()));
@@ -145,27 +136,12 @@ public class ListOfMembershipPlansGroupPage extends MenuPage {
         //container.add(groupPlansActive);
         //container.add(groupPlansExpired);
 
-        BookmarkablePageLink<Void> backToDetailLink = new BookmarkablePageLink<Void>("backLink", ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
-        BookmarkablePageLink<Void> buyPlanLink = new BookmarkablePageLink<Void>("buyMembershipPlan", BuyMembershipPlanGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
-        buyPlanLink.setVisibilityAllowed(isUserGroupAdmin);
+        //BookmarkablePageLink<Void> backToDetailLink = new BookmarkablePageLink<Void>("backLink", ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+        BookmarkablePageLink<Void> buyPlanLink = new BookmarkablePageLink<Void>("buyMembershipPlan", BuyMembershipPlanPersonPage.class);
+        buyPlanLink.setVisibilityAllowed(true);
 
-        add(groupPlansActive, groupPlansExpired, backToDetailLink, buyPlanLink);
+        add(personPlansActive, personPlansExpired, buyPlanLink);
 
-    }
-
-    private GroupPageLeftMenu[] prepareLeftMenu() {
-
-        List<GroupPageLeftMenu> list = new ArrayList<GroupPageLeftMenu>();
-        boolean authorizedToRequestGroupRole = securityFacade.isAuthorizedToRequestGroupRole();
-
-        for (GroupPageLeftMenu tmp : GroupPageLeftMenu.values())
-            list.add(tmp);
-
-        if (!authorizedToRequestGroupRole)
-            list.remove(GroupPageLeftMenu.REQUEST_FOR_GROUP_ROLE);
-
-        GroupPageLeftMenu[] array = new GroupPageLeftMenu[list.size()];
-        return list.toArray(array);
     }
 
     private StringValue parseParameters(PageParameters parameters) {

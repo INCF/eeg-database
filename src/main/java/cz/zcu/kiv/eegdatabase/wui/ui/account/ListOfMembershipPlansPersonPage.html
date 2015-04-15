@@ -36,7 +36,7 @@ This file is part of the EEG-database project
         </h1>
 
         <h2>
-            <wicket:message key='pageTitle.groupActiveMembershipPlanList'></wicket:message>
+            <wicket:message key='pageTitle.personActiveMembershipPlanList'></wicket:message>
         </h2>
 
         <table class="dataTable membershipPlansList">
@@ -50,7 +50,7 @@ This file is part of the EEG-database project
             </tr>
             </thead>
             <tbody>
-            <tr wicket:id="groupPlansActive">
+            <tr wicket:id="personPlansActive">
                 <td wicket:id="name"></td>
                 <td wicket:id="price"></td>
                 <td wicket:id="from"></td>
@@ -60,7 +60,7 @@ This file is part of the EEG-database project
         </table>
 
         <h2>
-            <wicket:message key='pageTitle.groupExpiredMembershipPlanList'></wicket:message>
+            <wicket:message key='pageTitle.personExpiredMembershipPlanList'></wicket:message>
         </h2>
 
         <table class="dataTable membershipPlansList">
@@ -74,7 +74,7 @@ This file is part of the EEG-database project
             </tr>
             </thead>
             <tbody>
-            <tr wicket:id="groupPlansExpired">
+            <tr wicket:id="personPlansExpired">
                 <td wicket:id="name"></td>
                 <td wicket:id="price"></td>
                 <td wicket:id="from"></td>
@@ -84,7 +84,6 @@ This file is part of the EEG-database project
         </table>
 
       <div class="actionBox">
-        <a href="#" class="lightButtonLink" wicket:id="backLink"><wicket:message key="button.backToGroupDetail" /></a>
         <a href="#" class="lightButtonLink" wicket:id="buyMembershipPlan"><wicket:message key="button.buyMembershipPlan" /></a>
       </div>
     </div>
