@@ -13,4 +13,6 @@ public interface PersonMembershipPlanFacade extends GenericFacade<PersonMembersh
 
     List<PersonMembershipPlan> getPersonMembershipPlans(Person person);
 
+    public boolean isPlanUsed(int membershipPlanId);
+
 }

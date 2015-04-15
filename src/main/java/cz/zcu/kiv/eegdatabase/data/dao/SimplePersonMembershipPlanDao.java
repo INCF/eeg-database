@@ -41,4 +41,11 @@ public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMember
         return ret;
     }
 
+    @Override
+    public boolean isPlanUsed(int membershipPlanId) {
+
+        String query = "select membershipPlan from PersonMembershipPlan m where m.membershipPlan.membershipId = :plan";
+        return (!this.getSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
+    }
+
 }

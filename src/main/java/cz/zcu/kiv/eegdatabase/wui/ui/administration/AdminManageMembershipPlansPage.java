@@ -10,6 +10,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPageLeftMenu;
@@ -43,6 +44,9 @@ public class AdminManageMembershipPlansPage extends MenuPage {
     @SpringBean
     ResearchGroupMembershipPlanFacade researchGroupMembershipPlanFacade;
 
+    @SpringBean
+    PersonMembershipPlanFacade personMembershipPlanFacade;
+
     public AdminManageMembershipPlansPage() {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.membershipPlans"));
@@ -74,8 +78,13 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
                     @Override
                     public void onClick(AjaxRequestTarget target) {
-                        item.getModel().getObject().setValid(false);
-                        membershipPlanFacade.update(item.getModel().getObject());
+                        if(personMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId())) {
+                            item.getModelObject().setValid(false);
+                            membershipPlanFacade.update(item.getModelObject());
+                        } else {
+                            membershipPlanFacade.delete(item.getModelObject());
+                        }
+
                         setResponsePage(AdminManageMembershipPlansPage.class);
                     }
                 };
@@ -109,7 +118,7 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
                         if(researchGroupMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId()))  {
-                            item.getModel().getObject().setValid(false);
+                            item.getModelObject().setValid(false);
                             membershipPlanFacade.update(item.getModelObject());
                         } else {
                             membershipPlanFacade.delete(item.getModelObject());
