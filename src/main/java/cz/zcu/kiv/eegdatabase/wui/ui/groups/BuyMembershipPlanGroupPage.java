@@ -18,6 +18,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard.BuyGroupMembershi
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.buyplanwizard.BuyGroupMembershipPlanSelectionForm;
 import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.extensions.wizard.WizardModel;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
@@ -57,6 +58,7 @@ import java.util.List;
  * <p/>
  * ********************************************************************************************************************
  */
+@AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class BuyMembershipPlanGroupPage extends MenuPage {
 
 

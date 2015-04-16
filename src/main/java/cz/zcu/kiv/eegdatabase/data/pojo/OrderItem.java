@@ -37,6 +37,14 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @ManyToOne
     @JoinColumn(name = "EXPERIMENT_PACKAGE")
     private ExperimentPackage experimentPackage;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBERSHIP_PLAN")
+    private MembershipPlan membershipPlan;
+
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
+    private ResearchGroup researchGroup;
     
     @ManyToOne
     @JoinColumn(name = "LICENSE")
@@ -56,6 +64,22 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.experimentPackage = experimentPackage;
         this.order = order;
         this.price = experimentPackage.getPrice() != null ? experimentPackage.getPrice() : BigDecimal.ZERO;
+    }
+
+    public ResearchGroup getResearchGroup() {
+        return researchGroup;
+    }
+
+    public void setResearchGroup(ResearchGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
+
+    public MembershipPlan getMembershipPlan() {
+        return membershipPlan;
+    }
+
+    public void setMembershipPlan(MembershipPlan membershipPlan) {
+        this.membershipPlan = membershipPlan;
     }
 
     public int getId() {

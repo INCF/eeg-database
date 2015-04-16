@@ -29,6 +29,10 @@ import java.util.Currency;
 import java.util.Date;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -44,10 +48,6 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.convert.IConverter;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Order;
-import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -59,6 +59,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ShoppingCartPage extends MenuPage {
@@ -67,6 +68,12 @@ public class ShoppingCartPage extends MenuPage {
 
     @SpringBean
     private OrderFacade orderFacade;
+
+    @SpringBean
+    PersonMembershipPlanFacade personPlanFacade;
+
+    @SpringBean
+    ResearchGroupMembershipPlanFacade groupPlanFacade;
 
     @SpringBean
     private LicenseFacade licenseFacade;
@@ -221,6 +228,36 @@ public class ShoppingCartPage extends MenuPage {
                     
                     if(item.getPrice() == null) {
                         item.setPrice(BigDecimal.ZERO);
+                    }
+
+                    if (item.getMembershipPlan() != null) {
+                        MembershipPlan plan = item.getMembershipPlan();
+                        if(MembershipPlanType.GROUP.getType()==plan.getType())
+                        {
+                            ResearchGroup group = item.getResearchGroup();
+
+                            ResearchGroupMembershipPlan groupPlan = new ResearchGroupMembershipPlan();
+
+                            groupPlan.setResearchGroup(group);
+                            groupPlan.setMembershipPlan(plan);
+                            groupPlan.setFrom(new Timestamp(System.currentTimeMillis()));
+                            groupPlan.setTo(new Timestamp(System.currentTimeMillis() + (groupPlan.getMembershipPlan().getLength() * 1000)));
+
+                            groupPlanFacade.create(groupPlan);
+
+                        }
+                        else{
+                            Person logged = EEGDataBaseSession.get().getLoggedUser();
+
+                            PersonMembershipPlan personPlan = new PersonMembershipPlan();
+
+                            personPlan.setPerson(logged);
+                            personPlan.setMembershipPlan(plan);
+                            personPlan.setFrom(new Timestamp(System.currentTimeMillis()));
+                            personPlan.setTo(new Timestamp(System.currentTimeMillis() + (personPlan.getMembershipPlan().getLength() * 1000)));
+
+                            personPlanFacade.create(personPlan);
+                        }
                     }
                 }
 
