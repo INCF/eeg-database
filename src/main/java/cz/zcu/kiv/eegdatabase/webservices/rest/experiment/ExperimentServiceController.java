@@ -339,7 +339,7 @@ public class ExperimentServiceController {
      *
      * @return user's experiment list
      */
-    @RequestMapping(value = "/mineInfoList")
+    @RequestMapping(value = "/mineInfo")
     public ExperimentInfoList getMyExperimentInfoList() {
         List<ExperimentData> experiments = service.getMyExperiments();
 
