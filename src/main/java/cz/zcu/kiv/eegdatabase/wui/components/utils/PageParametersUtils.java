@@ -27,6 +27,8 @@ import org.apache.wicket.request.Url;
 import org.apache.wicket.request.cycle.RequestCycle;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 
+import java.util.List;
+
 /**
  * Utilities class for page parameters.
  * 
@@ -56,6 +58,25 @@ public class PageParametersUtils {
         param.add(key, object);
 
         return param;
+    }
+
+    /**
+     * Creates page parameters.
+     *
+     * @param parameterNames
+     *            parameter names
+     * @param parameterValues
+     *            parameter valuse
+     * @return page parameters object with parameters: key[index] = object[index].
+     */
+    public static PageParameters getPageParameters(List<String> parameterNames, List<Object> parameterValues) {
+
+        PageParameters params = new PageParameters();
+        for(int i = 0; i < parameterNames.size(); i++) {
+            params.add(parameterNames.get(i), parameterValues.get(i));
+        }
+
+        return params;
     }
 
     /**

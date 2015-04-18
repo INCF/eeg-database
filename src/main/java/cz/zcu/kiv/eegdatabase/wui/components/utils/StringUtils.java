@@ -52,4 +52,8 @@ public class StringUtils {
     public static String getCaptchaString(){
         return randomString(3, 8);
     }
+
+    public static boolean isEmpty(String s) {
+        return s == null || s.trim().isEmpty();
+    }
 }

@@ -22,8 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
+import java.util.Iterator;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -383,6 +385,18 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     public void changePrice(Experiment experiment) {
         experimentDao.update(experiment);
         
+    }
+
+    @Override
+    @Transactional
+    public void deleteGenericParameter(Experiment experiment, String genericParameterName) {
+        for(Iterator<GenericParameter> pit = experiment.getGenericParameters().iterator(); pit.hasNext();) {
+            if(pit.next().getName().equals(genericParameterName)) {
+                pit.remove();
+                break;
+            }
+        }
+        experimentDao.update(experiment);
     }
 
 }

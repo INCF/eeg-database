@@ -23,7 +23,10 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.GenericParameterDetailPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
@@ -37,6 +40,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -260,7 +264,56 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
-        add(hardware, addParameters, files, software, diseases, pharmaceuticals, projectTypes);
+        PropertyListView<GenericParameter> genericParameters = new PropertyListView<GenericParameter>("genericParameters", new ListModel<GenericParameter>(experiment.getGenericParameters())) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(final ListItem<GenericParameter> item) {
+
+                item.add(new Label("genericParameterName", new PropertyModel<String>(item.getModel(), "name")));
+                item.add(new Label("genericParameterValue",
+                                    (StringUtils.isEmpty(item.getModelObject().getValueString()))
+                                        ? new PropertyModel<Double>(item.getModel(), "valueInteger")
+                                        : new PropertyModel<String>(item.getModel(), "valueString") ));
+
+                item.add(new ViewLinkPanel("detail", GenericParameterDetailPage.class,
+                        Arrays.asList(GenericParameterDetailPage.PARAM_EXPERIMENT_ID, GenericParameterDetailPage.PARAM_PARAMETER_NAME),
+                        Arrays.<Object>asList(experiment.getExperimentId(), item.getModelObject().getName()),
+                        ResourceUtils.getModel("link.detail")));
+
+                item.add(new AjaxLink<Void>("deleteLink") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+                        facade.deleteGenericParameter(experiment, item.getModelObject().getName());
+
+                        setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    }
+
+                    @Override
+                    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                        super.updateAjaxAttributes(attributes);
+
+                        AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.genericParameter", item.getModelObject().getName()) + "');");
+                        attributes.getAjaxCallListeners().add(ajaxCallListener);
+                    }
+
+                    @Override
+                    public boolean isVisible() {
+                        boolean isOwner = experiment.getPersonByOwnerId().getPersonId() == EEGDataBaseSession.get().getLoggedUser().getPersonId();
+                        boolean isAdmin = security.isAdmin();
+                        boolean isGroupAdmin = security.userIsAdminInGroup(experiment.getResearchGroup().getResearchGroupId());
+                        return isAdmin || isOwner || isGroupAdmin;
+                    }
+                });
+            }
+        };
+
+        add(hardware, addParameters, files, software, diseases, pharmaceuticals, projectTypes, genericParameters);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);

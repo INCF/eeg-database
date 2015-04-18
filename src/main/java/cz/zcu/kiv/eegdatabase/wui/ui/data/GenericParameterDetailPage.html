@@ -1,0 +1,62 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+  xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+  lang="en">
+<body>
+  <wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+
+
+      <h1>
+        <wicket:message key="heading.genericParameter" />
+      </h1>
+
+      <table class="standardValueTable">
+        <tr>
+          <th><wicket:message key="dataTable.heading.parameterName" /></th>
+          <td wicket:id="genericParameterName"></td>
+        </tr>
+        <tr>
+          <th><wicket:message key="dataTable.heading.parameterValue.string" /></th>
+          <td wicket:id="genericParameterValueString"></td>
+        </tr>
+        <tr>
+            <th><wicket:message key="dataTable.heading.parameterValue.integer" /></th>
+            <td wicket:id="genericParameterValueInteger"></td>
+        </tr>
+        <tr>
+            <th><wicket:message key="dataTable.heading.parameterAttribute.count" /></th>
+            <td wicket:id="genericParameterAttributeCount"></td>
+        </tr>
+      </table>
+
+        <wicket:enclosure child="attributes">
+            <h2>
+            <wicket:message key="heading.genericParameterAttributes" />
+            </h2>
+
+            <table class="dataTable" style="width: 450px;">
+              <thead>
+                <tr>
+                  <th style="width: 180px;"><wicket:message key="dataTable.heading.attributeName" /></th>
+                  <th><wicket:message key="dataTable.heading.attributeValue" /></th>
+                </tr>
+              </thead>
+                <tbody>
+                  <tr wicket:id="attributes">
+                    <td wicket:id="attributeName"></td>
+                    <td wicket:id="attributeValue"></td>
+                  </tr>
+                </tbody>
+            </table>
+        </wicket:enclosure>
+
+    <div class="actionBox">
+      <a href="#" wicket:id="backLink" class="lightButtonLink"><wicket:message key="button.backToMeasuration" /></a>
+    </div>
+    </div>
+  </wicket:extend>
+</body>
+</html>

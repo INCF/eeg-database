@@ -341,7 +341,7 @@ public class ExperimentServiceController {
      */
     @RequestMapping(value = "/mineInfo")
     public ExperimentInfoList getMyExperimentInfoList() {
-        List<ExperimentData> experiments = service.getMyExperiments();
+        List<ExperimentData> experiments = service.getMyExperiments();  //TODO load only necessary data
 
         List<ExperimentInfo> infoList = new ArrayList<ExperimentInfo>(experiments.size());
         for(ExperimentData experiment : experiments) {

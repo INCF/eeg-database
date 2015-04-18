@@ -227,6 +227,32 @@ This file is part of the EEG-database project
           </tr>
         </tbody>
       </table>
+
+        <h2>
+            <wicket:message key="heading.genericParameters" />
+        </h2>
+        <table class="dataTable" style="width: 500px;">
+            <thead>
+            <tr>
+                <th style="width: 250px;"><wicket:message key="dataTable.heading.parameterName" /></th>
+                <th style="width: 150px;"><wicket:message key="dataTable.heading.parameterValue" /></th>
+                <th>
+                    <!-- column with link for detail -->
+                </th>
+                <th>
+                    <!-- column with link for delete -->
+                </th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="genericParameters">
+                <td wicket:id="genericParameterName"></td>
+                <td wicket:id="genericParameterValue"></td>
+                <td wicket:id="detail"></td>
+                <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
+            </tr>
+            </tbody>
+        </table>
       
       <div class="actionBox">
       <a href="#" wicket:id="addParameterLink" class="lightButtonLink"><wicket:message:message key="button.addOptionalParameter"/></a>

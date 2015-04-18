@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
@@ -56,7 +57,6 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
 
     @Override
     public Experiment getExperimentForDetail(int experimentId) {
-        
         return service.getExperimentForDetail(experimentId);
     }
 
@@ -169,5 +169,10 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     @Override
     public void changePrice(Experiment experiment) {
         service.changePrice(experiment);
+    }
+
+    @Override
+    public void deleteGenericParameter(Experiment experiment, String genericParameterName) {
+        service.deleteGenericParameter(experiment, genericParameterName);
     }
 }
