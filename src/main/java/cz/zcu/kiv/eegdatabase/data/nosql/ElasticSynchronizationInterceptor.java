@@ -132,10 +132,19 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 	 */
 	private void syncExperimentParams(Experiment e) {
 
-		GenericParameter param;
-		e.setGenericParameters(new ArrayList<GenericParameter>());
-		e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
-		e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
+	    List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
+        syncedParams.addAll(getGenericParamaters("software", e.getGenericParameters()));
+        syncedParams.addAll(getGenericParamaters("diesease", e.getGenericParameters()));
+        syncedParams.addAll(getGenericParamaters("pharmaceutical", e.getGenericParameters()));
+        syncedParams.addAll(getGenericParamaters("digitization", e.getGenericParameters()));
+        syncedParams.addAll(getGenericParamaters("temperature", e.getGenericParameters()));
+        syncedParams.addAll(getGenericParamaters("weather", e.getGenericParameters()));
+        
+        GenericParameter param;
+        e.getGenericParameters().removeAll(syncedParams);
+        
+        e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
+        e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
 
 		for (Hardware hw : e.getHardwares()) {
 			param = new GenericParameter("hardware", hw.getTitle());
@@ -206,4 +215,14 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
 	}
+	
+	public List<GenericParameter> getGenericParamaters(String paramName, List<GenericParameter> params) {
+        List<GenericParameter> out = new ArrayList<GenericParameter>();
+        for (GenericParameter p : params) {
+            if (p.getName().equals(paramName)) {
+                out.add(p);
+            }
+        }
+        return out;
+    }
 }
