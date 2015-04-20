@@ -69,8 +69,77 @@
             </tr>
             </tbody>
         </table>
+
         <br/>
         <a href="#" wicket:id="addPlan" class="lightButtonLink"><wicket:message key="link.addMembershipPlan"></wicket:message></a>
+        <br/><br/>
+        <hr/>
+        <br/>
+
+
+        <h2>
+            <wicket:message key='pageTitle.personPromoCodeList'></wicket:message>
+        </h2>
+
+        <table class="dataTable promoCodeList">
+            <thead>
+            <tr>
+                <th class="columnCodeKeyword"><wicket:message key="dataTable.heading.keyword" /></th>
+                <th class="columnCodeDiscount"><wicket:message key="dataTable.heading.discount" /></th>
+                <th class="columnCodeDate"><wicket:message key="dataTable.heading.from" /></th>
+                <th class="columnCodeDate"><wicket:message key="dataTable.heading.to" /></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="personPromoCodes">
+                <td wicket:id="keyword"></td>
+                <td wicket:id="discount"></td>
+                <td wicket:id="dateFrom"></td>
+                <td wicket:id="dateTo"></td>
+                <td><a href="#" wicket:id="detailLink"><wicket:message key="link.detail"></wicket:message></a></td>
+                <td><a href="#" wicket:id="editLink"><wicket:message key="link.edit"></wicket:message></a></td>
+                <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
+            </tr>
+            </tbody>
+        </table>
+
+
+        <h2>
+            <wicket:message key='pageTitle.groupPromoCodeList'></wicket:message>
+        </h2>
+
+        <table class="dataTable promoCodeList">
+            <thead>
+            <tr>
+                <th class="columnCodeKeyword"><wicket:message key="dataTable.heading.keyword" /></th>
+                <th class="columnCodeDiscount"><wicket:message key="dataTable.heading.discount" /></th>
+                <th class="columnCodeDate"><wicket:message key="dataTable.heading.from" /></th>
+                <th class="columnCodeDate"><wicket:message key="dataTable.heading.to" /></th>
+                <th></th>
+                <th></th>
+                <th></th>
+            </tr>
+            </thead>
+            <tbody>
+            <tr wicket:id="groupPromoCodes">
+                <td wicket:id="keyword"></td>
+                <td wicket:id="discount"></td>
+                <td wicket:id="dateFrom"></td>
+                <td wicket:id="dateTo"></td>
+                <td><a href="#" wicket:id="detailLink"><wicket:message key="link.detail"></wicket:message></a></td>
+                <td><a href="#" wicket:id="editLink"><wicket:message key="link.edit"></wicket:message></a></td>
+                <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
+            </tr>
+            </tbody>
+        </table>
+
+        <br/>
+        <a href="#" wicket:id="addPromoCode" class="lightButtonLink"><wicket:message key="link.addPromoCode"></wicket:message></a>
+        <br/>
+
 
     </div>
 </wicket:extend>

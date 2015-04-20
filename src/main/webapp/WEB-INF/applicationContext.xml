@@ -240,6 +240,14 @@
         <constructor-arg ref="researchGroupMembershipPlanService"/>
     </bean>
 
+    <bean name="promoCodeFacade" class="cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacadeImpl" autowire="byType">
+        <constructor-arg ref="promoCodeService"/>
+    </bean>
+
+    <bean name="promoCodeService" class="cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeServiceImpl" autowire="byType">
+        <constructor-arg ref="promoCodeDao"/>
+    </bean>
+
 
 	<!-- MAIL -->
 	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />

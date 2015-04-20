@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
 
+import java.util.List;
+
 /**
  * ********************************************************************************************************************
  * <p/>
@@ -30,5 +32,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
  */
 
 public interface PromoCodeDao extends GenericDao<PromoCode,Integer> {
+
+    public List<PromoCode> getAvailableGroupPromoCodes();
+
+    public List<PromoCode> getAvailablePersonPromoCodes();
+
+    public PromoCode getPromoCodeById(Integer id);
 
 }

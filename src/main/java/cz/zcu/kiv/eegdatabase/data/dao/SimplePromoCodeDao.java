@@ -1,6 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+
+import java.util.List;
 
 /**
  * ********************************************************************************************************************
@@ -30,5 +33,25 @@ import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
  */
 
 public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> implements PromoCodeDao {
+
+    public List<PromoCode> getAvailableGroupPromoCodes()  {
+        String query = "select m from PromoCode m where m.type = :promoCodeType";
+
+        List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.GROUP.getType()).list(); //set parameters
+        return ret;
+    }
+
+    public List<PromoCode> getAvailablePersonPromoCodes()  {
+        String query = "select m from PromoCode m where m.type = :promoCodeType";
+
+        List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.PERSON.getType()).list(); //set parameters
+        return ret;
+    }
+
+    public PromoCode getPromoCodeById(Integer id)  {
+        String query = "select m from PromoCode m where m.promoCodeId = :id";
+        PromoCode ret = (PromoCode) this.getSession().createQuery(query).setParameter("id",id).uniqueResult();
+        return ret;
+    }
 
 }

@@ -395,6 +395,19 @@ while still visible in code, so it can be accessible without styles **/
     width: 100px;
 }
 
+.promoCodeList .columnCodeKeyword {
+    width: 150px;
+}
+
+.promoCodeList .columnCodeDiscount {
+    width: 120px;
+}
+
+.promoCodeList .columnCodeDate {
+    width: 150px;
+}
+
+
 /* Login form definitions are used also for print */
 
 @media screen, projection, print {

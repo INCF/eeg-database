@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 
 import java.util.List;
 
@@ -37,7 +38,7 @@ public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Int
     public List<MembershipPlan> getAvailableGroupMembershipPlans() {
         String query = "select m from MembershipPlan m where m.type = :membershipPlanType and m.valid = 'TRUE'";
 
-        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",1).list(); //set parameters
+        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType", MembershipPlanType.GROUP.getType()).list(); //set parameters
         return ret;
     }
 
@@ -45,7 +46,7 @@ public class SimpleMembershipPlanDao extends SimpleGenericDao<MembershipPlan,Int
     public List<MembershipPlan> getAvailablePersonMembershipPlans() {
         String query = "select m from MembershipPlan m where m.type = :membershipPlanType and m.valid = 'TRUE'";
 
-        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",0).list(); //set parameters
+        List<MembershipPlan> ret = this.getSession().createQuery(query).setParameter("membershipPlanType",MembershipPlanType.PERSON.getType()).list(); //set parameters
         return ret;
     }
 
