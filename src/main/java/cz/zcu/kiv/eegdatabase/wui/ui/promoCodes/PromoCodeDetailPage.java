@@ -13,12 +13,16 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
+import java.text.SimpleDateFormat;
+
 /**
  * Created by Lichous on 20.4.15.
  */
 public class PromoCodeDetailPage extends MenuPage {
 
     private static final long serialVersionUID = 6910619546343835996L;
+
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     @SpringBean
     PromoCodeFacade promoCodeFacade;
@@ -42,8 +46,8 @@ public class PromoCodeDetailPage extends MenuPage {
         add(new Label("keyword",promoCode.getKeyword()));
         add(new Label("description", promoCode.getDescription()));
         add(new Label("discount",promoCode.getDiscount()));
-        add(new Label("dateFrom", promoCode.getFrom()));
-        add(new Label("dateTo", promoCode.getTo()));
+        add(new Label("dateFrom", dateFormat.format(promoCode.getFrom())));
+        add(new Label("dateTo", dateFormat.format(promoCode.getTo())));
         add(new Label("type", MembershipPlanType.getMembershipPlanByType(promoCode.getType())));
 
     }

@@ -31,6 +31,8 @@ import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.text.SimpleDateFormat;
 import java.util.List;
 
 /**
@@ -41,6 +43,8 @@ import java.util.List;
 public class AdminManageMembershipPlansPage extends MenuPage {
 
     private static final long serialVersionUID = -5514198024012232250L;
+
+    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
     @SpringBean
     MembershipPlanFacade membershipPlanFacade;
@@ -164,8 +168,8 @@ public class AdminManageMembershipPlansPage extends MenuPage {
                 PromoCode modelObject = item.getModelObject();
                 item.add(new Label("keyword", modelObject.getKeyword()));
                 item.add(new Label("discount", modelObject.getDiscount()));
-                item.add(new Label("dateFrom",modelObject.getFrom()));
-                item.add(new Label("dateTo",modelObject.getTo()));
+                item.add(new Label("dateFrom",dateFormat.format(modelObject.getFrom())));
+                item.add(new Label("dateTo",dateFormat.format(modelObject.getTo())));
                 AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.promocode")) {
 
                     private static final long serialVersionUID = 1L;
@@ -195,11 +199,12 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
             @Override
             protected void populateItem(final ListItem<PromoCode> item) {
+
                 PromoCode modelObject = item.getModelObject();
                 item.add(new Label("keyword", modelObject.getKeyword()));
                 item.add(new Label("discount", modelObject.getDiscount()));
-                item.add(new Label("dateFrom",modelObject.getFrom()));
-                item.add(new Label("dateTo",modelObject.getTo()));
+                item.add(new Label("dateFrom",dateFormat.format(modelObject.getFrom())));
+                item.add(new Label("dateTo",dateFormat.format(modelObject.getTo())));
                 AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.promocode")) {
 
                     private static final long serialVersionUID = 1L;
