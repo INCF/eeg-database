@@ -106,7 +106,7 @@ public class ScenarioTestIT extends AbstractUITest {
 
     }
 
-    @Test(groups = "web")
+    @Test(groups = "web", enabled = false)
     public void testAddScenarioWithFileValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
