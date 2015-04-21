@@ -106,7 +106,7 @@ public class ScenarioTestIT extends AbstractUITest {
 
     }
 
-    @Test(groups = "web", enabled = false)
+    @Test(groups = "web")
     public void testAddScenarioWithFileValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
@@ -114,7 +114,7 @@ public class ScenarioTestIT extends AbstractUITest {
         File file = createFile();
         Assert.assertNotNull(file, "Error while creating file for scenario");
         tester.checkCheckbox("dataAvailable");
-
+        Thread.sleep(waitForAjax);
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
