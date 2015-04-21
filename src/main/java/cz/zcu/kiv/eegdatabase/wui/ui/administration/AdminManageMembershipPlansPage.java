@@ -8,8 +8,11 @@ import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxConfirmLink;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
+import cz.zcu.kiv.eegdatabase.wui.components.table.DeleteLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
@@ -19,20 +22,31 @@ import cz.zcu.kiv.eegdatabase.wui.ui.account.MyAccountPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.MembershipPlanManageFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.PromoCodeManageFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.memberships.ListMembershipsDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.promoCodes.ListPromoCodesDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.promoCodes.PromoCodeDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing.MethodListPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.AbstractColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -46,17 +60,14 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
     private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
 
+    private static final int ITEMS_PER_PAGE = 20;
+
     @SpringBean
     MembershipPlanFacade membershipPlanFacade;
 
     @SpringBean
     PromoCodeFacade promoCodeFacade;
 
-    @SpringBean
-    ResearchGroupMembershipPlanFacade researchGroupMembershipPlanFacade;
-
-    @SpringBean
-    PersonMembershipPlanFacade personMembershipPlanFacade;
 
     public AdminManageMembershipPlansPage() {
 
@@ -67,170 +78,84 @@ public class AdminManageMembershipPlansPage extends MenuPage {
         if (user == null)
             throw new RestartResponseAtInterceptPageException(HomePage.class);
 
+        DefaultDataTable<MembershipPlan, String> personPlans = new DefaultDataTable<MembershipPlan, String>("personPlans", createMembershipListColumns(),
+                new ListMembershipsDataProvider(membershipPlanFacade, MembershipPlanType.PERSON), ITEMS_PER_PAGE);
 
-        List<MembershipPlan> personMembershipPlanList = membershipPlanFacade.getAvailablePersonMembershipPlans();
-        List<MembershipPlan> groupMembershipPlanList = membershipPlanFacade.getAvailableGroupMembershipPlans();
-
-
-
-        ListView<MembershipPlan> personPlans = new ListView<MembershipPlan>("personPlans", personMembershipPlanList) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(final ListItem<MembershipPlan> item) {
-                MembershipPlan modelObject = item.getModelObject();
-                item.add(new Label("name", modelObject.getName()));
-                item.add(new Label("price", modelObject.getPrice()));
-                item.add(new Label("length",modelObject.getLength()));
-                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.membershipplan")) {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onClick(AjaxRequestTarget target) {
-                        if(personMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId())) {
-                            item.getModelObject().setValid(false);
-                            membershipPlanFacade.update(item.getModelObject());
-                        } else {
-                            membershipPlanFacade.delete(item.getModelObject());
-                        }
-
-                        setResponsePage(AdminManageMembershipPlansPage.class);
-                    }
-                };
-                deleteLink.setVisibilityAllowed(true);
-                item.add(deleteLink);
-
-                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
-                editLink.setVisibilityAllowed(true);
-                item.add(editLink);
-
-                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", MembershipPlansDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
-                detailLink.setVisibilityAllowed(true);
-                item.add(detailLink);
-            }
-        };
-
-        ListView<MembershipPlan> groupPlans = new ListView<MembershipPlan>("groupPlans", groupMembershipPlanList) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(final ListItem<MembershipPlan> item) {
-                MembershipPlan modelObject = item.getModelObject();
-                item.add(new Label("name", modelObject.getName()));
-                item.add(new Label("price", modelObject.getPrice()));
-                item.add(new Label("length",modelObject.getLength()));
-                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.membershipplan")) {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onClick(AjaxRequestTarget target) {
-                        if(researchGroupMembershipPlanFacade.isPlanUsed(item.getModelObject().getMembershipId()))  {
-                            item.getModelObject().setValid(false);
-                            membershipPlanFacade.update(item.getModelObject());
-                        } else {
-                            membershipPlanFacade.delete(item.getModelObject());
-                        }
-
-                        setResponsePage(AdminManageMembershipPlansPage.class);
-                    }
-                };
-                deleteLink.setVisibilityAllowed(true);
-                item.add(deleteLink);
-
-                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", MembershipPlanManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
-                editLink.setVisibilityAllowed(true);
-                item.add(editLink);
-
-                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", MembershipPlansDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getMembershipId()));
-                detailLink.setVisibilityAllowed(true);
-                item.add(detailLink);
-            }
-        };
+        DefaultDataTable<MembershipPlan, String> groupPlans = new DefaultDataTable<MembershipPlan, String>("groupPlans", createMembershipListColumns(),
+                new ListMembershipsDataProvider(membershipPlanFacade, MembershipPlanType.GROUP), ITEMS_PER_PAGE);
 
         BookmarkablePageLink<Void> addPlan = new BookmarkablePageLink<Void>("addPlan", MembershipPlanManageFormPage.class);
 
         add(personPlans,groupPlans,addPlan);
 
-        List<PromoCode> personPromoCodeList = promoCodeFacade.getAvailablePersonPromoCodes();
-        List<PromoCode> groupPromoCodeList = promoCodeFacade.getAvailableGroupPromoCodes();
 
+        DefaultDataTable<PromoCode, String> personPromoCodes = new DefaultDataTable<PromoCode, String>("personPromoCodes", createPromoCodeListColumns(),
+                new ListPromoCodesDataProvider(promoCodeFacade, MembershipPlanType.PERSON), ITEMS_PER_PAGE);
 
-        ListView<PromoCode> personPromoCodes = new ListView<PromoCode>("personPromoCodes",personPromoCodeList) {
+        DefaultDataTable<PromoCode, String> groupPromoCodes = new DefaultDataTable<PromoCode, String>("groupPromoCodes", createPromoCodeListColumns(),
+                new ListPromoCodesDataProvider(promoCodeFacade, MembershipPlanType.GROUP), ITEMS_PER_PAGE);
 
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(final ListItem<PromoCode> item) {
-                PromoCode modelObject = item.getModelObject();
-                item.add(new Label("keyword", modelObject.getKeyword()));
-                item.add(new Label("discount", modelObject.getDiscount()));
-                item.add(new Label("dateFrom",dateFormat.format(modelObject.getFrom())));
-                item.add(new Label("dateTo",dateFormat.format(modelObject.getTo())));
-                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.promocode")) {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onClick(AjaxRequestTarget target) {
-                        promoCodeFacade.delete(item.getModelObject());
-                        setResponsePage(AdminManageMembershipPlansPage.class);
-                    }
-                };
-                deleteLink.setVisibilityAllowed(true);
-                item.add(deleteLink);
-
-                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", PromoCodeManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getPromoCodeId()));
-                editLink.setVisibilityAllowed(true);
-                item.add(editLink);
-
-                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", PromoCodeDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getPromoCodeId()));
-                detailLink.setVisibilityAllowed(true);
-                item.add(detailLink);
-            }
-        };
-
-        ListView<PromoCode> groupPromoCodes = new ListView<PromoCode>("groupPromoCodes",groupPromoCodeList) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(final ListItem<PromoCode> item) {
-
-                PromoCode modelObject = item.getModelObject();
-                item.add(new Label("keyword", modelObject.getKeyword()));
-                item.add(new Label("discount", modelObject.getDiscount()));
-                item.add(new Label("dateFrom",dateFormat.format(modelObject.getFrom())));
-                item.add(new Label("dateTo",dateFormat.format(modelObject.getTo())));
-                AjaxConfirmLink<Void> deleteLink = new AjaxConfirmLink<Void>("deleteLink", ResourceUtils.getString("text.delete.promocode")) {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void onClick(AjaxRequestTarget target) {
-                        promoCodeFacade.delete(item.getModelObject());
-                        setResponsePage(AdminManageMembershipPlansPage.class);
-                    }
-                };
-                deleteLink.setVisibilityAllowed(true);
-                item.add(deleteLink);
-
-                BookmarkablePageLink<Void> editLink = new BookmarkablePageLink<Void>("editLink", PromoCodeManageFormPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getPromoCodeId()));
-                editLink.setVisibilityAllowed(true);
-                item.add(editLink);
-
-                BookmarkablePageLink<Void> detailLink = new BookmarkablePageLink<Void>("detailLink", PromoCodeDetailPage.class,PageParametersUtils.getDefaultPageParameters(item.getModelObject().getPromoCodeId()));
-                detailLink.setVisibilityAllowed(true);
-                item.add(detailLink);
-            }
-        };
 
         BookmarkablePageLink<Void> addPromoCode = new BookmarkablePageLink<Void>("addPromoCode", PromoCodeManageFormPage.class);
 
         add(personPromoCodes,groupPromoCodes,addPromoCode);
-        //throw new RestartResponseAtInterceptPageException(UnderConstructPage.class);
+
+    }
+
+    private List<? extends IColumn<MembershipPlan, String>> createMembershipListColumns() {
+        List<IColumn<MembershipPlan, String>> columns = new ArrayList<IColumn<MembershipPlan, String>>();
+
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.membershipName"), "name", "name"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.dayslength"), "length", "length"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.price"), "price", "price"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<MembershipPlan>> item, String componentId, IModel<MembershipPlan> rowModel) {
+                item.add(new ViewLinkPanel(componentId, MembershipPlansDetailPage.class, "membershipId", rowModel, ResourceUtils.getModel("link.detail")));
+            }
+        });
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.edit"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<MembershipPlan>> item, String componentId, IModel<MembershipPlan> rowModel) {
+                item.add(new ViewLinkPanel(componentId, MembershipPlanManageFormPage.class, "membershipId", rowModel, ResourceUtils.getModel("link.edit")));
+            }
+        });
+        columns.add(new AbstractColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.delete")) {
+            @Override
+            public void populateItem(Item<ICellPopulator<MembershipPlan>> item, String componentId,final IModel<MembershipPlan> rowModel) {
+
+                item.add(new DeleteLinkPanel(componentId,AdminManageMembershipPlansPage.class,"membershipId", rowModel,ResourceUtils.getModel("link.delete"),ResourceUtils.getString("text.delete.membershipplan")));
+            }
+        });
+        return columns;
+    }
+
+    private List<? extends IColumn<PromoCode, String>> createPromoCodeListColumns() {
+        List<IColumn<PromoCode, String>> columns = new ArrayList<IColumn<PromoCode, String>>();
+
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.keyword"), "keyword", "keyword"));
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.discount"), "discount", "discount"));
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.from"), "from", "from"));
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.to"), "to", "to"));
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {
+                item.add(new ViewLinkPanel(componentId, PromoCodeDetailPage.class, "promoCodeId", rowModel, ResourceUtils.getModel("link.detail")));
+            }
+        });
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.edit"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {
+                item.add(new ViewLinkPanel(componentId, PromoCodeManageFormPage.class, "promoCodeId", rowModel, ResourceUtils.getModel("link.edit")));
+            }
+        });
+        columns.add(new AbstractColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.delete")) {
+            @Override
+            public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId,final IModel<PromoCode> rowModel) {
+
+                item.add(new DeleteLinkPanel(componentId,AdminManageMembershipPlansPage.class,"promoCodeId", rowModel,ResourceUtils.getModel("link.delete"),ResourceUtils.getString("text.delete.promocode")));
+            }
+        });
+        return columns;
     }
 }

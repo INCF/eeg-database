@@ -43,22 +43,22 @@ public class PromoCode implements Serializable {
     private int promoCodeId;
 
     @Column(name="KEYWORD")
-    String keyword;
+    private String keyword;
 
     @Column(name="DISCOUNT")
-    String discount;
+    private int discount;
 
     @Column(name="DATE_FROM")
-    Date from;
+    private Date from;
 
     @Column(name="DATE_TO")
-    Date to;
+    private Date to;
 
     @Column(name="TYPE")
-    int type;
+    private int type;
 
     @Column(name="DESCRIPTION")
-    String description;
+    private String description;
 
     @OneToMany(mappedBy = "promoCode")
     private Set<PersonMembershipPlan> personMembershipPlans;
@@ -72,10 +72,6 @@ public class PromoCode implements Serializable {
 
     public String getKeyword() {
         return keyword;
-    }
-
-    public String getDiscount() {
-        return discount;
     }
 
     public Date getFrom() {
@@ -110,7 +106,11 @@ public class PromoCode implements Serializable {
         this.keyword = keyword;
     }
 
-    public void setDiscount(String discount) {
+    public int getDiscount() {
+        return discount;
+    }
+
+    public void setDiscount(int discount) {
         this.discount = discount;
     }
 
@@ -145,14 +145,14 @@ public class PromoCode implements Serializable {
 
         PromoCode promoCode = (PromoCode) o;
 
+        if (discount != promoCode.discount) return false;
         if (promoCodeId != promoCode.promoCodeId) return false;
         if (type != promoCode.type) return false;
         if (description != null ? !description.equals(promoCode.description) : promoCode.description != null)
             return false;
-        if (discount != null ? !discount.equals(promoCode.discount) : promoCode.discount != null) return false;
-        if (from != null ? !from.equals(promoCode.from) : promoCode.from != null) return false;
-        if (keyword != null ? !keyword.equals(promoCode.keyword) : promoCode.keyword != null) return false;
-        if (to != null ? !to.equals(promoCode.to) : promoCode.to != null) return false;
+        if (!from.equals(promoCode.from)) return false;
+        if (!keyword.equals(promoCode.keyword)) return false;
+        if (!to.equals(promoCode.to)) return false;
 
         return true;
     }
@@ -160,10 +160,10 @@ public class PromoCode implements Serializable {
     @Override
     public int hashCode() {
         int result = promoCodeId;
-        result = 31 * result + (keyword != null ? keyword.hashCode() : 0);
-        result = 31 * result + (discount != null ? discount.hashCode() : 0);
-        result = 31 * result + (from != null ? from.hashCode() : 0);
-        result = 31 * result + (to != null ? to.hashCode() : 0);
+        result = 31 * result + keyword.hashCode();
+        result = 31 * result + discount;
+        result = 31 * result + from.hashCode();
+        result = 31 * result + to.hashCode();
         result = 31 * result + type;
         result = 31 * result + (description != null ? description.hashCode() : 0);
         return result;
