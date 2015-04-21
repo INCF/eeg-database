@@ -367,7 +367,7 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         int id = permRequestDao.create(newInstance);
 
         String researchGroupTitle = newInstance.getResearchGroup().getTitle();
-        String emailAdmin = personDAO.read(newInstance.getResearchGroup().getPerson().getPersonId()).getEmail();
+        String emailAdmin = personDAO.read(newInstance.getResearchGroup().getPerson().getPersonId()).getUsername();
         Person person = personDAO.read(newInstance.getPerson().getPersonId());
 
         boolean existMembership = membershipDao.read(new ResearchGroupMembershipId(person.getPersonId(), newInstance.getResearchGroup().getResearchGroupId())) != null;
