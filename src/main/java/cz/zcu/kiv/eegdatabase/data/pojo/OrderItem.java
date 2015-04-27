@@ -1,16 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "EEG_ORDER_ITEM")
@@ -50,8 +42,22 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @JoinColumn(name = "LICENSE")
     private License license;
 
-    public OrderItem() {
+    //why was this public?
+    private OrderItem() {
 
+    }
+
+    public OrderItem(MembershipPlan plan, Order order) {
+        this.membershipPlan = plan;
+        this.order = order;
+        this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
+    }
+
+    public OrderItem(MembershipPlan plan, ResearchGroup researchGroup, Order order) {
+        this.membershipPlan = plan;
+        this.order = order;
+        this.researchGroup = researchGroup;
+        this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
     }
 
     public OrderItem(Experiment experiment, Order order) {

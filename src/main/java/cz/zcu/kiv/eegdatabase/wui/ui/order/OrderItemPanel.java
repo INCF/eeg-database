@@ -22,8 +22,16 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.order;
 
-import java.util.Date;
-
+import com.ibm.icu.text.SimpleDateFormat;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -38,18 +46,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import com.ibm.icu.text.SimpleDateFormat;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import java.util.Date;
 
 public class OrderItemPanel extends Panel {
 
@@ -70,6 +67,8 @@ public class OrderItemPanel extends Panel {
 
         final Experiment experiment = model.getObject().getExperiment();
         final ExperimentPackage experimentPackage = model.getObject().getExperimentPackage();
+        final MembershipPlan membershipPlan = model.getObject().getMembershipPlan();
+        final ResearchGroup researchGroup = model.getObject().getResearchGroup();
 
         // prepare containers
         WebMarkupContainer experimentContainer = new WebMarkupContainer("experiment") {
@@ -92,6 +91,18 @@ public class OrderItemPanel extends Panel {
             }
         };
 
+
+        WebMarkupContainer membershipPlanContainer = new WebMarkupContainer("membershipPlan") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isVisible() {
+                return membershipPlan != null;
+            }
+        };
+
+
         // prepare texts for experiment container
         int experimentId;
         String scenarioTitle;
@@ -106,10 +117,35 @@ public class OrderItemPanel extends Panel {
             date = "";
         }
 
+        int membershipPlanID;
+        String membershipPlanName= "";
+        String researchGroupName = "";
+
+        if (membershipPlan!= null)
+        {
+            membershipPlanName = membershipPlan.getName();
+            membershipPlanID = membershipPlan.getMembershipId();
+        }
+        else
+        {
+            membershipPlanID = -1;
+        }
+        if(researchGroup != null)
+        {
+            researchGroupName = " for "+researchGroup.getDescription();
+        }
+        else
+        {
+            researchGroupName = "";
+        }
+
         // add components for experiment container
         experimentContainer.add(new Label("experimentText1", ResourceUtils.getModel("text.order.item.experiment1", Integer.toString(experimentId), scenarioTitle)));
         experimentContainer.add(new Label("experimentText2", ResourceUtils.getModel("text.order.item.experiment2", date)));
         experimentContainer.add(new BookmarkablePageLink<Void>("detail", ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId)));
+
+        membershipPlanContainer.add(new Label("membershipPlanText1", membershipPlanName + researchGroupName));
+        membershipPlanContainer.add(new BookmarkablePageLink<Void>("detail", MembershipPlansDetailPage.class, PageParametersUtils.getDefaultPageParameters(membershipPlanID)));
 
         // prepare texts for package container
         int packageId;
@@ -169,7 +205,7 @@ public class OrderItemPanel extends Panel {
 
         experimentContainer.setOutputMarkupId(true);
         packageContainer.setOutputMarkupId(true);
-        add(experimentContainer, packageContainer);
+        add(experimentContainer, packageContainer, membershipPlanContainer);
 
     }
 

@@ -1,33 +1,32 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.account;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
-import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard.BuyPersonMembershipPlanPaymentForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.buyplanwizard.BuyPersonMembershipPlanSelectionForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.groups.GroupPageLeftMenu;
-import org.apache.wicket.Component;
+import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.account.components.AddPersonalMembershipPlanToCartLink;
+import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.memberships.ListMembershipsDataProvider;
+import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.wizard.Wizard;
-import org.apache.wicket.extensions.wizard.WizardModel;
-import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.Model;
+import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.DefaultDataTable;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
+import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.repeater.Item;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,11 +60,16 @@ import java.util.List;
 public class BuyMembershipPlanPersonPage extends MenuPage {
 
 
-    @SpringBean
-    SecurityFacade securityFacade;
+    private static final int ITEMS_PER_PAGE = 20;
 
     @SpringBean
-    PersonMembershipPlanFacade planFacade;
+    PersonMembershipPlanFacade personMembershipPlanFacade;
+
+    @SpringBean
+    MembershipPlanFacade membershipPlanFacade;
+
+    @SpringBean
+    PromoCodeFacade promoCodeFacade;
 
     @SpringBean
     PersonFacade personFacade;
@@ -77,75 +81,38 @@ public class BuyMembershipPlanPersonPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
-        final Model<PersonMembershipPlan> model = new Model<PersonMembershipPlan>(new PersonMembershipPlan());
+        Person user = EEGDataBaseSession.get().getLoggedUser();
 
-        WizardModel wizardModel = new WizardModel();
-        wizardModel.add(new BuyPersonMembershipPlanSelectionForm(model));
-        wizardModel.add(new BuyPersonMembershipPlanPaymentForm(model));
+        if (user == null)
+            throw new RestartResponseAtInterceptPageException(HomePage.class);
 
-        Wizard wizard = new Wizard("wizard", wizardModel, false) {
+        DefaultDataTable<MembershipPlan, String> personPlans = new DefaultDataTable<MembershipPlan, String>("personPlans", createMembershipListColumns(),
+                new ListMembershipsDataProvider(membershipPlanFacade, MembershipPlanType.PERSON), ITEMS_PER_PAGE);
 
-            private static final long serialVersionUID = 1L;
+        add(personPlans);
+    }
+
+    private List<? extends IColumn<MembershipPlan, String>> createMembershipListColumns() {
+        List<IColumn<MembershipPlan, String>> columns = new ArrayList<IColumn<MembershipPlan, String>>();
+
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.membershipName"), "name", "name"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.dayslength"), "length", "length"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.price"), "price", "price"));
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
+            @Override
+            public void populateItem(Item<ICellPopulator<MembershipPlan>> item, String componentId, IModel<MembershipPlan> rowModel) {
+                item.add(new ViewLinkPanel(componentId, MembershipPlansDetailPage.class, "membershipId", rowModel, ResourceUtils.getModel("link.detail")));
+            }
+        });
+        columns.add(new PropertyColumn<MembershipPlan, String>(ResourceUtils.getModel("dataTable.heading.buy"), null, null) {
 
             @Override
-            public void onFinish() {
-
-                PersonMembershipPlan plan = model.getObject();
-                plan.setFrom(new Timestamp(System.currentTimeMillis()));
-                plan.setTo(new Timestamp(System.currentTimeMillis() + (plan.getMembershipPlan().getLength() * 1000)));
-                //plan.setTo(new Timestamp(System.currentTimeMillis()*plan.getMembershipPlan().getLength()));
-                plan.setPerson(person);
-
-                Person logged = EEGDataBaseSession.get().getLoggedUser();
-
-                planFacade.create(plan);
-
-                setResponsePage(ListOfMembershipPlansPersonPage.class);
+            public void populateItem(Item<ICellPopulator<MembershipPlan>> item, String componentId, IModel<MembershipPlan> rowModel) {
+                item.add(new AddPersonalMembershipPlanToCartLink(componentId, rowModel));
             }
-
-            @Override
-            protected Component newFeedbackPanel(String id) {
-
-                ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(this);
-                return new FeedbackPanel(id, filter);
-            }
-
-            @Override
-            protected Component newButtonBar(String id) {
-                return new AjaxWizardButtonBar(id, this);
-            }
-
-            @Override
-            public void onCancel() {
-                throw new RestartResponseAtInterceptPageException(ListOfMembershipPlansPersonPage.class, getPageParameters());
-            }
-
-        };
-
-        add(wizard);
+        });
+        return columns;
     }
 
 
-    private GroupPageLeftMenu[] prepareLeftMenu() {
-
-        List<GroupPageLeftMenu> list = new ArrayList<GroupPageLeftMenu>();
-        boolean authorizedToRequestGroupRole = securityFacade.isAuthorizedToRequestGroupRole();
-
-        for (GroupPageLeftMenu tmp : GroupPageLeftMenu.values())
-            list.add(tmp);
-
-        if (!authorizedToRequestGroupRole)
-            list.remove(GroupPageLeftMenu.REQUEST_FOR_GROUP_ROLE);
-
-        GroupPageLeftMenu[] array = new GroupPageLeftMenu[list.size()];
-        return list.toArray(array);
-    }
-
-    private StringValue parseParameters(PageParameters parameters) {
-
-        StringValue value = parameters.get(BasePage.DEFAULT_PARAM_ID);
-        if (value.isNull() || value.isEmpty())
-            throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());
-        return value;
-    }
 }

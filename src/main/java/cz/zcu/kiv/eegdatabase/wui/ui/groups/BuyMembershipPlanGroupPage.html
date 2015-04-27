@@ -30,7 +30,18 @@ This file is part of the EEG-database project
     <div class="leftMenu" wicket:id="leftMenu"></div>
 
     <div class="mainContentWithMenu">
-    <div wicket:id="wizard" class="tabpanel wizard"></div>
+        <h1>
+        <wicket:message key='pageTitle.buyPlan'></wicket:message>
+    </h1>
+
+        <h2>
+            <wicket:message key='pageTitle.groupMembershipPlanList'></wicket:message>
+        </h2>
+
+        <br/>
+
+        <table class="dataTable measurationListDataTable" wicket:id="groupPlans"></table>
+
     </div>
   </wicket:extend>
 </body>

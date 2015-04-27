@@ -22,17 +22,21 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
+import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -48,18 +52,12 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.convert.IConverter;
 
-import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
-import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
+import java.util.List;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ShoppingCartPage extends MenuPage {
@@ -134,43 +132,102 @@ public class ShoppingCartPage extends MenuPage {
                 item.add(new RemoveLinkPanel("removeItemLink", item.getModel()));
 
                 List<License> licenses = new ArrayList<License>();
-                boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
-                if (isExpPackageLicenseChoiceShow) {
-                    int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
-                    licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                    licenses.add(0, licenseFacade.getPublicLicense());
-                }
-
                 ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("licenseInfo", "licenseId");
                 DropDownChoice<License> licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
-                
-                if (isExpPackageLicenseChoiceShow) {
-                    // preselect first license for dropdown choice component
-                    item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
-                }
-                
-                licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
-                    private static final long serialVersionUID = 1L;
+                if(item.getModelObject().getExperiment() != null)
+                {
 
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-
-                        OrderItem orderItem = item.getModelObject();
-                        if (orderItem.getLicense() != null) {
-                            orderItem.setPrice(orderItem.getLicense().getPrice());
-                        } else {
-                            orderItem.setPriceFromItem();
-                        }
-                        
-                        target.add(container);
-                        target.add(totalPriceLabel);
+                    boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
+                    if (isExpPackageLicenseChoiceShow) {
+                        int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
+                        licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                        licenses.add(0, licenseFacade.getPublicLicense());
                     }
-                });
-                licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
-                item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
-                item.add(licenseChoice);
 
+
+
+                    if (isExpPackageLicenseChoiceShow) {
+                        // preselect first license for dropdown choice component
+                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                    }
+
+                    licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        protected void onUpdate(AjaxRequestTarget target) {
+
+                            OrderItem orderItem = item.getModelObject();
+                            if (orderItem.getLicense() != null) {
+                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                            } else {
+                                orderItem.setPriceFromItem();
+                            }
+
+                            target.add(container);
+                            target.add(totalPriceLabel);
+                        }
+                    });
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
+                    item.add(licenseChoice);
+                }
+                else if(item.getModelObject().getExperimentPackage() != null)
+                {
+                    //TODO: remove code duplication
+                    boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
+                    if (isExpPackageLicenseChoiceShow) {
+                        int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
+                        licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                        licenses.add(0, licenseFacade.getPublicLicense());
+                    }
+
+                    if (isExpPackageLicenseChoiceShow) {
+                        // preselect first license for dropdown choice component
+                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                    }
+
+                    licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        protected void onUpdate(AjaxRequestTarget target) {
+
+                            OrderItem orderItem = item.getModelObject();
+                            if (orderItem.getLicense() != null) {
+                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                            } else {
+                                orderItem.setPriceFromItem();
+                            }
+
+                            target.add(container);
+                            target.add(totalPriceLabel);
+                        }
+                    });
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
+                    item.add(licenseChoice);
+                }
+                else if(item.getModelObject().getMembershipPlan() != null)
+                {
+                    //personal membership plan
+                    if(item.getModelObject().getResearchGroup() == null)
+                    {
+
+                    }
+                    //research group membership plan
+                    else
+                    {
+
+
+                    }
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(false));
+                    licenseChoice.setVisible(false);
+                    item.add(licenseChoice);
+                }
             }
         };
         
