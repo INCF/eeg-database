@@ -298,7 +298,7 @@ public class ShoppingCartPage extends MenuPage {
                             groupPlan.setResearchGroup(group);
                             groupPlan.setMembershipPlan(plan);
                             groupPlan.setFrom(new Timestamp(System.currentTimeMillis()));
-                            groupPlan.setTo(new Timestamp(System.currentTimeMillis() + (groupPlan.getMembershipPlan().getLength() * 1000)));
+                            groupPlan.setTo(new Timestamp(System.currentTimeMillis() + (groupPlan.getMembershipPlan().getLength() * 86400000)));
 
                             groupPlanFacade.create(groupPlan);
 
@@ -311,7 +311,7 @@ public class ShoppingCartPage extends MenuPage {
                             personPlan.setPerson(logged);
                             personPlan.setMembershipPlan(plan);
                             personPlan.setFrom(new Timestamp(System.currentTimeMillis()));
-                            personPlan.setTo(new Timestamp(System.currentTimeMillis() + (personPlan.getMembershipPlan().getLength() * 1000)));
+                            personPlan.setTo(new Timestamp(System.currentTimeMillis() + (personPlan.getMembershipPlan().getLength() * 86400000)));
 
                             personPlanFacade.create(personPlan);
                         }
