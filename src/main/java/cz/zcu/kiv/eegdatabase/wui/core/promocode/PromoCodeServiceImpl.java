@@ -43,4 +43,10 @@ public class PromoCodeServiceImpl extends GenericServiceImpl<PromoCode, Integer>
     public PromoCode getPromoCodeById(Integer id) {
         return dao.getPromoCodeById(id);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public PromoCode getPromoCodeByKeyword(String keyWord)  {
+        return dao.getPromoCodeByKeyword(keyWord);
+    }
 }

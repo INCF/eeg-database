@@ -55,10 +55,15 @@ public class PromoCodeManageFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(AdminManageMembershipPlansPage.class);
 
         PromoCode promoCode = promoCodeFacade.getPromoCodeById(promoCodeId.toInteger());
+        PromoCode newCode = new PromoCode();
+        newCode.setPromoCode(promoCode);
+        promoCode.setValid(false);
+        promoCodeFacade.update(promoCode);
+        promoCodeFacade.create(newCode);
 
         add(new Label("title", ResourceUtils.getModel("pageTitle.editPromoCode")));
         add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
-        add(new PromoCodeForm("form",new Model<PromoCode>(promoCode),promoCodeFacade,getFeedback()));
+        add(new PromoCodeForm("form",new Model<PromoCode>(newCode),promoCodeFacade,getFeedback()));
 
     }
 

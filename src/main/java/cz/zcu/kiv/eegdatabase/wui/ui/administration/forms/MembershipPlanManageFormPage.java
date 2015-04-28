@@ -52,10 +52,15 @@ public class MembershipPlanManageFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(AdminManageMembershipPlansPage.class);
 
         MembershipPlan membershipPlan = membershipPlanFacade.getMembershipPlanById(membershipPlanId.toInteger());
+        MembershipPlan newPlan = new MembershipPlan();
+        newPlan.setPlan(membershipPlan);
+        membershipPlan.setValid(false);
+        membershipPlanFacade.update(membershipPlan);
+        membershipPlanFacade.create(newPlan);
 
         add(new Label("title", ResourceUtils.getModel("pageTitle.editMembershipPlan")));
         add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
-        add(new MembershipPlanForm("form",new Model<MembershipPlan>(membershipPlan),membershipPlanFacade,getFeedback()));
+        add(new MembershipPlanForm("form",new Model<MembershipPlan>(newPlan),membershipPlanFacade,getFeedback()));
 
     }
 

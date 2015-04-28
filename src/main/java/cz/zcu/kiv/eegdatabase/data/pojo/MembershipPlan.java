@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.lang.reflect.Member;
 import java.math.BigDecimal;
 import java.util.Set;
 
@@ -64,6 +65,15 @@ public class MembershipPlan implements Serializable {
 
     @OneToMany(mappedBy = "membershipPlan")
     private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans;
+
+    public void setPlan(MembershipPlan plan) {
+        this.name = plan.name;
+        this.description = plan.description;
+        this.price = plan.price;
+        this.length = plan.length;
+        this.type = plan.type;
+        this.valid = plan.valid;
+    }
 
     public int getMembershipId() {
         return membershipId;

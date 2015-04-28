@@ -42,4 +42,9 @@ public class PromoCodeFacadeImpl extends GenericFacadeImpl<PromoCode, Integer> i
     public PromoCode getPromoCodeById(Integer id) {
         return service.getPromoCodeById(id);
     }
+
+    @Override
+    public PromoCode getPromoCodeByKeyword(String keyWord)  {
+        return service.getPromoCodeByKeyword(keyWord);
+    }
 }

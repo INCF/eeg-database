@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
 import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -35,14 +37,14 @@ import java.util.List;
 public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> implements PromoCodeDao {
 
     public List<PromoCode> getAvailableGroupPromoCodes()  {
-        String query = "select m from PromoCode m where m.type = :promoCodeType";
+        String query = "select m from PromoCode m where m.type = :promoCodeType and m.valid = 'TRUE'";
 
         List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.GROUP.getType()).list(); //set parameters
         return ret;
     }
 
     public List<PromoCode> getAvailablePersonPromoCodes()  {
-        String query = "select m from PromoCode m where m.type = :promoCodeType";
+        String query = "select m from PromoCode m where m.type = :promoCodeType and m.valid = 'TRUE'";
 
         List<PromoCode> ret = this.getSession().createQuery(query).setParameter("promoCodeType", MembershipPlanType.PERSON.getType()).list(); //set parameters
         return ret;
@@ -51,6 +53,14 @@ public class SimplePromoCodeDao extends SimpleGenericDao<PromoCode,Integer> impl
     public PromoCode getPromoCodeById(Integer id)  {
         String query = "select m from PromoCode m where m.promoCodeId = :id";
         PromoCode ret = (PromoCode) this.getSession().createQuery(query).setParameter("id",id).uniqueResult();
+        return ret;
+    }
+
+    public PromoCode getPromoCodeByKeyword(String keyWord)  {
+        Timestamp time = new Timestamp(new Date().getTime());
+
+        String query = "select m from PromoCode m where m.keyword = :keyword and m.valid='TRUE' and :time between m.from and m.to";
+        PromoCode ret = (PromoCode) this.getSession().createQuery(query).setParameter("keyword",keyWord).setParameter("time",time).uniqueResult();
         return ret;
     }
 

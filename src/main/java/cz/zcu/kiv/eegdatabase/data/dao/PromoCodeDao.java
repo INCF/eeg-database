@@ -39,4 +39,6 @@ public interface PromoCodeDao extends GenericDao<PromoCode,Integer> {
 
     public PromoCode getPromoCodeById(Integer id);
 
+    public PromoCode getPromoCodeByKeyword(String keyWord);
+
 }

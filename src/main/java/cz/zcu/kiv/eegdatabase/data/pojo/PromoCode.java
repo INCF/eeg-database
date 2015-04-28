@@ -60,11 +60,24 @@ public class PromoCode implements Serializable {
     @Column(name="DESCRIPTION")
     private String description;
 
+    @Column(name="VALID")
+    private boolean valid;
+
     @OneToMany(mappedBy = "promoCode")
     private Set<PersonMembershipPlan> personMembershipPlans;
 
     @OneToMany(mappedBy = "promoCode")
     private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans;
+
+    public void setPromoCode(PromoCode code) {
+        this.keyword = code.keyword;
+        this.discount = code.discount;
+        this.from = code.from;
+        this.to = code.to;
+        this.type = code.type;
+        this.description = code.description;
+        this.valid = code.valid;
+    }
 
     public int getPromoCodeId() {
         return promoCodeId;
@@ -138,6 +151,14 @@ public class PromoCode implements Serializable {
         this.researchGroupMembershipPlans = researchGroupMembershipPlans;
     }
 
+    public boolean isValid() {
+        return valid;
+    }
+
+    public void setValid(boolean valid) {
+        this.valid = valid;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -148,6 +169,7 @@ public class PromoCode implements Serializable {
         if (discount != promoCode.discount) return false;
         if (promoCodeId != promoCode.promoCodeId) return false;
         if (type != promoCode.type) return false;
+        if (valid != promoCode.valid) return false;
         if (description != null ? !description.equals(promoCode.description) : promoCode.description != null)
             return false;
         if (!from.equals(promoCode.from)) return false;
@@ -166,6 +188,7 @@ public class PromoCode implements Serializable {
         result = 31 * result + to.hashCode();
         result = 31 * result + type;
         result = 31 * result + (description != null ? description.hashCode() : 0);
+        result = 31 * result + (valid ? 1 : 0);
         return result;
     }
 }

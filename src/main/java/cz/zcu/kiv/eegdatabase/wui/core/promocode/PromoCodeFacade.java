@@ -15,4 +15,6 @@ public interface PromoCodeFacade extends GenericFacade<PromoCode, Integer> {
     public List<PromoCode> getAvailablePersonPromoCodes();
 
     public PromoCode getPromoCodeById(Integer id);
+
+    public PromoCode getPromoCodeByKeyword(String keyWord);
 }

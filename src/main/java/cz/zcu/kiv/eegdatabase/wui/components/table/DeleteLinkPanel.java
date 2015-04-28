@@ -53,7 +53,10 @@ public class DeleteLinkPanel extends Panel {
                     membershipPlanFacade.update(plan);
                 } else if(model.getObject().getClass() == PromoCode.class)   {
                     PromoCode code = promoCodeFacade.getPromoCodeById((Integer)paramModel.getObject());
-                    promoCodeFacade.delete(code);
+                    code.setValid(false);
+                    promoCodeFacade.update(code);
+                    //System.out.println(promoCodeFacade.getPromoCodeByKeyword("ABCK"));
+                    //System.out.println(promoCodeFacade.getPromoCodeByKeyword("FFDSFSDG"));
                 }
                 setResponsePage(page);
             }
