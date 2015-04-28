@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.administration.forms;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
+import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
@@ -11,12 +12,15 @@ import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
+import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -30,6 +34,8 @@ import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
+import java.util.Date;
+
 /**
  * Created by Lichous on 20.4.15.
  */
@@ -42,7 +48,10 @@ public class PromoCodeManageFormPage extends MenuPage {
     @SpringBean
     PromoCodeFacade promoCodeFacade;
 
+    private BaseFeedbackMessagePanel feedbackPanel;
+
     public PromoCodeManageFormPage() {
+        feedbackPanel = this.getFeedback();
         add(new Label("title", ResourceUtils.getModel("pageTitle.addPromoCode")));
         add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
         add(new PromoCodeForm("form",new Model<PromoCode>(new PromoCode()),promoCodeFacade,getFeedback()));
@@ -50,6 +59,7 @@ public class PromoCodeManageFormPage extends MenuPage {
     }
 
     public PromoCodeManageFormPage(PageParameters parameters) {
+        feedbackPanel = this.getFeedback();
         StringValue promoCodeId = parameters.get(DEFAULT_PARAM_ID);
         if (promoCodeId.isNull() || promoCodeId.isEmpty())
             throw new RestartResponseAtInterceptPageException(AdminManageMembershipPlansPage.class);
@@ -96,7 +106,7 @@ public class PromoCodeManageFormPage extends MenuPage {
             FormComponentLabel discountLabel = new FormComponentLabel("discountLb", discount);
             add(discount, discountLabel);
 
-            DateTimeFieldPicker from = new DateTimeFieldPicker("from") {
+            final DateTimeFieldPicker from = new DateTimeFieldPicker("from") {
 
                 private static final long serialVersionUID = 1L;
 
@@ -109,9 +119,9 @@ public class PromoCodeManageFormPage extends MenuPage {
             from.setLabel(ResourceUtils.getModel("label.From"));
             from.setRequired(true);
             FormComponentLabel fromLabel = new FormComponentLabel("fromLb", from);
-            add(from,fromLabel);
 
-            DateTimeFieldPicker to = new DateTimeFieldPicker("to") {
+
+            final DateTimeFieldPicker to = new DateTimeFieldPicker("to") {
 
                 private static final long serialVersionUID = 1L;
 
@@ -124,7 +134,27 @@ public class PromoCodeManageFormPage extends MenuPage {
             to.setLabel(ResourceUtils.getModel("label.To"));
             to.setRequired(true);
             FormComponentLabel toLabel = new FormComponentLabel("toLb", to);
+/*
+            IFormValidator validator = new AbstractFormValidator() {
+                public FormComponent<?>[] getDependentFormComponents() {
+                    return new FormComponent[] { from, to };
+                }
+
+                public void validate(Form<?> form) {
+                    Date startDate = (Date) from.getConvertedInput();
+                    Date endDate = (Date) to.getConvertedInput();
+                    if (endDate.before(startDate) || endDate.equals(startDate)){
+                        getSession().error(ResourceUtils.getString("error.fromToDate"));
+                        error(getDependentFormComponents()[0]);
+                    }
+                }
+            };
+*/
+
+            add(from, fromLabel);
             add(to,toLabel);
+
+           //add(validator);
 
             RadioChoice<Integer> type = new RadioChoice<Integer>("type", MembershipPlanType.getMembershipPlanTypes(), new ChoiceRenderer<Integer>() {
 
@@ -162,10 +192,14 @@ public class PromoCodeManageFormPage extends MenuPage {
                     PromoCode promoCode = PromoCodeForm.this.getModelObject();
                     boolean isEdit = promoCode.getPromoCodeId() > 0;
 
-                    if (validation(promoCode)) {
+                    if(promoCode.getFrom().after(promoCode.getTo()) || promoCode.getFrom().equals(promoCode.getTo())) {
+                        feedback.error(ResourceUtils.getString("error.fromToDate"));
+                    }
+                    else if (validation(promoCode)) {
                         if (isEdit) {
                             promoCodeFacade.update(promoCode);
                         } else {
+                            promoCode.setValid(true);
                             promoCodeFacade.create(promoCode);
                         }
                         setResponsePage(AdminManageMembershipPlansPage.class);
@@ -177,6 +211,7 @@ public class PromoCodeManageFormPage extends MenuPage {
         }
 
         private boolean validation (PromoCode promoCode) {
+
             return true;
         }
 

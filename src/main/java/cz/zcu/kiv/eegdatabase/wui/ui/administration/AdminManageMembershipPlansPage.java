@@ -9,6 +9,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.DeleteLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimeStampPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -58,7 +59,7 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
     private static final long serialVersionUID = -5514198024012232250L;
 
-    private static SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yyyy");
+    private String timestampFormat ="dd.MM.yyyy";
 
     private static final int ITEMS_PER_PAGE = 20;
 
@@ -135,8 +136,18 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.keyword"), "keyword", "keyword"));
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.discount"), "discount", "discount"));
-        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.from"), "from", "from"));
-        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.to"), "to", "to"));
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.from"), "from", "from") {
+            @Override
+            public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {
+                item.add(new TimeStampPanel(componentId, "from", rowModel, timestampFormat));
+            }
+        });
+        columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.to"), "to", "to"){
+            @Override
+            public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {
+                item.add(new TimeStampPanel(componentId, "to", rowModel, timestampFormat));
+            }
+        });
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
             @Override
             public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {
