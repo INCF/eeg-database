@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.app;
 
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -79,13 +80,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesSettingsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentOptParamValueFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.HardwareConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PersonConverter;
@@ -300,6 +294,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("add-experiment-wizard-page", ExperimentFormPage.class);
 
         mountPage("manage-packages", ManageExperimentPackagesPage.class);
+        mountPage("manage-experiments", ManageExperimentsPage.class);
         mountPage("license-request", LicenseRequestPage.class);
         mountPage("granted-licenses", GrantedLicensesPage.class);
         mountPage("manage-license-requests", ManageLicenseRequestsPage.class);

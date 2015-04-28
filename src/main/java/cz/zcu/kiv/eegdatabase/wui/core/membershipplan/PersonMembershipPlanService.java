@@ -15,4 +15,6 @@ public interface PersonMembershipPlanService extends GenericService<PersonMember
 
     public boolean isPlanUsed(int membershipPlanId);
 
+    public boolean hasActiveMembershipPlan(Person person);
+
 }

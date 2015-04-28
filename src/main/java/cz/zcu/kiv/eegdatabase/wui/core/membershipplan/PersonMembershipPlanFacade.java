@@ -15,4 +15,6 @@ public interface PersonMembershipPlanFacade extends GenericFacade<PersonMembersh
 
     public boolean isPlanUsed(int membershipPlanId);
 
+    public boolean hasActiveMembershipPlan(Person person);
+
 }

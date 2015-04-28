@@ -40,4 +40,10 @@ public class PersonMembershipPlanServiceImpl extends GenericServiceImpl<PersonMe
         return dao.isPlanUsed(membershipPlanId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public boolean hasActiveMembershipPlan(Person person) {
+        return dao.hasActiveMembershipPlan(person);
+    }
+
 }

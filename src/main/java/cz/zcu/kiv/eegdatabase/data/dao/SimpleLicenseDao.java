@@ -144,5 +144,15 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
         
         return license;
     }
+
+    @Override
+    public List<License> getLicensesForExperiment(int experimentId) {
+        List<License> ret;
+        String query = "select l from License l where l.licenseId IN(select license.licenseId from ExperimentLicence where experiment.experimentId = :exId)";
+        ret = (List<License>) this.getSession().createQuery(query).setParameter("exId",experimentId).list();
+
+        return ret;
+
+    }
     
 }

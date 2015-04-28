@@ -32,11 +32,10 @@ public class DeleteLinkPanel extends Panel {
     PromoCodeFacade promoCodeFacade;
 
     public DeleteLinkPanel(String id, final Class<? extends MenuPage> page,String propertyExpression, final IModel model, IModel<String> displayModel, String confirmMessage) {
-        //<MembershipPlan>
+
         super(id);
         final PropertyModel paramModel = new PropertyModel(model, propertyExpression);
 
-        //System.out.println(paramModel.getObject());
         System.out.println((Integer)paramModel.getObject());
         System.out.println(model.getClass());
 

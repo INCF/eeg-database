@@ -37,4 +37,9 @@ public class PersonMembershipPlanFacadeImpl extends GenericFacadeImpl<PersonMemb
         return service.isPlanUsed(membershipPlanId);
     }
 
+    @Override
+    public boolean hasActiveMembershipPlan(Person person) {
+        return service.hasActiveMembershipPlan(person);
+    }
+
 }

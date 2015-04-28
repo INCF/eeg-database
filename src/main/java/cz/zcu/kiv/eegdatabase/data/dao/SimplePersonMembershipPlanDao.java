@@ -3,6 +3,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonMembershipPlan;
 
+import java.sql.Timestamp;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -47,5 +49,18 @@ public class SimplePersonMembershipPlanDao extends SimpleGenericDao<PersonMember
         String query = "select membershipPlan from PersonMembershipPlan m where m.membershipPlan.membershipId = :plan";
         return (!this.getSession().createQuery(query).setParameter("plan",membershipPlanId).list().isEmpty());
     }
+
+    @Override
+    public boolean hasActiveMembershipPlan(Person person) {
+
+        Timestamp time = new Timestamp(new Date().getTime());
+
+        String query = "select m from PersonMembershipPlan m where m.person = :person and m.to > :time";
+
+        return (!this.getSession().createQuery(query).setParameter("person",person).setParameter("time",time).list().isEmpty()); //set parameters
+
+    }
+
+
 
 }
