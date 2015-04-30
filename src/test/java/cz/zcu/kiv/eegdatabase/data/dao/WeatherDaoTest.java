@@ -30,12 +30,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * User: Jan Stebetak
@@ -99,6 +98,18 @@ public class WeatherDaoTest extends AbstractDataAccessTest {
 
         List<Weather> list = weatherDao.getRecordsByGroup(researchGroup.getResearchGroupId());
         assertEquals(weatherGroupBefore + 1, list.size());
+    }
+
+    @Test(groups = "unit")
+    public void testEditWeather() {
+        int count = weatherDao.getCountRecords();
+        int id = weatherDao.create(weather);
+        assertEquals(count + 1, weatherDao.getCountRecords());
+        weather.setDescription("new desc");
+        weatherDao.update(weather);
+        assertEquals(count + 1, weatherDao.getCountRecords());
+
+        assertEquals("new desc", weatherDao.read(id).getDescription());
     }
 
 }

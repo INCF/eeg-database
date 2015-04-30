@@ -28,15 +28,13 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * User: Jan Stebetak
@@ -99,5 +97,17 @@ public class HardwareDaoTest extends AbstractDataAccessTest {
 
         List<Hardware> list = hardwareDao.getRecordsByGroup(researchGroup.getResearchGroupId());
         assertEquals(hardwareGroupBefore + 1, list.size());
+    }
+
+    @Test(groups = "unit")
+    public void testEditHardware() {
+        int count = hardwareDao.getCountRecords();
+        int id = hardwareDao.create(hardware);
+        assertEquals(count + 1, hardwareDao.getCountRecords());
+        hardware.setDescription("new desc");
+        hardwareDao.update(hardware);
+        assertEquals(count + 1, hardwareDao.getCountRecords());
+
+        assertEquals("new desc" , hardwareDao.read(id).getDescription());
     }
 }

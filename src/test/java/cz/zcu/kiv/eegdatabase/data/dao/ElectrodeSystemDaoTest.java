@@ -28,15 +28,14 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeSystem;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import org.junit.Before;
+
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * Created by stebjan on 8.7.14.
@@ -95,5 +94,17 @@ public class ElectrodeSystemDaoTest extends AbstractDataAccessTest {
         int count = electrodeSystemDao.getCountRecords();
         electrodeSystemDao.createDefaultRecord(electrodeSystem);
         assertEquals(count + 1, electrodeSystemDao.getCountRecords());
+    }
+
+    @Test(groups = "unit")
+    public void testEditElectrodeSystem() {
+        int count = electrodeSystemDao.getCountRecords();
+        int id = electrodeSystemDao.create(electrodeSystem);
+        assertEquals(count + 1, electrodeSystemDao.getCountRecords());
+        electrodeSystem.setDescription("new desc");
+        electrodeSystemDao.update(electrodeSystem);
+        assertEquals(count + 1, electrodeSystemDao.getCountRecords());
+
+        assertEquals("new desc" , electrodeSystemDao.read(id).getDescription());
     }
 }

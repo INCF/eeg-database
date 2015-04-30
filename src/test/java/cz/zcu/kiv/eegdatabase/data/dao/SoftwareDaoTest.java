@@ -30,12 +30,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
+import static org.testng.Assert.assertEquals;
 
 /**
  * User: Jan Stebetak
@@ -97,5 +96,17 @@ public class SoftwareDaoTest extends AbstractDataAccessTest {
 
         List<Software> list = softwareDao.getRecordsByGroup(researchGroup.getResearchGroupId());
         assertEquals(softwareGroupBefore + 1, list.size());
+    }
+
+    @Test(groups = "unit")
+    public void testEditSoftware() {
+        int count = softwareDao.getCountRecords();
+        int id = softwareDao.create(software);
+        assertEquals(count + 1, softwareDao.getCountRecords());
+        software.setDescription("new desc");
+        softwareDao.update(software);
+        assertEquals(count + 1, softwareDao.getCountRecords());
+
+        assertEquals("new desc", softwareDao.read(id).getDescription());
     }
 }

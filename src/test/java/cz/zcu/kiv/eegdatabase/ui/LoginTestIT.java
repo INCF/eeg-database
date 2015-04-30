@@ -33,6 +33,8 @@ import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 
+import java.io.IOException;
+
 /**
  * Created by stebjan on 10.9.2014.
  */
@@ -60,34 +62,34 @@ public class LoginTestIT extends AbstractUITest {
     }
 
     @Test(groups = "web")
-    public void testLogin() {
+    public void testLogin() throws IOException {
 
         tester.assertTitleEquals("Home Page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
     @Test(groups = "web")
-    public void testUnsuccesfullLogin() {
+    public void testUnsuccessfulLogin() throws IOException {
 
         tester.assertTitleEquals("Home Page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "xxx");
-        tester.clickButtonWithText("Log in");
+        tester.clickButtonWithText(getProperty("action.login"));
         tester.assertTextPresent("User cannot be log in");
 
     }
 
     @Test(groups = "web")
-    public void testEmptyFieldsLogin() {
+    public void testEmptyFieldsLogin() throws IOException {
 
         tester.assertTitleEquals("Home Page");
         tester.setTextField("userName", "");
         tester.setTextField("password", "");
-        tester.clickButtonWithText("Log in");
+        tester.clickButtonWithText(getProperty("action.login"));
         tester.assertTextPresent("Field 'userName' is required");
         tester.assertTextPresent("Field 'password' is required");
     }

@@ -36,8 +36,8 @@ import org.testng.annotations.BeforeMethod;
 
 import java.util.List;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.testng.Assert.assertEquals;
+import static org.testng.Assert.assertNotNull;
 
 /**
  * Contains test cases for form-layout DAO object.

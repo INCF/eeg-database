@@ -37,11 +37,11 @@ import cz.zcu.kiv.eegdatabase.wui.core.license.PersonalLicenseService;
 
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertNotNull;
+import static org.testng.Assert.assertNotNull;
+import static org.testng.Assert.assertEquals;
+
 
 /**
  * Created by stebjan on 25.8.2014.

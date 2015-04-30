@@ -26,12 +26,11 @@ import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Stimulus;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import java.util.Random;
 
-import static junit.framework.Assert.*;
+import static org.testng.Assert.*;
 
 /**
  * User: Tomas Pokryvka
@@ -63,5 +62,17 @@ public class StimulusDaoTest extends AbstractDataAccessTest {
         stimulusDao.create(stimulus);
         assertFalse(stimulusDao.canSaveDescription("test-description"));
         assertTrue(stimulusDao.canSaveDescription(String.valueOf(new Random().nextLong())));
+    }
+
+    @Test(groups = "unit")
+    public void testEditStimulus() {
+        int count = stimulusDao.getCountRecords();
+        int id = stimulusDao.create(stimulus);
+        assertEquals(count + 1, stimulusDao.getCountRecords());
+        stimulus.setDescription("new desc");
+        stimulusDao.update(stimulus);
+        assertEquals(count + 1, stimulusDao.getCountRecords());
+
+        assertEquals("new desc", stimulusDao.read(id).getDescription());
     }
 }

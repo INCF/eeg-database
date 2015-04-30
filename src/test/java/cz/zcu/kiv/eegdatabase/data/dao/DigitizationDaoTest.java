@@ -104,4 +104,16 @@ public class DigitizationDaoTest extends AbstractDataAccessTest {
         dig = digitizationDao.getDigitizationByParams(10f, 1f, "xxx");
         assertNull(dig);
     }
+
+    @Test(groups = "unit")
+    public void testEditDigitization() {
+        int count = digitizationDao.getCountRecords();
+        int id = digitizationDao.create(digitization);
+        assertEquals(count + 1, digitizationDao.getCountRecords());
+        digitization.setSamplingRate(500f);
+        digitizationDao.update(digitization);
+        assertEquals(count + 1, digitizationDao.getCountRecords());
+
+        assertEquals(500f , digitizationDao.read(id).getSamplingRate(), 0.1);
+    }
 }

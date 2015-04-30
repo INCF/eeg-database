@@ -31,6 +31,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 /**
  * Created by Jan Stebetak on 10.12.2014.
  */
@@ -41,7 +43,7 @@ public class ListMenuTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
             person.setConfirmed(true);
@@ -54,45 +56,46 @@ public class ListMenuTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak2@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testListLeftMenu() {
-        tester.clickLinkWithText("Lists");
-        tester.assertTextPresent("List of definitions");
-        tester.assertLinkPresentWithText("Hardware definition");
-        tester.assertLinkPresentWithText("Optional parameters for people");
-        tester.assertLinkPresentWithText("Optional parameters for experiments");
-        tester.assertLinkPresentWithText("File metadata definitions");
-        tester.assertLinkPresentWithText("Weather definitions");
-        tester.assertLinkPresentWithText("Artifact definitions");
+    public void testListLeftMenu() throws IOException {
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.optionalParametersForPeople"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.optionalParametersForExperiments"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.fileMetadataDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.weatherDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.artifactDefinitions"));
         //TODO other definitions (sw, disease, pharmaceuticals, ...)
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
     }
     @Test(groups = "web")
-    public void testListDefaultGroupsValidationAdmin() {
-        tester.clickLinkWithText("Lists");
-        tester.assertTextPresent("List of definitions");
-        tester.clickLinkWithText("Hardware definition");
+    public void testListDefaultGroupsValidationAdmin() throws IOException {
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.hardwareDefinitions"));
         tester.assertSelectOptionPresent("groups", "Default hardware");
 
-        tester.clickLinkWithText("Optional parameters for people");
+        tester.clickLinkWithText(getProperty("menuItem.optionalParametersForPeople"));
         tester.assertSelectOptionPresent("groups", "Default optional parameters");
 
-        tester.clickLinkWithText("Optional parameters for experiments");
+        tester.clickLinkWithText(getProperty("menuItem.optionalParametersForExperiments"));
         tester.assertSelectOptionPresent("groups", "Default optional parameters");
 
-        tester.clickLinkWithText("File metadata definitions");
+        tester.clickLinkWithText(getProperty("menuItem.fileMetadataDefinitions"));
         tester.assertSelectOptionPresent("groups", "Default metadata parameters");
 
-        tester.clickLinkWithText("Weather definitions");
+        tester.clickLinkWithText(getProperty("menuItem.weatherDefinitions"));
         tester.assertSelectOptionPresent("groups", "Default weather");
 
-        tester.clickLinkWithText("Artifact definitions"); //Artifact do not have the Default group
+        tester.clickLinkWithText(getProperty("menuItem.artifactDefinitions")); //Artifact do not have the Default group
         tester.assertSelectOptionNotPresent("groups", "Default artifact");
 
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
     }
 }

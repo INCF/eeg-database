@@ -34,6 +34,7 @@ public class PersonInfo {
     private String givenName;
     private String surname;
     private char gender;
+    private String educationalLevel;
     private boolean changed;
     private boolean added;
 
@@ -53,6 +54,14 @@ public class PersonInfo {
      */
     public void setPersonId(int personId) {
         this.personId = personId;
+    }
+
+    public String getEducationalLevel() {
+        return educationalLevel;
+    }
+
+    public void setEducationalLevel(String educationalLevel) {
+        this.educationalLevel = educationalLevel;
     }
 
     /**

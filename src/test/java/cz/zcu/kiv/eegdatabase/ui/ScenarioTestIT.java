@@ -46,7 +46,7 @@ public class ScenarioTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod(groups = "web")
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
@@ -59,22 +59,22 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testScenarioValidation() throws InterruptedException {
+    public void testScenarioValidation() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
-        tester.clickLinkWithText("Scenarios");
-        tester.assertLinkPresentWithText("Add scenario");
-        tester.clickLinkWithText("Add scenario");
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.addScenario"));
+        tester.clickLinkWithText(getProperty("menuItem.addScenario"));
 
         tester.setTextField("title", "");
         tester.setTextField("description", "");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Research group' is required.");
         tester.assertTextPresent("Field 'Scenario title' is required.");
@@ -84,25 +84,25 @@ public class ScenarioTestIT extends AbstractUITest {
         tester.setTextField("title", "test");
         tester.setTextField("description", "test");
         tester.setTextField("scenarioLength", "-1");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("'scenarioLength'");   //TODO validation message
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web")
-    public void testAddScenario() throws InterruptedException {
+    public void testAddScenario() throws InterruptedException, IOException {
 
         createGroupIfNotExists();
 
         createScenario("testScenario");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Scenario detail");
+        tester.assertTextPresent(getProperty("pageTitle.scenarioDetail"));
         tester.assertTextPresent("testScenario");
-        tester.assertTextPresent("This scenario contains no data file. ");
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("scenarioDetail.noFile"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
@@ -114,25 +114,25 @@ public class ScenarioTestIT extends AbstractUITest {
         File file = createFile();
         Assert.assertNotNull(file, "Error while creating file for scenario");
         tester.checkCheckbox("dataAvailable");
-
-        tester.clickButtonWithText("Save");
+        Thread.sleep(waitForAjax);
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("Field 'Data file' is required.");
         tester.setFormElement("contailer:file", file.getAbsolutePath());
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Scenario detail");
+        tester.assertTextPresent(getProperty("pageTitle.scenarioDetail"));
         tester.assertTextPresent("testScenario2");
-        tester.assertLinkPresentWithText("Download scenario file");
+        tester.assertLinkPresentWithText(getProperty("link.downloadXMLFile"));
 
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("action.logout"));
         file.delete();
 
     }
     @Test(groups = "web")
-    public void testUniqueTitle() throws InterruptedException {
+    public void testUniqueTitle() throws InterruptedException,IOException {
 
         createGroupIfNotExists();
         tester.clickLinkWithText("Scenarios");
@@ -140,23 +140,23 @@ public class ScenarioTestIT extends AbstractUITest {
             tester.assertTextPresent("testScenario");
         } catch (AssertionError er) {
             createScenario("testScenario"); //create if not exists
-            tester.clickButtonWithText("Save");
+            tester.clickButtonWithText(getProperty("button.save"));
             Thread.sleep(waitForAjax);
         }
 
         createScenario("testScenario");
-        tester.clickButtonWithText("Save");
+        tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Title already in database.");
-        tester.clickLinkWithText("Log out");
+        tester.assertTextPresent(getProperty("error.titleAlreadyInDatabase"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
-    private void createScenario(String title) {
-        tester.clickLinkWithText("Scenarios");
-        tester.assertLinkPresentWithText("Add scenario");
-        tester.clickLinkWithText("Add scenario");
+    private void createScenario(String title) throws IOException {
+        tester.clickLinkWithText(getProperty("menuItem.scenarios"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.addScenario"));
+        tester.clickLinkWithText(getProperty("menuItem.addScenario"));
 
         tester.selectOption("researchGroup", "new group");
         tester.setTextField("title", title);

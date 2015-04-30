@@ -379,8 +379,17 @@
 
     <bean name="diseaseService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DiseaseServiceImpl" autowire="byType" />
 
+    <bean name="digitizationService" class="cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationServiceImpl" autowire="byType" />
+
+    <bean name="personOptParamService" class="cz.zcu.kiv.eegdatabase.wui.core.person.param.PersonOptParamServiceImpl" autowire="byType" >
+        <property name="valDAO" ref="personOptParamValDao"/>
+    </bean>
+
     <bean name="pharmaceuticalService" class="cz.zcu.kiv.eegdatabase.wui.core.common.PharmaceuticalServiceImpl" autowire="byType">
         <property name="pharmaceuticalDao" ref="pharmaceuticalDao"/>
+    </bean>
+    <bean name="orderService" class="cz.zcu.kiv.eegdatabase.wui.core.order.OrderServiceImpl" autowire="byType">
+        <constructor-arg ref="orderDao"/>
     </bean>
 
     <bean name="projectTypeService" class="cz.zcu.kiv.eegdatabase.wui.core.common.ProjectTypeServiceImpl" autowire="byType" >

@@ -184,11 +184,13 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.facebookId = facebookId;
 	}
 
+	@Deprecated
 	@Column(name = "EMAIL", unique = true)
 	public String getEmail() {
 		return this.email;
 	}
-
+	
+	@Deprecated
 	public void setEmail(String email) {
 		this.email = email;
 	}

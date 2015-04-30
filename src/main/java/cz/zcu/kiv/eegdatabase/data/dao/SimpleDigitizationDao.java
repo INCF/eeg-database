@@ -83,7 +83,7 @@ public class SimpleDigitizationDao
 
     @Override
     public boolean hasGroupRel(int id) {
-        String hqlQuery = "from Digitization dig where dig.d = :id";
+        String hqlQuery = "from Digitization dig where dig.digitizationId = :id";
         String[] names = {"id"};
         Object[] values = {id};
         List<Digitization> list = getHibernateTemplate().findByNamedParam(hqlQuery, names, values);

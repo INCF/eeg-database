@@ -33,6 +33,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
+import java.io.IOException;
+
 import static org.testng.AssertJUnit.fail;
 
 /**
@@ -46,7 +48,7 @@ public class AccountOverviewTestIT extends AbstractUITest {
     private PersonDao personDao;
 
     @BeforeMethod
-    public void setUp() {
+    public void setUp() throws IOException {
         if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
@@ -59,98 +61,99 @@ public class AccountOverviewTestIT extends AbstractUITest {
         tester.beginAt("/home-page");
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText("Log in");
-        tester.assertTextPresent("Log out");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
 
     }
 
     @Test
-    public void testAccountOverview() {
+    public void testAccountOverview() throws IOException {
 
-        tester.assertLinkPresentWithExactText("My account");
-        tester.clickLinkWithText("My account");
+        tester.assertLinkPresentWithExactText(getProperty("general.page.myaccount.link"));
+        tester.clickLinkWithText(getProperty("general.page.myaccount.link"));
 
-        tester.assertTextPresent("E-mail (Login)");
-        tester.assertTextPresent("Change password");
+        tester.assertTextPresent(getProperty("label.emailLogin"));
+        tester.assertTextPresent(getProperty("menuItem.myAccount.changePassword"));
 
 
     }
 
     @Test
-    public void testChangePassword() throws InterruptedException {
+    public void testChangePassword() throws InterruptedException, IOException {
 
 
-        tester.assertLinkPresentWithExactText("My account");
-        tester.clickLinkWithText("My account");
+        tester.assertLinkPresentWithExactText(getProperty("general.page.myaccount.link"));
+        tester.clickLinkWithText(getProperty("general.page.myaccount.link"));
 
-        tester.assertTextPresent("Change password");
+        tester.assertTextPresent(getProperty("menuItem.myAccount.changePassword"));
 
-        tester.clickLinkWithText("Change password");
+        tester.clickLinkWithText(getProperty("menuItem.myAccount.changePassword"));
         tester.setTextField("oldPassword", "stebjan");
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjan2");
-        tester.clickButtonWithText("Change password");
-        System.out.println(tester.getPageSource());
-        Thread.sleep(2000);
-        System.out.println(tester.getPageSource());
+        tester.clickButtonWithText(getProperty("page.myAccount.changePasswordButton"));
+        Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Changes were made");
+        tester.assertTextPresent(getProperty("pageTitle.changesWereMade"));
 
 
         // test if the password was changed
-        tester.clickLinkWithText("Log out");
+        tester.clickLinkWithText(getProperty("action.logout"));
         tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.setTextField("password", "stebjan2");
-        tester.clickButtonWithText("Log in");
+        tester.clickButtonWithText(getProperty("action.login"));
 
-        tester.assertLinkPresentWithExactText("My account");
+        tester.assertLinkPresentWithExactText(getProperty("general.page.myaccount.link"));
 
-        tester.clickLinkWithText("My account");
+        tester.clickLinkWithText(getProperty("general.page.myaccount.link"));
 
         // return changes
-        tester.clickLinkWithText("Change password");
+        tester.clickLinkWithText(getProperty("menuItem.myAccount.changePassword"));
         tester.setTextField("oldPassword", "stebjan2");
         tester.setTextField("newPassword", "stebjan");
         tester.setTextField("verPassword", "stebjan");
-        tester.clickButtonWithText("Change password");
-        Thread.sleep(2000);
+        tester.clickButtonWithText(getProperty("page.myAccount.changePasswordButton"));
+        Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Changes were made");
+        tester.assertTextPresent(getProperty("pageTitle.changesWereMade"));
 
     }
 
     @Test
-    public void testInvalidChangePassword() throws InterruptedException {
+    public void testInvalidChangePassword() throws InterruptedException, IOException {
 
-        tester.assertLinkPresentWithExactText("My account");
-        tester.clickLinkWithText("My account");
-        tester.assertTextPresent("Change password");
-        tester.clickLinkWithText("Change password");
+        tester.assertLinkPresentWithExactText(getProperty("general.page.myaccount.link"));
+        tester.clickLinkWithText(getProperty("general.page.myaccount.link"));
+
+        tester.assertTextPresent(getProperty("menuItem.myAccount.changePassword"));
+        tester.clickLinkWithText(getProperty("menuItem.myAccount.changePassword"));
+
         tester.setTextField("oldPassword", "stebjanxxx");
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjan2");
-        tester.clickButtonWithText("Change password");
+        tester.clickButtonWithText(getProperty("page.myAccount.changePasswordButton"));
         Thread.sleep(waitForAjax);
-        tester.assertTextPresent("Inserted password doesn't match current password");
+        tester.assertTextPresent(getProperty("invalid.oldPassword"));
 
 
     }
 
     @Test
-    public void testInvalidPasswordVerification() throws InterruptedException {
+    public void testInvalidPasswordVerification() throws InterruptedException, IOException {
 
-        tester.assertLinkPresentWithExactText("My account");
-        tester.clickLinkWithText("My account");
-        tester.assertTextPresent("Change password");
-        tester.clickLinkWithText("Change password");
+        tester.assertLinkPresentWithExactText(getProperty("general.page.myaccount.link"));
+        tester.clickLinkWithText(getProperty("general.page.myaccount.link"));
+
+        tester.assertTextPresent(getProperty("menuItem.myAccount.changePassword"));
+        tester.clickLinkWithText(getProperty("menuItem.myAccount.changePassword"));
+
         tester.setTextField("oldPassword", "stebjan");
         tester.setTextField("newPassword", "stebjan2");
         tester.setTextField("verPassword", "stebjanxxx");
-        tester.clickButtonWithText("Change password");
+        tester.clickButtonWithText(getProperty("page.myAccount.changePasswordButton"));
         Thread.sleep(waitForAjax);
         //test if the form was not submitted
-        tester.assertTextPresent("Inserted passwords don't match");
-        //assertTrue(driver.findElement(By.cssSelector("BODY")).getText().matches("^[\\s\\S]*Inserted passwords don't match\\.[\\s\\S]*$"));
+        tester.assertTextPresent(getProperty("invalid.passwordMatch"));
 
 
     }

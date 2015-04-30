@@ -26,6 +26,11 @@ import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 
+import java.io.IOException;
+import java.util.Properties;
+
+import static org.testng.Assert.*;
+
 /**
  * Created by stebjan on 10.9.14.
  */
@@ -34,22 +39,30 @@ import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 public abstract class AbstractUITest extends AbstractTestNGSpringContextTests {
     protected WebTester tester;
 
-    protected int waitForAjax = 5000;
+    protected int waitForAjax = 10000;
 
     protected String url = "http://localhost:8082";
 
 
-    protected void createGroupIfNotExists() throws InterruptedException {
-        tester.clickLinkWithText("Groups");
+    protected void createGroupIfNotExists() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
         try {
             tester.assertTextPresent("new group");
         } catch (AssertionError ex) {
-            tester.clickLinkWithText("Create group");
+            tester.clickLinkWithText(getProperty("menuItem.createGroup"));
             tester.setTextField("title", "new group");
             tester.setTextField("description", "description");
-            tester.clickButtonWithText("Save");
+            tester.clickButtonWithText(getProperty("button.save"));
             Thread.sleep(waitForAjax);
         }
+    }
+
+    protected String getProperty(String key) throws IOException {
+        String propFile = "/EEGDataBaseApplication.properties";
+        Properties prop = new Properties();
+        assertNotNull(getClass().getResource(propFile));
+        prop.load(getClass().getResourceAsStream(propFile));
+        return prop.getProperty(key);
     }
 }
 
