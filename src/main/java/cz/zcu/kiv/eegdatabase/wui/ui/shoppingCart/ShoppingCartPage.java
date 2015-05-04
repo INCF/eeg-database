@@ -171,6 +171,7 @@ public class ShoppingCartPage extends MenuPage {
                         }
                     });
                     licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle"))); 
                     item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
                     item.add(licenseChoice);
                 }
@@ -208,6 +209,8 @@ public class ShoppingCartPage extends MenuPage {
                         }
                     });
                     licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle")));
+
                     item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
                     item.add(licenseChoice);
                 }
@@ -226,6 +229,8 @@ public class ShoppingCartPage extends MenuPage {
                     }
                     item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(false));
                     licenseChoice.setVisible(false);
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(false));
+
                     item.add(licenseChoice);
                 }
             }

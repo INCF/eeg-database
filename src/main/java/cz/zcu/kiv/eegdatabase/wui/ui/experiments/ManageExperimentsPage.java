@@ -82,6 +82,7 @@ public class ManageExperimentsPage extends MenuPage {
     private void setupComponents() {
 
         Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
+
         add(new Label("title", ResourceUtils.getModel("pageTitle.manageExperiments")));
         if (personMembershipPlanFacade.hasActiveMembershipPlan(loggedUser)) {
             add(new Label("membership",""));
@@ -122,9 +123,11 @@ public class ManageExperimentsPage extends MenuPage {
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, final IModel<Experiment> rowModel) {
 
-                item.add(new LicenseDropDownChoicePanel(componentId,rowModel));
+                item.add(new LicenseDropDownChoicePanel(componentId,rowModel, ManageExperimentsPage.class));
             }
         });
+
+
 
         return columns;
 

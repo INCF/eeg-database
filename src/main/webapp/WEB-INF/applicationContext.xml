@@ -248,6 +248,14 @@
         <constructor-arg ref="promoCodeDao"/>
     </bean>
 
+    <bean name="experimentLicenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacadeImpl" autowire="byType">
+        <constructor-arg ref="experimentLicenseService"/>
+    </bean>
+
+    <bean name="experimentLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseServiceImpl" autowire="byType">
+        <constructor-arg ref="experimentLicenceDao"/>
+    </bean>
+
 
 	<!-- MAIL -->
 	<bean name="mailService" class="cz.zcu.kiv.eegdatabase.data.service.SpringJavaMailService" />

@@ -88,9 +88,24 @@ public class OrderDetailPage extends MenuPage {
             @Override
             protected void populateItem(ListItem<OrderItem> item) {
 
+
                 item.add(new OrderItemPanel("item", item.getModel()));
                 item.add(new Label("price", item.getModel().getObject().getPrice()));
-                item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+
+                if (item.getModelObject().getExperiment()!=null) {
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(true));
+                    item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+                } else if (item.getModelObject().getExperimentPackage()!=null)  {
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(true));
+                    item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+                } else if (item.getModelObject().getMembershipPlan()!=null)  {
+                    item.add(new Label("licenseTitle").setVisibilityAllowed(false));
+                    item.add(new Label("license").setVisibilityAllowed(false));
+                }
+
+
+
+
             }
         };
 

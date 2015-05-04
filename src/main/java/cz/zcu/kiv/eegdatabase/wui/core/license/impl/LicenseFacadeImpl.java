@@ -198,5 +198,10 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
         return licenseService.getLicensesForExperiment(experimentId);
 
     }
+
+    @Override
+    public List<License> getPersonLicenses(int personId)  {
+        return licenseService.getPersonLicenses(personId);
+    }
 	
 }

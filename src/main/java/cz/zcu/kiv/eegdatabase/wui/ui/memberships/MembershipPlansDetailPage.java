@@ -1,9 +1,13 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.memberships;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
@@ -39,7 +43,9 @@ public class MembershipPlansDetailPage extends MenuPage {
 
     private void setupPageComponents(final Integer membershipPlanId) {
 
-        add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()));
+        Person user = EEGDataBaseSession.get().getLoggedUser();
+
+        add(new ButtonPageMenu("leftMenu", AdministrationPageLeftMenu.values()).setVisibilityAllowed(user.getAuthority().equals(UserRole.ROLE_ADMIN.toString())));
 
         final MembershipPlan membershipPlan = membershipPlanFacade.getMembershipPlanById(membershipPlanId);
 

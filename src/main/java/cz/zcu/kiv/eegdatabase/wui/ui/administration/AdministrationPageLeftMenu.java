@@ -37,7 +37,8 @@ public enum AdministrationPageLeftMenu implements IButtonPageMenu {
     CHANGE_USER_ROLE_PAGE(AdminManageUserRolePage.class, "menuItem.manageRoles", null),
     MANAGE_PERSON(AdminManagePersonPage.class, "menuItem.managePerson", null),
 	MANAGE_RESEARCH_GROUP_PAGE(ManageResearchGroupPage.class, "menuItem.manageResearchGroup", null),
-    MEMBERSHIP_PLANS(AdminManageMembershipPlansPage.class,"menuItem.myAccount.membershipPlan",null)
+    MEMBERSHIP_PLANS(AdminManageMembershipPlansPage.class,"menuItem.manageMembershipPlan",null),
+    MANAGE_LICENSES(AdminManageLicensesPage.class, "menuItem.manageLicenses", null)
     ;
 
     private Class<? extends MenuPage> pageClass;

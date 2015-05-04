@@ -272,4 +272,10 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         return licenseDao.getLicensesForExperiment(experimentId);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<License> getPersonLicenses(int personId)  {
+        return licenseDao.getPersonLicenses(personId);
+    }
+
 }

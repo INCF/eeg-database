@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 
 /**
  * ********************************************************************************************************************
@@ -29,5 +31,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
  * ********************************************************************************************************************
  */
 public interface ExperimentLicenceDao extends GenericDao<ExperimentLicence,Integer> {
+
+    public void remove(Experiment experiment, License license);
 
 }

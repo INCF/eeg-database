@@ -7,20 +7,16 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
-import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.form.validation.AbstractFormValidator;
-import org.apache.wicket.markup.html.form.validation.IFormValidator;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -30,7 +26,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.string.StringValue;
-import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 
@@ -106,7 +101,7 @@ public class PromoCodeManageFormPage extends MenuPage {
             FormComponentLabel discountLabel = new FormComponentLabel("discountLb", discount);
             add(discount, discountLabel);
 
-            final DateTimeFieldPicker from = new DateTimeFieldPicker("from") {
+            DateTimeFieldPicker from = new DateTimeFieldPicker("from") {
 
                 private static final long serialVersionUID = 1L;
 
@@ -120,8 +115,7 @@ public class PromoCodeManageFormPage extends MenuPage {
             from.setRequired(true);
             FormComponentLabel fromLabel = new FormComponentLabel("fromLb", from);
 
-
-            final DateTimeFieldPicker to = new DateTimeFieldPicker("to") {
+            DateTimeFieldPicker to = new DateTimeFieldPicker("to") {
 
                 private static final long serialVersionUID = 1L;
 
@@ -134,27 +128,9 @@ public class PromoCodeManageFormPage extends MenuPage {
             to.setLabel(ResourceUtils.getModel("label.To"));
             to.setRequired(true);
             FormComponentLabel toLabel = new FormComponentLabel("toLb", to);
-/*
-            IFormValidator validator = new AbstractFormValidator() {
-                public FormComponent<?>[] getDependentFormComponents() {
-                    return new FormComponent[] { from, to };
-                }
-
-                public void validate(Form<?> form) {
-                    Date startDate = (Date) from.getConvertedInput();
-                    Date endDate = (Date) to.getConvertedInput();
-                    if (endDate.before(startDate) || endDate.equals(startDate)){
-                        getSession().error(ResourceUtils.getString("error.fromToDate"));
-                        error(getDependentFormComponents()[0]);
-                    }
-                }
-            };
-*/
 
             add(from, fromLabel);
             add(to,toLabel);
-
-           //add(validator);
 
             RadioChoice<Integer> type = new RadioChoice<Integer>("type", MembershipPlanType.getMembershipPlanTypes(), new ChoiceRenderer<Integer>() {
 
@@ -173,10 +149,6 @@ public class PromoCodeManageFormPage extends MenuPage {
             type.setLabel(ResourceUtils.getModel("label.type"));
             FormComponentLabel typeLabel = new FormComponentLabel("typeLb", type);
             add(type,typeLabel);
-
-
-            //TODO FROM, TO
-
 
             AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.savePromoCode"), this) {
 

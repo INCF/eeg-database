@@ -358,7 +358,7 @@ public class ExperimentPackageManagePanel extends Panel {
 			@Override
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				License obj = model.getObject();
-				
+
 				FileUploadField fileUploadField = this.getFileUpload();
 				FileUpload uploadedFile = fileUploadField.getFileUpload();
 				

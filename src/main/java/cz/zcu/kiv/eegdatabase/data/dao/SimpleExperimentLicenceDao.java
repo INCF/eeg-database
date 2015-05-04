@@ -1,6 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 
 /**
  * ********************************************************************************************************************
@@ -30,5 +32,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
  */
 public class SimpleExperimentLicenceDao extends SimpleGenericDao<ExperimentLicence,Integer> implements ExperimentLicenceDao {
 
+    @Override
+    public void remove(Experiment experiment, License license) {
+        String hqlQuery = "delete from ExperimentLicence el where el.experiment = :ex and el.license = :lic";
+        this.getSession().createQuery(hqlQuery).setParameter("ex",experiment).setParameter("lic",license).executeUpdate();
+    }
 
 }
+

@@ -53,4 +53,6 @@ public interface LicenseDao extends GenericDao<License, Integer> {
 
     public List<License> getLicensesForExperiment(int experimentId);
 
+    public List<License> getPersonLicenses(int personId);
+
 }
