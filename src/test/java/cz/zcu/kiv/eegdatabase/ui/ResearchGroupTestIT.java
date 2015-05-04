@@ -124,7 +124,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("Field 'User role' is required.");
 
         tester.setTextField("username", "xxx@xxx.com");
-        tester.selectOption("roles", "group administrator");
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
@@ -151,7 +151,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
         tester.setTextField("username", "jan.stebetak@seznam.cz");
-        tester.selectOption("roles", "group administrator");
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));//select.option.groupAdmin
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
@@ -162,7 +162,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         personDao.create(newPerson);
 
         tester.setTextField("username", "newMember@test.com");
-        tester.selectOption("roles", "group administrator");
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
@@ -172,7 +172,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
         tester.setTextField("username", "newMember@test.com");
-        tester.selectOption("roles", "group administrator");
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
