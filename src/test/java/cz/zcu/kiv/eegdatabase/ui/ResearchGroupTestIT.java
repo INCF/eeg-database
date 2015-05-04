@@ -70,7 +70,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group title' is required.");
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
 
 
     }
@@ -97,7 +97,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.listOfMembers"));
         tester.assertTextPresent("jan.stebetak@seznam.cz");
 
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 
@@ -131,7 +131,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent(getProperty("invalid.userNameDoesNotExist"));
 
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
 
@@ -159,7 +159,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
 
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
 
     }
     @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
@@ -169,7 +169,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
             person.setConfirmed(true);
             personDao.create(person);
         }
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
         tester.setTextField("userName", "newMember@test.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText(getProperty("action.login"));
@@ -180,7 +180,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent("newMember@test.cz"); //Is a member of group
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
 
         if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
             Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
@@ -197,6 +197,6 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertLinkPresentWithText(getProperty("button.membershipRequest"));
 
-        tester.assertTextPresent(getProperty("action.logout"));
+        tester.clickLinkWithText(getProperty("action.logout"));
     }
 }
