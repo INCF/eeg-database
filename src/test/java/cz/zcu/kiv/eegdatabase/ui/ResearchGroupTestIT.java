@@ -136,6 +136,12 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
     @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
     public void testAddMemberDuplicity() throws InterruptedException, IOException {
+
+        Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
+        newPerson.setConfirmed(true);
+        personDao.create(newPerson);
+        Thread.sleep(waitForAjax);
+
         tester.clickLinkWithText(getProperty("menuItem.groups"));
         tester.assertTextPresent(getProperty("menuItem.myGroups"));
         tester.clickLinkWithText(getProperty("menuItem.myGroups"));
@@ -150,18 +156,14 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
-        tester.setTextField("username", "jan.stebetak@seznam.cz");
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
         tester.selectOption("roles", getProperty("select.option.groupAdmin"));//select.option.groupAdmin
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
 
-        Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
-        newPerson.setConfirmed(true);
-        personDao.create(newPerson);
-
-        tester.setTextField("username", "newMember@test.com");
+        tester.setTextField("userName", "newMember@test.com");
         tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
