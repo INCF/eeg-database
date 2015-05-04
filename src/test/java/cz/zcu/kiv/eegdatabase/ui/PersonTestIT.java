@@ -137,4 +137,41 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("action.logout"));
 
     }
+    @Test(groups = "web")
+    public void testAddPersonDateOfBirthValidation() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertLinkPresentWithText(getProperty("button.addPerson"));
+        tester.clickLinkWithText(getProperty("button.addPerson"));
+        tester.setTextField("givenname", "Test");
+        tester.setTextField("surname", "Test");
+        tester.setTextField("dateOfBirth", "10/10/2016"); //is in the future
+        tester.clickRadioOption("gender", "0");//"Male"
+        tester.setTextField("username", "personAdded@seznam.cz");
+        tester.clickButtonWithText(getProperty("button.save"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent(getProperty("invalid.dateOfBirth"));
+
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+    }
+
+    @Test(groups = "web")
+    public void testAddPerson() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.people"));
+        tester.assertLinkPresentWithText(getProperty("button.addPerson"));
+        tester.clickLinkWithText(getProperty("button.addPerson"));
+        tester.setTextField("givenname", "Test");
+        tester.setTextField("surname", "TestPerson");
+        tester.setTextField("dateOfBirth", "10/10/2010");
+        tester.clickRadioOption("gender", "0");//"Male"
+        tester.setTextField("username", "personAdded@seznam.cz");
+        tester.clickButtonWithText(getProperty("button.save"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent("Test");
+        tester.assertTextPresent("TestPerson");
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+    }
 }

@@ -86,8 +86,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
 //        }
 
-        tester.assertTextPresent("My groups");
-        tester.clickLinkWithText("My groups");
+        tester.assertTextPresent(getProperty("menuItem.myGroups"));
+        tester.clickLinkWithText(getProperty("menuItem.myGroups"));
 
         tester.assertTextPresent("new group");
 
@@ -98,5 +98,119 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent(getProperty("action.logout"));
 
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testAddMemberValidation() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("menuItem.myGroups"));
+        tester.clickLinkWithText(getProperty("menuItem.myGroups"));
+
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+        tester.assertTextPresent("jan.stebetak@seznam.cz");
+
+        tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
+        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
+        tester.setTextField("username", "");
+
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent("Field 'E-mail' is required.");
+        tester.assertTextPresent("Field 'User role' is required.");
+
+        tester.setTextField("username", "xxx@xxx.com");
+        tester.selectOption("roles", "group administrator");
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent(getProperty("invalid.userNameDoesNotExist"));
+
+        tester.assertTextPresent(getProperty("action.logout"));
+
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testAddMemberDuplicity() throws InterruptedException, IOException {
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent(getProperty("menuItem.myGroups"));
+        tester.clickLinkWithText(getProperty("menuItem.myGroups"));
+
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+        tester.assertTextPresent("jan.stebetak@seznam.cz");
+
+        tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
+        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
+
+        tester.setTextField("username", "jan.stebetak@seznam.cz");
+        tester.selectOption("roles", "group administrator");
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
+
+        Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
+        newPerson.setConfirmed(true);
+        personDao.create(newPerson);
+
+        tester.setTextField("username", "newMember@test.com");
+        tester.selectOption("roles", "group administrator");
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent(getProperty("pageTitle.listOfGroupMembers"));
+        tester.assertTextPresent("newMember@test.com");
+
+        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
+
+        tester.setTextField("username", "newMember@test.com");
+        tester.selectOption("roles", "group administrator");
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
+
+        tester.assertTextPresent(getProperty("action.logout"));
+
+    }
+    @Test(groups = "web", dependsOnMethods = {"testAddMemberDuplicity"})
+    public void testGroupPermission() throws InterruptedException, IOException {
+        tester.assertTextPresent(getProperty("action.logout"));
+        tester.setTextField("userName", "newMember@test.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertTextPresent("newMember@test.cz"); //Is a member of group
+        tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
+        tester.assertTextPresent(getProperty("action.logout"));
+
+        if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
+        tester.setTextField("userName", "jan.stebetak2@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertLinkPresentWithText(getProperty("button.membershipRequest"));
+
+        tester.assertTextPresent(getProperty("action.logout"));
     }
 }
