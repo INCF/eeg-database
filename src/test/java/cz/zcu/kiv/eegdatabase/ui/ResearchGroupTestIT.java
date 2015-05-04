@@ -164,21 +164,12 @@ public class ResearchGroupTestIT extends AbstractUITest {
     }
     @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
     public void testGroupPermission() throws InterruptedException, IOException {
-        if (!personDao.usernameExists("newMember@test.cz")) {
-            Person person = TestUtils.createPersonForTesting("newMember@test.cz", Util.ROLE_USER);
-            person.setConfirmed(true);
-            personDao.create(person);
-        }
-        tester.clickLinkWithText(getProperty("action.logout"));
-        tester.setTextField("userName", "newMember@test.cz");
-        tester.setTextField("password", "stebjan");
-        tester.clickButtonWithText(getProperty("action.login"));
 
         tester.clickLinkWithText(getProperty("menuItem.groups"));
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
 
-        tester.assertTextPresent("newMember@test.cz"); //Is a member of group
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("action.logout"));
 
