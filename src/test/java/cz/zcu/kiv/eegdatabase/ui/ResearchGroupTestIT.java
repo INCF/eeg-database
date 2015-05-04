@@ -33,6 +33,11 @@ public class ResearchGroupTestIT extends AbstractUITest {
             person.setConfirmed(true);
             personDao.create(person);
         }
+        if (!personDao.usernameExists("newMember@test.com")) {
+            Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
+            newPerson.setConfirmed(true);
+            personDao.create(newPerson);
+        }
         tester = new WebTester();
 
         //   tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
@@ -137,11 +142,6 @@ public class ResearchGroupTestIT extends AbstractUITest {
     @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
     public void testAddMemberDuplicity() throws InterruptedException, IOException {
 
-        Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
-        newPerson.setConfirmed(true);
-        personDao.create(newPerson);
-        Thread.sleep(waitForAjax);
-
         tester.clickLinkWithText(getProperty("menuItem.groups"));
         tester.assertTextPresent(getProperty("menuItem.myGroups"));
         tester.clickLinkWithText(getProperty("menuItem.myGroups"));
@@ -157,7 +157,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
         tester.setTextField("username", "jan.stebetak@seznam.cz");
-        tester.selectOption("roles", getProperty("select.option.groupAdmin"));//select.option.groupAdmin
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
@@ -183,7 +183,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
-    @Test(groups = "web", dependsOnMethods = {"testAddMemberDuplicity"})
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
     public void testGroupPermission() throws InterruptedException, IOException {
         tester.assertTextPresent(getProperty("action.logout"));
         tester.setTextField("userName", "newMember@test.cz");
