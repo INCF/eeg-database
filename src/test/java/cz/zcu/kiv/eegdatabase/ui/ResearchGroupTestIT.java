@@ -33,11 +33,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
             person.setConfirmed(true);
             personDao.create(person);
         }
-        if (!personDao.usernameExists("newMember@test.com")) {
-            Person newPerson = TestUtils.createPersonForTesting("newMember@test.com", Util.ROLE_USER);
-            newPerson.setConfirmed(true);
-            personDao.create(newPerson);
-        }
+
         tester = new WebTester();
 
         //   tester.setBaseUrl("http://eeg2.kiv.zcu.cz:8080");
@@ -163,28 +159,16 @@ public class ResearchGroupTestIT extends AbstractUITest {
 
         tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
 
-        tester.setTextField("username", "newMember@test.com");
-        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
-        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
-        Thread.sleep(waitForAjax);
-
-        tester.assertTextPresent(getProperty("pageTitle.listOfGroupMembers"));
-        tester.assertTextPresent("newMember@test.com");
-
-        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
-
-        tester.setTextField("username", "newMember@test.com");
-        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
-        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
-        Thread.sleep(waitForAjax);
-
-        tester.assertTextPresent(getProperty("invalid.userNameAlreadyInGroup"));
-
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
     @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
     public void testGroupPermission() throws InterruptedException, IOException {
+        if (!personDao.usernameExists("newMember@test.cz")) {
+            Person person = TestUtils.createPersonForTesting("newMember@test.cz", Util.ROLE_USER);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
         tester.assertTextPresent(getProperty("action.logout"));
         tester.setTextField("userName", "newMember@test.cz");
         tester.setTextField("password", "stebjan");
