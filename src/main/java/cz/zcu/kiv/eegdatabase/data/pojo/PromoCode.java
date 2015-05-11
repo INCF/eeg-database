@@ -64,10 +64,7 @@ public class PromoCode implements Serializable {
     private boolean valid;
 
     @OneToMany(mappedBy = "promoCode")
-    private Set<PersonMembershipPlan> personMembershipPlans;
-
-    @OneToMany(mappedBy = "promoCode")
-    private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans;
+    private Set<MembershipPlan> membershipPlans;
 
     public void setPromoCode(PromoCode code) {
         this.keyword = code.keyword;
@@ -103,12 +100,8 @@ public class PromoCode implements Serializable {
         return description;
     }
 
-    public Set<PersonMembershipPlan> getPersonMembershipPlans() {
-        return personMembershipPlans;
-    }
-
-    public Set<ResearchGroupMembershipPlan> getResearchGroupMembershipPlans() {
-        return researchGroupMembershipPlans;
+    public Set<MembershipPlan> geMembershipPlans() {
+        return membershipPlans;
     }
 
     public void setPromoCodeId(int promoCodeId) {
@@ -143,12 +136,8 @@ public class PromoCode implements Serializable {
         this.description = description;
     }
 
-    public void setPersonMembershipPlans(Set<PersonMembershipPlan> personMembershipPlans) {
-        this.personMembershipPlans = personMembershipPlans;
-    }
-
-    public void setResearchGroupMembershipPlans(Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans) {
-        this.researchGroupMembershipPlans = researchGroupMembershipPlans;
+    public void setMembershipPlans(Set<MembershipPlan> membershipPlans) {
+        this.membershipPlans = membershipPlans;
     }
 
     public boolean isValid() {

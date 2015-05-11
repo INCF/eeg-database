@@ -1,7 +1,7 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import java.io.Serializable;
 import javax.persistence.*;
+import java.io.Serializable;
 import java.sql.Timestamp;
 
 /**
@@ -54,10 +54,6 @@ public class ResearchGroupMembershipPlan implements Serializable {
     @JoinColumn(name = "MEMBERSHIP_PLAN")
     private MembershipPlan membershipPlan;
 
-    @ManyToOne
-    @JoinColumn(name = "PROMO_CODE")
-    private PromoCode promoCode;
-
     public int getResearchGroupMembershipPlanId() {
         return researchGroupMembershipPlanId;
     }
@@ -76,10 +72,6 @@ public class ResearchGroupMembershipPlan implements Serializable {
 
     public MembershipPlan getMembershipPlan() {
         return membershipPlan;
-    }
-
-    public PromoCode getPromoCode() {
-        return promoCode;
     }
 
     public void setResearchGroupMembershipPlanId(int researchGroupMembershipPlanId) {
@@ -102,7 +94,4 @@ public class ResearchGroupMembershipPlan implements Serializable {
         this.membershipPlan = membershipPlan;
     }
 
-    public void setPromoCode(PromoCode promoCode) {
-        this.promoCode = promoCode;
-    }
 }

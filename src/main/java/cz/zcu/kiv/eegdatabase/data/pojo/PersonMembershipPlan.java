@@ -54,12 +54,6 @@ public class PersonMembershipPlan implements Serializable {
     @JoinColumn(name = "MEMBERSHIP_PLAN")
     private MembershipPlan membershipPlan;
 
-    @ManyToOne
-    @JoinColumn(name = "PROMO_CODE")
-    private PromoCode promoCode;
-
-
-
     public void setPersonMembershipPlanId(int personMembershipPlanId) {
         this.personMembershipPlanId = personMembershipPlanId;
     }
@@ -80,9 +74,6 @@ public class PersonMembershipPlan implements Serializable {
         this.to = to;
     }
 
-    public void setPromoCode(PromoCode promoCode) {
-        this.promoCode = promoCode;
-    }
 
     public int getPersonMembershipPlanId() {
         return personMembershipPlanId;
@@ -104,7 +95,4 @@ public class PersonMembershipPlan implements Serializable {
         return to;
     }
 
-    public PromoCode getPromoCode() {
-        return promoCode;
-    }
 }

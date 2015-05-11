@@ -30,22 +30,29 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.components.PromoCodePopupForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.components.StringWrapper;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.math.BigDecimal;
 import java.util.Date;
 
 public class OrderItemPanel extends Panel {
@@ -56,6 +63,9 @@ public class OrderItemPanel extends Panel {
     @SpringBean
     private ExperimentsFacade facade;
 
+    @SpringBean
+    private PromoCodeFacade promoFacade;
+
     private IModel<String> showActionModel;
     private IModel<String> hideActionModel;
 
@@ -65,6 +75,7 @@ public class OrderItemPanel extends Panel {
         showActionModel = ResourceUtils.getModel("action.show");
         hideActionModel = ResourceUtils.getModel("action.hide");
 
+        final OrderItem modelItem = model.getObject();
         final Experiment experiment = model.getObject().getExperiment();
         final ExperimentPackage experimentPackage = model.getObject().getExperimentPackage();
         final MembershipPlan membershipPlan = model.getObject().getMembershipPlan();
@@ -146,6 +157,8 @@ public class OrderItemPanel extends Panel {
 
         membershipPlanContainer.add(new Label("membershipPlanText1", membershipPlanName + researchGroupName));
         membershipPlanContainer.add(new BookmarkablePageLink<Void>("detail", MembershipPlansDetailPage.class, PageParametersUtils.getDefaultPageParameters(membershipPlanID)));
+        final ModalWindow promoCodePopup = this.addPromoCodePopup(modelItem, membershipPlanContainer);
+
 
         // prepare texts for package container
         int packageId;
@@ -206,7 +219,83 @@ public class OrderItemPanel extends Panel {
         experimentContainer.setOutputMarkupId(true);
         packageContainer.setOutputMarkupId(true);
         add(experimentContainer, packageContainer, membershipPlanContainer);
+        //BookmarkablePageLink<Void> applyPromoCodeLink = new BookmarkablePageLink<Void>("applyPromoCode", BuyMembershipPlanPersonPage.class);
+        //add(applyPromoCodeLink);
 
     }
+
+    private ModalWindow addPromoCodePopup(final OrderItem parent, WebMarkupContainer membershipPlanContainer) {
+        final ModalWindow popup = new ModalWindow("promoCodePopup");
+        popup.setAutoSize(true);
+        popup.setResizable(false);
+        popup.setMinimalWidth(500);
+        popup.setWidthUnit("px");
+
+       PromoCodePopupForm popupForm = new PromoCodePopupForm(popup.getContentId(), new Model<StringWrapper>(new StringWrapper())) {
+
+            @Override
+            protected void onSubmitAction(IModel<StringWrapper> strWrapper, AjaxRequestTarget target, Form<?> form)
+            {
+                String code = strWrapper.getObject().getValue();
+                if(parent.getMembershipPlan()!=null)
+                {
+                    if(parent.getResearchGroup()==null)
+                    {
+                        if(promoFacade.isValidPersonalPlanCode(code))
+                        {
+                            PromoCode promoCode = promoFacade.getPromoCodeByKeyword(code);
+                            parent.setPromoCode(promoCode);
+                            double price = parent.getMembershipPlan().getPrice().doubleValue()*(1d-((double)promoCode.getDiscount()/100d));
+                            parent.setPrice(new BigDecimal(price));
+                        }
+                    }
+                    else
+                    {
+                        if(promoFacade.isValidGroupPlanCode(code))
+                        {
+                            PromoCode promoCode = promoFacade.getPromoCodeByKeyword(code);
+                            parent.setPromoCode(promoCode);
+                            double price = parent.getMembershipPlan().getPrice().doubleValue()*(1d-((double)promoCode.getDiscount()/100d));
+                            parent.setPrice(new BigDecimal(price));
+                        }
+                    }
+                }
+                ModalWindow.closeCurrent(target);
+                setResponsePage(OrderDetailPage.class);
+            }
+
+            @Override
+            protected void onCancelAction(IModel<StringWrapper> strWrapper, AjaxRequestTarget target, Form<?> form) {
+                ModalWindow.closeCurrent(target);
+            }
+
+        };
+        popup.setContent(popupForm);
+        membershipPlanContainer.add(popup);
+        AjaxLink popupLink = new AjaxLink<Object>("applyPromoCode") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+                //License l = this.getModelObject();
+                //if (l!=null) System.out.println(l.getTitle());
+                popup.show(target);
+            }
+
+        };
+        popup.setOutputMarkupPlaceholderTag(true);
+        popup.setVisibilityAllowed(true);
+        String promoCode = "";
+        if(parent.getPromoCode()!=null)
+        {
+            promoCode = "Applied code: "+parent.getPromoCode().getKeyword()+" ("+parent.getPromoCode().getDiscount()+"% off)";
+
+        }
+        membershipPlanContainer.add(new Label("promoCodeText", promoCode));
+        membershipPlanContainer.add(popupLink);
+        return popup;
+    }
+
 
 }
