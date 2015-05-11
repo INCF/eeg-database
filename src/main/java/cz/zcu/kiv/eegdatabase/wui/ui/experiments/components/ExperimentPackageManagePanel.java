@@ -359,10 +359,13 @@ public class ExperimentPackageManagePanel extends Panel {
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				License obj = model.getObject();
 
-				FileUploadField fileUploadField = this.getFileUpload();
-				FileUpload uploadedFile = fileUploadField.getFileUpload();
-				
+				//FileUploadField fileUploadField = this.getFileUpload();
+				//FileUpload uploadedFile = fileUploadField.getFileUpload();
+
+                //System.out.println("FileField: "+fileUploadField.toString() + ", UploadFile: "+uploadedFile.getClientFileName());
+                /*
                 if (uploadedFile != null) {
+                    System.out.println("==ISN'T NULL!");
                     obj.setAttachmentFileName(uploadedFile.getClientFileName());
                     try {
                         obj.setFileContentStream(uploadedFile.getInputStream());
@@ -370,7 +373,7 @@ public class ExperimentPackageManagePanel extends Panel {
                         log.error(e.getMessage(), e);
                     }
                 }
-				
+				*/
 				if (obj.getLicenseId() == 0) {
 					if(selectedBlueprintModel.getObject() != null && !obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
 						obj.setTemplate(true);

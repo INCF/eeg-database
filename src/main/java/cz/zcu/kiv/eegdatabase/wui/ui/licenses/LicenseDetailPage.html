@@ -33,6 +33,15 @@
                 <th><wicket:message key="label.type" /></th>
                 <td wicket:id="type"></td>
             </tr>
+            <wicket:enclosure child="download">
+                <tr>
+                    <th colspan="2"><wicket:message key="label.license.attachment.file"></wicket:message></th>
+                </tr>
+                <tr>
+                    <td wicket:id="attachmentFileName"></td>
+                    <td><a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a></td>
+                </tr>
+            </wicket:enclosure>
         </table>
 
 

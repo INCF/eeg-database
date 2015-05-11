@@ -195,5 +195,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
     public List<License> getLicensesForExperiment(int experimentId);
 
     public List<License> getPersonLicenses(int personId);
-	
+
+    public List<License> getLicenseTemplates();
 }

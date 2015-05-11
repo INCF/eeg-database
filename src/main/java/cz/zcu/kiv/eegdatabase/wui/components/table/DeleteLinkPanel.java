@@ -1,9 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.components.table;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.MembershipPlan;
 import cz.zcu.kiv.eegdatabase.data.pojo.PromoCode;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxConfirmLink;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -31,6 +33,9 @@ public class DeleteLinkPanel extends Panel {
     @SpringBean
     PromoCodeFacade promoCodeFacade;
 
+    @SpringBean
+    LicenseFacade licenseFacade;
+
     public DeleteLinkPanel(String id, final Class<? extends MenuPage> page,String propertyExpression, final IModel model, IModel<String> displayModel, String confirmMessage) {
 
         super(id);
@@ -57,6 +62,10 @@ public class DeleteLinkPanel extends Panel {
                     promoCodeFacade.update(code);
                     //System.out.println(promoCodeFacade.getPromoCodeByKeyword("ABCK"));
                     //System.out.println(promoCodeFacade.getPromoCodeByKeyword("FFDSFSDG"));
+                } else if (model.getObject().getClass() == License.class) {
+                    License license = licenseFacade.read((Integer)paramModel.getObject());
+                    licenseFacade.delete(license);
+
                 }
                 setResponsePage(page);
             }

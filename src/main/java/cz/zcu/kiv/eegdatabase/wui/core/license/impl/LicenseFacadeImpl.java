@@ -203,5 +203,9 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
     public List<License> getPersonLicenses(int personId)  {
         return licenseService.getPersonLicenses(personId);
     }
-	
+
+    @Override
+    public List<License> getLicenseTemplates() {
+        return licenseService.getLicenseTemplates();
+    }
 }

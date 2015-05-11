@@ -107,15 +107,16 @@ public class LicenseDropDownChoicePanel extends Panel {
         addLicenseWindow.setResizable(false);
         addLicenseWindow.setMinimalWidth(600);
         addLicenseWindow.setWidthUnit("px");
+        addLicenseWindow.showUnloadConfirmation(false);
 
         IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
             @Override
             protected List<License> load() {
-                return licenseFacade.getPersonLicenses(loggedUser.getPersonId());
+                return licenseFacade.getLicenseTemplates();
             }
         };
 
-        LicenseEditForm content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new Model<Boolean>(true)) {
+        final LicenseEditForm content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new Model<Boolean>(true)) {
 
             @Override
             protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
@@ -123,21 +124,9 @@ public class LicenseDropDownChoicePanel extends Panel {
 
                 System.out.println("LICECNE: "+obj+"id: "+obj.getLicenseId());
 
-                FileUploadField fileUploadField = this.getFileUpload();
-                FileUpload uploadedFile = fileUploadField.getFileUpload();
-
-                if (uploadedFile != null) {
-                    obj.setAttachmentFileName(uploadedFile.getClientFileName());
-                    try {
-                        obj.setFileContentStream(uploadedFile.getInputStream());
-                    } catch (IOException e) {
-                        log.error(e.getMessage(), e);
-                    }
-                }
-
                 if (obj.getLicenseId() == 0) {
                     //if(selectedBlueprintModel.getObject() != null && !obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
-                        obj.setTemplate(true);
+                        obj.setTemplate(false);
                         //obj.setResearchGroup(epModel.getObject().getResearchGroup());
                         licenseFacade.create(obj);
                         System.out.println("PO CREATEU: "+obj.getLicenseId());
@@ -186,6 +175,7 @@ public class LicenseDropDownChoicePanel extends Panel {
                 //License l = this.getModelObject();
                 //if (l!=null) System.out.println(l.getTitle());
                 licenseModel.setObject(new License());
+                content.setLicenseModel(new License());
                 addLicenseWindow.show(target);
             }
 

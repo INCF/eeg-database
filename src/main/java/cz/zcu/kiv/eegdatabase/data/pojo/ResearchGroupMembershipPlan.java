@@ -54,10 +54,10 @@ public class ResearchGroupMembershipPlan implements Serializable {
     @JoinColumn(name = "MEMBERSHIP_PLAN")
     private MembershipPlan membershipPlan;
 
-    @ManyToOne
+/*    @ManyToOne
     @JoinColumn(name = "PROMO_CODE")
     private PromoCode promoCode;
-
+*/
     public int getResearchGroupMembershipPlanId() {
         return researchGroupMembershipPlanId;
     }
@@ -77,11 +77,11 @@ public class ResearchGroupMembershipPlan implements Serializable {
     public MembershipPlan getMembershipPlan() {
         return membershipPlan;
     }
-
+/*
     public PromoCode getPromoCode() {
         return promoCode;
     }
-
+*/
     public void setResearchGroupMembershipPlanId(int researchGroupMembershipPlanId) {
         this.researchGroupMembershipPlanId = researchGroupMembershipPlanId;
     }
@@ -101,8 +101,9 @@ public class ResearchGroupMembershipPlan implements Serializable {
     public void setMembershipPlan(MembershipPlan membershipPlan) {
         this.membershipPlan = membershipPlan;
     }
-
+/*
     public void setPromoCode(PromoCode promoCode) {
         this.promoCode = promoCode;
     }
+    */
 }

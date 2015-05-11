@@ -37,11 +37,17 @@
 				</span>
                 </div>
 
-                <!--
+                <div class="itemBox">
+                    <!--<label class="textFieldLabel" wicket:message="value:label.license.attachment.file"/>-->
+                    <label for=licenseFile wicket:id="attachmentFileNameLb" class="textFieldLabel"> <wicket:message
+                            key="label.licenseFile">[file]</wicket:message></label>
+                    <input type="file" class="textField" wicket:id="attachmentFileName"/>
+                </div>
+
                 <div class="itemBox">
                     <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
                 </div>
-                -->
+
 
             </fieldset>
         </form>

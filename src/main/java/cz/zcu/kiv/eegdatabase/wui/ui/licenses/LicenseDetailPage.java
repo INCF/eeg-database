@@ -13,7 +13,9 @@ import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
@@ -48,5 +50,18 @@ public class LicenseDetailPage extends MenuPage {
         add(new Label("description", license.getDescription()));
         add(new Label("price", license.getPrice()));
         add(new Label("type", license.getLicenseType().toString()));
+        add(new Label("attachmentFileName", license.getAttachmentFileName()));
+
+        boolean isContent = license != null && license.getAttachmentFileName() != null;
+
+        ByteArrayResource res;
+        if (isContent) {
+            res = new ByteArrayResource("", licenseFacade.getLicenseAttachmentContent(license.getLicenseId()), license.getAttachmentFileName());
+        } else {
+            res = new ByteArrayResource("");
+        }
+        ResourceLink<Void> downloadLink = new ResourceLink<Void>("download", res);
+        downloadLink.setVisible(isContent);
+        add(downloadLink);
     }
 }
