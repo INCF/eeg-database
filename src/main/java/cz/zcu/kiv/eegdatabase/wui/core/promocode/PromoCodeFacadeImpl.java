@@ -47,4 +47,18 @@ public class PromoCodeFacadeImpl extends GenericFacadeImpl<PromoCode, Integer> i
     public PromoCode getPromoCodeByKeyword(String keyWord)  {
         return service.getPromoCodeByKeyword(keyWord);
     }
+
+    @Override
+    public boolean isValidPersonalPlanCode(String code) {
+        PromoCode codeObject = service.getPromoCodeByKeyword(code);
+        if(codeObject == null) return false;
+        return service.getAvailablePersonPromoCodes().contains(codeObject);
+    }
+
+    @Override
+    public boolean isValidGroupPlanCode(String code) {
+        PromoCode codeObject = service.getPromoCodeByKeyword(code);
+        if(codeObject == null) return false;
+        return service.getAvailableGroupPromoCodes().contains(codeObject);
+    }
 }

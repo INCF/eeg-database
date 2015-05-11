@@ -35,7 +35,7 @@ import java.util.Set;
 
 @Entity
 @Table(name="PROMO_CODE")
-public class    PromoCode implements Serializable {
+public class PromoCode implements Serializable {
 
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -62,13 +62,10 @@ public class    PromoCode implements Serializable {
 
     @Column(name="VALID")
     private boolean valid;
-/*
-    @OneToMany(mappedBy = "promoCode")
-    private Set<PersonMembershipPlan> personMembershipPlans;
 
     @OneToMany(mappedBy = "promoCode")
-    private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans;
-*/
+    private Set<MembershipPlan> membershipPlans;
+
     public void setPromoCode(PromoCode code) {
         this.keyword = code.keyword;
         this.discount = code.discount;
@@ -102,15 +99,11 @@ public class    PromoCode implements Serializable {
     public String getDescription() {
         return description;
     }
-/*
-    public Set<PersonMembershipPlan> getPersonMembershipPlans() {
-        return personMembershipPlans;
+
+    public Set<MembershipPlan> geMembershipPlans() {
+        return membershipPlans;
     }
 
-    public Set<ResearchGroupMembershipPlan> getResearchGroupMembershipPlans() {
-        return researchGroupMembershipPlans;
-    }
-*/
     public void setPromoCodeId(int promoCodeId) {
         this.promoCodeId = promoCodeId;
     }
@@ -142,15 +135,11 @@ public class    PromoCode implements Serializable {
     public void setDescription(String description) {
         this.description = description;
     }
-/*
-    public void setPersonMembershipPlans(Set<PersonMembershipPlan> personMembershipPlans) {
-        this.personMembershipPlans = personMembershipPlans;
+
+    public void setMembershipPlans(Set<MembershipPlan> membershipPlans) {
+        this.membershipPlans = membershipPlans;
     }
 
-    public void setResearchGroupMembershipPlans(Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans) {
-        this.researchGroupMembershipPlans = researchGroupMembershipPlans;
-    }
-*/
     public boolean isValid() {
         return valid;
     }

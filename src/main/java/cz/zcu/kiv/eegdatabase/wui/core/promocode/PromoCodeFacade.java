@@ -17,4 +17,8 @@ public interface PromoCodeFacade extends GenericFacade<PromoCode, Integer> {
     public PromoCode getPromoCodeById(Integer id);
 
     public PromoCode getPromoCodeByKeyword(String keyWord);
+
+    public boolean isValidPersonalPlanCode(String code);
+
+    public boolean isValidGroupPlanCode(String code);
 }

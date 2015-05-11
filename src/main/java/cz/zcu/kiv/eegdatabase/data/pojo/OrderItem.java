@@ -42,6 +42,10 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @JoinColumn(name = "LICENSE")
     private License license;
 
+    @ManyToOne
+    @JoinColumn(name = "PROMOCODE")
+    private PromoCode promoCode;
+
     //why was this public?
     private OrderItem() {
 
@@ -136,6 +140,14 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.license = license;
     }
 
+    public PromoCode getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(PromoCode promoCode) {
+        this.promoCode = promoCode;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -180,4 +192,5 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
             price = experimentPackage.getPrice();
         }
     }
+
 }
