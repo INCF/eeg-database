@@ -114,7 +114,7 @@ public class UserDataImpl implements UserDataService {
 
     public boolean isServiceAvailable() {
 
-        log.debug("User " + personDao.getLoggedPerson().getEmail()
+        log.debug("User " + personDao.getLoggedPerson().getUsername()
                 + " verified connection with datadownload web service.");
         return true;
     }
