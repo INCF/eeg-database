@@ -201,7 +201,9 @@ public class UserDataImpl implements UserDataService {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-        experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(personDao.getLoggedPerson().getPersonId()));
+//        experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(personDao.getLoggedPerson().getPersonId()));
+        experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
+
 
 
         for (Experiment experiment : experiments) {
