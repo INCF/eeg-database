@@ -121,7 +121,7 @@ public class ShoppingCartPage extends MenuPage {
             @Override
             protected void populateItem(final ListItem<OrderItem> item) {
 
-                item.add(new OrderItemPanel("item", item.getModel()));
+                item.add(new OrderItemPanel("item", item.getModel(), true));
 
                 // XXX price hidden for now.
                 /*
