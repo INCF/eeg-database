@@ -84,11 +84,6 @@ public class ManageExperimentsPage extends MenuPage {
         Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
 
         add(new Label("title", ResourceUtils.getModel("pageTitle.manageExperiments")));
-        if (personMembershipPlanFacade.hasActiveMembershipPlan(loggedUser)) {
-            add(new Label("membership",""));
-        } else {
-            add(new Label("membership",ResourceUtils.getModel("pageTitle.noActiveMembershipPlan")));
-        }
 
         boolean owner = true;
         boolean subject = false;

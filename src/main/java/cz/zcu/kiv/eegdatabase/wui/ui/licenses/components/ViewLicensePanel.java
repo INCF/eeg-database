@@ -1,7 +1,11 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
+import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
@@ -20,8 +24,10 @@ public class ViewLicensePanel extends Panel {
     private LicenseFacade facade;
     private ResourceLink<Void> downloadLink;
     private IModel<License> model;
+    private AjaxButton button;
+    private Form form;
 
-    public ViewLicensePanel(String id, IModel<License> model) {
+    public ViewLicensePanel(String id, final IModel<License> model) {
         super(id, new CompoundPropertyModel<License>(model));
         this.model = model;
 
@@ -43,6 +49,22 @@ public class ViewLicensePanel extends Panel {
         downloadLink.setVisible(isContent);
         add(downloadLink);
 
+        this.form = new Form("form");
+        add(form);
+        button = new AjaxButton("removeButton", ResourceUtils.getModel("button.remove")) {
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+                onRemoveAction(model, target, form);
+            }
+
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                this.setVisible(true);
+            }
+        };
+        form.add(button);
+
     }
 
     @SuppressWarnings("unchecked")
@@ -62,6 +84,9 @@ public class ViewLicensePanel extends Panel {
         ResourceLink<Void> newLink = new ResourceLink<Void>("download", res);
         downloadLink = (ResourceLink<Void>) downloadLink.replaceWith(newLink);
         downloadLink.setVisible(isContent);
+    }
+
+    protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
     }
 
 }

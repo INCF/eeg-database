@@ -35,6 +35,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.PromoCodePopupForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.StringWrapper;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -230,6 +231,7 @@ public class OrderItemPanel extends Panel {
         popup.setResizable(false);
         popup.setMinimalWidth(500);
         popup.setWidthUnit("px");
+        popup.showUnloadConfirmation(false);
 
        PromoCodePopupForm popupForm = new PromoCodePopupForm(popup.getContentId(), new Model<StringWrapper>(new StringWrapper())) {
 
@@ -261,7 +263,7 @@ public class OrderItemPanel extends Panel {
                     }
                 }
                 ModalWindow.closeCurrent(target);
-                setResponsePage(OrderDetailPage.class);
+                setResponsePage(ShoppingCartPage.class);
             }
 
             @Override

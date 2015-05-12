@@ -74,6 +74,7 @@ public class LicenseEditForm extends Panel {
     private AjaxButton saveButton;
     private FormComponent priceInput;
     private ResourceLink<Void> downloadLink;
+    private AjaxDropDownChoice<License> ddc;
 
     @SpringBean
     LicenseFacade licenseFacade;
@@ -205,7 +206,7 @@ public class LicenseEditForm extends Panel {
 
 	private void addBlueprintSelect() {
 		selectedBlueprintModel = new Model<License>();
-		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
+		ddc = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
@@ -274,8 +275,15 @@ public class LicenseEditForm extends Panel {
 
 		ddc.setNullValid(true);
 
+
 		form.add(ddc);
 	}
+
+    public void clearLicenseModel() {
+        ddc.setDefaultModelObject(null);
+        downloadLink.setVisibilityAllowed(false);
+        saveButton.setVisibilityAllowed(false);
+    }
 
     public void setLicenseModel (License license) {
         licenseModel.setObject(license);
@@ -288,6 +296,10 @@ public class LicenseEditForm extends Panel {
 	public void setDisplayControls(boolean displayControls) {
 		this.displayControls = displayControls;
 	}
+
+    public void setSaveButtonVisibility(boolean visibility) {
+        saveButton.setVisibilityAllowed(visibility);
+    }
 
 	public boolean isDisplayRemoveButton() {
 		return displayRemoveButton;

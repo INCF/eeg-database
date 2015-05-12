@@ -11,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentsPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -49,6 +50,8 @@ public class LicenseDropDownChoicePanel extends Panel {
     private Person loggedUser;
     private Class<? extends MenuPage> page;
     private boolean hasActiveMembershipPlan;
+    private LicenseEditForm licenseEditForm;
+    private AjaxDropDownChoice<License> licensesChoice;
 
     @SpringBean
     private LicenseFacade licenseFacade;
@@ -77,7 +80,7 @@ public class LicenseDropDownChoicePanel extends Panel {
             }
         };
 
-        AjaxDropDownChoice<License> licensesChoice = new AjaxDropDownChoice<License>("licenses",licenseModel,licenses, new ChoiceRenderer<License>("title", "licenseId")){
+        licensesChoice = new AjaxDropDownChoice<License>("licenses",licenseModel,licenses, new ChoiceRenderer<License>("title", "licenseId")){
 
             @Override
             protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
@@ -91,6 +94,7 @@ public class LicenseDropDownChoicePanel extends Panel {
         };
 
         licensesChoice.setVisibilityAllowed(hasActiveMembershipPlan);
+        licensesChoice.setNullValid(true);
         add(licensesChoice);
         this.addLicenseViewWindow();
         this.addLicenseAddWindow();
@@ -104,6 +108,14 @@ public class LicenseDropDownChoicePanel extends Panel {
         addLicenseWindow.setMinimalWidth(600);
         addLicenseWindow.setWidthUnit("px");
         addLicenseWindow.showUnloadConfirmation(false);
+        addLicenseWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+            private static final long serialVersionUID = 1L;
+
+            public void onClose(AjaxRequestTarget target) {
+                licenseEditForm.clearLicenseModel();
+                setResponsePage(ManageExperimentsPage.class);
+            }
+        });
 
         IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
             @Override
@@ -112,7 +124,7 @@ public class LicenseDropDownChoicePanel extends Panel {
             }
         };
 
-        final LicenseEditForm content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new Model<Boolean>(true)) {
+        licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new Model<Boolean>(true)) {
 
             @Override
             protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
@@ -158,8 +170,8 @@ public class LicenseDropDownChoicePanel extends Panel {
             }
 
         };
-        content.setDisplayRemoveButton(false);
-        addLicenseWindow.setContent(content);
+        licenseEditForm.setDisplayRemoveButton(false);
+        addLicenseWindow.setContent(licenseEditForm);
         add(addLicenseWindow);
 
         addLicenseLink = new AjaxLink<License>("addLicenseLink", licenseModel) {
@@ -171,7 +183,7 @@ public class LicenseDropDownChoicePanel extends Panel {
                 //License l = this.getModelObject();
                 //if (l!=null) System.out.println(l.getTitle());
                 licenseModel.setObject(new License());
-                content.setLicenseModel(new License());
+                licenseEditForm.setLicenseModel(new License());
                 addLicenseWindow.show(target);
             }
 
@@ -187,9 +199,19 @@ public class LicenseDropDownChoicePanel extends Panel {
         viewLicenseWindow.setResizable(false);
         viewLicenseWindow.setMinimalWidth(600);
         viewLicenseWindow.setWidthUnit("px");
+        viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
 
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel));
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel) {
+            @Override
+            protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+
+                experimentLicenseFacade.remove(experimentIModel.getObject(),model.getObject());
+                /*ModalWindow.closeCurrent(target);
+                //target.add(header);*/
+                setResponsePage(page);
+            }
+        });
         viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
         viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
 

@@ -114,7 +114,7 @@ public class LicenseManageFormPage extends MenuPage {
             setMaxSize(Bytes.megabytes(15));
             add(fileUpload,fileLabel);
 
-            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.saveMembershipPlan"), this) {
+            AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.saveLicense"), this) {
 
                 private static final long serialVersionUID = 1L;
 

@@ -29,6 +29,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.AjaxRequestTarget;
@@ -59,10 +63,6 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.hibernate.Hibernate;
 import org.hibernate.SessionFactory;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
@@ -92,6 +92,8 @@ public class ExperimentPackageManagePanel extends Panel {
 	private ExperimentPackageFacade experimentPackageFacade;
 	@SpringBean
 	private LicenseFacade licenseFacade;
+    @SpringBean
+    private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
 	/**
 	 * Main model of the component - experiment package
 	 */
@@ -118,8 +120,10 @@ public class ExperimentPackageManagePanel extends Panel {
 	private WebMarkupContainer header, footer;
 	private ModalWindow addExperimentsWindow;
 	private ModalWindow addLicenseWindow;
+    private ModalWindow viewLicenseWindow;
 	private ModalWindow privateLicenseWindow;
 	private ModalWindow publicLicenseWindow;
+    private LicenseEditForm licenseEditForm;
 
 	/**
 	 *
@@ -142,10 +146,31 @@ public class ExperimentPackageManagePanel extends Panel {
 		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
 		this.addExperimentsAddWindow();
+        this.addExperimentsViewWindow();
 		privateLicenseWindow = this.addPrivateAndPublicWindows("privateLicenseWindow", true);
 		publicLicenseWindow = this.addPrivateAndPublicWindows("publicLicenseWindow", false);
 		this.addLicenseAddWindow();
 	}
+
+    private void addExperimentsViewWindow() {
+        viewLicenseWindow = new ModalWindow("viewLicenseWindow");
+        viewLicenseWindow.setAutoSize(true);
+        viewLicenseWindow.setResizable(false);
+        viewLicenseWindow.setMinimalWidth(600);
+        viewLicenseWindow.setWidthUnit("px");
+        viewLicenseWindow.showUnloadConfirmation(false);
+        add(viewLicenseWindow);
+
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel) {
+            @Override
+            protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+                licenseFacade.removeLicenseFromPackage(model.getObject(), epModel.getObject());
+                ModalWindow.closeCurrent(target);
+                target.add(header);
+            }
+        });
+        viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
+    }
 
 	/**
 	 * Add window which allows to add experiments to the package.
@@ -291,8 +316,10 @@ public class ExperimentPackageManagePanel extends Panel {
 				AjaxLink<License> link = new AjaxLink<License>("licenseItem", item.getModel()) {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
+
 						licenseModel.setObject(this.getModelObject());
-						switch(this.getModelObject().getLicenseType()) {
+                        viewLicenseWindow.show(target);
+						/*switch(this.getModelObject().getLicenseType()) {
 							case OPEN_DOMAIN:
 								publicLicenseWindow.show(target);
 								break;
@@ -302,10 +329,12 @@ public class ExperimentPackageManagePanel extends Panel {
 							default:
 								addLicenseWindow.show(target);
 								break;
-						}
+						}*/
 					}
 				};
 
+                link.add(new Label("licenseItemLabel", new PropertyModel(item.getModel(), "title")));
+                /*
 				switch (item.getModelObject().getLicenseType()) {
 					case OPEN_DOMAIN://public license can be removed only if paid account or has other licenses
 						boolean canGoOffPublic = epModel.getObject().getResearchGroup().isPaidAccount()
@@ -320,6 +349,7 @@ public class ExperimentPackageManagePanel extends Panel {
 						link.add(new Label("licenseItemLabel", new PropertyModel(item.getModel(), "title")));
 						break;
 				}
+				*/
 
 				item.add(link);
 			}
@@ -346,44 +376,44 @@ public class ExperimentPackageManagePanel extends Panel {
 		addLicenseWindow.setResizable(false);
 		addLicenseWindow.setMinimalWidth(600);
 		addLicenseWindow.setWidthUnit("px");
+        addLicenseWindow.showUnloadConfirmation(false);
+        addLicenseWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+            private static final long serialVersionUID = 1L;
+
+            public void onClose(AjaxRequestTarget target) {
+                licenseEditForm.clearLicenseModel();
+            }
+        });
 
 		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
 			@Override
 			protected List<License> load() {
-				return licenseFacade.getLicenseTemplates(epModel.getObject().getResearchGroup());
+				//return licenseFacade.getLicenseTemplates(epModel.getObject().getResearchGroup());
+                return licenseFacade.getLicenseTemplates();
 			}
 		};
 
-		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel, new PropertyModel<Boolean>(epModel, "researchGroup.paidAccount")) {
+		licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), licenseModel, blpModel,  new Model<Boolean>(true)) {
 			@Override
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				License obj = model.getObject();
 
-				//FileUploadField fileUploadField = this.getFileUpload();
-				//FileUpload uploadedFile = fileUploadField.getFileUpload();
 
-                //System.out.println("FileField: "+fileUploadField.toString() + ", UploadFile: "+uploadedFile.getClientFileName());
-                /*
-                if (uploadedFile != null) {
-                    System.out.println("==ISN'T NULL!");
-                    obj.setAttachmentFileName(uploadedFile.getClientFileName());
-                    try {
-                        obj.setFileContentStream(uploadedFile.getInputStream());
-                    } catch (IOException e) {
-                        log.error(e.getMessage(), e);
-                    }
-                }
-				*/
 				if (obj.getLicenseId() == 0) {
-					if(selectedBlueprintModel.getObject() != null && !obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
-						obj.setTemplate(true);
-						obj.setResearchGroup(epModel.getObject().getResearchGroup());
+					//if(selectedBlueprintModel.getObject() != null && !obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
+						obj.setTemplate(false);
+						//obj.setResearchGroup(epModel.getObject().getResearchGroup());
 						licenseFacade.create(obj);
-					}
-					licenseFacade.addLicenseForPackage(model.getObject(), epModel.getObject());
+					//}
+					//licenseFacade.addLicenseForPackage(model.getObject(), epModel.getObject());
+                    ExperimentPackageLicense expPacLic = new ExperimentPackageLicense();
+                    expPacLic.setExperimentPackage(epModel.getObject());
+                    expPacLic.setLicense(obj);
+                    experimentPackageLicenseFacade.create(expPacLic);
 				} else {
 					licenseFacade.update(obj);
 				}
+
 				obj.setFileContentStream(null);
 				ModalWindow.closeCurrent(target);
 				target.add(header);
@@ -412,7 +442,7 @@ public class ExperimentPackageManagePanel extends Panel {
 				}
 			}
 		};
-		addLicenseWindow.setContent(content);
+		addLicenseWindow.setContent(licenseEditForm);
 		this.add(addLicenseWindow);
 	}
 

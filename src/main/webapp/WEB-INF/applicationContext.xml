@@ -194,6 +194,11 @@
 	<bean name="experimentPackageLicenseService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseServiceImpl" autowire="byType">
 		<constructor-arg ref="experimentPackageLicenseDao"/>
 	</bean>
+
+    <bean name="experimentPackageLicenseFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageLicenseFacadeImpl" autowire="byType">
+        <constructor-arg ref="experimentPackageLicenseService"/>
+    </bean>
+
 	<bean name="experimentPackageService" class="cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl.ExperimentPackageServiceImpl" autowire="byType">
 		<constructor-arg ref="experimentPackageDao"/>
 	</bean>
