@@ -123,62 +123,62 @@ public class UserDataImpl implements UserDataService {
     public ExperimentMetadata getExperimentsMetadata(int id) {
         ExperimentMetadata metadata = new ExperimentMetadata();
         Experiment experiment = experimentDao.read(id);
-//        metadata.setExperimentInfo(createExperimentInfo(experiment));
-//        metadata.setSubjectPerson(createPersonInfo(experiment.getPersonBySubjectPersonId()));
+        metadata.setExperimentInfo(createExperimentInfo(experiment));
+        metadata.setSubjectPerson(createPersonInfo(experiment.getPersonBySubjectPersonId()));
 //        //metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
         metadata.setDigitizationInfo(createDigitizationInfo(experiment.getDigitization()));
-//        metadata.setArtifactInfo(createArtifactInfo(experiment.getArtifact()));
-//        metadata.setWeatherInfo(createWeatherInfo(experiment.getWeather()));
-//        metadata.setSubjectGroupInfo(createSubjectGroupInfo(experiment.getSubjectGroup()));
-//        metadata.setResearchGroupInfo(createResearchGroupInfo(experiment.getResearchGroup()));
-//
-//        List<PersonInfo> coexperimenters = new LinkedList<PersonInfo>();
-//        for (Person experimenter: experiment.getPersons()) {
-//           coexperimenters.add(createPersonInfo(experimenter));
-//        }
-//        metadata.setCoexperimenters(coexperimenters);
-//
-//        List<HardwareInfo> hardwareInfos = new LinkedList<HardwareInfo>();
-//        for (Hardware hw: experiment.getHardwares()) {
-//            hardwareInfos.add(createHardwareInfo(hw));
-//        }
-//        metadata.setHardwareInfos(hardwareInfos);
-//
-//        List<ArtifactRemoveMethodInfo> artifactRemoveMethodInfos = new LinkedList<ArtifactRemoveMethodInfo>();
-//        for (ArtifactRemoveMethod method: experiment.getArtifactRemoveMethods()) {
-//            artifactRemoveMethodInfos.add(createArtifactRemoveMethodInfo(method));
-//        }
-//        metadata.setArtifactRemoveMethodInfos(artifactRemoveMethodInfos);
-//
-//        List<DataFileInfo> dataFileInfos = new LinkedList<DataFileInfo>();
-//        for (DataFile file: experiment.getDataFiles()) {
-//            dataFileInfos.add(createDataFileInfo(file));
-//        }
-//        metadata.setDataFileInfos(dataFileInfos);
-//
-//        List<DiseaseInfo> diseaseInfos = new LinkedList<DiseaseInfo>();
-//        for (Disease disease: experiment.getDiseases()) {
-//            diseaseInfos.add(createDiseaseInfo(disease));
-//        }
-//        metadata.setDiseaseInfos(diseaseInfos);
-//
-//        List<PharmaceuticalInfo> pharmaInfos = new LinkedList<PharmaceuticalInfo>();
-//        for (Pharmaceutical pharma: experiment.getPharmaceuticals()) {
-//            pharmaInfos.add(createPharmaceuticalInfo(pharma));
-//        }
-//        metadata.setPharmaceuticalInfos(pharmaInfos);
-//
-//        List<ProjectTypeInfo> projectTypeInfos = new LinkedList<ProjectTypeInfo>();
-//        for (ProjectType projectType: experiment.getProjectTypes()) {
-//            projectTypeInfos.add(createProjectTypeInfo(projectType));
-//        }
-//        metadata.setProjectTypeInfos(projectTypeInfos);
-//
-//        List<SoftwareInfo> softwareInfos = new LinkedList<SoftwareInfo>();
-//        for (Software software: experiment.getSoftwares()) {
-//            softwareInfos.add(createSoftwareInfo(software));
-//        }
-//        metadata.setSoftwareInfos(softwareInfos);
+        metadata.setArtifactInfo(createArtifactInfo(experiment.getArtifact()));
+        metadata.setWeatherInfo(createWeatherInfo(experiment.getWeather()));
+        metadata.setSubjectGroupInfo(createSubjectGroupInfo(experiment.getSubjectGroup()));
+        metadata.setResearchGroupInfo(createResearchGroupInfo(experiment.getResearchGroup()));
+
+        List<PersonInfo> coexperimenters = new LinkedList<PersonInfo>();
+        for (Person experimenter: experiment.getPersons()) {
+           coexperimenters.add(createPersonInfo(experimenter));
+        }
+        metadata.setCoexperimenters(coexperimenters);
+
+        List<HardwareInfo> hardwareInfos = new LinkedList<HardwareInfo>();
+        for (Hardware hw: experiment.getHardwares()) {
+            hardwareInfos.add(createHardwareInfo(hw));
+        }
+        metadata.setHardwareInfos(hardwareInfos);
+
+        List<ArtifactRemoveMethodInfo> artifactRemoveMethodInfos = new LinkedList<ArtifactRemoveMethodInfo>();
+        for (ArtifactRemoveMethod method: experiment.getArtifactRemoveMethods()) {
+            artifactRemoveMethodInfos.add(createArtifactRemoveMethodInfo(method));
+        }
+        metadata.setArtifactRemoveMethodInfos(artifactRemoveMethodInfos);
+
+        List<DataFileInfo> dataFileInfos = new LinkedList<DataFileInfo>();
+        for (DataFile file: experiment.getDataFiles()) {
+            dataFileInfos.add(createDataFileInfo(file));
+        }
+        metadata.setDataFileInfos(dataFileInfos);
+
+        List<DiseaseInfo> diseaseInfos = new LinkedList<DiseaseInfo>();
+        for (Disease disease: experiment.getDiseases()) {
+            diseaseInfos.add(createDiseaseInfo(disease));
+        }
+        metadata.setDiseaseInfos(diseaseInfos);
+
+        List<PharmaceuticalInfo> pharmaInfos = new LinkedList<PharmaceuticalInfo>();
+        for (Pharmaceutical pharma: experiment.getPharmaceuticals()) {
+            pharmaInfos.add(createPharmaceuticalInfo(pharma));
+        }
+        metadata.setPharmaceuticalInfos(pharmaInfos);
+
+        List<ProjectTypeInfo> projectTypeInfos = new LinkedList<ProjectTypeInfo>();
+        for (ProjectType projectType: experiment.getProjectTypes()) {
+            projectTypeInfos.add(createProjectTypeInfo(projectType));
+        }
+        metadata.setProjectTypeInfos(projectTypeInfos);
+
+        List<SoftwareInfo> softwareInfos = new LinkedList<SoftwareInfo>();
+        for (Software software: experiment.getSoftwares()) {
+            softwareInfos.add(createSoftwareInfo(software));
+        }
+        metadata.setSoftwareInfos(softwareInfos);
         return metadata;
     }
 
@@ -471,7 +471,7 @@ public class UserDataImpl implements UserDataService {
         info.setExperimentId(experiment.getExperimentId());
         info.setOwnerId(experiment.getPersonByOwnerId().getPersonId());
         info.setSubjectPersonId(experiment.getPersonBySubjectPersonId().getPersonId());
-        info.setScenarioId(experiment.getScenario().getScenarioId());
+//        info.setScenarioId(experiment.getScenario().getScenarioId());
         info.setStartTimeInMillis(experiment.getStartTime().getTime());
         info.setEndTimeInMillis(experiment.getEndTime().getTime());
         info.setWeatherId(experiment.getWeather().getWeatherId());
