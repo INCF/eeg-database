@@ -125,7 +125,7 @@ public class UserDataImpl implements UserDataService {
         Experiment experiment = experimentDao.read(id);
         metadata.setExperimentInfo(createExperimentInfo(experiment));
         metadata.setSubjectPerson(createPersonInfo(experiment.getPersonBySubjectPersonId()));
-        metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
+        //metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
         metadata.setDigitizationInfo(createDigitizationInfo(experiment.getDigitization()));
         metadata.setArtifactInfo(createArtifactInfo(experiment.getArtifact()));
         metadata.setWeatherInfo(createWeatherInfo(experiment.getWeather()));
@@ -201,8 +201,8 @@ public class UserDataImpl implements UserDataService {
         List<ExperimentInfo> exps = new LinkedList<ExperimentInfo>();
         List<Experiment> experiments;
 
-//        experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(personDao.getLoggedPerson().getPersonId()));
-        experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
+        experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(personDao.getLoggedPerson().getPersonId()));
+        //experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
 
 
 
