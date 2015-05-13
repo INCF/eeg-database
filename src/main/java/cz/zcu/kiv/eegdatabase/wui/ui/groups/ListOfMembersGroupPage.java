@@ -27,6 +27,9 @@ import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -82,6 +85,9 @@ public class ListOfMembersGroupPage extends MenuPage {
     @SpringBean
     ResearchGroupFacade facade;
 
+    @SpringBean
+    PersonFacade personFacade;
+
     public ListOfMembersGroupPage(PageParameters parameters) {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.listOfGroupMembers"));
@@ -124,6 +130,7 @@ public class ListOfMembersGroupPage extends MenuPage {
             @Override
             protected void populateItem(final ListItem<Map<String, Object>> item) {
                 final Map<String, Object> person = item.getModelObject();
+                boolean enabled = true;
 
                 final int personId = (Integer) person.get("personId");
                 final ResearchGroupMembershipId id = new ResearchGroupMembershipId(personId, groupId);
@@ -154,9 +161,18 @@ public class ListOfMembersGroupPage extends MenuPage {
                 });
 
                 roles.setVisibilityAllowed(isUserGroupAdmin);
+                Person owner = personFacade.getPerson((String)person.get("username"));
+                List<ResearchGroup> groups = facade.getResearchGroupsWhereOwner(owner);
+                for (ResearchGroup group: groups) {
+                    if (group.getResearchGroupId() == groupId) {
+                        enabled = false;
+                    }
+                }
+
+                item.setEnabled(enabled);
                 item.add(roles);
 
-                item.add(new AjaxLink<Void>("removeFromGroupLink") {
+                AjaxLink<Void> removeLink = (new AjaxLink<Void>("removeFromGroupLink") {
 
                     private static final long serialVersionUID = 1L;
 
@@ -178,7 +194,10 @@ public class ListOfMembersGroupPage extends MenuPage {
                         ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("link.confirm.sureToRemoveUserFromGroup") + "');");
                         attributes.getAjaxCallListeners().add(ajaxCallListener);
                     }
-                }.setVisibilityAllowed(isUserGroupAdmin));
+                });
+                removeLink.setVisibilityAllowed(isUserGroupAdmin);
+                removeLink.setVisible(enabled);
+                item.add(removeLink);
 
             }
         };

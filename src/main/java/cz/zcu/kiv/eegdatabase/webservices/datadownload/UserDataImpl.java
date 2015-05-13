@@ -122,7 +122,7 @@ public class UserDataImpl implements UserDataService {
     @Override
     public ExperimentMetadata getExperimentsMetadata(int id) {
         ExperimentMetadata metadata = new ExperimentMetadata();
-        Experiment experiment = experimentDao.getExperimentForDetail(id);
+        Experiment experiment = experimentDao.read(id);
         metadata.setExperimentInfo(createExperimentInfo(experiment));
         metadata.setSubjectPerson(createPersonInfo(experiment.getPersonBySubjectPersonId()));
         metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
@@ -504,7 +504,7 @@ public class UserDataImpl implements UserDataService {
         ScenarioInfo info = new ScenarioInfo();
 
         info.setDescription(scenario.getDescription());
-        info.setMimeType(scenario.getMimetype());
+        //info.setMimeType(scenario.getMimetype());
         info.setOwnerId(scenario.getPerson().getPersonId());
         info.setResearchGroupId(scenario.getResearchGroup().getResearchGroupId());
         info.setScenarioId(scenario.getScenarioId());
