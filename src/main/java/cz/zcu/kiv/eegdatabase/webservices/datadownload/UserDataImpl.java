@@ -479,7 +479,7 @@ public class UserDataImpl implements UserDataService {
         info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
         info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
         info.setTemperature(experiment.getTemperature());
-        info.setTitle(experiment.getScenario().getTitle());
+        //info.setTitle(experiment.getScenario().getTitle());
         return info;
     }
 
