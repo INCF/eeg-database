@@ -114,18 +114,18 @@ public class UserDataImpl implements UserDataService {
 
     public boolean isServiceAvailable() {
 
-        log.debug("User " + personDao.getLoggedPerson().getEmail()
-                + " verified connection with datadownload web service.");
+//        log.debug("User " + personDao.getLoggedPerson().getUsername()
+//                + " verified connection with datadownload web service.");
         return true;
     }
 
     @Override
     public ExperimentMetadata getExperimentsMetadata(int id) {
         ExperimentMetadata metadata = new ExperimentMetadata();
-        Experiment experiment = experimentDao.getExperimentForDetail(id);
+        Experiment experiment = experimentDao.read(id);
         metadata.setExperimentInfo(createExperimentInfo(experiment));
         metadata.setSubjectPerson(createPersonInfo(experiment.getPersonBySubjectPersonId()));
-        metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
+//        //metadata.setScenarioInfo(createScenarioInfo(experiment.getScenario()));
         metadata.setDigitizationInfo(createDigitizationInfo(experiment.getDigitization()));
         metadata.setArtifactInfo(createArtifactInfo(experiment.getArtifact()));
         metadata.setWeatherInfo(createWeatherInfo(experiment.getWeather()));
@@ -202,6 +202,8 @@ public class UserDataImpl implements UserDataService {
         List<Experiment> experiments;
 
         experiments = new LinkedList<Experiment>(experimentDao.getRecordsNewerThan(personDao.getLoggedPerson().getPersonId()));
+        //experiments = new LinkedList<Experiment>(experimentDao.getAllRecords());
+
 
 
         for (Experiment experiment : experiments) {
@@ -469,7 +471,7 @@ public class UserDataImpl implements UserDataService {
         info.setExperimentId(experiment.getExperimentId());
         info.setOwnerId(experiment.getPersonByOwnerId().getPersonId());
         info.setSubjectPersonId(experiment.getPersonBySubjectPersonId().getPersonId());
-        info.setScenarioId(experiment.getScenario().getScenarioId());
+//        info.setScenarioId(experiment.getScenario().getScenarioId());
         info.setStartTimeInMillis(experiment.getStartTime().getTime());
         info.setEndTimeInMillis(experiment.getEndTime().getTime());
         info.setWeatherId(experiment.getWeather().getWeatherId());
@@ -477,7 +479,7 @@ public class UserDataImpl implements UserDataService {
         info.setPrivateFlag((experiment.isPrivateExperiment() ? 1 : 0));
         info.setResearchGroupId(experiment.getResearchGroup().getResearchGroupId());
         info.setTemperature(experiment.getTemperature());
-        info.setTitle(experiment.getScenario().getTitle());
+        //info.setTitle(experiment.getScenario().getTitle());
         return info;
     }
 
@@ -502,7 +504,7 @@ public class UserDataImpl implements UserDataService {
         ScenarioInfo info = new ScenarioInfo();
 
         info.setDescription(scenario.getDescription());
-        info.setMimeType(scenario.getMimetype());
+        //info.setMimeType(scenario.getMimetype());
         info.setOwnerId(scenario.getPerson().getPersonId());
         info.setResearchGroupId(scenario.getResearchGroup().getResearchGroupId());
         info.setScenarioId(scenario.getScenarioId());
