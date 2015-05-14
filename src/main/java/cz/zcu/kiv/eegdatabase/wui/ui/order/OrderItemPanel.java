@@ -70,8 +70,12 @@ public class OrderItemPanel extends Panel {
     private IModel<String> showActionModel;
     private IModel<String> hideActionModel;
 
-    public OrderItemPanel(String id, final IModel<OrderItem> model) {
+    private boolean malleable;
+
+    public OrderItemPanel(String id, final IModel<OrderItem> model, boolean malleable) {
         super(id, new CompoundPropertyModel<OrderItem>(model));
+
+        this.malleable = malleable;
 
         showActionModel = ResourceUtils.getModel("action.show");
         hideActionModel = ResourceUtils.getModel("action.hide");
@@ -292,10 +296,10 @@ public class OrderItemPanel extends Panel {
         if(parent.getPromoCode()!=null)
         {
             promoCode = "Applied code: "+parent.getPromoCode().getKeyword()+" ("+parent.getPromoCode().getDiscount()+"% off)";
-
         }
         membershipPlanContainer.add(new Label("promoCodeText", promoCode));
         membershipPlanContainer.add(popupLink);
+        popupLink.setVisible(malleable);
         return popup;
     }
 

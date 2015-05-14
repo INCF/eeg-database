@@ -22,17 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.order;
 
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Order;
 import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -43,6 +32,15 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPageLeftMenu;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class OrderDetailPage extends MenuPage {
@@ -89,7 +87,7 @@ public class OrderDetailPage extends MenuPage {
             protected void populateItem(ListItem<OrderItem> item) {
 
 
-                item.add(new OrderItemPanel("item", item.getModel()));
+                item.add(new OrderItemPanel("item", item.getModel(), false));
                 item.add(new Label("price", item.getModel().getObject().getPrice()));
 
                 if (item.getModelObject().getExperiment()!=null) {
