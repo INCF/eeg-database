@@ -260,7 +260,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             } else {
                 licenseModel.setObject(licenseFacade.getPublicLicense());
             }
-            viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel));
+            viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
             viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
             AjaxLink<License> viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
 

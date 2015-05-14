@@ -77,6 +77,7 @@ public class ShoppingCartPage extends MenuPage {
     private LicenseFacade licenseFacade;
 
     private Label totalPriceLabel;
+    private DropDownChoice<License> licenseChoice;
 
     public ShoppingCartPage() {
         setupComponents();
@@ -133,24 +134,27 @@ public class ShoppingCartPage extends MenuPage {
 
                 List<License> licenses = new ArrayList<License>();
                 ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("licenseInfo", "licenseId");
-                DropDownChoice<License> licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
+                licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
+                licenseChoice.setNullValid(true);
 
                 if(item.getModelObject().getExperiment() != null)
                 {
-
-                    boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
+                    int experimentPackageId = item.getModelObject().getExperiment().getExperimentId();
+                    licenses.addAll(licenseFacade.getLicensesForExperiment(experimentPackageId));
+                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
                     if (isExpPackageLicenseChoiceShow) {
-                        int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
-                        licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                        licenses.add(0, licenseFacade.getPublicLicense());
+                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                        //licenses.add(0, licenseFacade.getPublicLicense());
                     }
 
 
 
                     if (isExpPackageLicenseChoiceShow) {
                         // preselect first license for dropdown choice component
-                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+
                     }
+
 
                     licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
@@ -170,7 +174,7 @@ public class ShoppingCartPage extends MenuPage {
                             target.add(totalPriceLabel);
                         }
                     });
-                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
                     item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle"))); 
                     item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
                     item.add(licenseChoice);
@@ -178,16 +182,18 @@ public class ShoppingCartPage extends MenuPage {
                 else if(item.getModelObject().getExperimentPackage() != null)
                 {
                     //TODO: remove code duplication
-                    boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
+                    licenses.addAll(licenseFacade.getLicensesForPackage(item.getModelObject().getExperimentPackage()));
+                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
                     if (isExpPackageLicenseChoiceShow) {
-                        int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
-                        licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                        licenses.add(0, licenseFacade.getPublicLicense());
+                        //int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
+                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                       // licenses.add(0, licenseFacade.getPublicLicense());
+
                     }
 
                     if (isExpPackageLicenseChoiceShow) {
                         // preselect first license for dropdown choice component
-                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
                     }
 
                     licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
@@ -208,9 +214,8 @@ public class ShoppingCartPage extends MenuPage {
                             target.add(totalPriceLabel);
                         }
                     });
-                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
                     item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle")));
-
                     item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
                     item.add(licenseChoice);
                 }
@@ -274,8 +279,25 @@ public class ShoppingCartPage extends MenuPage {
 
             @Override
             public void onClick() {
-
                 Order order = shoppingCart.getOrder();
+
+                for(OrderItem item : order.getItems()) {
+
+                    if (item.getExperimentPackage()!= null) {
+                        System.out.println("====="+item.getLicense());
+                        if (item.getLicense() == null) {
+                            setResponsePage(ShoppingCartPage.class);
+                            return;
+                        }
+                    } else if (item.getExperiment()!= null) {
+                        System.out.println("====="+item.getLicense());
+                        if (item.getLicense() == null) {
+                            setResponsePage(ShoppingCartPage.class);
+                            return;
+                        }
+                    }
+                }
+
                 order.setDate(new Timestamp(new Date().getTime()));
                 order.setPerson(EEGDataBaseSession.get().getLoggedUser());
                 order.setOrderPrice(shoppingCart.getTotalPrice());

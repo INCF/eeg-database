@@ -118,7 +118,7 @@ public class ManageExperimentsPage extends MenuPage {
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, final IModel<Experiment> rowModel) {
 
-                item.add(new LicenseDropDownChoicePanel(componentId,rowModel, ManageExperimentsPage.class));
+                item.add(new LicenseDropDownChoicePanel(componentId,rowModel, ManageExperimentsPage.class, true));
             }
         });
 

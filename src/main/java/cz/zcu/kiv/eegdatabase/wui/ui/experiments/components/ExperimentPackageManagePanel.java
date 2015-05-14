@@ -161,7 +161,7 @@ public class ExperimentPackageManagePanel extends Panel {
         viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
 
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel) {
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, true) {
             @Override
             protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
                 licenseFacade.removeLicenseFromPackage(model.getObject(), epModel.getObject());
@@ -402,7 +402,7 @@ public class ExperimentPackageManagePanel extends Panel {
 				if (obj.getLicenseId() == 0) {
 					//if(selectedBlueprintModel.getObject() != null && !obj.getTitle().equals(selectedBlueprintModel.getObject().getTitle())) {
 						obj.setTemplate(false);
-						//obj.setResearchGroup(epModel.getObject().getResearchGroup());
+						obj.setResearchGroup(epModel.getObject().getResearchGroup());
 						licenseFacade.create(obj);
 					//}
 					//licenseFacade.addLicenseForPackage(model.getObject(), epModel.getObject());

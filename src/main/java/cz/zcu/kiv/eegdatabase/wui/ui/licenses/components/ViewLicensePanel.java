@@ -27,7 +27,7 @@ public class ViewLicensePanel extends Panel {
     private AjaxButton button;
     private Form form;
 
-    public ViewLicensePanel(String id, final IModel<License> model) {
+    public ViewLicensePanel(String id, final IModel<License> model, boolean showRemoveButton) {
         super(id, new CompoundPropertyModel<License>(model));
         this.model = model;
 
@@ -63,6 +63,7 @@ public class ViewLicensePanel extends Panel {
                 this.setVisible(true);
             }
         };
+        button.setVisibilityAllowed(showRemoveButton);
         form.add(button);
 
     }

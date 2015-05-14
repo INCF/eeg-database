@@ -50,6 +50,7 @@ public class LicenseDropDownChoicePanel extends Panel {
     private Person loggedUser;
     private Class<? extends MenuPage> page;
     private boolean hasActiveMembershipPlan;
+    private boolean showRemoveButton;
     private LicenseEditForm licenseEditForm;
     private AjaxDropDownChoice<License> licensesChoice;
 
@@ -63,14 +64,14 @@ public class LicenseDropDownChoicePanel extends Panel {
     private PersonMembershipPlanFacade personMembershipPlanFacade;
 
 
-    public LicenseDropDownChoicePanel (String id, final IModel<Experiment> model, Class<? extends MenuPage> page) {
+    public LicenseDropDownChoicePanel (String id, final IModel<Experiment> model, Class<? extends MenuPage> page, boolean showRemoveButton) {
         super(id);
         this.licenseModel = new Model();
         this.experimentIModel = model;
         this.page = page;
-        loggedUser = EEGDataBaseSession.get().getLoggedUser();
-        hasActiveMembershipPlan = personMembershipPlanFacade.hasActiveMembershipPlan(loggedUser);
-
+        this.loggedUser = EEGDataBaseSession.get().getLoggedUser();
+        this.hasActiveMembershipPlan = personMembershipPlanFacade.hasActiveMembershipPlan(loggedUser);
+        this.showRemoveButton = showRemoveButton;
         licenses = new LoadableDetachableModel<List<License>>() {
 
             @Override
@@ -202,7 +203,7 @@ public class LicenseDropDownChoicePanel extends Panel {
         viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
 
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel) {
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel,showRemoveButton) {
             @Override
             protected void onRemoveAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 

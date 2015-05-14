@@ -182,6 +182,7 @@ public class ExperimentPackagePanel extends Panel {
         viewLicenseWindow.setResizable(false);
         viewLicenseWindow.setMinimalWidth(600);
         viewLicenseWindow.setWidthUnit("px");
+        viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
 	    
 		licenses = new LoadableDetachableModel<List<License>>() {
@@ -240,7 +241,7 @@ public class ExperimentPackagePanel extends Panel {
 		};
 		licenseBuyLink.setOutputMarkupPlaceholderTag(true);
 		
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel));
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
         viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
         viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
 
