@@ -23,9 +23,12 @@ import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.*;
+import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.ByteArrayResource;
+import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Classes;
+import org.apache.wicket.util.time.Duration;
 import org.apache.wicket.validation.validator.StringValidator;
 
 import java.io.ByteArrayInputStream;
@@ -60,7 +63,7 @@ public class AddLicensePage extends WebPage {
         return licenses;
     }
 
-    protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+    protected void onSubmitAction(IModel<License> model, Integer id, AjaxRequestTarget target, Form<?> form) {
     }
 
     private class LicenseForm extends Form<License> {
@@ -130,7 +133,12 @@ public class AddLicensePage extends WebPage {
             WicketUtils.addLabelsAndFeedback(this);
 
             ByteArrayResource res;
-            res = new ByteArrayResource("");
+            res = new ByteArrayResource("") {
+                @Override
+                public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                    response.setCacheDuration(Duration.NONE);
+                }
+            };
             downloadLink = new ResourceLink<Void>("download", res);
             downloadLink.setVisible(false);
 
@@ -142,7 +150,9 @@ public class AddLicensePage extends WebPage {
             saveButton = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    onSubmitAction(licenseModel, target, form);
+                    //System.out.println("---LIC_TEM_ID: "+ddc.getModel().getObject().getLicenseId());
+                    onSubmitAction(licenseModel, ddc.getModel().getObject().getLicenseId(), target, form);
+
                     target.add(form);
                 }
 
@@ -205,7 +215,7 @@ public class AddLicensePage extends WebPage {
                 }
 
                 @Override
-                protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+                protected void onSelectionChangeAjaxified(AjaxRequestTarget target, final License option) {
                     if (option == null || option.getLicenseId() == 0) {
                         licenseModel.setObject(new License());
                         saveButton.setVisibilityAllowed(false);
@@ -225,24 +235,23 @@ public class AddLicensePage extends WebPage {
                         l.setLicenseType(option.getLicenseType());
                         l.setPrice(option.getPrice());
                         l.setAttachmentFileName(option.getAttachmentFileName());
-
-                        //l.setFileContentStream();
+                        l.setTemplate(false);
+                        l.setFileContentStream(null);
 
 
                         if (option.getAttachmentFileName()!= null) {
                             ByteArrayResource res;
-                            System.out.println("---Novy ID: "+option.getLicenseId()+", FileName: "+option.getAttachmentFileName());
-                            res = new ByteArrayResource("", licenseFacade.getLicenseAttachmentContent(option.getLicenseId()), option.getAttachmentFileName());
+                            res = new ByteArrayResource("", licenseFacade.getLicenseAttachmentContent(option.getLicenseId()), option.getAttachmentFileName()) {
+
+                                @Override
+                                public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                                    response.setCacheDuration(Duration.NONE);
+                                    response.setFileName(option.getAttachmentFileName());
+                                }
+                            };
 
                             ResourceLink<Void> newLink = new ResourceLink<Void>("download", res);
 
-                            ByteArrayInputStream bis = new ByteArrayInputStream(licenseFacade.getLicenseAttachmentContent(option.getLicenseId()));
-                            l.setFileContentStream(bis);
-
-                            //downloadLink.remove();
-                           // downloadLink = newLink;
-
-                            //add(newLink);
                             downloadLink = (ResourceLink<Void>) downloadLink.replaceWith(newLink);
                             downloadLink.setVisible(true);
 

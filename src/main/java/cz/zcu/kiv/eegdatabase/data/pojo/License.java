@@ -234,7 +234,8 @@ public class License implements Serializable {
 	public String getLicenseInfo(){
 	    return title + " price: " + (price == null || price.compareTo(BigDecimal.ZERO) == 0 ? "No" : price);
 	}
-	
+
+    @Transient
 	public void setFileContentStream(InputStream inputStream) {
         this.fileContentStream = inputStream;
     }

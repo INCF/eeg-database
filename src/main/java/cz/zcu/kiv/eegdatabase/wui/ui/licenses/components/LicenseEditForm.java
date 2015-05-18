@@ -24,6 +24,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
 import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
@@ -44,7 +46,9 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.resource.AbstractResource;
 import org.apache.wicket.request.resource.ByteArrayResource;
+import org.apache.wicket.request.resource.IResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
 
@@ -53,6 +57,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import org.apache.wicket.util.time.Duration;
+
+import javax.sql.rowset.serial.SerialBlob;
 
 /**
  *
@@ -138,11 +145,18 @@ public class LicenseEditForm extends Panel {
 		WicketUtils.addLabelsAndFeedback(form);
 
         ByteArrayResource res;
-        res = new ByteArrayResource("");
+        res = new ByteArrayResource("") {
+            @Override
+            public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                response.setCacheDuration(Duration.NONE);
+            }
+        };
         downloadLink = new ResourceLink<Void>("download", res);
         downloadLink.setVisible(false);
 
         form.add(downloadLink);
+
+
 	}
 
 	/**
@@ -223,7 +237,7 @@ public class LicenseEditForm extends Panel {
 			}
 
 			@Override
-			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, final License option) {
 				if (option == null || option.getLicenseId() == 0) {
 					licenseModel.setObject(new License());
                     saveButton.setVisibilityAllowed(false);
@@ -237,31 +251,41 @@ public class LicenseEditForm extends Panel {
                     } else {
                         priceInput.setEnabled(false);
                     }
-					License l = new License();
+					final License l = new License();
 					l.setTitle(option.getTitle());
 					l.setDescription(option.getDescription());
 					l.setLicenseType(option.getLicenseType());
 					l.setPrice(option.getPrice());
                     l.setAttachmentFileName(option.getAttachmentFileName());
-
-                    //l.setFileContentStream();
+                    l.setFileContentStream(null);
 
 
                     if (option.getAttachmentFileName()!= null) {
-                        ByteArrayResource res;
-                        System.out.println("---Novy ID: "+option.getLicenseId()+", FileName: "+option.getAttachmentFileName());
-                        res = new ByteArrayResource("", licenseFacade.getLicenseAttachmentContent(option.getLicenseId()), option.getAttachmentFileName());
 
-                        ResourceLink<Void> newLink = new ResourceLink<Void>("download", res);
+                        //--------
+                        try {
+                            Blob blob = null;
+                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(option.getLicenseId()));
+                            l.setAttachmentContent(blob);
 
-                        ByteArrayInputStream bis = new ByteArrayInputStream(licenseFacade.getLicenseAttachmentContent(option.getLicenseId()));
-                        l.setFileContentStream(bis);
+                            ByteArrayResource res;
+                            res = new ByteArrayResource("", blob.getBytes(1,(int)blob.length())){
+                                @Override
+                                public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                                    response.setCacheDuration(Duration.NONE);
+                                    response.setFileName(option.getAttachmentFileName());
+                                }
+                            };
 
-                        downloadLink.remove();
-                        downloadLink = newLink;
-                        form.add(newLink);
-                        //downloadLink = (ResourceLink<Void>) downloadLink.replaceWith(newLink);
-                        downloadLink.setVisible(true);
+                            ResourceLink<Void> newLink = new ResourceLink<Void>("download", res);
+
+                            downloadLink = (ResourceLink<Void>) downloadLink.replaceWith(newLink);
+                            downloadLink.setVisible(true);
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
 
                     } else {
                         downloadLink.setVisible(false);

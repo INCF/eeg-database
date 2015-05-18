@@ -22,11 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
+import java.sql.Blob;
+import java.sql.SQLException;
+import java.util.*;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Component;
@@ -42,13 +44,11 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import java.io.ByteArrayInputStream;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
@@ -63,6 +63,8 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvir
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
 
+import javax.sql.rowset.serial.SerialBlob;
+
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPage extends MenuPage {
 
@@ -75,6 +77,12 @@ public class ExperimentFormPage extends MenuPage {
 
     @SpringBean
     private FileFacade fileFacade;
+
+    @SpringBean
+    private LicenseFacade licenseFacade;
+
+    @SpringBean
+    private ExperimentLicenseFacade experimentLicenseFacade;
 
     public ExperimentFormPage() {
 
@@ -93,6 +101,7 @@ public class ExperimentFormPage extends MenuPage {
         int experimentId = parseParameters(parameters);
         final Model<Experiment> model = new Model<Experiment>(facade.getExperimentForDetail(experimentId));
         setupComponents(model);
+
     }
 
     private void setupComponents(final Model<Experiment> model) {
@@ -100,6 +109,7 @@ public class ExperimentFormPage extends MenuPage {
 
         ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(this);
         getFeedback().setFilter(filter);
+        EEGDataBaseSession.get().clearCreateExperimentLicenseMap();
 
         WizardModel wizardModel = new WizardModel();
         wizardModel.add(new AddExperimentScenarioForm(model));
@@ -149,10 +159,41 @@ public class ExperimentFormPage extends MenuPage {
                 experiment.setPersonByOwnerId(logged);
 
                 Integer id = experiment.getExperimentId();
-                if (experiment.getExperimentId() != 0)
+                if (experiment.getExperimentId() != 0) {
                     facade.update(experiment);
-                else
+                }
+                else {
                     id = facade.create(experiment);
+                }
+
+                for (Map.Entry<Integer, License> entry : EEGDataBaseSession.get().getCreateExperimentLicenseMap().entrySet()) {
+                    Integer licenseTemplateId = entry.getKey();
+                    License newLicense = entry.getValue();
+
+                    if (newLicense.getAttachmentFileName() != null) {
+                        //ByteArrayInputStream bis = new ByteArrayInputStream(licenseFacade.getLicenseAttachmentContent(licenseTemplateId));
+                        //newLicense.setFileContentStream(bis);
+
+                        try {
+                            Blob blob = null;
+                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(licenseTemplateId));
+                            newLicense.setAttachmentContent(blob);
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+                    licenseFacade.create(newLicense);
+                    ExperimentLicence expLic = new ExperimentLicence();
+                    expLic.setExperiment(experiment);
+                    expLic.setLicense(newLicense);
+                    experimentLicenseFacade.create(expLic);
+
+                    newLicense.setFileContentStream(null);
+                }
+
+                EEGDataBaseSession.get().clearCreateExperimentLicenseMap();
+
 
                 Experiment read = facade.read(id);
 
@@ -178,6 +219,7 @@ public class ExperimentFormPage extends MenuPage {
 
             @Override
             public void onCancel() {
+                EEGDataBaseSession.get().clearCreateExperimentLicenseMap();
                 throw new RestartResponseAtInterceptPageException(ExperimentsDetailPage.class, getPageParameters());
             }
 

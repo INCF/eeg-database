@@ -476,15 +476,13 @@ public class AddExperimentScenarioForm extends WizardStep {
                 researchGroupChoice.setChoiceRenderer(groupRenderer);
                 researchGroupChoice.setChoices(groupChoices);
 
-
+                List <License> lics = new ArrayList<License>(EEGDataBaseSession.get().getCreateExperimentLicenseMap().values());
                 if (model.getObject().getExperimentId()>0) {
                     licenses = licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId());
+                    licenses.addAll(lics);
                     licenseList.setList(licenses);
                 } else {
-                    //System.out.println("----SIZE: "+p.getLicenses().size()+", " + p + p.hashCode());
-                    //licenses.addAll(p.getLicenses());
-                    System.out.println("----SIZE-rel: "+licenses.size());
-                    licenseList.setList(licenses);
+                    licenseList.setList(lics);
                 }
 
                 target.add(AddExperimentScenarioForm.this);
@@ -512,11 +510,11 @@ public class AddExperimentScenarioForm extends WizardStep {
                             if (targetClass.equals(AddLicensePage.class.getName())) {
                                 p = new AddLicensePage(getPage().getPageReference(),window, model) {
                                     @Override
-                                    protected void onSubmitAction(IModel<License> licenseIModel, AjaxRequestTarget target, Form<?> form) {
+                                    protected void onSubmitAction(IModel<License> licenseIModel, Integer id, AjaxRequestTarget target, Form<?> form) {
                                         License obj = licenseIModel.getObject();
 
-                                        licenses.add(obj);
-                                        if (model.getObject().getExperimentId()>0) {
+
+                                        /*if (model.getObject().getExperimentId()>0) {
                                             if (obj.getLicenseId() == 0) {
                                                 obj.setTemplate(false);
                                                 licenseFacade.create(obj);
@@ -531,7 +529,9 @@ public class AddExperimentScenarioForm extends WizardStep {
                                             experimentLicenseFacade.create(expLic);
 
                                             obj.setFileContentStream(null);
-                                        }
+                                        } else {*/
+                                            EEGDataBaseSession.get().addLicenseToCreateLicenseMap(id, obj);
+                                        /*}*/
 
                                         ModalWindow.closeCurrent(target);
                                     }
