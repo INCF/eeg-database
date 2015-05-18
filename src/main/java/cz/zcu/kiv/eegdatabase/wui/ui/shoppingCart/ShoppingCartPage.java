@@ -286,13 +286,13 @@ public class ShoppingCartPage extends MenuPage {
                     if (item.getExperimentPackage()!= null) {
                         System.out.println("====="+item.getLicense());
                         if (item.getLicense() == null) {
-                            setResponsePage(ShoppingCartPage.class);
+                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
                             return;
                         }
                     } else if (item.getExperiment()!= null) {
                         System.out.println("====="+item.getLicense());
                         if (item.getLicense() == null) {
-                            setResponsePage(ShoppingCartPage.class);
+                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
                             return;
                         }
                     }

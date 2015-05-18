@@ -291,7 +291,6 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("add-experiment-wizard-page", ExperimentFormPage.class);
 
         mountPage("manage-packages", ManageExperimentPackagesPage.class);
-        mountPage("manage-experiments", ManageExperimentsPage.class);
         mountPage("license-request", LicenseRequestPage.class);
         mountPage("granted-licenses", GrantedLicensesPage.class);
         mountPage("manage-license-requests", ManageLicenseRequestsPage.class);

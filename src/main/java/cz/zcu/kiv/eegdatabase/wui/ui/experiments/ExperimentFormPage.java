@@ -114,7 +114,7 @@ public class ExperimentFormPage extends MenuPage {
             public void onFinish() {
 
                 Experiment experiment = model.getObject();
-                
+
                 ResearchGroup group = experiment.getResearchGroup();
                 if (group != null && group.isLock()) {
                     this.error(ResourceUtils.getString("text.group.lock.experiment.create", group.getTitle()));
