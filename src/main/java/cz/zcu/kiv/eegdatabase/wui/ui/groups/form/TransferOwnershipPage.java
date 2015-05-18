@@ -22,10 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.groups.form;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -80,7 +79,7 @@ public class TransferOwnershipPage extends MenuPage {
 
     public TransferOwnershipPage(PageParameters parameters) {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.addMemberToGroup"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.transferOwnership"));
 
         add(new ButtonPageMenu("leftMenu", prepareLeftMenu()));
 
@@ -132,9 +131,9 @@ public class TransferOwnershipPage extends MenuPage {
 
         public TransferOwnershipForm(String id, final ResearchGroupFacade facade, final PersonFacade personFacade, final FeedbackPanel feedback, final int groupId) {
             super(id);
-            List<Person> choices = facade.getListOfGroupMembers(groupId);
-            ChoiceRenderer<Person> renderer = new ChoiceRenderer<Person>("username", "personId");
-            final DropDownChoice<Person> members = new DropDownChoice<Person>("members", new Model<Person>(), choices, renderer);
+            List<HashMap<String, Object>> choices = facade.getListOfGroupMembers(groupId);
+            ChoiceRenderer renderer = new ChoiceRenderer("username", "personId");
+            final DropDownChoice<HashMap<String, Object>> members = new DropDownChoice<HashMap<String, Object>>("members", new Model<HashMap<String, Object>>(), choices, renderer);
             members.setLabel(ResourceUtils.getModel("label.username"));
             members.setRequired(true);
 
@@ -150,17 +149,15 @@ public class TransferOwnershipPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
-                  //  GroupRole role = roles.getModelObject();
+                    HashMap<String, Object> personMap = members.getModelObject();
 
 
-                   // Person person = personFacade.getPerson(username);
-//                    ResearchGroupMembershipId id = new ResearchGroupMembershipId(person.getPersonId(), groupId);
-//                    ResearchGroupMembership membership = new ResearchGroupMembership();
-//                    membership.setId(id);
-//                    membership.setAuthority(role.name());
-//
-//                    facade.createMemberhip(membership);
-//                    setResponsePage(ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+                    Person person = personFacade.getPerson((String) personMap.get("username"));
+                    ResearchGroup group = facade.getResearchGroupById(groupId);
+                    group.setPerson(person);
+                    facade.update(group);
+
+                    setResponsePage(ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
 
                     target.add(feedback);
                 }
