@@ -1,0 +1,91 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+ 
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ 
+ ***********************************************************************************************************************
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+ 
+ ***********************************************************************************************************************
+ 
+  AddGroupPage.html, 2013/10/02 00:01 Jakub Rinkes
+-->
+<?xml version="1.0" encoding="UTF-8" ?>
+<html xmlns:wicket="http://wicket.apache.org">
+<head>
+    <title><wicket:message key="pageTitle.addLicense" /></title>
+</head>
+<body class="tabpanel wizard">
+<form wicket:id="addForm">
+    <div class="form-item">
+    <div class="form-sub-item">
+    <wicket:enclosure>
+        <label class="selectBoxLabel"><wicket:message key="label.license.blueprint" /></label>
+        <select class="selectBox" wicket:id="blueprintSelect"></select>
+    </wicket:enclosure>
+    </div>
+
+    <div class="form-sub-item">
+        <label class="textFieldLabel" wicket:id="title.label"/>
+        <input class="textField" wicket:id="title"/>
+        <div wicket:id="title.feedback"/>
+    </div>
+
+    <div class="form-sub-item">
+        <label class="textFieldLabel" wicket:id="price.label"/>
+        <input type="number" class="textField" wicket:id="price"/>
+        <wicket:message key="label.price.currency"/>
+        <div wicket:id="price.feedback"/>
+    </div>
+
+    <div class="form-sub-item">
+        <label class="textFieldLabel" wicket:id="licenseType.label"/>
+				<span wicket:id="licenseType">
+
+                    <input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+                    <br>
+					<wicket:enclosure>
+                        <input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+                    </wicket:enclosure>
+                    <br>
+                    <input type="radio" wicket:id="public"/><wicket:message key="LicenseType.PUBLIC"/>
+				</span>
+        <div wicket:id="licenseType.feedback"/>
+    </div>
+
+    <div class="form-sub-item">
+        <label class="textFieldLabel" wicket:id="description.label"/>
+        <textarea class="textareaField" wicket:id="description"/>
+        <div wicket:id="description.feedback"/>
+    </div>
+    <hr>
+
+    <div class="form-sub-item">
+        <wicket:enclosure child="download">
+
+            <h3><wicket:message key="label.license.attachment.file"></wicket:message></h3>
+            <div wicket:id="attachmentFileName"></div>
+            <a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a>
+
+        </wicket:enclosure>
+    </div>
+    <hr>
+
+    <div class="modal-buttons">
+        <input type="button" wicket:id="cancelButton" value="Cancel" class="cancel-button" />
+        <input type="button" wicket:id="submitButton" value="Create"/>
+    </div>
+    </div>
+</form>
+</body>
+</html>

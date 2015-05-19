@@ -22,8 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app.session;
 
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Set;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Session;
@@ -83,9 +87,13 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private StringValue searchString;
 
+    private HashMap<Integer,License> createExperimentLicenseMap;
+
+
+
     /*
-     * software cache with purchased experiments and packages. Cache is flushed after create new order.
-     */
+             * software cache with purchased experiments and packages. Cache is flushed after create new order.
+             */
     private Set<Integer> purchasedExperiments;
     private Set<Integer> purchasedExperimentPackages;
 
@@ -128,6 +136,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
             this.setLoggedUser(facade.getPerson(username));
             reloadPurchasedItemCache();
             this.createShoppingCart();
+            this.createExperimentLicenseMap();
 
         } catch (AuthenticationException e) {
             error((String.format("User '%s' failed to login. Reason: %s", username, e.getMessage())));
@@ -207,6 +216,26 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         if (this.shoppingCart == null) {
             this.shoppingCart = new ShoppingCart();
         }
+    }
+
+
+    public HashMap<Integer, License> getCreateExperimentLicenseMap() {
+        return createExperimentLicenseMap;
+    }
+
+    public void clearCreateExperimentLicenseMap() {
+        this.createExperimentLicenseMap.clear();
+    }
+
+    private void createExperimentLicenseMap() {
+        if (this.createExperimentLicenseMap == null) {
+            this.createExperimentLicenseMap = new HashMap<Integer, License>();
+        }
+    }
+
+    public void addLicenseToCreateLicenseMap(Integer integer, License license) {
+        if (this.createExperimentLicenseMap.containsKey(integer)) return;
+        this.createExperimentLicenseMap.put(integer,license);
     }
 
     public ShoppingCart getShoppingCart() {

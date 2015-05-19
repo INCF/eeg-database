@@ -60,7 +60,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 	public License getPublicLicense() {
 		LicenseType licenseType = LicenseType.OPEN_DOMAIN;
 		String hqlQuery = "select l from License l where l.licenseType=:licenseType";
-		
+
 		return (License) this.getSession().createQuery(hqlQuery).setParameter("licenseType", licenseType).list().iterator().next();
 	}
 
@@ -70,7 +70,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 
 		return this.getSession().createQuery(hqlQuery).setInteger("researchGroup", reseachGroupId).setParameterList("licenseType", licenseType).list();
 	}
-	
+
 	@Override
     public byte[] getLicenseAttachmentContent(int licenseId) {
         String query = "from License l where l.licenseId = :id";
@@ -97,7 +97,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
                 .setParameter("state", PersonalLicenseState.AUTHORIZED)
                 .setParameter("packageId", packageId).list();
     }
-    
+
     @Override
     public void update(License transientObject) {
         this.getSession().merge(transientObject);
@@ -105,11 +105,11 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 
     @Override
     public License getLicenseForPurchasedExperiment(int experimentId, int personId) {
-        
-        // original SQL : select eoi.license from eeg_order as eo 
-        // left join eeg_order_item as eoi on eo.order_id = eoi.order_id 
+
+        // original SQL : select eoi.license from eeg_order as eo
+        // left join eeg_order_item as eoi on eo.order_id = eoi.order_id
         // where eoi.experiment = :experimentId and eo.person = :personId order by eo.date asc
-        
+
         String query = "select eoi.license from OrderItem as eoi "
                 + "join eoi.order as eo "
                 + " where eo.id = eoi.order.id and eoi.experiment.experimentId = :experimentId and eo.person.personId = :personId "
@@ -119,30 +119,50 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
                 .setParameter("personId", personId)
                 .setParameter("experimentId", experimentId)
                 .uniqueResult();
-        
+
         return license;
     }
 
     @Override
     public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId) {
-        
-        // original SQL : select eoi.license from eeg_order as eo 
-        // left join eeg_order_item as eoi on eo.order_id = eoi.order_id 
+
+        // original SQL : select eoi.license from eeg_order as eo
+        // left join eeg_order_item as eoi on eo.order_id = eoi.order_id
         // where eoi.experiment_package = :experimentPackageId and eo.person = :personId order by eo.date asc
-        
+
         String query = "select eoi.license from OrderItem as eoi "
                 + "join eoi.order as eo "
                 + "where eo.id = eoi.order.id and eoi.experimentPackage.experimentPackageId = :experimentPackageId and eo.person.personId = :personId "
                 + "order by eo.date asc limit 1";
-        
+
         License license = (License) this.getSessionFactory().getCurrentSession().createQuery(query)
                 .setParameter("personId", personId)
                 .setParameter("experimentPackageId", experimentPackageId)
                 .uniqueResult();
-        
-        
-        
+
+
+
         return license;
+    }
+
+    @Override
+    public List<License> getLicensesForExperiment(int experimentId) {
+        List<License> ret;
+        String query = "select l from License l where l.licenseId IN(select license.licenseId from ExperimentLicence where experiment.experimentId = :exId)";
+        ret = (List<License>) this.getSession().createQuery(query).setParameter("exId",experimentId).list();
+
+        return ret;
+
+    }
+
+    @Override
+    public List<License> getPersonLicenses(int personId)  {
+        List<License> ret;
+        String query = "select distinct l.license from ExperimentLicence l where l.experiment.personByOwnerId.personId = :personId";
+        ret = (List<License>) this.getSession().createQuery(query).setParameter("personId",personId).list();
+
+        return ret;
+
     }
     
 }

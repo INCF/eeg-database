@@ -52,6 +52,7 @@ public class PersonListController extends AbstractController {
         try {
             page = Integer.parseInt(request.getParameter("page"));
         } catch (Exception e) {
+            e.printStackTrace();
         }
         paginator.setActualPage(page);
         List<Person> list = personDao.getDataForList(paginator.getFirstItemIndex(), ITEMS_PER_PAGE);

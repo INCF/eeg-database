@@ -1,16 +1,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.Table;
 
 @Entity
 @Table(name = "EEG_ORDER_ITEM")
@@ -37,13 +29,39 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @ManyToOne
     @JoinColumn(name = "EXPERIMENT_PACKAGE")
     private ExperimentPackage experimentPackage;
+
+    @ManyToOne
+    @JoinColumn(name = "MEMBERSHIP_PLAN")
+    private MembershipPlan membershipPlan;
+
+    @ManyToOne
+    @JoinColumn(name = "RESEARCH_GROUP_ID")
+    private ResearchGroup researchGroup;
     
     @ManyToOne
     @JoinColumn(name = "LICENSE")
     private License license;
 
-    public OrderItem() {
+    @ManyToOne
+    @JoinColumn(name = "PROMOCODE")
+    private PromoCode promoCode;
 
+    //why was this public?
+    private OrderItem() {
+
+    }
+
+    public OrderItem(MembershipPlan plan, Order order) {
+        this.membershipPlan = plan;
+        this.order = order;
+        this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
+    }
+
+    public OrderItem(MembershipPlan plan, ResearchGroup researchGroup, Order order) {
+        this.membershipPlan = plan;
+        this.order = order;
+        this.researchGroup = researchGroup;
+        this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
     }
 
     public OrderItem(Experiment experiment, Order order) {
@@ -56,6 +74,22 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.experimentPackage = experimentPackage;
         this.order = order;
         this.price = experimentPackage.getPrice() != null ? experimentPackage.getPrice() : BigDecimal.ZERO;
+    }
+
+    public ResearchGroup getResearchGroup() {
+        return researchGroup;
+    }
+
+    public void setResearchGroup(ResearchGroup researchGroup) {
+        this.researchGroup = researchGroup;
+    }
+
+    public MembershipPlan getMembershipPlan() {
+        return membershipPlan;
+    }
+
+    public void setMembershipPlan(MembershipPlan membershipPlan) {
+        this.membershipPlan = membershipPlan;
     }
 
     public int getId() {
@@ -106,6 +140,14 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.license = license;
     }
 
+    public PromoCode getPromoCode() {
+        return promoCode;
+    }
+
+    public void setPromoCode(PromoCode promoCode) {
+        this.promoCode = promoCode;
+    }
+
     @Override
     public int hashCode() {
         final int prime = 31;
@@ -150,4 +192,5 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
             price = experimentPackage.getPrice();
         }
     }
+
 }

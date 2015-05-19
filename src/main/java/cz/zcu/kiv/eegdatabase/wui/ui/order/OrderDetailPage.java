@@ -22,27 +22,28 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.order;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Order;
+import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPageLeftMenu;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Order;
-import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPageLeftMenu;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class OrderDetailPage extends MenuPage {
@@ -88,9 +89,30 @@ public class OrderDetailPage extends MenuPage {
             @Override
             protected void populateItem(ListItem<OrderItem> item) {
 
-                item.add(new OrderItemPanel("item", item.getModel()));
+
+                item.add(new OrderItemPanel("item", item.getModel(), false));
                 item.add(new Label("price", item.getModel().getObject().getPrice()));
-                item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+
+                if (item.getModelObject().getExperiment()!=null) {
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(true));
+                    item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+                    item.add(new BookmarkablePageLink("link", LicenseDetailPage.class, PageParametersUtils.getDefaultPageParameters(item.getModelObject().getLicense().getLicenseId()))
+                            .add(new Label("label", ResourceUtils.getModel("link.detail"))));
+                } else if (item.getModelObject().getExperimentPackage()!=null)  {
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(true));
+                    item.add(new Label("license", item.getModelObject().getLicense().getLicenseInfo()));
+                    item.add(new BookmarkablePageLink("link", LicenseDetailPage.class, PageParametersUtils.getDefaultPageParameters(item.getModelObject().getLicense().getLicenseId()))
+                            .add(new Label("label", ResourceUtils.getModel("link.detail"))));
+                } else if (item.getModelObject().getMembershipPlan()!=null)  {
+                    item.add(new Label("licenseTitle").setVisibilityAllowed(false));
+                    item.add(new Label("license").setVisibilityAllowed(false));
+                    item.add(new BookmarkablePageLink("link",LicenseDetailPage.class)
+                            .setVisibilityAllowed(false));
+                }
+
+
+
+
             }
         };
 

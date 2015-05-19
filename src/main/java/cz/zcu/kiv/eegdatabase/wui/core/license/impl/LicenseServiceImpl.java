@@ -199,6 +199,14 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     @Override
     @Transactional(readOnly = true)
+    public List<License> getLicenseTemplates() {
+        Map<String, Object> params = new HashMap<String, Object>();
+        params.put("template", true);
+        return this.licenseDao.readByParameter(params);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
     public byte[] getLicenseAttachmentContent(int licenseId) {
         return licenseDao.getLicenseAttachmentContent(licenseId);
     }
@@ -264,6 +272,18 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Transactional(readOnly = true)
     public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId) {
         return licenseDao.getLicenseForPurchasedExpPackage(experimentPackageId, personId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<License> getLicensesForExperiment(int experimentId) {
+        return licenseDao.getLicensesForExperiment(experimentId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<License> getPersonLicenses(int personId)  {
+        return licenseDao.getPersonLicenses(personId);
     }
 
 }

@@ -22,13 +22,21 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart;
 
-import java.math.BigDecimal;
-import java.sql.Timestamp;
-import java.util.ArrayList;
-import java.util.Currency;
-import java.util.Date;
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -44,21 +52,12 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.convert.IConverter;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Order;
-import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.eshop.ShoppingCart;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.util.ArrayList;
+import java.util.Currency;
+import java.util.Date;
+import java.util.List;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ShoppingCartPage extends MenuPage {
@@ -69,9 +68,16 @@ public class ShoppingCartPage extends MenuPage {
     private OrderFacade orderFacade;
 
     @SpringBean
+    PersonMembershipPlanFacade personPlanFacade;
+
+    @SpringBean
+    ResearchGroupMembershipPlanFacade groupPlanFacade;
+
+    @SpringBean
     private LicenseFacade licenseFacade;
 
     private Label totalPriceLabel;
+    private DropDownChoice<License> licenseChoice;
 
     public ShoppingCartPage() {
         setupComponents();
@@ -116,7 +122,7 @@ public class ShoppingCartPage extends MenuPage {
             @Override
             protected void populateItem(final ListItem<OrderItem> item) {
 
-                item.add(new OrderItemPanel("item", item.getModel()));
+                item.add(new OrderItemPanel("item", item.getModel(), true));
 
                 // XXX price hidden for now.
                 /*
@@ -127,43 +133,111 @@ public class ShoppingCartPage extends MenuPage {
                 item.add(new RemoveLinkPanel("removeItemLink", item.getModel()));
 
                 List<License> licenses = new ArrayList<License>();
-                boolean isExpPackageLicenseChoiceShow = item.getModelObject().getExperiment() == null;
-                if (isExpPackageLicenseChoiceShow) {
-                    int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
-                    licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                    licenses.add(0, licenseFacade.getPublicLicense());
-                }
-
                 ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("licenseInfo", "licenseId");
-                DropDownChoice<License> licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
-                
-                if (isExpPackageLicenseChoiceShow) {
-                    // preselect first license for dropdown choice component
-                    item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
-                }
-                
-                licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+                licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
+                licenseChoice.setNullValid(true);
 
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    protected void onUpdate(AjaxRequestTarget target) {
-
-                        OrderItem orderItem = item.getModelObject();
-                        if (orderItem.getLicense() != null) {
-                            orderItem.setPrice(orderItem.getLicense().getPrice());
-                        } else {
-                            orderItem.setPriceFromItem();
-                        }
-                        
-                        target.add(container);
-                        target.add(totalPriceLabel);
+                if(item.getModelObject().getExperiment() != null)
+                {
+                    int experimentPackageId = item.getModelObject().getExperiment().getExperimentId();
+                    licenses.addAll(licenseFacade.getLicensesForExperiment(experimentPackageId));
+                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
+                    if (isExpPackageLicenseChoiceShow) {
+                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                        //licenses.add(0, licenseFacade.getPublicLicense());
                     }
-                });
-                licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow && !licenses.isEmpty());
-                item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
-                item.add(licenseChoice);
 
+
+
+                    if (isExpPackageLicenseChoiceShow) {
+                        // preselect first license for dropdown choice component
+                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+
+                    }
+
+
+                    licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        protected void onUpdate(AjaxRequestTarget target) {
+
+                            OrderItem orderItem = item.getModelObject();
+                            if (orderItem.getLicense() != null) {
+                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                            } else {
+                                orderItem.setPriceFromItem();
+                            }
+
+                            target.add(container);
+                            target.add(totalPriceLabel);
+                        }
+                    });
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
+                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle"))); 
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
+                    item.add(licenseChoice);
+                }
+                else if(item.getModelObject().getExperimentPackage() != null)
+                {
+                    //TODO: remove code duplication
+                    licenses.addAll(licenseFacade.getLicensesForPackage(item.getModelObject().getExperimentPackage()));
+                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
+                    if (isExpPackageLicenseChoiceShow) {
+                        //int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
+                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
+                       // licenses.add(0, licenseFacade.getPublicLicense());
+
+                    }
+
+                    if (isExpPackageLicenseChoiceShow) {
+                        // preselect first license for dropdown choice component
+                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                    }
+
+                    licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
+
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        protected void onUpdate(AjaxRequestTarget target) {
+
+                            OrderItem orderItem = item.getModelObject();
+                            if (orderItem.getLicense() != null) {
+                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                            } else {
+                                orderItem.setPriceFromItem();
+                            }
+
+                            target.add(container);
+                            target.add(totalPriceLabel);
+                        }
+                    });
+                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
+                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle")));
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
+                    item.add(licenseChoice);
+                }
+                else if(item.getModelObject().getMembershipPlan() != null)
+                {
+                    //personal membership plan
+                    if(item.getModelObject().getResearchGroup() == null)
+                    {
+
+                    }
+                    //research group membership plan
+                    else
+                    {
+
+
+                    }
+                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(false));
+                    licenseChoice.setVisible(false);
+                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(false));
+
+                    item.add(licenseChoice);
+                }
             }
         };
         
@@ -205,8 +279,25 @@ public class ShoppingCartPage extends MenuPage {
 
             @Override
             public void onClick() {
-
                 Order order = shoppingCart.getOrder();
+
+                for(OrderItem item : order.getItems()) {
+
+                    if (item.getExperimentPackage()!= null) {
+                        System.out.println("====="+item.getLicense());
+                        if (item.getLicense() == null) {
+                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
+                            return;
+                        }
+                    } else if (item.getExperiment()!= null) {
+                        System.out.println("====="+item.getLicense());
+                        if (item.getLicense() == null) {
+                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
+                            return;
+                        }
+                    }
+                }
+
                 order.setDate(new Timestamp(new Date().getTime()));
                 order.setPerson(EEGDataBaseSession.get().getLoggedUser());
                 order.setOrderPrice(shoppingCart.getTotalPrice());
@@ -221,6 +312,36 @@ public class ShoppingCartPage extends MenuPage {
                     
                     if(item.getPrice() == null) {
                         item.setPrice(BigDecimal.ZERO);
+                    }
+
+                    if (item.getMembershipPlan() != null) {
+                        MembershipPlan plan = item.getMembershipPlan();
+                        if(MembershipPlanType.GROUP.getType()==plan.getType())
+                        {
+                            ResearchGroup group = item.getResearchGroup();
+
+                            ResearchGroupMembershipPlan groupPlan = new ResearchGroupMembershipPlan();
+
+                            groupPlan.setResearchGroup(group);
+                            groupPlan.setMembershipPlan(plan);
+                            groupPlan.setFrom(new Timestamp(System.currentTimeMillis()));
+                            groupPlan.setTo(new Timestamp(System.currentTimeMillis() + (groupPlan.getMembershipPlan().getLength() * 86400000)));
+
+                            groupPlanFacade.create(groupPlan);
+
+                        }
+                        else{
+                            Person logged = EEGDataBaseSession.get().getLoggedUser();
+
+                            PersonMembershipPlan personPlan = new PersonMembershipPlan();
+
+                            personPlan.setPerson(logged);
+                            personPlan.setMembershipPlan(plan);
+                            personPlan.setFrom(new Timestamp(System.currentTimeMillis()));
+                            personPlan.setTo(new Timestamp(System.currentTimeMillis() + (personPlan.getMembershipPlan().getLength() * 86400000)));
+
+                            personPlanFacade.create(personPlan);
+                        }
                     }
                 }
 

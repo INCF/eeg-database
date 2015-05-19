@@ -1,0 +1,60 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<body>
+<wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+        <h1 wicket:id="title"></h1>
+
+
+        <form class="standardInputForm" wicket:id="form">
+            <fieldset>
+
+                <div class="itemBox">
+                    <label for=name wicket:id="keywordLb" class="textFieldLabel"> <wicket:message
+                            key="label.keyword">[keyword]</wicket:message></label> <input wicket:id="keyword" class="textField" type="text" />
+                </div>
+
+                <div class="itemBox">
+                    <label for="description" wicket:id="descriptionLb" class="textareaFieldLabel"><wicket:message key="label.description" /></label>
+                    <textarea wicket:id="description" class="textareaField"></textarea>
+                </div>
+
+                <div class="itemBox">
+                    <label for=length wicket:id="discountLb" class="textFieldLabel"> <wicket:message
+                            key="label.discount">[discount]</wicket:message></label> <input wicket:id="discount" class="textField" value="" type="text" style="width: 80px;" />&#37;
+                </div>
+
+                <div class="itemBox">
+                    <label for="from" wicket:id="fromLb" class="textFieldLabel"> <wicket:message
+                            key="label.From">[date from]</wicket:message></label>
+                    <input wicket:id="from" class="textField dateField" type="text" />
+                    <span class="note"><wicket:message key="form.note.dateFormatDDMMYYYY"/></span>
+                </div>
+
+                <div class="itemBox">
+                    <label for="to" wicket:id="toLb" class="textFieldLabel"> <wicket:message
+                            key="label.To">[date to]</wicket:message></label>
+                    <input wicket:id="to" class="textField dateField" type="text" />
+                    <span class="note"><wicket:message key="form.note.dateFormatDDMMYYYY"/></span>
+                </div>
+
+                <div class="itemBox">
+                    <label for="type" wicket:id="typeLb" class="radio2ButtonsLabel"> <wicket:message
+                            key="label.type">[type]</wicket:message></label> <span wicket:id="type"></span>
+                </div>
+
+
+                <div class="itemBox">
+                    <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
+                </div>
+
+            </fieldset>
+        </form>
+    </div>
+</wicket:extend>
+</body>
+</html>
