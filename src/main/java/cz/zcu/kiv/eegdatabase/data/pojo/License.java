@@ -232,7 +232,7 @@ public class License implements Serializable {
 	
 	@Transient
 	public String getLicenseInfo(){
-	    return title + " price: " + (price == null || price.compareTo(BigDecimal.ZERO) == 0 ? "No" : price);
+	    return " "+ title + " price: " + (price == null || price.compareTo(BigDecimal.ZERO) == 0 ? "No" : price);
 	}
 
     @Transient

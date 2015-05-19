@@ -236,7 +236,6 @@ public class ExperimentsDetailPage extends MenuPage {
                     public void onClick(AjaxRequestTarget target) {
 
                         experimentLicenseFacade.remove(experiment,item.getModelObject());
-                        //licenseFacade.delete(item.getModelObject());
 
                         setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                     }
