@@ -207,12 +207,12 @@ public class ResearchGroupTestIT extends AbstractUITest {
         }
         tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
         tester.clickLinkWithText(getProperty("button.listOfMembers"));
-        tester.assertTextPresent("jan.stebetak2@seznam.cz");
+        tester.assertTextPresent("jan.stebetak@seznam.cz");
 
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
-        tester.setTextField("username", "jan.stebetak@seznam.cz");
+        tester.setTextField("username", "jan.stebetak2@seznam.cz");
         tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
