@@ -237,7 +237,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.transferOwnership"));
 
         tester.selectOption("members", "jan.stebetak3@seznam.cz");
-        tester.clickLinkWithText(getProperty("button.transferOwnership"));
+        tester.clickButtonWithText(getProperty("button.transferOwnership"));
         Thread.sleep(waitForAjax);
 
         tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership")); //the logged user is no more owner
