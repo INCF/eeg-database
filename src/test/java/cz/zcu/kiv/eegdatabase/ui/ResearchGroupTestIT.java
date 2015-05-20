@@ -169,7 +169,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
 
-        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is logged user a member of group
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("action.logout"));
 
@@ -198,26 +198,24 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
 
-        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
-
-        if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
-            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
+        if (!personDao.usernameExists("jan.stebetak3@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak3@seznam.cz", Util.ROLE_USER);
             person.setConfirmed(true);
             personDao.create(person);
         }
         tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
         tester.clickLinkWithText(getProperty("button.listOfMembers"));
-        tester.assertTextPresent("jan.stebetak@seznam.cz");
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
 
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
 
-        tester.setTextField("username", "jan.stebetak2@seznam.cz");
+        tester.setTextField("username", "jan.stebetak3@seznam.cz");
         tester.selectOption("roles", getProperty("select.option.groupAdmin"));
         tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
         Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("jan.stebetak2@seznam.cz");
+        tester.assertTextPresent("jan.stebetak3@seznam.cz"); //new member
 
         tester.clickLinkWithText(getProperty("action.logout"));
     }
@@ -229,21 +227,20 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
 
-        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
 
         tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
         tester.clickLinkWithText(getProperty("button.listOfMembers"));
-        tester.assertTextPresent("jan.stebetak2@seznam.cz");
+        tester.assertTextPresent("jan.stebetak3@seznam.cz"); //Is added in the previous test
 
         tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
         tester.clickLinkWithText(getProperty("button.transferOwnership"));
 
-        tester.selectOption("members", "jan.stebetak2@seznam.cz");
-        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
+        tester.selectOption("members", "jan.stebetak3@seznam.cz");
+        tester.clickLinkWithText(getProperty("button.transferOwnership"));
         Thread.sleep(waitForAjax);
 
-        tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership"));
+        tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership")); //the logged user is no more owner
 
         tester.clickLinkWithText(getProperty("action.logout"));
     }
