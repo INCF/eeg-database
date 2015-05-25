@@ -270,6 +270,9 @@ public class ResearchGroupTestIT extends AbstractUITest {
             tester.clickButtonWithText(getProperty("button.transferOwnership"));
             Thread.sleep(waitForAjax);
             fail("User is not member of the group.");
+        }
+        catch (AssertionError er) {
+            //User "jan.stebetak2@seznam.cz" is not in group
         } finally {
 
             tester.clickLinkWithText(getProperty("action.logout"));
