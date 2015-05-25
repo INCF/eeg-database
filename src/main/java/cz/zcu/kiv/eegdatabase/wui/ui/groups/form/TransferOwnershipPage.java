@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.groups.form;
 import java.util.*;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.logic.Util;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -156,6 +157,9 @@ public class TransferOwnershipPage extends MenuPage {
                     ResearchGroup group = facade.getResearchGroupById(groupId);
                     group.setPerson(person);
                     facade.update(group);
+                    ResearchGroupMembership membership = facade.readMemberhip(new ResearchGroupMembershipId(person.getPersonId(), groupId));
+                    membership.setAuthority(Util.GROUP_ADMIN);
+                    facade.updateMemberhip(membership);
 
                     setResponsePage(ListOfMembersGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
 

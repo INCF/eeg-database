@@ -8,12 +8,15 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.testng.FileAssert.fail;
 
 /**
  * Created by Roman Mouček on 13.11.2014.
@@ -220,7 +223,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("action.logout"));
     }
 
-    @Test(groups = "web", dependsOnMethods = {"testAddMemberToGroup"})
+    @Test(groups = "web", dependsOnMethods = {"testAddMemberToGroup", "testTransferOwnershipValidation"})
     public void testTransferOwnership() throws InterruptedException, IOException {
 
         tester.clickLinkWithText(getProperty("menuItem.groups"));
@@ -243,5 +246,29 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership")); //the logged user is no more owner
 
         tester.clickLinkWithText(getProperty("action.logout"));
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testTransferOwnershipValidation() throws InterruptedException, IOException {
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a logged user
+        tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
+        tester.clickLinkWithText("button.transferOwnership");
+
+        tester.clickButtonWithText("button.transferOwnership");
+        tester.assertTextPresent("Field 'User name' is required.");
+        try {
+
+            tester.selectOption("members", "jan.stebetak3@seznam.cz");
+            tester.clickButtonWithText("button.transferOwnership");
+            fail("User is not member of the group.");
+        } finally {
+
+            tester.clickLinkWithText(getProperty("action.logout"));
+        }
     }
 }

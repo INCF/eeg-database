@@ -131,18 +131,11 @@ public class ScenarioTestIT extends AbstractUITest {
         file.delete();
 
     }
-    @Test(groups = "web")
+    @Test(groups = "web", dependsOnMethods = "testAddScenario")
     public void testUniqueTitle() throws InterruptedException,IOException {
 
         createGroupIfNotExists();
         tester.clickLinkWithText("Scenarios");
-        try {
-            tester.assertTextPresent("testScenario");
-        } catch (AssertionError er) {
-            createScenario("testScenario"); //create if not exists
-            tester.clickButtonWithText(getProperty("button.save"));
-            Thread.sleep(waitForAjax);
-        }
 
         createScenario("testScenario");
         tester.clickButtonWithText(getProperty("button.save"));
