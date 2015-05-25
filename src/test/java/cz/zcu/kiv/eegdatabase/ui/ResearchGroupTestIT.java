@@ -262,11 +262,13 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("button.transferOwnership"));
 
         tester.clickButtonWithText(getProperty("button.transferOwnership"));
+        Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'User name' is required.");
         try {
 
             tester.selectOption("members", "jan.stebetak3@seznam.cz");
             tester.clickButtonWithText(getProperty("button.transferOwnership"));
+            Thread.sleep(waitForAjax);
             fail("User is not member of the group.");
         } finally {
 
