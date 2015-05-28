@@ -213,6 +213,8 @@ public class ExperimentDownloadProvider {
 
                 // mark all temp files for package for delete on exit
                 FileUtils.deleteOnExitQuietly(file);
+                IOUtils.closeQuietly(in);
+                FileUtils.deleteQuietly(file);
 
                 createHistoryRecordAboutDownload(exp);
             }
