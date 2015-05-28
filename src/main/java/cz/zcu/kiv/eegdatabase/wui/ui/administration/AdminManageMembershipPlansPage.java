@@ -136,6 +136,8 @@ public class AdminManageMembershipPlansPage extends MenuPage {
 
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.keyword"), "keyword", "keyword"));
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.discount"), "discount", "discount"));
+        
+        // XXX why create TimeStampPanel if there is TimestampPropertyColumn for wicket tables already implemented ???
         columns.add(new PropertyColumn<PromoCode, String>(ResourceUtils.getModel("dataTable.heading.from"), "from", "from") {
             @Override
             public void populateItem(Item<ICellPopulator<PromoCode>> item, String componentId, IModel<PromoCode> rowModel) {

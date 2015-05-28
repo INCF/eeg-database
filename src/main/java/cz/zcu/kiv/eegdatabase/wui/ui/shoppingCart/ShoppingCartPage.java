@@ -279,10 +279,11 @@ public class ShoppingCartPage extends MenuPage {
 
             @Override
             public void onClick() {
+                
                 Order order = shoppingCart.getOrder();
-
                 for(OrderItem item : order.getItems()) {
-
+                    
+                    // FIXME "You must select license for all experiments and experiment packages" for creating order with public experiment - no dropdownchoice for license choice. 
                     if (item.getExperimentPackage()!= null) {
                         System.out.println("====="+item.getLicense());
                         if (item.getLicense() == null) {
