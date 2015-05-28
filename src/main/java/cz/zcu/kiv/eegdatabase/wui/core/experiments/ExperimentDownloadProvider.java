@@ -52,6 +52,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileService;
@@ -80,7 +81,7 @@ public class ExperimentDownloadProvider {
     ExperimentPackageService packageService;
 
     ZipGenerator zipGenerator;
-    
+
     LicenseService licenseService;
 
     @Required
@@ -112,7 +113,7 @@ public class ExperimentDownloadProvider {
     public void setPackageService(ExperimentPackageService packageService) {
         this.packageService = packageService;
     }
-    
+
     @Required
     public void setLicenseService(LicenseService licenseService) {
         this.licenseService = licenseService;
@@ -129,8 +130,8 @@ public class ExperimentDownloadProvider {
      */
     @Transactional
     public FileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
+        File file = null;
         try {
-
             Experiment experiment = service.getExperimentForDetail(exp.getExperimentId());
             String scenarioName = experiment.getScenario().getTitle();
 
@@ -139,7 +140,7 @@ public class ExperimentDownloadProvider {
             // prepared history log
             createHistoryRecordAboutDownload(experiment);
 
-            File file = zipGenerator.generate(experiment, mc, newFiles, licenseService.getPublicLicenseFile(), licenseService.getPublicLicenseFileName());
+            file = zipGenerator.generate(experiment, mc, newFiles, licenseService.getPublicLicenseFile(), licenseService.getPublicLicenseFileName());
 
             FileDTO dto = new FileDTO();
             dto.setFile(file);
@@ -152,8 +153,13 @@ public class ExperimentDownloadProvider {
             return dto;
 
         } catch (Exception e) {
+
             log.error(e.getMessage(), e);
+            FileUtils.deleteQuietly(file);
             return null;
+
+        } finally {
+            FileUtils.deleteOnExitQuietly(file);
         }
 
     }
@@ -165,11 +171,12 @@ public class ExperimentDownloadProvider {
         FileOutputStream fileOutputStream = null;
         File tempZipFile = null;
         ZipInputStream in = null;
+        File file = null;
 
         try {
             FileDTO dto = new FileDTO();
             dto.setFileName(pckg.getName().replaceAll("\\s", "_") + ".zip");
-            
+
             // create temp zip file
             tempZipFile = File.createTempFile("experimentDownload_", ".zip");
             // open stream to temp zip file
@@ -189,12 +196,13 @@ public class ExperimentDownloadProvider {
                 } else
                     experimentDirPrefix = "Experiment_data_" + exp.getExperimentId() + "/";
                 // generate temp zip file with experiment
-                byte[] licenseFile = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFile(): licenseService.getLicenseAttachmentContent(license.getLicenseId());
+                byte[] licenseFile = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFile() : licenseService
+                        .getLicenseAttachmentContent(license.getLicenseId());
                 String licenseFileName = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFileName() : license.getAttachmentFileName();
-                File file = zipGenerator.generate(exp, mc, exp.getDataFiles(), licenseFile, licenseFileName);
+                file = zipGenerator.generate(exp, mc, exp.getDataFiles(), licenseFile, licenseFileName);
                 in = new ZipInputStream(new FileInputStream(file));
                 ZipEntry entryIn = null;
-                
+
                 // copy unziped experiment in package zip file.
                 // NOTE: its easier solution copy content of one zip in anoter instead create directory structure via java.io.File.
                 while ((entryIn = in.getNextEntry()) != null) {
@@ -203,32 +211,39 @@ public class ExperimentDownloadProvider {
                     zipOutputStream.closeEntry();
                 }
 
+                // mark all temp files for package for delete on exit
+                FileUtils.deleteOnExitQuietly(file);
+
                 createHistoryRecordAboutDownload(exp);
             }
 
             dto.setFile(tempZipFile);
+            
+            // no problem detected - close all streams and mark file for delete on exit.
+            // file is deleted after download action
+            FileUtils.deleteOnExitQuietly(tempZipFile);
+            IOUtils.closeQuietly(zipOutputStream);
+            IOUtils.closeQuietly(fileOutputStream);
+
             return dto;
         } catch (Exception e) {
 
             log.error(e.getMessage(), e);
+
+            // problem detected - close all streams, mark files for delete on exit and try delete them.
+            IOUtils.closeQuietly(zipOutputStream);
+            IOUtils.closeQuietly(fileOutputStream);
+            FileUtils.deleteOnExitQuietly(tempZipFile);
+            FileUtils.deleteOnExitQuietly(file);
+            FileUtils.deleteQuietly(tempZipFile);
+            FileUtils.deleteQuietly(file);
+
             return null;
-
-        } finally {
-
-            try {
-                zipOutputStream.flush();
-                zipOutputStream.close();
-                fileOutputStream.flush();
-                fileOutputStream.close();
-            } catch (IOException e) {
-
-            }
         }
-
     }
 
     private void createHistoryRecordAboutDownload(Experiment experiment) {
-        
+
         Person user = personService.getLoggedPerson();
         Timestamp currentTimestamp = new java.sql.Timestamp(Calendar.getInstance().getTime().getTime());
         History history = new History();
