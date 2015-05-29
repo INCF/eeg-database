@@ -27,6 +27,33 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
+import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
+import static org.elasticsearch.index.query.QueryBuilders.termQuery;
+
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+
+import org.apache.commons.lang.NotImplementedException;
+import org.elasticsearch.index.query.AndFilterBuilder;
+import org.elasticsearch.index.query.BoolFilterBuilder;
+import org.elasticsearch.index.query.BoolQueryBuilder;
+import org.elasticsearch.index.query.MatchQueryBuilder;
+import org.elasticsearch.index.query.NestedFilterBuilder;
+import org.elasticsearch.index.query.OrFilterBuilder;
+import org.hibernate.Query;
+import org.hibernate.Session;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
@@ -34,45 +61,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-
-import org.hibernate.Query;
-import org.hibernate.Session;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.text.ParseException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.List;
-
-import javax.annotation.Resource;
-
-import org.apache.commons.lang.NotImplementedException;
-import org.elasticsearch.index.query.AndFilterBuilder;
-import org.elasticsearch.index.query.BoolFilterBuilder;
-import org.elasticsearch.index.query.BoolQueryBuilder;
-
-import static org.elasticsearch.index.query.FilterBuilders.termFilter;
-
-import org.elasticsearch.index.query.MatchQueryBuilder;
-import org.elasticsearch.index.query.MultiMatchQueryBuilder;
-
-import static org.elasticsearch.index.query.QueryBuilders.termQuery;
-import static org.elasticsearch.index.query.QueryBuilders.matchQuery;
-import static org.elasticsearch.index.query.QueryBuilders.rangeQuery;
-import static org.elasticsearch.index.query.QueryBuilders.boolQuery;
-
-import org.elasticsearch.index.query.NestedFilterBuilder;
-import org.elasticsearch.index.query.NestedQueryBuilder;
-import org.elasticsearch.index.query.OrFilterBuilder;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 /**
  * This class extends powers (extend from) class SimpleGenericDao. Class is
@@ -87,6 +75,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 
 	public SimpleExperimentDao() {
 		super(Experiment.class);
+		
 	}
 
 	@Override

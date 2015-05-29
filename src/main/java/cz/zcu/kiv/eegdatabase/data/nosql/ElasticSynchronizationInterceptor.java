@@ -27,6 +27,23 @@
  */
 package cz.zcu.kiv.eegdatabase.data.nosql;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.annotation.Resource;
+
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.elasticsearch.index.query.IdsQueryBuilder;
+import org.hibernate.EmptyInterceptor;
+import org.hibernate.type.Type;
+import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
+import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
+
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
@@ -38,21 +55,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-import javax.annotation.Resource;
-import org.elasticsearch.index.query.IdsQueryBuilder;
-import org.hibernate.EmptyInterceptor;
-import org.hibernate.type.Type;
-import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
-import org.springframework.data.elasticsearch.core.query.DeleteQuery;
-import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 /**
- *
+ * 
  * @author bydga
  */
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {

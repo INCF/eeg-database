@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
 import java.io.InputStream;
+import java.util.List;
 
 import odml.core.Reader;
 import odml.core.Section;
@@ -39,11 +40,13 @@ import org.apache.wicket.util.string.StringValue;
 
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
@@ -56,6 +59,9 @@ public class MetadataFormPage extends MenuPage {
 
     @SpringBean
     private TemplateFacade templateFacade;
+
+    @SpringBean
+    private ExperimentsFacade expFacade;
 
     public MetadataFormPage() {
 
@@ -87,6 +93,16 @@ public class MetadataFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
 
+        List<Section> list = templateFacade.getListOfAvailableODMLSections();
+        Section root = new Section();
+
+        for (Section section : list)
+            root.add(section);
+
+        Experiment read = expFacade.getExperimentForDetail(262);
+        read.getElasticExperiment().setMetadata(root);
+        expFacade.update(read);
+
         int templateId = value.toInt();
         Template template = templateFacade.read(templateId);
 
@@ -94,13 +110,13 @@ public class MetadataFormPage extends MenuPage {
         try {
             Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
             section.setName(template.getName());
-            add(new MetadataForm("metadata-form", new Model<Section>(section)));
+            add(new MetadataForm("metadata-form", new Model<Section>(read.getElasticExperiment().getMetadata())));
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
-        
+
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
 }

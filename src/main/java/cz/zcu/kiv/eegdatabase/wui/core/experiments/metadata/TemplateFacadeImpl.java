@@ -142,6 +142,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
         try {
             paths = new ClassPathResource(odmlSectionsPath).getFile().listFiles();
             for (File path : paths) {
+                log.error(path.getName());
                 if (path.getName().endsWith(".xml")) {
                     filteredFiles.add(path);
                 }

@@ -327,6 +327,8 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         updated.setWeather(experiment.getWeather());
         updated.setEnvironmentNote(experiment.getEnvironmentNote());
         
+        updated.setElasticExperiment(experiment.getElasticExperiment());
+        
         experimentDao.update(updated);
     }
 
