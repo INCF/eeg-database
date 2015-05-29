@@ -39,7 +39,7 @@ public class ODMLSectionSerializer extends JsonSerializer<Section> {
             log.error(e.getMessage(), e);
         } finally {
             long end = System.currentTimeMillis();
-            log.error("Serialize time - " + (end - start) + " ms.");
+            log.warn("Serialize time - " + (end - start) + " ms.");
         }
 
     }
