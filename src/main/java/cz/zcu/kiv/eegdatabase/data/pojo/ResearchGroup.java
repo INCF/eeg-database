@@ -114,6 +114,7 @@ public class ResearchGroup implements java.io.Serializable, Comparable<ResearchG
     private Set<ProjectType> projectTypes = new HashSet<ProjectType>(0);
     private Set<Software> softwares = new HashSet<Software>(0);
     private Set<StimulusType> stimulusTypes = new HashSet<StimulusType>(0);
+    private Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans = new HashSet<ResearchGroupMembershipPlan>(0);
 
 	@ManyToMany(mappedBy = "researchGroups")
 	public Set<Analysis> getAnalyses() {
@@ -469,7 +470,16 @@ public class ResearchGroup implements java.io.Serializable, Comparable<ResearchG
 		this.experimentOptParamDefGroupRels = experimentOptParamDefGroupRels;
 	}
 
-	@ManyToMany(fetch = FetchType.LAZY, mappedBy = "researchGroups")
+    @OneToMany(mappedBy="researchGroup")
+    public Set<ResearchGroupMembershipPlan> getResearchGroupMembershipPlans() {
+        return researchGroupMembershipPlans;
+    }
+
+    public void setResearchGroupMembershipPlans(Set<ResearchGroupMembershipPlan> researchGroupMembershipPlans) {
+        this.researchGroupMembershipPlans = researchGroupMembershipPlans;
+    }
+
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "researchGroups")
 	public Set<ExperimentOptParamDef> getExperimentOptParamDefs() {
 		return this.experimentOptParamDefs;
 	}

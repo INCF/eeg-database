@@ -30,6 +30,7 @@ import java.util.Map;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.groups.form.TransferOwnershipPage;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -88,15 +89,27 @@ public class ListOfMembersGroupPage extends MenuPage {
     @SpringBean
     PersonFacade personFacade;
 
+    private boolean isLoggedPersonOwner;
+
     public ListOfMembersGroupPage(PageParameters parameters) {
+        StringValue value = parseParameters(parameters);
+        int groupId = value.toInt();
+        Person owner = personFacade.getLoggedPerson();
+        List<ResearchGroup> groups = facade.getResearchGroupsWhereOwner(owner);
+        for (ResearchGroup group: groups) {
+            if (group.getResearchGroupId() == groupId) {
+                isLoggedPersonOwner = true;
+                break;
+            }
+        }
 
         setPageTitle(ResourceUtils.getModel("pageTitle.listOfGroupMembers"));
 
         add(new ButtonPageMenu("leftMenu", prepareLeftMenu()));
 
-        StringValue value = parseParameters(parameters);
 
-        int groupId = value.toInt();
+
+
         
         if (!securityFacade.userIsExperimenterInGroup(groupId))
             throw new RestartResponseAtInterceptPageException(ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
@@ -206,9 +219,11 @@ public class ListOfMembersGroupPage extends MenuPage {
 
         BookmarkablePageLink<Void> backToDetailLink = new BookmarkablePageLink<Void>("backLink", ResearchGroupsDetailPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
         BookmarkablePageLink<Void> addMemberLink = new BookmarkablePageLink<Void>("addMemberLink", AddMemberToGroupPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
+        BookmarkablePageLink<Void> transferOwnershipLink = new BookmarkablePageLink<Void>("transferOwnershipLink", TransferOwnershipPage.class, PageParametersUtils.getDefaultPageParameters(groupId));
         addMemberLink.setVisibilityAllowed(isUserGroupAdmin);
+        transferOwnershipLink.setVisibilityAllowed(isLoggedPersonOwner);
 
-        add(container, backToDetailLink, addMemberLink);
+        add(container, backToDetailLink, addMemberLink, transferOwnershipLink);
 
     }
 

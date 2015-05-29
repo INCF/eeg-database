@@ -22,15 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.logic.eshop;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.MathContext;
 import java.math.RoundingMode;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.Order;
-import cz.zcu.kiv.eegdatabase.data.pojo.OrderItem;
 
 public class ShoppingCart implements Serializable {
 
@@ -64,6 +61,21 @@ public class ShoppingCart implements Serializable {
         return total;
     }
 
+    public void addToCart(MembershipPlan plan) {
+
+        if (!isInCart(plan)) {
+            order.getItems().add(new OrderItem(plan, order));
+        }
+    }
+
+
+    public void addToCart(MembershipPlan plan, ResearchGroup group) {
+
+        if (!isInCart(plan, group)) {
+            order.getItems().add(new OrderItem(plan, group, order));
+        }
+    }
+
     public void addToCart(Experiment experiment) {
 
         if (!isInCart(experiment)) {
@@ -76,6 +88,47 @@ public class ShoppingCart implements Serializable {
         if (!isInCart(expPackage)) {
             order.getItems().add(new OrderItem(expPackage, order));
         }
+    }
+
+    public boolean isInCart(MembershipPlan plan, ResearchGroup group) {
+
+        for (OrderItem tmp : order.getItems()) {
+
+            if (tmp.getMembershipPlan() == null) {
+                continue;
+            } else if (tmp.getMembershipPlan().getMembershipId() == plan.getMembershipId()) {
+                if(tmp.getResearchGroup() == null){
+                    continue;
+                }
+                else if(tmp.getResearchGroup().getResearchGroupId() == group.getResearchGroupId())
+                {
+                    return true;
+                }
+                else {
+                    continue;
+                }
+            } else {
+                continue;
+            }
+        }
+
+        return false;
+    }
+
+    public boolean isInCart(MembershipPlan plan) {
+
+        for (OrderItem tmp : order.getItems()) {
+
+            if (tmp.getMembershipPlan() == null) {
+                continue;
+            } else if (tmp.getMembershipPlan().getMembershipId() == plan.getMembershipId()) {
+                return true;
+            } else {
+                continue;
+            }
+        }
+
+        return false;
     }
 
     public boolean isInCart(Experiment experiment) {

@@ -1,0 +1,57 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<body>
+<wicket:extend>
+    <div class="leftMenu" wicket:id="leftMenu"></div>
+
+    <div class="mainContentWithMenu">
+        <h1 wicket:id="headTitle"></h1>
+
+        <form class="standardInputForm" wicket:id="form">
+            <fieldset>
+
+                <div class="itemBox">
+                    <label for=name wicket:id="titleLb" class="textFieldLabel"> <wicket:message
+                            key="label.name">[name]</wicket:message></label> <input wicket:id="title" class="textField" type="text" />
+                </div>
+
+                <div class="itemBox">
+                    <label for="description" wicket:id="descriptionLb" class="textareaFieldLabel"><wicket:message key="label.description" /></label>
+                    <textarea wicket:id="description" class="textareaField"></textarea>
+                </div>
+
+                <div class="itemBox">
+                    <label for=price wicket:id="priceLb" class="textFieldLabel"> <wicket:message
+                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" value="" type="text" style="width: 80px;" /> <wicket:message key="label.price.currency"/>
+                </div>
+
+                <div class="itemBox">
+                    <label for=licenseType wicket:id="typeLb" class="textFieldLabel"> <wicket:message
+                            key="label.type">[type]</wicket:message></label>
+				<span wicket:id="licenseType">
+                    <input type="radio" wicket:id="public"/><wicket:message key="LicenseType.PUBLIC"/>
+					<input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+                    <input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+				</span>
+                </div>
+
+                <div class="itemBox">
+                    <!--<label class="textFieldLabel" wicket:message="value:label.license.attachment.file"/>-->
+                    <label for=licenseFile wicket:id="attachmentFileNameLb" class="textFieldLabel"> <wicket:message
+                            key="label.licenseFile">[file]</wicket:message></label>
+                    <input type="file" class="textField" wicket:id="attachmentFileName"/>
+                </div>
+
+                <div class="itemBox">
+                    <input wicket:id="submit" class="submitButton lightButtonLink" type="submit" />
+                </div>
+
+
+            </fieldset>
+        </form>
+    </div>
+</wicket:extend>
+</body>
+</html>

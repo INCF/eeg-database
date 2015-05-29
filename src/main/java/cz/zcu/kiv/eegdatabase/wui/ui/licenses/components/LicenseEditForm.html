@@ -52,6 +52,7 @@ This file is part of the EEG-database project
 					<wicket:enclosure>
 						<input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
 					</wicket:enclosure>
+                    <input type="radio" wicket:id="public"/><wicket:message key="LicenseType.PUBLIC"/>
 				</span>
 				<div wicket:id="licenseType.feedback"/>
 			</div>
@@ -61,11 +62,26 @@ This file is part of the EEG-database project
 				<textarea class="textareaField" wicket:id="description"/>
 				<div wicket:id="description.feedback"/>
 			</div>
+            <hr>
 
+            <div class="itemBox">
+            <wicket:enclosure child="download">
+
+                <h3><wicket:message key="label.license.attachment.file"></wicket:message></h3>
+                <div wicket:id="attachmentFileName"></div>
+                <a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a>
+
+            </wicket:enclosure>
+            </div>
+            <hr>
+            <!--
 			<div class="itemBox">
 				<label class="textFieldLabel" wicket:message="value:label.license.attachment.file"/>
 				<input type="file" class="textField" wicket:id="licenseFile"/>
 			</div>
+            -->
+
+
 
 			<div class="itemBox">
 				<input type="submit" wicket:id="submitButton" class="lightButtonLink" />

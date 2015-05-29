@@ -257,4 +257,27 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <!--
+    New dao mapping for licenses and membership plans
+    -->
+    <bean name="membershipPlanDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleMembershipPlanDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="experimentLicenceDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleExperimentLicenceDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="promoCodeDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePromoCodeDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="personMembershipPlanDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimplePersonMembershipPlanDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
+    <bean name="researchGroupMembershipPlanDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleResearchGroupMembershipPlanDao">
+        <property name="sessionFactory" ref="sessionFactory"/>
+    </bean>
+
 </beans>

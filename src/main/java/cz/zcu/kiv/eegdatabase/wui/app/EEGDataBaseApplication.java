@@ -22,6 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.*;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -68,9 +70,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManagePersonPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.ManageResearchGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleCommentFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
@@ -78,13 +77,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesSettingsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentOptParamValueFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.HardwareConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PersonConverter;
@@ -128,7 +120,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.pricing.PriceListPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioFormPage;
@@ -307,6 +298,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         
         mountPackage("order-list", ListOrderPage.class);
         mountPackage("order-view", OrderDetailPage.class);
+
+        mountPage("administration-manage-membership-plans", AdminManageMembershipPlansPage.class);
+        mountPage("administration-manage-licenses", AdminManageLicensesPage.class);
         
 // XXX price list hidden for now.
 //        mountPage("pricelist", PriceListPage.class);

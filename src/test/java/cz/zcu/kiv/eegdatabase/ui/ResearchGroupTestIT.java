@@ -8,12 +8,15 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
 import net.sourceforge.jwebunit.junit.WebTester;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 import java.io.IOException;
 import java.util.List;
+
+import static org.testng.FileAssert.fail;
 
 /**
  * Created by Roman Mouček on 13.11.2014.
@@ -169,7 +172,7 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
 
-        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is logged user a member of group
         tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
         tester.clickLinkWithText(getProperty("action.logout"));
 
@@ -189,5 +192,90 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertLinkPresentWithText(getProperty("button.membershipRequest"));
 
         tester.clickLinkWithText(getProperty("action.logout"));
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testAddMemberToGroup() throws InterruptedException, IOException {
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        if (!personDao.usernameExists("jan.stebetak3@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak3@seznam.cz", Util.ROLE_USER);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a member of group
+
+        tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
+        tester.clickLinkWithText(getProperty("button.addMemberToGroup"));
+
+        tester.setTextField("username", "jan.stebetak3@seznam.cz");
+        tester.selectOption("roles", getProperty("select.option.groupAdmin"));
+        tester.clickButtonWithText(getProperty("button.addMemberToGroup"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertTextPresent("jan.stebetak3@seznam.cz"); //new member
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testAddMemberToGroup", "testTransferOwnershipValidation"})
+    public void testTransferOwnership() throws InterruptedException, IOException {
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertLinkPresentWithText(getProperty("button.addMemberToGroup"));
+
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+        tester.assertTextPresent("jan.stebetak3@seznam.cz"); //Is added in the previous test
+
+        tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
+        tester.clickLinkWithText(getProperty("button.transferOwnership"));
+
+        tester.selectOption("members", "jan.stebetak3@seznam.cz");
+        tester.clickButtonWithText(getProperty("button.transferOwnership"));
+        Thread.sleep(waitForAjax);
+
+        tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership")); //the logged user is no more owner
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+    }
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testTransferOwnershipValidation() throws InterruptedException, IOException {
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a logged user
+        tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
+        tester.clickLinkWithText(getProperty("button.transferOwnership"));
+
+        tester.clickButtonWithText(getProperty("button.transferOwnership"));
+        Thread.sleep(waitForAjax);
+        tester.assertTextPresent("Field 'User name' is required.");
+        try {
+
+            tester.selectOption("members", "jan.stebetak2@seznam.cz");
+            tester.clickButtonWithText(getProperty("button.transferOwnership"));
+            Thread.sleep(waitForAjax);
+            fail("User is not member of the group.");
+        }
+        catch (AssertionError er) {
+            //User "jan.stebetak2@seznam.cz" is not in group
+        } finally {
+
+            tester.clickLinkWithText(getProperty("action.logout"));
+        }
     }
 }

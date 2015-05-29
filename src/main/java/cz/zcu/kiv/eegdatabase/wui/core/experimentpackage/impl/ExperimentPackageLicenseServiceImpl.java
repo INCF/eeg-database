@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
+import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
@@ -33,11 +34,15 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicens
  */
 public class ExperimentPackageLicenseServiceImpl extends GenericServiceImpl<ExperimentPackageLicense, Integer> implements ExperimentPackageLicenseService{
 
-    public ExperimentPackageLicenseServiceImpl() {
+    private ExperimentPackageLicenseDao dao;
+
+    public ExperimentPackageLicenseServiceImpl(ExperimentPackageLicenseDao dao) {
+        super(dao);
+        setDao(dao);
     }
 
-    public ExperimentPackageLicenseServiceImpl(GenericDao<ExperimentPackageLicense, Integer> dao) {
-	super(dao);
+    public void setDao(ExperimentPackageLicenseDao dao) {
+        this.dao = dao;
     }
 
     

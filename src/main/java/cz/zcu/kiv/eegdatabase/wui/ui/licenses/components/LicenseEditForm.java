@@ -22,11 +22,16 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
+import java.io.ByteArrayInputStream;
 import java.math.BigDecimal;
+import java.sql.Blob;
+import java.sql.SQLException;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
@@ -36,10 +41,15 @@ import org.apache.wicket.markup.html.form.RadioGroup;
 import org.apache.wicket.markup.html.form.RequiredTextField;
 import org.apache.wicket.markup.html.form.TextArea;
 import org.apache.wicket.markup.html.form.upload.FileUploadField;
+import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
+import org.apache.wicket.request.resource.AbstractResource;
+import org.apache.wicket.request.resource.ByteArrayResource;
+import org.apache.wicket.request.resource.IResource;
+import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
@@ -47,6 +57,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import org.apache.wicket.util.time.Duration;
+
+import javax.sql.rowset.serial.SerialBlob;
 
 /**
  *
@@ -55,7 +68,9 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 public class LicenseEditForm extends Panel {
 
 	private static final long serialVersionUID = -3134581180799936781L;
-	
+
+
+
     private IModel<List<License>> blueprintsModel;
 	protected IModel<License> licenseModel;
 	protected IModel<License> selectedBlueprintModel;
@@ -63,7 +78,13 @@ public class LicenseEditForm extends Panel {
 	private boolean displayControls = true;
 	private IModel<Boolean> allowBusiness;
 	private boolean displayRemoveButton = true;
-    private FileUploadField fileUpload;
+    private AjaxButton saveButton;
+    private FormComponent priceInput;
+    private ResourceLink<Void> downloadLink;
+    private AjaxDropDownChoice<License> ddc;
+
+    @SpringBean
+    LicenseFacade licenseFacade;
 
 	public LicenseEditForm(String id, IModel<License> model, IModel<Boolean> allowBusiness) {
 		this(id, model, null, allowBusiness);
@@ -88,17 +109,23 @@ public class LicenseEditForm extends Panel {
 	private void addFormFields() {
 		FormComponent c = new RequiredTextField("title", new PropertyModel(licenseModel, "title"));
 		c.setLabel(ResourceUtils.getModel("label.license.title"));
+        c.setEnabled(false);
 		form.add(c);
+
+        Label l = new Label("attachmentFileName", new PropertyModel(licenseModel, "attachmentFileName"));
+        form.add(l);
 
 		c = new TextArea("description", new PropertyModel(licenseModel, "description"));
 		c.setLabel(ResourceUtils.getModel("label.license.description"));
 		c.setRequired(true);
+        c.setEnabled(false);
 		form.add(c);
 
-		c = new NumberTextField<BigDecimal>("price", new PropertyModel(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
-		c.setRequired(true);
-		c.setLabel(ResourceUtils.getModel("label.license.price"));
-		form.add(c);
+		priceInput = new NumberTextField<BigDecimal>("price", new PropertyModel(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
+		priceInput.setRequired(true);
+        priceInput.setEnabled(false);
+		priceInput.setLabel(ResourceUtils.getModel("label.license.price"));
+		form.add(priceInput);
 
 		c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
 		c.setLabel(ResourceUtils.getModel("label.license.type"));
@@ -111,15 +138,25 @@ public class LicenseEditForm extends Panel {
 				this.setVisible(allowBusiness.getObject());
 			}
 		});
+        c.add(new Radio("public",new Model(LicenseType.OPEN_DOMAIN)));
+        c.setEnabled(false);
 		form.add(c);
 
 		WicketUtils.addLabelsAndFeedback(form);
-		
-		fileUpload = new FileUploadField("licenseFile");
-		fileUpload.setLabel(ResourceUtils.getModel("label.license.attachment.file"));
-		
-		form.add(fileUpload);
-		form.setMaxSize(Bytes.megabytes(15));
+
+        ByteArrayResource res;
+        res = new ByteArrayResource("") {
+            @Override
+            public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                response.setCacheDuration(Duration.NONE);
+            }
+        };
+        downloadLink = new ResourceLink<Void>("download", res);
+        downloadLink.setVisible(false);
+
+        form.add(downloadLink);
+
+
 	}
 
 	/**
@@ -128,7 +165,7 @@ public class LicenseEditForm extends Panel {
 	 * @param cont
 	 */
 	private void addControls() {
-		AjaxButton button = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
+		saveButton = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onSubmitAction(licenseModel, target, form);
@@ -147,9 +184,9 @@ public class LicenseEditForm extends Panel {
 				this.setVisible(displayControls);
 			}
 		};
-		form.add(button);
-
-		button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
+        saveButton.setVisibilityAllowed(false);
+		form.add(saveButton);
+        AjaxButton button = new AjaxButton("cancelButton", ResourceUtils.getModel("button.cancel")) {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				onCancelAction(licenseModel, target, form);
@@ -183,7 +220,7 @@ public class LicenseEditForm extends Panel {
 
 	private void addBlueprintSelect() {
 		selectedBlueprintModel = new Model<License>();
-		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
+		ddc = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
@@ -195,27 +232,86 @@ public class LicenseEditForm extends Panel {
 					viz = false;
 				}
 				this.setVisible(viz);
+
+
 			}
 
 			@Override
-			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, final License option) {
 				if (option == null || option.getLicenseId() == 0) {
 					licenseModel.setObject(new License());
+                    saveButton.setVisibilityAllowed(false);
+                    priceInput.setEnabled(false);
+                    downloadLink.setVisible(false);
+
+
 				} else {
-					License l = new License();
+                    if (option.getLicenseType()== LicenseType.BUSINESS && option.getPrice().intValue() == 0) {
+                        priceInput.setEnabled(true);
+                    } else {
+                        priceInput.setEnabled(false);
+                    }
+					final License l = new License();
 					l.setTitle(option.getTitle());
 					l.setDescription(option.getDescription());
 					l.setLicenseType(option.getLicenseType());
 					l.setPrice(option.getPrice());
-					licenseModel.setObject(l);
+                    l.setAttachmentFileName(option.getAttachmentFileName());
+                    l.setFileContentStream(null);
+
+
+                    if (option.getAttachmentFileName()!= null) {
+
+                        //--------
+                        try {
+                            Blob blob = null;
+                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(option.getLicenseId()));
+                            l.setAttachmentContent(blob);
+
+                            ByteArrayResource res;
+                            res = new ByteArrayResource("", blob.getBytes(1,(int)blob.length())){
+                                @Override
+                                public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
+                                    response.setCacheDuration(Duration.NONE);
+                                    response.setFileName(option.getAttachmentFileName());
+                                }
+                            };
+
+                            ResourceLink<Void> newLink = new ResourceLink<Void>("download", res);
+
+                            downloadLink = (ResourceLink<Void>) downloadLink.replaceWith(newLink);
+                            downloadLink.setVisible(true);
+
+                        } catch (SQLException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    } else {
+                        downloadLink.setVisible(false);
+                    }
+                    licenseModel.setObject(l);
+                    saveButton.setVisibilityAllowed(true);
 				}
 				target.add(form);
 			}
 		};
 
 		ddc.setNullValid(true);
+
+
 		form.add(ddc);
 	}
+
+    public void clearLicenseModel() {
+        ddc.setDefaultModelObject(null);
+        downloadLink.setVisibilityAllowed(false);
+        saveButton.setVisibilityAllowed(false);
+    }
+
+    public void setLicenseModel (License license) {
+        licenseModel.setObject(license);
+    }
 
 	public boolean isDisplayControls() {
 		return displayControls;
@@ -225,13 +321,13 @@ public class LicenseEditForm extends Panel {
 		this.displayControls = displayControls;
 	}
 
+    public void setSaveButtonVisibility(boolean visibility) {
+        saveButton.setVisibilityAllowed(visibility);
+    }
+
 	public boolean isDisplayRemoveButton() {
 		return displayRemoveButton;
 	}
-	
-	public FileUploadField getFileUpload() {
-        return fileUpload;
-    }
 
 	public LicenseEditForm setDisplayRemoveButton(boolean displayRemoveButton) {
 		this.displayRemoveButton = displayRemoveButton;

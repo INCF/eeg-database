@@ -106,4 +106,10 @@ public interface LicenseService extends GenericService<License, Integer> {
 	public License getLicenseForPurchasedExperiment(int experimentId, int personId);
     
     public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId);
+
+    public List<License> getLicensesForExperiment(int experimentId);
+
+    public List<License> getPersonLicenses(int personId);
+
+    public List<License> getLicenseTemplates();
 }

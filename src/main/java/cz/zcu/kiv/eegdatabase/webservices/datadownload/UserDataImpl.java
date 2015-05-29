@@ -150,11 +150,11 @@ public class UserDataImpl implements UserDataService {
         }
         metadata.setArtifactRemoveMethodInfos(artifactRemoveMethodInfos);
 
-        List<DataFileInfo> dataFileInfos = new LinkedList<DataFileInfo>();
-        for (DataFile file: experiment.getDataFiles()) {
-            dataFileInfos.add(createDataFileInfo(file));
-        }
-        metadata.setDataFileInfos(dataFileInfos);
+//        List<DataFileInfo> dataFileInfos = new LinkedList<DataFileInfo>();
+//        for (DataFile file: experiment.getDataFiles()) {
+//            dataFileInfos.add(createDataFileInfo(file));
+//        }
+//        metadata.setDataFileInfos(dataFileInfos);
 
         List<DiseaseInfo> diseaseInfos = new LinkedList<DiseaseInfo>();
         for (Disease disease: experiment.getDiseases()) {

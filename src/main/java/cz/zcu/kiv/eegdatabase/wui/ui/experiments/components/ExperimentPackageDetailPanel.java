@@ -23,14 +23,18 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
+
+import java.util.ArrayList;
 import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
@@ -60,6 +64,9 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@SpringBean
 	private ExperimentPackageFacade experimentPackageFacade;
 
+    @SpringBean
+    private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
+
 	private IModel<ResearchGroup> resGroupModel;
 	private IModel<ExperimentPackage> packageModel;
 	private IModel<License> licenseModel;
@@ -68,12 +75,15 @@ public class ExperimentPackageDetailPanel extends Panel {
 	private Form form;
 	private ModalWindow addLicenseWindow;
 	private DropDownChoice<License> licenseSelect;
+    private LicenseEditForm licenseEditForm;
+
+    private List<License> licenses;
 
 	public ExperimentPackageDetailPanel(String id, IModel<ResearchGroup> resGroup) {
 		super(id);
 		this.packageModel = new Model<ExperimentPackage>(new ExperimentPackage());
 		this.licenseModel = new Model<License>();
-		
+		this.licenses = new ArrayList<License>();
 		this.resGroupModel = resGroup;
 		form = new StatelessForm("form");
 		this.add(form);
@@ -99,13 +109,10 @@ public class ExperimentPackageDetailPanel extends Panel {
 
 			@Override
 			protected List<License> loadList(ResearchGroup group) {
-				List<License> l = licenseFacade.getLicenseTemplates(group);
-				l.add(0, licenseFacade.getPublicLicense());
-				if(group.isPaidAccount()) {
-					l.add(1, licenseFacade.getOwnerLicense(group));
-				}
-				return l;
-			}
+				//List<License> l = licenseFacade.getLicenseTemplates();
+				//return l;
+                return licenses;
+            }
 		};
 
 		((ListModelWithResearchGroupCriteria) optionsModel).setCriteriaModel(resGroupModel);
@@ -139,26 +146,39 @@ public class ExperimentPackageDetailPanel extends Panel {
 		addLicenseWindow.setResizable(false);
 		addLicenseWindow.setMinimalWidth(600);
 		addLicenseWindow.setWidthUnit("px");
+        addLicenseWindow.showUnloadConfirmation(false);
+        addLicenseWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
+            private static final long serialVersionUID = 1L;
+
+            public void onClose(AjaxRequestTarget target) {
+                licenseEditForm.clearLicenseModel();
+            }
+        });
 
 		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
 			@Override
 			protected List<License> load() {
-				return licenseFacade.getLicenseTemplates(resGroupModel.getObject());
+				return licenseFacade.getLicenseTemplates();
 			}
 		};
 
-		Panel content = new LicenseEditForm(addLicenseWindow.getContentId(), new Model<License>(new License()), blpModel, new PropertyModel<Boolean>(resGroupModel, "paidAccount")) {
+		licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), new Model<License>(new License()), blpModel, new Model<Boolean>(true)) {
 			@Override
 			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
 				License obj = model.getObject();
-				obj.setTemplate(true);
-				obj.setResearchGroup(resGroupModel.getObject());
-				licenseFacade.create(obj);
-				//close window
-				ModalWindow.closeCurrent(target);
-				//update license templates
-				optionsModel.detach();
-				target.add(licenseSelect);
+
+                if (obj.getLicenseId() == 0) {
+                    obj.setTemplate(false);
+                    obj.setResearchGroup(resGroupModel.getObject());
+                    //licenseFacade.create(obj);
+                    //}
+                    ModalWindow.closeCurrent(target);
+                    //update license templates
+                    licenses.add(obj);
+                    optionsModel.detach();
+                    target.add(licenseSelect);
+                }
+
 			}
 
 			@Override
@@ -174,7 +194,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 
 		}.setDisplayRemoveButton(false);
 
-		addLicenseWindow.setContent(content);
+		addLicenseWindow.setContent(licenseEditForm);
 		this.add(addLicenseWindow);
 	}
 
@@ -184,9 +204,25 @@ public class ExperimentPackageDetailPanel extends Panel {
 			@Override
 			protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 				super.onSubmit(target, form);
+                this.setEnabled(false);
+
 				ExperimentPackage pck = packageModel.getObject();
 				pck.setResearchGroup(resGroupModel.getObject());
-				experimentPackageFacade.createExperimentPackage(pck, licenseModel.getObject());
+                //experimentPackageFacade.createExperimentPackage(pck, licenseModel.getObject());
+                experimentPackageFacade.create(pck);
+                ExperimentPackageLicense experimentPackageLicense;
+
+                for (License lic : licenses) {
+                    licenseFacade.create(lic);
+                    experimentPackageLicense = new ExperimentPackageLicense();
+                    experimentPackageLicense.setExperimentPackage(pck);
+                    experimentPackageLicense.setLicense(lic);
+                    experimentPackageLicenseFacade.create(experimentPackageLicense);
+                }
+
+
+                licenses.clear();
+                optionsModel.detach();
 				ExperimentPackageDetailPanel.this.onSubmitAction(target, form);
 			}
 			

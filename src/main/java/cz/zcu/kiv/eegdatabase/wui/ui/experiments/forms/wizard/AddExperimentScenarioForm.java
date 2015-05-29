@@ -31,6 +31,10 @@ import java.util.Date;
 import java.util.Iterator;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.MarkupContainer;
@@ -46,12 +50,15 @@ import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.extensions.wizard.WizardStep;
 import org.apache.wicket.extensions.yui.calendar.DateTimeField;
 import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
+import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.CheckBox;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.Form;
 import org.apache.wicket.markup.html.form.FormComponent;
 import org.apache.wicket.markup.html.form.ListMultipleChoice;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.PropertyModel;
@@ -60,11 +67,6 @@ import org.apache.wicket.util.string.Strings;
 import org.apache.wicket.validation.IValidatable;
 import org.apache.wicket.validation.IValidator;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.UniqueEntityValidator;
 import cz.zcu.kiv.eegdatabase.wui.components.model.LoadableListModel;
@@ -74,10 +76,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.group.ResearchGroupFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddGroupPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddPersonPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddProjectPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.AddScenarioPage;
+
 
 public class AddExperimentScenarioForm extends WizardStep {
 
@@ -94,6 +93,10 @@ public class AddExperimentScenarioForm extends WizardStep {
     private ProjectTypeFacade projectTypeFacade;
     @SpringBean
     private SecurityFacade securityFacade;
+    @SpringBean
+    private LicenseFacade licenseFacade;
+    @SpringBean
+    private ExperimentLicenseFacade experimentLicenseFacade;
 
     private DateTimeField finishDate;
     private DateTimeField startDate;
@@ -101,10 +104,15 @@ public class AddExperimentScenarioForm extends WizardStep {
     private IModel<Experiment> model;
     private ListMultipleChoice<Person> coexperimenters;
     private DropDownChoice<ResearchGroup> researchGroupChoice;
+    private  ListView<License> licenseList;
+    private List<License> licenses;
+    private AddLicensePage p;
+
 
     public AddExperimentScenarioForm(IModel<Experiment> model) {
         setOutputMarkupId(true);
         this.model = model;
+        this.licenses = new ArrayList<License>();
 
         addScenario();
         addResearchGroup();
@@ -114,8 +122,10 @@ public class AddExperimentScenarioForm extends WizardStep {
         addEndDate();
         addTestedSubject();
         addCoExperimenters();
+        addLicenses();
         createModalWindows();
     }
+
 
     private void addPrivateExperimentCheckBox() {
 
@@ -382,6 +392,29 @@ public class AddExperimentScenarioForm extends WizardStep {
         add(coexperimenters);
     }
 
+    private void addLicenses() {
+
+
+        if (model.getObject().getExperimentId()>0) {
+            licenses.addAll(licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId()));
+        } else {
+
+        }
+
+        licenseList = new ListView("licenses",licenses) {
+            protected void populateItem(ListItem item) {
+                License license = (License)item.getModelObject();
+                item.add(new Label("title",license.getTitle()));
+                item.add(new Label("price", license.getPrice()));
+                item.add(new Label("type", license.getLicenseType().toString()));
+
+                //item.add(new Label("label", item.getModel()));
+            }
+        };
+        licenseList.setViewSize(10);
+        add(licenseList);
+    }
+
     private void createModalWindows() {
 
         window = new ModalWindow("modalWindow");
@@ -405,6 +438,10 @@ public class AddExperimentScenarioForm extends WizardStep {
 
         addModalWindowAndButton(this, "add-co-experimenter",
                 "addCoExperimenter", AddPersonPage.class.getName(), window);
+
+        addModalWindowAndButton(this, "add-license",
+                "addLicense", AddLicensePage.class.getName(), window);
+
     }
 
     private AutoCompleteSettings prepareAutoCompleteSettings() {
@@ -420,6 +457,8 @@ public class AddExperimentScenarioForm extends WizardStep {
 
     private void addModalWindowAndButton(MarkupContainer container, final String cookieName,
             final String buttonName, final String targetClass, final ModalWindow window) {
+
+
         window.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
 
             private static final long serialVersionUID = 1L;
@@ -436,6 +475,15 @@ public class AddExperimentScenarioForm extends WizardStep {
                 List<ResearchGroup> groupChoices = researchGroupFacade.getResearchGroupsWhereAbleToWriteInto(EEGDataBaseSession.get().getLoggedUser());
                 researchGroupChoice.setChoiceRenderer(groupRenderer);
                 researchGroupChoice.setChoices(groupChoices);
+
+                List <License> lics = new ArrayList<License>(EEGDataBaseSession.get().getCreateExperimentLicenseMap().values());
+                if (model.getObject().getExperimentId()>0) {
+                    licenses = licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId());
+                    licenses.addAll(lics);
+                    licenseList.setList(licenses);
+                } else {
+                    licenseList.setList(lics);
+                }
 
                 target.add(AddExperimentScenarioForm.this);
 
@@ -459,11 +507,43 @@ public class AddExperimentScenarioForm extends WizardStep {
                     public Page createPage() {
                         try {
                             Constructor<?> cons = null;
-                            cons = Class.forName(targetClass).getConstructor(
-                                    PageReference.class, ModalWindow.class);
+                            if (targetClass.equals(AddLicensePage.class.getName())) {
+                                p = new AddLicensePage(getPage().getPageReference(),window, model) {
+                                    @Override
+                                    protected void onSubmitAction(IModel<License> licenseIModel, Integer id, AjaxRequestTarget target, Form<?> form) {
+                                        License obj = licenseIModel.getObject();
 
-                            return (Page) cons.newInstance(
-                                    getPage().getPageReference(), window);
+
+                                        /*if (model.getObject().getExperimentId()>0) {
+                                            if (obj.getLicenseId() == 0) {
+                                                obj.setTemplate(false);
+                                                licenseFacade.create(obj);
+                                            }
+                                            else {
+                                                licenseFacade.update(obj);
+                                            }
+
+                                            ExperimentLicence expLic = new ExperimentLicence();
+                                            expLic.setExperiment(model.getObject());
+                                            expLic.setLicense(obj);
+                                            experimentLicenseFacade.create(expLic);
+
+                                            obj.setFileContentStream(null);
+                                        } else {*/
+                                            EEGDataBaseSession.get().addLicenseToCreateLicenseMap(id, obj);
+                                        /*}*/
+
+                                        ModalWindow.closeCurrent(target);
+                                    }
+                                };
+                                //System.out.println("--PAGE: "+ p + p.hashCode());
+                                return (Page)p;
+                            } else {
+                                cons = Class.forName(targetClass).getConstructor(
+                                        PageReference.class, ModalWindow.class);
+                                return (Page) cons.newInstance(
+                                        getPage().getPageReference(), window);
+                            }
                         } catch (NoSuchMethodException e) {
                             log.error(e.getMessage(), e);
                         } catch (IllegalAccessException e) {
@@ -532,4 +612,5 @@ public class AddExperimentScenarioForm extends WizardStep {
         }
         
     }
+
 }

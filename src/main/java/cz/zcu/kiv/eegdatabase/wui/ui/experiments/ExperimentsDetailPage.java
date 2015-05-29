@@ -24,6 +24,10 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import java.util.ArrayList;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseDetailPage;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
@@ -42,15 +46,6 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -91,6 +86,12 @@ public class ExperimentsDetailPage extends MenuPage {
 
     @SpringBean
     SecurityFacade security;
+
+    @SpringBean
+    LicenseFacade licenseFacade;
+
+    @SpringBean
+    ExperimentLicenseFacade experimentLicenseFacade;
 
     public ExperimentsDetailPage(PageParameters parameters) {
 
@@ -216,6 +217,50 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
+        PropertyListView<License> licenseList = new PropertyListView<License>("licenseList", new ListModel<License>(licenseFacade.getLicensesForExperiment(experiment.getExperimentId()))) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(final ListItem<License> item) {
+                item.add(new Label("title"));
+                item.add(new Label("price"));
+                item.add(new Label("licenseType"));
+                item.add(new Label("attachmentFileName"));
+                item.add(new ViewLinkPanel("detail", LicenseDetailPage.class, "licenseId", item.getModel(), ResourceUtils.getModel("link.detail")));
+                item.add(new AjaxLink<Void>("deleteLink") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void onClick(AjaxRequestTarget target) {
+
+                        experimentLicenseFacade.remove(experiment,item.getModelObject());
+
+                        setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+                    }
+
+                    @Override
+                    protected void updateAjaxAttributes(AjaxRequestAttributes attributes) {
+                        super.updateAjaxAttributes(attributes);
+
+                        AjaxCallListener ajaxCallListener = new AjaxCallListener();
+                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.license", item.getModelObject().getTitle()) + "');");
+                        attributes.getAjaxCallListeners().add(ajaxCallListener);
+                    }
+
+                    @Override
+                    public boolean isVisible() {
+                        boolean isOwner = experiment.getPersonByOwnerId().getPersonId() == EEGDataBaseSession.get().getLoggedUser().getPersonId();
+                        boolean isAdmin = security.isAdmin();
+                        boolean isGroupAdmin = security.userIsAdminInGroup(experiment.getResearchGroup().getResearchGroupId());
+                        return isAdmin || isOwner || isGroupAdmin;
+                    }
+
+                });
+            }
+        };
+
         PropertyListView<DataFile> files = new PropertyListView<DataFile>("files", new ListModel<DataFile>(new ArrayList<DataFile>(experiment.getDataFiles()))) {
 
             private static final long serialVersionUID = 1L;
@@ -260,7 +305,7 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
-        add(hardware, addParameters, files, software, diseases, pharmaceuticals, projectTypes);
+        add(hardware, addParameters, files, software, diseases, pharmaceuticals,licenseList, projectTypes);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);

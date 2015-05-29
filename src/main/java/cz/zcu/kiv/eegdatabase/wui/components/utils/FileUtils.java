@@ -60,7 +60,7 @@ public class FileUtils {
 
         return new ResourceStreamRequestHandler(stream).setFileName(file.getFileName());
     }
-    
+
     /**
      * Prepare byte array from file.
      * 
@@ -73,12 +73,12 @@ public class FileUtils {
             return new byte[0];
         } else {
             try {
-                
+
                 FileInputStream fileInputStream = new FileInputStream(file);
                 byte[] byteArray = IOUtils.toByteArray(fileInputStream);
                 fileInputStream.close();
                 return byteArray;
-                
+
             } catch (FileNotFoundException e) {
                 log.error(e.getMessage(), e);
                 return new byte[0];
@@ -88,5 +88,34 @@ public class FileUtils {
             }
         }
 
+    }
+
+    public static boolean deleteOnExitQuietly(File file) {
+
+        if (file == null) {
+            return false;
+        }
+
+        try {
+            file.deleteOnExit();
+            return true;
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
+            return false;
+        }
+    }
+
+    public static boolean deleteQuietly(File file) {
+
+        if (file == null) {
+            return false;
+        }
+
+        try {
+            return file.delete();
+        } catch (Exception e) {
+            log.warn(e.getMessage(), e);
+            return false;
+        }
     }
 }
