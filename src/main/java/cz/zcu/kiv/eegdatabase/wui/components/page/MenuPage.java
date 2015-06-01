@@ -97,7 +97,7 @@ public class MenuPage extends BasePage {
 
         }
         cart.add(new Label("cartLabel", cartLabel));
-        cart.setVisibilityAllowed(signedIn);     TODO set me visible
+        cart.setVisibilityAllowed(signedIn);
         add(cart);
 
         Link<Void> link = new Link<Void>("logout") {
