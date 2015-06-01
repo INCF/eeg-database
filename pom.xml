@@ -45,7 +45,8 @@
 		<slf4j-version>1.6.1</slf4j-version>
 
 		<jetty.version>7.5.0.v20110901</jetty.version>
-		<wicket.version>6.14.0</wicket.version>
+		<wicket.version>6.19.0</wicket.version>
+		<wicket.bootstrap.version>0.9.8</wicket.bootstrap.version>
 
 		<!-- Delete this line when the project tests are ready to use -->
 		<skipTests>false</skipTests>
@@ -429,13 +430,37 @@
         <dependency>
             <groupId>com.googlecode.wicket-jquery-ui</groupId>
             <artifactId>wicket-jquery-ui-core</artifactId>
-            <version>6.14.0</version>
+            <version>6.19.0</version>
         </dependency>
 
         <dependency>
             <groupId>com.googlecode.wicket-jquery-ui</groupId>
             <artifactId>wicket-jquery-ui</artifactId>
-            <version>6.14.0</version>
+            <version>6.19.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-core</artifactId>
+            <version>${wicket.bootstrap.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-extensions</artifactId>
+            <version>${wicket.bootstrap.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-themes</artifactId>
+            <version>${wicket.bootstrap.version}</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>de.agilecoders.wicket</groupId>
+            <artifactId>wicket-bootstrap-less</artifactId>
+            <version>${wicket.bootstrap.version}</version>
         </dependency>
 
 		<!--======================================= Hibernate ============================================= -->

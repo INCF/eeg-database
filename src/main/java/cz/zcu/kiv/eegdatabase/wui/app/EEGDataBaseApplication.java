@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.wui.app;
 
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.*;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
+
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -127,6 +128,13 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.form.ScenarioSchemaFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.security.ConfirmPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.welcome.WelcomePage;
+import de.agilecoders.wicket.core.Bootstrap;
+import de.agilecoders.wicket.core.settings.BootstrapSettings;
+import de.agilecoders.wicket.core.settings.IBootstrapSettings;
+import de.agilecoders.wicket.core.settings.ThemeProvider;
+import de.agilecoders.wicket.less.BootstrapLess;
+import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
+import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 
 /**
  * Main class for wicket core. Initialization of wicket core, mounter pages on specific url, prepare project settings: security policy, redirect policy.
@@ -207,6 +215,9 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         // mount pages in wicket application for better working with pages.
         mountPages();
+        
+        // add the wicket-bootstrap extension
+        configureBootstrap();
 
     }
     
@@ -307,6 +318,20 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
 
         mountPage("elastic", Elastic.class);
     }
+    
+    
+    /**
+     * Add the wicket-bootstrap extension to the wicket application.
+     */
+    private void configureBootstrap() {
+        final IBootstrapSettings settings = new BootstrapSettings();
+        settings.useCdnResources(true);
+        final ThemeProvider themeProvider = new BootswatchThemeProvider(BootswatchTheme.Spacelab);
+        settings.setThemeProvider(themeProvider);
+        Bootstrap.install(this, settings);
+        BootstrapLess.install(this);
+    }
+    
 
     @Override
     protected IConverterLocator newConverterLocator() {
