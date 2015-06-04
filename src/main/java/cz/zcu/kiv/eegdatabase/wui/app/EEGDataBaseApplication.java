@@ -326,7 +326,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     private void configureBootstrap() {
         final IBootstrapSettings settings = new BootstrapSettings();
         settings.useCdnResources(true);
-        final ThemeProvider themeProvider = new BootswatchThemeProvider(BootswatchTheme.Spacelab);
+        final ThemeProvider themeProvider = new BootswatchThemeProvider(BootswatchTheme.Sandstone);
         settings.setThemeProvider(themeProvider);
         Bootstrap.install(this, settings);
         BootstrapLess.install(this);

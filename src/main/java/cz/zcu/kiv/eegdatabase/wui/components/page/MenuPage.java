@@ -22,27 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
-import java.io.Serializable;
-import java.util.Calendar;
-
 import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.ExternalLink;
-import org.apache.wicket.markup.html.link.Link;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.util.string.StringValue;
 
-import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
+import de.agilecoders.wicket.core.Bootstrap;
 
 /**
  * MenuPage for EEGDatabase portal, added header section with information about logged user,
@@ -58,77 +42,15 @@ public class MenuPage extends BasePage {
     private BaseFeedbackMessagePanel feedback;
 
     public MenuPage() {
+        
+        // header
+        add(new HeaderPanel("header"));
 
         feedback = new BaseFeedbackMessagePanel("base_feedback");
         add(feedback);
 
-        boolean signedIn = EEGDataBaseSession.get().isSignedIn();
-
-        String labelMessage;
-        Class<?> pageClass;
-        String labelLink;
-
-        if (signedIn) {
-            labelMessage = ResourceUtils.getString("general.header.logged");
-            labelMessage += EEGDataBaseSession.get().getLoggedUser().getUsername();
-            labelLink = ResourceUtils.getString("general.page.myaccount.link");
-            pageClass = AccountOverViewPage.class;
-        } else {
-            labelMessage = ResourceUtils.getString("general.header.notlogged");
-            labelLink = ResourceUtils.getString("action.register");
-            pageClass = RegistrationPage.class;
-        }
-
-        BookmarkablePageLink headerLink = new BookmarkablePageLink("userHeaderLink", pageClass);
-        headerLink.add(new Label("linkLabel", labelLink));
-        add(headerLink);
-
-        BookmarkablePageLink cart = new BookmarkablePageLink("cart", ShoppingCartPage.class);
-        String cartLabel = ResourceUtils.getString("general.page.myCart.link") + " ";
-        if(signedIn){
-            //
-            cart.add(new Label("cartSizeLabel", new Model(){
-                @Override
-                public Serializable getObject(){
-                    String cartSize =  "" + EEGDataBaseSession.get().getShoppingCart().size();
-                    return cartSize;
-                }
-            }));
-
-        }
-        cart.add(new Label("cartLabel", cartLabel));
-        cart.setVisibilityAllowed(signedIn);
-        add(cart);
-
-        Link<Void> link = new Link<Void>("logout") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick() {
-                EEGDataBaseSession.get().invalidate();
-                setResponsePage(EEGDataBaseApplication.get().getHomePage());
-            }
-        };
-        link.setVisibilityAllowed(signedIn);
-        add(link);
-
-        StringValue searchString = EEGDataBaseSession.get().getSearchString();
-        MenuSearchPanel panel = new MenuSearchPanel("menuSearchPanel", searchString);
-        add(panel);
-        if (!signedIn) {
-            panel.setVisible(false);
-        }
-
-        add(new Label("userLogStatusLabel", labelMessage));
-
-        add(new MainMenu("mainMenu"));
-
-        add(new ExternalLink("footerLink", ResourceUtils.getString("general.footer.link"), ResourceUtils.getString("general.footer.link.title")));
-
-        int year = Calendar.getInstance().get(Calendar.YEAR);
-
-        add(new Label("year", ResourceUtils.getString("general.footer.year") + year));
+        // footer
+        add(new FooterPanel("footer"));
     }
 
     public BaseFeedbackMessagePanel getFeedback() {
@@ -137,7 +59,8 @@ public class MenuPage extends BasePage {
     
     @Override
     public void renderHead(IHeaderResponse response) {
-        response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
+        //response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
         super.renderHead(response);
+        Bootstrap.renderHead(response);
     }
 }
