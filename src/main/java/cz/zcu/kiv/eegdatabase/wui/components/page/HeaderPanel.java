@@ -24,33 +24,21 @@
  **********************************************************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
-import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.LinkedList;
 import java.util.List;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.Page;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.AbstractLink;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
-import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
-import org.apache.wicket.request.cycle.RequestCycle;
-import org.apache.wicket.util.string.StringValue;
-
-import com.thoughtworks.selenium.webdriven.commands.IsVisible;
+import org.apache.wicket.model.StringResourceModel;
 
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.menu.EEGDatabaseMainMenu;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MainMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.ddm.MenuItem;
+import cz.zcu.kiv.eegdatabase.wui.components.link.LabeledLink;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
@@ -58,19 +46,14 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsByPackagePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.home.HomePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonList;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.DropDownButton;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.MenuBookmarkablePageLink;
-import de.agilecoders.wicket.core.markup.html.bootstrap.image.GlyphIconType;
-import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.INavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.ImmutableNavbarComponent;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.Navbar;
 import de.agilecoders.wicket.core.markup.html.bootstrap.navbar.NavbarButton;
@@ -113,35 +96,6 @@ public class HeaderPanel extends Panel {
         headerLink.add(new Label("linkLabel", labelLink));
         add(headerLink);
 
-        BookmarkablePageLink cart = new BookmarkablePageLink("cart", ShoppingCartPage.class);
-        String cartLabel = ResourceUtils.getString("general.page.myCart.link") + " ";
-        if(signedIn){
-            //
-            cart.add(new Label("cartSizeLabel", new Model(){
-                @Override
-                public Serializable getObject(){
-                    String cartSize =  "" + EEGDataBaseSession.get().getShoppingCart().size();
-                    return cartSize;
-                }
-            }));
-
-        }
-        cart.add(new Label("cartLabel", cartLabel));
-        cart.setVisibilityAllowed(signedIn);
-        add(cart);
-
-        Link<Void> link = new Link<Void>("logout") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void onClick() {
-                EEGDataBaseSession.get().invalidate();
-                setResponsePage(EEGDataBaseApplication.get().getHomePage());
-            }
-        };
-        link.setVisibilityAllowed(signedIn);
-        add(link);
 
         StringValue searchString = EEGDataBaseSession.get().getSearchString();
         MenuSearchPanel panel = new MenuSearchPanel("menuSearchPanel", searchString);
@@ -195,30 +149,27 @@ public class HeaderPanel extends Panel {
     private DropDownButton userDropdown() {
         String userName = EEGDataBaseSession.get().getLoggedUser().getUsername();
         
-        
-        // TODO vyresit label u linku
-        final Link<Void> logoutLink = new Link<Void>(ButtonList.getButtonMarkupId()) {
-
-            private static final long serialVersionUID = 1L;
-
+        // logout link
+        @SuppressWarnings("serial")
+        final LabeledLink logoutLink = new LabeledLink(ButtonList.getButtonMarkupId(), new ResourceModel("action.logout")) {
+            
             @Override
             public void onClick() {
                 EEGDataBaseSession.get().invalidate();
                 setResponsePage(EEGDataBaseApplication.get().getHomePage());
             }
+            
         };
-        //logoutLink.add(new Label("logout-label", "Logout"));
-        
-        
         
         DropDownButton dropdown = new NavbarDropDownButton(Model.of(userName)) {
 
             @Override
             protected List<AbstractLink> newSubMenuButtons(String buttonMarkupId) {
                 final List<AbstractLink> subMenu = new ArrayList<AbstractLink>();
-                subMenu.add(new MenuBookmarkablePageLink(HomePage.class, Model.of("My account"))
+                subMenu.add(new MenuBookmarkablePageLink(AccountOverViewPage.class, new ResourceModel("general.page.myaccount.link"))
                                 .setIconType(FontAwesomeIconType.user));
-                subMenu.add(new MenuBookmarkablePageLink(HomePage.class, Model.of("My cart"))
+                subMenu.add(new MenuBookmarkablePageLink(ShoppingCartPage.class,
+                        new StringResourceModel("general.page.myCart.link", this, null, EEGDataBaseSession.get().getShoppingCart().size()))
                                 .setIconType(FontAwesomeIconType.shopping_cart));
                 subMenu.add(logoutLink);
                 return subMenu;
@@ -250,6 +201,7 @@ public class HeaderPanel extends Panel {
         }
         
     }
+    
     
 
 }
