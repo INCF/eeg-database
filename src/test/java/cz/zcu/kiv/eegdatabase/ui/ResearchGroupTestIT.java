@@ -247,6 +247,8 @@ public class ResearchGroupTestIT extends AbstractUITest {
             tester.selectOption("members", "jan.stebetak2@seznam.cz");
             tester.clickButtonWithText("button.transferOwnership");
             fail("User is not member of the group.");
+        } catch (AssertionError er) {
+                //User "jan.stebetak2@seznam.cz" is not in group
         } finally {
 
             tester.clickLinkWithText(getProperty("action.logout"));
