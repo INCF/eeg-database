@@ -24,11 +24,13 @@ This file is part of the EEG-database project
 <html
     xmlns="http://www.w3.org/1999/xhtml"
     xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en">
-    <body>
+
+<body>
 	<wicket:extend>
+	
 		<div class="leftMenu" wicket:id="leftMenu"></div>
 
-		<div class="mainContentWithMenu">
+		<div class="mainContentWithMenu tab-content">
 
 			<h1>
 				<wicket:message key="pageTitle.allExperiments" />
@@ -37,6 +39,8 @@ This file is part of the EEG-database project
 				<wicket:container wicket:id="packageList"/>
 			</div>
 		</div>
+
 	</wicket:extend>
 </body>
+
 </html>

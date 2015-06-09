@@ -35,11 +35,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.ResourceModel;
 import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.util.string.StringValue;
 
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.link.LabeledLink;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
@@ -49,7 +49,9 @@ import cz.zcu.kiv.eegdatabase.wui.ui.history.HistoryPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.ListListsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ListScenariosPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.search.MenuSearchPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.search.SearchPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.RegistrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.shoppingCart.ShoppingCartPage;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.ButtonList;
 import de.agilecoders.wicket.core.markup.html.bootstrap.button.dropdown.DropDownButton;
@@ -72,42 +74,7 @@ public class HeaderPanel extends Panel {
     
     public HeaderPanel(String id) {
         super(id);
-        
         add(navbar());
-        
-        /*boolean signedIn = EEGDataBaseSession.get().isSignedIn();
-
-        String labelMessage;
-        Class<?> pageClass;
-        String labelLink;
-
-        if (signedIn) {
-            labelMessage = ResourceUtils.getString("general.header.logged");
-            labelMessage += EEGDataBaseSession.get().getLoggedUser().getUsername();
-            labelLink = ResourceUtils.getString("general.page.myaccount.link");
-            pageClass = AccountOverViewPage.class;
-        } else {
-            labelMessage = ResourceUtils.getString("general.header.notlogged");
-            labelLink = ResourceUtils.getString("action.register");
-            pageClass = RegistrationPage.class;
-        }
-
-        BookmarkablePageLink headerLink = new BookmarkablePageLink("userHeaderLink", pageClass);
-        headerLink.add(new Label("linkLabel", labelLink));
-        add(headerLink);
-
-
-        StringValue searchString = EEGDataBaseSession.get().getSearchString();
-        MenuSearchPanel panel = new MenuSearchPanel("menuSearchPanel", searchString);
-        add(panel);
-        if (!signedIn) {
-            panel.setVisible(false);
-        }
-
-        add(new Label("userLogStatusLabel", labelMessage));
-
-        add(new MainMenu("mainMenu"));*/
-        
     }
     
     
@@ -127,19 +94,23 @@ public class HeaderPanel extends Panel {
                 new MyNavbarButton<HistoryPage>(HistoryPage.class, "menuItem.history"),
                 new MyNavbarButton<AdminManageUserRolePage>(AdminManageUserRolePage.class, "menuItem.administration")  ));
         
-        /*
-        List<NavbarButton> buttons = new LinkedList<NavbarButton>();
+        // an alternative creation of the main menu using the EEGDatabaseMainMenu enum
+        /* List<NavbarButton> buttons = new LinkedList<NavbarButton>();
         MenuItem menu = new MenuItem(EEGDatabaseMainMenu.Main);
         for (MenuItem item : menu.getSubmenu()) {
             String title = ResourceUtils.getString(item.getString());
             NavbarButton<?> button = new NavbarButton(item.getClassForUrl(), Model.of(title));
             buttons.add(button);
         }
-        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, buttons.toArray(new NavbarButton[0])));
-        */
+        navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.LEFT, buttons.toArray(new NavbarButton[0]))); */
         
         if (EEGDataBaseSession.get().isSignedIn()) {
+            StringValue searchString = EEGDataBaseSession.get().getSearchString();
+            navbar.addComponents(new ImmutableNavbarComponent(new MenuSearchPanel(Navbar.componentId(), searchString), Navbar.ComponentPosition.LEFT));
             navbar.addComponents(new ImmutableNavbarComponent(userDropdown(), Navbar.ComponentPosition.RIGHT));
+        } else {
+            navbar.addComponents(NavbarComponents.transform(Navbar.ComponentPosition.RIGHT,
+                    new MyNavbarButton<RegistrationPage>(RegistrationPage.class, "action.register")));
         }
         
         return navbar;
@@ -147,7 +118,6 @@ public class HeaderPanel extends Panel {
     
     
     private DropDownButton userDropdown() {
-        String userName = EEGDataBaseSession.get().getLoggedUser().getUsername();
         
         // logout link
         @SuppressWarnings("serial")
@@ -161,14 +131,17 @@ public class HeaderPanel extends Panel {
             
         };
         
+        // dropdown button labeled with username
+        String userName = EEGDataBaseSession.get().getLoggedUser().getUsername();
+        @SuppressWarnings("serial")
         DropDownButton dropdown = new NavbarDropDownButton(Model.of(userName)) {
 
             @Override
             protected List<AbstractLink> newSubMenuButtons(String buttonMarkupId) {
                 final List<AbstractLink> subMenu = new ArrayList<AbstractLink>();
-                subMenu.add(new MenuBookmarkablePageLink(AccountOverViewPage.class, new ResourceModel("general.page.myaccount.link"))
+                subMenu.add(new MenuBookmarkablePageLink<AccountOverViewPage>(AccountOverViewPage.class, new ResourceModel("general.page.myaccount.link"))
                                 .setIconType(FontAwesomeIconType.user));
-                subMenu.add(new MenuBookmarkablePageLink(ShoppingCartPage.class,
+                subMenu.add(new MenuBookmarkablePageLink<ShoppingCartPage>(ShoppingCartPage.class,
                         new StringResourceModel("general.page.myCart.link", this, null, EEGDataBaseSession.get().getShoppingCart().size()))
                                 .setIconType(FontAwesomeIconType.shopping_cart));
                 subMenu.add(logoutLink);

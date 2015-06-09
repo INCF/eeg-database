@@ -28,7 +28,10 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentPackageListPanel;
+
 import java.util.List;
+
+import org.apache.wicket.Component;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.model.IModel;
@@ -59,7 +62,9 @@ public class ListExperimentsByPackagePage extends MenuPage {
     public ListExperimentsByPackagePage() {
 		this.initializeModel();
 
-		this.add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
+		Component menu = new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values());
+		menu.setRenderBodyOnly(true);
+		this.add(menu);
 
 		this.addContent();
     }

@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.search;
 
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.util.string.StringValue;
 
 /**
@@ -36,5 +35,6 @@ public class MenuSearchPanel extends SearchPanel {
 
     public MenuSearchPanel(String id, StringValue searchString) {
         super(id, searchString);
+        //get("searchForm:searchButton").setVisible(false);
     }
 }

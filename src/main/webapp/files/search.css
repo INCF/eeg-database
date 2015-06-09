@@ -6,6 +6,12 @@
         Purpose of the stylesheet follows.
 */
 
+/* Menu search form */
+
+.collapse {
+	visibility: collapse;
+}
+
 /* Search Results */
 
 .searchResults {

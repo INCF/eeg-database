@@ -1,0 +1,51 @@
+@charset "utf-8";
+
+
+.homepageLeftColumn {
+    float: left;
+    width: 550px;
+}
+
+.homepageRightColumn {
+    margin-left: 570px;
+}
+
+.homepageLeftColumn h2 {
+    margin: 0;
+}
+
+.homepageLeftColumn .dataTable,
+.homepageRightColumn .dataTable {
+    margin-top: 2px;
+}
+
+.homepageLeftColumn h2 a,
+.homepageRightColumn h2 a {
+    font-size: .7em;
+    margin-left: 5px;
+}
+
+
+
+
+/***************** dalsi ******************/
+
+#homepageMyExperimentsList .columnDate,
+#homepageMeAsSubjectList .columnDate {
+    width: 150px;
+}
+
+#homepageMyExperimentsList .columnId,
+#homepageMeAsSubjectList .columnId {
+    width: 50px;
+}
+
+#homepageMyExperimentsList .columnScenarioTitle,
+#homepageMeAsSubjectList .columnScenarioTitle {
+    width: 270px;
+}
+
+#homepageMyScenariosList .columnTitle,
+#homepageMyGroupsList .columnTitle {
+    width: 320px;
+}
