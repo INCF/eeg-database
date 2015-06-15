@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.components.menu.button;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.authroles.authorization.strategies.role.Roles;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
@@ -60,6 +61,8 @@ public class ButtonPageMenu extends Panel {
             protected void populateItem(ListItem<IButtonPageMenu> item) {
                 item.add(new BookmarkablePageLink("link", item.getModelObject().getPageClass(), item.getModelObject().getPageParameters())
                         .add(new Label("label", ResourceUtils.getModel(item.getModelObject().getPageTitleKey()))));
+                if (getPage().getPageClass().equals(item.getModelObject().getPageClass()))
+                    item.add(new AttributeModifier("class", "active"));
             }
         };
 

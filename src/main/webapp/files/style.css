@@ -44,3 +44,15 @@ html, body {
 	margin: 16px 40px;
 }
 
+
+.leftMenu {
+    width: 200px;
+    float: left;
+    padding: 10px 0;
+}
+
+.mainContentWithMenu {
+    padding: 10px 0;
+    margin-left: 220px;
+}
+

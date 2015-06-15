@@ -24,13 +24,17 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.wui.components.repeater.CustomAjaxPagingNavigator;
+
 import java.util.List;
+
 import org.apache.wicket.ajax.markup.html.navigation.paging.AjaxPagingNavigator;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
 import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
+
+import de.agilecoders.wicket.core.markup.html.bootstrap.navigation.BootstrapPagingNavigator;
 
 /**
  * Panel which displays list of experiment packages and experiments
@@ -93,7 +97,9 @@ public class ExperimentPackageListPanel extends Panel {
 		listView.setOutputMarkupId(true);
 
 		add(listView);
-		PagingNavigator navig = new PagingNavigator("navigation", listView);
+		PagingNavigator navig = new BootstrapPagingNavigator("navigation", listView);
+		if (listView.getPageCount() < 2)
+		    navig.setVisible(false);
 		add(navig);
     }
 

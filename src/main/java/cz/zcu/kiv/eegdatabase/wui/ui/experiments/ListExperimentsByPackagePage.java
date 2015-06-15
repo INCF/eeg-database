@@ -63,7 +63,7 @@ public class ListExperimentsByPackagePage extends MenuPage {
 		this.initializeModel();
 
 		Component menu = new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values());
-		menu.setRenderBodyOnly(true);
+		//menu.setRenderBodyOnly(true);
 		this.add(menu);
 
 		this.addContent();

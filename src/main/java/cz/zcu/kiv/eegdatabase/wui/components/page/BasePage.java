@@ -22,17 +22,22 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.model.IModel;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+
 import org.apache.wicket.request.http.WebResponse;
+
+import de.agilecoders.wicket.core.Bootstrap;
 
 /**
  * Base wicket page for pages in EEGDatabase. Added title in html header section.
  * 
  * @author Jakub Rinkes
+ * @author Jakub Krauz
  * 
  */
 public class BasePage extends WebPage {
@@ -55,4 +60,11 @@ public class BasePage extends WebPage {
         // Protection against ClickJacking, prevents the page from being rendered in an iframe element
         response.setHeader("X-Frame-Options", "deny");
     }
+    
+    @Override
+    public void renderHead(IHeaderResponse response) {
+        super.renderHead(response);
+        Bootstrap.renderHead(response);
+    }
+    
 }

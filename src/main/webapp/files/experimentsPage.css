@@ -1,0 +1,36 @@
+@charset "utf-8";
+
+
+.packageList {
+    padding: 0;
+}
+
+.packageList li {
+    list-style: none;
+}
+
+.headerWithLinks h2 {
+    font-size: 170%;
+}
+
+.actions {
+	
+}
+
+.actions div {
+	display: inline;
+}
+
+.dataTable {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.dataTable .headers {
+    background-color: #3E3F3A;
+    color: silver;
+}
+
+.dataTable tbody tr td:nth-child(2) {
+    white-space: normal;
+}

@@ -33,6 +33,7 @@ import de.agilecoders.wicket.core.Bootstrap;
  * added base feedback panel and footer link.
  * 
  * @author Jakub Rinkes
+ * @author Jakub Krauz
  *
  */
 public class MenuPage extends BasePage {

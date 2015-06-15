@@ -28,6 +28,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
+import cz.zcu.kiv.eegdatabase.wui.components.repeater.BootstrapAjaxFallbackDataTable;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -35,7 +36,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseRequestPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
@@ -44,12 +44,11 @@ import cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing.MethodListPage;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.CloseButtonCallback;
-import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.IColumn;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColumn;
+import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
@@ -60,7 +59,7 @@ import org.apache.wicket.model.*;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.math.BigDecimal;
+import de.agilecoders.wicket.core.Bootstrap;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -72,6 +71,8 @@ import java.util.List;
  * @author Jakub Danek
  */
 public class ExperimentPackagePanel extends Panel {
+
+    private static final long serialVersionUID = 1L;
 
     private static final int EXPERIMENTS_PER_PAGE = 10;
 
@@ -122,7 +123,7 @@ public class ExperimentPackagePanel extends Panel {
 		super(id);
 
 		this.epModel = model;
-		this.licenseModel = new Model();
+		this.licenseModel = new Model<License>();
 		ownedLicenses = licenseFacade.getUsersLicenses(EEGDataBaseSession.get().getLoggedUser());
 
 		experimentListCont = new WebMarkupContainer("experimentListCont");
@@ -130,10 +131,11 @@ public class ExperimentPackagePanel extends Panel {
 		this.add(experimentListCont);
 
 		this.addHeader();
-		this.addFooter();
+		//this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
-		add(new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", epModel)
-		.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0)));
+		
+		/*add(new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", epModel)
+		.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0)));*/
     }
 
     /**
@@ -159,6 +161,12 @@ public class ExperimentPackagePanel extends Panel {
 		};
 		this.addLicenseList(licenseCont);
 		header.add(licenseCont);
+		
+		header.add(new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", epModel)
+        .setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0)));
+		
+		header.add(createVisibilityLink("showListLink", true));
+        header.add(createVisibilityLink("hideListLink", false));
     }
 
 	private void addFooter() {
@@ -327,8 +335,8 @@ public class ExperimentPackagePanel extends Panel {
 
 		};
 
-		table = new AjaxFallbackDefaultDataTable<Experiment, String>("list", columns,
-								new ListExperimentsDataProvider(experimentsModel), EXPERIMENTS_PER_PAGE);
+		table = new BootstrapAjaxFallbackDataTable<Experiment, String>("list", columns,
+                        new ListExperimentsDataProvider(experimentsModel), EXPERIMENTS_PER_PAGE);
 
 		cont.add(table);
     }
@@ -374,5 +382,6 @@ public class ExperimentPackagePanel extends Panel {
 
 		return columns;
     }
+
 
 }
