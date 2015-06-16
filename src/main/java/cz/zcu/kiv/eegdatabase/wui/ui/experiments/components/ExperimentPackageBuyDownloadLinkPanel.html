@@ -25,12 +25,12 @@ This file is part of the EEG-database project
 <body>
     <wicket:panel>
         <wicket:enclosure child="addToCartLink">
-            <a href='#' wicket:id="addToCartLink"><wicket:message key="link.addToCart"></wicket:message></a>
+            <a href='#' wicket:id="addToCartLink" class="btn btn-sm btn-primary"><wicket:message key="link.addToCart"></wicket:message></a>
 <!--             <span><wicket:message key="label.price"></wicket:message></span> -->
 <!--             <span wicket:id="price"></span> -->
         </wicket:enclosure>
-        <span wicket:id="inCart" class="alert"></span>
-        <a href='#' wicket:id="downloadLink"><wicket:message key="link.download"></wicket:message></a>
+        <span wicket:id="inCart" class="label label-success"></span>
+        <a href='#' wicket:id="downloadLink" class="btn btn-sm btn-success"><wicket:message key="link.download"></wicket:message></a>
     </wicket:panel>
 </body>
 </html>

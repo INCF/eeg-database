@@ -7,23 +7,55 @@
 
 .packageList li {
     list-style: none;
+    margin-bottom: 50px;
 }
 
 .headerWithLinks h2 {
     font-size: 170%;
 }
 
-.actions {
-	
+.headerWithLinks .subtitle {
+    font-size: 120%;
 }
 
-.actions div {
-	display: inline;
+.headerWithLinks .label {
+	font-size: 110%;
+}
+
+.wrapper {
+	overflow: hidden;
+	margin: 0;
+	padding: 0;
+}
+
+.actions {
+	float: left;
+	padding: 10px 50px 20px 0;
+}
+
+.packageInfo {
+    float: left;
+    padding: 10px 0 20px 0;
+}
+
+.hide-show-wrapper {
+	margin: 0;
+	position: relative;
+}
+
+.hide-show {
+	position: absolute; 
+    bottom: 0;
+    right: 0;
 }
 
 .dataTable {
     width: 100%;
     white-space: nowrap;
+}
+
+.pagination {
+	margin: 10px;
 }
 
 .dataTable .headers {
