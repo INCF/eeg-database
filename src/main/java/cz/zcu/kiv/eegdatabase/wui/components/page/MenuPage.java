@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.page;
 
-import org.apache.wicket.markup.head.CssHeaderItem;
 import org.apache.wicket.markup.head.IHeaderResponse;
 
 import cz.zcu.kiv.eegdatabase.wui.components.feedback.BaseFeedbackMessagePanel;

@@ -10,8 +10,9 @@
     margin-bottom: 50px;
 }
 
-.headerWithLinks h2 {
+.mainContentWithMenu h1 {
     font-size: 170%;
+    margin-bottom: 30px;
 }
 
 .headerWithLinks .subtitle {
@@ -47,20 +48,6 @@
 	position: absolute; 
     bottom: 0;
     right: 0;
-}
-
-.dataTable {
-    width: 100%;
-    white-space: nowrap;
-}
-
-.pagination {
-	margin: 10px;
-}
-
-.dataTable .headers {
-    background-color: #3E3F3A;
-    color: silver;
 }
 
 .dataTable tbody tr td:nth-child(2) {

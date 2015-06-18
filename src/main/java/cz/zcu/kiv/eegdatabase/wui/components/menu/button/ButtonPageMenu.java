@@ -36,6 +36,7 @@ import org.apache.wicket.markup.html.panel.Panel;
 
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
 
 /**
  * Component for creating left menu on pages. Works with Enumeration of menu structure. Enumeration have to implements IButtonPageMenu interface. Menu use AuthorizeInstantiation
@@ -61,8 +62,18 @@ public class ButtonPageMenu extends Panel {
             protected void populateItem(ListItem<IButtonPageMenu> item) {
                 item.add(new BookmarkablePageLink("link", item.getModelObject().getPageClass(), item.getModelObject().getPageParameters())
                         .add(new Label("label", ResourceUtils.getModel(item.getModelObject().getPageTitleKey()))));
-                if (getPage().getPageClass().equals(item.getModelObject().getPageClass()))
-                    item.add(new AttributeModifier("class", "active"));
+
+                // add the .active class to the active item
+                // FIXME this is a quick hack, not a clean solution
+                if (getPage().getPageClass().equals(item.getModelObject().getPageClass())) {
+                    if (getPage().getPageClass().equals(ListExperimentsPage.class)) {
+                        if (getPage().getPageParameters().equals(item.getModelObject().getPageParameters()))
+                            item.add(new AttributeModifier("class", "active"));
+                    } else {
+                        item.add(new AttributeModifier("class", "active"));
+                    }
+                }
+                
             }
         };
 

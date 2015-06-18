@@ -81,6 +81,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.PublicPrivateLicensePan
  *
  * @author Jakub Danek
  */
+// TODO style (see {@link ExperimentPackagePanel})
 public class ExperimentPackageManagePanel extends Panel {
     
     protected Log log = LogFactory.getLog(getClass());
