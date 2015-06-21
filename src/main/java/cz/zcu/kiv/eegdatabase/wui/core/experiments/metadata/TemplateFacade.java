@@ -52,4 +52,6 @@ public interface TemplateFacade extends GenericFacade<Template, Integer> {
     public boolean canSaveName(String name, int personId);
     
     public List<Section> getListOfAvailableODMLSections();
+    
+    public void migrateSQLToES();
 }

@@ -29,9 +29,10 @@ public class ODMLSectionSerializer extends JsonSerializer<Section> {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             wr.write(stream, false, false);
 
-            String xmlString = stream.toString("UTF-8");
+            String xmlString = stream.toString("UTF-8"); // encoding is necessary
             JSONObject jsonObject = XML.toJSONObject(xmlString);
-            String jsonString = jsonObject.toString();
+//            String jsonString = jsonObject.toString(); /// XXX remove this - UTF8 encoding problem. 
+            String jsonString = new String(jsonObject.toString().getBytes("UTF-8")); // encoding is necessary
             
             jgen.writeRawValue(jsonString);
 

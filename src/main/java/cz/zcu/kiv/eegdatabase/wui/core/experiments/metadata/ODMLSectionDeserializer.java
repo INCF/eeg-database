@@ -2,6 +2,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
@@ -26,6 +27,7 @@ import org.codehaus.jackson.map.DeserializationContext;
 import org.codehaus.jackson.map.JsonDeserializer;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+import org.xml.sax.InputSource;
 
 public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
 
@@ -41,11 +43,14 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
             JSONObject jsonObject = new JSONObject(jsonString);
             String xmlString = XML.toString(jsonObject);
             Reader reader = new Reader();
-
-            ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes());
+            
+            ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8")); // encoding is necessary
+            
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder dbuilder = dbf.newDocumentBuilder();
-            Document dom = dbuilder.parse(stream);
+            InputSource source = new InputSource(stream);
+            source.setEncoding("UTF-8"); // encoding is necessary
+            Document dom = dbuilder.parse(source);
             Element rootElement = dom.getDocumentElement();
             rootElement.setAttribute("version", "1.0");
 

@@ -26,28 +26,42 @@
  */
 package cz.zcu.kiv.eegdatabase.logic.xml;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.data.xmlObjects.*;
-import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
-import com.ibm.icu.util.Calendar;
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.OutputStream;
+import java.sql.Timestamp;
+import java.util.List;
+import java.util.Set;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBElement;
 import javax.xml.bind.JAXBException;
 import javax.xml.bind.Marshaller;
 
-import java.io.ByteArrayOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.Timestamp;
-import java.util.Date;
-import java.util.List;
-import java.util.Set;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal;
+import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.DataType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.FileMetadataType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.HardwareType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.MeasurationAddParam;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.MeasurationType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.ObjectFactory;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonAddParam;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.PersonType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.ScenarioType;
+import cz.zcu.kiv.eegdatabase.data.xmlObjects.WeatherType;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.DateUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
 /**
  *
@@ -174,20 +188,7 @@ public class XMLTransformer implements DataTransformer {
     if (mc.isBirth()) {
         if (per.getDateOfBirth() != null && scenarioStartTime != null) {
             
-            Calendar toTime = Calendar.getInstance();
-            toTime.setTimeInMillis(scenarioStartTime.getTime());
-            
-            Calendar birthDate = Calendar.getInstance();
-            birthDate.setTimeInMillis(per.getDateOfBirth().getTime());
-            
-            int years = toTime.get(Calendar.YEAR) - birthDate.get(Calendar.YEAR);
-            int currMonth = toTime.get(Calendar.MONTH) + 1;
-            int birthMonth = birthDate.get(Calendar.MONTH) + 1;
-            int months = currMonth - birthMonth;
-            
-            if (months < 0)
-               years--;
-            
+            int years = DateUtils.getPersonAge(per, scenarioStartTime);
             pert.setAge(Integer.toString(years));
         }
 

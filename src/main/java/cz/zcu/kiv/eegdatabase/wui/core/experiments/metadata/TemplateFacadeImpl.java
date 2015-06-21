@@ -1,19 +1,29 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
 import odml.core.Reader;
 import odml.core.Section;
+import odml.core.Writer;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.ajax.json.JSONException;
+import org.apache.wicket.ajax.json.JSONObject;
+import org.apache.wicket.ajax.json.XML;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.ClassPathResource;
+import org.springframework.transaction.annotation.Transactional;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 
 /**
  * ********************************************************************************************************************
@@ -45,9 +55,16 @@ public class TemplateFacadeImpl implements TemplateFacade {
 
     private TemplateService service;
 
+    private ExperimentsFacade facade;
+
     @Required
     public void setService(TemplateService service) {
         this.service = service;
+    }
+
+    @Required
+    public void setFacade(ExperimentsFacade facade) {
+        this.facade = facade;
     }
 
     @Override
@@ -164,5 +181,41 @@ public class TemplateFacadeImpl implements TemplateFacade {
         }
 
         return sections;
+    }
+
+    @Override
+    @Transactional
+    public void migrateSQLToES() {
+        List<Experiment> allRecords = facade.getAllRecords();
+        for (Experiment tmp : allRecords) {
+            try {
+
+                Experiment experiment = facade.getExperimentForDetail(tmp.getExperimentId());
+                Section section = ExperimentToODMLMapper.convertExperimentToSection(experiment);
+
+                Writer wr = new Writer(section, true, false);
+                ByteArrayOutputStream stream = new ByteArrayOutputStream();
+                wr.write(stream, false, false);
+
+                String xmlString;
+                xmlString = stream.toString("UTF-8");
+                JSONObject jsonObject = XML.toJSONObject(xmlString);
+                // String jsonString = jsonObject.toString(); /// XXX remove this - UTF8 encoding problem.
+                String jsonString = new String(jsonObject.toString(4).getBytes("UTF-8")); // encoding is necessary
+                
+                FileUtils.writeStringToFile(new File("D:\\tmp\\experiment" + experiment.getExperimentId() + ".json"), jsonString);
+            } catch (UnsupportedEncodingException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } // encoding is necessary
+            catch (JSONException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+        }
     }
 }

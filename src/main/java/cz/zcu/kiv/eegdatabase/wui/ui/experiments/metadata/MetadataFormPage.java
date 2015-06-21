@@ -27,6 +27,7 @@ import java.util.List;
 
 import odml.core.Reader;
 import odml.core.Section;
+import odml.core.Writer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -37,6 +38,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 
@@ -47,6 +49,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.ExperimentToODMLMapper;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
@@ -82,7 +85,7 @@ public class MetadataFormPage extends MenuPage {
         add(new MetadataForm("metadata-form", new Model<Section>(section)));
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
-
+    
     public MetadataFormPage(final PageParameters parameters) {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.metadata.new"));
@@ -93,15 +96,17 @@ public class MetadataFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
 
-        List<Section> list = templateFacade.getListOfAvailableODMLSections();
-        Section root = new Section();
-
-        for (Section section : list)
-            root.add(section);
-
-        Experiment read = expFacade.getExperimentForDetail(262);
-        read.getElasticExperiment().setMetadata(root);
-        expFacade.update(read);
+//        List<Section> list = templateFacade.getListOfAvailableODMLSections();
+//        Section root = new Section();
+//
+//        for (Section section : list)
+//            root.add(section);
+//
+//        Experiment read = expFacade.getExperimentForDetail(262);
+//        read.getElasticExperiment().setMetadata(root);
+//        expFacade.update(read);
+        
+//        templateFacade.migrateSQLToES();
 
         int templateId = value.toInt();
         Template template = templateFacade.read(templateId);
@@ -110,7 +115,7 @@ public class MetadataFormPage extends MenuPage {
         try {
             Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
             section.setName(template.getName());
-            add(new MetadataForm("metadata-form", new Model<Section>(read.getElasticExperiment().getMetadata())));
+            add(new MetadataForm("metadata-form", new Model<Section>(section)));
 
         } catch (Exception e) {
             log.error(e.getMessage(), e);
@@ -119,4 +124,5 @@ public class MetadataFormPage extends MenuPage {
 
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
+    
 }

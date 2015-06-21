@@ -22,6 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
+import java.sql.Timestamp;
+
+import com.ibm.icu.util.Calendar;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+
 /**
  * Utilities class for string.
  * 
@@ -52,4 +58,5 @@ public class StringUtils {
     public static String getCaptchaString(){
         return randomString(3, 8);
     }
+    
 }
