@@ -32,7 +32,6 @@ import org.apache.wicket.MarkupContainer;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.behavior.AttributeAppender;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableLabel;
 import org.apache.wicket.extensions.ajax.markup.html.AjaxEditableMultiLineLabel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
@@ -56,6 +55,7 @@ public class TemplateSectionPanel extends Panel {
     private WebMarkupContainer head;
     private MarkupContainer mainContainer;
     private TemplateTreeViewModel viewModel;
+    private int propertySuffix;
 
     public TemplateSectionPanel(String id, IModel<Section> model, final MarkupContainer container, final List<Section> choices, TemplateTreeViewModel viewModel) {
         super(id, new CompoundPropertyModel<Section>(model));
@@ -68,6 +68,7 @@ public class TemplateSectionPanel extends Panel {
         head = new WebMarkupContainer("head");
         content.setOutputMarkupPlaceholderTag(true);
         add(content, head);
+        propertySuffix = model.getObject().propertyCount() + 1;
 
         setupHeadAndControlComponents(model, choices);
         setupContentComponents(choices);
@@ -101,7 +102,7 @@ public class TemplateSectionPanel extends Panel {
     private void setupHeadAndControlComponents(final IModel<Section> model, final List<Section> choices) {
         // head + control
         final boolean notRootSection = model.getObject().getParent() != null;
-        
+
         head.add(new AjaxEditableLabel<String>("name") {
 
             private static final long serialVersionUID = 1L;
@@ -116,14 +117,14 @@ public class TemplateSectionPanel extends Panel {
                 }
             }
         });
-        
+
         String key;
-        if(notRootSection){
+        if (notRootSection) {
             key = "label.template.section";
         } else {
             key = "label.template.templateName";
         }
-        
+
         head.add(new Label("sectionNameLabel", ResourceUtils.getString(key)));
 
         head.add(new AjaxEditableMultiLineLabel<String>("definition") {
@@ -203,7 +204,7 @@ public class TemplateSectionPanel extends Panel {
             public void onClick(AjaxRequestTarget target) {
 
                 try {
-                    Property property = new Property("NewProperty", new Object());
+                    Property property = new Property(ResourceUtils.getString("text.template.empty.propertyName") + propertySuffix++, ResourceUtils.getString("text.template.empty.propertyValue"));
                     TemplateSectionPanel.this.model.getObject().add(property);
                 } catch (Exception e) {
                     e.printStackTrace();

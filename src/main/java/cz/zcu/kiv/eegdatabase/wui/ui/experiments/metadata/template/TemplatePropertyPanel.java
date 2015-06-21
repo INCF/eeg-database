@@ -54,26 +54,17 @@ public class TemplatePropertyPanel extends Panel {
 
     private void setupComponents(IModel<Property> model) {
 
-        add(new AjaxEditableLabel<String>("name"){
-            
+        add(new AjaxEditableLabel<String>("name") {
+
             private static final long serialVersionUID = 1L;
 
             @Override
             protected String defaultNullLabel() {
                 return ResourceUtils.getString("text.template.empty.propertyName");
             }
-            
+
         });
-        add(new AjaxEditableLabel<Object>("value"){
-            
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            protected String defaultNullLabel() {
-                return ResourceUtils.getString("text.template.empty.propertyValue");
-            }
-            
-        });
+        add(new PropertyMultiValuePanel("value", model));
         add(new AjaxEditableMultiLineLabel<String>("definition") {
 
             private static final long serialVersionUID = 1L;
@@ -83,15 +74,15 @@ public class TemplatePropertyPanel extends Panel {
                 super.onConfigure();
                 setVisible(TemplatePropertyPanel.this.viewModel.isDefinitionVisible());
             }
-            
+
             @Override
             protected String defaultNullLabel() {
                 return ResourceUtils.getString("text.template.empty.definition");
             }
         });
-        
-        add(new AjaxEditableLabel<String>("type"){
-            
+
+        add(new AjaxEditableLabel<String>("type") {
+
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -99,8 +90,8 @@ public class TemplatePropertyPanel extends Panel {
                 return ResourceUtils.getString("text.template.empty.propertyType");
             }
         });
-        
-        add(new AjaxLink<Void>("remove-property"){
+
+        add(new AjaxLink<Void>("remove-property") {
 
             private static final long serialVersionUID = 1L;
 
@@ -108,15 +99,14 @@ public class TemplatePropertyPanel extends Panel {
             public void onClick(AjaxRequestTarget target) {
                 Property property = (Property) TemplatePropertyPanel.this.getDefaultModelObject();
                 property.getParent().removeProperty(property.getName());
-                
+
                 target.add(container);
             }
-            
-            
+
         });
-        
+
         add(new AjaxCheckBox("required", new PropertyModel<Boolean>(model.getObject(), "guiHelper.required")) {
-            
+
             private static final long serialVersionUID = 1L;
 
             @Override
