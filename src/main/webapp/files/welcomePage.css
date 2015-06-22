@@ -5,13 +5,20 @@
     white-space: normal;
 }
 
-.jumbotron {
-	padding: 30px 10px !important;
+.content h2 {
+	font-size: 200%;
+	margin-top: 50px;
 }
 
+.content .btn {
+	margin-left: 20px;
+}
 
+.emptyDataTable {
+	padding: 20px;
+	background-color: #d4e8b7;
+}
 
-/***************** dalsi ******************/
 
 #homepageMyExperimentsList .columnDate,
 #homepageMeAsSubjectList .columnDate {
@@ -23,12 +30,7 @@
     width: 50px;
 }
 
-#homepageMyExperimentsList .columnScenarioTitle,
-#homepageMeAsSubjectList .columnScenarioTitle {
-    width: 270px;
-}
-
-#homepageMyScenariosList .columnTitle,
-#homepageMyGroupsList .columnTitle {
-    width: 320px;
+#homepageMyScenariosList .columnDetail,
+#homepageMyGroupsList .columnDetail {
+    width: 50px;
 }

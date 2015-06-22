@@ -380,5 +380,31 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
     public String getDomain() {
         return domain;
     }
+    
+    
+    
+    /*
+    // LESS integration in this way supports only class-scope .less resources
+    // context-relative resource references (e.g. in the webapp/files folder) is not supported
+    
+    @Override
+    protected ResourceReferenceRegistry newResourceReferenceRegistry() {
+        return new ResourceReferenceRegistry(new LessRRR());
+    }
+
+    
+    private static class LessRRR extends ResourceReferenceRegistry.DefaultResourceReferenceFactory {
+
+        @Override
+        public ResourceReference create(ResourceReference.Key key) {
+            if (key.getName().endsWith(".less")) {
+                return new LessResourceReference(key);
+            } else {
+                return super.create(key);
+            }
+        }
+        
+    }*/
+    
 
 }

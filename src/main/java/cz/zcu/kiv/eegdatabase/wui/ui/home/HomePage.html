@@ -30,36 +30,30 @@ This file is part of the EEG-database project
 
 <body>
   <wicket:extend>
-    <div class="notLogged">
-      <div class="homepageLeftColumn">
+<!--     <div class="notLogged"> -->
+    
+      <div class="homepageLeftColumn col-sm-8">
         <h1>
           <wicket:message key="homePage.welcomeHeading" />
         </h1>
 
         <p>
           <wicket:message key="homePage.description1"></wicket:message>
-        <div class="left">
-          <img src="./files/images/eeg-foto-main.jpg" />
-        </div>
-        <div class="right">
-          <h2>
-            <wicket:message key="homePage.featuresHeading"></wicket:message>
-          </h2>
-          <wicket:message key="homePage.featuresList"></wicket:message>
-        </div>
-        <div class="clear"></div>
+          <div class="left">
+            <img src="./files/images/eeg-foto-main.jpg" />
+          </div>
+          <div class="right">
+            <h2><wicket:message key="homePage.featuresHeading"></wicket:message></h2>
+            <wicket:message key="homePage.featuresList"></wicket:message>
+          </div>
+          <div class="clear"></div>
         </p>
-
-        <p>
-          <wicket:message key="homePage.description2" />
-        </p>
-
-        <div class="homePageActionBoxes">
-          <a wicket:id="registerLink" class="homepageRegistrationLink"> <wicket:message
-              key="system.register" /></a>
+        
+        <div class="alert alert-info" role="alert">
+          <wicket:message key="homePage.description2">
+            <a wicket:id="registerLink" class="alert-link"><wicket:message key="homePage.signUp" /></a>
+          </wicket:message>
         </div>
-
-        <div class="clear"></div>
 
         <h2>
           <wicket:message key="homePage.discoverHeading" />
@@ -81,9 +75,7 @@ This file is part of the EEG-database project
           </ul>
         </div>
 
-          <p>
-              <a wicket:id="licenseLink1"><img wicket:message="alt:homePage.license.ccalt" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-          </p>
+          <a wicket:id="licenseLink1"><img wicket:message="alt:homePage.license.ccalt" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
           <p>
               <wicket:message key="homePage.license.text1"/>
               <a wicket:id="EEGBaseLink"></a>
@@ -106,31 +98,34 @@ This file is part of the EEG-database project
 
 
 
-      <div class="homepageRightColumn">
+      <div class="homepageRightColumn col-sm-4">
         <h2>Login</h2>
 
         <a href='#' wicket:id="forgottenPass"><wicket:message key="system.forgottenPassword"></wicket:message>?</a>
 
         <form wicket:id="login" class="loginForm">
-          <fieldset>
-            <div>
-              <label for="userName" class="fieldLabel"><wicket:message key="general.email">[email]</wicket:message></label>
-              <input type="text" wicket:id="userName" />
-            </div>
-            <div>
-              <label for="password" class="fieldLabel"><wicket:message
-                  key="general.password">[password]</wicket:message></label> <input type="password"
-                wicket:id="password" />
-            </div>
-            <div class="rememberMeBox">
-              <input type="checkbox" name="_spring_security_remember_me"
+          <table>
+            <tr>
+              <td><label for="userName" class="fieldLabel">
+                <wicket:message key="general.email">[email]</wicket:message>
+              </label></td>
+              <td><input type="text" wicket:id="userName" id="userName" /></td>
+            </tr>
+            <tr>
+              <td><label for="password" class="fieldLabel">
+                <wicket:message key="general.password">[password]</wicket:message>
+              </label></td>
+              <td><input type="password" wicket:id="password" id="password" /></td>
+            </tr>
+            <tr>
+              <td colspan="2"><input type="checkbox" name="_spring_security_remember_me"
                 id="_spring_security_remember_me" /> <label for="_spring_security_remember_me"><wicket:message
-                  key="label.rememberMe" /></label>
-            </div>
-            <div>
-              <input type="submit" wicket:id="submit" />
-            </div>
-          </fieldset>
+                  key="label.rememberMe" /></label></td>
+            </tr>
+            <tr>
+              <td colspan="2"><input type="submit" wicket:id="submit" class="pull-right" /></td>
+            </tr>
+          </table>
         </form>
         
         <div>OR</div>
@@ -167,7 +162,7 @@ This file is part of the EEG-database project
         </ul>
       </div>
       
-    </div>
+<!--     </div> -->
   </wicket:extend>
 </body>
 </html>

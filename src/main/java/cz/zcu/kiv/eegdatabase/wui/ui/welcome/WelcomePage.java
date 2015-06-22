@@ -121,6 +121,7 @@ public class WelcomePage extends MenuPage {
         add(new BookmarkablePageLink<Void>("scenariosList", ListScenariosPage.class));
         add(new BookmarkablePageLink<Void>("groupList", ListResearchGroupsPage.class));
     }
+    
 
     private class MyArticlesFragment extends Fragment {
 

@@ -30,78 +30,54 @@ This file is part of the EEG-database project
 
 <body>
   <wicket:extend>
-    <!-- <h1 class="homepageHeading">
-      <wicket:message key="pageTitle.homePage" />
-    </h1> -->
-    
-<!--     <div class="container">
-    <div class="row"> -->
 
     <div class="homepageLeftColumn col-sm-7">
 
-      <div class="jumbotron">
       <h2>
         <wicket:message key="heading.myArticles" />
-        <a href="#" wicket:id="articlesList"><wicket:message key="seeAll" /></a>
+        <a href="#" wicket:id="articlesList" class="btn btn-primary btn-sm"><wicket:message key="seeAll" /></a>
       </h2>
-
       <wicket:container wicket:id="articles"></wicket:container>
-      </div>
 
-        <div class="jumbotron">
       <h2>
         <wicket:message key="heading.myExperiments" />
-        <a href="#" wicket:id="experimentList"><wicket:message key="seeAll" /></a>
+        <a href="#" wicket:id="experimentList" class="btn btn-primary btn-sm"><wicket:message key="seeAll" /></a>
       </h2>
-
       <wicket:container wicket:id="experiments"></wicket:container>
-        </div>
 
-<div class="jumbotron">
       <h2>
         <wicket:message key="heading.meAsSubject" />
-        <a href="#" wicket:id="meAsSubjectList"><wicket:message key="seeAll" /></a>
+        <a href="#" wicket:id="meAsSubjectList" class="btn btn-primary btn-sm"><wicket:message key="seeAll" /></a>
       </h2>
-
       <wicket:container wicket:id="meAsSubject"></wicket:container>
-</div>
 
     </div>
 
     <div class="homepageRightColumn col-sm-5">
-    
-    <div class="jumbotron">
+
       <h2>
         <wicket:message key="heading.myScenarios" />
-        <a href="#" wicket:id="scenariosList"><wicket:message key="seeAll" /></a>
+        <a href="#" wicket:id="scenariosList" class="btn btn-primary btn-sm"><wicket:message key="seeAll" /></a>
       </h2>
-
       <wicket:container wicket:id="myScenarios"></wicket:container>
-      </div>
 
-<div class="jumbotron">
       <h2>
         <wicket:message key="heading.myMemberGroups" />
-        <a href="#" wicket:id="groupList"><wicket:message key="seeAll" /></a>
+        <a href="#" wicket:id="groupList" class="btn btn-primary btn-sm"><wicket:message key="seeAll" /></a>
       </h2>
-
       <wicket:container wicket:id="myGroups"></wicket:container>
-      </div>
 
     </div>
-    
- <!--    </div>
-    </div> -->
 
 
   <wicket:fragment wicket:id="emptyFrag">
-    <div class="emptyDataTable">
+    <div class="emptyDataTable text-center">
       <wicket:message key="emptyTable.noItems" />
     </div>
   </wicket:fragment>
   
   <wicket:fragment wicket:id="articlesFrag">
-    <table class="dataTable table table-hover table-condensed">
+    <table class="dataTable table table-hover table-condensed" id="homepageMyArticlesList">
       <thead>
         <tr>
           <th class="columnDate"><wicket:message key="dataTable.heading.date" /></th>
@@ -110,7 +86,7 @@ This file is part of the EEG-database project
           <th class="columnCommentsCount"><wicket:message key="heading.comments" /></th>
         </tr>
       </thead>
-      <tbody id="homepageMyArticlesList">
+      <tbody>
         <tr wicket:id="list">
           <td wicket:id="time"></td>
           <td wicket:id="articleTitle"></td>
@@ -169,7 +145,7 @@ This file is part of the EEG-database project
         <thead>
           <tr>
             <th class="columnTitle"><wicket:message key="dataTable.heading.scenarioTitle" /></th>
-            <th></th>
+            <th class="columnDetail"></th>
           </tr>
         </thead>
         <tbody>
@@ -186,7 +162,7 @@ This file is part of the EEG-database project
         <thead>
           <tr>
             <th class="columnTitle"><wicket:message key="dataTable.heading.groupTitle" /></th>
-            <th></th>
+            <th class="columnDetail"></th>
           </tr>
         </thead>
         <tbody>
