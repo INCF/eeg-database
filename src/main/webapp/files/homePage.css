@@ -9,6 +9,9 @@ p {
 	margin-top: 0;
 }
 
+
+/****************** left column *******************/
+
 .homepageLeftColumn {
 	padding-right: 50px;
 }
@@ -54,6 +57,9 @@ p {
     border: 1px solid gray;
 }
 
+
+/****************** right column ********************/
+
 .homepageRightColumn {
     padding-left: 40px;
     padding-top: 30px;
@@ -68,4 +74,16 @@ p {
 	margin: 20px 0;
 }
 
-ul.partners {list-style: none; position: relative; left: 45px;}
+#fb_signin {
+	margin: 10px 0;
+}
+
+#li_signin {
+	margin-bottom: 50px;
+}
+
+ul.partners {
+	list-style: none; 
+	position: relative; 
+	left: 45px;
+}
