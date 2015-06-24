@@ -213,15 +213,6 @@
     </property>
     
     <property>
-      <name>Threshold</name>
-      <value>
-        <type>float</type> 
-        <unit>V</unit>
-      </value>
-      <definition>The firing threshold.</definition>
-    </property>
-    
-    <property>
       <name>ThresholdEquation</name>
       <value>
         <type>string</type> 

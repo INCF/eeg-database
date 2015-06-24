@@ -1,106 +1,106 @@
 <?xml version="1.0" encoding="ISO-8859-1"?>
 <?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
 <!-- ********************************** -->
-<!--        Software	 -->
+<!-- Software -->
 <!-- ********************************** -->
 <odML version="1">
-	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
-        <version>1.0</version>
-        <date>2014-03-02</date>
-     
-     <section>
-		<type>software</type>
-         <name>Software</name>
-         <definition>This is a software section .</definition>
-                  
-          <property>
-            <name>Name</name>
-	         <value>
-				<type>string</type>
-	         </value>
+    <repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+    <version>1.0</version>
+    <date>2014-03-02</date>
+
+    <section>
+        <type>software</type>
+        <name>Software</name>
+        <definition>This is a software section .</definition>
+
+        <property>
+            <name>Software name</name>
+            <value>
+                <type>string</type>
+            </value>
             <definition>The software's name.</definition>
-			<required>yes</required>
-	      </property> 
-         
-         <property>
-	         <name>Owner</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <required>yes</required>
+        </property>
+
+        <property>
+            <name>Owner</name>
+            <value>
+                <type>string</type>
+            </value>
             <definition>The owner of the software.</definition>
-	      </property> 
-	      
-	      <property>
+        </property>
+
+        <property>
             <name>Developer</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>The developer or the developers firm.</definition>
-	      </property> 
-	      
-	      <property>
+        </property>
+
+        <property>
             <name>Version</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>Version of the software.</definition>
-			<required>yes</required>
-	      </property> 
-	      
-	      <property>
+            <required>yes</required>
+        </property>
+
+        <property>
             <name>Licence</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>License type</definition>
-	      </property> 
-	      
-	      <property>
+        </property>
+
+        <property>
             <name>LicenceStart</name>
-	         <value>
-				<type>date</type>
-	         </value>
+            <value>
+                <type>date</type>
+            </value>
             <definition>The start date of time limited licence.</definition>
-	      </property> 
-              
-              <property>
+        </property>
+
+        <property>
             <name>LicenceExpiration</name>
-	         <value>
-				<type>date</type>
-	         </value>
+            <value>
+                <type>date</type>
+            </value>
             <definition>The end date of time limited licence.</definition>
-	      </property>
-        
+        </property>
+
         <property>
             <name>LicenceDuration</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>Duration of the licece for the software.</definition>
-	      </property>  
-        
+        </property>
+
         <property>
             <name>LicenceCount</name>
-	         <value>
-				<type>int</type>
-	         </value>
+            <value>
+                <type>int</type>
+            </value>
             <definition>Number of the software's licence.</definition>
-	      </property>  
-        
+        </property>
+
         <property>
             <name>Distribution</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>Distribution type</definition>
-	      </property>  
-		  
+        </property>
+
         <property>
             <name>Decsription</name>
-	         <value>
-				<type>string</type>
-	         </value>
+            <value>
+                <type>string</type>
+            </value>
             <definition>The descrisption of the software.</definition>
-	      </property>  
-      </section>
+        </property>
+    </section>
 </odML>
