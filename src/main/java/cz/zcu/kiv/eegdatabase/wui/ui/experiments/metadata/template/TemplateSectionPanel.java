@@ -133,7 +133,7 @@ public class TemplateSectionPanel extends Panel {
 
             @Override
             protected String defaultNullLabel() {
-                return ResourceUtils.getString("text.template.empty.definition");
+                return ResourceUtils.getString("text.template.empty.section.definition");
             }
 
             @Override

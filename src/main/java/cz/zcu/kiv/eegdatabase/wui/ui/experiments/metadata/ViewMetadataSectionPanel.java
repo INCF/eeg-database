@@ -18,9 +18,9 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   ViewSectionPanel.java, 2015/02/26 00:01 Jakub Rinkes
+ *   ViewMetadataSectionPanel.java, 2015/02/26 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
 import odml.core.Property;
 import odml.core.Section;
@@ -32,11 +32,11 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
-public class ViewSectionPanel extends Panel {
+public class ViewMetadataSectionPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
 
-    public ViewSectionPanel(String id, IModel<Section> model) {
+    public ViewMetadataSectionPanel(String id, IModel<Section> model) {
         super(id, new CompoundPropertyModel<Section>(model));
         
         add(new Label("name"));
@@ -48,7 +48,12 @@ public class ViewSectionPanel extends Panel {
 
             @Override
             protected void populateItem(ListItem<Property> item) {
-                item.add(new ViewPropertyPanel("property", item.getModel()));
+                item.add(new ViewMetadataPropertyPanel("property", item.getModel()));
+            }
+            
+            @Override
+            public boolean isVisible() {
+                return getModelObject() != null && !getModelObject().isEmpty();
             }
         };
         
@@ -60,7 +65,12 @@ public class ViewSectionPanel extends Panel {
 
             @Override
             protected void populateItem(ListItem<Section> item) {
-                item.add(new ViewSectionPanel("section", item.getModel()));
+                item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+            }
+            
+            @Override
+            public boolean isVisible() {
+                return getModelObject() != null && !getModelObject().isEmpty();
             }
         };
         add(sections);

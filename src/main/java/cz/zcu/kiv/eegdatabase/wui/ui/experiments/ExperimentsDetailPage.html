@@ -201,6 +201,13 @@ This file is part of the EEG-database project
           <td wicket:id="paramValue"></td>
         </tr>
       </table>
+      
+      <h2>
+        Metadata
+      </h2>
+      <div wicket:id="sections">
+        <div wicket:id="section"></div>
+      </div>
 
       <h2>
           <wicket:message key="dataTable.heading.licenses" />
@@ -261,6 +268,7 @@ This file is part of the EEG-database project
       <a href="#" wicket:id="addParameterLink" class="lightButtonLink"><wicket:message:message key="button.addOptionalParameter"/></a>
       <a href="#" wicket:id="addFileLink" class="lightButtonLink"><wicket:message:message key="button.addDataFile"/></a>
       <a href="#" wicket:id="editExpLink" class="lightButtonLink"><wicket:message:message key="button.editExperiment"/></a>
+      <a href="#" wicket:id="metadataLink" class="lightButtonLink"><wicket:message:message key="button.metadataLink"/></a>
       <span wicket:id="downloadExpLink" class="lightButtonLink" ></span>
       
       <!-- XXX #66 Java Heap Space Exception : working with big data file in memory.

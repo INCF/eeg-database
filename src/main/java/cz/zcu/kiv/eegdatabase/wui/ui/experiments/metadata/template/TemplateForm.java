@@ -87,7 +87,7 @@ public class TemplateForm extends Panel {
         window.setHeightUnit("px");
         window.setWidthUnit("px");
 
-        ViewSectionPanel panel = new ViewSectionPanel(window.getContentId(), this.model);
+        ViewFormSectionPanel panel = new ViewFormSectionPanel(window.getContentId(), this.model);
         window.setContent(panel);
         add(window);
 

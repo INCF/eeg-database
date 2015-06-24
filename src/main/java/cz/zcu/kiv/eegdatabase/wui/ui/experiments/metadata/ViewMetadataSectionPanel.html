@@ -18,23 +18,34 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  ViewSectionPanel.html, 2013/02/27 00:01 Jakub Rinkes
+  ViewMetadataSectionPanel.html, 2013/02/27 00:01 Jakub Rinkes
 -->
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
 <wicket:panel>
-    <div class="view-template-form">
-    <h1 wicket:id="name"></h1>
-    <p wicket:id="definition"></p>
-    
-    <div wicket:id="properties">
-        <div wicket:id="property" class="property"></div>
-    </div>
-    
-    <div wicket:id="sections">
-        <div wicket:id="section" class="section"></div>
-    </div>
+    <div class="view-template-form" style="margin-left: 10px">
+        <h2 wicket:id="name"></h2>
+        <p wicket:id="definition"></p>
+        
+        <wicket:enclosure child="properties">
+            <table class="dataTable" style="width: 600px;">
+                <thead><tr>
+                    <th><wicket:message key="label.template.property"></wicket:message></th>
+                    <th><wicket:message key="label.template.value.title"></wicket:message></th>
+                </tr></thead>
+                <tbody>
+                    <tr wicket:id="properties"><wicket:container wicket:id="property"></wicket:container></tr>
+                </tbody>
+            </table>
+        </wicket:enclosure>
+        
+        <wicket:enclosure child="sections">
+            <h3><wicket:message key="label.template.section.subsections"></wicket:message></h3>
+            <div wicket:id="sections">
+                <div wicket:id="section" class="section"></div>
+            </div>
+        </wicket:enclosure>
     </div>
 </wicket:panel>
 </body>

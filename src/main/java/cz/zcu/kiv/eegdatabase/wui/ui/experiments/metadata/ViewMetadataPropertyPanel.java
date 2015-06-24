@@ -18,46 +18,38 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   ViewPropertyPanel.java, 2015/02/26 00:01 Jakub Rinkes
+ *   ViewMetadataPropertyPanel.java, 2015/02/26 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
-
-import java.util.List;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
 import odml.core.Property;
-import odml.core.Value;
 
+import org.apache.wicket.AttributeModifier;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
 
-public class ViewPropertyPanel extends Panel {
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+
+public class ViewMetadataPropertyPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
-    
-    private TextField textField;
-    private DropDownChoice<Value> choice;
 
-    public ViewPropertyPanel(String id, IModel<Property> model) {
+    public ViewMetadataPropertyPanel(String id, IModel<Property> model) {
         super(id, new CompoundPropertyModel<Property>(model));
-        
-        add(new Label("name"));
-        add(new Label("definition"));
-        
-        textField = new TextField("textfield", new PropertyModel(model.getObject(), "value"));
-        add(textField);
 
-        choice = new DropDownChoice<Value>("select", new Model<Value>(),new PropertyModel<List<Value>>(model.getObject(), "values"));
-        add(choice);
+        Label name = new Label("name");
+        Label value = new Label("value");
+
+        String definition = model.getObject().getDefinition();
+        if (definition != null && !definition.isEmpty()) {
+            String tooltip = ResourceUtils.getString("label.template.definition.tooltip") + definition;
+            name.add(AttributeModifier.append("title", tooltip));
+            value.add(AttributeModifier.append("title", tooltip));
+        }
         
-        boolean singleValue = model.getObject().getValues() != null ? model.getObject().getValues().size() == 1 : true;
-        textField.setVisibilityAllowed(singleValue);
-        choice.setVisibilityAllowed(!singleValue);
+        add(name, value);
     }
-    
+
 }

@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.util.Iterator;
 import java.util.List;
 
 import odml.core.Reader;
@@ -33,15 +34,13 @@ import odml.core.Writer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.Component;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.extensions.wizard.IWizardStep;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.extensions.wizard.WizardModel;
-import org.apache.wicket.feedback.ComponentFeedbackMessageFilter;
+import org.apache.wicket.extensions.wizard.WizardStep;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
@@ -50,10 +49,12 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import com.sun.xml.messaging.saaj.util.ByteInputStream;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 
 public class MetadataForm extends Panel {
@@ -64,27 +65,35 @@ public class MetadataForm extends Panel {
 
     @SpringBean
     private TemplateFacade templateFacade;
+    
+    @SpringBean
+    private ExperimentsFacade expFacade;
 
     private CompoundPropertyModel<Section> model;
+    private WizardModel wizardModel;
+    private Wizard wizard;
 
-    public MetadataForm(String id) {
-        this(id, new Model<Section>(new Section()));
+    public MetadataForm(String id, int experimentId) {
+        this(id, new Model<Section>(new Section()), experimentId);
     }
 
-    public MetadataForm(String id, IModel<Section> model) {
+    public MetadataForm(String id, IModel<Section> model, final int experimentId) {
         super(id);
 
         this.model = new CompoundPropertyModel<Section>(model);
         setDefaultModel(this.model);
         setOutputMarkupId(true);
-        
-        // TODO select template not work.
-        WizardModel wizardModel = new WizardModel();
-        for (Section section : model.getObject().getSections()) {
-            wizardModel.add(new MetadataWizardStep(new Model<Section>(section)));
+
+        wizardModel = new WizardModel();
+        if (model.getObject() != null) {
+            for (Section section : model.getObject().getSections()) {
+                wizardModel.add(new MetadataWizardStep(new Model<Section>(section)));
+            }
+        } else {
+            wizardModel.add(new WizardStep());
         }
 
-        Wizard wizard = new Wizard("wizard", wizardModel, true) {
+        wizard = new Wizard("wizard", wizardModel, true) {
 
             private static final long serialVersionUID = 1L;
 
@@ -92,7 +101,7 @@ public class MetadataForm extends Panel {
             public void onFinish() {
                 try {
                     Section data = MetadataForm.this.model.getObject();
-                    FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\"+ data.getName() + ".xml"));
+                    FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\" + data.getName() + ".xml"));
 
                     Writer writer = new Writer(data, true, true);
                     if (writer.write(stream)) {
@@ -104,15 +113,16 @@ public class MetadataForm extends Panel {
                     e.printStackTrace();
                 }
             }
-            
+
             @Override
             public void onCancel() {
                 throw new RestartResponseAtInterceptPageException(MetadataForm.this.getPage().getPageClass(), MetadataForm.this.getPage().getPageParameters());
             }
-            
-        };
 
-        add(wizard);
+        };
+        wizard.setOutputMarkupId(true);
+        
+        add(wizard.setVisible(model.getObject() != null));
 
         int personId = EEGDataBaseSession.get().getLoggedUser().getPersonId();
         List<Template> templatesByPerson = templateFacade.getTemplatesByPerson(personId);
@@ -123,17 +133,59 @@ public class MetadataForm extends Panel {
 
             @Override
             protected void onSelectionChangeAjaxified(AjaxRequestTarget target, Template template) {
-                
+
                 try {
                     Reader reader = new Reader();
                     Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
                     section.setName(template.getName());
                     MetadataForm.this.model.setObject(section);
+                    
+                    wizardModel = new WizardModel();
+                    for (Section subsection : section.getSections()) {
+                        wizardModel.add(new MetadataWizardStep(new Model<Section>(subsection)));
+                    }
+                    
+                    Wizard wiz = new Wizard("wizard", wizardModel, true){
+
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void onFinish() {
+                            try {
+                                Section data = MetadataForm.this.model.getObject();
+                                FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\" + data.getName() + ".xml"));
+
+                                Writer writer = new Writer(data, true, true);
+                                if (writer.write(stream)) {
+                                    info("Save template done.");
+                                } else {
+                                    error("Save template failed.");
+                                }
+                                
+                                Experiment experiment = expFacade.getExperimentForDetail(experimentId);
+                                experiment.getElasticExperiment().setMetadata(data);
+                                expFacade.update(experiment);
+                                
+                            } catch (FileNotFoundException e) {
+                                e.printStackTrace();
+                            }
+                        }
+
+                        @Override
+                        public void onCancel() {
+                            throw new RestartResponseAtInterceptPageException(MetadataForm.this.getPage().getPageClass(), MetadataForm.this.getPage().getPageParameters());
+                        }
+
+                    };
+                    
+                    wizard = (Wizard) wizard.replaceWith(wiz);
+                    
+                    log.error("Wizard reset...");
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                     error(ResourceUtils.getString("text.template.error.load"));
                 }
-                
+
                 target.add(MetadataForm.this);
             }
 

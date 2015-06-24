@@ -18,9 +18,9 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   FormPropertyPanel.java, 2015/02/26 00:01 Jakub Rinkes
+ *   ViewFormPropertyPanel.java, 2015/02/26 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
+package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
 
 import java.util.List;
 
@@ -36,47 +36,28 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueModel;
-
-public class FormPropertyPanel extends Panel {
+public class ViewFormPropertyPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
-
+    
     private TextField textField;
     private DropDownChoice<Value> choice;
 
-    public FormPropertyPanel(String id, IModel<Property> model) {
+    public ViewFormPropertyPanel(String id, IModel<Property> model) {
         super(id, new CompoundPropertyModel<Property>(model));
-
-        setupLabels();
-        setupFormComponents(model);
-    }
-
-    private void setupFormComponents(IModel<Property> model) {
-
+        
+        add(new Label("name"));
+        add(new Label("definition"));
+        
         textField = new TextField("textfield", new PropertyModel(model.getObject(), "value"));
         add(textField);
 
-        choice = new DropDownChoice("select", new PropertyValueModel(model.getObject(), 0), new PropertyModel<List<Value>>(model.getObject(), "values"));
+        choice = new DropDownChoice<Value>("select", new Model<Value>(),new PropertyModel<List<Value>>(model.getObject(), "values"));
         add(choice);
-
+        
         boolean singleValue = model.getObject().getValues() != null ? model.getObject().getValues().size() == 1 : true;
         textField.setVisibilityAllowed(singleValue);
         choice.setVisibilityAllowed(!singleValue);
-
-        textField.setLabel(new Model<String>(model.getObject().getName()));
-        choice.setLabel(new Model<String>(model.getObject().getName()));
-
-        boolean required = model.getObject().getGuiHelper().getRequired();
-        textField.setRequired(required);
-        choice.setRequired(required);
-
     }
-
-    private void setupLabels() {
-
-        add(new Label("name"));
-        add(new Label("definition"));
-    }
-
+    
 }

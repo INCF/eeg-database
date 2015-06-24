@@ -82,7 +82,7 @@ public class MetadataFormPage extends MenuPage {
             log.error(e.getMessage(), e);
         }
 
-        add(new MetadataForm("metadata-form", new Model<Section>(section)));
+        add(new MetadataForm("metadata-form", new Model<Section>(section), 0));
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
     
@@ -108,19 +108,19 @@ public class MetadataFormPage extends MenuPage {
         
 //        templateFacade.migrateSQLToES();
 
-        int templateId = value.toInt();
-        Template template = templateFacade.read(templateId);
+        int experimentId = value.toInt();
+        Experiment exp = expFacade.getExperimentForDetail(experimentId);
 
         Reader reader = new Reader();
-        try {
-            Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
-            section.setName(template.getName());
-            add(new MetadataForm("metadata-form", new Model<Section>(section)));
+//        try {
+//            Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
+//            section.setName(template.getName());
+            add(new MetadataForm("metadata-form", new Model<Section>(exp.getElasticExperiment().getMetadata()), experimentId));
 
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-            throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
-        }
+//        } catch (Exception e) {
+//            log.error(e.getMessage(), e);
+//            throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
+//        }
 
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }

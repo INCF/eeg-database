@@ -23,6 +23,9 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
 import java.util.ArrayList;
+import java.util.List;
+
+import odml.core.Section;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
@@ -41,6 +44,7 @@ import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
 import org.apache.wicket.model.Model;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
@@ -51,7 +55,6 @@ import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.UnderConstructPage;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
@@ -64,6 +67,8 @@ import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.ViewMetadataSectionPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
 
@@ -133,9 +138,10 @@ public class ExperimentsDetailPage extends MenuPage {
         BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", ExperimentOptParamValueFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
+        BookmarkablePageLink<Void> metadataLink = new BookmarkablePageLink<Void>("metadataLink", MetadataFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", new Model<Experiment>(experiment));
         downloadExpLink.setVisibilityAllowed(experiment.getExperimentPackageConnections().isEmpty());
-        add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), downloadExpLink);
+        add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), metadataLink.setVisibilityAllowed(coexperiment), downloadExpLink);
         
         /* XXX #66 Java Heap Space Exception : working with big data file in memory.
             final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
@@ -216,6 +222,18 @@ public class ExperimentsDetailPage extends MenuPage {
 
             }
         };
+        
+        PropertyListView<Section> metadata = new PropertyListView<Section>("sections", new PropertyModel<List<Section>>(experiment.getElasticExperiment().getMetadata(), "sections")) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void populateItem(ListItem<Section> item) {
+                item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+            }
+        };
+        
+        add(metadata);
 
         PropertyListView<License> licenseList = new PropertyListView<License>("licenseList", new ListModel<License>(licenseFacade.getLicensesForExperiment(experiment.getExperimentId()))) {
 
