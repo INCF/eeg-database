@@ -7,6 +7,7 @@ import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.List;
 
+import odml.core.Property;
 import odml.core.Reader;
 import odml.core.Section;
 import odml.core.Writer;
@@ -23,6 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 
 /**
@@ -56,6 +58,9 @@ public class TemplateFacadeImpl implements TemplateFacade {
     private TemplateService service;
 
     private ExperimentsFacade facade;
+    
+    // default location in resources, configurations via project.properties
+    private String odmlSectionsPath = "odML/odMLSections";
 
     @Required
     public void setService(TemplateService service) {
@@ -65,6 +70,10 @@ public class TemplateFacadeImpl implements TemplateFacade {
     @Required
     public void setFacade(ExperimentsFacade facade) {
         this.facade = facade;
+    }
+    
+    public void setOdmlSectionsPath(String odmlSectionsPath) {
+        this.odmlSectionsPath = odmlSectionsPath;
     }
 
     @Override
@@ -152,8 +161,6 @@ public class TemplateFacadeImpl implements TemplateFacade {
     @Override
     public List<Section> getListOfAvailableODMLSections() {
 
-        // TODO add this in project.properties
-        String odmlSectionsPath = "./odML/odMLSections";
         List<File> filteredFiles = new ArrayList<File>();
         File[] paths;
         try {
@@ -173,13 +180,23 @@ public class TemplateFacadeImpl implements TemplateFacade {
         for (File file : filteredFiles) {
             Section section = null;
             try {
+                log.error(file.getName());
                 section = reader.load(file.getAbsolutePath());
                 sections.addAll(section.getSections());
             } catch (Exception e) {
                 log.error(e.getMessage(), e);
             }
         }
-
+        
+        try {
+            Section empty = new Section(ResourceUtils.getString("text.template.empty.section"), "empty");
+            Property emptyProp = new Property(ResourceUtils.getString("text.template.empty.propertyName"), ResourceUtils.getString("text.template.empty.propertyValue"));
+            empty.add(emptyProp);
+            sections.add(0, empty);
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+        }
+        
         return sections;
     }
 
