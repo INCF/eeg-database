@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
 
 import java.io.ByteArrayOutputStream;
+import java.io.FileOutputStream;
 import java.util.List;
 
 import odml.core.Section;
@@ -44,6 +45,7 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 
 public class TemplateForm extends Panel {
@@ -54,6 +56,7 @@ public class TemplateForm extends Panel {
 
     @SpringBean
     private TemplateFacade templateFacade;
+    
     private int templateId;
 
     public TemplateForm(String id) {
@@ -176,6 +179,80 @@ public class TemplateForm extends Panel {
         };
 
         form.add(viewTemplateFormButton);
+
+        AjaxButton saveTemplateAsSystem = new AjaxButton("save-template-system", ResourceUtils.getModel("button.template.save.system")) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+
+                Section section = TemplateForm.this.model.getObject();
+                if (section.getName() == null || section.getName().isEmpty()) {
+                    error(ResourceUtils.getString("text.template.error.templateName"));
+                } else {
+
+                    if (templateFacade.createSystemTemplate(section)) {
+                        setResponsePage(ListTemplatePage.class);
+                    } else {
+                        error(ResourceUtils.getString("text.template.error.save"));
+                    }
+                }
+
+                target.add(TemplateForm.this);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(TemplateForm.this);
+            }
+        };
+        
+        boolean isAdmin = EEGDataBaseSession.get().hasRole(UserRole.ROLE_ADMIN.name());
+        form.add(saveTemplateAsSystem.setVisibilityAllowed(isAdmin));
+
+        AjaxButton saveTemplateAsNew = new AjaxButton("save-template-new", ResourceUtils.getModel("button.template.save.new")) {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
+
+                Section section = TemplateForm.this.model.getObject();
+                if (section.getName() == null || section.getName().isEmpty()) {
+                    error(ResourceUtils.getString("text.template.error.templateName"));
+                } else {
+
+                    String templateName = section.getName();
+                    Writer writer = new Writer(section, true, true);
+                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+
+                    if (writer.write(byteStream)) {
+
+                        Template template = new Template();
+                        byte[] templateXML = byteStream.toByteArray();
+                        
+                        template.setTemplate(templateXML);
+                        template.setName(templateName);
+                        template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
+                        templateFacade.create(template);
+
+                        setResponsePage(ListTemplatePage.class);
+                    } else {
+                        error(ResourceUtils.getString("text.template.error.save"));
+                    }
+                }
+
+                target.add(TemplateForm.this);
+            }
+
+            @Override
+            protected void onError(AjaxRequestTarget target, Form<?> form) {
+                target.add(TemplateForm.this);
+            }
+        };
+
+        form.add(saveTemplateAsNew);
     }
 
 }

@@ -2,6 +2,8 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -58,7 +60,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
     private TemplateService service;
 
     private ExperimentsFacade facade;
-    
+
     // default location in resources, configurations via project.properties
     private String odmlSectionsPath = "odML/odMLSections";
 
@@ -71,7 +73,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
     public void setFacade(ExperimentsFacade facade) {
         this.facade = facade;
     }
-    
+
     public void setOdmlSectionsPath(String odmlSectionsPath) {
         this.odmlSectionsPath = odmlSectionsPath;
     }
@@ -187,7 +189,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
                 log.error(e.getMessage(), e);
             }
         }
-        
+
         try {
             Section empty = new Section(ResourceUtils.getString("text.template.empty.section"), "empty");
             Property emptyProp = new Property(ResourceUtils.getString("text.template.empty.propertyName"), ResourceUtils.getString("text.template.empty.propertyValue"));
@@ -196,7 +198,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        
+
         return sections;
     }
 
@@ -219,7 +221,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
                 JSONObject jsonObject = XML.toJSONObject(xmlString);
                 // String jsonString = jsonObject.toString(); /// XXX remove this - UTF8 encoding problem.
                 String jsonString = new String(jsonObject.toString(4).getBytes("UTF-8")); // encoding is necessary
-                
+
                 FileUtils.writeStringToFile(new File("D:\\tmp\\experiment" + experiment.getExperimentId() + ".json"), jsonString);
             } catch (UnsupportedEncodingException e) {
                 // TODO Auto-generated catch block
@@ -233,6 +235,25 @@ public class TemplateFacadeImpl implements TemplateFacade {
                 e.printStackTrace();
             }
 
+        }
+    }
+
+    @Override
+    public boolean createSystemTemplate(Section section) {
+
+        try {
+            Writer writer = new Writer(section, true, true);
+            FileOutputStream fostream = new FileOutputStream(new File(new ClassPathResource(odmlSectionsPath).getFile(), section.getName() + ".xml"));
+            writer.write(fostream);
+            fostream.close();
+            
+            return true;
+        } catch (FileNotFoundException e) {
+            log.error(e.getMessage(), e);
+            return false;
+        } catch (IOException e) {
+            log.error(e.getMessage(), e);
+            return false;
         }
     }
 }

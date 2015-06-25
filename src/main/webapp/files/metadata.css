@@ -78,6 +78,11 @@
 	-webkit-margin-end: 0px;
 }
 
+.template-tree .tree div.section {
+    border: 1px solid black;
+    padding: 0.3em
+}
+
 .template-tree .tree div.section:first-child {
 	display: block;
 }

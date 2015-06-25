@@ -54,4 +54,6 @@ public interface TemplateFacade extends GenericFacade<Template, Integer> {
     public List<Section> getListOfAvailableODMLSections();
     
     public void migrateSQLToES();
+
+    public boolean createSystemTemplate(Section section);
 }

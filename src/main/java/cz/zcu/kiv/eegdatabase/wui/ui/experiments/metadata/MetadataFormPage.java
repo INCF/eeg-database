@@ -23,11 +23,9 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
 import java.io.InputStream;
-import java.util.List;
 
 import odml.core.Reader;
 import odml.core.Section;
-import odml.core.Writer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -38,18 +36,13 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import org.springframework.transaction.annotation.Transactional;
-
-import com.sun.xml.messaging.saaj.util.ByteInputStream;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Template;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.ExperimentToODMLMapper;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPageLeftMenu;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
