@@ -18,40 +18,36 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   PropertyValueModel.java, 2015/02/26 00:01 Jakub Rinkes
+ *   PropertyValueDropDownChoiceModel.java, 2015/06/26 00:01 Jakub Rinkes
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
 
 import java.io.Serializable;
 
 import odml.core.Property;
-import odml.core.Value;
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.model.Model;
 
 /**
- * Model for working with {@link Value} in {@link Property}.
- * Model is used in {@link TemplateForm} for property with values in template.
- * 
+ * Wicket model used in {@link DropDownChoice} for select {@link Value} from list in {@link Property}.
  * Because we can't work directly with {@link Value} objects. We work with methods of {@link Property}.
  * 
+ * Selected {@link Value} is always on index 0 in vector of objects.
+ * Model swap {@link Value} at index 0 with new selected {@link value}. Old {@link Value} is stored on index
+ * of new selected item.
+ * 
  * @author Jakub Rinkes
- *
+ * 
  */
-public class PropertyValueModel extends Model<Serializable> {
-    
-    protected Log log = LogFactory.getLog(getClass());
+public class PropertyValueDropDownChoiceModel extends Model<Serializable> {
 
     private static final long serialVersionUID = 1L;
 
     private Property property;
-    private int valueIndex;
 
-    public PropertyValueModel(Property property, int valueIndex) {
+    public PropertyValueDropDownChoiceModel(Property property) {
         this.property = property;
-        this.valueIndex = valueIndex;
     }
 
     @Override
@@ -60,18 +56,16 @@ public class PropertyValueModel extends Model<Serializable> {
         if (property.valueCount() == 0)
             return null;
 
-        return (Serializable) property.getValue(valueIndex);
+        return (Serializable) property.getValue();
     }
 
     @Override
     public void setObject(Serializable object) {
-        
-        if (object instanceof String && ((String) object).equalsIgnoreCase("...")) {
-            // fixed default empty value from AjaxEditableLabel - default value is cleared - textfield will be empty.
-            property.setValueAt("", valueIndex);
-        } else {
-            property.setValueAt(object, valueIndex);
-        }
+
+        int oldIndex = property.getValueIndex(object);
+        Object oldValue = property.getValue(0);
+        property.setValueAt(object, 0);
+        property.setValueAt(oldValue, oldIndex);
     }
 
 }

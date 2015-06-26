@@ -147,6 +147,7 @@ public class TemplateForm extends Panel {
                         } else {
                             // update existing
                             Template updated = templateFacade.read(templateId);
+                            updated.setName(templateName);
                             updated.setTemplate(templateXML);
 
                             templateFacade.update(updated);

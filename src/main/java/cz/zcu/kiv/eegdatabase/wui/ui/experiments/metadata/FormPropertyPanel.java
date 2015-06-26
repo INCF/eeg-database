@@ -36,7 +36,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueDropDownChoiceModel;
 
 public class FormPropertyPanel extends Panel {
 
@@ -57,7 +57,7 @@ public class FormPropertyPanel extends Panel {
         textField = new TextField("textfield", new PropertyModel(model.getObject(), "value"));
         add(textField);
 
-        choice = new DropDownChoice("select", new PropertyValueModel(model.getObject(), 0), new PropertyModel<List<Value>>(model.getObject(), "values"));
+        choice = new DropDownChoice("select", new PropertyValueDropDownChoiceModel(model.getObject()), new PropertyModel<List<Value>>(model.getObject(), "values"));
         add(choice);
 
         boolean singleValue = model.getObject().getValues() != null ? model.getObject().getValues().size() == 1 : true;

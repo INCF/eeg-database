@@ -59,26 +59,6 @@ public class MetadataFormPage extends MenuPage {
     @SpringBean
     private ExperimentsFacade expFacade;
 
-    public MetadataFormPage() {
-
-        setPageTitle(ResourceUtils.getModel("pageTitle.metadata.new"));
-        add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
-
-        InputStream template = EEGDataBaseApplication.get().getServletContext().getResourceAsStream("/files/odML/testtemplate.xml");
-
-        Section section = null;
-        Reader reader = new Reader();
-        try {
-            section = reader.load(template);
-
-        } catch (Exception e) {
-            log.error(e.getMessage(), e);
-        }
-
-        add(new MetadataForm("metadata-form", new Model<Section>(section), 0));
-        getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
-    }
-    
     public MetadataFormPage(final PageParameters parameters) {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.metadata.new"));
@@ -89,33 +69,10 @@ public class MetadataFormPage extends MenuPage {
             throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
         }
 
-//        List<Section> list = templateFacade.getListOfAvailableODMLSections();
-//        Section root = new Section();
-//
-//        for (Section section : list)
-//            root.add(section);
-//
-//        Experiment read = expFacade.getExperimentForDetail(262);
-//        read.getElasticExperiment().setMetadata(root);
-//        expFacade.update(read);
-        
-//        templateFacade.migrateSQLToES();
-
         int experimentId = value.toInt();
         Experiment exp = expFacade.getExperimentForDetail(experimentId);
-
-        Reader reader = new Reader();
-//        try {
-//            Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
-//            section.setName(template.getName());
-            add(new MetadataForm("metadata-form", new Model<Section>(exp.getElasticExperiment().getMetadata()), experimentId));
-
-//        } catch (Exception e) {
-//            log.error(e.getMessage(), e);
-//            throw new RestartResponseAtInterceptPageException(ListTemplatePage.class);
-//        }
-
+        add(new MetadataForm("metadata-form", new Model<Section>(exp.getElasticExperiment().getMetadata()), experimentId));
         getFeedback().setFilter(new ComponentFeedbackMessageFilter(this));
     }
-    
+
 }

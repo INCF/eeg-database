@@ -440,8 +440,7 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
         elasticExperiment.setGroupId(transientObject.getResearchGroup().getResearchGroupId());
         indexQuery.setObject(elasticExperiment);
         indexQuery.setId("" + transientObject.getExperimentId());
-        
+
         elasticsearchTemplate.index(indexQuery);
-        
     }
 }

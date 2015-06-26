@@ -22,9 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata;
 
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
+import java.io.ByteArrayOutputStream;
+import java.text.DateFormat;
+import java.util.Date;
 import java.util.List;
 
 import odml.core.Reader;
@@ -35,6 +35,7 @@ import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.wizard.Wizard;
 import org.apache.wicket.extensions.wizard.WizardModel;
 import org.apache.wicket.extensions.wizard.WizardStep;
@@ -54,6 +55,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
 
 public class MetadataForm extends Panel {
 
@@ -63,7 +65,7 @@ public class MetadataForm extends Panel {
 
     @SpringBean
     private TemplateFacade templateFacade;
-    
+
     @SpringBean
     private ExperimentsFacade expFacade;
 
@@ -97,19 +99,10 @@ public class MetadataForm extends Panel {
 
             @Override
             public void onFinish() {
-                try {
-                    Section data = MetadataForm.this.model.getObject();
-                    FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\" + data.getName() + ".xml"));
-
-                    Writer writer = new Writer(data, true, true);
-                    if (writer.write(stream)) {
-                        info("Save template done.");
-                    } else {
-                        error("Save template failed.");
-                    }
-                } catch (FileNotFoundException e) {
-                    e.printStackTrace();
-                }
+                Section data = MetadataForm.this.model.getObject();
+                Experiment experiment = expFacade.getExperimentForDetail(experimentId);
+                experiment.getElasticExperiment().setMetadata(data);
+                expFacade.update(experiment);
             }
 
             @Override
@@ -119,7 +112,7 @@ public class MetadataForm extends Panel {
 
         };
         wizard.setOutputMarkupId(true);
-        
+
         add(wizard.setVisible(model.getObject() != null));
 
         int personId = EEGDataBaseSession.get().getLoggedUser().getPersonId();
@@ -137,36 +130,22 @@ public class MetadataForm extends Panel {
                     Section section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
                     section.setName(template.getName());
                     MetadataForm.this.model.setObject(section);
-                    
+
                     wizardModel = new WizardModel();
                     for (Section subsection : section.getSections()) {
                         wizardModel.add(new MetadataWizardStep(new Model<Section>(subsection)));
                     }
-                    
-                    Wizard wiz = new Wizard("wizard", wizardModel, true){
+
+                    Wizard wiz = new Wizard("wizard", wizardModel, true) {
 
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         public void onFinish() {
-                            try {
-                                Section data = MetadataForm.this.model.getObject();
-                                FileOutputStream stream = new FileOutputStream(new File("D:\\trash\\" + data.getName() + ".xml"));
-
-                                Writer writer = new Writer(data, true, true);
-                                if (writer.write(stream)) {
-                                    info("Save template done.");
-                                } else {
-                                    error("Save template failed.");
-                                }
-                                
-                                Experiment experiment = expFacade.getExperimentForDetail(experimentId);
-                                experiment.getElasticExperiment().setMetadata(data);
-                                expFacade.update(experiment);
-                                
-                            } catch (FileNotFoundException e) {
-                                e.printStackTrace();
-                            }
+                            Section data = MetadataForm.this.model.getObject();
+                            Experiment experiment = expFacade.getExperimentForDetail(experimentId);
+                            experiment.getElasticExperiment().setMetadata(data);
+                            expFacade.update(experiment);
                         }
 
                         @Override
@@ -175,10 +154,8 @@ public class MetadataForm extends Panel {
                         }
 
                     };
-                    
+
                     wizard = (Wizard) wizard.replaceWith(wiz);
-                    
-                    log.error("Wizard reset...");
                 } catch (Exception e) {
                     log.error(e.getMessage(), e);
                     error(ResourceUtils.getString("text.template.error.load"));
@@ -190,6 +167,40 @@ public class MetadataForm extends Panel {
         };
 
         add(templateSelection);
+
+        AjaxLink<Void> saveAsTemplate = new AjaxLink<Void>("saveAsTemplate") {
+
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public void onClick(AjaxRequestTarget target) {
+
+                Section section = MetadataForm.this.model.getObject();
+                String templateName = section.getName() != null ? section.getName() + "-savedFromWizard" : "Template-savedFromWizard";
+                Date now = new Date();
+                templateName += "-" + DateFormat.getDateTimeInstance(DateFormat.SHORT, DateFormat.SHORT).format(now);
+
+                Writer writer = new Writer(section, true, true);
+                ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+
+                if (writer.write(byteStream)) {
+
+                    Template template = new Template();
+                    byte[] templateXML = byteStream.toByteArray();
+
+                    template.setTemplate(templateXML);
+                    template.setName(templateName);
+                    template.setPersonByPersonId(EEGDataBaseSession.get().getLoggedUser());
+                    templateFacade.create(template);
+
+                    setResponsePage(ListTemplatePage.class);
+                } else {
+                    error(ResourceUtils.getString("text.template.error.save"));
+                }
+            }
+        };
+
+        add(saveAsTemplate);
     }
 
 }
