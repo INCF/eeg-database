@@ -30,7 +30,6 @@ This file is part of the EEG-database project
 
 <body>
   <wicket:extend>
-<!--     <div class="notLogged"> -->
     
       <div class="homepageLeftColumn col-sm-8">
         <h1>
@@ -75,28 +74,26 @@ This file is part of the EEG-database project
           </ul>
         </div>
 
-          <a wicket:id="licenseLink1"><img wicket:message="alt:homePage.license.ccalt" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
-          <p>
-              <wicket:message key="homePage.license.text1"/>
-              <a wicket:id="EEGBaseLink"></a>
-              <wicket:message key="homePage.license.text2"/>
-              <a wicket:id="licenseLink2"></a>
-          </p>
-          <p>
-              <wicket:message key="homePage.license.text3"/>
-              <a wicket:id="githubLink"></a>
-          </p>
+        <a wicket:id="licenseLink1"><img wicket:message="alt:homePage.license.ccalt" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" /></a>
+        <p>
+          <wicket:message key="homePage.license.text1"/>
+          <a wicket:id="EEGBaseLink"></a>
+          <wicket:message key="homePage.license.text2"/>
+          <a wicket:id="licenseLink2"></a>
+        </p>
+        <p>
+          <wicket:message key="homePage.license.text3"/>
+          <a wicket:id="githubLink"></a>
+        </p>
 
-          <h2>
-              <wicket:message key="homePage.citation"/>
-          </h2>
-          <p>
-              <wicket:message key="homePage.citationFormat"/>
-          </p>
+        <h2>
+          <wicket:message key="homePage.citation"/>
+        </h2>
+        <p>
+          <wicket:message key="homePage.citationFormat"/>
+        </p>
+        
       </div>
-
-
-
 
       <div class="homepageRightColumn col-sm-4">
         <h2>Login</h2>
@@ -158,9 +155,9 @@ This file is part of the EEG-database project
               title="INCF National node of Czech Republic" style="border: none;" />
           </a></li>
         </ul>
+        
       </div>
       
-<!--     </div> -->
   </wicket:extend>
 </body>
 </html>
