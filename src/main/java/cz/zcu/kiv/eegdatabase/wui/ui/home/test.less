@@ -1,0 +1,13 @@
+// this file demonstrates use of the LESS preprocessor
+// it is located in this folder due to missing support for context-relative resources in wicket-bootstrap-less v0.9.8
+// you can safely delete this file (don't forget to comment out its import in HomePage.java)
+
+
+// define a LESS variable
+@background-color: red;
+
+
+// use the variable in a CSS class
+.content {
+    background-color: @background-color;
+}

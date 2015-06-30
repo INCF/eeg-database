@@ -37,6 +37,8 @@ import org.apache.wicket.core.request.mapper.CryptoMapper;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.request.Request;
 import org.apache.wicket.request.Response;
+import org.apache.wicket.request.resource.ResourceReference;
+import org.apache.wicket.request.resource.ResourceReferenceRegistry;
 import org.apache.wicket.settings.IExceptionSettings;
 import org.apache.wicket.spring.injection.annot.SpringComponentInjector;
 import org.springframework.beans.BeansException;
@@ -133,6 +135,7 @@ import de.agilecoders.wicket.core.settings.BootstrapSettings;
 import de.agilecoders.wicket.core.settings.IBootstrapSettings;
 import de.agilecoders.wicket.core.settings.ThemeProvider;
 import de.agilecoders.wicket.less.BootstrapLess;
+import de.agilecoders.wicket.less.LessResourceReference;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchTheme;
 import de.agilecoders.wicket.themes.markup.html.bootswatch.BootswatchThemeProvider;
 
@@ -381,11 +384,11 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         return domain;
     }
     
+
     
-    
-    /*
-    // LESS integration in this way supports only class-scope .less resources
-    // context-relative resource references (e.g. in the webapp/files folder) is not supported
+    // LESS integration in this way does not support context-relative .less resources
+    // context-relative resource references (e.g. in the webapp/files folder) is not supported in wicket-bootstrap-less v0.9.8
+    // however, in future versions ContextRelativeLessResourceReference should be introduced
     
     @Override
     protected ResourceReferenceRegistry newResourceReferenceRegistry() {
@@ -404,7 +407,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
             }
         }
         
-    }*/
+    }
     
 
 }

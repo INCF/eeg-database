@@ -78,6 +78,7 @@ public class WelcomePage extends MenuPage {
 
     @SpringBean
     ScenariosFacade scenariosFacade;
+    
 
     public WelcomePage() {
 
