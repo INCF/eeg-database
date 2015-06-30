@@ -23,7 +23,7 @@
   
 -->
 <!DOCTYPE html>
-<html>
+<html xmlns:wicket="http://wicket.apache.org" lang="en">
 
 <head>
 	<title>FooterPanel</title>
@@ -31,13 +31,15 @@
 
 <body>
 <wicket:panel>
+
     <div class="footer">
         <wicket:message key="general.footer.title">[EEGbase - ...]</wicket:message>
-        <br />
+        <br>
         <wicket:message key="general.footer.copy">[Copy ...]</wicket:message>
         <a wicket:id="footerLink"></a>
         <span wicket:id="year"></span>
 	</div>
+	
 </wicket:panel>
 </body>
 

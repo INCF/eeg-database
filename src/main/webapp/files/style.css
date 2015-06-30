@@ -1,82 +1,653 @@
 @charset "utf-8";
 
-html, body {
-    height: 100%;
+/** CSS file for standard layout with menu header, footer and content **/
+@import "search.css";
+@import "modalForm.css";
+@import "common.css";
+@import "table.css";
+@import "jquery-ui.css";
+@import "bookingRoom.css";
+@import "visualization.css";
+
+@media screen, projection {
+    .page {
+        width: 950px;
+        margin: 20px auto;
+        padding: 0;
+    }
+
+    .page > .header, page .headerNoLogin {
+        padding: 0;
+        margin: 0;
+        height: 132px;
+        background: #81c5d0 url(images/header.gif) left top no-repeat;
+        overflow: hidden;
+        position: relative;
+    }
+
+    .headerNoLogin {
+        background-image: url(images/header-no-login.gif);
+    }
+
+    .pageTitle {
+        font-size: 2.5em;
+        font-weight: bold;
+        color: #fff;
+
+        /** these few lines make page title invisible on standard screen
+while still visible in code, so it can be accessible without styles **/
+        line-height: 500px;
+        width: 1px;
+        height: 1px;
+        overflow: hidden;
+        /*****************/
+    }
+
+    /** These lines are formatting the search form in the page header - it is part
+     *   of the layout, so it is present in this file.
+    */
+    form.globalSearch {
+        margin: 0;
+        padding: 0;
+        position: absolute;
+        bottom: 51px;
+        right: 5px;
+        border: solid 1px #636363;
+        background: #fff url(images/search-bg.gif) top left repeat-x
+    }
+
+    form.globalSearch fieldset {
+        margin: 0;
+        padding: 0;
+        border: none;
+    }
+
+    form.globalSearch .textfield {
+        border: none;
+        background: none;
+        padding: 1px 5px;
+        margin-bottom: 2px;
+        width: 200px;
+    }
+
+    form.globalSearch .button {
+        border: none;
+        background: #597000;
+        margin: 2px;
+        padding: 1px 4px;
+        color: #fff;
+    }
+
+    form.globalSearch .textfield,
+    form.globalSearch .button {
+        font-size: 1.3em;
+        font-family: "Trebuchet MS", "Arial CE", Arial, sans-serif;
+    }
+
+    /**
+     * Main menu
+    */
+    .mainMenu {
+        font-size: 1.5em;
+        list-style: none;
+        position: relative;
+        margin-top: 98px;
+        margin-left: 10px;
+        padding: 0;
+    }
+
+    .mainMenu li {
+        display: block;
+        float: left;
+        margin: 0;
+    }
+
+    .mainMenu a {
+        color: #0b3c45;
+        text-decoration: none;
+        padding: 3px 8px 6px;
+        margin: 0 0 0 5px;
+        display: block;
+        text-shadow: 1px 1px 1px #CDEBF1;
+        /* text-shadow: 1px 0px white;*/
+    }
+
+    .mainMenu a:hover {
+        color: #000;
+        border: solid 1px #999;
+        border-bottom: none;
+        background: #ededed url(images/main-menu-selected-bg.gif) left bottom repeat-x;
+        padding: 2px 7px 5px;
+    }
+
+    .footer {
+        padding: 3px 10px 1px;
+        background: #dcf2f5 url(images/footer-bg.gif) left top repeat-x;
+        text-align: center;
+        color: #666;
+        clear: both;
+    }
+
+    .mainContent {
+        padding: 10px 0;
+    }
+
+    .mainContentWithMenu {
+        padding: 10px 0;
+        margin-left: 220px;
+    }
+
+    .pageTitle {
+        float: left;
+    }
+
+    .loggedUserBox {
+        float: right;
+        padding: 12px 10px;
+        font-size: 1.2em;
+    }
+
+    .loggedUserBox .borderDecoration {
+        border-left: solid 1px #8a966d;
+    }
+    
+    .loggedUserBox a {
+        margin-left: 5px;
+        padding-left: 5px;
+        margin-right: 5px;
+    }
+
+    .loggedUserBox a, .loggedUserBox a:hover {
+        color: #000;
+    }
+
+    .loggedUserBox a:hover {
+        text-decoration: none;
+    }
+
+    .leftMenu {
+        width: 200px;
+        float: left;
+        padding: 10px 0;
+    }
+
+    .dummySearchColumn {
+        width: 60px;
+    }
+
+    input.condition {
+        width: 400px;
+    }
+
 }
 
-h2 {
-    font-size: 170%;
-}
 
-.content {
-    /* place for sticky footer (see .footer) */
-    min-height: 100%;
-    height: auto;
-    margin: 0 auto -50px;
-    padding: 70px 0 50px;
-}
-
-.footer {
-    padding: 3px 10px 1px;
-    border-top: 1px solid #555;
-    background: -webkit-linear-gradient(white, #93C54B); /* For Safari 5.1 to 6.0 */
-    background: -o-linear-gradient(white, #93C54B);      /* For Opera 11.1 to 12.0 */
-    background: -moz-linear-gradient(white, #93C54B);    /* For Firefox 3.6 to 15 */
-    background: linear-gradient(#BEDC93, #84B144);       /* Standard syntax (must be last) */
+.paginator {
+    margin: 5px 0;
+    padding: 5px;
     text-align: center;
-    color: #555;
-    clear: both;
-    width : 100%;
-    height: 50px;
+}
+.paginator > a,
+.paginator > span {
+    background: #666;
+    color: #fff;
+    text-decoration: none;
 }
 
-.footer a {
-	color: #252623;
+.paginator > span,
+.paginator .disabled {
+    background: #ddd;
+    color: #999;
+}
+.paginator > a,
+.paginator > span,
+.paginator .disabled {
+    font-size: 1.3em;
+    padding: 3px 10px;
+}
+.paginator a:hover {
+    background-color: #000;
+}
+.paginator .description {
+    margin: 0 5px;
 }
 
-.search-query {
-	margin: 16px 40px;
+.homepageLoginLink,
+.homepageRegistrationLink {
+    font-size: 1.5em;
+    border: solid 1px #71a7b1;
+    color: #102b30;
+    text-decoration: none;
+    padding: 10px 20px;
+    margin: 10px 10px 10px 0;
+    text-align: center;
+    background: #c2e3e9;
+    float: left;
+    display: block;
+    text-shadow: 1px 1px 1px #fff;
+    border-radius: 10px;
+}
+
+.homepageLoginLink:hover,
+.homepageRegistrationLink:hover {
+    background: #cfecf0;
+    text-decoration: none;
+}
+
+
+.homepageHeading {
+    padding-bottom: 0;
+}
+
+.notLogged .homepageLeftColumn h2 {
+    margin: 0;
+}
+
+.notLogged .homepageLeftColumn .dataTable,
+.notLogged .homepageRightColumn .dataTable {
+    margin-top: 2px;
+}
+
+.notLogged .homepageLeftColumn h2 a,
+.notLogged .homepageRightColumn h2 a {
+    font-size: .7em;
+    margin-left: 5px;
+}
+
+.notLogged ul.partners {list-style: none; position: relative; left: 45px;}
+
+
+/* Styles for data tables at home page */
+.homepageLeftColumn {
+    float: left;
+    width: 550px;
+}
+
+.homepageRightColumn {
+    margin-left: 570px;
+}
+
+.homepageLeftColumn h2 {
+    margin: 0;
+}
+
+.homepageLeftColumn .dataTable,
+.homepageRightColumn .dataTable {
+    margin-top: 2px;
+}
+
+.homepageLeftColumn h2 a,
+.homepageRightColumn h2 a {
+    font-size: .7em;
+    margin-left: 5px;
+}
+
+/** NOT LOGGED */
+
+.notLogged .homepageLeftColumn {
+    float: left;
+    width: 650px;
+    padding: 20px;
+}
+
+.notLogged .homepageLeftColumn h1 {
+    margin: 0px;
+    padding: 0;
+}
+
+.notLogged .homepageLeftColumn ul {
+}
+
+.notLogged .homepageLeftColumn h2 {
+    margin: 0px;
+    padding: 0;
+}
+
+.notLogged .homepageRightColumn {
+    margin-left: 670px;
+}
+
+.notLogged .homepageLeftColumn .left {
+    float: left;
+    width: 120px;
+    padding-top: 0px;
+}
+
+.notLogged .showreel {display: block; height: 100px; position: relative; top: 20px;}
+
+.notLogged .showreel ul {
+	list-style: none;
+}
+.notLogged .showreel li {
+	float: left; display: block;
+}
+
+.notLogged .showreel li {
+	float: left; display: block;
+	margin-left: 10px;
+}
+
+.notLogged .showreel li a img {
+	border: 1px solid lightgray;
+}
+
+.notLogged .showreel li a:hover img {
+	border: 1px solid gray;
+}
+
+/*.homepageLeftColumn .left {float: left; display: block; width: 200px; }*/
+.notLogged .homepageLeftColumn .right {
+    float: left;
+    display: block;
+    width: 440px;
+    position: relative;
 }
 
 .clear {
-	clear: both;
+    clear: both;
+}
+
+#homepageMyExperimentsList .columnDate,
+#homepageMeAsSubjectList .columnDate {
+    width: 150px;
+}
+
+#homepageMyExperimentsList .columnId,
+#homepageMeAsSubjectList .columnId {
+    width: 50px;
+}
+
+#homepageMyExperimentsList .columnScenarioTitle,
+#homepageMeAsSubjectList .columnScenarioTitle {
+    width: 270px;
+}
+
+#homepageMyScenariosList .columnTitle,
+#homepageMyGroupsList .columnTitle {
+    width: 320px;
+}
+
+.listOfResearchGroupsDataTable .columnGroupTitle {
+    width: 250px;
+}
+
+.listOfResearchGroupsDataTable .columnDescription {
+    width: 400px;
+}
+
+.accountOverviewGroupMembershipDataTable .columnGroupName {
+    width: 350px;
+}
+
+.accountOverviewGroupMembershipDataTable .columnRole {
+    width: 250px;
+}
+
+.membershipPlansList .columnPlanName {
+    width: 400px;
+
+}
+.membershipPlansList .columnPlanPrice {
+    width: 100px;
+}
+
+.membershipPlansList .columnPlanLength {
+    width: 100px;
+}
+
+.promoCodeList .columnCodeKeyword {
+    width: 150px;
+}
+
+.promoCodeList .columnCodeDiscount {
+    width: 120px;
+}
+
+.promoCodeList .columnCodeDate {
+    width: 150px;
 }
 
 
-/****************** left menu ********************/
+/* Login form definitions are used also for print */
 
-.leftMenu {
-    width: 200px;
-    float: left;
-    padding: 30px 0;
+@media screen, projection, print {
+    /* Style for login page */
+
+    .loginForm {
+        margin: 0;
+        padding: 0;
+    }
+
+    .loginForm fieldset {
+        border: none;
+        padding: 0;
+        text-align: center;
+    }
+
+    .loginForm .fieldLabel {
+        display: block;
+        margin: 10px 0 0;
+    }
+
+    .loginForm #j_username,
+    .loginForm #j_password {
+        border: solid 1px #bababa;
+        font-size: 2em;
+        color: #000;
+        background: #fff url(images/input-field-bg.gif) left bottom repeat-x;
+        padding: 3px 5px;
+        width: 200px;
+    }
+
+    .loginForm .rememberMeBox {
+        padding: 10px 0;
+    }
+
+    .loginForm .errorMessage {
+        font-size: 1.4em;
+        color: #c00;
+    }
 }
 
-.leftMenu li.active {
-    background-color: #DFD7CA;
+div.article {
+    margin-bottom: 40px;
+    width: 700px;
+    word-wrap: break-word;
+    text-align: justify;
+    display: block;
+    margin-bottom: 10px;
 }
 
-.leftMenu li.active a:hover {
-    background-color: #C9C2B6;
+div.articleDetail .content {
+    margin-top: 15px;
+    width: 700px;
+    text-align: justify;
+    margin-bottom: 30px;
 }
 
-.mainContentWithMenu {
-    padding: 20px 0;
-    margin-left: 270px;
+.homePageActionBoxes {
+    display: block;
+    height: 60px;
+    position: relative;
+    left: 270px;
+	width: 100px;
 }
 
+.articleDetail h1 {
 
-/******************** tables ********************/
-
-.dataTable {
-    width: 100%;
-    white-space: nowrap;
 }
 
-.pagination {
+.article {
+    border: solid 1px #ddd;
+}
+.article:hover {
+    border-color: #bbb;
+    background-color: #f3f3f3;
+}
+.article h2 {
+    margin: 10px;
+    padding: 0px;
+}
+.article .content {
+    color: #333;
+    margin: 10px;
+    font-size: 1.1em;
+}
+.article:hover .content {
+    color: #000;
+}
+.article .articleInfo {
+    padding: 3px 10px;
+    color: #333;
+    background: #eee;
+}
+.article .articleInfo .label {
+    color: #999;
+}
+.article:hover .articleInfo {
+    color: #000;
+    background-color: #ddd;
+}
+
+.articleDetail .subheading {
+    margin-top: 5px;
+    margin-bottom: 5px;
+    color: gray;
+}
+
+ul.comments {
+    width: 680px;
+    list-style: none;
+    list-style-position: outside;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+li.comment {
+    background: #f0f3f3;
+    margin-top: 5px;
+    padding: 5px;
+    border-top: 1px solid lightblue;
+    clear: both;
     margin: 10px;
 }
 
-.dataTable thead tr {
-    background-color: #3E3F3A;
-    color: silver;
+li.comment ul {
+    list-style: none;
+    margin-left: 10px;
+    padding: 0;
+}
+
+li.comment li {
+    border-top: 1px solid #add8e6;
+    border-left: 4px solid #add8e6;
+    padding-left: 5px;
+    margin: 10px;
+    margin-left: 0;
+    padding-bottom: 10px;
+}
+
+li.comment li {
+    background: #ffffff;
+}
+
+li.comment li li {
+    background: #f0f3f3;
+}
+
+li.comment li li li {
+    background: #ffffff;
+}
+
+li.comment li li li {
+    background: #f0f3f3;
+}
+
+.packageList li {
+    list-style: none;
+}
+
+.headerWithLinks a {
+	font-size: 0.7em;
+    margin-left: 5px;
+}
+
+.headerWithLinks em {
+	font-size: 0.7em;
+    margin-left: 5px;
+	font-style: normal;
+}
+
+.subtitle {
+	font-size: 0.8em;
+	font-weight: bold;
+	display: inline;
+}
+
+
+@media print {
+    .leftMenu {
+        display: none;
+    }
+
+    .footer {
+        margin-top: 40px;
+        border-top: solid 1px #000;
+        text-align: center;
+    }
+
+    #homepageMyExperimentsList a,
+    #homepageMyDataList a,
+    #homepageMyScenariosList a,
+    #homepageMyGroupsList a,
+    #accountOverviewGroupMembership a {
+        display: none;
+    }
+
+    .accountOverviewList dt {
+        float: left;
+        width: 180px;
+        font-weight: bold;
+    }
+
+    form.globalSearch {
+        display: none;
+    }
+    
+}
+
+.feedbackPanelDEBUG {
+	font-weight: bold;
+	color: #00bfff;
+}
+
+.feedbackPanelINFO {
+	font-weight: bold;
+	color: #00ff00;
+}
+
+.feedbackPanelWARNING {
+	font-weight: bold;
+	color: #ffd700;
+}
+
+.feedbackPanelERROR {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+.feedbackPanelFATAL {
+	font-weight: bold;
+	color: #ff00ff;
+}
+
+.removeLinkShort {
+	font-weight: bold;
+	color: #ff0000;
+}
+
+.alert {
+	font-weight: bold;
+	color: #ff0000;
 }

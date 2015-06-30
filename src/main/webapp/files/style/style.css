@@ -1,0 +1,82 @@
+@charset "utf-8";
+
+html, body {
+    height: 100%;
+}
+
+h2 {
+    font-size: 170%;
+}
+
+.content {
+    /* place for sticky footer (see .footer) */
+    min-height: 100%;
+    height: auto;
+    margin: 0 auto -50px;
+    padding: 70px 0 50px;
+}
+
+.footer {
+    padding: 3px 10px 1px;
+    border-top: 1px solid #555;
+    background: -webkit-linear-gradient(white, #93C54B); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(white, #93C54B);      /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(white, #93C54B);    /* For Firefox 3.6 to 15 */
+    background: linear-gradient(#BEDC93, #84B144);       /* Standard syntax (must be last) */
+    text-align: center;
+    color: #555;
+    clear: both;
+    width : 100%;
+    height: 50px;
+}
+
+.footer a {
+	color: #252623;
+}
+
+.search-query {
+	margin: 16px 40px;
+}
+
+.clear {
+	clear: both;
+}
+
+
+/****************** left menu ********************/
+
+.leftMenu {
+    width: 200px;
+    float: left;
+    padding: 30px 0;
+}
+
+.leftMenu li.active {
+    background-color: #DFD7CA;
+}
+
+.leftMenu li.active a:hover {
+    background-color: #C9C2B6;
+}
+
+.mainContentWithMenu {
+    padding: 20px 0;
+    margin-left: 270px;
+}
+
+
+/******************** tables ********************/
+
+.dataTable {
+    width: 100%;
+    white-space: nowrap;
+}
+
+.pagination {
+    margin: 10px;
+}
+
+.dataTable thead tr {
+    background-color: #3E3F3A;
+    color: silver;
+}
