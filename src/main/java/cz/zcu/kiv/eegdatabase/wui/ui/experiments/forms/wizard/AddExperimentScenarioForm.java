@@ -117,7 +117,6 @@ public class AddExperimentScenarioForm extends WizardStep {
         addScenario();
         addResearchGroup();
         addPrivateExperimentCheckBox();
-        addProject();
         addStartDate();
         addEndDate();
         addTestedSubject();
@@ -208,33 +207,6 @@ public class AddExperimentScenarioForm extends WizardStep {
 
         add(startDate);
         add(feedback);
-    }
-
-    private void addProject() {
-
-        // added listmultiplechoice for project types
-        ChoiceRenderer<ProjectType> renderer = new ChoiceRenderer<ProjectType>("title", "projectTypeId");
-        LoadableListModel<ProjectType> choiceModel = new LoadableListModel<ProjectType>() {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected List<ProjectType> load() {
-
-                Experiment experiment2 = model.getObject();
-                ResearchGroup researchGroup = experiment2.getResearchGroup();
-
-                if (researchGroup != null)
-                    return projectTypeFacade.getRecordsByGroup(researchGroup.getResearchGroupId());
-                else
-                    return Collections.EMPTY_LIST;
-            }
-
-        };
-        ListMultipleChoice<ProjectType> projectTypes = new ListMultipleChoice<ProjectType>("projectTypes", new PropertyModel<List<ProjectType>>(model.getObject(), "projectTypes"), choiceModel,
-                renderer);
-        projectTypes.setLabel(ResourceUtils.getModel("label.projectType"));
-        add(projectTypes);
     }
 
     private void addResearchGroup() {
@@ -373,7 +345,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         };
 
         personField.add(new UniqueEntityValidator<Person>(personFacade));
-        personField.setRequired(true);
+        personField.setRequired(true); // remove this after SQL script from issue #117
         personField.setLabel(ResourceUtils.getModel("label.subjectPerson"));
         final FeedbackPanel personFeedback = createFeedbackForComponent(personField, "personFeedback");
 
@@ -407,8 +379,8 @@ public class AddExperimentScenarioForm extends WizardStep {
                 item.add(new Label("title",license.getTitle()));
                 item.add(new Label("price", license.getPrice()));
                 item.add(new Label("type", license.getLicenseType().toString()));
-
-                //item.add(new Label("label", item.getModel()));
+                
+                //item.add(new Label("label", item.getModel())); TODO remove this, code improve this listview
             }
         };
         licenseList.setViewSize(10);
@@ -426,9 +398,6 @@ public class AddExperimentScenarioForm extends WizardStep {
 
         addModalWindowAndButton(this, "add-group",
                 "addGroup", AddGroupPage.class.getName(), window);
-
-        addModalWindowAndButton(this, "new-project",
-                "newProject", AddProjectPage.class.getName(), window);
 
         addModalWindowAndButton(this, "new-scenario",
                 "newScenario", AddScenarioPage.class.getName(), window);

@@ -59,7 +59,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentEnvironmentForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
 
@@ -113,7 +112,6 @@ public class ExperimentFormPage extends MenuPage {
 
         WizardModel wizardModel = new WizardModel();
         wizardModel.add(new AddExperimentScenarioForm(model));
-        wizardModel.add(new AddExperimentEnvironmentForm(model));
         wizardModel.add(new AddExperimentResultsForm(fileModel));
 
         Wizard wizard = new Wizard("wizard", wizardModel, false) {
@@ -135,7 +133,8 @@ public class ExperimentFormPage extends MenuPage {
                 Set<DataFile> files = new HashSet<DataFile>();
                 try {
                     List<FileUpload> fileUploadList = fileModel.getObject();
-                    if (fileUploadList.isEmpty()) {
+                    // files are required only for create experiment, not editation
+                    if (experiment.getExperimentId() == 0 && fileUploadList.isEmpty()) {
                         this.error(ResourceUtils.getString("required.dataFile"));
                         setResponsePage(getPage());
                         return;

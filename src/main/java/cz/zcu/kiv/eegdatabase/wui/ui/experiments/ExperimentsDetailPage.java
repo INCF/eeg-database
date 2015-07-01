@@ -114,114 +114,34 @@ public class ExperimentsDetailPage extends MenuPage {
         final Experiment experiment = facade.getExperimentForDetail(experimentId);
 
         add(new Label("experimentId", experiment.getExperimentId()+""));
-        add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
-        add(new TimestampLabel("endTime", experiment.getEndTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
-        add(new Label("temperature", experiment.getTemperature()+""));
-        add(new Label("weather.title", experiment.getWeather().getTitle()));
-        add(new Label("environmentNote", experiment.getEnvironmentNote()));
         add(new Label("privateExperiment", experiment.isPrivateExperiment()+""));
         add(new Label("scenario.title", experiment.getScenario().getTitle()));
         add(new Label("price", experiment.getPrice()));
-
-        Person personBySubjectPersonId = experiment.getPersonBySubjectPersonId();
-        add(new TimestampLabel("dateOfBirth", personBySubjectPersonId.getDateOfBirth(), StringUtils.DATE_TIME_FORMAT_PATTER_ONLY_YEAR));
-        add(new EnumLabel<Gender>("gender", Gender.getGenderByShortcut(personBySubjectPersonId.getGender())));
+        add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
+        add(new TimestampLabel("endTime", experiment.getEndTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         
-        BookmarkablePageLink<Void> personLink = new BookmarkablePageLink<Void>("personLink", PersonDetailPage.class, PageParametersUtils.getDefaultPageParameters(personBySubjectPersonId.getPersonId()));
-        personLink.setVisibilityAllowed(security.userCanViewPersonDetails(personBySubjectPersonId.getPersonId()));
+        Person personBySubjectPersonId = experiment.getPersonBySubjectPersonId();
+        add(new TimestampLabel("dateOfBirth", personBySubjectPersonId != null ? personBySubjectPersonId.getDateOfBirth() : null, StringUtils.DATE_TIME_FORMAT_PATTER_ONLY_YEAR));
+        add(new EnumLabel<Gender>("gender", (personBySubjectPersonId != null ? Gender.getGenderByShortcut(personBySubjectPersonId.getGender()) : null)));
+        
+        BookmarkablePageLink<Void> personLink = new BookmarkablePageLink<Void>("personLink", PersonDetailPage.class, PageParametersUtils.getDefaultPageParameters(personBySubjectPersonId != null ? personBySubjectPersonId.getPersonId() : -1));
+        personLink.setVisibilityAllowed(personBySubjectPersonId != null && security.userCanViewPersonDetails(personBySubjectPersonId.getPersonId()));
         add(personLink);
+        
         BookmarkablePageLink<Void> scenarioLink = new BookmarkablePageLink<Void>("scenarioLink", ScenarioDetailPage.class, PageParametersUtils.getDefaultPageParameters(experiment.getScenario().getScenarioId()));
         add(scenarioLink);
         
-        // TODO action box pages
         boolean coexperiment = security.userIsOwnerOrCoexperimenter(experimentId) || security.isAdmin();
-        BookmarkablePageLink<Void> addParameterLink = new BookmarkablePageLink<Void>("addParameterLink", ExperimentOptParamValueFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> metadataLink = new BookmarkablePageLink<Void>("metadataLink", MetadataFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", new Model<Experiment>(experiment));
         downloadExpLink.setVisibilityAllowed(experiment.getExperimentPackageConnections().isEmpty());
-        add(addParameterLink.setVisibilityAllowed(coexperiment), addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), metadataLink.setVisibilityAllowed(coexperiment), downloadExpLink);
+        add(addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), metadataLink.setVisibilityAllowed(coexperiment), downloadExpLink);
         
         /* XXX #66 Java Heap Space Exception : working with big data file in memory.
             final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
          */
-
-        PropertyListView<Hardware> hardware = new PropertyListView<Hardware>("hardware", new ListModel<Hardware>(new ArrayList<Hardware>(experiment.getHardwares()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<Hardware> item) {
-                item.add(new Label("title"));
-                item.add(new Label("type"));
-
-            }
-        };
-        PropertyListView<ExperimentOptParamVal> addParameters = new PropertyListView<ExperimentOptParamVal>("addParameters", new ListModel<ExperimentOptParamVal>(new ArrayList<ExperimentOptParamVal>(
-                experiment.getExperimentOptParamVals()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<ExperimentOptParamVal> item) {
-                item.add(new Label("experimentOptParamDef.paramName"));
-                item.add(new Label("paramValue"));
-
-            }
-        };
-        
-        PropertyListView<Software> software = new PropertyListView<Software>("software", new ListModel<Software>(new ArrayList<Software>(
-                experiment.getSoftwares()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<Software> item) {
-                item.add(new Label("title"));
-                item.add(new Label("description"));
-
-            }
-        };
-        
-        PropertyListView<Disease> diseases = new PropertyListView<Disease>("diseases", new ListModel<Disease>(new ArrayList<Disease>(
-                experiment.getDiseases()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<Disease> item) {
-                item.add(new Label("title"));
-                item.add(new Label("description"));
-
-            }
-        };
-        
-        PropertyListView<Pharmaceutical> pharmaceuticals = new PropertyListView<Pharmaceutical>("pharmaceuticals", new ListModel<Pharmaceutical>(new ArrayList<Pharmaceutical>(
-                experiment.getPharmaceuticals()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<Pharmaceutical> item) {
-                item.add(new Label("title"));
-                item.add(new Label("description"));
-
-            }
-        };
-        
-        PropertyListView<ProjectType> projectTypes = new PropertyListView<ProjectType>("projectTypes", new ListModel<ProjectType>(new ArrayList<ProjectType>(
-                experiment.getProjectTypes()))) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void populateItem(ListItem<ProjectType> item) {
-                item.add(new Label("title"));
-                item.add(new Label("description"));
-
-            }
-        };
         
         PropertyListView<Section> metadata = new PropertyListView<Section>("sections", new PropertyModel<List<Section>>(experiment.getElasticExperiment().getMetadata(), "sections")) {
 
@@ -323,7 +243,8 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
-        add(hardware, addParameters, files, software, diseases, pharmaceuticals,licenseList, projectTypes);
+        add(licenseList);
+        add(files);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");
         container.setOutputMarkupId(true);
