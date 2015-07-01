@@ -27,6 +27,8 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import odml.core.Property;
@@ -46,6 +48,10 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsService;
 
 public class TemplateFacadeImpl implements TemplateFacade {
+
+    private static final String XML_FILE_SUFFIX = ".xml";
+    private static final String ODML_TEMPLATE_PREFIX = "ODML-";
+    private static final String EEG_TEMPLATE_PREFIX = "EEG-";
 
     protected Log log = LogFactory.getLog(getClass());
 
@@ -160,7 +166,7 @@ public class TemplateFacadeImpl implements TemplateFacade {
         try {
             paths = new ClassPathResource(odmlSectionsPath).getFile().listFiles();
             for (File path : paths) {
-                if (path.getName().endsWith(".xml")) {
+                if (path.getName().endsWith(XML_FILE_SUFFIX)) {
                     filteredFiles.add(path);
                 }
             }
@@ -179,6 +185,20 @@ public class TemplateFacadeImpl implements TemplateFacade {
                 log.error(e.getMessage(), e);
             }
         }
+        
+        for(Section section : sections) {
+            if(!section.getName().startsWith(EEG_TEMPLATE_PREFIX)) {
+                section.setName(ODML_TEMPLATE_PREFIX + section.getName());
+            }
+        }
+        
+        Collections.sort(sections, new Comparator<Section>() {
+
+            @Override
+            public int compare(Section o1, Section o2) {
+                return o1.getName().compareTo(o2.getName());
+            }
+        });
 
         try {
             Section empty = new Section(ResourceUtils.getString("text.template.empty.section"), "new");
@@ -223,9 +243,14 @@ public class TemplateFacadeImpl implements TemplateFacade {
     @Override
     public boolean createSystemTemplate(Section section) {
         try {
-
-            Writer writer = new Writer(section, true, true);
-            FileOutputStream fostream = new FileOutputStream(new File(new ClassPathResource(odmlSectionsPath).getFile(), section.getName() + ".xml"));
+            
+            Section root = new Section();
+            root.add(section);
+            section.setName(EEG_TEMPLATE_PREFIX + section.getName());
+            section.setType(section.getName().toLowerCase());
+            
+            Writer writer = new Writer(root, true, true);
+            FileOutputStream fostream = new FileOutputStream(new File(new ClassPathResource(odmlSectionsPath).getFile(), section.getName() + XML_FILE_SUFFIX));
             writer.write(fostream);
             fostream.close();
 
