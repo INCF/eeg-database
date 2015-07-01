@@ -23,7 +23,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template;
 
 import java.io.ByteArrayOutputStream;
-import java.io.FileOutputStream;
 import java.util.List;
 
 import odml.core.Section;

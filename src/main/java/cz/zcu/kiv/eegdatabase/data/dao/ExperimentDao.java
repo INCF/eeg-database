@@ -89,4 +89,6 @@ public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 	public List<Experiment> search(String value);
 
 	public List<Experiment> searchByAttribute(String attrName, String attrValue);
+	
+	boolean deleteAndCreateExperimentIndexInES();
 }

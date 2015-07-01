@@ -37,6 +37,7 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueDropDownChoiceModel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueModel;
 
 public class FormPropertyPanel extends Panel {
 
@@ -54,13 +55,13 @@ public class FormPropertyPanel extends Panel {
 
     private void setupFormComponents(IModel<Property> model) {
 
-        textField = new TextField("textfield", new PropertyModel(model.getObject(), "value"));
+        textField = new TextField("textfield", new PropertyValueModel(model.getObject()));
         add(textField);
 
         choice = new DropDownChoice("select", new PropertyValueDropDownChoiceModel(model.getObject()), new PropertyModel<List<Value>>(model.getObject(), "values"));
         add(choice);
 
-        boolean singleValue = model.getObject().getValues() != null ? model.getObject().getValues().size() == 1 : true;
+        boolean singleValue = model.getObject().getValues() != null && model.getObject().getValues().size() > 1 ? false : true;
         textField.setVisibilityAllowed(singleValue);
         choice.setVisibilityAllowed(!singleValue);
 

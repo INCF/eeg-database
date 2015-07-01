@@ -1,3 +1,25 @@
+/*******************************************************************************
+ * This file is part of the EEG-database project
+ * 
+ *   ==========================================
+ *  
+ *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ *  
+ *  ***********************************************************************************************************************
+ *  
+ *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+ *   the License. You may obtain a copy of the License at
+ *  
+ *       http://www.apache.org/licenses/LICENSE-2.0
+ *  
+ *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+ *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+ *   specific language governing permissions and limitations under the License.
+ *  
+ *  ***********************************************************************************************************************
+ *  
+ *   ExperimentToODMLMapper.java, 2015/02/26 00:01 Jakub Rinkes
+ ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
 import odml.core.Property;
@@ -61,19 +83,19 @@ public class ExperimentToODMLMapper {
             }
 
             if (exp.getPersonBySubjectPersonId() != null) {
-                experiment.add(convertPersonToSection(exp.getPersonBySubjectPersonId(), true));
+                root.add(convertPersonToSection(exp.getPersonBySubjectPersonId(), true));
             }
 
             if (exp.getWeather() != null) {
-                experiment.add(convertWeatherToSection(exp.getWeather()));
+                root.add(convertWeatherToSection(exp.getWeather()));
             }
 
             if (exp.getArtifact() != null) {
-                experiment.add(convertArtifactToSection(exp.getArtifact()));
+                root.add(convertArtifactToSection(exp.getArtifact()));
             }
 
             if (exp.getDigitization() != null) {
-                experiment.add(convertDigitizationToSection(exp.getDigitization()));
+                root.add(convertDigitizationToSection(exp.getDigitization()));
             }
 
             if (exp.getHardwares().size() != 0) {
@@ -81,7 +103,7 @@ public class ExperimentToODMLMapper {
                 Section hardwares = new Section();
                 hardwares.setName("Hardwares");
                 hardwares.setType("collection");
-                experiment.add(hardwares);
+                root.add(hardwares);
 
                 for (Hardware hw : exp.getHardwares()) {
                     hardwares.add(convertHardwareToSection(hw));
@@ -94,7 +116,7 @@ public class ExperimentToODMLMapper {
                 Section softwares = new Section();
                 softwares.setName("Softwares");
                 softwares.setType("collection");
-                experiment.add(softwares);
+                root.add(softwares);
 
                 for (Software sw : exp.getSoftwares()) {
                     softwares.add(convertSoftwareToSection(sw));
@@ -107,7 +129,7 @@ public class ExperimentToODMLMapper {
                 Section pharmaceuticals = new Section();
                 pharmaceuticals.setName("Pharmaceuticals");
                 pharmaceuticals.setType("collection");
-                experiment.add(pharmaceuticals);
+                root.add(pharmaceuticals);
 
                 for (Pharmaceutical ph : exp.getPharmaceuticals()) {
                     pharmaceuticals.add(convertPharmaceuticalToSection(ph));
@@ -120,7 +142,7 @@ public class ExperimentToODMLMapper {
                 Section diseases = new Section();
                 diseases.setName("Diseases");
                 diseases.setType("collection");
-                experiment.add(diseases);
+                root.add(diseases);
 
                 for (Disease tmp : exp.getDiseases()) {
                     diseases.add(convertDiseaseToSection(tmp));
@@ -133,7 +155,7 @@ public class ExperimentToODMLMapper {
                 Section projectTypes = new Section();
                 projectTypes.setName("ProjectTypes");
                 projectTypes.setType("collection");
-                experiment.add(projectTypes);
+                root.add(projectTypes);
 
                 for (ProjectType tmp : exp.getProjectTypes()) {
                     projectTypes.add(convertProjectTypeToSection(tmp));
@@ -146,7 +168,7 @@ public class ExperimentToODMLMapper {
                 Section artifactRemoveMethod = new Section();
                 artifactRemoveMethod.setName("ArtifactRemoveMethods");
                 artifactRemoveMethod.setType("collection");
-                experiment.add(artifactRemoveMethod);
+                root.add(artifactRemoveMethod);
 
                 for (ArtifactRemoveMethod tmp : exp.getArtifactRemoveMethods()) {
                     artifactRemoveMethod.add(convertArtifactRemoveMethodToSection(tmp));
@@ -159,7 +181,7 @@ public class ExperimentToODMLMapper {
                 Section experimentOptParameters = new Section();
                 experimentOptParameters.setName("ExperimentOptParameters");
                 experimentOptParameters.setType("collection");
-                experiment.add(experimentOptParameters);
+                root.add(experimentOptParameters);
 
                 for (ExperimentOptParamVal tmp : exp.getExperimentOptParamVals()) {
                     experimentOptParameters.add(convertExperimentOptParamValToSection(tmp));
@@ -172,7 +194,7 @@ public class ExperimentToODMLMapper {
                 Section experimentators = new Section();
                 experimentators.setName("Experimentators");
                 experimentators.setType("collection");
-                experiment.add(experimentators);
+                root.add(experimentators);
 
                 for (Person tmp : exp.getPersons()) {
                     experimentators.add(convertPersonToSection(tmp, false));
@@ -183,7 +205,7 @@ public class ExperimentToODMLMapper {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
         }
-        return experiment;
+        return root;
     }
 
     public static Section convertHardwareToSection(Hardware hw) {
@@ -404,7 +426,7 @@ public class ExperimentToODMLMapper {
 
         return experimentOptParam;
     }
-
+    
     public static Section convertPersonToSection(Person pr, boolean subject) {
 
         Section person = new Section();

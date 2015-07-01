@@ -31,6 +31,7 @@ import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.PropertyValueModel;
 
 public class ViewMetadataPropertyPanel extends Panel {
 
@@ -40,7 +41,7 @@ public class ViewMetadataPropertyPanel extends Panel {
         super(id, new CompoundPropertyModel<Property>(model));
 
         Label name = new Label("name");
-        Label value = new Label("value");
+        Label value = new Label("value", new PropertyValueModel(model.getObject()));
 
         String definition = model.getObject().getDefinition();
         if (definition != null && !definition.isEmpty()) {

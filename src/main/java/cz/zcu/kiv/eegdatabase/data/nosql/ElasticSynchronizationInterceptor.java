@@ -62,91 +62,92 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
  */
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
-	@Resource
-	private ElasticsearchTemplate elasticsearchTemplate;
+    protected Log log = LogFactory.getLog(getClass());
 
-	@Override
-	public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
-		boolean res = super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
-		if (entity instanceof Experiment) {
-			Experiment e = (Experiment) entity;
-			this.syncExperimentParams(e);
-			e.getElasticExperiment().setExperimentId("" + id);
-			IndexQuery indexQuery = new IndexQuery();
-			indexQuery.setObject(e.getElasticExperiment());
-			indexQuery.setId("" + id);
-			this.elasticsearchTemplate.index(indexQuery);
+    @Resource
+    private ElasticsearchTemplate elasticsearchTemplate;
 
-		}
+    @Override
+    public boolean onFlushDirty(Object entity, Serializable id, Object[] currentState, Object[] previousState, String[] propertyNames, Type[] types) {
+        boolean res = super.onFlushDirty(entity, id, currentState, previousState, propertyNames, types);
+        if (entity instanceof Experiment) {
+            Experiment e = (Experiment) entity;
+            this.syncExperimentParams(e);
+            e.getElasticExperiment().setExperimentId("" + id);
+            IndexQuery indexQuery = new IndexQuery();
+            indexQuery.setObject(e.getElasticExperiment());
+            indexQuery.setId("" + id);
+            this.elasticsearchTemplate.index(indexQuery);
 
-		return res;
-	}
+        }
+        
+        return res;
+    }
 
-	@Override
-	public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-		boolean res = super.onSave(entity, id, state, propertyNames, types);
+    @Override
+    public boolean onSave(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        boolean res = super.onSave(entity, id, state, propertyNames, types);
+        if (entity instanceof Experiment) {
+            Experiment e = (Experiment) entity;
+            this.syncExperimentParams(e);
+            e.getElasticExperiment().setExperimentId("" + id);
+            IndexQuery indexQuery = new IndexQuery();
+            indexQuery.setObject(e.getElasticExperiment());
+            indexQuery.setId("" + id);
+            this.elasticsearchTemplate.index(indexQuery);
 
-		if (entity instanceof Experiment) {
-			Experiment e = (Experiment) entity;
-			this.syncExperimentParams(e);
-			e.getElasticExperiment().setExperimentId("" + id);
-			IndexQuery indexQuery = new IndexQuery();
-			indexQuery.setObject(e.getElasticExperiment());
-			indexQuery.setId("" + id);
-			this.elasticsearchTemplate.index(indexQuery);
+        }
+        
+        return res;
+    }
 
-		}
+    @Override
+    public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        super.onDelete(entity, id, state, propertyNames, types);
+        if (entity instanceof Experiment) {
+            Experiment e = (Experiment) entity;
+            DeleteQuery deleteQuery = new DeleteQuery();
+            deleteQuery.setQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId()));
+            this.elasticsearchTemplate.delete(deleteQuery);
+        }
+    }
 
-		return res;
-	}
+    @Override
+    public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
+        boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
+        if (entity instanceof Experiment) {
+            Experiment e = (Experiment) entity;
+            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+            if (elastic.size() > 0 && elastic.get(0) != null) {
+                e.setElasticExperiment(elastic.get(0));
+            }
+        }
 
-	@Override
-	public void onDelete(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-		super.onDelete(entity, id, state, propertyNames, types);
-		if (entity instanceof Experiment) {
-			Experiment e = (Experiment) entity;
-			DeleteQuery deleteQuery = new DeleteQuery();
-			deleteQuery.setQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId()));
-			this.elasticsearchTemplate.delete(deleteQuery);
-		}
-	}
+        return res;
+    }
 
-	@Override
-	public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
-		boolean res = super.onLoad(entity, id, state, propertyNames, types); //To change body of generated methods, choose Tools | Templates.
-
-		if (entity instanceof Experiment) {
-			Experiment e = (Experiment) entity;
-			SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-			List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-			if (elastic.size() > 0 && elastic.get(0) != null) {
-				e.setElasticExperiment(elastic.get(0));
-			}
-		}
-
-		return res;
-	}
-
-	/**
-	 * Just temporal method. Keeps synced specific params that are stored in ES
-	 * with its originals in relational DB. As soon as the bussiness code will
-	 * be completely switched to GenericParameters, all original experiment
-	 * properties will be dropped and this method will not be necessary.
-	 *
-	 * @param e
-	 */
-	private void syncExperimentParams(Experiment e) {
-
-	    List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
+    /**
+     * Just temporal method. Keeps synced specific params that are stored in ES with its originals in relational DB. As soon as the bussiness code will be completely switched to
+     * GenericParameters, all original experiment properties will be dropped and this method will not be necessary.
+     * 
+     * @param e
+     */
+    private void syncExperimentParams(Experiment e) {
+        
+        List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
         syncedParams.addAll(getGenericParamaters("software", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("diesease", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("pharmaceutical", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("digitization", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("temperature", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("weather", e.getGenericParameters()));
+        log.trace("synced parameters " + syncedParams.size());
         
         GenericParameter param;
+        log.trace("before remove all parameters " + e.getGenericParameters().size());
         e.getGenericParameters().removeAll(syncedParams);
+        log.trace("after remove all parameters " + e.getGenericParameters().size());
         
         e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
         e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());

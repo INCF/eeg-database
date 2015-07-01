@@ -44,11 +44,14 @@ import org.elasticsearch.index.query.BoolQueryBuilder;
 import org.elasticsearch.index.query.MatchQueryBuilder;
 import org.elasticsearch.index.query.NestedFilterBuilder;
 import org.elasticsearch.index.query.OrFilterBuilder;
+import org.elasticsearch.index.query.QueryBuilders;
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
 import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
 import org.springframework.data.elasticsearch.core.query.SearchQuery;
@@ -442,5 +445,28 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
         indexQuery.setId("" + transientObject.getExperimentId());
 
         elasticsearchTemplate.index(indexQuery);
+    }
+
+    @Override
+    public boolean deleteAndCreateExperimentIndexInES() {
+
+        DeleteQuery dq = new DeleteQuery();
+        dq.setQuery(QueryBuilders.matchAllQuery());
+        dq.setIndex(ExperimentElastic.class.getAnnotation(Document.class).indexName());
+        dq.setType(ExperimentElastic.class.getAnnotation(Document.class).type());
+        // delete all experiments in index
+        elasticsearchTemplate.delete(dq);
+        // delete index
+        elasticsearchTemplate.deleteIndex(ExperimentElastic.class);
+        // test if index still exists
+        if (elasticsearchTemplate.indexExists(ExperimentElastic.class)) {
+            return false;
+        }
+        // create new index
+        if (!elasticsearchTemplate.createIndex(ExperimentElastic.class)) {
+            return false;
+        }
+
+        return true;
     }
 }

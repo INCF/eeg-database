@@ -387,4 +387,19 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         
     }
 
+    @Override
+    public boolean deleteAndCreateExperimentIndexInES() {
+        return experimentDao.deleteAndCreateExperimentIndexInES();
+    }
+    
+    /**
+     * Method for update object for migration. 
+     * Because migration have own transaction, there is problem with original update method called from wicket.
+     * 
+     */
+    @Override
+    public void simpleUpdate(Experiment exp) {
+        experimentDao.update(exp);
+    }
+
 }

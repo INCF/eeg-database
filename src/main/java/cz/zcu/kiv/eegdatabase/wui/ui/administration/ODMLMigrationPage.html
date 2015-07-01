@@ -18,22 +18,19 @@ This file is part of the EEG-database project
  
  ***********************************************************************************************************************
  
-  TemplatePropertyPanel.html, 2013/02/27 00:01 Jakub Rinkes
+  ManageResearchGroupPage.html, 2014/05/13 00:01 Jakub Rinkes
 -->
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
 <body>
-    <wicket:panel>
-        <label><wicket:message key="label.template.property"/>: <span wicket:id="name" class="editable"/>
-<!--          - <wicket:message key="label.template.type"></wicket:message>: <span wicket:id="type" class="editable"/> -->
-         </label>
-         - <input type="checkbox" wicket:id="required"/><label><wicket:message key="label.template.property.required"/></label>
-         - <input type="button" wicket:id="remove-property" value="X" class="remove-button"/>
-        <br />
-        <wicket:enclosure child="definition">
-            <div wicket:id="definition" class="definition editable"></div>
-        </wicket:enclosure>
-        <wicket:message key="label.template.value"></wicket:message>: <span wicket:id="value" class="editable"/> 
-    </wicket:panel>
+    <wicket:extend>
+        <div class="leftMenu" wicket:id="leftMenu"></div>
+
+        <div class="mainContentWithMenu">
+            <h1><wicket:message key="pageTitle.migration"></wicket:message></h1>
+            
+            <a href="#" class="lightButtonLink" wicket:id="migrationLink"><wicket:message key="button.migration.link"></wicket:message></a>
+        </div>
+    </wicket:extend>
 </body>
 </html>

@@ -40,6 +40,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 public class TemplatePropertyPanel extends Panel {
 
     private static final long serialVersionUID = 1L;
+
     private TemplateTreeViewModel viewModel;
     private MarkupContainer container;
 
@@ -52,7 +53,7 @@ public class TemplatePropertyPanel extends Panel {
         setupComponents(model);
     }
 
-    private void setupComponents(IModel<Property> model) {
+    private void setupComponents(final IModel<Property> model) {
 
         add(new AjaxEditableLabel<String>("name") {
 
@@ -65,7 +66,18 @@ public class TemplatePropertyPanel extends Panel {
 
         });
         add(new PropertyMultiValuePanel("value", model));
-        add(new AjaxEditableMultiLineLabel<String>("definition") {
+        add(new AjaxEditableMultiLineLabel<String>("definition", new PropertyModel(model, "definition") {
+
+            private static final long serialVersionUID = 1L;
+
+            // TODO remove this if java odml lib will be upgraded, bug fix with definition setter.
+
+            @Override
+            public void setObject(Object object) {
+                super.setObject(object == null ? "" : object);
+            }
+
+        }) {
 
             private static final long serialVersionUID = 1L;
 
@@ -78,16 +90,6 @@ public class TemplatePropertyPanel extends Panel {
             @Override
             protected String defaultNullLabel() {
                 return ResourceUtils.getString("text.template.empty.property.definition");
-            }
-        });
-
-        add(new AjaxEditableLabel<String>("type") {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected String defaultNullLabel() {
-                return ResourceUtils.getString("text.template.empty.propertyType");
             }
         });
 

@@ -78,7 +78,6 @@ public class ListTemplatePage extends MenuPage {
 
         columns.add(new PropertyColumn<Template, String>(ResourceUtils.getModel("dataTable.heading.number"), "templateId", "templateId"));
         columns.add(new PropertyColumn<Template, String>(ResourceUtils.getModel("dataTable.heading.name"), "name", "name"));
-        columns.add(new PropertyColumn<Template, String>(ResourceUtils.getModel("dataTable.heading.default"), "isDefault", "isDefault"));
 
         columns.add(new PropertyColumn<Template, String>(null, null, null) {
 
@@ -87,16 +86,6 @@ public class ListTemplatePage extends MenuPage {
             @Override
             public void populateItem(Item<ICellPopulator<Template>> item, String componentId, IModel<Template> rowModel) {
                 item.add(new ViewLinkPanel(componentId, TemplateFormPage.class, "templateId", rowModel, ResourceUtils.getModel("label.edit")));
-            }
-        });
-        
-        columns.add(new PropertyColumn<Template, String>(null, null, null) {
-
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public void populateItem(Item<ICellPopulator<Template>> item, String componentId, IModel<Template> rowModel) {
-                item.add(new ViewLinkPanel(componentId, MetadataFormPage.class, "templateId", rowModel, new Model<String>("test template")));
             }
         });
         

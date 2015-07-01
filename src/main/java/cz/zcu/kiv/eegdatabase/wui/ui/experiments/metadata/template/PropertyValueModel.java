@@ -38,16 +38,20 @@ import org.apache.wicket.model.Model;
  * Because we can't work directly with {@link Value} objects. We work with methods of {@link Property}.
  * 
  * @author Jakub Rinkes
- *
+ * 
  */
 public class PropertyValueModel extends Model<Serializable> {
-    
+
     protected Log log = LogFactory.getLog(getClass());
 
     private static final long serialVersionUID = 1L;
 
     private Property property;
     private int valueIndex;
+
+    public PropertyValueModel(Property property) {
+        this(property, 0);
+    }
 
     public PropertyValueModel(Property property, int valueIndex) {
         this.property = property;
@@ -65,9 +69,15 @@ public class PropertyValueModel extends Model<Serializable> {
 
     @Override
     public void setObject(Serializable object) {
-        
-        if (object instanceof String && ((String) object).equalsIgnoreCase("...")) {
+
+        if (property.valueCount() == 0) {
+            property.addValue(object);
+            return;
+        }
+
+        if ((object instanceof String && ((String) object).equalsIgnoreCase("...")) || object == null) {
             // fixed default empty value from AjaxEditableLabel - default value is cleared - textfield will be empty.
+            // fixed posible NullPointerException on Property.setValueAt(Object value, int index) - line 903
             property.setValueAt("", valueIndex);
         } else {
             property.setValueAt(object, valueIndex);
