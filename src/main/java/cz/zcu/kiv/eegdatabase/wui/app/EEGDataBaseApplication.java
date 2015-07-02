@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app;
 
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.*;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.*;
 import org.apache.wicket.ConverterLocator;
 import org.apache.wicket.IConverterLocator;
 import org.apache.wicket.Page;
@@ -70,6 +68,12 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.scenarios.ScenariosFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.AccountOverViewPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.account.SocialNetworksPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageLicensesPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManagePersonPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageUserRolePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.ManageResearchGroupPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.administration.ODMLMigrationPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleCommentFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticleFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesPage;
@@ -77,6 +81,13 @@ import cz.zcu.kiv.eegdatabase.wui.ui.articles.ArticlesSettingsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.articles.ViewArticlePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentOptParamValueFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ManageExperimentPackagesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.DiseaseConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.HardwareConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.PersonConverter;
@@ -87,6 +98,10 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.ScenarioConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.SoftwareConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.StimulusConverter;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.WeatherConverter;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.TemplateFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.TemplateSharePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListOfMembersGroupPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.ListResearchGroupsPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.groups.MyGroupsPage;
@@ -237,6 +252,7 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("administration-manage-user-role", AdminManageUserRolePage.class);
         mountPage("administration-manage-user", AdminManagePersonPage.class);
         mountPage("administration-manage-group", ManageResearchGroupPage.class);
+        mountPage("administration-migration-odml", ODMLMigrationPage.class);
 
         mountPage("articles-list", ArticlesPage.class);
         mountPage("articles-form", ArticleFormPage.class);
@@ -251,6 +267,10 @@ public class EEGDataBaseApplication extends AuthenticatedWebApplication implemen
         mountPage("experiments-package-download", ExperimentsPackageDownloadPage.class);
         mountPage("experiments-add-file", AddDataFilePage.class);
         mountPage("experiments-add-param", ExperimentOptParamValueFormPage.class);
+        mountPage("experiments-template-list", ListTemplatePage.class);
+        mountPage("experiments-template-share", TemplateSharePage.class);
+        mountPage("experiments-add-template", TemplateFormPage.class);
+        mountPage("experiments-add-metadata", MetadataFormPage.class);
         mountPage("file-detail", DataFileDetailPage.class);
 
         mountPage("groups-list", ListResearchGroupsPage.class);

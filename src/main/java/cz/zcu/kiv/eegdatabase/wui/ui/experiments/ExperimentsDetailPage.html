@@ -54,23 +54,11 @@ This file is part of the EEG-database project
           <td wicket:id="endTime"></td>
         </tr>
         <tr>
-          <th><wicket:message key="label.temperature" /></th>
-          <td wicket:id="temperature"></td>
-        </tr>
-        <tr>
-          <th><wicket:message key="label.weather" /></th>
-          <td wicket:id="weather.title"></td>
-        </tr>
-        <tr>
-          <th><wicket:message key="label.weatherNote" /></th>
-          <td wicket:id="environmentNote"></td>
-        </tr>
-        <tr>
           <th><wicket:message key="label.private" /></th>
           <td wicket:id="privateExperiment"></td>
         </tr>
       </table>
-
+      
       <h2>
         <wicket:message key="heading.subjectPerson" />
       </h2>
@@ -91,6 +79,7 @@ This file is part of the EEG-database project
         </wicket:enclosure>
       </table>
 
+    
       <h2>
         <wicket:message key="heading.scenario" />
       </h2>
@@ -104,103 +93,13 @@ This file is part of the EEG-database project
                 key="link.viewDetailOfScenario" /></a></td>
         </tr>
       </table>
-
-      <h2>
-        <wicket:message key="heading.usedHardware" />
-      </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message key="dataTable.heading.hardwareTitle" /></th>
-            <th><wicket:message key="dataTable.heading.hardwareType" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="hardware">
-          <td wicket:id="title"></td>
-          <td wicket:id="type"></td>
-        </tr>
-      </table>
       
       <h2>
-        <wicket:message key="label.software" />
+        <wicket:message key="label.metadata"></wicket:message>
       </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message key="label.title" /></th>
-            <th><wicket:message key="label.description" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="software">
-          <td wicket:id="title"></td>
-          <td wicket:id="description"></td>
-        </tr>
-      </table>
-      
-      <h2>
-        <wicket:message key="label.disease" />
-      </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message key="label.title" /></th>
-            <th><wicket:message key="label.description" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="diseases">
-          <td wicket:id="title"></td>
-          <td wicket:id="description"></td>
-        </tr>
-      </table>
-      
-      <h2>
-        <wicket:message key="label.pharmaceutical" />
-      </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message key="label.title" /></th>
-            <th><wicket:message key="label.description" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="pharmaceuticals">
-          <td wicket:id="title"></td>
-          <td wicket:id="description"></td>
-        </tr>
-      </table>
-      
-      <h2>
-        <wicket:message key="label.projectType" />
-      </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message key="label.title" /></th>
-            <th><wicket:message key="label.description" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="projectTypes">
-          <td wicket:id="title"></td>
-          <td wicket:id="description"></td>
-        </tr>
-      </table>
-
-      <h2>
-        <wicket:message key="heading.optionalParameters" />
-      </h2>
-      <table class="dataTable" style="width: 450px;">
-        <thead>
-          <tr>
-            <th style="width: 250px;"><wicket:message
-                key="dataTable.heading.measurationOptionalParamName" /></th>
-            <th><wicket:message key="dataTable.heading.measurationOptionalParamValue" /></th>
-          </tr>
-        </thead>
-        <tr wicket:id="addParameters">
-          <td wicket:id="experimentOptParamDef.paramName"></td>
-          <td wicket:id="paramValue"></td>
-        </tr>
-      </table>
+      <div wicket:id="sections">
+        <div wicket:id="section"></div>
+      </div>
 
       <h2>
           <wicket:message key="dataTable.heading.licenses" />
@@ -258,9 +157,9 @@ This file is part of the EEG-database project
       </table>
       
       <div class="actionBox">
-      <a href="#" wicket:id="addParameterLink" class="lightButtonLink"><wicket:message:message key="button.addOptionalParameter"/></a>
       <a href="#" wicket:id="addFileLink" class="lightButtonLink"><wicket:message:message key="button.addDataFile"/></a>
       <a href="#" wicket:id="editExpLink" class="lightButtonLink"><wicket:message:message key="button.editExperiment"/></a>
+      <a href="#" wicket:id="metadataLink" class="lightButtonLink"><wicket:message:message key="button.metadataLink"/></a>
       <span wicket:id="downloadExpLink" class="lightButtonLink" ></span>
       
       <!-- XXX #66 Java Heap Space Exception : working with big data file in memory.

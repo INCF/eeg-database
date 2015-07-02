@@ -1,0 +1,91 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+<!-- ********************************************************* -->
+<!--                    Recording section                      -->
+<!-- ********************************************************* --> 
+	<section>
+		<type>recording</type>
+		<name>Recording</name>
+		<definition>During a recording session in a Setup Datasets are
+      obtained from Cells and/or a Subject by using various stimuli (Stimulus section).</definition>
+                        
+      <property>
+         <name>Comment</name>
+	      <value>
+			<type>string</type>
+	      </value>
+         <definition>Comments on the recording session.</definition>
+      </property>      
+      
+      <property>
+         <name>Experimenter</name>
+	      <value>
+			<type>person</type>
+	      </value>
+         <definition>The name of the person actually performing the recordings.</definition>
+		 <required>yes</required>
+      </property> 
+      
+      <property>
+         <name>ExperimenterID</name>
+	      <value>
+			<type>person</type>
+	      </value>
+         <definition>If registered in a database the primary key of the person that performed the experiments.</definition>
+      </property> 
+	  
+	  <property>
+         <name>Start</name>
+	      <value>
+			<type>datetime</type>
+	      </value>         
+         <definition>The date and time at which the recording started in  (YYYY-MM-DD hh:mm:ss format).</definition>
+      </property> 
+      
+      <property>
+         <name>End</name>
+	      <value>
+			<type>datetime</type>
+	      </value>
+         <definition>The date and time at which the recording ended in  (YYYY-MM-DD hh:mm:ss format).</definition>
+      </property> 
+	  
+      <property>
+         <name>StartDate</name>
+	      <value>
+			<type>date</type>
+	      </value>
+         <definition>The date the recording session was conducted (YYYY-MM-DD format).</definition>
+      </property> 
+      
+      <property>
+         <name>EndDate</name>
+	      <value>
+			<type>date</type>
+	      </value>
+         <definition>The date the recording session ended (YYYY-MM-DD
+         format).</definition>
+      </property> 
+      
+      <property>
+         <name>StartTime</name>
+	      <value>
+			<type>time</type>
+	      </value>
+         <definition>The time the recordings began (hh:mm:ss format).</definition>
+      </property> 
+      
+      <property>
+         <name>EndTime</name>
+	      <value>
+			<type>time</type>
+	      </value>
+         <definition>The time the recordings ended (hh:mm:ss format).</definition>
+      </property> 
+
+   </section> 
+</odML>

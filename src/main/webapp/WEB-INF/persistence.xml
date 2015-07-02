@@ -44,9 +44,12 @@
 	<context:annotation-config/>
 	
 	<elasticsearch:transport-client id="client" cluster-name="${elasticsearch.clusterName}" cluster-nodes="${elasticsearch.url}" />
-
+    
+    <bean name="customEntityMapper" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.CustomEntityMapper"/>
+    
 	<bean name="elasticsearchTemplate" class="org.springframework.data.elasticsearch.core.ElasticsearchTemplate">
 		<constructor-arg name="client" ref="client"/>
+        <constructor-arg name="entityMapper" ref="customEntityMapper"/>
 	</bean>
 	
 <!--	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.nosql.repositories" />-->

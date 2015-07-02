@@ -231,7 +231,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "SUBJECT_PERSON_ID", nullable = false)
+	@JoinColumn(name = "SUBJECT_PERSON_ID", nullable = true)
 	public Person getPersonBySubjectPersonId() {
 		return this.personBySubjectPersonId;
 	}

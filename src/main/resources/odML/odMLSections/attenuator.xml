@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+ <!-- ********************************** -->
+      <!--        Attenuator properties       -->
+      <!-- ********************************** -->
+     <section>
+		<type>hardware/attenuator</type>
+        <name>Attenuator</name>
+	      <definition>Settings of the data acquisition system. most settings refer to individual channels the channel number should be given after the property name like DAQ.AISampleRate0 for the sampling rate of the analog input	channel 0.</definition>
+         
+        <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property>  
+         
+         <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+      	</property> 
+	      
+	      <property>
+            <name>Manufacturer</name>
+	         <value>
+				<type>string</type>
+	         </value>
+           <definition>The Manufacturer of this hardware item.</definition>
+	      </property> 
+	      
+	     <property>
+            <name>LineCount</name>
+	         <value>
+				<type>int</type>
+	         </value>
+           <definition>The number of indepoendent lines.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>MaxAttenuation</name>
+	         <value>
+				<type>float</type>
+	         </value>
+           <definition>The maximum attenuation.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>MinAttenuation</name>
+	         <value>
+				<type>float</type>
+	         </value>
+           <definition>The minimum attenuation.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>StepSize</name>
+	         <value>
+				<type>float</type>
+	         </value>
+           <definition>The size of the attenuation steps between minimum and maximum attenuation.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Attenuation</name>
+	         <value>
+				<type>float</type>
+	         </value>
+           <definition>The actual attenuation setting.</definition>
+	      </property> 
+	      
+         <property>
+            <name>Description</name>
+            <value>
+               <type>string</type>
+            </value>
+            <definition>A description of this hardware item.</definition>
+	      </property>
+	      
+      </section>
+</odML>
