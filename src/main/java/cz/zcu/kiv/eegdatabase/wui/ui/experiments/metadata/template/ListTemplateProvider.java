@@ -40,4 +40,11 @@ public class ListTemplateProvider extends BasicDataProvider<Template> {
         List<Template> list = facade.getTemplatesByPerson(personId);
         super.listModel.setObject(list);
     }
+    
+    public ListTemplateProvider(TemplateFacade facade) {
+        super("templateId", SortOrder.ASCENDING);
+        
+        List<Template> list = facade.getDefaultTemplates();
+        super.listModel.setObject(list);
+    }
 }

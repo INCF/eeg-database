@@ -50,28 +50,10 @@ public class TemplateServiceImpl implements TemplateService {
         return templateDao.getDefaultTemplates();
     }
 
-    /**
-     * Finds all default and user's templates
-     *
-     * @param personId id of a user
-     * @return default + user's templates
-     */
-    @Override
-    @Transactional
-    public List<Template> getUsableTemplates(int personId) {
-        return templateDao.getUsableTemplates(personId);
-    }
-
     @Override
     @Transactional
     public Template getTemplateByPersonAndName(int personId, String name) {
         return templateDao.getTemplateByPersonAndName(personId, name);
-    }
-
-    @Override
-    @Transactional
-    public boolean isDefault(int id) {
-        return templateDao.isDefault(id);
     }
 
     @Override

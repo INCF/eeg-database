@@ -192,7 +192,20 @@ public class TemplateForm extends Panel {
                     error(ResourceUtils.getString("text.template.error.templateName"));
                 } else {
 
-                    if (templateFacade.createSystemTemplate(section)) {
+                    String templateName = section.getName();
+                    Writer writer = new Writer(section, true, true);
+                    ByteArrayOutputStream byteStream = new ByteArrayOutputStream();
+
+                    if (writer.write(byteStream)) {
+
+                        Template template = new Template();
+                        byte[] templateXML = byteStream.toByteArray();
+                        
+                        template.setTemplate(templateXML);
+                        template.setName(templateName);
+                        template.setPersonByPersonId(null);
+                        templateFacade.createSystemTemplate(template);
+
                         setResponsePage(ListTemplatePage.class);
                     } else {
                         error(ResourceUtils.getString("text.template.error.save"));

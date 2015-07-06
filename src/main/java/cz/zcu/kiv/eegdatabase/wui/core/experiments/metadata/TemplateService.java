@@ -33,16 +33,7 @@ public interface TemplateService extends GenericService<Template, Integer> {
 
     public List<Template> getDefaultTemplates();
 
-    /**
-     * Finds all default and user's templates
-     * @param personId id of a user
-     * @return default + user's templates
-     */
-    public List<Template> getUsableTemplates(int personId);
-
     public Template getTemplateByPersonAndName(int personId, String name);
-
-    public boolean isDefault(int id);
 
     public boolean canSaveName(String name, int personId);
 }

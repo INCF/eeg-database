@@ -52,7 +52,7 @@ public class RemoveTemplateLinkPanel extends Panel {
             @Override
             public void onClick(AjaxRequestTarget target) {
                 facade.delete(RemoveTemplateLinkPanel.this.model.getObject());
-                setResponsePage(ListTemplatePage.class);
+                setResponsePage(getPage().getClass(), getPage().getPageParameters());
             }
         });
     }

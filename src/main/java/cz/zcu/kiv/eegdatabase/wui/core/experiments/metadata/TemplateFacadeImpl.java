@@ -23,8 +23,6 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -34,13 +32,14 @@ import java.util.List;
 import odml.core.Property;
 import odml.core.Reader;
 import odml.core.Section;
-import odml.core.Writer;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.transaction.annotation.Transactional;
+
+import com.sun.xml.messaging.saaj.util.ByteInputStream;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Template;
@@ -86,26 +85,9 @@ public class TemplateFacadeImpl implements TemplateFacade {
         return service.getDefaultTemplates();
     }
 
-    /**
-     * Finds all default and user's templates
-     * 
-     * @param personId
-     *            id of a user
-     * @return default + user's templates
-     */
-    @Override
-    public List<Template> getUsableTemplates(int personId) {
-        return service.getUsableTemplates(personId);
-    }
-
     @Override
     public Template getTemplateByPersonAndName(int personId, String name) {
         return service.getTemplateByPersonAndName(personId, name);
-    }
-
-    @Override
-    public boolean isDefault(int id) {
-        return service.isDefault(id);
     }
 
     @Override
@@ -186,12 +168,24 @@ public class TemplateFacadeImpl implements TemplateFacade {
             }
         }
         
-        for(Section section : sections) {
-            if(!section.getName().startsWith(EEG_TEMPLATE_PREFIX)) {
+        List<Template> defaultTemplates = service.getDefaultTemplates();
+        for(Template template : defaultTemplates) {
+            Section section = null;
+            try {
+                section = reader.load(new ByteInputStream(template.getTemplate(), template.getTemplate().length));
+                section.setName(template.getName());
+                sections.add(section);
+            } catch (Exception e) {
+                log.error(e.getMessage(), e);
+            }
+        }
+
+        for (Section section : sections) {
+            if (!section.getName().startsWith(EEG_TEMPLATE_PREFIX)) {
                 section.setName(ODML_TEMPLATE_PREFIX + section.getName());
             }
         }
-        
+
         Collections.sort(sections, new Comparator<Section>() {
 
             @Override
@@ -241,26 +235,11 @@ public class TemplateFacadeImpl implements TemplateFacade {
     }
 
     @Override
-    public boolean createSystemTemplate(Section section) {
-        try {
-            
-            Section root = new Section();
-            root.add(section);
-            section.setName(EEG_TEMPLATE_PREFIX + section.getName());
-            section.setType(section.getName().toLowerCase());
-            
-            Writer writer = new Writer(root, true, true);
-            FileOutputStream fostream = new FileOutputStream(new File(new ClassPathResource(odmlSectionsPath).getFile(), section.getName() + XML_FILE_SUFFIX));
-            writer.write(fostream);
-            fostream.close();
+    @Transactional
+    public void createSystemTemplate(Template template) {
 
-            return true;
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(), e);
-            return false;
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            return false;
-        }
+        template.setName(EEG_TEMPLATE_PREFIX + template.getName());
+        service.create(template);
+
     }
 }

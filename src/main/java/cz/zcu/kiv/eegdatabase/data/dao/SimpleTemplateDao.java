@@ -46,25 +46,9 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
 
     @Override
     public List<Template> getDefaultTemplates() {
-        String hqlQuery = "from Template t where t.isDefault = true";
+        String hqlQuery = "from Template t where t.personByPersonId is null";
         List<Template> list = getHibernateTemplate().find(hqlQuery);
 
-        return list;
-    }
-
-    /**
-     * Finds all default and user's templates.
-     * Distinct select and ordered by isDefault param (default templates first).
-     *
-     * @param personId id of a user
-     * @return default + user's templates
-     */
-    @Override
-    public List<Template> getUsableTemplates(int personId) {
-        String hqlQuery = "select distinct  t from Template t where t.isDefault = true or t.personByPersonId.personId = :personId order by t.isDefault asc";
-        List<Template> list = getSessionFactory().getCurrentSession().
-                createQuery(hqlQuery).
-                setParameter("personId", personId).list();
         return list;
     }
 
@@ -80,20 +64,6 @@ public class SimpleTemplateDao extends SimpleGenericDao<Template, Integer> imple
             return list.get(0);
         }
         return null;
-    }
-
-    @Override
-    public boolean isDefault(int id) {
-        String hqlQuery = "select t.isDefault from Template t where t.templateId = :id";
-        List<Integer> list = getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("id", id).list();
-        if (list.isEmpty()) {
-            return false;
-        }
-        if (list.get(0) == 1) {
-            return true;
-        } else {
-            return false;
-        }
     }
 
     @Override
