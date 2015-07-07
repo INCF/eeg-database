@@ -65,14 +65,14 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
         try {
 
             String jsonString = jp.getCodec().readTree(jp).toString();
-            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id) + ".json"), jsonString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".json"), jsonString.getBytes("UTF-8"));
             JSONObject jsonObject = new JSONObject(jsonString);
             String xmlString = XML.toString(jsonObject);
             Reader reader = new Reader();
             
             ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8")); // encoding is necessary
             
-            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id) + ".xml"), xmlString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".xml"), xmlString.getBytes("UTF-8"));
             
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder dbuilder = dbf.newDocumentBuilder();
@@ -92,7 +92,7 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
                     output = output + p.getName() +"\t=" + p.getValue() + "\n";
                 }
             }
-            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id++) + ".txt"), xmlString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id++) + ".txt"), xmlString.getBytes("UTF-8"));
             
             return load;
         } catch (JSONException e) {
