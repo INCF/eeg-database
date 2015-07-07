@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata;
 
 import java.io.ByteArrayInputStream;
+import java.io.File;
 import java.io.IOException;
 import java.io.StringWriter;
 
@@ -37,6 +38,7 @@ import javax.xml.transform.stream.StreamResult;
 import odml.core.Reader;
 import odml.core.Section;
 
+import org.apache.commons.io.FileUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.ajax.json.JSONException;
@@ -53,6 +55,7 @@ import org.xml.sax.InputSource;
 public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
 
     protected Log log = LogFactory.getLog(getClass());
+    private int id = 0;
 
     @Override
     public Section deserialize(JsonParser jp, DeserializationContext ctxt) throws IOException, JsonProcessingException {
@@ -61,11 +64,14 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
         try {
 
             String jsonString = jp.getCodec().readTree(jp).toString();
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".json"), jsonString.getBytes("UTF-8"));
             JSONObject jsonObject = new JSONObject(jsonString);
             String xmlString = XML.toString(jsonObject);
             Reader reader = new Reader();
             
             ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8")); // encoding is necessary
+            
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id++) + ".xml"), xmlString.getBytes("UTF-8"));
             
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder dbuilder = dbf.newDocumentBuilder();
