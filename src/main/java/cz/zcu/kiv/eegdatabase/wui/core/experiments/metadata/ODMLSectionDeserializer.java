@@ -92,7 +92,7 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
                     output = output + p.getName() +"\t=" + p.getValue() + "\n";
                 }
             }
-            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id++) + ".txt"), xmlString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id++) + ".txt"), output.getBytes());
             
             return load;
         } catch (JSONException e) {
