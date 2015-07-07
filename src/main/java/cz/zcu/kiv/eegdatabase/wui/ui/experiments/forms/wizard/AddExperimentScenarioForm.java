@@ -345,7 +345,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         };
 
         personField.add(new UniqueEntityValidator<Person>(personFacade));
-        personField.setRequired(true); // remove this after SQL script from issue #117
+        personField.setRequired(false);
         personField.setLabel(ResourceUtils.getModel("label.subjectPerson"));
         final FeedbackPanel personFeedback = createFeedbackForComponent(personField, "personFeedback");
 
