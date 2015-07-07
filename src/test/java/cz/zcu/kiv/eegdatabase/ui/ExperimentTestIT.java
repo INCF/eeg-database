@@ -98,18 +98,18 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
         //Next page with hw, sw, ...
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Field 'Hardware' is required.");
-        tester.assertTextPresent("Field 'Software' is required.");
-        tester.assertTextPresent("Field 'Weather' is required.");
-
-        tester.selectOption("view:hardwares", "HardwareForExperiment");
-        tester.selectOption("view:softwares", "SoftwareForExperiment");
-        tester.selectOption("view:weather", "WeatherForExperiment");
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        tester.assertTextPresent("Field 'Hardware' is required.");
+//        tester.assertTextPresent("Field 'Software' is required.");
+//        tester.assertTextPresent("Field 'Weather' is required.");
+//
+//        tester.selectOption("view:hardwares", "HardwareForExperiment");
+//        tester.selectOption("view:softwares", "SoftwareForExperiment");
+//        tester.selectOption("view:weather", "WeatherForExperiment");
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);
         tester.assertTextNotPresent(getProperty("text.group.lock.experiment.create"));
@@ -133,13 +133,13 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
-        //Next page with hw, sw, ...
-
-        tester.selectOption("view:hardwares", "HardwareForExperiment");
-        tester.selectOption("view:softwares", "SoftwareForExperiment");
-        tester.selectOption("view:weather", "WeatherForExperiment");
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        //Next page with hw, sw, ...
+//
+//        tester.selectOption("view:hardwares", "HardwareForExperiment");
+//        tester.selectOption("view:softwares", "SoftwareForExperiment");
+//        tester.selectOption("view:weather", "WeatherForExperiment");
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
 
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);
