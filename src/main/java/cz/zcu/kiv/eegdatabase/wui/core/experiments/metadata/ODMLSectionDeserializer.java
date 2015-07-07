@@ -72,7 +72,6 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
             
             ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8")); // encoding is necessary
             
-            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".xml"), xmlString.getBytes("UTF-8"));
             
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder dbuilder = dbf.newDocumentBuilder();
@@ -82,8 +81,11 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
             Element rootElement = dom.getDocumentElement();
             rootElement.setAttribute("version", "1.0");
 
-            stream = new ByteArrayInputStream(getStringFromDocument(dom).getBytes("UTF-8")); // encoding is necessary
+            byte[] xmlStringUpdated = getStringFromDocument(dom).getBytes("UTF-8");
+            stream = new ByteArrayInputStream(xmlStringUpdated); // encoding is necessary
             
+            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".xml"), xmlStringUpdated);
+
             Section load = reader.load(stream);
             
             String output = "";
