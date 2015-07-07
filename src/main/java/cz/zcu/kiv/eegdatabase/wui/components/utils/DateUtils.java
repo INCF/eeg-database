@@ -10,7 +10,7 @@ public class DateUtils {
     
     public static int getPersonAge(Person per, Timestamp scenarioStartTime) {
         
-        if(scenarioStartTime == null || per == null)
+        if(scenarioStartTime == null || per == null || per.getDateOfBirth() == null)
             return -1;
         
         Calendar toTime = Calendar.getInstance();
