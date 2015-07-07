@@ -35,6 +35,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import odml.core.Property;
 import odml.core.Reader;
 import odml.core.Section;
 
@@ -64,14 +65,14 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
         try {
 
             String jsonString = jp.getCodec().readTree(jp).toString();
-            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id) + ".json"), jsonString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id) + ".json"), jsonString.getBytes("UTF-8"));
             JSONObject jsonObject = new JSONObject(jsonString);
             String xmlString = XML.toString(jsonObject);
             Reader reader = new Reader();
             
             ByteArrayInputStream stream = new ByteArrayInputStream(xmlString.getBytes("UTF-8")); // encoding is necessary
             
-            FileUtils.writeByteArrayToFile(new File("/tmp/expriment" + (id++) + ".xml"), xmlString.getBytes("UTF-8"));
+            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id) + ".xml"), xmlString.getBytes("UTF-8"));
             
             DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
             DocumentBuilder dbuilder = dbf.newDocumentBuilder();
@@ -82,7 +83,18 @@ public class ODMLSectionDeserializer extends JsonDeserializer<Section> {
             rootElement.setAttribute("version", "1.0");
 
             stream = new ByteArrayInputStream(getStringFromDocument(dom).getBytes("UTF-8")); // encoding is necessary
-            return reader.load(stream);
+            
+            Section load = reader.load(stream);
+            
+            String output = "";
+            for(Section s : load.getSections()) {
+                for(Property p : s.getProperties()) {
+                    output = output + p.getName() +"\t=" + p.getValue() + "\n";
+                }
+            }
+            FileUtils.writeByteArrayToFile(new File("D:\\tmp\\expriment" + (id++) + ".txt"), xmlString.getBytes("UTF-8"));
+            
+            return load;
         } catch (JSONException e) {
             log.warn(e.getMessage(), e);
         } catch (Exception e) {
