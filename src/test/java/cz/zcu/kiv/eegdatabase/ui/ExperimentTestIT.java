@@ -70,6 +70,34 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
+    @Test(groups = "web", enabled = false)
+    public void testAddExperimentPermission() throws InterruptedException, IOException {
+        createGroupIfNotExists();
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.experiments.addExperiment"));
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+
+        /*
+         * This person is admin but it is not member of any group. He should not be able to create new experiments.
+         */
+        if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
+        tester.setTextField("userName", "jan.stebetak2@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
+
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertLinkNotPresentWithText(getProperty("menuItem.experiments.addExperiment"));
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+
+    }
+
     @Test(groups = "web")
     public void testExperimentValidation() throws InterruptedException, IOException {
 
@@ -86,7 +114,7 @@ public class ExperimentTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group' is required.");
         tester.assertTextPresent("Field 'Scenario' is required.");
-        tester.assertTextPresent("Field 'Subject person' is required.");
+//        tester.assertTextPresent("Field 'Subject person' is required.");
 
         tester.selectOption("view:researchGroup", "new group");
 //        Thread.sleep(waitForAjax);
