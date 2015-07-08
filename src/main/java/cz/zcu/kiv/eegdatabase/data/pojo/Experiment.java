@@ -221,7 +221,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.EAGER)
-	@JoinColumn(name = "WEATHER_ID", nullable = false)
+	@JoinColumn(name = "WEATHER_ID", nullable = true)
 	public Weather getWeather() {
 		return this.weather;
 	}
@@ -271,7 +271,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "DIGITIZATION_ID", nullable = false)
+	@JoinColumn(name = "DIGITIZATION_ID", nullable = true)
 	public Digitization getDigitization() {
 		return this.digitization;
 	}
@@ -291,7 +291,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ARTEFACT_ID", nullable = false)
+	@JoinColumn(name = "ARTEFACT_ID", nullable = true)
 	public Artifact getArtifact() {
 		return this.artifact;
 	}
@@ -301,7 +301,7 @@ public class Experiment implements Serializable {
 	}
 
 	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "ELECTRODE_CONF_ID", nullable = false)
+	@JoinColumn(name = "ELECTRODE_CONF_ID", nullable = true)
 	public ElectrodeConf getElectrodeConf() {
 		return this.electrodeConf;
 	}
