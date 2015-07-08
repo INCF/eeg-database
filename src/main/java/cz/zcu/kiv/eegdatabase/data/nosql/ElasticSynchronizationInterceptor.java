@@ -204,20 +204,22 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 		}
 
 
-		Digitization d = e.getDigitization();
-		param = new GenericParameter("digitization", d.getFilter());
-		param.getAttributes().add(new ParameterAttribute("gain", "" + d.getGain()));
-		param.getAttributes().add(new ParameterAttribute("samplingRate", "" + d.getSamplingRate()));
-		e.getGenericParameters().add(param);
+        Digitization d = e.getDigitization();
+        if (d != null) {
+            param = new GenericParameter("digitization", d.getFilter());
+            param.getAttributes().add(new ParameterAttribute("gain", "" + d.getGain()));
+            param.getAttributes().add(new ParameterAttribute("samplingRate", "" + d.getSamplingRate()));
+            e.getGenericParameters().add(param);
+        }
 
-
-		Weather w = e.getWeather();
-		param = new GenericParameter("weather", w.getTitle());
-		if (!"".equals(w.getDescription())) {
-			param.getAttributes().add(new ParameterAttribute("description", "" + w.getDescription()));
-		}
-		e.getGenericParameters().add(param);
-
+        Weather w = e.getWeather();
+        if (w != null) {
+            param = new GenericParameter("weather", w.getTitle());
+            if (!"".equals(w.getDescription())) {
+                param.getAttributes().add(new ParameterAttribute("description", "" + w.getDescription()));
+            }
+            e.getGenericParameters().add(param);
+        }
 
 		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
 	}
