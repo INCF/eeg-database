@@ -89,10 +89,12 @@ public class ZipGenerator implements Generator {
 
             ZipEntry entry;
             
-            zipOutputStream.putNextEntry(entry = new ZipEntry("License/"+licenseFileName));
-            IOUtils.copyLarge(new ByteArrayInputStream(licenseFile), zipOutputStream);
-            zipOutputStream.closeEntry();
-
+            if (licenseFileName != null && !licenseFileName.isEmpty()) {
+                zipOutputStream.putNextEntry(entry = new ZipEntry("License/" + licenseFileName));
+                IOUtils.copyLarge(new ByteArrayInputStream(licenseFile), zipOutputStream);
+                zipOutputStream.closeEntry();
+            }
+            
             if (mc.isScenFile() && scen.getScenarioFile() != null) {
                 try {
 

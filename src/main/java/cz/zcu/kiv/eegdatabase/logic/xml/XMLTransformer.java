@@ -126,7 +126,7 @@ public class XMLTransformer implements DataTransformer {
       }
     }
 
-    if (mc.isWeather()) {
+    if (mc.isWeather() && meas.getWeather() != null) {
       WeatherType wType = of.createWeatherType();
       wType.setTitle(meas.getWeather().getTitle());
       wType.setDescription(meas.getWeather().getDescription());
