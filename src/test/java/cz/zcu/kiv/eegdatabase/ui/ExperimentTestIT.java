@@ -79,14 +79,13 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("action.logout"));
 
         /*
-         * This person is admin but it is not member of any group. He should not be able to create new experiments.
+         * This person is not member of any group. He should not be able to create new experiments.
          */
-        if (!personDao.usernameExists("jan.stebetak2@seznam.cz")) {
-            Person person = TestUtils.createPersonForTesting("jan.stebetak2@seznam.cz", Util.ROLE_ADMIN);
-            person.setConfirmed(true);
-            personDao.create(person);
-        }
-        tester.setTextField("userName", "jan.stebetak2@seznam.cz");
+        Person person  = TestUtils.createPersonForTesting("jan.stebetak4@seznam.cz", Util.ROLE_USER);
+        person.setConfirmed(true);
+        personDao.create(person);
+
+        tester.setTextField("userName", "jan.stebetak4@seznam.cz");
         tester.setTextField("password", "stebjan");
         tester.clickButtonWithText(getProperty("action.login"));
         tester.assertTextPresent(getProperty("action.logout"));
@@ -95,6 +94,7 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertLinkNotPresentWithText(getProperty("menuItem.experiments.addExperiment"));
 
         tester.clickLinkWithText(getProperty("action.logout"));
+        personDao.delete(person);
 
     }
 
