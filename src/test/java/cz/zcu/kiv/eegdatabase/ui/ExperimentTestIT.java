@@ -70,7 +70,7 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
-    @Test(groups = "web", enabled = false)
+    @Test(groups = "web")
     public void testAddExperimentPermission() throws InterruptedException, IOException {
         createGroupIfNotExists();
         tester.clickLinkWithText(getProperty("menuItem.experiments"));
