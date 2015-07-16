@@ -26,6 +26,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.IButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.template.ListTemplatePage;
 
 /**
  * Enumeration of left page menu for administration section.
@@ -38,7 +40,9 @@ public enum AdministrationPageLeftMenu implements IButtonPageMenu {
     MANAGE_PERSON(AdminManagePersonPage.class, "menuItem.managePerson", null),
 	MANAGE_RESEARCH_GROUP_PAGE(ManageResearchGroupPage.class, "menuItem.manageResearchGroup", null),
     MEMBERSHIP_PLANS(AdminManageMembershipPlansPage.class,"menuItem.manageMembershipPlan",null),
-    MANAGE_LICENSES(AdminManageLicensesPage.class, "menuItem.manageLicenses", null)
+    MANAGE_LICENSES(AdminManageLicensesPage.class, "menuItem.manageLicenses", null),
+	MANAGE_SYSTEM_TEMPLATE(ListTemplatePage.class, "pageTitle.template.system", PageParametersUtils.getDefaultPageParameters(0)),
+	ODML_MIGRATION_PAGE(ODMLMigrationPage.class, "pageTitle.migration.short", null)
     ;
 
     private Class<? extends MenuPage> pageClass;

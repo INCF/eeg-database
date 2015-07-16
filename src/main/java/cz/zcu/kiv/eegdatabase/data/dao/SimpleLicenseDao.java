@@ -76,7 +76,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
         String query = "from License l where l.licenseId = :id";
         License result =  (License) this.getSession().createQuery(query).setInteger("id", licenseId).uniqueResult();
         try {
-            return result.getAttachmentContent().getBytes(1, (int) result.getAttachmentContent().length());
+            return result.getAttachmentContent() != null ? result.getAttachmentContent().getBytes(1, (int) result.getAttachmentContent().length()) : new byte[0];
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return new byte[0];

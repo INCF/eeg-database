@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************** -->
+<!--        Stimulus Isolator           -->
+<!-- ********************************** -->
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+	
+    <section>
+		<type>hardware/stimulus_isolator</type>
+         <name>StimulusIsolator</name>
+	      <definition>Properties of a stimulus Isolator device.</definition>
+         
+         <property>
+            <name>SerialNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The device's serial number.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InventoryNo</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The inventory number of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Model</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition>The model name of this hardware item.</definition>
+      	</property> 
+	      
+	      <property>
+            <name>Manufacturer</name>
+	         <value>
+				<type>string</type>
+	         </value>
+           <definition>The Manufacturer of this hardware item.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>Owner</name>
+	         <value>
+				<type>string</type>
+	         </value>
+            <definition> Who's the owner of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InputRangeMinVoltage</name>
+	         <value>
+				<type>float</type>
+				<unit>V</unit>
+			 </value>
+            <definition>The minimal input voltage.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>InputRangeMaxVoltage</name>
+	         <value>
+				<type>float</type>
+				<unit>V</unit>
+			 </value>
+            <definition>The maximal input voltage.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>OutputRangeMinVolatge</name>
+	         <value>
+				<type>float</type>
+				<unit>V</unit>
+			 </value>
+            <definition>The minimal output voltage.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>OutputRangeMaxVoltage</name>
+	         <value>
+				<type>float</type>
+				<unit>V</unit>
+			 </value>
+            <definition>The maximal ouput voltage.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>OutputRangeMinCurrent</name>
+	         <value>
+				<type>float</type>
+				<unit>A</unit>
+			 </value>
+            <definition>The minimal output current.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>OutputRangeMaxCurrent</name>
+	         <value>
+				<type>float</type>
+				<unit>A</unit>
+			 </value>
+            <definition>The maximal ouput current.</definition>
+	      </property> 
+	      
+        <property>
+            <name>MaximumGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The maximum gain of the device.</definition>
+	      </property> 
+	      
+	      <property>
+            <name>MinimumGain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The minimum gain of the device.</definition>
+	      </property> 
+	      
+	       <property>
+            <name>GainStepSize</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The size of the gain steps between minimum and maximum.</definition>
+	      </property> 
+	      
+	      <property>
+	         <name>OutputType</name>
+	         <value>Voltage
+				<type>string</type>
+	         </value>
+	         <value>Current
+				<type>string</type>
+	         </value>
+            <definition>The type of output of the stimulus isolator.</definition>
+	      </property>
+	      
+	      <property>
+	         <name>OutpuMode</name>
+	         <value>BipolarOn
+				<type>string</type>
+	         </value>
+	         <value>BipolarOff
+				<type>string</type>
+	         </value>
+            <definition>The polarity mode of the stimulus isolator.</definition>
+	      </property>
+	      
+	      <property>
+            <name>Gain</name>
+	         <value>
+				<type>float</type>
+	         </value>
+            <definition>The gain of the device.</definition>
+         </property> 
+      
+	      <property>
+            <name>GainDb</name>
+	         <value>
+				<type>float</type>
+				<unit>db</unit>
+			 </value>
+            <definition>The gain of the device given in db.</definition>
+         </property> 
+         
+         <property>
+           <name>Description</name>
+           <value>
+              <type>string</type>
+           </value>
+           <definition>A description of this hardware item.</definition>
+	      </property>
+
+      </section>
+
+</odML>

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<odML version="1">
+	<repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+        <version>1.0</version>
+        <date>2011-01-21</date>
+  <!-- ********************************************************* -->
+  <!--                      Dataset section                      -->
+  <!-- ********************************************************* -->
+	<section>
+		<type>dataset</type>
+		<name>Dataset</name>
+		<definition>Names (URLs) and times of recorded data files.
+     Datasets are obtained during a Recording and may belong to
+     different Experiments. Related sections that can be used as
+     subsections, parent sections, or siblings are Stimulus,
+     HardwareSettings, and Experiment.</definition>
+          
+     <property>
+       <name>Start</name>
+       <value>
+		<type>datetime</type>
+       </value>
+       <definition>The point in time the recording of this dataset was
+         started.</definition>
+     </property> 
+     
+     <property>
+       <name>End</name>
+       <value>
+		<type>datetime</type>
+       </value>
+       <definition>The point in time the recording of this dataset was
+         ended.</definition>
+     </property>
+     
+     <property>
+       <name>StartDate</name>
+       <value>
+		<type>date</type>
+       </value>
+       <definition>The date recording of this dataset was
+         started.</definition>
+     </property> 
+     
+     <property>
+       <name>EndDate</name>
+       <value>
+		<type>date</type>
+       </value>
+       <definition>The date the recording of this dataset was
+         ended.</definition>
+     </property>
+     
+     <property>
+       <name>StartTime</name>
+       <value>
+			<type>time</type>
+       </value>
+       <definition>The local time recording was started.</definition>
+     </property> 
+     
+     <property>
+       <name>EndTime</name>
+       <value>
+			<type>time</type>
+	   </value>
+       <definition>The local time recording was ended.</definition>
+     </property> 
+     
+     <property>
+       <name>Comment</name>
+       <value>
+			<type>text</type>
+       </value>
+       <definition>A comment about the dataset (common to all files
+         belonging to this dataset).</definition>
+     </property>
+     
+     <property>
+         <name>File</name>
+	      <value>
+				<type>binary</type>
+	      </value>
+         <definition> Data of this dataset. Be aware that
+         including the actual content of a data file by this property
+         will blow up the the size of the metadatafile. We rather
+         recommend to simply refer to the URL of a dataset file using
+         the FileURL property.</definition>
+     </property> 
+     
+      <property>
+         <name>File</name>
+	      <value>
+				<type>URL</type>
+	      </value>
+         <definition>The URL of a data file.</definition>
+     </property>  
+     
+     <property>
+       <name>Quality</name>
+       <value>
+			<type>string</type>
+       </value>
+       <definition>A rough indication of the overall quality of
+       the dataset. E.g. poor, fair, or good.</definition>
+     </property> 
+     
+     <property>
+       <name>QualityRange</name>
+       <value>
+			<type>string</type>
+       </value>
+       <definition>A comma separated ascending list of all used
+       values for indicating the overall quality of the
+       dataset. E.g. "poor,fair,good".</definition>
+     </property> 
+     
+  </section>
+</odML>

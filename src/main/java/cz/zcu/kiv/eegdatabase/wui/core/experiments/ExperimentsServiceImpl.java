@@ -327,6 +327,8 @@ public class ExperimentsServiceImpl implements ExperimentsService {
         updated.setWeather(experiment.getWeather());
         updated.setEnvironmentNote(experiment.getEnvironmentNote());
         
+        updated.setElasticExperiment(experiment.getElasticExperiment());
+        
         experimentDao.update(updated);
     }
 
@@ -383,6 +385,21 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     public void changePrice(Experiment experiment) {
         experimentDao.update(experiment);
         
+    }
+
+    @Override
+    public boolean deleteAndCreateExperimentIndexInES() {
+        return experimentDao.deleteAndCreateExperimentIndexInES();
+    }
+    
+    /**
+     * Method for update object for migration. 
+     * Because migration have own transaction, there is problem with original update method called from wicket.
+     * 
+     */
+    @Override
+    public void simpleUpdate(Experiment exp) {
+        experimentDao.update(exp);
     }
 
 }

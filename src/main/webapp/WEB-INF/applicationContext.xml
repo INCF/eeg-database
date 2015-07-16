@@ -222,6 +222,13 @@
         <constructor-arg ref="orderService"/>
     </bean>
 
+    <bean name="templateService" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateServiceImpl" autowire="byType">
+        <property name="templateDao" ref="templateDao" />
+    </bean>
+    <bean name="templateFacade" class="cz.zcu.kiv.eegdatabase.wui.core.experiments.metadata.TemplateFacadeImpl" autowire="byType" >
+        <property name="odmlSectionsPath" value="${odml.sections}"/>
+    </bean>
+
 
     <!-- MEMBERSHIP PLANS, LICENCE HISTORY -->
     <bean name="membershipPlanService" class="cz.zcu.kiv.eegdatabase.wui.core.membershipplan.MembershipPlanServiceImpl" autowire="byType">

@@ -280,4 +280,8 @@
         <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
+    <bean name="templateDao" class="cz.zcu.kiv.eegdatabase.data.dao.SimpleTemplateDao">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
 </beans>

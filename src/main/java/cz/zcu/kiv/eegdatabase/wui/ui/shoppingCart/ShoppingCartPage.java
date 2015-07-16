@@ -151,7 +151,7 @@ public class ShoppingCartPage extends MenuPage {
 
                     if (isExpPackageLicenseChoiceShow) {
                         // preselect first license for dropdown choice component
-                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
 
                     }
 
@@ -187,13 +187,13 @@ public class ShoppingCartPage extends MenuPage {
                     if (isExpPackageLicenseChoiceShow) {
                         //int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
                         //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                       // licenses.add(0, licenseFacade.getPublicLicense());
+                        //licenses.add(0, licenseFacade.getPublicLicense());
 
                     }
 
                     if (isExpPackageLicenseChoiceShow) {
                         // preselect first license for dropdown choice component
-                        //item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
+                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
                     }
 
                     licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
@@ -291,11 +291,11 @@ public class ShoppingCartPage extends MenuPage {
                             return;
                         }
                     } else if (item.getExperiment()!= null) {
-                        System.out.println("====="+item.getLicense());
-                        if (item.getLicense() == null) {
-                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
-                            return;
-                        }
+//                        System.out.println("====="+item.getLicense());
+//                        if (item.getLicense() == null) {
+//                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
+//                            return;
+//                        }
                     }
                 }
 

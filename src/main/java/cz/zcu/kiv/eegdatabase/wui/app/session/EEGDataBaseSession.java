@@ -124,6 +124,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
         if (password.equalsIgnoreCase(SOCIAL_PASSWD)) {
             this.setLoggedUser(facade.getPerson(username));
             this.createShoppingCart();
+            this.createExperimentLicenseMap();
             reloadPurchasedItemCache();
             return true;
         }
@@ -224,6 +225,9 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
     public void clearCreateExperimentLicenseMap() {
+        if (this.createExperimentLicenseMap == null) {
+            createExperimentLicenseMap();
+        }
         this.createExperimentLicenseMap.clear();
     }
 

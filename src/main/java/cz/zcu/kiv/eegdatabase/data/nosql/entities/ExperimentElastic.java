@@ -30,6 +30,9 @@ package cz.zcu.kiv.eegdatabase.data.nosql.entities;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+
+import odml.core.Section;
+
 import org.springframework.data.annotation.Id;
 import org.springframework.data.elasticsearch.annotations.Document;
 import org.springframework.data.elasticsearch.annotations.Field;
@@ -50,7 +53,10 @@ public class ExperimentElastic implements Serializable {
 	private int userId;
 	@Field(type = FieldType.Integer)
 	private int groupId;
-
+	
+	@Field(type = FieldType.Object)
+	private Section metadata;
+	
 	public ExperimentElastic() {
 	}
 
@@ -85,4 +91,12 @@ public class ExperimentElastic implements Serializable {
 	public void setExperimentId(String experimentId) {
 		this.experimentId = experimentId;
 	}
+	
+	public Section getMetadata() {
+        return metadata;
+    }
+	
+    public void setMetadata(Section metadata) {
+        this.metadata = metadata;
+    }
 }

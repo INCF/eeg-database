@@ -98,4 +98,38 @@ public class ListMenuTestIT extends AbstractUITest {
 
         tester.clickLinkWithText(getProperty("action.logout"));
     }
+
+    @Test(groups = "web")
+    public void testListDefaultGroupsValidationUser() throws IOException {
+        tester.clickLinkWithText(getProperty("action.logout"));
+        if (!personDao.usernameExists("jan.stebetak@seznam.cz")) {
+            Person person = TestUtils.createPersonForTesting("jan.stebetak@seznam.cz", Util.ROLE_USER);
+            person.setConfirmed(true);
+            personDao.create(person);
+        }
+        tester.setTextField("userName", "jan.stebetak@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
+
+        tester.clickLinkWithText(getProperty("menuItem.lists"));
+        tester.assertTextPresent(getProperty("pageTitle.listOfDefinitions"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.clickLinkWithText(getProperty("menuItem.hardwareDefinitions"));
+        tester.assertSelectOptionNotPresent("groups", "Default hardware");
+
+        tester.clickLinkWithText(getProperty("menuItem.optionalParametersForPeople"));
+        tester.assertSelectOptionNotPresent("groups", "Default optional parameters");
+
+        tester.clickLinkWithText(getProperty("menuItem.optionalParametersForExperiments"));
+        tester.assertSelectOptionNotPresent("groups", "Default optional parameters");
+
+        tester.clickLinkWithText(getProperty("menuItem.fileMetadataDefinitions"));
+        tester.assertSelectOptionNotPresent("groups", "Default metadata parameters");
+
+        tester.clickLinkWithText(getProperty("menuItem.weatherDefinitions"));
+        tester.assertSelectOptionNotPresent("groups", "Default weather");
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+    }
 }

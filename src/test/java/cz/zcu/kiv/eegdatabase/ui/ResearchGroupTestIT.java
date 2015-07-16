@@ -19,7 +19,7 @@ import java.util.List;
 import static org.testng.FileAssert.fail;
 
 /**
- * Created by Roman Mouček on 13.11.2014.
+ * Created by stebjan on 13.11.2014.
  */
 public class ResearchGroupTestIT extends AbstractUITest {
 
@@ -223,8 +223,40 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("action.logout"));
     }
 
+
+
+    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
+    public void testTransferOwnershipValidation() throws InterruptedException, IOException {
+
+        tester.clickLinkWithText(getProperty("menuItem.groups"));
+        tester.assertTextPresent("new group");
+        tester.clickLinkWithText(getProperty("link.detail"));
+
+        tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
+        tester.clickLinkWithText(getProperty("button.listOfMembers"));
+
+        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a logged user
+        tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
+        tester.clickLinkWithText(getProperty("button.transferOwnership"));
+
+        tester.clickButtonWithText(getProperty("button.transferOwnership"));
+        Thread.sleep(waitForAjax);
+        tester.assertTextPresent("Field 'User name' is required.");
+        try {
+
+            tester.selectOption("members", "jan.stebetak2@seznam.cz");
+            tester.clickButtonWithText("button.transferOwnership");
+            fail("User is not member of the group.");
+        } catch (AssertionError er) {
+                //User "jan.stebetak2@seznam.cz" is not in group
+        } finally {
+
+            tester.clickLinkWithText(getProperty("action.logout"));
+        }
+    }
+
     @Test(groups = "web", dependsOnMethods = {"testAddMemberToGroup", "testTransferOwnershipValidation"})
-    public void testTransferOwnership() throws InterruptedException, IOException {
+     public void testTransferOwnership() throws InterruptedException, IOException {
 
         tester.clickLinkWithText(getProperty("menuItem.groups"));
         tester.assertTextPresent("new group");
@@ -246,36 +278,28 @@ public class ResearchGroupTestIT extends AbstractUITest {
         tester.assertLinkNotPresentWithText(getProperty("button.transferOwnership")); //the logged user is no more owner
 
         tester.clickLinkWithText(getProperty("action.logout"));
-    }
 
-    @Test(groups = "web", dependsOnMethods = {"testCreateResearchGroup"})
-    public void testTransferOwnershipValidation() throws InterruptedException, IOException {
+        //Returning ownership back.
+        tester.setTextField("userName", "jan.stebetak3@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
 
         tester.clickLinkWithText(getProperty("menuItem.groups"));
         tester.assertTextPresent("new group");
         tester.clickLinkWithText(getProperty("link.detail"));
+
         tester.assertLinkPresentWithText(getProperty("button.listOfMembers"));
         tester.clickLinkWithText(getProperty("button.listOfMembers"));
+        tester.assertTextPresent("jan.stebetak3@seznam.cz"); //Is added in the previous test
 
-        tester.assertTextPresent("jan.stebetak@seznam.cz"); //Is a logged user
         tester.assertLinkPresentWithText(getProperty("button.transferOwnership"));
         tester.clickLinkWithText(getProperty("button.transferOwnership"));
 
+        tester.selectOption("members", "jan.stebetak@seznam.cz");
         tester.clickButtonWithText(getProperty("button.transferOwnership"));
         Thread.sleep(waitForAjax);
-        tester.assertTextPresent("Field 'User name' is required.");
-        try {
 
-            tester.selectOption("members", "jan.stebetak2@seznam.cz");
-            tester.clickButtonWithText(getProperty("button.transferOwnership"));
-            Thread.sleep(waitForAjax);
-            fail("User is not member of the group.");
-        }
-        catch (AssertionError er) {
-            //User "jan.stebetak2@seznam.cz" is not in group
-        } finally {
+        tester.clickLinkWithText(getProperty("action.logout"));
 
-            tester.clickLinkWithText(getProperty("action.logout"));
-        }
     }
 }

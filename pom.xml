@@ -839,6 +839,13 @@
             <!--<scope>test</scope>-->
         </dependency>
 
+        <dependency>
+            <groupId>org.json</groupId>
+            <artifactId>json</artifactId>
+            <version>20131018</version>
+        </dependency>
+        
+
 	</dependencies>
 
 	<build>

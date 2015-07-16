@@ -1,0 +1,46 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+ 
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+ 
+ ***********************************************************************************************************************
+ 
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+ 
+      http://www.apache.org/licenses/LICENSE-2.0
+ 
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+ 
+ ***********************************************************************************************************************
+ 
+  TemplateSectionPanel.html, 2013/02/27 00:01 Jakub Rinkes
+-->
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+<body>
+    <wicket:panel>
+        <div wicket:id="head">
+            <label><span wicket:id="sectionNameLabel">:</span> <span wicket:id="name" class="editable"></span></label><br />
+            <label><wicket:message key="label.template.control.addSection"></wicket:message></label><select wicket:id="addSubsectionList"></select>
+            <input type="button" wicket:id="removeSection" class="remove-button" wicket:message="value:button.template.section.remove" />
+            <input type="button" wicket:id="addProperty" wicket:message="value:button.template.section.addProperty"/>
+            <input type="button" wicket:id="showhideSectionContent" wicket:message="value:button.template.section.showhide" /><br /> 
+            <div wicket:id="definition" class="definition editable"></div>
+        </div>
+        <div wicket:id="content">
+            <ul class="tree">
+                <li wicket:id="properties"><div wicket:id="property" class="property"></div></li>
+            </ul>
+
+            <ul class="tree">
+                <li wicket:id="subsections"><div wicket:id="section" class="section"></div></li>
+            </ul>
+        </div>
+    </wicket:panel>
+</body>
+</html>

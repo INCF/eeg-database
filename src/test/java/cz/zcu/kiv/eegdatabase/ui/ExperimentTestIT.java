@@ -70,6 +70,34 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.assertTextPresent(getProperty("action.logout"));
 
     }
+    @Test(groups = "web", enabled = false)
+    public void testAddExperimentPermission() throws InterruptedException, IOException {
+        createGroupIfNotExists();
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertLinkPresentWithText(getProperty("menuItem.experiments.addExperiment"));
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+
+        /*
+         * This person is not member of any group. He should not be able to create new experiments.
+         */
+        Person person  = TestUtils.createPersonForTesting("jan.stebetak4@seznam.cz", Util.ROLE_USER);
+        person.setConfirmed(true);
+        personDao.create(person);
+
+        tester.setTextField("userName", "jan.stebetak4@seznam.cz");
+        tester.setTextField("password", "stebjan");
+        tester.clickButtonWithText(getProperty("action.login"));
+        tester.assertTextPresent(getProperty("action.logout"));
+
+        tester.clickLinkWithText(getProperty("menuItem.experiments"));
+        tester.assertLinkNotPresentWithText(getProperty("menuItem.experiments.addExperiment"));
+
+        tester.clickLinkWithText(getProperty("action.logout"));
+        personDao.delete(person);
+
+    }
+
     @Test(groups = "web")
     public void testExperimentValidation() throws InterruptedException, IOException {
 
@@ -86,7 +114,7 @@ public class ExperimentTestIT extends AbstractUITest {
         Thread.sleep(waitForAjax);
         tester.assertTextPresent("Field 'Group' is required.");
         tester.assertTextPresent("Field 'Scenario' is required.");
-        tester.assertTextPresent("Field 'Subject person' is required.");
+//        tester.assertTextPresent("Field 'Subject person' is required.");
 
         tester.selectOption("view:researchGroup", "new group");
 //        Thread.sleep(waitForAjax);
@@ -98,18 +126,18 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
         //Next page with hw, sw, ...
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
 
-        tester.assertTextPresent("Field 'Hardware' is required.");
-        tester.assertTextPresent("Field 'Software' is required.");
-        tester.assertTextPresent("Field 'Weather' is required.");
-
-        tester.selectOption("view:hardwares", "HardwareForExperiment");
-        tester.selectOption("view:softwares", "SoftwareForExperiment");
-        tester.selectOption("view:weather", "WeatherForExperiment");
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        tester.assertTextPresent("Field 'Hardware' is required.");
+//        tester.assertTextPresent("Field 'Software' is required.");
+//        tester.assertTextPresent("Field 'Weather' is required.");
+//
+//        tester.selectOption("view:hardwares", "HardwareForExperiment");
+//        tester.selectOption("view:softwares", "SoftwareForExperiment");
+//        tester.selectOption("view:weather", "WeatherForExperiment");
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);
         tester.assertTextNotPresent(getProperty("text.group.lock.experiment.create"));
@@ -133,13 +161,13 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.setTextField("view:personBySubjectPersonId", "jan.stebetak@seznam.cz");
         tester.clickButtonWithText("Next >");
         Thread.sleep(waitForAjax);
-        //Next page with hw, sw, ...
-
-        tester.selectOption("view:hardwares", "HardwareForExperiment");
-        tester.selectOption("view:softwares", "SoftwareForExperiment");
-        tester.selectOption("view:weather", "WeatherForExperiment");
-        tester.clickButtonWithText("Next >");
-        Thread.sleep(waitForAjax);
+//        //Next page with hw, sw, ...
+//
+//        tester.selectOption("view:hardwares", "HardwareForExperiment");
+//        tester.selectOption("view:softwares", "SoftwareForExperiment");
+//        tester.selectOption("view:weather", "WeatherForExperiment");
+//        tester.clickButtonWithText("Next >");
+//        Thread.sleep(waitForAjax);
 
         tester.clickButtonWithText("Finish");
         Thread.sleep(waitForAjax);

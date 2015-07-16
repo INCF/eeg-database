@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="ISO-8859-1"?>
+<?xml-stylesheet type="text/xsl" href="Form.xsl" xmlns:odml="http://www.g-node.org/odml"?>
+<!-- ********************************************************* -->
+<!--                     Behavioral experiment			                       -->
+<!-- ********************************************************* -->  
+<odML version="1">
+  <repository>http://portal.g-node.org/odml/terminologies/v1.0/terminologies.xml</repository>
+  <version>1.0</version>
+  <date>2011-01-21</date>	
+  
+  <section>
+    <type>experiment/bahavior</type>
+    <name>Behavior</name>
+    <definition>Properties for describing an behavioural experiment.</definition>
+    
+    <property>
+      <name>Paradigm</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The paradigm used in the experiment, e.g. Learning, navigation, etc... </definition>
+    </property>
+    
+    <property>
+      <name>Environment</name>
+      <value>
+        <type>string</type> 
+      </value>
+      <definition>The environment in which the experiments were conducted. Classical environments are e.g. the Y-maze or T-maze. Some environments are called enriched also reduced or even natural.</definition>
+    </property>
+    
+    <property>
+      <name>IndividualCount</name>
+      <value>
+        <type>int</type> 
+      </value>
+      <definition>The number of individuals that are observed/investigated at the same time.</definition>
+    </property>
+    
+    <property>
+      <name>definition</name>
+      <value>
+        <type>text</type> 
+      </value>
+      <definition>A definition of the conducted experiment.</definition>
+    </property>
+    
+    <property>
+      <name>Protocol</name>
+      <value>
+        <type>text</type> 
+      </value>
+      <definition>A description of the task protocol undertaken by the subject.</definition>
+    </property>
+  </section>
+</odML>
