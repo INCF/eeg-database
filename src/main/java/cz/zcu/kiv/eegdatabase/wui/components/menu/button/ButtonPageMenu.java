@@ -43,6 +43,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsPage;
  * annotation for filtering menu item which logged user cannot see.
  * 
  * @author Jakub Rinkes
+ * @author Jakub Krauz
  * 
  */
 public class ButtonPageMenu extends Panel {
