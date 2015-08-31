@@ -72,7 +72,7 @@ http://www.springframework.org/schema/security/spring-security-3.1.xsd">
     </jaxws:endpoint>
 
     <jaxws:client id="eegService"
-                  address="http://147.228.63.134:8080/eegdataprocessor/webservice/webservice/processService"
+                  address="http://147.228.127.58:8080/eegdataprocessor/webservice/webservice/processService"
                   serviceClass="cz.zcu.kiv.eegdatabase.webservices.EDPClient.ProcessService"
                   username="EEGBase"
                   password="eeg" />
