@@ -136,8 +136,9 @@ public class MethodParametersPage extends MenuPage {
                     int index = file.getFileName().indexOf(".");
 
                     result.setOwner(service.getLoggedPerson());
-                    result.setStatus("running");
+                    result.setStatus("finished");
                     result.setTitle(file.getFileName().substring(0, index) + " " + methodName);
+                    result.setFilename(methodName + "_result.xml");
                     service.create(result);
                     ServiceResultManager manager = new ServiceResultManager(files, SupportedFormat.KIV_FORMAT, methodName, test,
                             service, result);

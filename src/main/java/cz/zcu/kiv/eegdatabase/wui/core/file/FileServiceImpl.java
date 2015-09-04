@@ -128,7 +128,7 @@ public class FileServiceImpl implements FileService {
     @Override
     @Transactional
     public FileDTO getFile(int fileId) {
-
+        FileOutputStream out = null;
         try {
             DataFile dataFileEntity = fileDAO.read(fileId);
             FileDTO dto = new FileDTO();
@@ -136,9 +136,8 @@ public class FileServiceImpl implements FileService {
             File tmpFile;
             tmpFile = File.createTempFile("dataFile", ".tmp");
             tmpFile.deleteOnExit();
-            FileOutputStream out = new FileOutputStream(tmpFile);
+            out = new FileOutputStream(tmpFile);
             IOUtils.copyLarge(dataFileEntity.getFileContent().getBinaryStream(), out);
-            out.close();
             dto.setFile(tmpFile);
             dto.setFileName(dataFileEntity.getFilename());
             dto.setMimetype(dataFileEntity.getMimetype());
@@ -150,6 +149,8 @@ public class FileServiceImpl implements FileService {
         } catch (SQLException e) {
             log.error(e.getMessage(), e);
             return null;
+        } finally {
+                IOUtils.closeQuietly(out);
         }
 
     }

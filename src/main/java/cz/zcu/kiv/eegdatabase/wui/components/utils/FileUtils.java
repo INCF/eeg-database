@@ -29,10 +29,14 @@ import java.io.IOException;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.request.IRequestCycle;
 import org.apache.wicket.request.handler.resource.ResourceStreamRequestHandler;
+import org.apache.wicket.request.resource.ContentDisposition;
+import org.apache.wicket.util.file.Files;
 import org.apache.wicket.util.io.IOUtils;
+import org.apache.wicket.util.resource.FileResourceStream;
+import org.apache.wicket.util.resource.IResourceStream;
 
-import cz.zcu.kiv.eegdatabase.wui.components.form.input.FileDownloadStreamWriter;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 
 /**
@@ -56,9 +60,20 @@ public class FileUtils {
         if (file == null || file.getFile() == null)
             return null;
 
-        FileDownloadStreamWriter stream = new FileDownloadStreamWriter(file.getFile(), file.getMimetype());
+        IResourceStream stream = new FileResourceStream(file.getFile());
 
-        return new ResourceStreamRequestHandler(stream).setFileName(file.getFileName());
+        ResourceStreamRequestHandler resourceStreamRequestHandler = new ResourceStreamRequestHandler(stream) {
+
+            @Override
+            public void detach(IRequestCycle requestCycle) {
+                super.detach(requestCycle);
+
+                if (!Files.remove(file.getFile())) {
+                    log.error("Temporary file " + file.getFile().getAbsolutePath() + " cannot be deleted.");
+                }
+            }
+        };
+        return resourceStreamRequestHandler.setFileName(file.getFileName()).setContentDisposition(ContentDisposition.ATTACHMENT);
     }
 
     /**
