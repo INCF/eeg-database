@@ -63,7 +63,6 @@ public class RegistrationTestIT extends AbstractUITest {
         assertTrue(driver.getPageSource().contains("Field 'Password' is required"));
         assertTrue(driver.getPageSource().contains("Field 'Repeat password' is required"));
         assertTrue(driver.getPageSource().contains("Field 'Control text' is required"));
-        assertTrue(driver.getPageSource().contains("Field 'Education Level' is required"));
 
         Assert.assertEquals(driver.getTitle(), "Registration");
         driver.quit();
