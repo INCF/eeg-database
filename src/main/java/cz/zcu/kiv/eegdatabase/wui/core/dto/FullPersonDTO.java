@@ -22,15 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.dto;
 
-import java.io.Serializable;
-import java.sql.Timestamp;
-import java.util.Date;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import org.apache.commons.lang.builder.ReflectionToStringBuilder;
 import org.joda.time.DateTime;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
-import cz.zcu.kiv.eegdatabase.wui.core.Gender;
+import java.io.Serializable;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Object used for registration. Help with validation and prepared data for creating user.
@@ -75,6 +74,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private String orgPhone;
     private String VAT;
     private String country;
+    private String orgCountry;
 
     public FullPersonDTO() {
         dateOfBirth = new Timestamp(new Date().getTime());
@@ -355,5 +355,13 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     public void setVAT(String VAT) {
         this.VAT = VAT;
+    }
+
+    public String getOrgCountry() {
+        return orgCountry;
+    }
+
+    public void setOrgCountry(String orgCountry) {
+        this.orgCountry = orgCountry;
     }
 }

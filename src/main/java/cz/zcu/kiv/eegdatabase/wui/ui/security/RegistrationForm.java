@@ -22,14 +22,19 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
-import java.awt.image.BufferedImage;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Date;
-import java.util.List;
-
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import com.octo.captcha.service.image.ImageCaptchaService;
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
@@ -41,20 +46,12 @@ import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
 
-import com.octo.captcha.service.image.ImageCaptchaService;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.Gender;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
 
 /**
  * Form for registration new user.
@@ -77,7 +74,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
     private NonCachingImage captchaImage;
 
-    public RegistrationForm(String id, final FeedbackPanel feedback) {
+    public RegistrationForm(String id, final FeedbackPanel feedback) throws IOException {
         super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
 
         TextField<String> name = new TextField<String>("name");
@@ -202,7 +199,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         listOfTitles.add("Ms.");
 
         DropDownChoice<String> title = new DropDownChoice<String>("title", listOfTitles,
-                new ChoiceRenderer<String>("title") {
+                new ChoiceRenderer<String>() {
 
                     private static final long serialVersionUID = 1L;
 
@@ -217,7 +214,10 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         title.setLabel(ResourceUtils.getModel("label.title"));
         add(title);
 
-        DropDownChoice<String> country = new DropDownChoice<String>("country", new ArrayList<String>(),
+        File file = ResourceUtils.getFile("countries.txt");
+        List<String> countries = FileUtils.getFileLines(file);
+
+        DropDownChoice<String> country = new DropDownChoice<String>("country", countries,
                 new ChoiceRenderer<String>("country") {
 
                     private static final long serialVersionUID = 1L;
@@ -233,6 +233,22 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         country.setLabel(ResourceUtils.getModel("label.country"));
         add(country);
 
+        DropDownChoice<String> orgCountry = new DropDownChoice<String>("orgCountry", countries,
+                new ChoiceRenderer<String>("orgCountry") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(String object) {
+                        return object;
+                    }
+
+                });
+
+        //orgCountry.setRequired(true);
+        orgCountry.setLabel(ResourceUtils.getModel("label.country"));
+        add(orgCountry);
+
         DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
                 new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
 
@@ -245,7 +261,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
 
                 });
 
-        educationLevel.setRequired(true);
         educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
         add(educationLevel);
 
