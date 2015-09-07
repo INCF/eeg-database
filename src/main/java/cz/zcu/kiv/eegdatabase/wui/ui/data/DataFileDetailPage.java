@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.data;
 import java.util.ArrayList;
 import java.util.List;
 
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -136,6 +137,7 @@ public class DataFileDetailPage extends MenuPage {
         BookmarkablePageLink<Void> backLink = new BookmarkablePageLink<Void>("backLink", ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(file.getExperiment()
                 .getExperimentId()));
         SimpleDownloadLink downloadLink = new SimpleDownloadLink("downloadLink", id);
+        downloadLink.setVisibilityAllowed(EEGDataBaseSession.get().isExperimentPurchased(experiment.getExperimentId()));
         
         // form for add file parameter action
         add(new AddMetadataForm("form", metadataParamFacade, coexperimenter, id, experiment.getResearchGroup().getResearchGroupId(), getFeedback()).add(params));

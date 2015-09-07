@@ -61,13 +61,27 @@ public class PersonMapper {
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
         person.setUsername(dto.getEmail().toLowerCase());
         person.setEmail(dto.getEmail().toLowerCase());
-        person.setGender(dto.getGender().getShortcut());
+        //person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
         person.setPassword(dto.getPassword());
         person.setEducationLevel(dto.getEducationLevel());
+
+//        person.setTile(dto.getTitle());
+        if (dto.getTitle().equals("Mr.")) {
+            person.setGender('M');
+        } else {
+            person.setGender('F');
+        }
+//        person.setAddress(dto.getAddress());
+//        person.setCity(dto.getCity());
+//        person.setState(dto.getState());
+//        person.setZipCode(dto.getZipCode());
+//        person.setUrl(dto.getUrl());
+        person.setPhoneNumber(dto.getPhone());
+
 
         return person;
     }

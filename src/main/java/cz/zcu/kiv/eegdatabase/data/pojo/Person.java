@@ -80,6 +80,13 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private String username;
 	private String password;
 	private String authority;
+    private String title;
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String url;
+    private String phone;
 	private Timestamp registrationDate;
 	private boolean confirmed;
 	private boolean lock = false;

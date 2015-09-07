@@ -26,6 +26,7 @@ import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
+import java.util.List;
 
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -121,6 +122,66 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         passwordVerify.add(StringValidator.minimumLength(6));
         add(passwordVerify);
 
+        TextField<String> address = new TextField<String>("address");
+        address.setLabel(ResourceUtils.getModel("label.address"));
+        add(address);
+
+        TextField<String> city = new TextField<String>("city");
+        city.setLabel(ResourceUtils.getModel("label.city"));
+        add(city);
+
+        TextField<String> state = new TextField<String>("state");
+        state.setLabel(ResourceUtils.getModel("label.state"));
+        add(state);
+
+        TextField<String> zipCode = new TextField<String>("zipCode");
+        zipCode.setLabel(ResourceUtils.getModel("label.zipCode"));
+        add(zipCode);
+
+        TextField<String> url = new TextField<String>("url");
+        url.setLabel(ResourceUtils.getModel("label.url"));
+        add(url);
+
+        TextField<String> phone = new TextField<String>("phone");
+        phone.setLabel(ResourceUtils.getModel("label.phoneNumber"));
+        add(phone);
+
+        TextField<String> organization = new TextField<String>("organization");
+        organization.setLabel(ResourceUtils.getModel("label.organization"));
+        add(organization);
+
+        TextField<String> jobTitle = new TextField<String>("jobTitle");
+        jobTitle.setLabel(ResourceUtils.getModel("label.jobTitle"));
+        add(jobTitle);
+
+        TextField<String> orgAddress = new TextField<String>("orgAddress");
+        orgAddress.setLabel(ResourceUtils.getModel("label.address"));
+        add(orgAddress);
+
+        TextField<String> orgCity = new TextField<String>("orgCity");
+        orgCity.setLabel(ResourceUtils.getModel("label.city"));
+        add(orgCity);
+
+        TextField<String> orgState = new TextField<String>("orgState");
+        orgState.setLabel(ResourceUtils.getModel("label.state"));
+        add(orgState);
+
+        TextField<String> orgZipCode = new TextField<String>("orgZipCode");
+        orgZipCode.setLabel(ResourceUtils.getModel("label.zipCode"));
+        add(orgZipCode);
+
+        TextField<String> orgUrl = new TextField<String>("orgUrl");
+        orgUrl.setLabel(ResourceUtils.getModel("label.url"));
+        add(orgUrl);
+
+        TextField<String> orgPhone = new TextField<String>("orgPhone");
+        orgPhone.setLabel(ResourceUtils.getModel("label.phoneNumber"));
+        add(orgPhone);
+
+        TextField<String> VAT = new TextField<String>("VAT");
+        VAT.setLabel(ResourceUtils.getModel("label.VAT"));
+        add(VAT);
+
         generateCaptchaImageAndPrepareValidation();
         add(captchaImage);
 
@@ -129,11 +190,48 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         controlText.setRequired(true);
         add(controlText);
 
-        RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
-        gender.setSuffix("\n");
-        gender.setRequired(true);
-        gender.setLabel(ResourceUtils.getModel("general.gender"));
-        add(gender);
+//        RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
+//        gender.setSuffix("\n");
+//        gender.setRequired(true);
+//        gender.setLabel(ResourceUtils.getModel("general.gender"));
+//        add(gender);
+
+        List<String> listOfTitles = new ArrayList<String>();
+        listOfTitles.add("Mr.");
+        listOfTitles.add("Mrs.");
+        listOfTitles.add("Ms.");
+
+        DropDownChoice<String> title = new DropDownChoice<String>("title", listOfTitles,
+                new ChoiceRenderer<String>("title") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(String object) {
+                        return object;
+                    }
+
+                });
+
+        title.setRequired(true);
+        title.setLabel(ResourceUtils.getModel("label.title"));
+        add(title);
+
+        DropDownChoice<String> country = new DropDownChoice<String>("country", new ArrayList<String>(),
+                new ChoiceRenderer<String>("country") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(String object) {
+                        return object;
+                    }
+
+                });
+
+        country.setRequired(true);
+        country.setLabel(ResourceUtils.getModel("label.country"));
+        add(country);
 
         DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
                 new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
@@ -150,6 +248,26 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         educationLevel.setRequired(true);
         educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
         add(educationLevel);
+
+        List<String> listOfOrgTypes = new ArrayList<String>();
+        listOfOrgTypes.add("Commercial");
+        listOfOrgTypes.add("Non-Commercial");
+
+        DropDownChoice<String> organizationType = new DropDownChoice<String>("organizationType", listOfOrgTypes,
+                new ChoiceRenderer<String>("organizationType") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(String object) {
+                        return object;
+                    }
+
+                });
+
+        organizationType.setRequired(true);
+        organizationType.setLabel(ResourceUtils.getModel("label.organizationType"));
+        add(organizationType);
 
 
         SubmitLink submit = new SubmitLink("submit", ResourceUtils.getModel("action.create.account")) {
