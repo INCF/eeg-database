@@ -99,7 +99,7 @@ public class RegistrationForm extends Form<FullPersonDTO> {
             }
         };
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
-        date.setRequired(true);
+        //date.setRequired(true);
         add(date);
 
         EmailTextField email = new EmailTextField("email");

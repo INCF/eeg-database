@@ -22,14 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.joda.time.DateTime;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
 
 public class PersonMapper {
 
@@ -69,18 +67,31 @@ public class PersonMapper {
         person.setPassword(dto.getPassword());
         person.setEducationLevel(dto.getEducationLevel());
 
-//        person.setTile(dto.getTitle());
+        person.setTitle(dto.getTitle());
         if (dto.getTitle().equals("Mr.")) {
             person.setGender('M');
         } else {
             person.setGender('F');
         }
-//        person.setAddress(dto.getAddress());
-//        person.setCity(dto.getCity());
-//        person.setState(dto.getState());
-//        person.setZipCode(dto.getZipCode());
-//        person.setUrl(dto.getUrl());
+        person.setAddress(dto.getAddress());
+        person.setCity(dto.getCity());
+        person.setState(dto.getState());
+        person.setZipCode(dto.getZipCode());
+        person.setCountry(dto.getCountry());
+        person.setUrl(dto.getUrl());
         person.setPhoneNumber(dto.getPhone());
+
+        person.setOrganizationType(dto.getOrganizationType());
+        person.setOrganization(dto.getOrganization());
+        person.setJobTitle(dto.getJobTitle());
+        person.setOrgAddress(dto.getOrgAddress());
+        person.setOrgCity(dto.getOrgCity());
+        person.setOrgState(dto.getOrgState());
+        person.setOrgZipCode(dto.getOrgZipCode());
+        person.setOrgUrl(dto.getOrgUrl());
+        person.setOrgCountry(dto.getOrgCountry());
+        person.setVAT(dto.getVAT());
+        person.setOrgPhone(dto.getOrgPhone());
 
 
         return person;
