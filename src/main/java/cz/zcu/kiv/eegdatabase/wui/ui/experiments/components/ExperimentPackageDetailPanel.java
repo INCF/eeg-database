@@ -33,25 +33,20 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicens
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
-
-import java.util.ArrayList;
-import java.util.List;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponent;
-import org.apache.wicket.markup.html.form.IChoiceRenderer;
-import org.apache.wicket.markup.html.form.RequiredTextField;
-import org.apache.wicket.markup.html.form.StatelessForm;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.LoadableDetachableModel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -96,7 +91,8 @@ public class ExperimentPackageDetailPanel extends Panel {
 
 
 	private void addBasicInfoFields() {
-		FormComponent c = new RequiredTextField("name", new PropertyModel(packageModel, "name"));
+		FormComponent c = new TextField("name", new PropertyModel(packageModel, "name"));
+        c.setRequired(true);
 		c.setLabel(ResourceUtils.getModel("label.experimentPackage.name"));
 
 		form.add(c);
