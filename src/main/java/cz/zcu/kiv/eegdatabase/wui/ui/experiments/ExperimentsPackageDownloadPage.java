@@ -49,6 +49,7 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.markup.html.navigation.paging.PagingNavigator;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.model.Model;
@@ -127,7 +128,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
             group.add(new CheckGroupSelector("selectedAll", group));
 
-            PageableListView<Experiment> experimentsList = new PageableListView<Experiment>("selectExp", experiments, 30) {
+            PageableListView<Experiment> experimentsList = new PageableListView<Experiment>("selectExp", experiments, 15) {
 
                 private static final long serialVersionUID = 1L;
 
@@ -144,6 +145,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             };
 
             group.add(experimentsList);
+            add(new PagingNavigator("navigator",experimentsList));
             add(group);
 
             // checkbox for group of checkboxes about person
