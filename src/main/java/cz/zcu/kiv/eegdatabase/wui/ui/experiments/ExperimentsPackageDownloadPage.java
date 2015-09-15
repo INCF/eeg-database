@@ -22,31 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Check;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
-import org.apache.wicket.markup.html.form.CheckGroupSelector;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.SubmitLink;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PageableListView;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
@@ -64,6 +39,25 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PageableListView;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsPackageDownloadPage extends MenuPage {
@@ -133,7 +127,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
             group.add(new CheckGroupSelector("selectedAll", group));
 
-            PageableListView<Experiment> experimentsList = new PageableListView<Experiment>("selectExp", experiments, 15) {
+            PageableListView<Experiment> experimentsList = new PageableListView<Experiment>("selectExp", experiments, 30) {
 
                 private static final long serialVersionUID = 1L;
 
