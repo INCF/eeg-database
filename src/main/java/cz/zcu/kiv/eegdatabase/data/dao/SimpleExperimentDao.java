@@ -111,7 +111,20 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		return getExperimentsWhereOwner(person, 0, limit);
 	}
 
-	@Override
+    @Override
+    public List<Experiment> getExperimentsForMyExperiments(Person person, int start, int limit) {
+        String query = "select distinct e from Experiment e left join fetch e.persons p where e.personByOwnerId.personId = :personId or " +
+                "p.personId = :personId order by e.startTime desc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).
+                setFirstResult(start).setMaxResults(limit).list();
+    }
+
+    @Override
+    public List<Experiment> getExperimentsForMyExperiments(Person person, int limit) {
+        return getExperimentsForMyExperiments(person, 0, limit);
+    }
+
+    @Override
 	public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit) {
 		String query = "from Experiment e left join fetch e.scenario where e.personByOwnerId.personId = :personId order by e.startTime desc";
 		return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(limit).list();
