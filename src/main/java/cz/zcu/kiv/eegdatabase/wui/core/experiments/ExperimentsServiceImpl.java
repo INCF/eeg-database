@@ -381,13 +381,6 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 	}
 
     @Override
-    @Transactional
-    public void changePrice(Experiment experiment) {
-        experimentDao.update(experiment);
-        
-    }
-
-    @Override
     public boolean deleteAndCreateExperimentIndexInES() {
         return experimentDao.deleteAndCreateExperimentIndexInES();
     }

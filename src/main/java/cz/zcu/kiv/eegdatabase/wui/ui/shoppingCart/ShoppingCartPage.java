@@ -165,7 +165,8 @@ public class ShoppingCartPage extends MenuPage {
 
                             OrderItem orderItem = item.getModelObject();
                             if (orderItem.getLicense() != null) {
-                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                                // TODO kuba licence
+                                //orderItem.setPrice(orderItem.getLicense().getPrice());
                             } else {
                                 orderItem.setPriceFromItem();
                             }
@@ -205,7 +206,8 @@ public class ShoppingCartPage extends MenuPage {
 
                             OrderItem orderItem = item.getModelObject();
                             if (orderItem.getLicense() != null) {
-                                orderItem.setPrice(orderItem.getLicense().getPrice());
+                                // TODO kuba licence
+                                //orderItem.setPrice(orderItem.getLicense().getPrice());
                             } else {
                                 orderItem.setPriceFromItem();
                             }

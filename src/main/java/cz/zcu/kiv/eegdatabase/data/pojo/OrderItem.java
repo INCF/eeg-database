@@ -64,10 +64,11 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
     }
 
+    // TODO kuba licence: misto Experiment se musi vkladat ExperimentLicense
     public OrderItem(Experiment experiment, Order order) {
         this.experiment = experiment;
         this.order = order;
-        this.price = experiment.getPrice() != null ? experiment.getPrice() : BigDecimal.ZERO;
+        //this.price = experiment.getPrice() != null ? experiment.getPrice() : BigDecimal.ZERO;
     }
 
     public OrderItem(ExperimentPackage experimentPackage, Order order) {
@@ -184,10 +185,12 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         return (id < o.getId()) ? -1 : ((id == o.getId()) ? 0 : 1);
     }
 
+    
+    // TODO kuba licence
     public void setPriceFromItem() {
         
-        if(experiment != null) {
-            price = experiment.getPrice();
+        if (experiment != null) {
+            //price = experiment.getPrice();
         } else {
             price = experimentPackage.getPrice();
         }

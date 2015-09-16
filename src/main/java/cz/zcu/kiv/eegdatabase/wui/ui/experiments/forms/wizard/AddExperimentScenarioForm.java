@@ -35,6 +35,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals.*;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.MarkupContainer;
@@ -364,6 +365,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         add(coexperimenters);
     }
 
+    @SuppressWarnings("serial")
     private void addLicenses() {
 
 
@@ -373,11 +375,13 @@ public class AddExperimentScenarioForm extends WizardStep {
 
         }
 
-        licenseList = new ListView("licenses",licenses) {
-            protected void populateItem(ListItem item) {
+        // TODO kuba licence
+        
+        licenseList = new ListView<License>("licenses",licenses) {
+            protected void populateItem(ListItem<License> item) {
                 License license = (License)item.getModelObject();
                 item.add(new Label("title",license.getTitle()));
-                item.add(new Label("price", license.getPrice()));
+                item.add(new Label("price", /*license.getPrice()*/ "xxx"));
                 item.add(new Label("type", license.getLicenseType().toString()));
                 
                 //item.add(new Label("label", item.getModel())); TODO remove this, code improve this listview

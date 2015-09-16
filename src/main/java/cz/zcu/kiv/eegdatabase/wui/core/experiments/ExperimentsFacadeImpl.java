@@ -166,8 +166,4 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
 		return service.getExperimentsWithoutPackage();
 	}
 
-    @Override
-    public void changePrice(Experiment experiment) {
-        service.changePrice(experiment);
-    }
 }

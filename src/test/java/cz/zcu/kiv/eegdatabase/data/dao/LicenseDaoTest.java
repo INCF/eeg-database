@@ -57,7 +57,8 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
+        // TODO kuba licence test
+        //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
 
@@ -100,7 +101,8 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         licenseDao.create(license);
         License license2 = new License();
         license2.setLicenseId(-231);
-        license2.setPrice(BigDecimal.valueOf(-1000f));
+        // TODO kuba licence test
+        //license2.setPrice(BigDecimal.valueOf(-1000f));
         license2.setTitle("title");
         license2.setLicenseType(LicenseType.ACADEMIC);
         license2.setResearchGroup(researchGroup);

@@ -101,7 +101,8 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
+        // TODO kuba licence test
+        //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
         license.setResearchGroup(researchGroup);

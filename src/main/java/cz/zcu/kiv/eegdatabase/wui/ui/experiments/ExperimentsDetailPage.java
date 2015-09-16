@@ -116,7 +116,10 @@ public class ExperimentsDetailPage extends MenuPage {
         add(new Label("experimentId", experiment.getExperimentId()+""));
         add(new Label("privateExperiment", experiment.isPrivateExperiment()+""));
         add(new Label("scenario.title", experiment.getScenario().getTitle()));
-        add(new Label("price", experiment.getPrice()));
+        
+        // TODO kuba licence
+        add(new Label("price", /*experiment.getPrice()*/ "xxx"));
+        
         add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         add(new TimestampLabel("endTime", experiment.getEndTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         

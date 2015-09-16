@@ -11,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -34,6 +35,7 @@ import org.apache.wicket.util.string.StringValue;
 import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
+import org.apache.wicket.validation.validator.UrlValidator;
 
 import java.io.IOException;
 import java.math.BigDecimal;
@@ -90,14 +92,6 @@ public class LicenseManageFormPage extends MenuPage {
             FormComponentLabel descriptionLabel = new FormComponentLabel("descriptionLb", description);
             add(description,descriptionLabel);
 
-            TextField<Integer> price = new TextField<Integer>("price",Integer.class);
-            price.setLabel(ResourceUtils.getModel("label.price"));
-            price.setRequired(false);
-            price.add(RangeValidator.minimum(0));
-            FormComponentLabel priceLabel = new FormComponentLabel("priceLb", price);
-            add(price,priceLabel);
-
-
             RadioGroup<LicenseType> type = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(model, "licenseType"));
             type.setLabel(ResourceUtils.getModel("label.license.type"));
             type.setRequired(true);
@@ -107,6 +101,13 @@ public class LicenseManageFormPage extends MenuPage {
 
             FormComponentLabel typeLabel = new FormComponentLabel("typeLb", type);
             add(type,typeLabel);
+            
+            TextField<String> link = new TextField<String>("link");
+            link.setLabel(ResourceUtils.getModel("label.link"));
+            link.add(StringValidator.maximumLength(255));
+            link.add(new UrlValidator());
+            FormComponentLabel linkLabel = new FormComponentLabel("linkLb", link);
+            add(link, linkLabel);
 
             final FileUploadField fileUpload = new FileUploadField("attachmentFileName");
             FormComponentLabel fileLabel = new FormComponentLabel("attachmentFileNameLb",fileUpload);
@@ -127,7 +128,10 @@ public class LicenseManageFormPage extends MenuPage {
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
                     License license = LicenseForm.this.getModelObject();
-                    if (license.getPrice()==null) license.setPrice(new BigDecimal(0));
+                    
+                    // TODO kuba licence
+                    //if (license.getPrice()==null) license.setPrice(new BigDecimal(0));
+                    
                     FileUpload uploadedFile = fileUpload.getFileUpload();
 
                     if (uploadedFile != null) {

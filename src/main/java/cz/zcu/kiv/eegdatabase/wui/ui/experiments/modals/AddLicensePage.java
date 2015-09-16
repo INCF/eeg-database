@@ -223,8 +223,9 @@ public class AddLicensePage extends WebPage {
                         downloadLink.setVisible(false);
 
 
+                        // TODO kuba licence
                     } else {
-                        if (option.getLicenseType()== LicenseType.BUSINESS && option.getPrice().intValue() == 0) {
+                        if (option.getLicenseType()== LicenseType.BUSINESS /*&& option.getPrice().intValue() == 0*/) {
                             priceInput.setEnabled(true);
                         } else {
                             priceInput.setEnabled(false);
@@ -233,7 +234,7 @@ public class AddLicensePage extends WebPage {
                         l.setTitle(option.getTitle());
                         l.setDescription(option.getDescription());
                         l.setLicenseType(option.getLicenseType());
-                        l.setPrice(option.getPrice());
+                        //l.setPrice(option.getPrice());
                         l.setAttachmentFileName(option.getAttachmentFileName());
                         l.setTemplate(false);
                         l.setFileContentStream(null);

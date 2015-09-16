@@ -76,6 +76,8 @@ public class ShoppingCart implements Serializable {
         }
     }
 
+    
+    // TODO kuba licence: misto Experiment se musi vkladat ExperimentLicense
     public void addToCart(Experiment experiment) {
 
         if (!isInCart(experiment)) {

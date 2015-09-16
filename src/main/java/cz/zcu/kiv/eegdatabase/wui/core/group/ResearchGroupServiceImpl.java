@@ -241,7 +241,8 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         privateLicense.setDescription("Default generated owner license");
         privateLicense.setTitle("Owner License");
         privateLicense.setLicenseType(LicenseType.OWNER);
-        privateLicense.setPrice(BigDecimal.ZERO);
+        // TODO kuba licence
+        //privateLicense.setPrice(BigDecimal.ZERO);
         privateLicense.setResearchGroup(group);
         licenseDao.create(privateLicense);
 

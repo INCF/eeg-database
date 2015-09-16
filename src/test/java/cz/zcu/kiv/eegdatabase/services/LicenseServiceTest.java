@@ -72,7 +72,8 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
+        // TODO kuba licence test
+        //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
     }
@@ -94,7 +95,8 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(BigDecimal.valueOf(1000f));
+        // TODO kuba licence test
+        //newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
         licenseService.create(newLicense);
@@ -120,7 +122,8 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(BigDecimal.valueOf(1000f));
+        // TODO kuba licence test
+        //newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
         newLicense.setResearchGroup(researchGroup);
