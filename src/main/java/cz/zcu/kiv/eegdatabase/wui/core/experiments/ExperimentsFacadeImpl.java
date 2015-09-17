@@ -71,6 +71,21 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
     }
 
     @Override
+    public List<Experiment> getMyExperiments(Person person, int limit) {
+        return service.getMyExperiments(person, limit);
+    }
+
+    @Override
+    public List<Experiment> getMyExperiments(Person person, int start, int limit) {
+        return service.getMyExperiments(person, start, limit);
+    }
+
+    @Override
+    public int getCountForExperimentsWhereOwnerOrExperimenter(Person loggedUser) {
+        return service.getCountForExperimentsWhereOwnerOrExperimenter(loggedUser);
+    }
+
+    @Override
     public int getCountForExperimentsWhereOwner(Person loggedUser) {
         return service.getCountForExperimentsWhereOwner(loggedUser);
     }

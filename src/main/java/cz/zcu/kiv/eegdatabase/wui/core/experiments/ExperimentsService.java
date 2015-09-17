@@ -22,13 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+
+import java.util.List;
 
 public interface ExperimentsService extends GenericService<Experiment, Integer> {
 
@@ -43,6 +43,12 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
     List<Experiment> getExperimentsWhereOwner(Person person, int limit);
 
     List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
+
+    List<Experiment> getMyExperiments(Person person, int limit);
+
+    List<Experiment> getMyExperiments(Person person, int start, int limit);
+
+    int getCountForExperimentsWhereOwnerOrExperimenter(Person loggedUser);
 
     List<Experiment> getExperimentsWhereSubject(Person person, int limit);
 

@@ -45,11 +45,17 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
 
     List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
 
+    List<Experiment> getMyExperiments(Person person, int limit);
+
+    List<Experiment> getMyExperiments(Person person, int start, int limit);
+
     List<Experiment> getExperimentsWhereSubject(Person person, int limit);
 
     List<Experiment> getExperimentsWhereSubject(Person person, int start, int limit);
 
     int getCountForExperimentsWhereOwner(Person loggedUser);
+
+    int getCountForExperimentsWhereOwnerOrExperimenter(Person loggedUser);
 
     int getCountForExperimentsWhereSubject(Person person);
 

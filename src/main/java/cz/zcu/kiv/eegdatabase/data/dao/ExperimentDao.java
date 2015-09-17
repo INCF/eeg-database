@@ -53,9 +53,11 @@ public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 
 	public List<Experiment> getExperimentsWhereOwner(Person person, int limit);
 
-    public List<Experiment> getExperimentsForMyExperiments(Person person, int start, int limit);
+    public List<Experiment> getMyExperiments(Person person, int start, int limit);
 
-    public List<Experiment> getExperimentsForMyExperiments(Person person, int limit);
+    public int getCountForExperimentsWhereOwnerOrExperimenter(Person person);
+
+    public List<Experiment> getMyExperiments(Person person, int limit);
 
 	public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
 
