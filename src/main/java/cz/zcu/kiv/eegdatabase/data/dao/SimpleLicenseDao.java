@@ -58,7 +58,7 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 
 	@Override
 	public License getPublicLicense() {
-		LicenseType licenseType = LicenseType.OPEN_DOMAIN;
+		LicenseType licenseType = LicenseType.NON_COMMERCIAL;
 		String hqlQuery = "select l from License l where l.licenseType=:licenseType";
 
 		return (License) this.getSession().createQuery(hqlQuery).setParameter("licenseType", licenseType).list().iterator().next();

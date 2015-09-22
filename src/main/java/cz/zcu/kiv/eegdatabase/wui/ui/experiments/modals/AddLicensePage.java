@@ -94,41 +94,33 @@ public class AddLicensePage extends WebPage {
         }
 
         private void addFormFields() {
-            FormComponent c = new RequiredTextField("title", new PropertyModel(licenseModel, "title"));
-            c.setLabel(ResourceUtils.getModel("label.license.title"));
-            c.setEnabled(false);
-            add(c);
+            TextField<String> title = new RequiredTextField<String>("title", new PropertyModel<String>(licenseModel, "title"));
+            title.setLabel(ResourceUtils.getModel("label.license.title"));
+            title.setEnabled(false);
+            add(title);
 
-            Label l = new Label("attachmentFileName", new PropertyModel(licenseModel, "attachmentFileName"));
+            Label l = new Label("attachmentFileName", new PropertyModel<String>(licenseModel, "attachmentFileName"));
             add(l);
 
-            c = new TextArea("description", new PropertyModel(licenseModel, "description"));
-            c.setLabel(ResourceUtils.getModel("label.license.description"));
-            c.setRequired(true);
-            c.setEnabled(false);
-            add(c);
+            TextArea<String> description = new TextArea<String>("description", new PropertyModel<String>(licenseModel, "description"));
+            description.setLabel(ResourceUtils.getModel("label.license.description"));
+            description.setRequired(true);
+            description.setEnabled(false);
+            add(description);
 
-            priceInput = new NumberTextField<BigDecimal>("price", new PropertyModel(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
+            priceInput = new NumberTextField<BigDecimal>("price", new PropertyModel<BigDecimal>(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
             priceInput.setRequired(true);
             priceInput.setEnabled(false);
             priceInput.setLabel(ResourceUtils.getModel("label.license.price"));
             add(priceInput);
 
-
-            c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
-            c.setLabel(ResourceUtils.getModel("label.license.type"));
-            c.setRequired(true);
-            c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
-            c.add(new Radio("business", new Model(LicenseType.BUSINESS)) {
-                @Override
-                protected void onConfigure() {
-                    super.onConfigure();
-                    this.setVisible(true);
-                }
-            });
-            c.add(new Radio("public",new Model(LicenseType.OPEN_DOMAIN)));
-            c.setEnabled(false);
-            add(c);
+            RadioGroup<LicenseType> licenceType = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
+            licenceType.setLabel(ResourceUtils.getModel("label.license.type"));
+            licenceType.setRequired(true);
+            licenceType.add(new Radio("nonCommercial",new Model(LicenseType.NON_COMMERCIAL)));
+            licenceType.add(new Radio("commercial", new Model(LicenseType.COMMERCIAL)));
+            licenceType.setEnabled(false);
+            add(licenceType);
 
             WicketUtils.addLabelsAndFeedback(this);
 
@@ -225,7 +217,7 @@ public class AddLicensePage extends WebPage {
 
                         // TODO kuba licence
                     } else {
-                        if (option.getLicenseType()== LicenseType.BUSINESS /*&& option.getPrice().intValue() == 0*/) {
+                        if (option.getLicenseType()== LicenseType.COMMERCIAL /*&& option.getPrice().intValue() == 0*/) {
                             priceInput.setEnabled(true);
                         } else {
                             priceInput.setEnabled(false);

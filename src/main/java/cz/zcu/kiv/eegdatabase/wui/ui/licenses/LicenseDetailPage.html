@@ -29,10 +29,12 @@
                 <th><wicket:message key="label.type" /></th>
                 <td wicket:id="type"></td>
             </tr>
-            <tr>
-                <th><wicket:message key="label.link" /></th>
-                <td><a wicket:id="link"></a></td>
-            </tr>
+            <wicket:enclosure child="link">
+	            <tr>
+	                <th><wicket:message key="label.link" /></th>
+	                <td><a wicket:id="link"></a></td>
+	            </tr>
+            </wicket:enclosure>
             <wicket:enclosure child="download">
                 <tr>
                     <th colspan="2"><wicket:message key="label.license.attachment.file"></wicket:message></th>

@@ -48,11 +48,10 @@ This file is part of the EEG-database project
 			<div class="itemBox">
 				<label class="textFieldLabel" wicket:id="licenseType.label"/>
 				<span wicket:id="licenseType">
-					<input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
+					<input type="radio" wicket:id="nonCommercial"/><wicket:message key="LicenseType.NON_COMMERCIAL"/>
 					<wicket:enclosure>
-						<input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+						<input type="radio" wicket:id="commercial"/><wicket:message key="LicenseType.COMMERCIAL"/>
 					</wicket:enclosure>
-                    <input type="radio" wicket:id="public"/><wicket:message key="LicenseType.PUBLIC"/>
 				</span>
 				<div wicket:id="licenseType.feedback"/>
 			</div>

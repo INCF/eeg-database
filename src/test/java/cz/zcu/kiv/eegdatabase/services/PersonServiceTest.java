@@ -75,7 +75,7 @@ public class PersonServiceTest extends AbstractServicesTest {
         // TODO kuba licence test
         //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OPEN_DOMAIN);
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseDao.create(license);
 
 

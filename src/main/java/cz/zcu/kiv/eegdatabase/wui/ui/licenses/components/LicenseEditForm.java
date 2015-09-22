@@ -130,15 +130,14 @@ public class LicenseEditForm extends Panel {
 		c = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
 		c.setLabel(ResourceUtils.getModel("label.license.type"));
 		c.setRequired(true);
-		c.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
-		c.add(new Radio("business", new Model(LicenseType.BUSINESS)) {
+		c.add(new Radio("nonCommercial",new Model(LicenseType.NON_COMMERCIAL)));
+		c.add(new Radio("commercial", new Model(LicenseType.COMMERCIAL)) {
 			@Override
 			protected void onConfigure() {
 				super.onConfigure();
 				this.setVisible(allowBusiness.getObject());
 			}
 		});
-        c.add(new Radio("public",new Model(LicenseType.OPEN_DOMAIN)));
         c.setEnabled(false);
 		form.add(c);
 
@@ -247,7 +246,7 @@ public class LicenseEditForm extends Panel {
 
 				} else {
 				    // TODO kuba licence
-                    if (option.getLicenseType()== LicenseType.BUSINESS /*&& option.getPrice().intValue() == 0*/) {
+                    if (option.getLicenseType()== LicenseType.COMMERCIAL /*&& option.getPrice().intValue() == 0*/) {
                         priceInput.setEnabled(true);
                     } else {
                         priceInput.setEnabled(false);

@@ -183,7 +183,7 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     private void checkLicenseGroupValidity(License license, ResearchGroup group)
     {
-        if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.BUSINESS) {
+        if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.COMMERCIAL) {
             throw new InvalidLicenseForPackageException("Group " + group.getTitle() + " is not a paid account and can not create bussiness licenses");
         }
     }

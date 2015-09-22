@@ -25,22 +25,23 @@ package cz.zcu.kiv.eegdatabase.data.pojo;
 /**
  *
  * @author Jakub Danek
+ * @author Jakub Krauz
  */
 public enum LicenseType {
+    
     /**
-     * Public experiments
+     * Public non-commercial experiments
      */
-    OPEN_DOMAIN,
-    /**
-     * Experiments published for research/education purposes only
-     */
-    ACADEMIC,
+    NON_COMMERCIAL,
+    
     /**
      * For any purpose, paid
      */
-    BUSINESS,
+    COMMERCIAL,
+    
     /**
      * Private experiments
      */
     OWNER
+    
 }
