@@ -22,21 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import javax.persistence.*;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
 
 /**
  *
@@ -61,6 +51,9 @@ public class ExperimentPackage implements Serializable {
 
 	@OneToMany(mappedBy= "experimentPackage")
 	private Set<ExperimentPackageLicense> experimentPackageLicenses;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "experimentPackage")
+    private Set<Keywords> keywords = new HashSet<Keywords>(0);
 
 	@OneToMany(mappedBy = "experimentPackage")
 	private Set<ExperimentPackageConnection> experimentPackageConnections;
