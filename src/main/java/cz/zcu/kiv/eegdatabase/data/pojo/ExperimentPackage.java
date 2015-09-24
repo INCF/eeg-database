@@ -97,8 +97,17 @@ public class ExperimentPackage implements Serializable {
 		return experimentPackageConnections;
 	}
 
-	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
+    public Set<Keywords> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<Keywords> keywords) {
+        this.keywords = keywords;
+    }
+
+    public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
 		this.experimentPackageConnections = experimentPackageConnections;
+
 	}
 	
 	public BigDecimal getPrice() {

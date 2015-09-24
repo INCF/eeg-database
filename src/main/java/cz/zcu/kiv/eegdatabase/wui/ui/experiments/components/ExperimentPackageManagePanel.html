@@ -28,6 +28,7 @@ This file is part of the EEG-database project
   <wicket:panel>
       <h2 wicket:id="header" class="headerWithLinks">
 		<wicket:container wicket:id="packageTitle"/>
+
 		<a wicket:id="removePackageLink"><wicket:container wicket:id="label"/></a>
 		<div>
 			<span style="font-size: 0.8em; font-weight: bold; display: inline"><wicket:message key="heading.license.list"/></span>
@@ -42,6 +43,12 @@ This file is part of the EEG-database project
 			
 		</div>
       </h2>
+      <div class="itemBox">
+          <h3>
+          <wicket:message key="label.keywords"></wicket:message>:
+          <wicket:container wicket:id="keywords"/>
+          </h3>
+      </div>
       <div wicket:id="experimentListCont">
 	  <table class="dataTable measurationListDataTable" wicket:id="list"></table>
       </div>

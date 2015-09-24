@@ -22,12 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
@@ -62,10 +60,14 @@ public class ExperimentPackageDetailPanel extends Panel {
     @SpringBean
     private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
 
+    @SpringBean
+    private KeywordsFacade keywordsFacade;
+
 	private IModel<ResearchGroup> resGroupModel;
 	private IModel<ExperimentPackage> packageModel;
 	private IModel<License> licenseModel;
 	private IModel<List<License>> optionsModel;
+    private IModel<Keywords> keywordsModel;
 
 	private Form form;
 	private ModalWindow addLicenseWindow;
@@ -79,6 +81,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 		this.packageModel = new Model<ExperimentPackage>(new ExperimentPackage());
 		this.licenseModel = new Model<License>();
 		this.licenses = new ArrayList<License>();
+        this.keywordsModel = new Model<Keywords>(new Keywords());
 		this.resGroupModel = resGroup;
 		form = new StatelessForm("form");
 		this.add(form);
@@ -96,6 +99,10 @@ public class ExperimentPackageDetailPanel extends Panel {
 		c.setLabel(ResourceUtils.getModel("label.experimentPackage.name"));
 
 		form.add(c);
+
+        TextArea keywords = new TextArea("keywords", new PropertyModel(keywordsModel, "keywordsText"));
+        keywords.setLabel(ResourceUtils.getModel("label.keywords"));
+        form.add(keywords);
 
 		WicketUtils.addLabelsAndFeedback(form);
 	}
@@ -203,10 +210,13 @@ public class ExperimentPackageDetailPanel extends Panel {
                 this.setEnabled(false);
 
 				ExperimentPackage pck = packageModel.getObject();
+                Keywords packageKeywords = keywordsModel.getObject();
 				pck.setResearchGroup(resGroupModel.getObject());
                 //experimentPackageFacade.createExperimentPackage(pck, licenseModel.getObject());
                 experimentPackageFacade.create(pck);
                 ExperimentPackageLicense experimentPackageLicense;
+                packageKeywords.setExperimentPackage(pck);
+                keywordsFacade.create(packageKeywords);
 
                 for (License lic : licenses) {
                     licenseFacade.create(lic);

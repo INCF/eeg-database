@@ -22,16 +22,20 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashSet;
-import java.util.Iterator;
-import java.util.List;
-import java.util.Set;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
+import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.PublicPrivateLicensePanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -47,33 +51,15 @@ import org.apache.wicket.extensions.model.AbstractCheckBoxModel;
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.upload.FileUpload;
-import org.apache.wicket.markup.html.form.upload.FileUploadField;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.ListView;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.model.PropertyModel;
-import org.apache.wicket.model.StringResourceModel;
+import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.hibernate.Hibernate;
-import org.hibernate.SessionFactory;
 
-import cz.zcu.kiv.eegdatabase.wui.components.table.CheckBoxColumn;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
-import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
-import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.PublicPrivateLicensePanel;
+import java.util.*;
 
 /**
  * Panel for experiment package management. Adding/removing experiments and
@@ -94,6 +80,8 @@ public class ExperimentPackageManagePanel extends Panel {
 	private LicenseFacade licenseFacade;
     @SpringBean
     private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
+    @SpringBean
+    private KeywordsFacade keywordsFacade;
 	/**
 	 * Main model of the component - experiment package
 	 */
@@ -111,6 +99,7 @@ public class ExperimentPackageManagePanel extends Panel {
 	 */
 	private IModel<List<Experiment>> experimentsToAddModel;
 	private IModel<List<License>> licenses;
+    private IModel<Keywords> keywordsModel;
 	/**
 	 * Model of the addLicenseWindow
 	 */
@@ -141,8 +130,10 @@ public class ExperimentPackageManagePanel extends Panel {
 		experimentListCont = new WebMarkupContainer("experimentListCont");
 		experimentListCont.setOutputMarkupPlaceholderTag(true);
 		this.add(experimentListCont);
+        keywordsModel = this.keywordsToPackage();
 
 		this.addHeader();
+        this.add((new Label("keywords", new PropertyModel(keywordsModel, "keywordsText"))));
 		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
 		this.addExperimentsAddWindow();
@@ -183,6 +174,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		addExperimentsWindow.setWidthUnit("px");
 
 		experimentsToAddModel = this.listExperimentsToAdd();
+
 
 		Panel content = new ExperimentListForm(addExperimentsWindow.getContentId(), ResourceUtils.getModel("pageTitle.addExperimenToPackage"), experimentsToAddModel) {
 			@Override
@@ -244,6 +236,19 @@ public class ExperimentPackageManagePanel extends Panel {
 			}
 		};
 	}
+    private IModel<Keywords> keywordsToPackage() {
+        return new LoadableDetachableModel<Keywords>() {
+            @Override
+            protected Keywords load() {
+                List<Integer> list = keywordsFacade.getKeywordsFromPackage(epModel.getObject());
+                if (list.isEmpty()) {
+                    return new Keywords();
+                } else {
+                    return keywordsFacade.read(list.get(0));
+                }
+            }
+        };
+    }
 
 	/**
 	 * Add components header - title, controls
@@ -254,6 +259,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		this.add(header);
 
 		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
+
 
 		header.add(createRemovePackageLink("removePackageLink"));
 
@@ -275,7 +281,12 @@ public class ExperimentPackageManagePanel extends Panel {
 		Link removeLink = new Link(id) {
 			@Override
 			public void onClick() {
-				experimentPackageFacade.removeExperimentPackage(epModel.getObject());
+                ExperimentPackage pck = epModel.getObject();
+                List<Integer> list = keywordsFacade.getKeywordsFromPackage(pck);
+                for (Integer id: list) {
+                    keywordsFacade.delete(keywordsFacade.read(id));
+                }
+				experimentPackageFacade.removeExperimentPackage(pck);
 				setResponsePage(this.getPage().getPageClass(), this.getPage().getPageParameters());
 			}
 		};

@@ -31,8 +31,17 @@ This file is part of the EEG-database project
 		<div class="itemBox">
 			<label class="textFieldLabel" wicket:id="name.label"></label>
 			<input class="textField" wicket:id="name"/>
+
 			<div wicket:id="name.feedback"></div>
 	    </div>
+
+        <div class="itemBox">
+            <label class="textFieldLabel" wicket:id="keywords.label"></label>
+            <textarea rows="8" cols="55" wicket:id="keywords">
+                KEYWORDS
+            </textarea>
+            <div wicket:id="keywords.feedback"></div>
+        </div>
 
 		<div class="itemBox">
 			<label class="selectBoxLabel"><wicket:message key="label.licenses"></wicket:message> </label>

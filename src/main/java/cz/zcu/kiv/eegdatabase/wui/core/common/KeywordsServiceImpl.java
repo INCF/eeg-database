@@ -22,13 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.dao.SimpleKeywordsDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import cz.zcu.kiv.eegdatabase.data.dao.SimpleKeywordsDao;
-import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
+import java.util.List;
 
 public class KeywordsServiceImpl implements KeywordsService {
 
@@ -103,5 +103,11 @@ public class KeywordsServiceImpl implements KeywordsService {
     @Transactional(readOnly = true)
     public int getID(int groupId) {
         return dao.getID(groupId);
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Integer> getKeywordsFromPackage(ExperimentPackage pck) {
+        return dao.getKeywordsFromPackage(pck);
     }
 }

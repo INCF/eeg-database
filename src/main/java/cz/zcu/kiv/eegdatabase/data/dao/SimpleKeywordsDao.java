@@ -26,6 +26,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.dao;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -57,7 +58,13 @@ public class SimpleKeywordsDao extends SimpleGenericDao<Keywords, Integer> {
         }else{
             return "No keywords defined!";
         }
+
     }
+
+    public List<Integer> getKeywordsFromPackage(ExperimentPackage pck) {
+        String hqlQuery = "select k.keywordsId from Keywords k left join k.experimentPackage pck where pck.experimentPackageId = :packageId" ;
+        return  getSessionFactory().getCurrentSession().createQuery(hqlQuery).setParameter("packageId", pck.getExperimentPackageId()).list();
+}
     
     /**
      * Gets ID of specific record in Keywords table by research group ID

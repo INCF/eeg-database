@@ -22,11 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
-import java.util.List;
-
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
 import org.springframework.beans.factory.annotation.Required;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
+import java.util.List;
 
 public class KeywordsFacadeImpl implements KeywordsFacade {
 
@@ -90,5 +90,10 @@ public class KeywordsFacadeImpl implements KeywordsFacade {
     @Override
     public int getID(int groupId) {
         return service.getID(groupId);
+    }
+
+    @Override
+    public List<Integer> getKeywordsFromPackage(ExperimentPackage pck) {
+        return service.getKeywordsFromPackage(pck);
     }
 }
