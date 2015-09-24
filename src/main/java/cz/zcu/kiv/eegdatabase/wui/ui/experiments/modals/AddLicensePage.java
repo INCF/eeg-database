@@ -1,6 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.modals;
 
 import com.sun.java.swing.plaf.windows.resources.windows;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
@@ -10,6 +11,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+
 import org.apache.wicket.PageReference;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -20,6 +22,7 @@ import org.apache.wicket.markup.head.IHeaderResponse;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.*;
@@ -59,7 +62,6 @@ public class AddLicensePage extends WebPage {
     }
 
     public List<License> getLicenses() {
-        System.out.println("----SIZE-IN return: "+licenses.size()+", " + this);
         return licenses;
     }
 
@@ -78,53 +80,35 @@ public class AddLicensePage extends WebPage {
         protected IModel<License> licenseModel;
         private AjaxButton saveButton;
         private ResourceLink<Void> downloadLink;
-        private FormComponent priceInput;
-        private Form form;
+        //private FormComponent<BigDecimal> priceInput;
+        private Form<License> form;
         private ModalWindow window;
 
         public LicenseForm(String id, final ModalWindow window, final IModel<Experiment> model) {
             super(id, new CompoundPropertyModel<License>(new License()));
             form = this;
             this.window=window;
-            licenseModel = new Model();
+            licenseModel = new Model<License>();
             addFormFields();
             addControls();
             addBlueprintSelect();
-
+            addLicenseDetails();
         }
 
         private void addFormFields() {
-            TextField<String> title = new RequiredTextField<String>("title", new PropertyModel<String>(licenseModel, "title"));
-            title.setLabel(ResourceUtils.getModel("label.license.title"));
-            title.setEnabled(false);
-            add(title);
 
-            Label l = new Label("attachmentFileName", new PropertyModel<String>(licenseModel, "attachmentFileName"));
-            add(l);
+            /*Label l = new Label("attachmentFileName", new PropertyModel<String>(licenseModel, "attachmentFileName"));
+            add(l);*/
 
-            TextArea<String> description = new TextArea<String>("description", new PropertyModel<String>(licenseModel, "description"));
-            description.setLabel(ResourceUtils.getModel("label.license.description"));
-            description.setRequired(true);
-            description.setEnabled(false);
-            add(description);
-
-            priceInput = new NumberTextField<BigDecimal>("price", new PropertyModel<BigDecimal>(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
+            /*priceInput = new NumberTextField<BigDecimal>("price", new PropertyModel<BigDecimal>(licenseModel, "price"), BigDecimal.class).setMinimum(BigDecimal.ZERO);
             priceInput.setRequired(true);
             priceInput.setEnabled(false);
             priceInput.setLabel(ResourceUtils.getModel("label.license.price"));
-            add(priceInput);
-
-            RadioGroup<LicenseType> licenceType = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(licenseModel, "licenseType"));
-            licenceType.setLabel(ResourceUtils.getModel("label.license.type"));
-            licenceType.setRequired(true);
-            licenceType.add(new Radio("nonCommercial",new Model(LicenseType.NON_COMMERCIAL)));
-            licenceType.add(new Radio("commercial", new Model(LicenseType.COMMERCIAL)));
-            licenceType.setEnabled(false);
-            add(licenceType);
+            add(priceInput);*/
 
             WicketUtils.addLabelsAndFeedback(this);
 
-            ByteArrayResource res;
+            /*ByteArrayResource res;
             res = new ByteArrayResource("") {
                 @Override
                 public void configureResponse(final AbstractResource.ResourceResponse response, final IResource.Attributes attributes) {
@@ -134,7 +118,39 @@ public class AddLicensePage extends WebPage {
             downloadLink = new ResourceLink<Void>("download", res);
             downloadLink.setVisible(false);
 
-            add(downloadLink);
+            add(downloadLink);*/
+        }
+        
+        
+        private void addLicenseDetails() {
+            Label title = new Label("title", new PropertyModel<String>(licenseModel, "title"));
+            add(title);
+            
+            Label type = new Label("type", new PropertyModel<String>(licenseModel, "licenseType"));
+            add(type);
+            
+            Label description = new Label("description", new PropertyModel<String>(licenseModel, "description"));
+            add(description);
+            
+            // FIXME nezobrazuje se
+            PropertyModel<String> linkModel = new PropertyModel<String>(licenseModel, "link");
+            ExternalLink link = new ExternalLink("link", linkModel, linkModel);
+            link.setVisible(linkModel.getObject() != null);
+            add(link);
+            
+            /*add(new Label("attachmentFileName", license.getAttachmentFileName()));
+
+            boolean isContent = license != null && license.getAttachmentFileName() != null;
+
+            ByteArrayResource res;
+            if (isContent) {
+                res = new ByteArrayResource("", licenseFacade.getLicenseAttachmentContent(license.getLicenseId()), license.getAttachmentFileName());
+            } else {
+                res = new ByteArrayResource("");
+            }
+            ResourceLink<Void> downloadLink = new ResourceLink<Void>("download", res);
+            downloadLink.setVisible(isContent);
+            add(downloadLink);*/
         }
 
 
@@ -211,17 +227,17 @@ public class AddLicensePage extends WebPage {
                     if (option == null || option.getLicenseId() == 0) {
                         licenseModel.setObject(new License());
                         saveButton.setVisibilityAllowed(false);
-                        priceInput.setEnabled(false);
+                        //priceInput.setEnabled(false);
                         downloadLink.setVisible(false);
 
 
                         // TODO kuba licence
                     } else {
-                        if (option.getLicenseType()== LicenseType.COMMERCIAL /*&& option.getPrice().intValue() == 0*/) {
-                            priceInput.setEnabled(true);
-                        } else {
-                            priceInput.setEnabled(false);
-                        }
+                        //if (option.getLicenseType()== LicenseType.COMMERCIAL /*&& option.getPrice().intValue() == 0*/) {
+                        //    priceInput.setEnabled(true);
+                        //} else {
+                        //    priceInput.setEnabled(false);
+                        //}
                         License l = new License();
                         l.setTitle(option.getTitle());
                         l.setDescription(option.getDescription());

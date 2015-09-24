@@ -381,7 +381,7 @@ public class AddExperimentScenarioForm extends WizardStep {
             protected void populateItem(ListItem<License> item) {
                 License license = (License)item.getModelObject();
                 item.add(new Label("title",license.getTitle()));
-                item.add(new Label("price", /*license.getPrice()*/ "xxx"));
+                //item.add(new Label("price", /*license.getPrice()*/ "xxx"));
                 item.add(new Label("type", license.getLicenseType().toString()));
                 
                 //item.add(new Label("label", item.getModel())); TODO remove this, code improve this listview

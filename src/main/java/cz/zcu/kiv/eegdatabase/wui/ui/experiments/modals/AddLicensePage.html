@@ -22,65 +22,91 @@ This file is part of the EEG-database project
 -->
 <?xml version="1.0" encoding="UTF-8" ?>
 <html xmlns:wicket="http://wicket.apache.org">
+
 <head>
     <title><wicket:message key="pageTitle.addLicense" /></title>
 </head>
+
 <body class="tabpanel wizard">
+
 <form wicket:id="addForm">
     <div class="form-item">
+    
     <div class="form-sub-item">
     <wicket:enclosure>
         <label class="selectBoxLabel"><wicket:message key="label.license.blueprint" /></label>
         <select class="selectBox" wicket:id="blueprintSelect"></select>
     </wicket:enclosure>
     </div>
-
+    
     <div class="form-sub-item">
-        <label class="textFieldLabel" wicket:id="title.label"/>
-        <input class="textField" wicket:id="title"/>
-        <div wicket:id="title.feedback"/>
+        <label class="textFieldLabel"><wicket:message key="label.price" /></label>
+        <input type="number" class="textField" />
+        <wicket:message key="label.price.currency" />
     </div>
 
-    <div class="form-sub-item">
-        <label class="textFieldLabel" wicket:id="price.label"/>
-        <input type="number" class="textField" wicket:id="price"/>
-        <wicket:message key="label.price.currency"/>
-        <div wicket:id="price.feedback"/>
-    </div>
+<!--     <div class="form-sub-item"> -->
+<!--         <label class="textFieldLabel" wicket:id="price.label"/> -->
+<!--         <input type="number" class="textField" wicket:id="price"/> -->
+<!--         <wicket:message key="label.price.currency"/> -->
+<!--         <div wicket:id="price.feedback"/> -->
+<!--     </div> -->
 
-    <div class="form-sub-item">
-        <label class="textFieldLabel" wicket:id="licenseType.label"/>
-				<span wicket:id="licenseType">
-                    <input type="radio" wicket:id="nonCommercial"/><wicket:message key="LicenseType.NON_COMMERCIAL"/>
-                    <br>
-                    <input type="radio" wicket:id="commercial"/><wicket:message key="LicenseType.COMMERCIAL"/>
-				</span>
-        <div wicket:id="licenseType.feedback"/>
-    </div>
 
-    <div class="form-sub-item">
-        <label class="textFieldLabel" wicket:id="description.label"/>
-        <textarea class="textareaField" wicket:id="description"/>
-        <div wicket:id="description.feedback"/>
-    </div>
-    <hr>
+<!--     <div class="form-sub-item"> -->
+<!--         <wicket:enclosure child="download"> -->
 
-    <div class="form-sub-item">
-        <wicket:enclosure child="download">
+<!--             <h3><wicket:message key="label.license.attachment.file"></wicket:message></h3> -->
+<!--             <div wicket:id="attachmentFileName"></div> -->
+<!--             <a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a> -->
 
-            <h3><wicket:message key="label.license.attachment.file"></wicket:message></h3>
-            <div wicket:id="attachmentFileName"></div>
-            <a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a>
-
-        </wicket:enclosure>
-    </div>
-    <hr>
+<!--         </wicket:enclosure> -->
+<!--     </div> -->
 
     <div class="modal-buttons">
         <input type="button" wicket:id="cancelButton" value="Cancel" class="cancel-button" />
         <input type="button" wicket:id="submitButton" value="Create"/>
     </div>
     </div>
+    
+    <hr>
+    
+	<div id="license-details">
+	    <h3>License details</h3>
+	    <table>
+            <tr>
+                <th><wicket:message key="label.title" /></th>
+                <td wicket:id="title"></td>
+            </tr>
+            <tr>
+                <th><wicket:message key="label.type" /></th>
+                <td wicket:id="type"></td>
+            </tr>
+            <tr>
+                <th><wicket:message key="label.description" /></th>
+                <td wicket:id="description"></td>
+            </tr>
+            <wicket:enclosure child="link">
+                <tr>
+                    <th><wicket:message key="label.link" /></th>
+                    <td><a wicket:id="link"></a></td>
+                </tr>
+            </wicket:enclosure>
+<!--             <wicket:enclosure child="download"> -->
+<!--                 <tr> -->
+<!--                     <th colspan="2"><wicket:message key="label.license.attachment.file"></wicket:message></th> -->
+<!--                 </tr> -->
+<!--                 <tr> -->
+<!--                     <td wicket:id="attachmentFileName"></td> -->
+<!--                     <td><a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a></td> -->
+<!--                 </tr> -->
+<!--             </wicket:enclosure> -->
+        </table>
+	</div>
+
 </form>
+
+
 </body>
+
 </html>
