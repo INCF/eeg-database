@@ -483,8 +483,15 @@ public class AddExperimentScenarioForm extends WizardStep {
                             if (targetClass.equals(AddLicensePage.class.getName())) {
                                 p = new AddLicensePage(getPage().getPageReference(),window, model) {
                                     @Override
-                                    protected void onSubmitAction(IModel<License> licenseIModel, Integer id, AjaxRequestTarget target, Form<?> form) {
-                                        License obj = licenseIModel.getObject();
+                                    protected void onSubmitAction(IModel<ExperimentLicence> licenseIModel, Integer id, AjaxRequestTarget target, Form<?> form) {
+                                        License obj = licenseIModel.getObject().getLicense();
+                                        
+                                        ExperimentLicence xx = licenseIModel.getObject();
+                                        System.out.println("\n****************\n"
+                                                + "licence: " + xx.getLicense().getTitle() + "\n"
+                                                + "cena: " + xx.getPrice() + "\n"
+                                                + "experiment: " + xx.getExperiment() + "\n"
+                                                + "**********************");
 
 
                                         /*if (model.getObject().getExperimentId()>0) {
