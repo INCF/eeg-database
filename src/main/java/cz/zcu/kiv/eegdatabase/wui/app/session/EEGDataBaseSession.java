@@ -22,12 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.app.session;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Set;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Session;
@@ -87,13 +85,13 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private StringValue searchString;
 
-    private HashMap<Integer,License> createExperimentLicenseMap;
+    private HashMap<Integer,ExperimentLicence> createExperimentLicenseMap;
 
 
 
     /*
-             * software cache with purchased experiments and packages. Cache is flushed after create new order.
-             */
+     * software cache with purchased experiments and packages. Cache is flushed after create new order.
+     */
     private Set<Integer> purchasedExperiments;
     private Set<Integer> purchasedExperimentPackages;
 
@@ -220,7 +218,7 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
 
-    public HashMap<Integer, License> getCreateExperimentLicenseMap() {
+    public HashMap<Integer, ExperimentLicence> getCreateExperimentLicenseMap() {
         return createExperimentLicenseMap;
     }
 
@@ -233,13 +231,14 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
 
     private void createExperimentLicenseMap() {
         if (this.createExperimentLicenseMap == null) {
-            this.createExperimentLicenseMap = new HashMap<Integer, License>();
+            this.createExperimentLicenseMap = new HashMap<Integer, ExperimentLicence>();
         }
     }
 
-    public void addLicenseToCreateLicenseMap(Integer integer, License license) {
-        if (this.createExperimentLicenseMap.containsKey(integer)) return;
-        this.createExperimentLicenseMap.put(integer,license);
+    public void addLicenseToCreateLicenseMap(Integer integer, ExperimentLicence experimentLicence) {
+        if (this.createExperimentLicenseMap.containsKey(integer))
+            return;
+        this.createExperimentLicenseMap.put(integer, experimentLicence);
     }
 
     public ShoppingCart getShoppingCart() {

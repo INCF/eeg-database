@@ -62,7 +62,7 @@ public class AddLicensePage extends WebPage {
         return licenses;
     }
 
-    protected void onSubmitAction(IModel<ExperimentLicence> model, Integer id, AjaxRequestTarget target, Form<?> form) {
+    protected void onSubmitAction(IModel<ExperimentLicence> experimentLicenseModel, Integer licenseId, AjaxRequestTarget target, Form<?> form) {
         // to be overriden
     }
 

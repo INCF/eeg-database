@@ -165,30 +165,32 @@ public class ExperimentFormPage extends MenuPage {
                     id = facade.create(experiment);
                 }
 
-                for (Map.Entry<Integer, License> entry : EEGDataBaseSession.get().getCreateExperimentLicenseMap().entrySet()) {
-                    Integer licenseTemplateId = entry.getKey();
-                    License newLicense = entry.getValue();
+                for (Map.Entry<Integer, ExperimentLicence> entry : EEGDataBaseSession.get().getCreateExperimentLicenseMap().entrySet()) {
+                    Integer licenseId = entry.getKey();
+                    ExperimentLicence expLic = entry.getValue();
 
-                    if (newLicense.getAttachmentFileName() != null) {
+                    /*if (newLicense.getAttachmentFileName() != null) {
                         //ByteArrayInputStream bis = new ByteArrayInputStream(licenseFacade.getLicenseAttachmentContent(licenseTemplateId));
                         //newLicense.setFileContentStream(bis);
 
                         try {
                             Blob blob = null;
-                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(licenseTemplateId));
+                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(licenseId));
                             newLicense.setAttachmentContent(blob);
                         } catch (SQLException e) {
                             e.printStackTrace();
                         }
 
-                    }
-                    licenseFacade.create(newLicense);
-                    ExperimentLicence expLic = new ExperimentLicence();
-                    expLic.setExperiment(experiment);
-                    expLic.setLicense(newLicense);
+                    }*/
+                    
+                    //licenseFacade.create(newLicense);
+                    
+                    //ExperimentLicence expLic = new ExperimentLicence();
+                    /*expLic.setExperiment(experiment);
+                    expLic.setLicense(newLicense);*/
                     experimentLicenseFacade.create(expLic);
 
-                    newLicense.setFileContentStream(null);
+                    //newLicense.setFileContentStream(null);
                 }
 
                 EEGDataBaseSession.get().clearCreateExperimentLicenseMap();
