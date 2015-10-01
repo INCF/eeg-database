@@ -30,7 +30,6 @@ This file is part of the EEG-database project
 <body class="tabpanel wizard">
 
 <form wicket:id="addForm">
-
     <div class="form-item">
     
 	    <div class="form-sub-item">
@@ -52,39 +51,38 @@ This file is part of the EEG-database project
 	        <input type="button" wicket:id="submitButton" value="Create"/>
 	    </div>
 	    
+		<div wicket:id="licenseDetails" id="license-details">
+	        <br><hr>
+		    <h3>License details</h3>
+		    <table>
+	            <tr>
+	                <th><wicket:message key="label.title" /></th>
+	                <td wicket:id="title"></td>
+	            </tr>
+	            <tr>
+	                <th><wicket:message key="label.type" /></th>
+	                <td wicket:id="type"></td>
+	            </tr>
+	            <tr>
+	                <th><wicket:message key="label.description" /></th>
+	                <td wicket:id="description"></td>
+	            </tr>
+	            <wicket:enclosure child="link">
+	                <tr>
+	                    <th><wicket:message key="label.link" /></th>
+	                    <td><a wicket:id="link"></a></td>
+	                </tr>
+	            </wicket:enclosure>
+	            <wicket:enclosure child="fileDownload">
+	                <tr>
+	                    <th><wicket:message key="label.license.attachment.file" /></th>
+	                    <td><a href="#" wicket:id="fileDownload"><span wicket:id="fileName" /></a></td>
+	                </tr>
+	            </wicket:enclosure>
+	        </table>
+		</div>
+	
     </div>
-    
-	<div wicket:id="licenseDetails" id="license-details">
-        <hr>
-	    <h3>License details</h3>
-	    <table>
-            <tr>
-                <th><wicket:message key="label.title" /></th>
-                <td wicket:id="title"></td>
-            </tr>
-            <tr>
-                <th><wicket:message key="label.type" /></th>
-                <td wicket:id="type"></td>
-            </tr>
-            <tr>
-                <th><wicket:message key="label.description" /></th>
-                <td wicket:id="description"></td>
-            </tr>
-            <wicket:enclosure child="link">
-                <tr>
-                    <th><wicket:message key="label.link" /></th>
-                    <td><a wicket:id="link"></a></td>
-                </tr>
-            </wicket:enclosure>
-            <wicket:enclosure child="fileDownload">
-                <tr>
-                    <th><wicket:message key="label.license.attachment.file" /></th>
-                    <td><a href="#" wicket:id="fileDownload"><span wicket:id="fileName" /></a></td>
-                </tr>
-            </wicket:enclosure>
-        </table>
-	</div>
-
 </form>
 
 

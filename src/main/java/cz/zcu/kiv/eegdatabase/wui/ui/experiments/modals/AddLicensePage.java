@@ -54,7 +54,7 @@ public class AddLicensePage extends WebPage {
 
     @Override
     public void renderHead(IHeaderResponse response) {
-        response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
+        response.render(CssHeaderItem.forUrl("files/wizard-style.css"));
         super.renderHead(response);
     }
 
@@ -73,9 +73,6 @@ public class AddLicensePage extends WebPage {
 
         @SpringBean
         LicenseFacade licenseFacade;
-
-        /*@SpringBean
-        ExperimentLicenseFacade experimentLicenseFacade;*/
         
         private AjaxDropDownChoice<License> licenseChoice;
         private NumberTextField<BigDecimal> priceInput;
@@ -196,19 +193,6 @@ public class AddLicensePage extends WebPage {
             };
             
             licenseChoice = new AjaxDropDownChoice<License>("blueprintSelect", selectedBlueprintModel, blueprintsModel, new ChoiceRenderer<License>("title")) {
-                
-                /*@Override
-                protected void onConfigure() {
-                    super.onConfigure();
-                    boolean viz = false;
-                    if (blueprintsModel != null) {
-                        viz = blueprintsModel.getObject() != null ? !blueprintsModel.getObject().isEmpty() : false;
-                    }
-                    if (licenseModel.getObject() != null && licenseModel.getObject().getLicenseId() != 0) {
-                        viz = false;
-                    }
-                    this.setVisible(viz);
-                }*/
 
                 @Override
                 protected void onSelectionChangeAjaxified(AjaxRequestTarget target, final License option) {
@@ -220,16 +204,6 @@ public class AddLicensePage extends WebPage {
                         licenseDetails.setVisible(false);
                     } else {
                         priceInput.setEnabled(option.getLicenseType() == LicenseType.COMMERCIAL);
-                        
-                        /*License l = new License();
-                        l.setTitle(option.getTitle());
-                        l.setDescription(option.getDescription());
-                        l.setLicenseType(option.getLicenseType());
-                        l.setLink(option.getLink());
-                        l.setAttachmentFileName(option.getAttachmentFileName());
-                        l.setTemplate(false);
-                        l.setFileContentStream(null);*/
-                        
                         licenseDetails.setVisible(true);
                         licenseLink.setVisible(option.getLink() != null);
 
@@ -251,7 +225,6 @@ public class AddLicensePage extends WebPage {
                             downloadLink.setVisible(false);
                         }
                         
-                        //LicenseForm.this.getModelObject().setLicense(l);
                         LicenseForm.this.getModelObject().setLicense(option);
                         saveButton.setVisibilityAllowed(true);
                     }

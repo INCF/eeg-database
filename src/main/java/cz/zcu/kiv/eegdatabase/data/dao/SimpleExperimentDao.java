@@ -137,7 +137,8 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	public Experiment getExperimentForDetail(int experimentId) {
 		String query = "from Experiment e left join fetch e.dataFiles left join fetch e.hardwares left join fetch e.experimentOptParamVals left join fetch e.scenario "
 				+ "left join fetch e.weather left join fetch e.projectTypes left join fetch e.diseases left join fetch e.pharmaceuticals pharmaceuticals "
-				+ "left join fetch e.softwares left join fetch e.persons left join fetch e.experimentPackageConnections where e.experimentId = :experimentId";
+				+ "left join fetch e.softwares left join fetch e.persons left join fetch e.experimentPackageConnections left join fetch e.experimentLicences "
+				+ "where e.experimentId = :experimentId";
 		return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
 	}
 

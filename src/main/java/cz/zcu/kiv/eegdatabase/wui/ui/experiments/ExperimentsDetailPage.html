@@ -42,10 +42,6 @@ This file is part of the EEG-database project
           <td wicket:id="experimentId"></td>
         </tr>
         <tr>
-          <th><wicket:message key="label.price" /></th>
-          <td wicket:id="price"></td>
-        </tr>
-        <tr>
           <th><wicket:message key="label.beginningOfMeasuration" /></th>
           <td wicket:id="startTime"></td>
         </tr>
@@ -110,7 +106,7 @@ This file is part of the EEG-database project
               <th style="width: 250px;"><wicket:message key="dataTable.heading.title" /></th>
               <th style="width: 250px;"><wicket:message key="dataTable.heading.type" /></th>
               <th style="width: 250px;"><wicket:message key="dataTable.heading.price" /></th>
-              <th style="width: 250px;"><wicket:message key="dataTable.heading.attachmentFile" /></th>
+              <!-- <th style="width: 250px;"><wicket:message key="dataTable.heading.attachmentFile" /></th> -->
               <th>
                   <!-- column with link for detail -->
               </th>
@@ -120,10 +116,10 @@ This file is part of the EEG-database project
           </tr>
           </thead>
           <tr wicket:id="licenseList">
-              <td wicket:id="title"></td>
-              <td wicket:id="licenseType"></td>
+              <td wicket:id="license.title"></td>
+              <td wicket:id="license.licenseType"></td>
               <td wicket:id="price"></td>
-              <td wicket:id="attachmentFileName"></td>
+              <!-- <td wicket:id="license.attachmentFileName"></td> -->
               <td wicket:id="detail"></td>
               <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
 

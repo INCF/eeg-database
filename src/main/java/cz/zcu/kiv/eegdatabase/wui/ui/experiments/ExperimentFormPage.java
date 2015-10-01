@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.sql.Blob;
-import java.sql.SQLException;
 import java.util.*;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
@@ -44,11 +42,8 @@ import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
-import java.io.ByteArrayInputStream;
-
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
@@ -61,8 +56,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
-
-import javax.sql.rowset.serial.SerialBlob;
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentFormPage extends MenuPage {
@@ -140,16 +133,13 @@ public class ExperimentFormPage extends MenuPage {
                         return;
                     }
                     for (FileUpload fileUpload : fileUploadList) {
-
                         DataFile file = new DataFile();
                         file.setMimetype(fileUpload.getContentType());
                         file.setFilename(fileUpload.getClientFileName());
                         file.setFileContentStream(fileUpload.getInputStream());
                         files.add(file);
                     }
-
-                }
-                catch (Exception ex) {
+                } catch (Exception ex) {
                     error("File saving failed");
                     log.error(ex.getMessage(), ex);
                 }
@@ -157,47 +147,22 @@ public class ExperimentFormPage extends MenuPage {
                 Person logged = EEGDataBaseSession.get().getLoggedUser();
                 experiment.setPersonByOwnerId(logged);
 
+                // persist the experiment
                 Integer id = experiment.getExperimentId();
                 if (experiment.getExperimentId() != 0) {
                     facade.update(experiment);
-                }
-                else {
+                } else {
                     id = facade.create(experiment);
                 }
 
-                for (Map.Entry<Integer, ExperimentLicence> entry : EEGDataBaseSession.get().getCreateExperimentLicenseMap().entrySet()) {
-                    Integer licenseId = entry.getKey();
-                    ExperimentLicence expLic = entry.getValue();
-
-                    /*if (newLicense.getAttachmentFileName() != null) {
-                        //ByteArrayInputStream bis = new ByteArrayInputStream(licenseFacade.getLicenseAttachmentContent(licenseTemplateId));
-                        //newLicense.setFileContentStream(bis);
-
-                        try {
-                            Blob blob = null;
-                            blob = new SerialBlob(licenseFacade.getLicenseAttachmentContent(licenseId));
-                            newLicense.setAttachmentContent(blob);
-                        } catch (SQLException e) {
-                            e.printStackTrace();
-                        }
-
-                    }*/
-                    
-                    //licenseFacade.create(newLicense);
-                    
-                    //ExperimentLicence expLic = new ExperimentLicence();
-                    /*expLic.setExperiment(experiment);
-                    expLic.setLicense(newLicense);*/
+                // persist licenses
+                for (ExperimentLicence expLic : EEGDataBaseSession.get().getCreateExperimentLicenseMap().values()) {
+                    expLic.setExperiment(experiment);
                     experimentLicenseFacade.create(expLic);
-
-                    //newLicense.setFileContentStream(null);
                 }
-
                 EEGDataBaseSession.get().clearCreateExperimentLicenseMap();
 
-
-                Experiment read = facade.read(id);
-
+                // persist data files
                 for (DataFile file : files) {
                     file.setExperiment(experiment);
                     fileFacade.create(file);
@@ -229,14 +194,15 @@ public class ExperimentFormPage extends MenuPage {
         add(wizard);
     }
 
+    
     @Override
     public void renderHead(IHeaderResponse response) {
-        response.render(CssHeaderItem.forUrl("/files/wizard-style.css"));
+        response.render(CssHeaderItem.forUrl("files/wizard-style.css"));
         super.renderHead(response);
     }
 
+    
     private int parseParameters(PageParameters parameters) {
-
         StringValue value = parameters.get(BasePage.DEFAULT_PARAM_ID);
         if (value.isNull() || value.isEmpty())
             throw new RestartResponseAtInterceptPageException(EEGDataBaseApplication.get().getHomePage());

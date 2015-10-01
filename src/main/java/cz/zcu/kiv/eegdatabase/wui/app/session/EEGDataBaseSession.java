@@ -236,8 +236,8 @@ public class EEGDataBaseSession extends AuthenticatedWebSession {
     }
 
     public void addLicenseToCreateLicenseMap(Integer integer, ExperimentLicence experimentLicence) {
-        if (this.createExperimentLicenseMap.containsKey(integer))
-            return;
+        /*if (this.createExperimentLicenseMap.containsKey(integer))
+            return;*/
         this.createExperimentLicenseMap.put(integer, experimentLicence);
     }
 

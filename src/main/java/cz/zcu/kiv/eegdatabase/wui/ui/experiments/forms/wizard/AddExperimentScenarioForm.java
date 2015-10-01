@@ -370,6 +370,12 @@ public class AddExperimentScenarioForm extends WizardStep {
         if (model.getObject().getExperimentId() > 0) {
             // TODO kuba licence
             //licenses.addAll(licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId()));
+            /*String s = "\n*********************\n";
+            for (ExperimentLicence el : model.getObject().getExperimentLicences())
+                s += el.getLicense().getTitle() + ": " + el.getPrice() + "\n";
+            s += "\n*********************";
+            System.out.println(s);*/
+            licenses.addAll(model.getObject().getExperimentLicences());
         } else {
             // licenses are added using the modal window
         }
@@ -451,6 +457,9 @@ public class AddExperimentScenarioForm extends WizardStep {
                     /*licenses = licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId());
                     licenses.addAll(lics);
                     licenseList.setList(licenses);*/
+                    //licenses = new ArrayList<ExperimentLicence>(model.getObject().getExperimentLicences());
+                    //licenses.addAll(lics);
+                    licenseList.setList(licenses);
                 } else {
                     licenseList.setList(lics);
                 }
@@ -484,6 +493,8 @@ public class AddExperimentScenarioForm extends WizardStep {
                                         ExperimentLicence experimentLicense = experimentLicenseModel.getObject();
                                         if (model.getObject().getExperimentId() > 0) {
                                             experimentLicenseFacade.create(experimentLicense);
+                                            // TODO kuba neslo by to predelat a vzdy vkladat do createLicenseMap?
+                                            AddExperimentScenarioForm.this.licenses.add(experimentLicense);
                                         } else {
                                             EEGDataBaseSession.get().addLicenseToCreateLicenseMap(licenseId, experimentLicense);
                                         }
