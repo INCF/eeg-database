@@ -90,12 +90,14 @@ This file is part of the EEG-database project
         </tr>
       </table>
       
-      <h2>
-        <wicket:message key="label.metadata"></wicket:message>
-      </h2>
-      <div wicket:id="sections">
-        <div wicket:id="section"></div>
-      </div>
+      <wicket:enclosure child="sections">
+	      <h2>
+	        <wicket:message key="label.metadata"></wicket:message>
+	      </h2>
+	      <div wicket:id="sections">
+	        <div wicket:id="section"></div>
+	      </div>
+      </wicket:enclosure>
 
       <h2>
           <wicket:message key="dataTable.heading.licenses" />
@@ -118,7 +120,7 @@ This file is part of the EEG-database project
           <tr wicket:id="licenseList">
               <td wicket:id="license.title"></td>
               <td wicket:id="license.licenseType"></td>
-              <td wicket:id="price"></td>
+              <td><span wicket:id="price" /> <wicket:message key="label.price.currency" /></td>
               <!-- <td wicket:id="license.attachmentFileName"></td> -->
               <td wicket:id="detail"></td>
               <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>

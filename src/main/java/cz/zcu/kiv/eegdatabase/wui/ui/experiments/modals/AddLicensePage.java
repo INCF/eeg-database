@@ -4,6 +4,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.WicketUtils;
@@ -31,7 +32,9 @@ import org.apache.wicket.util.time.Duration;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by Lichous on 16.5.15.
@@ -188,7 +191,17 @@ public class AddLicensePage extends WebPage {
             final IModel<List<License>> blueprintsModel = new LoadableDetachableModel<List<License>>() {
                 @Override
                 protected List<License> load() {
-                    return licenseFacade.getLicenseTemplates();
+                    List<License> list = licenseFacade.getLicenseTemplates();
+                    
+                    // remove all currently assigned licenses
+                    Set<ExperimentLicence> expLics = getModelObject().getExperiment().getExperimentLicences();
+                    expLics.addAll(EEGDataBaseSession.get().getCreateExperimentLicenseMap().values());
+                    Set<License> activeLicenses = new HashSet<License>();
+                    for (ExperimentLicence e : expLics)
+                        activeLicenses.add(e.getLicense());
+                    list.removeAll(activeLicenses);
+                    
+                    return list;
                 }
             };
             

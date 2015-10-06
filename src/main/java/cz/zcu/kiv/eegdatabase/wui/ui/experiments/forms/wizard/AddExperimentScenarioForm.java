@@ -172,8 +172,7 @@ public class AddExperimentScenarioForm extends WizardStep {
         startDate.setOutputMarkupId(true);
         startDate.setRequired(true);
 
-        FormComponent component = (FormComponent) startDate.get("hours");
-        component.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+        startDate.get("hours").add(new AjaxFormComponentUpdatingBehavior("onchange") {
 
             private static final long serialVersionUID = 1L;
 
@@ -183,8 +182,7 @@ public class AddExperimentScenarioForm extends WizardStep {
             }
         });
 
-        FormComponent minutes = (FormComponent) startDate.get("minutes");
-        minutes.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+        startDate.get("minutes").add(new AjaxFormComponentUpdatingBehavior("onchange") {
 
             private static final long serialVersionUID = 1L;
 
@@ -194,8 +192,7 @@ public class AddExperimentScenarioForm extends WizardStep {
             }
         });
 
-        FormComponent date = (FormComponent) startDate.get("date");
-        date.add(new AjaxFormComponentUpdatingBehavior("onchange") {
+        startDate.get("date").add(new AjaxFormComponentUpdatingBehavior("onchange") {
 
             private static final long serialVersionUID = 1L;
 
@@ -367,18 +364,7 @@ public class AddExperimentScenarioForm extends WizardStep {
     
     @SuppressWarnings("serial")
     private void addLicenses() {
-        if (model.getObject().getExperimentId() > 0) {
-            // TODO kuba licence
-            //licenses.addAll(licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId()));
-            /*String s = "\n*********************\n";
-            for (ExperimentLicence el : model.getObject().getExperimentLicences())
-                s += el.getLicense().getTitle() + ": " + el.getPrice() + "\n";
-            s += "\n*********************";
-            System.out.println(s);*/
-            licenses.addAll(model.getObject().getExperimentLicences());
-        } else {
-            // licenses are added using the modal window
-        }
+        licenses.addAll(model.getObject().getExperimentLicences());
 
         licenseList = new ListView<ExperimentLicence>("licenses", licenses) {
             protected void populateItem(ListItem<ExperimentLicence> item) {
@@ -388,6 +374,7 @@ public class AddExperimentScenarioForm extends WizardStep {
                 item.add(new Label("type", experimentLicense.getLicense().getLicenseType().toString()));
             }
         };
+        
         licenseList.setViewSize(10);
         add(licenseList);
     }
@@ -451,18 +438,9 @@ public class AddExperimentScenarioForm extends WizardStep {
                 researchGroupChoice.setChoiceRenderer(groupRenderer);
                 researchGroupChoice.setChoices(groupChoices);
 
-                List<ExperimentLicence> lics = new ArrayList<ExperimentLicence>(EEGDataBaseSession.get().getCreateExperimentLicenseMap().values());
-                if (model.getObject().getExperimentId() > 0) {
-                    // TODO kuba licence: predelat fasadu na ExperimentLicense
-                    /*licenses = licenseFacade.getLicensesForExperiment(model.getObject().getExperimentId());
-                    licenses.addAll(lics);
-                    licenseList.setList(licenses);*/
-                    //licenses = new ArrayList<ExperimentLicence>(model.getObject().getExperimentLicences());
-                    //licenses.addAll(lics);
-                    licenseList.setList(licenses);
-                } else {
-                    licenseList.setList(lics);
-                }
+                licenses.clear();
+                licenses.addAll(model.getObject().getExperimentLicences());
+                licenses.addAll(EEGDataBaseSession.get().getCreateExperimentLicenseMap().values());
 
                 target.add(AddExperimentScenarioForm.this);
             }
@@ -491,13 +469,7 @@ public class AddExperimentScenarioForm extends WizardStep {
                                     @Override
                                     protected void onSubmitAction(IModel<ExperimentLicence> experimentLicenseModel, Integer licenseId, AjaxRequestTarget target, Form<?> form) {
                                         ExperimentLicence experimentLicense = experimentLicenseModel.getObject();
-                                        if (model.getObject().getExperimentId() > 0) {
-                                            experimentLicenseFacade.create(experimentLicense);
-                                            // TODO kuba neslo by to predelat a vzdy vkladat do createLicenseMap?
-                                            AddExperimentScenarioForm.this.licenses.add(experimentLicense);
-                                        } else {
-                                            EEGDataBaseSession.get().addLicenseToCreateLicenseMap(licenseId, experimentLicense);
-                                        }
+                                        EEGDataBaseSession.get().addLicenseToCreateLicenseMap(licenseId, experimentLicense);
                                         ModalWindow.closeCurrent(target);
                                     }
                                 };
@@ -552,7 +524,8 @@ public class AddExperimentScenarioForm extends WizardStep {
         }
     }
 
-    private FeedbackPanel createFeedbackForComponent(FormComponent component, String id) {
+    
+    private FeedbackPanel createFeedbackForComponent(FormComponent<?> component, String id) {
 
         ComponentFeedbackMessageFilter filter = new ComponentFeedbackMessageFilter(component);
         final FeedbackPanel feedback = new FeedbackPanel(id, filter);
@@ -560,6 +533,7 @@ public class AddExperimentScenarioForm extends WizardStep {
 
         return feedback;
     }
+    
     
     private class CustomGroupValidator implements IValidator<ResearchGroup> {
 
@@ -576,5 +550,6 @@ public class AddExperimentScenarioForm extends WizardStep {
         }
         
     }
+    
 
 }

@@ -152,6 +152,7 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
         
+        metadata.setVisible(metadata.getViewSize() > 0);
         add(metadata);
 
         PropertyListView<ExperimentLicence> licenseList = new PropertyListView<ExperimentLicence>("licenseList", new ListModel<ExperimentLicence>(new ArrayList<ExperimentLicence>(experiment.getExperimentLicences()))) {
