@@ -22,12 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.form;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
 import org.apache.wicket.markup.html.form.DropDownChoice;
 import org.apache.wicket.markup.html.form.FormComponentPanel;
@@ -46,10 +48,11 @@ import java.util.List;
  */
 public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
 
-    private TextField<String> surname;
+    private EducationLevelFacade educationLevelFacade;
 
-    public PersonFormPanel(String id, IModel<FullPersonDTO> model) throws IOException {
+    public PersonFormPanel(String id, IModel<FullPersonDTO> model, EducationLevelFacade educationLevelFacade) throws IOException {
         super(id, model);
+        this.educationLevelFacade = educationLevelFacade;
         init();
     }
 
@@ -61,7 +64,7 @@ public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
         name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
         add(name);
 
-        surname = new TextField<String>("surname");
+        TextField<String> surname = new TextField<String>("surname");
         surname.setLabel(ResourceUtils.getModel("general.surname"));
         surname.setRequired(true);
         surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
@@ -216,6 +219,21 @@ public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
         organizationType.setRequired(true);
         organizationType.setLabel(ResourceUtils.getModel("label.organizationType"));
         add(organizationType);
+
+        DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
+                new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(EducationLevel object) {
+                        return object.getEducationLevelId() + " " + super.getDisplayValue(object);
+                    }
+
+                });
+
+        educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
+        add(educationLevel);
     }
 
 
