@@ -18,89 +18,50 @@
  *
  *  ***********************************************************************************************************************
  *
- *   RegistrationForm.java, 2013/10/02 00:01 Jakub Rinkes
+ *   PersonFormPanel.java, 2015/10/07 00:01 Jan Stebetak
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.wui.ui.security;
+package cz.zcu.kiv.eegdatabase.wui.components.form;
 
-import com.octo.captcha.service.image.ImageCaptchaService;
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
-import org.apache.wicket.markup.html.form.*;
-import org.apache.wicket.markup.html.image.NonCachingImage;
-import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.markup.html.form.ChoiceRenderer;
+import org.apache.wicket.markup.html.form.DropDownChoice;
+import org.apache.wicket.markup.html.form.FormComponentPanel;
+import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
 import org.apache.wicket.validation.validator.PatternValidator;
-import org.apache.wicket.validation.validator.StringValidator;
-import org.joda.time.DateTime;
 
-import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 /**
- * Form for registration new user.
- *
- * @author Jakub Rinkes
- *
+ * Created by stebjan on 7.10.2015.
  */
-public class RegistrationForm extends Form<FullPersonDTO> {
+public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
 
-    private static final long serialVersionUID = 4973918066620014022L;
+    private TextField<String> surname;
 
-    @SpringBean
-    EducationLevelFacade educationLevelFacade;
+    public PersonFormPanel(String id, IModel<FullPersonDTO> model) throws IOException {
+        super(id, model);
+        init();
+    }
 
-    @SpringBean
-    PersonFacade personFacade;
 
-    @SpringBean
-    ImageCaptchaService captchaService;
-
-    private NonCachingImage captchaImage;
-
-    public RegistrationForm(String id, final FeedbackPanel feedback) throws IOException {
-        super(id, new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()));
-
-        EmailTextField email = new EmailTextField("email");
-        email.setLabel(ResourceUtils.getModel("general.email"));
-        email.setRequired(true);
-        add(email);
-
-        PasswordTextField password = new PasswordTextField("password");
-        password.setLabel(ResourceUtils.getModel("general.password"));
-        password.setRequired(true);
-        password.add(StringValidator.minimumLength(6));
-        add(password);
-
-        PasswordTextField passwordVerify = new PasswordTextField("passwordVerify");
-        passwordVerify.setLabel(ResourceUtils.getModel("general.password.verify"));
-        passwordVerify.setRequired(true);
-        passwordVerify.add(StringValidator.minimumLength(6));
-        add(passwordVerify);
-
-        TextField<String> name = new TextField<String>("name");
+    private void init() throws IOException {
+        TextField<String> name = new TextField<String>("givenname");
         name.setLabel(ResourceUtils.getModel("general.name"));
         name.setRequired(true);
         name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
         add(name);
 
-        TextField<String> surname = new TextField<String>("surname");
+        surname = new TextField<String>("surname");
         surname.setLabel(ResourceUtils.getModel("general.surname"));
         surname.setRequired(true);
         surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
@@ -118,7 +79,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         date.setLabel(ResourceUtils.getModel("general.dateofbirth"));
         //date.setRequired(true);
         add(date);
-
 
         TextField<String> address = new TextField<String>("address");
         address.setLabel(ResourceUtils.getModel("label.address"));
@@ -180,19 +140,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         VAT.setLabel(ResourceUtils.getModel("label.VAT"));
         add(VAT);
 
-        generateCaptchaImageAndPrepareValidation();
-        add(captchaImage);
-
-        TextField<String> controlText = new TextField<String>("controlText");
-        controlText.setLabel(ResourceUtils.getModel("general.controlText"));
-        controlText.setRequired(true);
-        add(controlText);
-
-//        RadioChoice<Gender> gender = new RadioChoice<Gender>("gender", Arrays.asList(Gender.values()), new EnumChoiceRenderer<Gender>());
-//        gender.setSuffix("\n");
-//        gender.setRequired(true);
-//        gender.setLabel(ResourceUtils.getModel("general.gender"));
-//        add(gender);
 
         List<String> listOfTitles = new ArrayList<String>();
         listOfTitles.add("Mr.");
@@ -250,21 +197,6 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         orgCountry.setLabel(ResourceUtils.getModel("label.country"));
         add(orgCountry);
 
-        DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationLevelFacade.getAllRecords(),
-                new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
-
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public Object getDisplayValue(EducationLevel object) {
-                        return object.getEducationLevelId() + " " + super.getDisplayValue(object);
-                    }
-
-                });
-
-        educationLevel.setLabel(ResourceUtils.getModel("general.educationlevel"));
-        add(educationLevel);
-
         List<String> listOfOrgTypes = new ArrayList<String>();
         listOfOrgTypes.add("Commercial");
         listOfOrgTypes.add("Non-Commercial");
@@ -284,81 +216,14 @@ public class RegistrationForm extends Form<FullPersonDTO> {
         organizationType.setRequired(true);
         organizationType.setLabel(ResourceUtils.getModel("label.organizationType"));
         add(organizationType);
-
-
-        SubmitLink submit = new SubmitLink("submit", ResourceUtils.getModel("action.create.account")) {
-
-            private static final long serialVersionUID = 1L;
-
-//            @Override
-//            protected void onError(AjaxRequestTarget target, Form<?> form) {
-//                target.add(feedback);
-//            }
-
-            @Override
-            public void onSubmit() {
-
-                FullPersonDTO user = RegistrationForm.this.getModelObject();
-                // validate captcha via service
-                if (captchaService.validateResponseForID(user.getCaptcha(), user.getControlText())) {
-
-                    user.setRegistrationDate(new DateTime());
-                    if (validation(user)) {
-                        personFacade.create(new PersonMapper().convertToEntity(user, new Person()));
-                        setResponsePage(ConfirmPage.class, PageParametersUtils.getPageParameters(ConfirmPage.EMAIL, user.getEmail()));
-                    }
-                    // if captcha is valid but other validation fail - generate new captcha
-                    generateCaptchaImageAndPrepareValidation();
-                } else {
-                    error(ResourceUtils.getString("general.error.registration.captchaInvalid"));
-                    generateCaptchaImageAndPrepareValidation();
-                }
-                //target.add(captchaImage);
-                //target.add(feedback);
-            }
-        };
-        add(submit);
     }
 
-    private void generateCaptchaImageAndPrepareValidation() {
 
-        // TODO create own captcha component with using this captcha service.
-        String captcha = StringUtils.getCaptchaString();
-        getModelObject().setCaptcha(captcha);
+    @Override
+    protected void convertInput() {
 
-        BufferedImage image = captchaService.getImageChallengeForID(captcha, getLocale());
-        BufferedDynamicImageResource res = new BufferedDynamicImageResource();
-        res.setImage(image);
-
-        if(captchaImage == null)
-            captchaImage = new NonCachingImage("captchaImage", res);
-        else
-            captchaImage.setImageResource(res);
-
-        captchaImage.setOutputMarkupId(true);
+        this.setConvertedInput(this.getModelObject());
+        //System.out.println(this.getModelObject().getSurname());
 
     }
-
-    private boolean validation(FullPersonDTO user) {
-
-        boolean validate = true;
-
-        if (personFacade.usernameExists(user.getEmail())) {
-            error(ResourceUtils.getString("inUse.email"));
-            validate = false;
-        }
-
-        if (user.getDateOfBirth().getTime() >= new Date().getTime()) {
-            error(ResourceUtils.getString("invalid.dateOfBirth"));
-            validate = false;
-        }
-
-        if (!user.isPasswordValid()) {
-            error(ResourceUtils.getString("invalid.passwordMatch"));
-            validate = false;
-        }
-
-        return validate;
-    }
-
 }
