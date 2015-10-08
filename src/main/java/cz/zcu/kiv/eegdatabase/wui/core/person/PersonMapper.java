@@ -25,6 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.components.RegistrationObject;
 import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
@@ -38,7 +39,7 @@ public class PersonMapper {
         dto.setName(person.getGivenname());
         dto.setSurname(person.getSurname());
         dto.setDateOfBirth(person.getDateOfBirth() == null ? null : person.getDateOfBirth());
-        dto.setEmail(person.getUsername().toLowerCase());
+        //dto.setEmail(person.getUsername().toLowerCase());
         dto.setUsername(person.getUsername());
         dto.setGender(Gender.getGenderByShortcut(person.getGender()));
         dto.setConfirmed(person.isConfirmed());
@@ -51,20 +52,22 @@ public class PersonMapper {
         return dto;
     }
 
-    public Person convertToEntity(FullPersonDTO dto, Person person) {
+    public Person convertToEntity(RegistrationObject reg, Person person) {
+
+        FullPersonDTO dto = reg.getPanelPerson();
 
         person.setPersonId(dto.getId());
         person.setGivenname(dto.getName());
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
-        person.setUsername(dto.getEmail().toLowerCase());
-        person.setEmail(dto.getEmail().toLowerCase());
+        person.setUsername(reg.getEmail().toLowerCase());
+        person.setEmail(reg.getEmail().toLowerCase());
         //person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
-        person.setPassword(dto.getPassword());
+        person.setPassword(reg.getPassword());
         person.setEducationLevel(dto.getEducationLevel());
 
         person.setTitle(dto.getTitle());

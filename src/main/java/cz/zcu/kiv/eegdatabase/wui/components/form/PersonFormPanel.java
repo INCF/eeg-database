@@ -58,7 +58,7 @@ public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
 
 
     private void init() throws IOException {
-        TextField<String> name = new TextField<String>("givenname");
+        TextField<String> name = new TextField<String>("name");
         name.setLabel(ResourceUtils.getModel("general.name"));
         name.setRequired(true);
         name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));

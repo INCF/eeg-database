@@ -24,15 +24,20 @@ package cz.zcu.kiv.eegdatabase.wui.ui.security.components;
 
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 
+import java.io.Serializable;
+
 /**
  * Created by stebjan on 7.10.2015.
  */
-public class RegistrationObject {
+public class RegistrationObject implements Serializable {
 
+    private String email;
     private String password;
     private String passwordVerify;
     private String username;
     private FullPersonDTO panelPerson;
+    private String captcha;
+    private String controlText;
 
     public String getPassword() {
         return password;
@@ -64,5 +69,38 @@ public class RegistrationObject {
 
     public void setPanelPerson(FullPersonDTO panelPerson) {
         this.panelPerson = panelPerson;
+    }
+
+
+    public String getCaptcha() {
+        return captcha;
+    }
+
+    public void setCaptcha(String captcha) {
+        this.captcha = captcha;
+    }
+
+    public boolean isCaptchaValid() {
+        return captcha.equals(controlText);
+    }
+
+    public String getControlText() {
+        return controlText;
+    }
+
+    public void setControlText(String controlText) {
+        this.controlText = controlText;
+    }
+
+    public boolean isPasswordValid() {
+        return password.equals(passwordVerify);
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 }

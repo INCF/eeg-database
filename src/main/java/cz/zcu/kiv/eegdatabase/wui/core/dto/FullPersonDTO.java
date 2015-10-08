@@ -32,7 +32,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 /**
- * Object used for registration. Help with validation and prepared data for creating user.
+ * Object used for PersonFormPanel that is put into registration form, add/edit person, and account management.
  * 
  * @author Jakub Rinkes
  *
@@ -46,12 +46,10 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
     private Timestamp dateOfBirth;
     private Gender gender;
     private String username;
-    private String email;
-    private String password;
-    private String passwordVerify;
+
     private EducationLevel educationLevel;
-    private String controlText;
-    private String captcha;
+
+
     private boolean confirmed;
     private DateTime registrationDate;
     private char laterality;
@@ -176,30 +174,6 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         this.gender = gender;
     }
 
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getPasswordVerify() {
-        return passwordVerify;
-    }
-
-    public void setPasswordVerify(String passwordVerify) {
-        this.passwordVerify = passwordVerify;
-    }
-
     public EducationLevel getEducationLevel() {
         return educationLevel;
     }
@@ -208,34 +182,11 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         this.educationLevel = educationLevel;
     }
 
-    public String getControlText() {
-        return controlText;
-    }
-
-    public void setControlText(String controlText) {
-        this.controlText = controlText;
-    }
-
-    public String getCaptcha() {
-        return captcha;
-    }
-
-    public void setCaptcha(String captcha) {
-        this.captcha = captcha;
-    }
-
     @Override
     public String toString() {
         return ReflectionToStringBuilder.toString(this);
     }
 
-    public boolean isPasswordValid() {
-        return password.equals(passwordVerify);
-    }
-
-    public boolean isCaptchaValid() {
-        return captcha.equals(controlText);
-    }
 
     public boolean isConfirmed() {
         return confirmed;
