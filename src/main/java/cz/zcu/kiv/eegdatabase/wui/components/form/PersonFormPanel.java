@@ -40,17 +40,18 @@ import org.apache.wicket.validation.validator.PatternValidator;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by stebjan on 7.10.2015.
  */
-public class PersonFormPanel extends FormComponentPanel<FullPersonDTO> {
+public class PersonFormPanel<T extends Serializable> extends FormComponentPanel<T> {
 
     private EducationLevelFacade educationLevelFacade;
 
-    public PersonFormPanel(String id, IModel<FullPersonDTO> model, EducationLevelFacade educationLevelFacade) throws IOException {
+    public PersonFormPanel(String id, IModel<T> model, EducationLevelFacade educationLevelFacade) throws IOException {
         super(id, model);
         this.educationLevelFacade = educationLevelFacade;
         init();

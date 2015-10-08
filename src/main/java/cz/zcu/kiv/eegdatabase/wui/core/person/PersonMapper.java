@@ -55,19 +55,29 @@ public class PersonMapper {
     public Person convertToEntity(RegistrationObject reg, Person person) {
 
         FullPersonDTO dto = reg.getPanelPerson();
+        person = convertToEntity(dto, person);
 
+        person.setUsername(reg.getEmail().toLowerCase());
+        person.setEmail(reg.getEmail().toLowerCase());
+        //person.setGender(dto.getGender().getShortcut());
+
+        person.setPassword(reg.getPassword());
+
+        return person;
+    }
+
+    public Person convertToEntity(FullPersonDTO dto, Person person) {
         person.setPersonId(dto.getId());
         person.setGivenname(dto.getName());
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
-        person.setUsername(reg.getEmail().toLowerCase());
-        person.setEmail(reg.getEmail().toLowerCase());
+
         //person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
-        person.setPassword(reg.getPassword());
+
         person.setEducationLevel(dto.getEducationLevel());
 
         person.setTitle(dto.getTitle());
@@ -98,5 +108,6 @@ public class PersonMapper {
 
 
         return person;
+
     }
 }

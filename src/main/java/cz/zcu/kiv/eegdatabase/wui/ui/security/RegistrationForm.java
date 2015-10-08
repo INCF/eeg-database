@@ -76,7 +76,7 @@ public class RegistrationForm extends Form<RegistrationObject> {
 
     private NonCachingImage captchaImage;
 
-    private PersonFormPanel panelPerson;
+    private PersonFormPanel<FullPersonDTO> panelPerson;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) throws IOException {
         super(id, new CompoundPropertyModel<RegistrationObject>(new RegistrationObject()));
@@ -98,7 +98,7 @@ public class RegistrationForm extends Form<RegistrationObject> {
         passwordVerify.add(StringValidator.minimumLength(6));
         add(passwordVerify);
 
-        add(panelPerson = new PersonFormPanel("panelPerson",new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()), educationLevelFacade));
+        add(panelPerson = new PersonFormPanel<FullPersonDTO>("panelPerson",new CompoundPropertyModel<FullPersonDTO>(new FullPersonDTO()), educationLevelFacade));
 
 //        TextField<String> name = new TextField<String>("name");
 //        name.setLabel(ResourceUtils.getModel("general.name"));
