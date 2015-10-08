@@ -27,16 +27,11 @@ This file is part of the EEG-database project
 	<body>
 	<wicket:panel>
 		<form wicket:id="form" class="standardInputForm">
+		
 			<wicket:enclosure>
 				<label class="selectBoxLabel"><wicket:message key="label.license.blueprint" /></label>
 				<select class="selectBox" wicket:id="blueprintSelect"></select>
 			</wicket:enclosure>
-
-			<div class="itemBox">
-				<label class="textFieldLabel" wicket:id="title.label"/>
-				<input class="textField" wicket:id="title"/>
-				<div wicket:id="title.feedback"/>
-			</div>
 
 			<div class="itemBox">
 				<label class="textFieldLabel" wicket:id="price.label"/>
@@ -44,6 +39,14 @@ This file is part of the EEG-database project
 				<wicket:message key="label.price.currency"/>
 				<div wicket:id="price.feedback"/>
 			</div>
+			
+			<!-- 
+			<div class="itemBox">
+				<label class="textFieldLabel" wicket:id="title.label"/>
+				<input class="textField" wicket:id="title"/>
+				<div wicket:id="title.feedback"/>
+			</div>
+
 
 			<div class="itemBox">
 				<label class="textFieldLabel" wicket:id="licenseType.label"/>
@@ -73,6 +76,8 @@ This file is part of the EEG-database project
             </wicket:enclosure>
             </div>
             <hr>
+            -->
+            
             <!--
 			<div class="itemBox">
 				<label class="textFieldLabel" wicket:message="value:label.license.attachment.file"/>
@@ -80,13 +85,43 @@ This file is part of the EEG-database project
 			</div>
             -->
 
-
-
 			<div class="itemBox">
 				<input type="submit" wicket:id="submitButton" class="lightButtonLink" />
 				<input type="submit" wicket:id="cancelButton" class="lightButtonLink" />
-				<input type="submit" wicket:id="removeButton" class="lightButtonLink" />
+				<!-- <input type="submit" wicket:id="removeButton" class="lightButtonLink" /> -->
 			</div>
+			
+			<div wicket:id="licenseDetails" id="license-details">
+	            <br><hr>
+	            <h3>License details</h3>
+	            <table>
+	                <tr>
+	                    <th><wicket:message key="label.title" /></th>
+	                    <td wicket:id="title"></td>
+	                </tr>
+	                <tr>
+	                    <th><wicket:message key="label.type" /></th>
+	                    <td wicket:id="type"></td>
+	                </tr>
+	                <tr>
+	                    <th><wicket:message key="label.description" /></th>
+	                    <td wicket:id="description"></td>
+	                </tr>
+	                <wicket:enclosure child="link">
+	                    <tr>
+	                        <th><wicket:message key="label.link" /></th>
+	                        <td><a wicket:id="link"></a></td>
+	                    </tr>
+	                </wicket:enclosure>
+	                <wicket:enclosure child="fileDownload">
+	                    <tr>
+	                        <th><wicket:message key="label.license.attachment.file" /></th>
+	                        <td><a href="#" wicket:id="fileDownload"><span wicket:id="fileName" /></a></td>
+	                    </tr>
+	                </wicket:enclosure>
+	            </table>
+            </div>
+            
 		</form>
 	</wicket:panel>
 </body>

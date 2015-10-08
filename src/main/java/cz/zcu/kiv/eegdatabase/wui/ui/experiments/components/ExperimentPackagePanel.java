@@ -66,11 +66,14 @@ import java.util.Iterator;
 import java.util.List;
 
 /**
- * Panel for experiment package management. Adding/removing experiments and
- * licenses.
  *
  * @author Jakub Danek
+ * 
+ *
  */
+//
+// TODO kuba licence (zobrazeni balicku na Experiments -> All experiments)
+//
 public class ExperimentPackagePanel extends Panel {
 
     private static final int EXPERIMENTS_PER_PAGE = 10;
@@ -144,7 +147,7 @@ public class ExperimentPackagePanel extends Panel {
 		header.setOutputMarkupId(true);
 		this.add(header);
 		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
-		header.add(new Label("researchGroupTitle", new PropertyModel(epModel, "researchGroup.title")));
+		//header.add(new Label("researchGroupTitle", new PropertyModel(epModel, "researchGroup.title")));
 		
 
 		WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {

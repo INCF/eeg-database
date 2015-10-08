@@ -100,6 +100,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 		WicketUtils.addLabelsAndFeedback(form);
 	}
 
+	
 	private void generateLicenseChoices() {
 		optionsModel = new ListModelWithResearchGroupCriteria<License>() {
 
@@ -114,6 +115,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 		((ListModelWithResearchGroupCriteria) optionsModel).setCriteriaModel(resGroupModel);
 	}
 
+	
 	private void addLicenseSelect() {
 		generateLicenseChoices();
 		licenseSelect = new DropDownChoice<License>("licensePolicy", licenseModel, optionsModel, new IChoiceRenderer<License>() {
@@ -133,13 +135,14 @@ public class ExperimentPackageDetailPanel extends Panel {
 		form.add(licenseSelect);
 	}
 
+	
 	/**
 	 * Add window which allows to add new license to the package.
 	 */
 	private void addLicenseAddWindow() {
 		addLicenseWindow = new ModalWindow("addLicenseWindow");
 		addLicenseWindow.setAutoSize(true);
-		addLicenseWindow.setResizable(false);
+		addLicenseWindow.setResizable(true);
 		addLicenseWindow.setMinimalWidth(600);
 		addLicenseWindow.setWidthUnit("px");
         addLicenseWindow.showUnloadConfirmation(false);
@@ -158,10 +161,11 @@ public class ExperimentPackageDetailPanel extends Panel {
 			}
 		};
 
-		licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), new Model<License>(new License()), blpModel, new Model<Boolean>(true)) {
+		licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), new Model<License>(new License()), blpModel) {
+		    
 			@Override
-			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
-				License obj = model.getObject();
+			protected void onSubmitAction(IModel<ExperimentPackageLicense> model, AjaxRequestTarget target, Form<?> form) {
+				License obj = model.getObject().getLicense();
 
                 if (obj.getLicenseId() == 0) {
                     obj.setTemplate(false);
@@ -178,15 +182,15 @@ public class ExperimentPackageDetailPanel extends Panel {
 			}
 
 			@Override
-			protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
+			protected void onCancelAction(IModel<ExperimentPackageLicense> model, AjaxRequestTarget target, Form<?> form) {
 				ModalWindow.closeCurrent(target);
 			}
 
-			@Override
+			/*@Override
 			protected void onConfigure() {
 				super.onConfigure();
 				this.licenseModel.setObject(new License());
-			}
+			}*/
 
 		}.setDisplayRemoveButton(false);
 
