@@ -27,6 +27,8 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -34,7 +36,6 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -57,7 +58,11 @@ public class ExperimentPackageLicense implements Serializable {
 	@ManyToOne
 	@JoinColumn(name = "LICENSE")
 	private License license;
+	
+	@Column(name = "PRICE", precision = 19, scale = 2)
+    private BigDecimal price;
 
+	
 	public int getExperimentPackageLicenseId() {
 		return experimentPackageLicenseId;
 	}
@@ -82,6 +87,13 @@ public class ExperimentPackageLicense implements Serializable {
 		this.license = license;
 	}
 	
+	public BigDecimal getPrice() {
+        return price;
+    }
+	
+	public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
 	
 	
 }
