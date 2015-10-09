@@ -69,7 +69,7 @@ public class RegistrationTestIT extends AbstractUITest {
 
     }
 
-    @Test(groups = "web")
+    @Test(groups = "web", enabled = false)
     public void testEmailFormat() {
 
         driver.findElement(By.linkText("Register")).click();
@@ -94,7 +94,7 @@ public class RegistrationTestIT extends AbstractUITest {
 
     }
 
-    @Test(groups = "web")
+    @Test(groups = "web", enabled = false)
     public void testPasswordVerification() {
 
         driver.findElement(By.linkText("Register")).click();
