@@ -28,14 +28,12 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.Laterality;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.FormComponentPanel;
-import org.apache.wicket.markup.html.form.TextField;
+import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.util.convert.IConverter;
+import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.validation.validator.PatternValidator;
 
 import java.io.File;
@@ -165,6 +163,23 @@ public class PersonFormPanel<T extends Serializable> extends FormComponentPanel<
         title.setRequired(true);
         title.setLabel(ResourceUtils.getModel("label.title"));
         add(title);
+
+        DropDownChoice<Character> laterality = new DropDownChoice<Character>("laterality", Laterality.getShortcutList(),
+                new ChoiceRenderer<Character>() {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Object getDisplayValue(Character object) {
+                        Laterality enumValue = Laterality.getLateralityByShortcut(object);
+                        return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
+                    }
+
+                });
+
+        laterality.setLabel(ResourceUtils.getModel("label.laterality"));
+        FormComponentLabel lateralityLabel = new FormComponentLabel("lateralityLb", laterality);
+        add(laterality, lateralityLabel);
 
         File file = ResourceUtils.getFile("countries.txt");
         List<String> countries = FileUtils.getFileLines(file);
