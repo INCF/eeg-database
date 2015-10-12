@@ -76,7 +76,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.assertTextPresent("Field 'Name' is required.");
         tester.assertTextPresent("Field 'Surname' is required.");
         tester.assertTextPresent("Field 'Date of birth' is required.");
-        tester.assertTextPresent("Field 'Gender' is required.");
+       // tester.assertTextPresent("Field 'Gender' is required.");
         tester.assertTextPresent("Field 'E-mail' is required.");
         //   tester.assertTextPresent("Field 'Education Level' is required");  TODO need to be fixed in form
 
@@ -126,7 +126,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("givenname", "Test");
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2010");
-        tester.clickRadioOption("gender", "0");//"Male"
+       // tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
@@ -145,7 +145,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("givenname", "Test");
         tester.setTextField("surname", "Test");
         tester.setTextField("dateOfBirth", "10/10/2016"); //is in the future
-        tester.clickRadioOption("gender", "0");//"Male"
+       // tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "personAdded@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);

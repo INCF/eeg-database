@@ -23,12 +23,8 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.security;
 
 import com.octo.captcha.service.image.ImageCaptchaService;
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.form.PersonFormPanel;
-import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
@@ -36,24 +32,19 @@ import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonMapper;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.components.RegistrationObject;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.components.PersonFormObject;
 import org.apache.wicket.markup.html.form.*;
 import org.apache.wicket.markup.html.image.NonCachingImage;
 import org.apache.wicket.markup.html.image.resource.BufferedDynamicImageResource;
 import org.apache.wicket.markup.html.panel.FeedbackPanel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.joda.time.DateTime;
 
 import java.awt.image.BufferedImage;
-import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Date;
-import java.util.List;
 
 /**
  * Form for registration new user.
@@ -61,7 +52,7 @@ import java.util.List;
  * @author Jakub Rinkes
  *
  */
-public class RegistrationForm extends Form<RegistrationObject> {
+public class RegistrationForm extends Form<PersonFormObject> {
 
     private static final long serialVersionUID = 4973918066620014022L;
 
@@ -79,7 +70,7 @@ public class RegistrationForm extends Form<RegistrationObject> {
     private PersonFormPanel<FullPersonDTO> panelPerson;
 
     public RegistrationForm(String id, final FeedbackPanel feedback) throws IOException {
-        super(id, new CompoundPropertyModel<RegistrationObject>(new RegistrationObject()));
+        super(id, new CompoundPropertyModel<PersonFormObject>(new PersonFormObject()));
 
         EmailTextField email = new EmailTextField("email");
         email.setLabel(ResourceUtils.getModel("general.email"));
@@ -304,7 +295,7 @@ public class RegistrationForm extends Form<RegistrationObject> {
             @Override
             public void onSubmit() {
 
-                RegistrationObject user = RegistrationForm.this.getModelObject();
+                PersonFormObject user = RegistrationForm.this.getModelObject();
                 user.setPanelPerson(panelPerson.getModelObject());
                 // validate captcha via service
                 if (captchaService.validateResponseForID(user.getCaptcha(), user.getControlText())) {
@@ -346,7 +337,7 @@ public class RegistrationForm extends Form<RegistrationObject> {
 
     }
 
-    private boolean validation(RegistrationObject user) {
+    private boolean validation(PersonFormObject user) {
 
         boolean validate = true;
 

@@ -29,7 +29,7 @@ import java.io.Serializable;
 /**
  * Created by stebjan on 7.10.2015.
  */
-public class RegistrationObject implements Serializable {
+public class PersonFormObject implements Serializable {
 
     private String email;
     private String password;

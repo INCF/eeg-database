@@ -59,7 +59,7 @@ public class PersonFormPanel<T extends Serializable> extends FormComponentPanel<
 
 
     private void init() throws IOException {
-        TextField<String> name = new TextField<String>("name");
+        TextField<String> name = new TextField<String>("givenname"); //todo set it to givenname in the page and FullPersonTDO
         name.setLabel(ResourceUtils.getModel("general.name"));
         name.setRequired(true);
         name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));

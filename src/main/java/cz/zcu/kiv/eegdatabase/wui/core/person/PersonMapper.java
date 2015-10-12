@@ -25,7 +25,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
-import cz.zcu.kiv.eegdatabase.wui.ui.security.components.RegistrationObject;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.components.PersonFormObject;
 import org.joda.time.DateTime;
 
 import java.sql.Timestamp;
@@ -36,7 +36,7 @@ public class PersonMapper {
 
         FullPersonDTO dto = new FullPersonDTO();
         dto.setId(person.getPersonId());
-        dto.setName(person.getGivenname());
+        dto.setGivenname(person.getGivenname());
         dto.setSurname(person.getSurname());
         dto.setDateOfBirth(person.getDateOfBirth() == null ? null : person.getDateOfBirth());
         //dto.setEmail(person.getUsername().toLowerCase());
@@ -52,7 +52,7 @@ public class PersonMapper {
         return dto;
     }
 
-    public Person convertToEntity(RegistrationObject reg, Person person) {
+    public Person convertToEntity(PersonFormObject reg, Person person) {
 
         FullPersonDTO dto = reg.getPanelPerson();
         person = convertToEntity(dto, person);
@@ -68,7 +68,7 @@ public class PersonMapper {
 
     public Person convertToEntity(FullPersonDTO dto, Person person) {
         person.setPersonId(dto.getId());
-        person.setGivenname(dto.getName());
+        person.setGivenname(dto.getGivenname());
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
 

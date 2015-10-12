@@ -41,7 +41,7 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
 
     private static final long serialVersionUID = -5467478793603707659L;
 
-    private String name;
+    private String givenname;
     private String surname;
     private Timestamp dateOfBirth;
     private Gender gender;
@@ -78,12 +78,12 @@ public class FullPersonDTO extends IdentifiDTO implements Serializable {
         dateOfBirth = new Timestamp(new Date().getTime());
     }
 
-    public String getName() {
-        return name;
+    public String getGivenname() {
+        return givenname;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public void setGivenname(String givenname) {
+        this.givenname = givenname;
     }
 
     public String getTitle() {

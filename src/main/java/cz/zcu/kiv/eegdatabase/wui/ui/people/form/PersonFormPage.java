@@ -22,6 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.people.form;
 
+import cz.zcu.kiv.eegdatabase.wui.components.form.PersonFormPanel;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -67,6 +68,8 @@ import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
 
+import java.io.IOException;
+
 /**
  * Page add / edit action of person.
  * 
@@ -87,7 +90,7 @@ public class PersonFormPage extends MenuPage {
     @SpringBean
     SecurityFacade securityFacade;
 
-    public PersonFormPage() {
+    public PersonFormPage() throws IOException {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.addPerson"));
         add(new Label("title", ResourceUtils.getModel("pageTitle.addPerson")));
@@ -97,7 +100,7 @@ public class PersonFormPage extends MenuPage {
         add(new PersonForm("form", new Model<Person>(new Person()), educationFacade, facade, getFeedback()));
     }
 
-    public PersonFormPage(PageParameters parameters) {
+    public PersonFormPage(PageParameters parameters) throws IOException {
 
         StringValue paramId = parameters.get(DEFAULT_PARAM_ID);
 
@@ -122,104 +125,11 @@ public class PersonFormPage extends MenuPage {
 
         private static final long serialVersionUID = 1L;
 
-        public PersonForm(String id, IModel<Person> model, final EducationLevelFacade educationFacade, final PersonFacade personFacade, final FeedbackPanel feedback) {
+        public PersonForm(String id, IModel<Person> model, final EducationLevelFacade educationFacade, final PersonFacade personFacade, final FeedbackPanel feedback) throws IOException {
             super(id, new CompoundPropertyModel<Person>(model));
 
-            TextField<String> name = new TextField<String>("givenname");
-            name.setLabel(ResourceUtils.getModel("label.name"));
-            name.setRequired(true);
-            name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-            FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
-            add(name, nameLabel);
-
-            TextField<String> surname = new TextField<String>("surname");
-            surname.setLabel(ResourceUtils.getModel("label.surname"));
-            surname.setRequired(true);
-            surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-            FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
-            add(surname, surnameLabel);
-
-            DateTimeFieldPicker date = new DateTimeFieldPicker("dateOfBirth") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public <C> IConverter<C> getConverter(Class<C> type) {
-                    return (IConverter<C>) new TimestampConverter();
-                }
-            };
-
-            date.setLabel(ResourceUtils.getModel("label.dateOfBirth"));
-            date.setRequired(true);
-            FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
-            add(date, dateLabel);
-
-            EmailTextField email = new EmailTextField("username");
-            email.setLabel(ResourceUtils.getModel("label.email"));
-            email.setRequired(true);
-            FormComponentLabel emailLabel = new FormComponentLabel("emailLb", email);
-            add(email, emailLabel);
-
-            TextField<String> phoneNumber = new TextField<String>("phoneNumber");
-            phoneNumber.setLabel(ResourceUtils.getModel("label.phoneNumber"));
-            FormComponentLabel phoneNumberLabel = new FormComponentLabel("phoneNumberLb", phoneNumber);
-            add(phoneNumber, phoneNumberLabel);
-
-            RadioChoice<Character> gender = new RadioChoice<Character>("gender", Gender.getShortcutList(), new ChoiceRenderer<Character>() {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public Object getDisplayValue(Character object) {
-                    Gender enumValue = Gender.getGenderByShortcut(object);
-                    return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
-                }
-
-            });
-            gender.setSuffix("\n");
-            gender.setRequired(true);
-            gender.setLabel(ResourceUtils.getModel("label.gender"));
-            FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
-            add(gender, genderLabel);
-
-            TextArea<String> note = new TextArea<String>("note");
-            note.setLabel(ResourceUtils.getModel("label.note"));
-            note.add(StringValidator.maximumLength(255));
-            FormComponentLabel noteLabel = new FormComponentLabel("noteLb", note);
-            add(note, noteLabel);
-
-            DropDownChoice<Character> laterality = new DropDownChoice<Character>("laterality", Laterality.getShortcutList(),
-                    new ChoiceRenderer<Character>() {
-
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public Object getDisplayValue(Character object) {
-                            Laterality enumValue = Laterality.getLateralityByShortcut(object);
-                            return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
-                        }
-
-                    });
-
-            laterality.setLabel(ResourceUtils.getModel("label.laterality"));
-            FormComponentLabel lateralityLabel = new FormComponentLabel("lateralityLb", laterality);
-            add(laterality, lateralityLabel);
-
-            DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationFacade.getAllRecords(),
-                    new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
-
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public Object getDisplayValue(EducationLevel object) {
-                            return object.getEducationLevelId() + " " + super.getDisplayValue(object);
-                        }
-
-                    });
-
-            educationLevel.setLabel(ResourceUtils.getModel("label.educationLevel"));
-            FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
-            add(educationLevel, educationLevelLabel);
+            final PersonFormPanel<Person> panelPerson = new PersonFormPanel<Person>("panelPerson", model, educationFacade);
+            add(panelPerson);
 
             AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.save"), this) {
 
@@ -232,7 +142,8 @@ public class PersonFormPage extends MenuPage {
 
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    Person user = PersonForm.this.getModelObject();
+                    Person user = panelPerson.getModelObject();
+                    System.out.println(user.getCountry());
                     user.setEmail(user.getUsername().toLowerCase());
                     boolean isEdit = user.getPersonId() > 0;
 
