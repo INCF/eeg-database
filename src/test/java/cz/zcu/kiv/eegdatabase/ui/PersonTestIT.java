@@ -107,12 +107,6 @@ public class PersonTestIT extends AbstractUITest{
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
-        tester.setTextField("username", "xxx@xxx.com");
-        tester.clickButtonWithText(getProperty("button.save"));
-        Thread.sleep(waitForAjax);
-
-        tester.assertTextNotPresent("'E-mail'" + getProperty("EmailAddressValidator"));
-
 
         tester.clickLinkWithText(getProperty("action.logout"));
 
