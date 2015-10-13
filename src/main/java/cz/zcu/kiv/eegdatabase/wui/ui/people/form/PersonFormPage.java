@@ -52,6 +52,8 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
 import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Page add / edit action of person.
@@ -79,8 +81,10 @@ public class PersonFormPage extends MenuPage {
         add(new Label("title", ResourceUtils.getModel("pageTitle.addPerson")));
 
         add(new ButtonPageMenu("leftMenu", PersonPageLeftMenu.values()));
+        Person person = new Person();
+        person.setDateOfBirth(new Timestamp(new Date().getTime()));
 
-        add(new PersonForm("form", new Model<Person>(new Person()), educationFacade, facade, getFeedback()));
+        add(new PersonForm("form", new Model<Person>(person), educationFacade, facade, getFeedback()));
     }
 
     public PersonFormPage(PageParameters parameters) throws IOException {
@@ -132,7 +136,7 @@ public class PersonFormPage extends MenuPage {
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
                     Person user = panelPerson.getModelObject();
-                    System.out.println(user.getCountry());
+                    user.setUsername(PersonForm.this.getModelObject().getUsername());
                     user.setEmail(user.getUsername().toLowerCase());
                     boolean isEdit = user.getPersonId() > 0;
 
@@ -161,7 +165,8 @@ public class PersonFormPage extends MenuPage {
                 validate = false;
             }
 
-            if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
+            if
+                (user.getDateOfBirth() != null && user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
                 error(ResourceUtils.getString("invalid.dateOfBirth"));
                 validate = false;
             }
