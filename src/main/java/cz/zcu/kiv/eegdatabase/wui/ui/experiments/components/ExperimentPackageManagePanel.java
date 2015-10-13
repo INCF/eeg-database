@@ -107,7 +107,7 @@ public class ExperimentPackageManagePanel extends Panel {
 	/** List of experiments which can be added to the package */
 	private IModel<List<Experiment>> experimentsToAddModel;
 	
-	private IModel<List<License>> licenses;
+	//private IModel<List<License>> licenses;
 	
 	/**
 	 * Model of the viewLicenseWindow
@@ -262,7 +262,7 @@ public class ExperimentPackageManagePanel extends Panel {
 	 * @param cont container to add the list to
 	 */
 	private void addLicenseList(WebMarkupContainer cont) {
-		licenses = new LoadableDetachableModel<List<License>>() {
+	    /*IModel<List<License>> licenses = new LoadableDetachableModel<List<License>>() {
 			@Override
 			protected List<License> load() {
 				List<License> l = licenseFacade.getLicensesForPackage(epModel.getObject());
@@ -279,22 +279,40 @@ public class ExperimentPackageManagePanel extends Panel {
 
 				return l;
 			}
-		};
+		};*/
+		
+		IModel<List<ExperimentPackageLicense>> licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
+            @Override
+            protected List<ExperimentPackageLicense> load() {
+                List<ExperimentPackageLicense> list = experimentPackageLicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
 
-		ListView<License> view = new ListView<License>("licenseView", licenses) {
+                if (list.size() > 1) { //do not display owner license if there are others as well
+                    Iterator<ExperimentPackageLicense> it = list.iterator();
+                    while (it.hasNext()) {
+                        if (it.next().getLicense().getLicenseType() == LicenseType.OWNER) {
+                            it.remove();
+                            break;
+                        }
+                    }
+                }
+
+                return list;
+            }
+        };
+
+		ListView<ExperimentPackageLicense> view = new ListView<ExperimentPackageLicense>("licenseView", licenses) {
 			@Override
-			protected void populateItem(ListItem<License> item) {
-				AjaxLink<License> link = new AjaxLink<License>("licenseItem", item.getModel()) {
+			protected void populateItem(ListItem<ExperimentPackageLicense> item) {
+				AjaxLink<License> link = new AjaxLink<License>("licenseItem", new Model<License>(item.getModelObject().getLicense())) {
 					@Override
 					public void onClick(AjaxRequestTarget target) {
-
 						licenseModel.setObject(this.getModelObject());
                         viewLicenseWindow.show(target);
 					}
 				};
-
-                link.add(new Label("licenseItemLabel", new PropertyModel<String>(item.getModel(), "title")));
+                link.add(new Label("licenseItemLabel", new PropertyModel<String>(item.getModelObject().getLicense(), "title")));
 				item.add(link);
+				item.add(new Label("price", new Model<BigDecimal>(item.getModelObject().getPrice())));
 			}
 		};
 
@@ -318,7 +336,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		addLicenseWindow.setAutoSize(true);
 		addLicenseWindow.setResizable(false);
 		addLicenseWindow.setMinimalWidth(600);
-		addLicenseWindow.setMinimalHeight(600);
+		addLicenseWindow.setMinimalHeight(400);
 		addLicenseWindow.setWidthUnit("px");
         addLicenseWindow.showUnloadConfirmation(false);
 
@@ -352,8 +370,8 @@ public class ExperimentPackageManagePanel extends Panel {
             }
             
         };
+        
         addLicenseWindow.setContent(addLicenseForm);
-		
 		this.add(addLicenseWindow);
 	}
     
