@@ -22,20 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
-import java.math.BigDecimal;
-import java.util.Currency;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.convert.IConverter;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
@@ -52,6 +46,9 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
     private boolean isDownloadable = false;
 
     private ExperimentPackage experimentPck;
+    
+    private Link<Void> addToCartLink;
+    
 
     public ExperimentPackageBuyDownloadLinkPanel(String id, IModel<ExperimentPackage> model) {
         super(id);
@@ -69,7 +66,7 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             }
         });
         */
-        add(new Link<Void>("addToCartLink") {
+        addToCartLink = new Link<Void>("addToCartLink") {
 
             private static final long serialVersionUID = 1L;
 
@@ -83,7 +80,8 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             public boolean isVisible() {
                 return !inCart && !isDownloadable;
             }
-        });
+        };
+        add(addToCartLink);
 
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
 
@@ -108,20 +106,23 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             }
         };
         add(downloadLink);
-
     }
 
+    
     @Override
     protected void onConfigure() {
         inCart = inCart(experimentPck);
         isDownloadable = isDownloadable(experimentPck);
     }
 
+    
     private boolean isDownloadable(final ExperimentPackage experimentPck) {
         return EEGDataBaseSession.get().isExperimentPackagePurchased(experimentPck.getExperimentPackageId());
     }
 
+    
     private boolean inCart(final ExperimentPackage experimentPck) {
         return EEGDataBaseSession.get().getShoppingCart().isInCart(experimentPck);
     }
+    
 }

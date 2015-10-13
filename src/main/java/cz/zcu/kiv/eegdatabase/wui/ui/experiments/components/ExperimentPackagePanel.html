@@ -29,16 +29,16 @@ This file is part of the EEG-database project
       <h2 wicket:id="header" class="headerWithLinks">
 		<!-- <wicket:container wicket:id="packageTitle"/><br/> -->
 		<div>
-		    <!-- <wicket:message key="label.experimentsPackage"/>:  -->
+		    <span wicket:id="experimentPackageLabelCont">
+		        <wicket:message key="label.experimentsPackage"/>:
+		    </span>
 		    <span wicket:id="packageTitle"/>
 		</div>
-		<!-- <span class="subtitle" wicket:id="researchGroupTitle"/> -->
 		<div wicket:id="licensesCont">
 			<span class="subtitle"><wicket:message key="heading.license.list"/></span>
 			<select wicket:id="licenses"/>
-			<a href="#" wicket:id="buyLicense"><wicket:message key="link.license.buy"/></a>
+			<span wicket:id="priceCont" class="subtitle">Price: <span wicket:id="price" /> <wicket:message key="label.price.currency" /></span>
             <a href="#" wicket:id="viewLicenseLink"><wicket:message key="link.license.view"/></a>
-			
 		</div>
       </h2>
       <div wicket:id="buyDownloadLinkPanel"></div>

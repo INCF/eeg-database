@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -32,6 +33,7 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
@@ -80,10 +82,15 @@ public class ExperimentPackagePanel extends Panel {
 
     @SpringBean
     private ExperimentsFacade experimentsFacade;
+    
     @SpringBean
     private ExperimentPackageFacade experimentPackageFacade;
-	@SpringBean
+	
+    @SpringBean
 	private LicenseFacade licenseFacade;
+    
+    @SpringBean
+    private ExperimentPackageLicenseFacade experimentPackagelicenseFacade;
 
     /**
      * Main model of the component - experiment package
@@ -95,27 +102,24 @@ public class ExperimentPackagePanel extends Panel {
 	 */
     private IModel<List<Experiment>> experimentsModel;
 
-	private IModel<List<License>> licenses;
+	private IModel<List<ExperimentPackageLicense>> licenses;
 
 	/**
 	 * Model of the addLicenseWindow
 	 */
-	private IModel<License> licenseModel;
-
-	private List<License> ownedLicenses;
+	private IModel<ExperimentPackageLicense> licenseModel = new Model<ExperimentPackageLicense>();
 
     //containers
     private WebMarkupContainer experimentListCont;
     private WebMarkupContainer header, footer;
-	private Link<License> licenseBuyLink;
 	private DataTable<Experiment, String> table;
 
-	private boolean hasLicense = true;
 
     private ModalWindow viewLicenseWindow;
 
     private AjaxLink<License> viewLicenseLink;
 
+    
     /**
      *
      * @param id component id
@@ -125,9 +129,6 @@ public class ExperimentPackagePanel extends Panel {
 		super(id);
 
 		this.epModel = model;
-		this.licenseModel = new Model();
-		ownedLicenses = licenseFacade.getUsersLicenses(EEGDataBaseSession.get().getLoggedUser());
-
 		experimentListCont = new WebMarkupContainer("experimentListCont");
 		experimentListCont.setOutputMarkupPlaceholderTag(true);
 		this.add(experimentListCont);
@@ -135,10 +136,12 @@ public class ExperimentPackagePanel extends Panel {
 		this.addHeader();
 		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
+		
 		add(new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", epModel)
 		.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0)));
     }
 
+    
     /**
      * Add components header - title, controls
      */
@@ -146,11 +149,12 @@ public class ExperimentPackagePanel extends Panel {
 		header = new WebMarkupContainer("header");
 		header.setOutputMarkupId(true);
 		this.add(header);
-		header.add(new Label("packageTitle", new PropertyModel(epModel, "name")));
-		//header.add(new Label("researchGroupTitle", new PropertyModel(epModel, "researchGroup.title")));
 		
+		header.add(new WebMarkupContainer("experimentPackageLabelCont").setVisible(!(epModel.getObject().getExperimentPackageId() == 0)));
+		header.add(new Label("packageTitle", new PropertyModel<String>(epModel, "name")));		
 
-		WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {
+		@SuppressWarnings("serial")
+        WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {
 
 			@Override
 			protected void onConfigure() {
@@ -164,6 +168,7 @@ public class ExperimentPackagePanel extends Panel {
 		header.add(licenseCont);
     }
 
+    
 	private void addFooter() {
 		footer = new WebMarkupContainer("footer");
 		footer.setOutputMarkupId(true);
@@ -173,12 +178,14 @@ public class ExperimentPackagePanel extends Panel {
 		footer.add(createVisibilityLink("hideListLink", false));
 	}
 
+	
 	/**
 	 * Adds list of licenses attached to the package.
 	 *
 	 * @param cont container to add the list to
 	 */
-	private void addLicenseList(WebMarkupContainer cont ) {
+	@SuppressWarnings("serial")
+    private void addLicenseList(WebMarkupContainer cont ) {
 
         viewLicenseWindow = new ModalWindow("viewLicenseWindow");
         viewLicenseWindow.setAutoSize(true);
@@ -187,66 +194,52 @@ public class ExperimentPackagePanel extends Panel {
         viewLicenseWindow.setWidthUnit("px");
         viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
+        
+        final WebMarkupContainer priceCont = new WebMarkupContainer("priceCont") {
+            @Override
+            protected void onConfigure() {
+                super.onConfigure();
+                this.setVisible(licenseModel.getObject() != null);
+            }
+        };
+        priceCont.setOutputMarkupPlaceholderTag(true);
+        Label price = new Label("price", new PropertyModel<String>(licenseModel, "price"));
+        priceCont.add(price);
 	    
-		licenses = new LoadableDetachableModel<List<License>>() {
+		licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
 
 			@Override
-			protected List<License> load() {
-				List<License> l = licenseFacade.getLicensesForPackage(epModel.getObject());
+			protected List<ExperimentPackageLicense> load() {
+				List<ExperimentPackageLicense> list = experimentPackagelicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
 
-				if(l.size() > 1) { //do not display owner license if there are others as well
-					Iterator<License> it = l.iterator();
-					while(it.hasNext()) {
-						if(it.next().getLicenseType() == LicenseType.OWNER) {
+				if (list.size() > 1) { //do not display owner license if there are others as well
+					Iterator<ExperimentPackageLicense> it = list.iterator();
+					while (it.hasNext()) {
+						if (it.next().getLicense().getLicenseType() == LicenseType.OWNER) {
 							it.remove();
 							break;
 						}
 					}
 				}
 
-				return l;
+				return list;
 			}
 		};
 
-		AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("licenses", licenseModel, licenses, new ChoiceRenderer<License>("title", "licenseId")) {
+		AjaxDropDownChoice<ExperimentPackageLicense> ddc = new AjaxDropDownChoice<ExperimentPackageLicense>("licenses", licenseModel, licenses, new ChoiceRenderer<ExperimentPackageLicense>("license.title", "experimentPackageLicenseId")) {
 
 			@Override
-			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentPackageLicense option) {
 				super.onSelectionChangeAjaxified(target, option);
-
-				hasLicense = option == null ? true : ownedLicenses.contains(option);
-
-
-				target.add(licenseBuyLink);
 				target.add(viewLicenseLink);
+				target.add(priceCont);
 			}
 
 		};
-
-		licenseBuyLink = new Link<License>("buyLicense", licenseModel) {
-
-			@Override
-			public void onClick() {
-				License l = this.getModelObject();
-				if(l != null) {
-					PageParameters params = new PageParameters();
-					params.set(LicenseRequestPage.PARAM_LICENSE_ID, l.getLicenseId());
-					setResponsePage(LicenseRequestPage.class, params);
-				}
-			}
-
-			@Override
-			protected void onConfigure() {
-				super.onConfigure();
-				this.setVisible(!hasLicense);
-			}
-
-		};
-		licenseBuyLink.setOutputMarkupPlaceholderTag(true);
 		
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), new PropertyModel<License>(licenseModel, "license"), false));
         viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
-        viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
+        viewLicenseLink = new AjaxLink<License>("viewLicenseLink", new PropertyModel<License>(licenseModel, "license")) {
 
             private static final long serialVersionUID = 1L;
 
@@ -263,10 +256,10 @@ public class ExperimentPackagePanel extends Panel {
 
         };
         viewLicenseLink.setOutputMarkupPlaceholderTag(true);
-		
+
 		cont.add(ddc);
-		cont.add(licenseBuyLink);
 		cont.add(viewLicenseLink);
+		cont.add(priceCont);
 	}
 
 
@@ -310,6 +303,7 @@ public class ExperimentPackagePanel extends Panel {
 		return link;
     }
 
+    
     /**
      * Add view for the list of experiments to a container given
      * @param cont the container
@@ -336,6 +330,7 @@ public class ExperimentPackagePanel extends Panel {
 		cont.add(table);
     }
 
+    
     /**
      *
      * @return list of columns the table of experiments shall display
@@ -349,14 +344,16 @@ public class ExperimentPackagePanel extends Panel {
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
                 "personBySubjectPersonId.dateOfBirth", "yyyy"));
+        
 		// TODO service page missing.
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
+        /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                 item.add(new ViewLinkPanel(componentId, MethodListPage.class, "experimentId", rowModel, ResourceUtils.getModel("menuItem.services")));
             }
-        });
+        });*/
+        
 		columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.detail"), null, null) {
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
@@ -377,5 +374,6 @@ public class ExperimentPackagePanel extends Panel {
 
 		return columns;
     }
+    
 
 }

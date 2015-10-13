@@ -31,9 +31,7 @@ public class ViewLicensePanel extends Panel {
         super(id, new CompoundPropertyModel<License>(model));
         this.model = model;
 
-        // TODO kuba licence
         add(new Label("title"));
-        //add(new Label("price"));
         add(new Label("licenseType"));
         add(new MultiLineLabel("description"));
         add(new Label("attachmentFileName"));
