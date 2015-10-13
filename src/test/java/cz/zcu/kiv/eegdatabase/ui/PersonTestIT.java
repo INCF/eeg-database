@@ -69,7 +69,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("panelPerson:givenname", "");
         tester.setTextField("panelPerson:surname", "");
         tester.setTextField("panelPerson:dateOfBirth", "");
-        tester.setTextField("panelPerson:username", "");
+        tester.setTextField("username", "");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -93,19 +93,19 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("panelPerson:givenname", "Test");
         tester.setTextField("panelPerson:surname", "Test");
         tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
-        tester.setTextField("panelPerson:username", "xxx");
+        tester.setTextField("username", "xxx");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
-        tester.setTextField("panelPerson:username", "xxx@xxx");
+        tester.setTextField("username", "xxx@xxx");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
-        tester.setTextField("panelPerson:username", "xxx@xxx.com");
+        tester.setTextField("username", "xxx@xxx.com");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -127,7 +127,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("panelPerson:surname", "Test");
         tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
        // tester.clickRadioOption("gender", "0");//"Male"
-        tester.setTextField("panelPerson:username", "jan.stebetak2@seznam.cz");
+        tester.setTextField("username", "jan.stebetak2@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -146,7 +146,7 @@ public class PersonTestIT extends AbstractUITest{
         tester.setTextField("panelPerson:surname", "Test");
         tester.setTextField("panelPerson:dateOfBirth", "10/10/2016"); //is in the future
        // tester.clickRadioOption("gender", "0");//"Male"
-        tester.setTextField("panelPerson:username", "personAdded@seznam.cz");
+        tester.setTextField("username", "personAdded@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 

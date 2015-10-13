@@ -33,6 +33,14 @@ This file is part of the EEG-database project
 
       <form class="standardInputForm" wicket:id="form">
         <fieldset>
+            <h2>
+                <wicket:message key="label.myAccount"/>
+            </h2>
+            <div class="itemBox">
+                <label for="username" wicket:id="emailLb" class="textFieldLabel"> <wicket:message
+                        key="general.email">[email]</wicket:message> *</label> <input wicket:id="username"
+                        class="textField" type="email" />
+            </div>
 
             <span wicket:id="panelPerson"></span>
 
@@ -60,11 +68,7 @@ This file is part of the EEG-database project
                 <!--key="general.gender">[gender]</wicket:message></label> <span wicket:id="gender"></span>-->
           <!--</div>-->
 
-          <!--<div class="itemBox">-->
-            <!--<label for="username" wicket:id="emailLb" class="textFieldLabel"> <wicket:message-->
-                <!--key="general.email">[email]</wicket:message></label> <input wicket:id="username"-->
-              <!--class="textField" type="email" />-->
-          <!--</div>-->
+
           <!---->
           <!--<div class="itemBox">-->
                 <!--<label for="phoneNumber" wicket:id="phoneNumberLb" class="textFieldLabel"><wicket:message-->
