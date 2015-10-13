@@ -22,6 +22,9 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage;
 
+import java.util.List;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
@@ -31,5 +34,13 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
  * @author Jakub Danek
  */
 public interface ExperimentPackageLicenseService extends GenericService<ExperimentPackageLicense, Integer> {
+    
+    /**
+     * List all experiment package licenses for the given package.
+     *
+     * @param pckg the package
+     * @return list of experiment package licenses
+     */
+    public List<ExperimentPackageLicense> getExperimentPackageLicensesForPackage(ExperimentPackage pckg);
 
 }

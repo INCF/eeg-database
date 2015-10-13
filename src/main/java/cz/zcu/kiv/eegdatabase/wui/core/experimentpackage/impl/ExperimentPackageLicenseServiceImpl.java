@@ -22,8 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
+import java.util.List;
+
+import org.springframework.transaction.annotation.Transactional;
+
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
@@ -43,6 +47,13 @@ public class ExperimentPackageLicenseServiceImpl extends GenericServiceImpl<Expe
 
     public void setDao(ExperimentPackageLicenseDao dao) {
         this.dao = dao;
+    }
+
+    
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentPackageLicense> getExperimentPackageLicensesForPackage(ExperimentPackage pckg) {
+        return dao.readByParameter("experimentPackage.experimentPackageId", pckg.getExperimentPackageId());
     }
 
     
