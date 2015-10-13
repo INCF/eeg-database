@@ -66,10 +66,10 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "");
-        tester.setTextField("surname", "");
-        tester.setTextField("dateOfBirth", "");
-        tester.setTextField("username", "");
+        tester.setTextField("panelPerson:givenname", "");
+        tester.setTextField("panelPerson:surname", "");
+        tester.setTextField("panelPerson:dateOfBirth", "");
+        tester.setTextField("panelPerson:username", "");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -90,22 +90,22 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2010");
-        tester.setTextField("username", "xxx");
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
+        tester.setTextField("panelPerson:username", "xxx");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
-        tester.setTextField("username", "xxx@xxx");
+        tester.setTextField("panelPerson:username", "xxx@xxx");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
 
-        tester.setTextField("username", "xxx@xxx.com");
+        tester.setTextField("panelPerson:username", "xxx@xxx.com");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -123,11 +123,11 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2010");
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
        // tester.clickRadioOption("gender", "0");//"Male"
-        tester.setTextField("username", "jan.stebetak2@seznam.cz");
+        tester.setTextField("panelPerson:username", "jan.stebetak2@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
@@ -142,11 +142,11 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2016"); //is in the future
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2016"); //is in the future
        // tester.clickRadioOption("gender", "0");//"Male"
-        tester.setTextField("username", "personAdded@seznam.cz");
+        tester.setTextField("panelPerson:username", "personAdded@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
 
