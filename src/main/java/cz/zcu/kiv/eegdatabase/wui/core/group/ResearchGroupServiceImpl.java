@@ -237,12 +237,13 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
 
         preparedDefaultListsForNewGroup(group);
         
-        License privateLicense = new License();
+        // TODO kuba licence: owner license
+        /*License privateLicense = new License();
         privateLicense.setDescription("Default generated owner license");
         privateLicense.setTitle("Owner License");
         privateLicense.setLicenseType(LicenseType.OWNER);
         privateLicense.setResearchGroup(group);
-        licenseDao.create(privateLicense);
+        licenseDao.create(privateLicense);*/
 
         return groupId;
     }

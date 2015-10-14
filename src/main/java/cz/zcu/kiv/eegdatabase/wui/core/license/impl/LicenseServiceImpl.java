@@ -120,7 +120,9 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         this.checkLicenseGroupValidity(license, pack.getResearchGroup());
 
         License tmp;
-        if (license.isTemplate()) {
+        
+        // TODO kuba licence: templates
+        /*if (license.isTemplate()) {
             tmp = new License();
             tmp.copyFromTemplate(license);
         } else {
@@ -131,7 +133,9 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
             tmp.setResearchGroup(pack.getResearchGroup());
             int res = this.licenseDao.create(tmp);
             tmp.setLicenseId(res);
-        }
+        }*/
+        tmp = license;
+        
         ExperimentPackageLicense conn = new ExperimentPackageLicense();
         conn.setExperimentPackage(pack);
         conn.setLicense(tmp);
@@ -201,7 +205,8 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Transactional(readOnly = true)
     public List<License> getLicenseTemplates() {
         Map<String, Object> params = new HashMap<String, Object>();
-        params.put("template", true);
+        // TODO kuba licence
+        //params.put("template", true);
         return this.licenseDao.readByParameter(params);
     }
 

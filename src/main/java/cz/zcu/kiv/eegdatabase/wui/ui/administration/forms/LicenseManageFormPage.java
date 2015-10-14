@@ -5,7 +5,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
@@ -29,11 +28,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
 import org.apache.wicket.util.string.StringValue;
-import org.apache.wicket.validation.validator.PatternValidator;
 import org.apache.wicket.validation.validator.StringValidator;
 import org.apache.wicket.validation.validator.UrlValidator;
-import org.apache.xalan.xsltc.compiler.Pattern;
-
 import java.io.IOException;
 
 /**
@@ -142,9 +138,7 @@ public class LicenseManageFormPage extends MenuPage {
                     }
 
                     if (license.getLicenseId() == 0) {
-                        license.setTemplate(true);
                         licenseFacade.create(license);
-
                     } else {
                         if (uploadedFile == null) {
                             license.setAttachmentFileName(licenseFacade.read(license.getLicenseId()).getAttachmentFileName());

@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-
 import java.io.InputStream;
 import java.io.Serializable;
 import java.sql.Blob;
@@ -33,9 +32,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
@@ -43,6 +40,7 @@ import javax.persistence.Transient;
 /**
  *
  * @author bydga
+ * @author Jakub Krauz
  */
 @Entity
 @Table(name="LICENSE")
@@ -52,32 +50,17 @@ public class License implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Column(name = "LICENSE_ID")
     private int licenseId;
-
-	@ManyToOne
-	@JoinColumn(name = "RESEARCH_GROUP_ID")
-    private ResearchGroup researchGroup;
 	
     @Column(name = "TITLE")
     private String title;
 	
     @Column(name = "DESCRIPTION")
     private String description;
-    @OneToMany(mappedBy = "license")
-    private Set<PersonalLicense> personalLicenses;
-
-    @OneToMany(mappedBy = "license")
-    private Set<ExperimentPackageLicense> experimentPackageLicenses;
-
-    @OneToMany(mappedBy = "license")
-    private Set<ExperimentLicence> experimentLicences;
-
+    
     @Column(name = "LICENSE_TYPE" )
     private LicenseType licenseType;
-
-	@Column(name = "IS_TEMPLATE")
-	private boolean template;
-	
-	@Column(name = "ATTACHMENT_FILE_NAME")
+    
+    @Column(name = "ATTACHMENT_FILE_NAME")
     private String attachmentFileName;
     
     @Lob
@@ -89,7 +72,17 @@ public class License implements Serializable {
     
     @Column(name = "LINK")
     private String link;
+    
+    @OneToMany(mappedBy = "license")
+    private Set<PersonalLicense> personalLicenses;
 
+    @OneToMany(mappedBy = "license")
+    private Set<ExperimentPackageLicense> experimentPackageLicenses;
+
+    @OneToMany(mappedBy = "license")
+    private Set<ExperimentLicence> experimentLicences;
+
+    
 	public int getLicenseId() {
 		return licenseId;
 	}
@@ -124,18 +117,10 @@ public class License implements Serializable {
 	public Set<PersonalLicense> getPersonalLicenses() {
 		return personalLicenses;
     }
-	
-	public void setResearchGroup(ResearchGroup group) {
-		this.researchGroup = group;
-	}
 
 	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
 		this.personalLicenses = personalLicenses;
     }
-	
-	public ResearchGroup getResearchGroup() {
-		return this.researchGroup;
-	}
 
 	public Set<ExperimentPackageLicense> getExperimentPackageLicenses() {
 		return experimentPackageLicenses;
@@ -169,14 +154,6 @@ public class License implements Serializable {
         this.attachmentContent = attachmentContent;
     }
 
-	public boolean isTemplate() {
-		return template;
-	}
-
-	public void setTemplate(boolean template) {
-		this.template = template;
-	}
-
     public String getLink() {
         return link;
     }
@@ -198,7 +175,6 @@ public class License implements Serializable {
 		hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
 		hash = 79 * hash + (this.description != null ? this.description.hashCode() : 0);
 		hash = 79 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
-		hash = 79 * hash + (this.template ? 1 : 0);
 		hash = 79 * hash + (this.link != null ? this.link.hashCode() : 0);
 		return hash;
 	}
@@ -219,9 +195,6 @@ public class License implements Serializable {
 			return false;
 		}
 		if (this.licenseType != other.licenseType) {
-			return false;
-		}
-		if (this.template != other.template) {
 			return false;
 		}
 		if ((this.link == null) ? (other.link != null) : !this.link.equals(other.link)) {

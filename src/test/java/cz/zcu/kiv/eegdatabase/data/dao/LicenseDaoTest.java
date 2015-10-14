@@ -91,13 +91,11 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         researchGroup.setTitle("test-title");
         researchGroup.setPerson(person);
         researchGroupDao.create(researchGroup);
-        license.setResearchGroup(researchGroup);
         licenseDao.create(license);
         License license2 = new License();
         license2.setLicenseId(-231);
         license2.setTitle("title");
         license2.setLicenseType(LicenseType.COMMERCIAL);
-        license2.setResearchGroup(researchGroup);
         licenseDao.create(license2);
         assertEquals(count + 2, licenseDao.getCountRecords());
         assertEquals(count + 1, licenseDao.getLicensesByType(researchGroup.getResearchGroupId(), LicenseType.COMMERCIAL).size());

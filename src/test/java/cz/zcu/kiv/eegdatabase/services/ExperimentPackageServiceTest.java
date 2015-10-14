@@ -24,8 +24,6 @@ package cz.zcu.kiv.eegdatabase.services;
 
 import static org.testng.Assert.assertEquals;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.ExperimentGenerator;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
@@ -101,11 +99,8 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        // TODO kuba licence test
-        //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
-        license.setResearchGroup(researchGroup);
         licenseDao.create(license);
     }
 

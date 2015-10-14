@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
@@ -72,8 +70,6 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        // TODO kuba licence test
-        //license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
         license.setLicenseType(LicenseType.OWNER);
     }
@@ -95,8 +91,6 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        // TODO kuba licence test
-        //newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseService.create(newLicense);
@@ -122,11 +116,8 @@ public class LicenseServiceTest extends AbstractServicesTest {
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        // TODO kuba licence test
-        //newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
         newLicense.setLicenseType(LicenseType.NON_COMMERCIAL);
-        newLicense.setResearchGroup(researchGroup);
         licenseService.create(newLicense);
 
         assertEquals(groupCount + 1, licenseService.getLicensesForGroup(researchGroup, LicenseType.NON_COMMERCIAL).size());
