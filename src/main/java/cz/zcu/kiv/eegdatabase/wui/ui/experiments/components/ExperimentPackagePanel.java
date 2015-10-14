@@ -335,6 +335,7 @@ public class ExperimentPackagePanel extends Panel {
      *
      * @return list of columns the table of experiments shall display
      */
+    @SuppressWarnings("serial")
     private List<? extends IColumn<Experiment, String>> createListColumns() {
 		List<IColumn<Experiment, String>> columns = new ArrayList<IColumn<Experiment, String>>();
 
@@ -362,14 +363,28 @@ public class ExperimentPackagePanel extends Panel {
         });
 
         if (epModel.getObject().getExperimentPackageId() == 0) {
+            
+            /*columns.add(new PropertyColumn<Experiment, String>(Model.of("License"), null, null) {
+                @Override
+                public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
+                    item.add(new Label(componentId, "Commons Attribution License 4.0"));
+                }
+            });*/
+            
+            columns.add(new PropertyColumn<Experiment, String>(Model.of("Price"), null, null) {
+                @Override
+                public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
+                    item.add(new Label(componentId, "0 EUR"));
+                }
+            });
 
             columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
-
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                     item.add(new ExperimentBuyDownloadLinkPanel(componentId, rowModel));
                 }
             });
+            
         }
 
 		return columns;

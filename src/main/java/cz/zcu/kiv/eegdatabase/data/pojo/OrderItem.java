@@ -46,10 +46,6 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @JoinColumn(name = "PROMOCODE")
     private PromoCode promoCode;
 
-    //why was this public?
-    private OrderItem() {
-
-    }
 
     public OrderItem(MembershipPlan plan, Order order) {
         this.membershipPlan = plan;
@@ -71,10 +67,11 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         //this.price = experiment.getPrice() != null ? experiment.getPrice() : BigDecimal.ZERO;
     }
 
+    // TODO kuba licence: misto ExperimentPackage se musi vkladat ExperimentPackageLicense
     public OrderItem(ExperimentPackage experimentPackage, Order order) {
         this.experimentPackage = experimentPackage;
         this.order = order;
-        this.price = experimentPackage.getPrice() != null ? experimentPackage.getPrice() : BigDecimal.ZERO;
+        //this.price = experimentPackage.getPrice() != null ? experimentPackage.getPrice() : BigDecimal.ZERO;
     }
 
     public ResearchGroup getResearchGroup() {
@@ -192,7 +189,7 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         if (experiment != null) {
             //price = experiment.getPrice();
         } else {
-            price = experimentPackage.getPrice();
+            //price = experimentPackage.getPrice();
         }
     }
 
