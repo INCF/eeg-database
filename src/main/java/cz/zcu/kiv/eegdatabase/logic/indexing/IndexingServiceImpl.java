@@ -24,7 +24,6 @@ package cz.zcu.kiv.eegdatabase.logic.indexing;
 
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.LinkedInManager;
-
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.solr.client.solrj.SolrServerException;
@@ -33,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -41,7 +39,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Implementation of the indexing service.
@@ -161,7 +161,7 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws InvocationTargetException
      * @throws ClassNotFoundException
      */
-    @Scheduled(cron = "${solr.indexingPeriod}")
+
     @Transactional(propagation=Propagation.REQUIRED)
     public void indexAll() {
         log.info("Starting indexing data");
