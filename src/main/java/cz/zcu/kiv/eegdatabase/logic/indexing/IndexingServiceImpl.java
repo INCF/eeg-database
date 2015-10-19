@@ -32,6 +32,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Async;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -162,28 +163,29 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws ClassNotFoundException
      */
 
+    @Scheduled(cron = "${solr.indexingPeriod}")
     @Transactional(propagation=Propagation.REQUIRED)
     public void indexAll() {
-        log.info("Starting indexing data");
-        try {
-            indexDatabase();
-            indexLinkedIn();
-            log.info("Optimalization of index started");
-            long start = System.currentTimeMillis();
-            indexer.getSolrServer().optimize();
-            long end = System.currentTimeMillis();
-            log.info("Optimalization ended, duration " + (end - start) + "ms");
-        } catch (IllegalAccessException e) {
-            log.error(e);
-        } catch (SolrServerException e) {
-            log.error(e);
-        } catch (IOException e) {
-            log.error(e);
-        }  catch (NoSuchMethodException e) {
-            log.error(e);
-        } catch (InstantiationException e) {
-            log.error(e);
-        }
-        log.info("Indexing finished");
+//        log.info("Starting indexing data");
+//        try {
+//            indexDatabase();
+//            indexLinkedIn();
+//            log.info("Optimalization of index started");
+//            long start = System.currentTimeMillis();
+//            indexer.getSolrServer().optimize();
+//            long end = System.currentTimeMillis();
+//            log.info("Optimalization ended, duration " + (end - start) + "ms");
+//        } catch (IllegalAccessException e) {
+//            log.error(e);
+//        } catch (SolrServerException e) {
+//            log.error(e);
+//        } catch (IOException e) {
+//            log.error(e);
+//        }  catch (NoSuchMethodException e) {
+//            log.error(e);
+//        } catch (InstantiationException e) {
+//            log.error(e);
+//        }
+//        log.info("Indexing finished");
     }
 }
