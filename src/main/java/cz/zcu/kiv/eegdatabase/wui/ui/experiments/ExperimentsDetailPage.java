@@ -43,7 +43,6 @@ import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.list.ListItem;
 import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.model.util.ListModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
@@ -65,7 +64,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
 import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.ViewMetadataSectionPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
@@ -134,9 +132,15 @@ public class ExperimentsDetailPage extends MenuPage {
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> metadataLink = new BookmarkablePageLink<Void>("metadataLink", MetadataFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
-        ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", new Model<Experiment>(experiment));
-        downloadExpLink.setVisibilityAllowed(experiment.getExperimentPackageConnections().isEmpty());
-        add(addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), metadataLink.setVisibilityAllowed(coexperiment), downloadExpLink);
+        
+        // TODO kuba licence - musime vybrat licenci aby bylo mozne pridat do kosiku
+        /*ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", new Model<Experiment>(experiment));
+        downloadExpLink.setVisibilityAllowed(experiment.getExperimentPackageConnections().isEmpty());*/
+        
+        add(addFileLink.setVisibilityAllowed(coexperiment), 
+            editExpLink.setVisibilityAllowed(coexperiment), 
+            metadataLink.setVisibilityAllowed(coexperiment)/*, 
+            downloadExpLink*/);
         
         /* XXX #66 Java Heap Space Exception : working with big data file in memory.
             final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);

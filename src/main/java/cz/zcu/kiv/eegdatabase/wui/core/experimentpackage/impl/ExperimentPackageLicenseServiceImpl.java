@@ -22,13 +22,16 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
 
@@ -54,6 +57,18 @@ public class ExperimentPackageLicenseServiceImpl extends GenericServiceImpl<Expe
     @Transactional(readOnly = true)
     public List<ExperimentPackageLicense> getExperimentPackageLicensesForPackage(ExperimentPackage pckg) {
         return dao.readByParameter("experimentPackage.experimentPackageId", pckg.getExperimentPackageId());
+    }
+
+    @Override
+    public ExperimentPackageLicense getExperimentPackageLicense(ExperimentPackage pckg, License license) {
+        Map<String, Object> params = new HashMap<String, Object>(2);
+        params.put("experimentPackage.experimentPackageId", pckg.getExperimentPackageId());
+        params.put("license.licenseId", license.getLicenseId());
+        List<ExperimentPackageLicense> result = dao.readByParameter(params);
+        if (!result.isEmpty())
+            return result.get(0);
+        else
+            return null;
     }
 
     

@@ -30,6 +30,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -43,14 +44,16 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     @SpringBean
     private OrderFacade facade;
 
-    private Experiment experiment;
+    //private Experiment experiment;
+    private IModel<ExperimentLicence> model;
 
     private boolean inCart = false;
     private boolean isDownloadable = false;
 
-    public ExperimentBuyDownloadLinkPanel(String id, IModel<Experiment> model) {
+    public ExperimentBuyDownloadLinkPanel(String id, IModel<ExperimentLicence> model) {
         super(id);
-        experiment = model.getObject();
+        //experiment = model.getObject();
+        this.model = model;
         
         // XXX price hidden for now.
         /*
@@ -70,7 +73,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
             @Override
             public void onClick() {
-                EEGDataBaseSession.get().getShoppingCart().addToCart(experiment);
+                EEGDataBaseSession.get().getShoppingCart().addToCart(ExperimentBuyDownloadLinkPanel.this.model.getObject());
                 setResponsePage(getPage());
             }
 
@@ -92,8 +95,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
         });
 
         // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
-        BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experiment
-                .getExperimentId())) {
+        BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, 
+                PageParametersUtils.getDefaultPageParameters(model.getObject().getExperiment().getExperimentId())) {
 
             private static final long serialVersionUID = 1L;
 
@@ -107,8 +110,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
     @Override
     protected void onConfigure() {
-        inCart = inCart(experiment);
-        isDownloadable = isDownloadable(experiment);
+        inCart = inCart(model.getObject().getExperiment());
+        isDownloadable = isDownloadable(model.getObject().getExperiment());
     }
 
     private boolean isDownloadable(final Experiment experiment) {

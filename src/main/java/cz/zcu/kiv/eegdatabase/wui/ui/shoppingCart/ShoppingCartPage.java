@@ -31,12 +31,15 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.PersonMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.membershipplan.ResearchGroupMembershipPlanFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.OrderItemPanel;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.form.AjaxFormComponentUpdatingBehavior;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
@@ -75,18 +78,24 @@ public class ShoppingCartPage extends MenuPage {
 
     @SpringBean
     private LicenseFacade licenseFacade;
+    
+    @SpringBean
+    private ExperimentLicenseFacade experimentLicenseFacade;
+    
+    @SpringBean
+    private ExperimentPackageLicenseFacade experimentPackageLicenseFacade;
 
     private Label totalPriceLabel;
-    private DropDownChoice<License> licenseChoice;
 
+    
     public ShoppingCartPage() {
         setupComponents();
     }
 
+    
     private void setupComponents() {
 
         IModel<String> title = ResourceUtils.getModel("pageTitle.myCart");
-        final Person loggedUser = EEGDataBaseSession.get().getLoggedUser();
         add(new Label("title", title));
         setPageTitle(title);
         add(new ButtonPageMenu("leftMenu", ShoppingCartPageLeftMenu.values()));
@@ -115,9 +124,8 @@ public class ShoppingCartPage extends MenuPage {
         };
         container.setOutputMarkupId(true);
 
+        @SuppressWarnings("serial")
         PropertyListView<OrderItem> items = new PropertyListView<OrderItem>("items", shoppingCart.getOrder().getItems()) {
-
-            private static final long serialVersionUID = 1L;
 
             @Override
             protected void populateItem(final ListItem<OrderItem> item) {
@@ -131,115 +139,61 @@ public class ShoppingCartPage extends MenuPage {
                  * @Override public <C> IConverter<C> getConverter(Class<C> type) { return new MoneyFormatConverter(Currency.getInstance("EUR"), 2); } });
                  */
                 item.add(new RemoveLinkPanel("removeItemLink", item.getModel()));
+                
+                Label licenseTitle = new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle"));
+                item.add(licenseTitle);
 
                 List<License> licenses = new ArrayList<License>();
-                ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("licenseInfo", "licenseId");
-                licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
-                licenseChoice.setNullValid(true);
-
-                if(item.getModelObject().getExperiment() != null)
-                {
-                    int experimentPackageId = item.getModelObject().getExperiment().getExperimentId();
-                    licenses.addAll(licenseFacade.getLicensesForExperiment(experimentPackageId));
-                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
-                    if (isExpPackageLicenseChoiceShow) {
-                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                        //licenses.add(0, licenseFacade.getPublicLicense());
-                    }
-
-
-
-                    if (isExpPackageLicenseChoiceShow) {
-                        // preselect first license for dropdown choice component
-                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
-
-                    }
-
+                ChoiceRenderer<License> renderer = new ChoiceRenderer<License>("title", "licenseId");
+                final DropDownChoice<License> licenseChoice = new DropDownChoice<License>("license", licenses, renderer);
+                licenseChoice.setNullValid(false);
+                
+                if (item.getModelObject().getExperiment() != null) {
+                    
+                    // TODO kuba - overit ze funguje readByParameter
+                    final List<ExperimentLicence> expLicenses = experimentLicenseFacade.readByParameter("experiment", item.getModelObject().getExperiment());
+                    for (ExperimentLicence expLicense : expLicenses)
+                        licenses.add(expLicense.getLicense());
 
                     licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
 
-                        private static final long serialVersionUID = 1L;
-
                         @Override
                         protected void onUpdate(AjaxRequestTarget target) {
-
-                            OrderItem orderItem = item.getModelObject();
-                            if (orderItem.getLicense() != null) {
-                                // TODO kuba licence
-                                //orderItem.setPrice(orderItem.getLicense().getPrice());
-                            } else {
-                                orderItem.setPriceFromItem();
-                            }
-
+                            ExperimentLicence experimentLicense = findExperimentLicense(expLicenses, licenseChoice.getModelObject());
+                            item.getModelObject().setPrice(experimentLicense.getPrice());
                             target.add(container);
                             target.add(totalPriceLabel);
                         }
                     });
-                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
-                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle"))); 
-                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
-                    item.add(licenseChoice);
-                }
-                else if(item.getModelObject().getExperimentPackage() != null)
-                {
-                    //TODO: remove code duplication
-                    licenses.addAll(licenseFacade.getLicensesForPackage(item.getModelObject().getExperimentPackage()));
-                    boolean isExpPackageLicenseChoiceShow = !licenses.isEmpty();
-                    if (isExpPackageLicenseChoiceShow) {
-                        //int experimentPackageId = item.getModelObject().getExperimentPackage().getExperimentPackageId();
-                        //licenses.addAll(licenseFacade.getLicenseForPackageAndOwnedByPerson(loggedUser.getPersonId(), experimentPackageId));
-                        //licenses.add(0, licenseFacade.getPublicLicense());
-
-                    }
-
-                    if (isExpPackageLicenseChoiceShow) {
-                        // preselect first license for dropdown choice component
-                        item.getModelObject().setLicense(licenseChoice.getChoices().get(0));
-                    }
-
+                    
+                } else if (item.getModelObject().getExperimentPackage() != null) {
+                    
+                    final List<ExperimentPackageLicense> expPacLicenses = experimentPackageLicenseFacade.getExperimentPackageLicensesForPackage(item.getModelObject().getExperimentPackage());
+                    for (ExperimentPackageLicense epl : expPacLicenses)
+                        licenses.add(epl.getLicense());
+                    
                     licenseChoice.add(new AjaxFormComponentUpdatingBehavior("onChange") {
-
-                        private static final long serialVersionUID = 1L;
 
                         @Override
                         protected void onUpdate(AjaxRequestTarget target) {
-
-                            OrderItem orderItem = item.getModelObject();
-                            if (orderItem.getLicense() != null) {
-                                // TODO kuba licence
-                                //orderItem.setPrice(orderItem.getLicense().getPrice());
-                            } else {
-                                orderItem.setPriceFromItem();
-                            }
-
+                            ExperimentPackageLicense expPacLicense = findExperimentPackageLicense(expPacLicenses, licenseChoice.getModelObject());
+                            item.getModelObject().setPrice(expPacLicense.getPrice());
                             target.add(container);
                             target.add(totalPriceLabel);
                         }
                     });
-                    licenseChoice.setVisibilityAllowed(isExpPackageLicenseChoiceShow);
-                    item.add(new Label("licenseTitle", ResourceUtils.getModel("dataTable.heading.licenseTitle")));
-                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(!(isExpPackageLicenseChoiceShow && !licenses.isEmpty())));
-                    item.add(licenseChoice);
-                }
-                else if(item.getModelObject().getMembershipPlan() != null)
-                {
-                    //personal membership plan
-                    if(item.getModelObject().getResearchGroup() == null)
-                    {
 
-                    }
-                    //research group membership plan
-                    else
-                    {
-
-
-                    }
-                    item.add(new Label("NoLicenseLabel", ResourceUtils.getModel("label.license.public")).setVisibilityAllowed(false));
+                } else if (item.getModelObject().getMembershipPlan() != null) {
+                    
                     licenseChoice.setVisible(false);
-                    item.add(new Label("licenseTitle",ResourceUtils.getModel("dataTable.heading.licenseTitle")).setVisibilityAllowed(false));
-
-                    item.add(licenseChoice);
+                    licenseTitle.setVisibilityAllowed(false);
+                    
                 }
+                
+                item.add(licenseChoice);
+                
+                Label price = new Label("price", new PropertyModel<String>(item.getModelObject(), "price"));
+                item.add(price);
             }
         };
         
@@ -287,7 +241,7 @@ public class ShoppingCartPage extends MenuPage {
                     
                     // FIXME "You must select license for all experiments and experiment packages" for creating order with public experiment - no dropdownchoice for license choice. 
                     if (item.getExperimentPackage()!= null) {
-                        System.out.println("====="+item.getLicense());
+                        //System.out.println("====="+item.getLicense());
                         if (item.getLicense() == null) {
                             this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
                             return;
@@ -358,6 +312,24 @@ public class ShoppingCartPage extends MenuPage {
 
         }.setVisibilityAllowed(!shoppingCart.isEmpty()));
 
+    }
+    
+    
+    private ExperimentLicence findExperimentLicense(List<ExperimentLicence> list, License license) {
+        for (ExperimentLicence item : list) {
+            if (item.getLicense().equals(license))
+                return item;
+        }
+        return null;
+    }
+    
+    
+    private ExperimentPackageLicense findExperimentPackageLicense(List<ExperimentPackageLicense> list, License license) {
+        for (ExperimentPackageLicense item : list) {
+            if (item.getLicense().equals(license))
+                return item;
+        }
+        return null;
     }
 
 }

@@ -143,13 +143,15 @@ public class ListExperimentsPage extends MenuPage {
             }
         });
 
-        columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.buy"), null, null) {
+        // TODO kuba licence - je potreba nejdrive zvolit licenci
+        /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.buy"), null, null) {
 
             @Override
             public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                 item.add(new ExperimentBuyDownloadLinkPanel(componentId, rowModel));
             }
-        });
+        });*/
+        
         return columns;
     }
 }

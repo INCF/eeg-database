@@ -27,7 +27,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
@@ -37,16 +36,11 @@ import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicens
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
-import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseRequestPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
-import cz.zcu.kiv.eegdatabase.wui.ui.signalProcessing.MethodListPage;
-
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow.CloseButtonCallback;
 import org.apache.wicket.extensions.ajax.markup.html.repeater.data.table.AjaxFallbackDefaultDataTable;
 import org.apache.wicket.extensions.markup.html.repeater.data.grid.ICellPopulator;
 import org.apache.wicket.extensions.markup.html.repeater.data.table.DataTable;
@@ -55,14 +49,11 @@ import org.apache.wicket.extensions.markup.html.repeater.data.table.PropertyColu
 import org.apache.wicket.markup.html.WebMarkupContainer;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.*;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -118,6 +109,8 @@ public class ExperimentPackagePanel extends Panel {
     private ModalWindow viewLicenseWindow;
 
     private AjaxLink<License> viewLicenseLink;
+    
+    private ExperimentPackageBuyDownloadLinkPanel buyDownloadPanel;
 
     
     /**
@@ -137,8 +130,11 @@ public class ExperimentPackagePanel extends Panel {
 		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
 		
-		add(new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", epModel)
-		.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0)));
+		buyDownloadPanel = new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", new Model<ExperimentPackageLicense>());
+		buyDownloadPanel.setExperimentPackage(model.getObject());
+        buyDownloadPanel.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0));
+        buyDownloadPanel.setOutputMarkupId(true);
+		add(buyDownloadPanel);
     }
 
     
@@ -233,6 +229,8 @@ public class ExperimentPackagePanel extends Panel {
 				super.onSelectionChangeAjaxified(target, option);
 				target.add(viewLicenseLink);
 				target.add(priceCont);
+				buyDownloadPanel.setModelObject(option);
+				target.add(buyDownloadPanel);
 			}
 
 		};
@@ -378,12 +376,14 @@ public class ExperimentPackagePanel extends Panel {
                 }
             });
 
-            columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
+            
+            // TODO kuba licence - pridavani experimentu do kosiku
+            /*columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                     item.add(new ExperimentBuyDownloadLinkPanel(componentId, rowModel));
                 }
-            });
+            });*/
             
         }
 
