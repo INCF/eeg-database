@@ -184,10 +184,8 @@ public class ShoppingCartPage extends MenuPage {
                     });
 
                 } else if (item.getModelObject().getMembershipPlan() != null) {
-                    
                     licenseChoice.setVisible(false);
                     licenseTitle.setVisibilityAllowed(false);
-                    
                 }
                 
                 item.add(licenseChoice);

@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -31,8 +32,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
 
 
 public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
@@ -84,7 +87,7 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             @Override
             public boolean isVisible() {
                 return ! (ExperimentPackageBuyDownloadLinkPanel.this.model.getObject() == null)
-                        && !inCart && !isDownloadable;
+                        && !inCart /*&& !isDownloadable*/;
             }
             
             @Override
