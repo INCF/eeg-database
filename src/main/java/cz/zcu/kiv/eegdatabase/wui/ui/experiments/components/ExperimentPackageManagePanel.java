@@ -107,11 +107,7 @@ public class ExperimentPackageManagePanel extends Panel {
 	/** List of experiments which can be added to the package */
 	private IModel<List<Experiment>> experimentsToAddModel;
 	
-	//private IModel<List<License>> licenses;
-	
-	/**
-	 * Model of the viewLicenseWindow
-	 */
+	/** Model of the viewLicenseWindow */
 	private IModel<License> licenseModel = new Model<License>();
 	
 	//containers
@@ -146,6 +142,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		this.addLicenseAddWindow();
 	}
 
+	
     private void addExperimentsViewWindow() {
         viewLicenseWindow = new ModalWindow("viewLicenseWindow");
         viewLicenseWindow.setAutoSize(true);
@@ -161,11 +158,13 @@ public class ExperimentPackageManagePanel extends Panel {
                 licenseFacade.removeLicenseFromPackage(model.getObject(), epModel.getObject());
                 ModalWindow.closeCurrent(target);
                 target.add(header);
+                experimentsToAddModel.detach();  // list of experiments to add must be reloaded for the actual set of licenses
             }
         });
         viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
     }
 
+    
 	/**
 	 * Add window which allows to add experiments to the package.
 	 */
@@ -194,6 +193,7 @@ public class ExperimentPackageManagePanel extends Panel {
 				target.add(experimentListCont);
 			}
 		};
+		
 		addExperimentsWindow.setContent(content);
 		this.add(addExperimentsWindow);
 	}
@@ -205,10 +205,25 @@ public class ExperimentPackageManagePanel extends Panel {
 	 */
 	private IModel<List<Experiment>> listExperimentsToAdd() {
 		return new LoadableDetachableModel<List<Experiment>>() {
+		    
 			@Override
 			protected List<Experiment> load() {
-				return experimentsFacade.getExperimentsWithoutPackage(epModel.getObject());
+			    ExperimentPackage pckg = epModel.getObject();
+			    List<Experiment> list = experimentsFacade.getExperimentsWithoutPackage(pckg);
+			    
+			    // remove all experiments that do not match package licenses
+			    // TODO doing this in one database query would be more efficient
+			    final List<License> pckgLicenses = licenseFacade.getLicensesForPackage(pckg);
+			    Iterator<Experiment> it = list.iterator();
+			    while (it.hasNext()) {
+			        List<License> expLicenses = licenseFacade.getLicensesForExperiment(it.next().getExperimentId());
+			        if (! expLicenses.containsAll(pckgLicenses))
+			            it.remove();
+			    }
+			    
+			    return list;
 			}
+			
 		};
 	}
 
@@ -262,24 +277,6 @@ public class ExperimentPackageManagePanel extends Panel {
 	 * @param cont container to add the list to
 	 */
 	private void addLicenseList(WebMarkupContainer cont) {
-	    /*IModel<List<License>> licenses = new LoadableDetachableModel<List<License>>() {
-			@Override
-			protected List<License> load() {
-				List<License> l = licenseFacade.getLicensesForPackage(epModel.getObject());
-
-				if (l.size() > 1) { //do not display owner license if there are others as well
-					Iterator<License> it = l.iterator();
-					while (it.hasNext()) {
-						if (it.next().getLicenseType() == LicenseType.OWNER) {
-							it.remove();
-							break;
-						}
-					}
-				}
-
-				return l;
-			}
-		};*/
 		
 		IModel<List<ExperimentPackageLicense>> licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
             @Override
@@ -361,6 +358,7 @@ public class ExperimentPackageManagePanel extends Panel {
                 experimentPackageLicenseFacade.create(expPacLic);
                 ModalWindow.closeCurrent(target);
                 target.add(header);
+                experimentsToAddModel.detach();  // list of experiments to add must be reloaded for the actual set of licenses
             }
             
             @Override
