@@ -1,0 +1,27 @@
+@charset "utf-8";
+
+/** This file contains some specific definitions used in Experiments pages **/
+
+
+#packageLicensesList {
+	overflow: hidden;
+	padding-top: 5px;
+	font-size: 0.8em;
+}
+
+#packageLicensesList a {
+	font-size: 0.8em;
+}
+
+#packageLicensesList ul {
+	float: left;
+}
+
+#licensesLabel {
+	float: left;
+	font-weight: bold;
+}
+
+.bold {
+	font-weight: bold;
+}

@@ -9,6 +9,7 @@
 @import "bookingRoom.css";
 @import "visualization.css";
 @import "metadata.css";
+@import "experiments.css";
 
 @media screen, projection {
     .page {
