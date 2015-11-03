@@ -329,7 +329,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		IModel<List<License>> licenses = new LoadableDetachableModel<List<License>>() {
 			@Override
 			protected List<License> load() {
-			    List<License> list = licenseFacade.getLicenseTemplates();
+			    List<License> list = licenseFacade.getAllRecords();
                 list.removeAll(licenseFacade.getLicensesForPackage(epModel.getObject()));
 			    return list;
 			}

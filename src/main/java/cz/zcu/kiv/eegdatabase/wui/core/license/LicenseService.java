@@ -85,12 +85,6 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 * @return list of licenses
 	 */
 	public List<License> getLicensesForPackage(ExperimentPackage pckg);
-
-	/**
-	 *
-	 * @return list of licenses saved as templates for new
-	 */
-	public List<License> getLicenseTemplates(ResearchGroup group);
 	
 	public byte[] getLicenseAttachmentContent(int licenseId);
 	
@@ -104,5 +98,5 @@ public interface LicenseService extends GenericService<License, Integer> {
 
     public List<License> getPersonLicenses(int personId);
 
-    public List<License> getLicenseTemplates();
+    //public List<License> getLicenseTemplates();
 }

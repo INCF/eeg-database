@@ -153,11 +153,6 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 		personalLicenseService.update(license);
 	}
 
-	@Override
-	public List<License> getLicenseTemplates(ResearchGroup group) {
-		return this.licenseService.getLicenseTemplates(group);
-	}
-
     @Override
     public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId) {
         return personalLicenseService.getPersonalLicenseAttachmentContent(personalLicenseId);
@@ -199,8 +194,4 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
         return licenseService.getPersonLicenses(personId);
     }
 
-    @Override
-    public List<License> getLicenseTemplates() {
-        return licenseService.getLicenseTemplates();
-    }
 }

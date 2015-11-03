@@ -33,10 +33,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
 import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -165,24 +162,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.COMMERCIAL) {
             throw new InvalidLicenseForPackageException("Group " + group.getTitle() + " is not a paid account and can not create bussiness licenses");
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<License> getLicenseTemplates(ResearchGroup group) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("template", true);
-        params.put("researchGroup.researchGroupId", group.getResearchGroupId());
-        return this.licenseDao.readByParameter(params);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<License> getLicenseTemplates() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        // TODO kuba licence
-        //params.put("template", true);
-        return this.licenseDao.readByParameter(params);
     }
 
     @Override

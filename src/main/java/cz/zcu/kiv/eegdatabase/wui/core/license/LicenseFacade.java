@@ -168,12 +168,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return
 	 */
 	public List<License> getUsersLicenses(Person person);
-
-	/**
-	 *
-	 * @return list of licenses saved as templates for new
-	 */
-	public List<License> getLicenseTemplates(ResearchGroup group);
 	
 	public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId);
 	
@@ -189,5 +183,4 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 
     public List<License> getPersonLicenses(int personId);
 
-    public List<License> getLicenseTemplates();
 }

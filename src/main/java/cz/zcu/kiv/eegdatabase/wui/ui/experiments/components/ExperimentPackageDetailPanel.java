@@ -159,7 +159,7 @@ public class ExperimentPackageDetailPanel extends Panel {
         IModel<List<License>> licensesToAdd = new LoadableDetachableModel<List<License>>() {
             @Override
             protected List<License> load() {
-                List<License> list = licenseFacade.getLicenseTemplates();
+                List<License> list = licenseFacade.getAllRecords();
                 list.removeAll(licensePriceMap.keySet());
                 return list;
             }

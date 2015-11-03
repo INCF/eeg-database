@@ -162,13 +162,6 @@ public class License implements Serializable {
         this.link = link;
     }
 
-    public void copyFromTemplate(License template) {
-		this.description = template.description;
-		this.title = template.title;
-		this.licenseType = template.licenseType;
-		this.link = template.link;
-	}
-
 	@Override
 	public int hashCode() {
 		int hash = 3;

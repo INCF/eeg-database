@@ -191,7 +191,7 @@ public class AddLicensePage extends WebPage {
             final IModel<List<License>> blueprintsModel = new LoadableDetachableModel<List<License>>() {
                 @Override
                 protected List<License> load() {
-                    List<License> list = licenseFacade.getLicenseTemplates();
+                    List<License> list = licenseFacade.getAllRecords();
                     
                     // remove all currently assigned licenses
                     Set<ExperimentLicence> expLics = getModelObject().getExperiment().getExperimentLicences();
