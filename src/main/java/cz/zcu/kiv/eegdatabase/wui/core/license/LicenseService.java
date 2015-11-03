@@ -77,13 +77,6 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 * @return list of licenses that match the given criteria.
 	 */
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
-
-	/**
-	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
-	 * @param group Whose license to fetch.
-	 * @return Group's owner license.
-	 */
-	public License getOwnerLicense(ResearchGroup group);
 	
 	/**
 	 * List all licenses the package has been published under.

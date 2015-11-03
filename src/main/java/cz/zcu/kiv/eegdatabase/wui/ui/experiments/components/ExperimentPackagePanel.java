@@ -206,19 +206,7 @@ public class ExperimentPackagePanel extends Panel {
 
 			@Override
 			protected List<ExperimentPackageLicense> load() {
-				List<ExperimentPackageLicense> list = experimentPackagelicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
-
-				if (list.size() > 1) { //do not display owner license if there are others as well
-					Iterator<ExperimentPackageLicense> it = list.iterator();
-					while (it.hasNext()) {
-						if (it.next().getLicense().getLicenseType() == LicenseType.OWNER) {
-							it.remove();
-							break;
-						}
-					}
-				}
-
-				return list;
+				return experimentPackagelicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
 			}
 		};
 

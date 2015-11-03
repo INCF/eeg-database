@@ -71,7 +71,7 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OWNER);
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
     }
 
     @Test(groups = "unit")

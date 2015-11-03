@@ -281,19 +281,7 @@ public class ExperimentPackageManagePanel extends Panel {
 		IModel<List<ExperimentPackageLicense>> licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
             @Override
             protected List<ExperimentPackageLicense> load() {
-                List<ExperimentPackageLicense> list = experimentPackageLicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
-
-                if (list.size() > 1) { //do not display owner license if there are others as well
-                    Iterator<ExperimentPackageLicense> it = list.iterator();
-                    while (it.hasNext()) {
-                        if (it.next().getLicense().getLicenseType() == LicenseType.OWNER) {
-                            it.remove();
-                            break;
-                        }
-                    }
-                }
-
-                return list;
+                return experimentPackageLicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
             }
         };
 

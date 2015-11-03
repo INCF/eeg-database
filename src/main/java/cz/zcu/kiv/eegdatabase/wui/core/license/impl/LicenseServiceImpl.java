@@ -116,29 +116,10 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Override
     @Transactional
     public void addLicenseForPackage(License license, ExperimentPackage pack) {
-
         this.checkLicenseGroupValidity(license, pack.getResearchGroup());
-
-        License tmp;
-        
-        // TODO kuba licence: templates
-        /*if (license.isTemplate()) {
-            tmp = new License();
-            tmp.copyFromTemplate(license);
-        } else {
-            tmp = license;
-        }
-
-        if (tmp.getLicenseId() == 0) {
-            tmp.setResearchGroup(pack.getResearchGroup());
-            int res = this.licenseDao.create(tmp);
-            tmp.setLicenseId(res);
-        }*/
-        tmp = license;
-        
         ExperimentPackageLicense conn = new ExperimentPackageLicense();
         conn.setExperimentPackage(pack);
-        conn.setLicense(tmp);
+        conn.setLicense(license);
         this.experimentPackageLicenseDao.create(conn);
     }
 
@@ -158,12 +139,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Transactional(readOnly = true)
     public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
         return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public License getOwnerLicense(ResearchGroup group) {
-        return this.getLicensesForGroup(group, LicenseType.OWNER).get(0);
     }
 
     @Override

@@ -37,11 +37,6 @@ public enum LicenseType {
     /**
      * For any purpose, paid
      */
-    COMMERCIAL,
-    
-    /**
-     * Private experiments
-     */
-    OWNER
+    COMMERCIAL
     
 }

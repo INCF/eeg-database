@@ -124,11 +124,6 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public License getOwnerLicense(ResearchGroup group) {
-		return licenseService.getOwnerLicense(group);
-	}
-
-	@Override
 	public List<License> getLicensesForPackage(ExperimentPackage pckg) {
 		return licenseService.getLicensesForPackage(pckg);
 	}

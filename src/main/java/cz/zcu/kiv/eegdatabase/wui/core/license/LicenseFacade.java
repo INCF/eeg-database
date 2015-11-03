@@ -155,13 +155,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
 	/**
-	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
-	 * @param group Whose license to fetch.
-	 * @return Group's owner license.
-	 */
-	public License getOwnerLicense(ResearchGroup group);
-
-	/**
 	 * List all licenses the package has been published under.
 	 *
 	 * @param pckg the package
