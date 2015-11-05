@@ -1,5 +1,7 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experimentLicense;
 
+import java.util.List;
+
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
@@ -10,5 +12,21 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
  */
 public interface ExperimentLicenseService extends GenericService<ExperimentLicence, Integer> {
 
-    public void remove(Experiment experiment, License license);
+    void remove(Experiment experiment, License license);
+    
+    /**
+     * List all experiment licenses for the given experiment.
+     * @param experiment the experiment
+     * @return list of experiment licenses
+     */
+    List<ExperimentLicence> getExperimentLicensesForExperiment(Experiment experiment);
+    
+    /**
+     * Find the experiment license object for the given experiment and license.
+     * @param experiment the experiment
+     * @param license the license
+     * @return the experiment license
+     */
+    ExperimentLicence getExperimentLicense(Experiment experiment, License license);
+    
 }

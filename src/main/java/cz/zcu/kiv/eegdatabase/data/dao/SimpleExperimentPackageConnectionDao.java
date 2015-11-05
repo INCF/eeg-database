@@ -26,11 +26,11 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageConnection;
 import java.util.List;
+
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.criterion.Projections;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.Session;
 
 /**
  * Hibernate implementation of ExperimentPackageConnectionDao
@@ -112,4 +112,16 @@ public class SimpleExperimentPackageConnectionDao extends SimpleGenericDao<Exper
 		Query query = getSessionFactory().getCurrentSession().createQuery(HQL);
 		return query.list();
 	}
+	
+	@Override
+    public List<Experiment> listExperimentsWithoutPackageWithLicense(int licenseId) {
+        String HQL = "SELECT e FROM Experiment e "
+                + "LEFT JOIN fetch e.scenario "
+                + "WHERE e.experimentId NOT IN "
+                + "(SELECT epc.experiment.experimentId FROM ExperimentPackageConnection epc) "
+                + "AND e.experimentId IN (SELECT el.experiment.experimentId FROM ExperimentLicence el WHERE el.license.licenseId = :licenseId)";
+        Query query = getSessionFactory().getCurrentSession().createQuery(HQL);
+        query.setParameter("licenseId", licenseId);
+        return query.list();
+    }
 }

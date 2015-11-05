@@ -568,6 +568,7 @@ li.comment li li li {
 
 .packageList li {
     list-style: none;
+    padding-bottom: 20px;
 }
 
 .headerWithLinks a {

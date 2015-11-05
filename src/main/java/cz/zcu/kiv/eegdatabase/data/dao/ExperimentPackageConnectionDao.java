@@ -39,7 +39,8 @@ public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPac
      * @param packageId id of the package
      * @return list of experiments or an empty list
      */
-    public List<Experiment> listExperimentsByPackage(int packageId);
+    List<Experiment> listExperimentsByPackage(int packageId);
+    
     /**
      * Returns list of experiments that are not members of the given package.
      * @param packageId id of the package
@@ -53,16 +54,22 @@ public interface ExperimentPackageConnectionDao extends GenericDao<ExperimentPac
      * @param packageId id of the package
      * @return true if experiment is member of the package
      */
-    public boolean isExperimentInPackage(int experimentId, int packageId);
+    boolean isExperimentInPackage(int experimentId, int packageId);
 	
-    public boolean removeExperimentFromPackage(int experimentId, int packageId);
+    boolean removeExperimentFromPackage(int experimentId, int packageId);
 	
-	public void removeAllConnections(ExperimentPackage pack);
+	void removeAllConnections(ExperimentPackage pack);
 
 	/**
-	 * List all experiments that arent in any package.
+	 * List all experiments that aren't in any package.
 	 * @return
 	 */
-	public List<Experiment> listExperimentsWithoutPackage();
+	List<Experiment> listExperimentsWithoutPackage();
+	
+	/**
+     * List all experiments that aren't in any package and are connected with a license with the given id.
+     * @return
+     */
+    List<Experiment> listExperimentsWithoutPackageWithLicense(int licenseId);
 
 }

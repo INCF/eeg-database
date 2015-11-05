@@ -44,16 +44,20 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     @SpringBean
     private OrderFacade facade;
 
-    //private Experiment experiment;
     private IModel<ExperimentLicence> model;
+    private Experiment experiment;
 
     private boolean inCart = false;
     private boolean isDownloadable = false;
 
+    
     public ExperimentBuyDownloadLinkPanel(String id, IModel<ExperimentLicence> model) {
         super(id);
         //experiment = model.getObject();
         this.model = model;
+        
+        if (model.getObject() != null)
+            this.experiment = model.getObject().getExperiment();
         
         // XXX price hidden for now.
         /*
@@ -79,8 +83,15 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
             @Override
             public boolean isVisible() {
-                return !inCart && !isDownloadable;
+                return (ExperimentBuyDownloadLinkPanel.this.model.getObject() != null)
+                        && !inCart /*&& !isDownloadable*/;
             }
+            
+            @Override
+            public boolean isEnabled() {
+                return (ExperimentBuyDownloadLinkPanel.this.model.getObject() != null);
+            }
+            
         });
 
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
@@ -94,8 +105,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
         });
 
-        // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
-        BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, 
+        // TODO kuba licence - bude zachovano tlacitko download?
+        /*BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, 
                 PageParametersUtils.getDefaultPageParameters(model.getObject().getExperiment().getExperimentId())) {
 
             private static final long serialVersionUID = 1L;
@@ -105,19 +116,34 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
                 return isDownloadable;
             }
         };
-        add(downloadLink);
+        add(downloadLink);*/
+    }
+    
+    
+    public void setModelObject(ExperimentLicence experimentLicence) {
+        model.setObject(experimentLicence);
+        if (experimentLicence != null)
+            this.experiment = experimentLicence.getExperiment();
+    }
+    
+    
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
     }
 
+    
     @Override
     protected void onConfigure() {
-        inCart = inCart(model.getObject().getExperiment());
-        isDownloadable = isDownloadable(model.getObject().getExperiment());
+        inCart = inCart(experiment);
+        isDownloadable = isDownloadable(experiment);
     }
 
+    
     private boolean isDownloadable(final Experiment experiment) {
         return EEGDataBaseSession.get().isExperimentPurchased(experiment.getExperimentId());
     }
 
+    
     private boolean inCart(final Experiment experiment) {
         return EEGDataBaseSession.get().getShoppingCart().isInCart(experiment);
     }

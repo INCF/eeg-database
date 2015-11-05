@@ -75,6 +75,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicensePriceForm;
  * licenses.
  *
  * @author Jakub Danek
+ * @author Jakub Krauz
  */
 @SuppressWarnings("serial")
 public class ExperimentPackageManagePanel extends Panel {
@@ -347,6 +348,7 @@ public class ExperimentPackageManagePanel extends Panel {
                 ModalWindow.closeCurrent(target);
                 target.add(header);
                 experimentsToAddModel.detach();  // list of experiments to add must be reloaded for the actual set of licenses
+                // TODO check all experiments contained in the package for the new license
             }
             
             @Override

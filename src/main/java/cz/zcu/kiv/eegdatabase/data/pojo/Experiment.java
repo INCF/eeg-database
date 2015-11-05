@@ -414,7 +414,7 @@ public class Experiment implements Serializable {
 		this.artifactRemoveMethods = artifactRemoveMethods;
 	}
 
-    @OneToMany(mappedBy = "experiment")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "experiment")
     public Set<ExperimentLicence> getExperimentLicences() {
         return experimentLicences;
     }

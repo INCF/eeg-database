@@ -23,14 +23,15 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.form.input.AjaxDropDownChoice;
 import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampPropertyColumn;
 import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
@@ -38,6 +39,8 @@ import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
+
+import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -53,20 +56,20 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.springframework.transaction.annotation.Transactional;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
 /**
+ * This panel shows an experiment package with its content.
  *
  * @author Jakub Danek
- * 
- *
+ * @author Jakub Krauz
  */
-//
-// TODO kuba licence (zobrazeni balicku na Experiments -> All experiments)
-//
 public class ExperimentPackagePanel extends Panel {
 
     private static final int EXPERIMENTS_PER_PAGE = 10;
@@ -81,36 +84,35 @@ public class ExperimentPackagePanel extends Panel {
 	private LicenseFacade licenseFacade;
     
     @SpringBean
+    private ExperimentLicenseFacade experimentLicenseFacade;
+    
+    @SpringBean
     private ExperimentPackageLicenseFacade experimentPackagelicenseFacade;
 
-    /**
-     * Main model of the component - experiment package
-     */
+    /** Main model of the component - experiment package */
     private IModel<ExperimentPackage> epModel;
 
-	/**
-	 * List of experiments attached to the package
-	 */
+	/** List of experiments attached to the package */
     private IModel<List<Experiment>> experimentsModel;
 
-	private IModel<List<ExperimentPackageLicense>> licenses;
-
-	/**
-	 * Model of the addLicenseWindow
-	 */
-	private IModel<ExperimentPackageLicense> licenseModel = new Model<ExperimentPackageLicense>();
+	/** Model of the addLicenseWindow */
+	private IModel<ExperimentPackageLicense> packageLicenseModel = new Model<ExperimentPackageLicense>();
+	
+	private IModel<License> licenseModel = new Model<License>();
 
     //containers
     private WebMarkupContainer experimentListCont;
     private WebMarkupContainer header, footer;
 	private DataTable<Experiment, String> table;
 
-
     private ModalWindow viewLicenseWindow;
 
+    private WebMarkupContainer priceCont;
     private AjaxLink<License> viewLicenseLink;
     
     private ExperimentPackageBuyDownloadLinkPanel buyDownloadPanel;
+    
+    private final boolean noPackage;
 
     
     /**
@@ -122,6 +124,8 @@ public class ExperimentPackagePanel extends Panel {
 		super(id);
 
 		this.epModel = model;
+		this.noPackage = (model.getObject().getExperimentPackageId() == 0);
+		
 		experimentListCont = new WebMarkupContainer("experimentListCont");
 		experimentListCont.setOutputMarkupPlaceholderTag(true);
 		this.add(experimentListCont);
@@ -149,18 +153,8 @@ public class ExperimentPackagePanel extends Panel {
 		header.add(new WebMarkupContainer("experimentPackageLabelCont").setVisible(!(epModel.getObject().getExperimentPackageId() == 0)));
 		header.add(new Label("packageTitle", new PropertyModel<String>(epModel, "name")));		
 
-		@SuppressWarnings("serial")
-        WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont") {
-
-			@Override
-			protected void onConfigure() {
-				super.onConfigure();
-				boolean vis = licenses.getObject() != null ? licenses.getObject().size() > 0 : false;
-				this.setVisible(vis);
-			}
-
-		};
-		this.addLicenseList(licenseCont);
+        WebMarkupContainer licenseCont = new WebMarkupContainer("licensesCont");
+		addPackageLicenseList(licenseCont); 
 		header.add(licenseCont);
     }
 
@@ -181,7 +175,7 @@ public class ExperimentPackagePanel extends Panel {
 	 * @param cont container to add the list to
 	 */
 	@SuppressWarnings("serial")
-    private void addLicenseList(WebMarkupContainer cont ) {
+    private void addPackageLicenseList(WebMarkupContainer cont ) {
 
         viewLicenseWindow = new ModalWindow("viewLicenseWindow");
         viewLicenseWindow.setAutoSize(true);
@@ -191,18 +185,18 @@ public class ExperimentPackagePanel extends Panel {
         viewLicenseWindow.showUnloadConfirmation(false);
         add(viewLicenseWindow);
         
-        final WebMarkupContainer priceCont = new WebMarkupContainer("priceCont") {
+        priceCont = new WebMarkupContainer("priceCont") {
             @Override
             protected void onConfigure() {
                 super.onConfigure();
-                this.setVisible(licenseModel.getObject() != null);
+                this.setVisible(packageLicenseModel.getObject() != null);
             }
         };
         priceCont.setOutputMarkupPlaceholderTag(true);
-        Label price = new Label("price", new PropertyModel<String>(licenseModel, "price"));
+        Label price = new Label("price", new PropertyModel<String>(packageLicenseModel, "price"));
         priceCont.add(price);
 	    
-		licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
+		/*licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
 
 			@Override
 			protected List<ExperimentPackageLicense> load() {
@@ -210,7 +204,7 @@ public class ExperimentPackagePanel extends Panel {
 			}
 		};
 
-		AjaxDropDownChoice<ExperimentPackageLicense> ddc = new AjaxDropDownChoice<ExperimentPackageLicense>("licenses", licenseModel, licenses, new ChoiceRenderer<ExperimentPackageLicense>("license.title", "experimentPackageLicenseId")) {
+		AjaxDropDownChoice<ExperimentPackageLicense> ddc = new AjaxDropDownChoice<ExperimentPackageLicense>("licenses", packageLicenseModel, licenses, new ChoiceRenderer<ExperimentPackageLicense>("license.title", "experimentPackageLicenseId")) {
 
 			@Override
 			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentPackageLicense option) {
@@ -221,11 +215,12 @@ public class ExperimentPackagePanel extends Panel {
 				target.add(buyDownloadPanel);
 			}
 
-		};
+		};*/
+        AjaxDropDownChoice<?> ddc = noPackage ? createLicenseChoice() : createPackageLicenseChoice();
 		
-        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), new PropertyModel<License>(licenseModel, "license"), false));
+        viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
         viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
-        viewLicenseLink = new AjaxLink<License>("viewLicenseLink", new PropertyModel<License>(licenseModel, "license")) {
+        viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {
 
             private static final long serialVersionUID = 1L;
 
@@ -247,7 +242,58 @@ public class ExperimentPackagePanel extends Panel {
 		cont.add(viewLicenseLink);
 		cont.add(priceCont);
 	}
+	
+	
+	private AjaxDropDownChoice<ExperimentPackageLicense> createPackageLicenseChoice() {
+	    
+	    IModel<List<ExperimentPackageLicense>> licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
+            @Override
+            protected List<ExperimentPackageLicense> load() {
+                return experimentPackagelicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
+            }
+        };
 
+        AjaxDropDownChoice<ExperimentPackageLicense> ddc = new AjaxDropDownChoice<ExperimentPackageLicense>("licenses", packageLicenseModel, licenses, new ChoiceRenderer<ExperimentPackageLicense>("license.title", "experimentPackageLicenseId")) {
+
+            @Override
+            protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentPackageLicense option) {
+                super.onSelectionChangeAjaxified(target, option);
+                licenseModel.setObject((option != null) ? option.getLicense() : null);
+                target.add(viewLicenseLink);
+                target.add(priceCont);
+                buyDownloadPanel.setModelObject(option);
+                target.add(buyDownloadPanel);
+            }
+
+        };
+        
+        return ddc;
+	}
+	
+	
+	private AjaxDropDownChoice<License> createLicenseChoice() {
+	    
+	    IModel<List<License>> licenses = new LoadableDetachableModel<List<License>>() {
+            @Override
+            protected List<License> load() {
+                return licenseFacade.getAllRecords();
+            }
+        };
+
+        AjaxDropDownChoice<License> ddc = new AjaxDropDownChoice<License>("licenses", licenseModel, licenses, new ChoiceRenderer<License>("title", "licenseId")) {
+
+            @Override
+            protected void onSelectionChangeAjaxified(AjaxRequestTarget target, License option) {
+                super.onSelectionChangeAjaxified(target, option);
+                target.add(viewLicenseLink);
+                experimentsModel.detach();
+                target.add(experimentListCont);
+            }
+
+        };
+        
+        return ddc;
+	}
 
 
     /**
@@ -301,10 +347,10 @@ public class ExperimentPackagePanel extends Panel {
 
 			@Override
 			protected List<Experiment> load() {
-				if(epModel.getObject().getExperimentPackageId() > 0) {
+				if (!noPackage) {
 					return experimentsFacade.getExperimentsByPackage(epModel.getObject().getExperimentPackageId());
 				} else {
-					return experimentsFacade.getExperimentsWithoutPackage();
+				    return experimentsFacade.getExperimentsWithoutPackageWithLicense(licenseModel.getObject());
 				}
 			}
 
@@ -328,9 +374,10 @@ public class ExperimentPackagePanel extends Panel {
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.number"), "experimentId", "experimentId"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.scenarioTitle"), "scenario.title", "scenario.title"));
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.date"), "startTime", "startTime"));
+        
         columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.gender"), "personBySubjectPersonId.gender", "personBySubjectPersonId.gender"));
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
-                "personBySubjectPersonId.dateOfBirth", "yyyy"));
+                    "personBySubjectPersonId.dateOfBirth", "yyyy"));
         
 		// TODO service page missing.
         /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
@@ -348,34 +395,81 @@ public class ExperimentPackagePanel extends Panel {
             }
         });
 
-        if (epModel.getObject().getExperimentPackageId() == 0) {
+        if (noPackage) {
             
-            /*columns.add(new PropertyColumn<Experiment, String>(Model.of("License"), null, null) {
+            /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.licenses"), null, null) {
+                
+                // TODO kuba licence: zde vytvorit dropdown select licenci a napojit na cenu a odkaz pro pridani do kosiku
+                
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                    item.add(new Label(componentId, "Commons Attribution License 4.0"));
+                    //item.add(new Label(componentId, "Commons Attribution License 4.0"));
+                    
+                    final Experiment experiment = rowModel.getObject();
+                    IModel<List<ExperimentLicence>> expLicences = new LoadableDetachableModel<List<ExperimentLicence>>() {
+                        @Override
+                        protected List<ExperimentLicence> load() {
+                            return experimentLicenseFacade.getExperimentLicensesForExperiment(experiment);
+                        }
+                    };
+                    
+                    AjaxDropDownChoice<ExperimentLicence> choice = new AjaxDropDownChoice<ExperimentLicence>(componentId, new Model<ExperimentLicence>(), expLicences, new ChoiceRenderer<ExperimentLicence>("license.title", "experimentLicenceId")) {
+
+                        @Override
+                        protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentLicence option) {
+                            super.onSelectionChangeAjaxified(target, option);
+                            //target.add(viewLicenseLink);
+                            //target.add(priceCont);
+                            //buyDownloadPanel.setModelObject(option);
+                            //target.add(buyDownloadPanel);
+                        }
+
+                    };
+
+                    item.add(choice);
                 }
+                
             });*/
             
             columns.add(new PropertyColumn<Experiment, String>(Model.of("Price"), null, null) {
+                
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                    item.add(new Label(componentId, "0 EUR"));
+                    if (licenseModel.getObject() != null) {
+                        ExperimentLicence expLic = findExperimentLicense(rowModel.getObject().getExperimentLicences(), licenseModel.getObject());
+                        item.add(new Label(componentId, new PropertyModel<String>(expLic, "price")));
+                    } else {
+                        item.add(new Label(componentId).setVisible(false));
+                    }
                 }
+                
             });
 
             
             // TODO kuba licence - pridavani experimentu do kosiku
-            /*columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
+            columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
+                
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                    item.add(new ExperimentBuyDownloadLinkPanel(componentId, rowModel));
+                    ExperimentBuyDownloadLinkPanel buyDownloadPanel = new ExperimentBuyDownloadLinkPanel(componentId, new Model<ExperimentLicence>());
+                    buyDownloadPanel.setExperiment(rowModel.getObject());
+                    item.add(buyDownloadPanel);
                 }
-            });*/
+                
+            });
             
         }
 
 		return columns;
+    }
+    
+    
+    private ExperimentLicence findExperimentLicense(Collection<ExperimentLicence> experimentLicenses, License license) {
+        for (ExperimentLicence item : experimentLicenses) {
+            if (item.getLicense().equals(license))
+                return item;
+        }
+        return new ExperimentLicence();
     }
     
 

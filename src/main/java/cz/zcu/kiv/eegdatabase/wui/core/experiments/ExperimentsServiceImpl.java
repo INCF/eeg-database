@@ -45,6 +45,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
 import cz.zcu.kiv.eegdatabase.data.pojo.ElectrodeConf;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
 import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
@@ -145,9 +146,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Override
     @Transactional(readOnly = true)
     public Experiment getExperimentForDetail(int experimentId) {
-        
         Experiment experiment = experimentDao.getExperimentForDetail(experimentId);
-        
         return experiment;
     }
 
@@ -379,6 +378,15 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 	public List<Experiment> getExperimentsWithoutPackage() {
 		return experimentPackageConnectionDao.listExperimentsWithoutPackage();
 	}
+	
+	@Override
+    @Transactional(readOnly = true)
+    public List<Experiment> getExperimentsWithoutPackageWithLicense(License license) {
+	    if (license != null)
+	        return experimentPackageConnectionDao.listExperimentsWithoutPackageWithLicense(license.getLicenseId());
+	    else
+	        return experimentPackageConnectionDao.listExperimentsWithoutPackage();
+    }
 
     @Override
     public boolean deleteAndCreateExperimentIndexInES() {
