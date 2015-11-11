@@ -379,7 +379,7 @@ public class ExperimentPackagePanel extends Panel {
         columns.add(new TimestampPropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.yearOfBirth"), "personBySubjectPersonId.dateOfBirth",
                     "personBySubjectPersonId.dateOfBirth", "yyyy"));
         
-		// TODO service page missing.
+		// XXX service page missing.
         /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.services"), null, null) {
 
             @Override
@@ -431,13 +431,15 @@ public class ExperimentPackagePanel extends Panel {
                 
             });*/
             
-            columns.add(new PropertyColumn<Experiment, String>(Model.of("Price"), null, null) {
+            
+            columns.add(new PropertyColumn<Experiment, String>(new ResourceModel("dataTable.heading.price"), null, null) {
                 
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                     if (licenseModel.getObject() != null) {
                         ExperimentLicence expLic = findExperimentLicense(rowModel.getObject().getExperimentLicences(), licenseModel.getObject());
-                        item.add(new Label(componentId, new PropertyModel<String>(expLic, "price")));
+                        IModel<String> priceLabel = new StringResourceModel("price.currency", (IModel<?>) null, new PropertyModel<String>(expLic, "price"));
+                        item.add(new Label(componentId, priceLabel));
                     } else {
                         item.add(new Label(componentId).setVisible(false));
                     }
@@ -445,14 +447,16 @@ public class ExperimentPackagePanel extends Panel {
                 
             });
 
-            
-            // TODO kuba licence - pridavani experimentu do kosiku
             columns.add(new PropertyColumn<Experiment, String>(null, null, null) {
                 
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
                     ExperimentBuyDownloadLinkPanel buyDownloadPanel = new ExperimentBuyDownloadLinkPanel(componentId, new Model<ExperimentLicence>());
                     buyDownloadPanel.setExperiment(rowModel.getObject());
+                    if (licenseModel.getObject() != null) {
+                        ExperimentLicence expLic = findExperimentLicense(rowModel.getObject().getExperimentLicences(), licenseModel.getObject());
+                        buyDownloadPanel.setModelObject(expLic);
+                    }
                     item.add(buyDownloadPanel);
                 }
                 

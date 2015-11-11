@@ -29,26 +29,31 @@ This file is part of the EEG-database project
         
         <table class="standardValueTable" style="width: 100%">
             <tr>
-                <th><wicket:message key="label.license.title"></wicket:message></th>
+                <th><wicket:message key="label.title"></wicket:message></th>
                 <td wicket:id="title"></td>
             </tr>
             <tr>
-                <th><wicket:message key="label.license.type"></wicket:message></th>
+                <th><wicket:message key="label.type"></wicket:message></th>
                 <td wicket:id="licenseType"></td>
             </tr>
-
             <tr>
-                <th><wicket:message key="label.license.description"></wicket:message></th>
+                <th><wicket:message key="label.description"></wicket:message></th>
                 <td wicket:id="description"></td>
             </tr>
+            <wicket:enclosure child="link">
+                <tr>
+                    <th><wicket:message key="label.link" /></th>
+                    <td><a wicket:id="link"></a></td>
+                </tr>
+            </wicket:enclosure>
             <wicket:enclosure child="download">
-            <tr>
-                <th colspan="2"><wicket:message key="label.license.attachment.file"></wicket:message></th>
-            </tr>
-            <tr>
-                <td wicket:id="attachmentFileName"></td>
-                <td><a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a></td>
-            </tr>
+	            <tr>
+	                <th colspan="2"><wicket:message key="label.license.attachment.file"></wicket:message></th>
+	            </tr>
+	            <tr>
+	                <td wicket:id="attachmentFileName"></td>
+	                <td><a href="#" wicket:id="download"><wicket:message key="link.download"></wicket:message></a></td>
+	            </tr>
             </wicket:enclosure>
         </table>
         <form wicket:id="form" class="standardInputForm">

@@ -150,8 +150,7 @@ public class ShoppingCartPage extends MenuPage {
                 
                 if (item.getModelObject().getExperiment() != null) {
                     
-                    // TODO kuba - overit ze funguje readByParameter
-                    final List<ExperimentLicence> expLicenses = experimentLicenseFacade.readByParameter("experiment", item.getModelObject().getExperiment());
+                    final List<ExperimentLicence> expLicenses = experimentLicenseFacade.getExperimentLicensesForExperiment(item.getModelObject().getExperiment());
                     for (ExperimentLicence expLicense : expLicenses)
                         licenses.add(expLicense.getLicense());
 

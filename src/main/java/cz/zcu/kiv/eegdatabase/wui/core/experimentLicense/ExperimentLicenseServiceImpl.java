@@ -38,11 +38,13 @@ public class ExperimentLicenseServiceImpl extends GenericServiceImpl<ExperimentL
     }
 
     @Override
+    @Transactional(readOnly = true)
     public List<ExperimentLicence> getExperimentLicensesForExperiment(Experiment experiment) {
         return dao.readByParameter("experiment.experimentId", experiment.getExperimentId());
     }
 
     @Override
+    @Transactional(readOnly = true)
     public ExperimentLicence getExperimentLicense(Experiment experiment, License license) {
         Map<String, Object> params = new HashMap<String, Object>(2);
         params.put("experiment.experimentId", experiment.getExperimentId());

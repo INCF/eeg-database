@@ -1,15 +1,18 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses.components;
 
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.basic.MultiLineLabel;
 import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.CompoundPropertyModel;
 import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.resource.ByteArrayResource;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
@@ -22,11 +25,14 @@ public class ViewLicensePanel extends Panel {
 
     @SpringBean
     private LicenseFacade facade;
-    private ResourceLink<Void> downloadLink;
     private IModel<License> model;
-    private AjaxButton button;
-    private Form form;
 
+    private ExternalLink licenseLink;
+    private ResourceLink<Void> downloadLink;
+    private Form<Void> form;
+    private AjaxButton button;
+
+    
     public ViewLicensePanel(String id, final IModel<License> model, boolean showRemoveButton) {
         super(id, new CompoundPropertyModel<License>(model));
         this.model = model;
@@ -34,8 +40,12 @@ public class ViewLicensePanel extends Panel {
         add(new Label("title"));
         add(new Label("licenseType"));
         add(new MultiLineLabel("description"));
+        
+        IModel<String> link = new PropertyModel<String>(model, "link");
+        licenseLink = new ExternalLink("link", link, link);
+        add(licenseLink);
+        
         add(new Label("attachmentFileName"));
-
         boolean isContent = model.getObject() != null && model.getObject().getAttachmentFileName() != null;
         ByteArrayResource res;
         if (isContent) {
@@ -48,7 +58,7 @@ public class ViewLicensePanel extends Panel {
         downloadLink.setVisible(isContent);
         add(downloadLink);
 
-        this.form = new Form("form");
+        this.form = new Form<Void>("form");
         add(form);
         button = new AjaxButton("removeButton", ResourceUtils.getModel("button.remove")) {
             @Override
@@ -71,6 +81,8 @@ public class ViewLicensePanel extends Panel {
     @Override
     protected void onConfigure() {
         super.onConfigure();
+        
+        licenseLink.setVisible(model.getObject() != null && model.getObject().getLink() != null);
 
         boolean isContent = model.getObject() != null && model.getObject().getAttachmentFileName() != null;
         ByteArrayResource res;
