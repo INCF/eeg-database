@@ -118,9 +118,8 @@ public class ExperimentFormPage extends MenuPage {
             public void onFinish() {
                 Integer id = 0; //TODO remove
                 for (int i = 0; i < 20; i++) { //TODO remove for cycle
-                    Experiment experiment = new Experiment();
-                    experiment = model.getObject();
-                    id = 0;
+                    Experiment experiment = model.getObject();
+                    experiment.setExperimentId(0);
 
                     ResearchGroup group = experiment.getResearchGroup();
                     if (group != null && group.isLock()) {
