@@ -117,7 +117,7 @@ public class ExperimentFormPage extends MenuPage {
             @Override
             public void onFinish() {
                 Integer id = 0; //TODO remove
-                for (int i = 0; i < 100; i++) { //TODO remove for cycle
+                for (int i = 0; i < 50; i++) { //TODO remove for cycle
                     Experiment experiment = model.getObject();
                     experiment.setExperimentId(0);
 
