@@ -25,7 +25,6 @@ package cz.zcu.kiv.eegdatabase.ui;
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
-import cz.zcu.kiv.eegdatabase.data.dao.ScenarioDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.logic.Util;
@@ -144,7 +143,7 @@ public class ExperimentTestIT extends AbstractUITest {
         tester.clickLinkWithText(getProperty("action.logout"));
 
     }
-    @Test(groups = "web", dependsOnMethods = {"testExperimentValidation"})
+    @Test(groups = "web", enabled = false, dependsOnMethods = {"testExperimentValidation"})
     public void testAddExperiment() throws InterruptedException, IOException {
 
         unlockGroup();
