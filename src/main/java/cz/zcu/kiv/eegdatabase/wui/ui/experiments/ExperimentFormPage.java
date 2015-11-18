@@ -116,10 +116,7 @@ public class ExperimentFormPage extends MenuPage {
 
             @Override
             public void onFinish() {
-                Integer id = 0; //TODO remove
-                for (int i = 0; i < 50; i++) { //TODO remove for cycle
                     Experiment experiment = model.getObject();
-                    experiment.setExperimentId(0);
 
                     ResearchGroup group = experiment.getResearchGroup();
                     if (group != null && group.isLock()) {
@@ -155,7 +152,7 @@ public class ExperimentFormPage extends MenuPage {
                     Person logged = EEGDataBaseSession.get().getLoggedUser();
                     experiment.setPersonByOwnerId(logged);
 
-                    id = experiment.getExperimentId();
+                    Integer id = experiment.getExperimentId();
                     if (experiment.getExperimentId() != 0) {
                         facade.update(experiment);
                     }
@@ -198,7 +195,6 @@ public class ExperimentFormPage extends MenuPage {
                         file.setExperiment(experiment);
                         fileFacade.create(file);
                     }
-                }
 
 
 
