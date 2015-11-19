@@ -45,7 +45,9 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @ManyToOne
     @JoinColumn(name = "PROMOCODE")
     private PromoCode promoCode;
-
+    
+    
+    public OrderItem() { }
 
     public OrderItem(MembershipPlan plan, Order order) {
         this.membershipPlan = plan;
