@@ -51,13 +51,10 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     private boolean isDownloadable = false;
 
     
-    public ExperimentBuyDownloadLinkPanel(String id, IModel<ExperimentLicence> model) {
+    public ExperimentBuyDownloadLinkPanel(String id, Experiment experiment, IModel<ExperimentLicence> model) {
         super(id);
-        //experiment = model.getObject();
+        this.experiment = experiment;
         this.model = model;
-        
-        if (model.getObject() != null)
-            this.experiment = model.getObject().getExperiment();
         
         // XXX price hidden for now.
         /*
@@ -71,6 +68,9 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
             }
         });
         */
+        
+        // "Add to cart" link
+        // rendered only for experiments that haven't been placed in the cart yet
         add(new Link<Void>("addToCartLink") {
 
             private static final long serialVersionUID = 1L;
@@ -84,7 +84,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
             @Override
             public boolean isVisible() {
                 return (ExperimentBuyDownloadLinkPanel.this.model.getObject() != null)
-                        && !inCart /*&& !isDownloadable*/;
+                        && !inCart && !isDownloadable;
             }
             
             @Override
@@ -94,6 +94,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
             
         });
 
+        
+        // label showing that the experiment is already in the cart
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
 
             private static final long serialVersionUID = 1L;
@@ -105,9 +107,11 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
         });
 
-        // TODO kuba licence - bude zachovano tlacitko download?
-        /*BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, 
-                PageParametersUtils.getDefaultPageParameters(model.getObject().getExperiment().getExperimentId())) {
+        
+        // "Download" link for purchased experiments
+        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink = 
+                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class, 
+                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
 
             private static final long serialVersionUID = 1L;
 
@@ -116,14 +120,12 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
                 return isDownloadable;
             }
         };
-        add(downloadLink);*/
+        add(downloadLink);
     }
     
     
     public void setModelObject(ExperimentLicence experimentLicence) {
         model.setObject(experimentLicence);
-        if (experimentLicence != null)
-            this.experiment = experimentLicence.getExperiment();
     }
     
     

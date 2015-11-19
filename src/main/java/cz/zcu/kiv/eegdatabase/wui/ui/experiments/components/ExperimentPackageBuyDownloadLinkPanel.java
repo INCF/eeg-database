@@ -23,6 +23,7 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
@@ -31,8 +32,10 @@ import org.apache.wicket.spring.injection.annot.SpringBean;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
 
 
 public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
@@ -51,12 +54,10 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
     private Link<Void> addToCartLink;
     
 
-    public ExperimentPackageBuyDownloadLinkPanel(String id, IModel<ExperimentPackageLicense> model) {
+    public ExperimentPackageBuyDownloadLinkPanel(String id, ExperimentPackage pckg, IModel<ExperimentPackageLicense> model) {
         super(id);
+        this.experimentPackage = pckg;
         this.model = model;
-        
-        if (model.getObject() != null)
-            this.experimentPackage = model.getObject().getExperimentPackage();
         
         // XXX price hidden for now.
         /*
@@ -71,6 +72,8 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
         });
         */
         
+        // "Add to cart" link
+        // rendered only for packages that haven't been placed in the cart yet
         addToCartLink = new Link<Void>("addToCartLink") {
 
             private static final long serialVersionUID = 1L;
@@ -84,7 +87,7 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             @Override
             public boolean isVisible() {
                 return (ExperimentPackageBuyDownloadLinkPanel.this.model.getObject() != null)
-                        && !inCart /*&& !isDownloadable*/;
+                        && !inCart && !isDownloadable;
             }
             
             @Override
@@ -93,9 +96,10 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             }
             
         };
-        
         add(addToCartLink);
-
+        
+        
+        // label showing that the package is already in the cart
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
 
             private static final long serialVersionUID = 1L;
@@ -107,10 +111,11 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
 
         });
 
-        // TODO kuba licence - bude zachovano tlacitko download?
-        // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
-        /*BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsPackageDownloadPage.class,
-                PageParametersUtils.getDefaultPageParameters(model.getObject().getExperimentPackage().getExperimentPackageId())) {
+        
+        // "Download" link for purchased packages
+        BookmarkablePageLink<ExperimentsPackageDownloadPage> downloadLink = 
+                new BookmarkablePageLink<ExperimentsPackageDownloadPage>("downloadLink", ExperimentsPackageDownloadPage.class,
+                            PageParametersUtils.getDefaultPageParameters(pckg.getExperimentPackageId())) {
 
             private static final long serialVersionUID = 1L;
 
@@ -119,14 +124,13 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
                 return isDownloadable;
             }
         };
-        add(downloadLink);*/
+        add(downloadLink);
+        
     }
     
     
     public void setModelObject(ExperimentPackageLicense experimentPackageLicense) {
         model.setObject(experimentPackageLicense);
-        if (experimentPackageLicense != null)
-            this.experimentPackage = experimentPackageLicense.getExperimentPackage();
     }
     
     

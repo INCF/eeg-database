@@ -134,8 +134,7 @@ public class ExperimentPackagePanel extends Panel {
 		this.addFooter();
 		this.addExperimentListToCont(experimentListCont);
 		
-		buyDownloadPanel = new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", new Model<ExperimentPackageLicense>());
-		buyDownloadPanel.setExperimentPackage(model.getObject());
+		buyDownloadPanel = new ExperimentPackageBuyDownloadLinkPanel("buyDownloadLinkPanel", model.getObject(), new Model<ExperimentPackageLicense>());
         buyDownloadPanel.setVisibilityAllowed(!(epModel.getObject().getExperimentPackageId() == 0));
         buyDownloadPanel.setOutputMarkupId(true);
 		add(buyDownloadPanel);
@@ -451,8 +450,7 @@ public class ExperimentPackagePanel extends Panel {
                 
                 @Override
                 public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                    ExperimentBuyDownloadLinkPanel buyDownloadPanel = new ExperimentBuyDownloadLinkPanel(componentId, new Model<ExperimentLicence>());
-                    buyDownloadPanel.setExperiment(rowModel.getObject());
+                    ExperimentBuyDownloadLinkPanel buyDownloadPanel = new ExperimentBuyDownloadLinkPanel(componentId, rowModel.getObject(), new Model<ExperimentLicence>());
                     if (licenseModel.getObject() != null) {
                         ExperimentLicence expLic = findExperimentLicense(rowModel.getObject().getExperimentLicences(), licenseModel.getObject());
                         buyDownloadPanel.setModelObject(expLic);
