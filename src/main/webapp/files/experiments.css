@@ -17,6 +17,10 @@
 	float: left;
 }
 
+#packageLicensesList li {
+    padding-bottom: 3px;
+}
+
 #licensesLabel {
 	float: left;
 	font-weight: bold;
