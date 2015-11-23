@@ -8,7 +8,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.LicenseManageFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.forms.MembershipPlanManageFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.ListLicensesDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseDownloadLinkPanel;
@@ -60,7 +59,7 @@ public class AdminManageLicensesPage extends MenuPage {
         List<IColumn<License, String>> columns = new ArrayList<IColumn<License, String>>();
 
         columns.add(new PropertyColumn<License, String>(ResourceUtils.getModel("dataTable.heading.title"), "title", "title"));
-        columns.add(new PropertyColumn<License, String>(ResourceUtils.getModel("dataTable.heading.price"), "price", "price"));
+        //columns.add(new PropertyColumn<License, String>(ResourceUtils.getModel("dataTable.heading.link"), null, "link"));
         columns.add(new PropertyColumn<License, String>(ResourceUtils.getModel("dataTable.heading.attachmentFile"), null, null) {
             @Override
             public void populateItem(Item<ICellPopulator<License>> item, String componentId, IModel<License> rowModel) {

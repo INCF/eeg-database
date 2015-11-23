@@ -20,7 +20,9 @@ public class ListLicensesDataProvider extends BasicDataProvider<License> {
 
         List<License> licenses;
 
-        licenses = licenseFacade.readByParameter("template",template);
+        //licenses = licenseFacade.readByParameter("template",template);
+        licenses = licenseFacade.getAllRecords();
+        
         if(licenses == null ) {
             licenses = new ArrayList<License>();
         }

@@ -49,15 +49,19 @@ public enum ExperimentsPageLeftMenu implements IButtonPageMenu {
     LIST_OF_EXPERIMENTS_AS_OWNER(ListExperimentsPage.class, "menuItem.experiments.myExperiments", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_OWNER)),
     LIST_OF_EXPERIMENTS_AS_SUBJECT(ListExperimentsPage.class, "menuItem.experiments.meAsSubject", PageParametersUtils.getDefaultPageParameters(ListExperimentsPage.PARAM_SUBJECT)),
     MANAGE_EXPERIMENT_PACKAGES(ManageExperimentPackagesPage.class, "menuItem.experiments.packages", null),
-	MANAGE_LICENSE_REQUESTS(ManageLicenseRequestsPage.class, "menuItem.experiments.licenses.requests", null),
-	LIST_GRANTED_LICENSES(GrantedLicensesPage.class, "menuItem.experiments.licenses.granted", null),
-	LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
-    SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
+	
+    // XXX license requests etc. are not used anymore
+    //MANAGE_LICENSE_REQUESTS(ManageLicenseRequestsPage.class, "menuItem.experiments.licenses.requests", null),
+	//LIST_GRANTED_LICENSES(GrantedLicensesPage.class, "menuItem.experiments.licenses.granted", null),
+	//LIST_REVOKED_LICENSES(RevokedRequestPage.class, "menuItem.experiments.licenses.revoked", null),
+    
+	SEARCH(UnderConstructPage.class, "menuItem.searchMeasuration", null),
     ADD_EXPERIMENTS(ExperimentFormPage.class, "menuItem.experiments.addExperiment", null),
     LIST_TEMPLATE(ListTemplatePage.class, "menuItem.template.list", null),
     RESULT(ResultListPage.class, "menuItem.serviceResult", null),
-// XXX price list hidden for now.
-    //    PRICELIST(PriceListPage.class, "pageTitle.pricelist", null),
+
+    // XXX price list hidden for now.
+    //PRICELIST(PriceListPage.class, "pageTitle.pricelist", null),
 
     ;
 

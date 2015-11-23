@@ -32,8 +32,6 @@ import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-
 import org.apache.commons.logging.Log;
 
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
@@ -47,7 +45,6 @@ import org.springframework.transaction.annotation.Transactional;
 import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -192,9 +189,7 @@ public class PersonServiceImpl implements PersonService {
         log.debug("Laterality = " + person.getLaterality());
 
         int id = personDAO.create(person);
-		
 		person.setPersonId(id);
-		licenseFacade.addPublicLicenseToPerson(person);
 		
         return person;
     }

@@ -26,11 +26,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 import odml.core.Section;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseDetailPage;
+
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
@@ -76,7 +76,7 @@ import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
  * Page of detail on experiment. 
  * 
  * @author Jakub Rinkes
- *
+ * @author Jakub Krauz
  */
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class ExperimentsDetailPage extends MenuPage {
@@ -116,7 +116,7 @@ public class ExperimentsDetailPage extends MenuPage {
         add(new Label("experimentId", experiment.getExperimentId()+""));
         add(new Label("privateExperiment", experiment.isPrivateExperiment()+""));
         add(new Label("scenario.title", experiment.getScenario().getTitle()));
-        add(new Label("price", experiment.getPrice()));
+
         add(new TimestampLabel("startTime", experiment.getStartTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         add(new TimestampLabel("endTime", experiment.getEndTime(), StringUtils.DATE_TIME_FORMAT_PATTER));
         
@@ -135,9 +135,16 @@ public class ExperimentsDetailPage extends MenuPage {
         BookmarkablePageLink<Void> addFileLink = new BookmarkablePageLink<Void>("addFileLink", AddDataFilePage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> editExpLink = new BookmarkablePageLink<Void>("editExpLink", ExperimentFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
         BookmarkablePageLink<Void> metadataLink = new BookmarkablePageLink<Void>("metadataLink", MetadataFormPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
-        ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", new Model<Experiment>(experiment));
+        
+        ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", experiment, new Model<ExperimentLicence>());
         downloadExpLink.setVisibilityAllowed(experiment.getExperimentPackageConnections().isEmpty());
-        add(addFileLink.setVisibilityAllowed(coexperiment), editExpLink.setVisibilityAllowed(coexperiment), metadataLink.setVisibilityAllowed(coexperiment), downloadExpLink);
+        // TODO add license choice to allow the "Add to cart" link, then delete the following line
+        downloadExpLink.setVisible(EEGDataBaseSession.get().isExperimentPurchased(experiment.getExperimentId()));
+        
+        add(addFileLink.setVisibilityAllowed(coexperiment), 
+            editExpLink.setVisibilityAllowed(coexperiment), 
+            metadataLink.setVisibilityAllowed(coexperiment), 
+            downloadExpLink);
         
         /* XXX #66 Java Heap Space Exception : working with big data file in memory.
             final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
@@ -153,19 +160,20 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
         
+        metadata.setVisible(metadata.getViewSize() > 0);
         add(metadata);
 
-        PropertyListView<License> licenseList = new PropertyListView<License>("licenseList", new ListModel<License>(licenseFacade.getLicensesForExperiment(experiment.getExperimentId()))) {
-
+        PropertyListView<ExperimentLicence> licenseList = new PropertyListView<ExperimentLicence>("licenseList", new ListModel<ExperimentLicence>(new ArrayList<ExperimentLicence>(experiment.getExperimentLicences()))) {
+            
             private static final long serialVersionUID = 1L;
 
             @Override
-            protected void populateItem(final ListItem<License> item) {
-                item.add(new Label("title"));
+            protected void populateItem(final ListItem<ExperimentLicence> item) {
+                item.add(new Label("license.title"));
                 item.add(new Label("price"));
-                item.add(new Label("licenseType"));
-                item.add(new Label("attachmentFileName"));
-                item.add(new ViewLinkPanel("detail", LicenseDetailPage.class, "licenseId", item.getModel(), ResourceUtils.getModel("link.detail")));
+                item.add(new Label("license.licenseType"));
+                //item.add(new Label("license.attachmentFileName"));
+                item.add(new ViewLinkPanel("detail", LicenseDetailPage.class, "license.licenseId", item.getModel(), ResourceUtils.getModel("link.detail")));
                 item.add(new AjaxLink<Void>("deleteLink") {
 
                     private static final long serialVersionUID = 1L;
@@ -173,7 +181,7 @@ public class ExperimentsDetailPage extends MenuPage {
                     @Override
                     public void onClick(AjaxRequestTarget target) {
 
-                        experimentLicenseFacade.remove(experiment,item.getModelObject());
+                        experimentLicenseFacade.remove(experiment, item.getModelObject().getLicense());
 
                         setResponsePage(ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId));
                     }
@@ -183,7 +191,7 @@ public class ExperimentsDetailPage extends MenuPage {
                         super.updateAjaxAttributes(attributes);
 
                         AjaxCallListener ajaxCallListener = new AjaxCallListener();
-                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.license", item.getModelObject().getTitle()) + "');");
+                        ajaxCallListener.onPrecondition("return confirm('" + ResourceUtils.getString("text.delete.license", item.getModelObject().getLicense().getTitle()) + "');");
                         attributes.getAjaxCallListeners().add(ajaxCallListener);
                     }
 
@@ -198,6 +206,8 @@ public class ExperimentsDetailPage extends MenuPage {
                 });
             }
         };
+        
+        add(licenseList);
 
         PropertyListView<DataFile> files = new PropertyListView<DataFile>("files", new ListModel<DataFile>(new ArrayList<DataFile>(experiment.getDataFiles()))) {
 
@@ -243,7 +253,6 @@ public class ExperimentsDetailPage extends MenuPage {
             }
         };
 
-        add(licenseList);
         add(files);
 
         final WebMarkupContainer container = new WebMarkupContainer("container");

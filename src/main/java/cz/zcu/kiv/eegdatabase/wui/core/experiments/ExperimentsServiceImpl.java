@@ -22,15 +22,17 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.dao.*;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import java.util.*;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 
-import java.util.List;
+import cz.zcu.kiv.eegdatabase.data.dao.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+
 
 public class ExperimentsServiceImpl implements ExperimentsService {
     
@@ -125,9 +127,7 @@ public class ExperimentsServiceImpl implements ExperimentsService {
     @Override
     @Transactional(readOnly = true)
     public Experiment getExperimentForDetail(int experimentId) {
-        
         Experiment experiment = experimentDao.getExperimentForDetail(experimentId);
-        
         return experiment;
     }
 
@@ -377,12 +377,14 @@ public class ExperimentsServiceImpl implements ExperimentsService {
 	public List<Experiment> getExperimentsWithoutPackage() {
 		return experimentPackageConnectionDao.listExperimentsWithoutPackage();
 	}
-
-    @Override
-    @Transactional
-    public void changePrice(Experiment experiment) {
-        experimentDao.update(experiment);
-        
+	
+	@Override
+    @Transactional(readOnly = true)
+    public List<Experiment> getExperimentsWithoutPackageWithLicense(License license) {
+	    if (license != null)
+	        return experimentPackageConnectionDao.listExperimentsWithoutPackageWithLicense(license.getLicenseId());
+	    else
+	        return experimentPackageConnectionDao.listExperimentsWithoutPackage();
     }
 
     @Override

@@ -40,8 +40,6 @@ public interface LicenseDao extends GenericDao<License, Integer> {
 	public List<License> getLicensesByType(int reseachGroupId, LicenseType licenseType);
 
 	public List<License> getLicensesByType(int reseachGroupId, List<LicenseType> licenseType);
-
-	public License getPublicLicense();
 	
 	public byte[] getLicenseAttachmentContent(int licenseId);
 	
