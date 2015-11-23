@@ -228,10 +228,7 @@ public class PriceListPage extends MenuPage {
                     @Override
                     void onUpdate(AjaxRequestTarget target) {
                         Experiment experiment = rowModel.getObject();
-                        
-                        // TODO kuba licence
-                        //experimentFacade.changePrice(experiment);
-                        
+                        // TODO change price
                         target.add(container);
                     }
 

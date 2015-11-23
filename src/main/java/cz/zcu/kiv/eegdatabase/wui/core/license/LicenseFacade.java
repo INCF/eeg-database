@@ -123,22 +123,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public boolean addLicenseToPerson(License license, Person person);
 
 	/**
-	 * Adds a public license to the person.
-	 *
-	 * @param person person
-	 * @return true if success, false if not (e.g. person already has the
-	 * license)
-	 */
-	public boolean addPublicLicenseToPerson(Person person);
-
-	/**
-	 * Returns the one global public License object.
-	 * @return global shared public license.
-	 */
-	public License getPublicLicense();
-	public byte[] getPublicLicenseFile();
-
-	/**
 	 * Returns all licenses of a given type for specified group.
 	 * @param group Group to get licenses for
 	 * @param type Fetch only licenses of this type.

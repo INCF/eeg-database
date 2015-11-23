@@ -234,11 +234,9 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
-		if(this.resGroupModel.getObject() != null) {
+		if (this.resGroupModel.getObject() != null) {
 			this.generateLicenseChoices();
 			packageModel.setObject(new ExperimentPackage());
-
-			licenseModel.setObject(licenseFacade.getPublicLicense());
 		}
 	}
 

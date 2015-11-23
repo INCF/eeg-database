@@ -53,14 +53,6 @@ public interface LicenseService extends GenericService<License, Integer> {
 	 * @param group 
 	 */
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
-		
-	/**
-	 * Returns the one global public License object.
-	 * @return global shared public license.
-	 */
-	public License getPublicLicense();
-	public byte[] getPublicLicenseFile();
-	public String getPublicLicenseFileName();
 
 	/**
 	 * Returns all licenses of a given type for specified group.
@@ -97,6 +89,5 @@ public interface LicenseService extends GenericService<License, Integer> {
     public List<License> getLicensesForExperiment(int experimentId);
 
     public List<License> getPersonLicenses(int personId);
-
-    //public List<License> getLicenseTemplates();
+    
 }

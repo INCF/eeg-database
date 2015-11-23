@@ -250,11 +250,8 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             
             licenseModel = new Model<License>();
             License license = licenseFacade.getLicenseForPurchasedExpPackage(expPackage.getExperimentPackageId(), EEGDataBaseSession.get().getLoggedUser().getPersonId());
-            if (license != null) {
-                licenseModel.setObject(license);
-            } else {
-                licenseModel.setObject(licenseFacade.getPublicLicense());
-            }
+            licenseModel.setObject(license);
+                
             viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
             viewLicenseWindow.setTitle(ResourceUtils.getModel("dataTable.heading.licenseTitle"));
             AjaxLink<License> viewLicenseLink = new AjaxLink<License>("viewLicenseLink", licenseModel) {

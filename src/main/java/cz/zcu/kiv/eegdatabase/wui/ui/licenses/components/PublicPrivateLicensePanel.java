@@ -99,19 +99,12 @@ public class PublicPrivateLicensePanel extends Panel {
 	/**
 	 * Override this method to provide additional onSubmit action
 	 *
-	 * On default removes public license if isPrivate is false or adds it otherwise.
-	 *
 	 * @param model license model
 	 * @param target ajax target
 	 * @param form form of the window
 	 */
 	protected void onSubmitAction(AjaxRequestTarget target, Form<?> form) {
-		License p = licenseFacade.getPublicLicense();
-		if(isPrivate) {	
-			licenseFacade.addLicenseForPackage(p, epmodel.getObject());
-		} else {
-			licenseFacade.removeLicenseFromPackage(p, epmodel.getObject());
-		}
+
 	}
 
 	/**

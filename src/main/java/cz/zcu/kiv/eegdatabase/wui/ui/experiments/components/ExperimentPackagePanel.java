@@ -40,7 +40,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ListExperimentsDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
 
-import org.apache.wicket.Component;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
@@ -56,12 +55,8 @@ import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.markup.repeater.Item;
 import org.apache.wicket.model.*;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -195,26 +190,6 @@ public class ExperimentPackagePanel extends Panel {
         Label price = new Label("price", new PropertyModel<String>(packageLicenseModel, "price"));
         priceCont.add(price);
 	    
-		/*licenses = new LoadableDetachableModel<List<ExperimentPackageLicense>>() {
-
-			@Override
-			protected List<ExperimentPackageLicense> load() {
-				return experimentPackagelicenseFacade.getExperimentPackageLicensesForPackage(epModel.getObject());
-			}
-		};
-
-		AjaxDropDownChoice<ExperimentPackageLicense> ddc = new AjaxDropDownChoice<ExperimentPackageLicense>("licenses", packageLicenseModel, licenses, new ChoiceRenderer<ExperimentPackageLicense>("license.title", "experimentPackageLicenseId")) {
-
-			@Override
-			protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentPackageLicense option) {
-				super.onSelectionChangeAjaxified(target, option);
-				target.add(viewLicenseLink);
-				target.add(priceCont);
-				buyDownloadPanel.setModelObject(option);
-				target.add(buyDownloadPanel);
-			}
-
-		};*/
         AjaxDropDownChoice<?> ddc = noPackage ? createLicenseChoice() : createPackageLicenseChoice();
 		
         viewLicenseWindow.setContent(new ViewLicensePanel(viewLicenseWindow.getContentId(), licenseModel, false));
@@ -395,41 +370,6 @@ public class ExperimentPackagePanel extends Panel {
         });
 
         if (noPackage) {
-            
-            /*columns.add(new PropertyColumn<Experiment, String>(ResourceUtils.getModel("dataTable.heading.licenses"), null, null) {
-                
-                // TODO kuba licence: zde vytvorit dropdown select licenci a napojit na cenu a odkaz pro pridani do kosiku
-                
-                @Override
-                public void populateItem(Item<ICellPopulator<Experiment>> item, String componentId, IModel<Experiment> rowModel) {
-                    //item.add(new Label(componentId, "Commons Attribution License 4.0"));
-                    
-                    final Experiment experiment = rowModel.getObject();
-                    IModel<List<ExperimentLicence>> expLicences = new LoadableDetachableModel<List<ExperimentLicence>>() {
-                        @Override
-                        protected List<ExperimentLicence> load() {
-                            return experimentLicenseFacade.getExperimentLicensesForExperiment(experiment);
-                        }
-                    };
-                    
-                    AjaxDropDownChoice<ExperimentLicence> choice = new AjaxDropDownChoice<ExperimentLicence>(componentId, new Model<ExperimentLicence>(), expLicences, new ChoiceRenderer<ExperimentLicence>("license.title", "experimentLicenceId")) {
-
-                        @Override
-                        protected void onSelectionChangeAjaxified(AjaxRequestTarget target, ExperimentLicence option) {
-                            super.onSelectionChangeAjaxified(target, option);
-                            //target.add(viewLicenseLink);
-                            //target.add(priceCont);
-                            //buyDownloadPanel.setModelObject(option);
-                            //target.add(buyDownloadPanel);
-                        }
-
-                    };
-
-                    item.add(choice);
-                }
-                
-            });*/
-            
             
             columns.add(new PropertyColumn<Experiment, String>(new ResourceModel("dataTable.heading.price"), null, null) {
                 

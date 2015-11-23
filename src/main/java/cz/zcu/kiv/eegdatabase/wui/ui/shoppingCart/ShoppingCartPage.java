@@ -234,66 +234,33 @@ public class ShoppingCartPage extends MenuPage {
             public void onClick() {
                 
                 Order order = shoppingCart.getOrder();
-                for(OrderItem item : order.getItems()) {
-                    
-                    // FIXME "You must select license for all experiments and experiment packages" for creating order with public experiment - no dropdownchoice for license choice. 
-                    if (item.getExperimentPackage()!= null) {
-                        //System.out.println("====="+item.getLicense());
-                        if (item.getLicense() == null) {
-                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
-                            return;
-                        }
-                    } else if (item.getExperiment()!= null) {
-//                        System.out.println("====="+item.getLicense());
-//                        if (item.getLicense() == null) {
-//                            this.getSession().error(ResourceUtils.getString("error.licenseSelect"));
-//                            return;
-//                        }
-                    }
-                }
-
                 order.setDate(new Timestamp(new Date().getTime()));
                 order.setPerson(EEGDataBaseSession.get().getLoggedUser());
                 order.setOrderPrice(shoppingCart.getTotalPrice());
                 
-                License publicLicense = licenseFacade.getPublicLicense();
-                
                 for(OrderItem item : order.getItems()) {
                     
-                    if(item.getLicense() == null) {
-                        item.setLicense(publicLicense);
-                    }
-                    
-                    if(item.getPrice() == null) {
+                    if (item.getPrice() == null) {
                         item.setPrice(BigDecimal.ZERO);
                     }
 
                     if (item.getMembershipPlan() != null) {
                         MembershipPlan plan = item.getMembershipPlan();
-                        if(MembershipPlanType.GROUP.getType()==plan.getType())
-                        {
+                        if (MembershipPlanType.GROUP.getType()==plan.getType()) {
                             ResearchGroup group = item.getResearchGroup();
-
                             ResearchGroupMembershipPlan groupPlan = new ResearchGroupMembershipPlan();
-
                             groupPlan.setResearchGroup(group);
                             groupPlan.setMembershipPlan(plan);
                             groupPlan.setFrom(new Timestamp(System.currentTimeMillis()));
                             groupPlan.setTo(new Timestamp(System.currentTimeMillis() + (groupPlan.getMembershipPlan().getLength() * 86400000)));
-
                             groupPlanFacade.create(groupPlan);
-
-                        }
-                        else{
+                        } else {
                             Person logged = EEGDataBaseSession.get().getLoggedUser();
-
                             PersonMembershipPlan personPlan = new PersonMembershipPlan();
-
                             personPlan.setPerson(logged);
                             personPlan.setMembershipPlan(plan);
                             personPlan.setFrom(new Timestamp(System.currentTimeMillis()));
                             personPlan.setTo(new Timestamp(System.currentTimeMillis() + (personPlan.getMembershipPlan().getLength() * 86400000)));
-
                             personPlanFacade.create(personPlan);
                         }
                     }

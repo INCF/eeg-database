@@ -57,14 +57,6 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
 	}
 
 	@Override
-	public License getPublicLicense() {
-		LicenseType licenseType = LicenseType.NON_COMMERCIAL;
-		String hqlQuery = "select l from License l where l.licenseType=:licenseType";
-
-		return (License) this.getSession().createQuery(hqlQuery).setParameter("licenseType", licenseType).list().iterator().next();
-	}
-
-	@Override
 	public List<License> getLicensesByType(int reseachGroupId, List<LicenseType> licenseType) {
 		String hqlQuery = "select l from License l where l.licenseType IN (:licenseType) and l.researchGroup=:researchGroup";
 

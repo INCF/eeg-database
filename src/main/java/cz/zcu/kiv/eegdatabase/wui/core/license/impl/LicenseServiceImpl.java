@@ -26,15 +26,11 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.ArrayList;
 import java.util.List;
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
@@ -49,7 +45,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 
@@ -63,7 +58,7 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     private ExperimentPackageLicenseDao experimentPackageLicenseDao;
     private LicenseDao licenseDao;
-    private String publicLicenseFileName = "PublicLicense.pdf";
+
 
     public LicenseServiceImpl() {
     }
@@ -80,10 +75,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     public LicenseServiceImpl(GenericDao<License, Integer> dao) {
         super(dao);
-    }
-
-    public void setPublicLicenseFileName(String publicLicenseFileName) {
-        this.publicLicenseFileName = publicLicenseFileName;
     }
 
     @Override
@@ -124,12 +115,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Transactional
     public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
         this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public License getPublicLicense() {
-        return this.licenseDao.getPublicLicense();
     }
 
     @Override
@@ -194,31 +179,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public byte[] getPublicLicenseFile() {
-
-        byte[] data = new byte[0];
-        try {
-            File file = ResourceUtils.getFile(publicLicenseFileName);
-            if (file.exists()) {
-                data = IOUtils.toByteArray(new FileInputStream(file));
-            }
-            return data;
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(), e);
-            return data;
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            return data;
-        }
-    }
-    
-    @Override
-    public String getPublicLicenseFileName() {
-        return publicLicenseFileName;
     }
 
     @Override
