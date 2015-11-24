@@ -29,8 +29,9 @@ import cz.zcu.kiv.eegdatabase.wui.core.common.KeywordsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicenseEditForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.LicensePriceForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.lists.components.ListModelWithResearchGroupCriteria;
+
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
 import org.apache.wicket.ajax.markup.html.form.AjaxButton;
@@ -43,8 +44,12 @@ import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.Map.Entry;
 
 /**
  *
@@ -52,8 +57,11 @@ import java.util.List;
  */
 public class ExperimentPackageDetailPanel extends Panel {
 
-	@SpringBean
+    private static final long serialVersionUID = 1L;
+    
+    @SpringBean
 	private LicenseFacade licenseFacade;
+    
 	@SpringBean
 	private ExperimentPackageFacade experimentPackageFacade;
 
@@ -69,18 +77,17 @@ public class ExperimentPackageDetailPanel extends Panel {
 	private IModel<List<License>> optionsModel;
     private IModel<Keywords> keywordsModel;
 
-	private Form form;
+	private Form<?> form;
 	private ModalWindow addLicenseWindow;
 	private DropDownChoice<License> licenseSelect;
-    private LicenseEditForm licenseEditForm;
-
-    private List<License> licenses;
+    
+    private Map<License, BigDecimal> licensePriceMap = new HashMap<License, BigDecimal>();
+    
 
 	public ExperimentPackageDetailPanel(String id, IModel<ResearchGroup> resGroup) {
 		super(id);
 		this.packageModel = new Model<ExperimentPackage>(new ExperimentPackage());
 		this.licenseModel = new Model<License>();
-		this.licenses = new ArrayList<License>();
         this.keywordsModel = new Model<Keywords>(new Keywords());
 		this.resGroupModel = resGroup;
 		form = new StatelessForm("form");
@@ -94,7 +101,7 @@ public class ExperimentPackageDetailPanel extends Panel {
 
 
 	private void addBasicInfoFields() {
-		FormComponent c = new TextField("name", new PropertyModel(packageModel, "name"));
+		TextField<String> c = new TextField<String>("name", new PropertyModel<String>(packageModel, "name"));
         c.setRequired(true);
 		c.setLabel(ResourceUtils.getModel("label.experimentPackage.name"));
 
@@ -107,20 +114,21 @@ public class ExperimentPackageDetailPanel extends Panel {
 		WicketUtils.addLabelsAndFeedback(form);
 	}
 
-	private void generateLicenseChoices() {
+	
+	@SuppressWarnings("serial")
+    private void generateLicenseChoices() {
 		optionsModel = new ListModelWithResearchGroupCriteria<License>() {
 
 			@Override
 			protected List<License> loadList(ResearchGroup group) {
-				//List<License> l = licenseFacade.getLicenseTemplates();
-				//return l;
-                return licenses;
+			    return new ArrayList<License>(licensePriceMap.keySet());
             }
 		};
 
 		((ListModelWithResearchGroupCriteria) optionsModel).setCriteriaModel(resGroupModel);
 	}
 
+	
 	private void addLicenseSelect() {
 		generateLicenseChoices();
 		licenseSelect = new DropDownChoice<License>("licensePolicy", licenseModel, optionsModel, new IChoiceRenderer<License>() {
@@ -140,67 +148,51 @@ public class ExperimentPackageDetailPanel extends Panel {
 		form.add(licenseSelect);
 	}
 
+	
 	/**
 	 * Add window which allows to add new license to the package.
 	 */
-	private void addLicenseAddWindow() {
+	@SuppressWarnings("serial")
+    private void addLicenseAddWindow() {
 		addLicenseWindow = new ModalWindow("addLicenseWindow");
 		addLicenseWindow.setAutoSize(true);
-		addLicenseWindow.setResizable(false);
+		addLicenseWindow.setResizable(true);
 		addLicenseWindow.setMinimalWidth(600);
+		addLicenseWindow.setMinimalHeight(400);
 		addLicenseWindow.setWidthUnit("px");
         addLicenseWindow.showUnloadConfirmation(false);
-        addLicenseWindow.setWindowClosedCallback(new ModalWindow.WindowClosedCallback() {
-            private static final long serialVersionUID = 1L;
-
-            public void onClose(AjaxRequestTarget target) {
-                licenseEditForm.clearLicenseModel();
+		
+		// prepare list of licenses not associated with the package yet
+        IModel<List<License>> licensesToAdd = new LoadableDetachableModel<List<License>>() {
+            @Override
+            protected List<License> load() {
+                List<License> list = licenseFacade.getAllRecords();
+                list.removeAll(licensePriceMap.keySet());
+                return list;
             }
-        });
-
-		IModel<List<License>> blpModel = new LoadableDetachableModel<List<License>>() {
-			@Override
-			protected List<License> load() {
-				return licenseFacade.getLicenseTemplates();
-			}
-		};
-
-		licenseEditForm = new LicenseEditForm(addLicenseWindow.getContentId(), new Model<License>(new License()), blpModel, new Model<Boolean>(true)) {
-			@Override
-			protected void onSubmitAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
-				License obj = model.getObject();
-
-                if (obj.getLicenseId() == 0) {
-                    obj.setTemplate(false);
-                    obj.setResearchGroup(resGroupModel.getObject());
-                    //licenseFacade.create(obj);
-                    //}
-                    ModalWindow.closeCurrent(target);
-                    //update license templates
-                    licenses.add(obj);
-                    optionsModel.detach();
-                    target.add(licenseSelect);
-                }
-
-			}
-
-			@Override
-			protected void onCancelAction(IModel<License> model, AjaxRequestTarget target, Form<?> form) {
-				ModalWindow.closeCurrent(target);
-			}
-
-			@Override
-			protected void onConfigure() {
-				super.onConfigure();
-				this.licenseModel.setObject(new License());
-			}
-
-		}.setDisplayRemoveButton(false);
-
-		addLicenseWindow.setContent(licenseEditForm);
+        };
+        
+        LicensePriceForm addLicenseForm = new LicensePriceForm(addLicenseWindow.getContentId(), licensesToAdd) {
+            
+            @Override
+            protected void onSubmitAction(License license, BigDecimal price, AjaxRequestTarget target, Form<?> form) {
+                licensePriceMap.put(license, price);
+                ModalWindow.closeCurrent(target);
+                target.add(licenseSelect);
+            }
+            
+            @Override
+            protected void onCancelAction(AjaxRequestTarget target, Form<?> form) {
+                ModalWindow.closeCurrent(target);
+            }
+            
+        };
+        
+        addLicenseWindow.setContent(addLicenseForm);
 		this.add(addLicenseWindow);
 	}
 
+	
 	private void addControls() {
 		AjaxButton b = new AjaxButton("submitButton", ResourceUtils.getModel("button.save")) {
 
@@ -210,24 +202,22 @@ public class ExperimentPackageDetailPanel extends Panel {
                 this.setEnabled(false);
 
 				ExperimentPackage pck = packageModel.getObject();
-                Keywords packageKeywords = keywordsModel.getObject();
 				pck.setResearchGroup(resGroupModel.getObject());
-                //experimentPackageFacade.createExperimentPackage(pck, licenseModel.getObject());
                 experimentPackageFacade.create(pck);
-                ExperimentPackageLicense experimentPackageLicense;
+                
+                Keywords packageKeywords = keywordsModel.getObject();
                 packageKeywords.setExperimentPackage(pck);
                 keywordsFacade.create(packageKeywords);
-
-                for (License lic : licenses) {
-                    licenseFacade.create(lic);
-                    experimentPackageLicense = new ExperimentPackageLicense();
+                
+                for (Entry<License, BigDecimal> entry : licensePriceMap.entrySet()) {
+                    ExperimentPackageLicense experimentPackageLicense = new ExperimentPackageLicense();
                     experimentPackageLicense.setExperimentPackage(pck);
-                    experimentPackageLicense.setLicense(lic);
+                    experimentPackageLicense.setLicense(entry.getKey());
+                    experimentPackageLicense.setPrice(entry.getValue());
                     experimentPackageLicenseFacade.create(experimentPackageLicense);
                 }
 
-
-                licenses.clear();
+                licensePriceMap.clear();
                 optionsModel.detach();
 				ExperimentPackageDetailPanel.this.onSubmitAction(target, form);
 			}
@@ -255,11 +245,9 @@ public class ExperimentPackageDetailPanel extends Panel {
 	@Override
 	protected void onConfigure() {
 		super.onConfigure();
-		if(this.resGroupModel.getObject() != null) {
+		if (this.resGroupModel.getObject() != null) {
 			this.generateLicenseChoices();
 			packageModel.setObject(new ExperimentPackage());
-
-			licenseModel.setObject(licenseFacade.getPublicLicense());
 		}
 	}
 

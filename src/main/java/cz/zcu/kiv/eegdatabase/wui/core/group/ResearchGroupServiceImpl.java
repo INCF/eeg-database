@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.group;
 
-import java.math.BigDecimal;
 import java.util.List;
 import java.util.Locale;
 import java.util.Set;
@@ -50,8 +49,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.GroupPermissionRequest;
 import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamDef;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
@@ -236,14 +233,6 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         log.debug("Creating of research group done.");
 
         preparedDefaultListsForNewGroup(group);
-        
-        License privateLicense = new License();
-        privateLicense.setDescription("Default generated owner license");
-        privateLicense.setTitle("Owner License");
-        privateLicense.setLicenseType(LicenseType.OWNER);
-        privateLicense.setPrice(BigDecimal.ZERO);
-        privateLicense.setResearchGroup(group);
-        licenseDao.create(privateLicense);
 
         return groupId;
     }
@@ -453,16 +442,6 @@ public class ResearchGroupServiceImpl implements ResearchGroupService {
         membership.setAuthority(request.getRequestedPermission());
 
         membershipDao.create(membership);
-		
-		// accesscontrol: after person is assigned into researchgroup, 
-		// grant him license to all groups experiments - add "group's OWNER license
-		List<License> licenses = this.licenseDao.getLicensesByType(request.getResearchGroup().getResearchGroupId(), LicenseType.OWNER);
-		if (licenses.size() == 1) {
-			License ownerLicense = licenses.get(0);
-			this.personalLicenseService.addLicenseToPerson(person, ownerLicense);
-		} else {
-			throw new RuntimeException("Group " + request.getResearchGroup().getResearchGroupId() + " has more than one owner license!");
-		}
 		
     }
     

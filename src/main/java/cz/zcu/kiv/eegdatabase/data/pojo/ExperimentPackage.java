@@ -22,11 +22,12 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-import javax.persistence.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
+
+import javax.persistence.*;
+
 
 /**
  *
@@ -57,9 +58,6 @@ public class ExperimentPackage implements Serializable {
 
 	@OneToMany(mappedBy = "experimentPackage")
 	private Set<ExperimentPackageConnection> experimentPackageConnections;
-	
-	@Column(name = "PRICE", precision = 19, scale = 2)
-    private BigDecimal price;
 
 	public int getExperimentPackageId() {
 		return experimentPackageId;
@@ -109,13 +107,5 @@ public class ExperimentPackage implements Serializable {
 		this.experimentPackageConnections = experimentPackageConnections;
 
 	}
-	
-	public BigDecimal getPrice() {
-        return price;
-    }
-	
-	public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 	
 }

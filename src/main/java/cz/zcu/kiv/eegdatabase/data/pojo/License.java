@@ -22,10 +22,8 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
-
 import java.io.InputStream;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.sql.Blob;
 import java.util.Set;
 
@@ -34,15 +32,15 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
 import javax.persistence.Lob;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
 /**
  *
  * @author bydga
+ * @author Jakub Krauz
  */
 @Entity
 @Table(name="LICENSE")
@@ -53,18 +51,28 @@ public class License implements Serializable {
     @Column(name = "LICENSE_ID")
     private int licenseId;
 	
-    @Column(name = "PRICE", precision = 19, scale = 2)
-    private BigDecimal price;
-
-	@ManyToOne
-	@JoinColumn(name = "RESEARCH_GROUP_ID")
-    private ResearchGroup researchGroup;
-	
     @Column(name = "TITLE")
     private String title;
 	
     @Column(name = "DESCRIPTION")
     private String description;
+    
+    @Column(name = "LICENSE_TYPE" )
+    private LicenseType licenseType;
+    
+    @Column(name = "ATTACHMENT_FILE_NAME")
+    private String attachmentFileName;
+    
+    @Lob
+    @Column(name = "ATTACHMENT_CONTENT")
+    private Blob attachmentContent;
+    
+    @Transient
+    private InputStream fileContentStream;
+    
+    @Column(name = "LINK")
+    private String link;
+    
     @OneToMany(mappedBy = "license")
     private Set<PersonalLicense> personalLicenses;
 
@@ -74,36 +82,13 @@ public class License implements Serializable {
     @OneToMany(mappedBy = "license")
     private Set<ExperimentLicence> experimentLicences;
 
-    @Column(name = "LICENSE_TYPE" )
-    private LicenseType licenseType;
-
-	@Column(name = "IS_TEMPLATE")
-	private boolean template;
-	
-	@Column(name = "ATTACHMENT_FILE_NAME")
-    private String attachmentFileName;
     
-    @Lob
-    @Column(name = "ATTACHMENT_CONTENT")
-    private Blob attachmentContent;
-    
-    @Transient
-    private InputStream fileContentStream;
-
 	public int getLicenseId() {
 		return licenseId;
 	}
 
 	public void setLicenseId(int licenseId) {
 		this.licenseId = licenseId;
-	}
-
-	public BigDecimal getPrice() {
-		return price;
-	}
-
-	public void setPrice(BigDecimal price) {
-		this.price = price;
 	}
 
 	public String getTitle() {
@@ -132,18 +117,10 @@ public class License implements Serializable {
 	public Set<PersonalLicense> getPersonalLicenses() {
 		return personalLicenses;
     }
-	
-	public void setResearchGroup(ResearchGroup group) {
-		this.researchGroup = group;
-	}
 
 	public void setPersonalLicenses(Set<PersonalLicense> personalLicenses) {
 		this.personalLicenses = personalLicenses;
     }
-	
-	public ResearchGroup getResearchGroup() {
-		return this.researchGroup;
-	}
 
 	public Set<ExperimentPackageLicense> getExperimentPackageLicenses() {
 		return experimentPackageLicenses;
@@ -177,29 +154,21 @@ public class License implements Serializable {
         this.attachmentContent = attachmentContent;
     }
 
-	public boolean isTemplate() {
-		return template;
-	}
-
-	public void setTemplate(boolean template) {
-		this.template = template;
-	}
-
-	public void copyFromTemplate(License template) {
-		this.description = template.description;
-		this.title = template.title;
-		this.price = template.price;
-		this.licenseType = template.licenseType;
-	}
+    public String getLink() {
+        return link;
+    }
+    
+    public void setLink(String link) {
+        this.link = link;
+    }
 
 	@Override
 	public int hashCode() {
 		int hash = 3;
-		hash = 79 * hash + (this.price != null ? this.price.hashCode() : 0);
 		hash = 79 * hash + (this.title != null ? this.title.hashCode() : 0);
 		hash = 79 * hash + (this.description != null ? this.description.hashCode() : 0);
 		hash = 79 * hash + (this.licenseType != null ? this.licenseType.hashCode() : 0);
-		hash = 79 * hash + (this.template ? 1 : 0);
+		hash = 79 * hash + (this.link != null ? this.link.hashCode() : 0);
 		return hash;
 	}
 
@@ -212,9 +181,6 @@ public class License implements Serializable {
 			return false;
 		}
 		final License other = (License) obj;
-		if (this.price != other.price && (this.price == null || !this.price.equals(other.price))) {
-			return false;
-		}
 		if ((this.title == null) ? (other.title != null) : !this.title.equals(other.title)) {
 			return false;
 		}
@@ -224,15 +190,15 @@ public class License implements Serializable {
 		if (this.licenseType != other.licenseType) {
 			return false;
 		}
-		if (this.template != other.template) {
-			return false;
-		}
+		if ((this.link == null) ? (other.link != null) : !this.link.equals(other.link)) {
+            return false;
+        }
 		return true;
 	}
 	
 	@Transient
 	public String getLicenseInfo(){
-	    return " "+ title + " price: " + (price == null || price.compareTo(BigDecimal.ZERO) == 0 ? "No" : price);
+	    return " "+ title;
 	}
 
     @Transient

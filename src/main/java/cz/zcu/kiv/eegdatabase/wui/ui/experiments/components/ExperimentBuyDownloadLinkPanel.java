@@ -30,6 +30,7 @@ import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
@@ -43,14 +44,17 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     @SpringBean
     private OrderFacade facade;
 
+    private IModel<ExperimentLicence> model;
     private Experiment experiment;
 
     private boolean inCart = false;
     private boolean isDownloadable = false;
 
-    public ExperimentBuyDownloadLinkPanel(String id, IModel<Experiment> model) {
+    
+    public ExperimentBuyDownloadLinkPanel(String id, Experiment experiment, IModel<ExperimentLicence> model) {
         super(id);
-        experiment = model.getObject();
+        this.experiment = experiment;
+        this.model = model;
         
         // XXX price hidden for now.
         /*
@@ -64,22 +68,34 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
             }
         });
         */
+        
+        // "Add to cart" link
+        // rendered only for experiments that haven't been placed in the cart yet
         add(new Link<Void>("addToCartLink") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {
-                EEGDataBaseSession.get().getShoppingCart().addToCart(experiment);
+                EEGDataBaseSession.get().getShoppingCart().addToCart(ExperimentBuyDownloadLinkPanel.this.model.getObject());
                 setResponsePage(getPage());
             }
 
             @Override
             public boolean isVisible() {
-                return !inCart && !isDownloadable;
+                return (ExperimentBuyDownloadLinkPanel.this.model.getObject() != null)
+                        && !inCart && !isDownloadable;
             }
+            
+            @Override
+            public boolean isEnabled() {
+                return (ExperimentBuyDownloadLinkPanel.this.model.getObject() != null);
+            }
+            
         });
 
+        
+        // label showing that the experiment is already in the cart
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
 
             private static final long serialVersionUID = 1L;
@@ -91,9 +107,11 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
         });
 
-        // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
-        BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsDownloadPage.class, PageParametersUtils.getDefaultPageParameters(experiment
-                .getExperimentId())) {
+        
+        // "Download" link for purchased experiments
+        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink = 
+                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class, 
+                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
 
             private static final long serialVersionUID = 1L;
 
@@ -104,17 +122,30 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
         };
         add(downloadLink);
     }
+    
+    
+    public void setModelObject(ExperimentLicence experimentLicence) {
+        model.setObject(experimentLicence);
+    }
+    
+    
+    public void setExperiment(Experiment experiment) {
+        this.experiment = experiment;
+    }
 
+    
     @Override
     protected void onConfigure() {
         inCart = inCart(experiment);
         isDownloadable = isDownloadable(experiment);
     }
 
+    
     private boolean isDownloadable(final Experiment experiment) {
         return EEGDataBaseSession.get().isExperimentPurchased(experiment.getExperimentId());
     }
 
+    
     private boolean inCart(final Experiment experiment) {
         return EEGDataBaseSession.get().getShoppingCart().isInCart(experiment);
     }

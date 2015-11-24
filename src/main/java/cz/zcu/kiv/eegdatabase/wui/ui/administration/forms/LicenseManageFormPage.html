@@ -23,18 +23,18 @@
                 </div>
 
                 <div class="itemBox">
-                    <label for=price wicket:id="priceLb" class="textFieldLabel"> <wicket:message
-                            key="label.price">[price]</wicket:message></label> <input wicket:id="price" class="textField" value="" type="text" style="width: 80px;" /> <wicket:message key="label.price.currency"/>
-                </div>
-
-                <div class="itemBox">
                     <label for=licenseType wicket:id="typeLb" class="textFieldLabel"> <wicket:message
                             key="label.type">[type]</wicket:message></label>
 				<span wicket:id="licenseType">
-                    <input type="radio" wicket:id="public"/><wicket:message key="LicenseType.PUBLIC"/>
-					<input type="radio" wicket:id="academic"/><wicket:message key="LicenseType.ACADEMIC"/>
-                    <input type="radio" wicket:id="business"/><wicket:message key="LicenseType.BUSINESS"/>
+                    <input type="radio" wicket:id="nonCommercial"/><wicket:message key="LicenseType.NON_COMMERCIAL"/>
+                    <input type="radio" wicket:id="commercial"/><wicket:message key="LicenseType.COMMERCIAL"/>
 				</span>
+                </div>
+                
+                <div class="itemBox">
+                    <label for=link wicket:id="linkLb" class="textFieldLabel"> <wicket:message
+                            key="label.link">[link]</wicket:message></label>
+                    <input wicket:id="link" class="textField" type="text" />
                 </div>
 
                 <div class="itemBox">

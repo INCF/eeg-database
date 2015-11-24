@@ -32,6 +32,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
  */
 public class SimpleExperimentLicenceDao extends SimpleGenericDao<ExperimentLicence,Integer> implements ExperimentLicenceDao {
 
+    public SimpleExperimentLicenceDao() {
+        super(ExperimentLicence.class);
+    }
+    
     @Override
     public void remove(Experiment experiment, License license) {
         String hqlQuery = "delete from ExperimentLicence el where el.experiment = :ex and el.license = :lic";

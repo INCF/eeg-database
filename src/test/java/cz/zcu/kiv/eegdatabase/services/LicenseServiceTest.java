@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ResearchGroupDao;
@@ -72,9 +70,8 @@ public class LicenseServiceTest extends AbstractServicesTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OWNER);
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
     }
 
     @Test(groups = "unit")
@@ -91,15 +88,13 @@ public class LicenseServiceTest extends AbstractServicesTest {
         int id = licenseService.create(license);
         assertNotNull(licenseService.read(id));
 
-
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
-        newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
+        newLicense.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseService.create(newLicense);
 
-        assertEquals("test-title", licenseService.getPublicLicense().getTitle());
+        //assertEquals("test-title", licenseService.getPublicLicense().getTitle());
         assertEquals(count + 2, licenseService.getCountRecords());
 
     }
@@ -116,17 +111,15 @@ public class LicenseServiceTest extends AbstractServicesTest {
         researchGroup.setPerson(person);
         researchGroupDao.create(researchGroup);
 
-        int groupCount = licenseService.getLicensesForGroup(researchGroup, LicenseType.OPEN_DOMAIN).size();
+        int groupCount = licenseService.getLicensesForGroup(researchGroup, LicenseType.NON_COMMERCIAL).size();
 
         License newLicense = new License();
         newLicense.setDescription("desc");
-        newLicense.setPrice(BigDecimal.valueOf(1000f));
         newLicense.setTitle("test-title");
-        newLicense.setLicenseType(LicenseType.OPEN_DOMAIN);
-        newLicense.setResearchGroup(researchGroup);
+        newLicense.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseService.create(newLicense);
 
-        assertEquals(groupCount + 1, licenseService.getLicensesForGroup(researchGroup, LicenseType.OPEN_DOMAIN).size());
+        assertEquals(groupCount + 1, licenseService.getLicensesForGroup(researchGroup, LicenseType.NON_COMMERCIAL).size());
         assertEquals(count + 2, licenseService.getCountRecords());
 
     }

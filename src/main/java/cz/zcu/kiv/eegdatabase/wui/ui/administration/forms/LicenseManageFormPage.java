@@ -5,12 +5,10 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.MembershipPlanType;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageLicensesPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageMembershipPlansPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
@@ -29,14 +27,10 @@ import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.lang.Bytes;
-import org.apache.wicket.util.lang.Classes;
 import org.apache.wicket.util.string.StringValue;
-import org.apache.wicket.validation.validator.PatternValidator;
-import org.apache.wicket.validation.validator.RangeValidator;
 import org.apache.wicket.validation.validator.StringValidator;
-
+import org.apache.wicket.validation.validator.UrlValidator;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  * Created by Lichous on 4.5.15.
@@ -71,7 +65,13 @@ public class LicenseManageFormPage extends MenuPage {
 
     }
 
+    
     private class LicenseForm extends Form<License> {
+        
+        private static final long serialVersionUID = 1L;
+        
+        private TextField<String> link;
+        private final FileUploadField fileUpload;
 
         public LicenseForm(String id, IModel<License> model,final LicenseFacade licenseFacade, final FeedbackPanel feedback) {
             super(id,new CompoundPropertyModel<License>(model));
@@ -80,7 +80,7 @@ public class LicenseManageFormPage extends MenuPage {
             name.setLabel(ResourceUtils.getModel("label.name"));
             name.setRequired(true);
             name.add(StringValidator.maximumLength(255));
-            name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
+            //name.add(new PatternValidator(StringUtils.REGEX_ALPHANUMERIC));
             FormComponentLabel nameLabel = new FormComponentLabel("titleLb", name);
             add(name, nameLabel);
 
@@ -90,25 +90,23 @@ public class LicenseManageFormPage extends MenuPage {
             FormComponentLabel descriptionLabel = new FormComponentLabel("descriptionLb", description);
             add(description,descriptionLabel);
 
-            TextField<Integer> price = new TextField<Integer>("price",Integer.class);
-            price.setLabel(ResourceUtils.getModel("label.price"));
-            price.setRequired(false);
-            price.add(RangeValidator.minimum(0));
-            FormComponentLabel priceLabel = new FormComponentLabel("priceLb", price);
-            add(price,priceLabel);
-
-
             RadioGroup<LicenseType> type = new RadioGroup<LicenseType>("licenseType", new PropertyModel<LicenseType>(model, "licenseType"));
             type.setLabel(ResourceUtils.getModel("label.license.type"));
             type.setRequired(true);
-            type.add(new Radio("public", new Model(LicenseType.OPEN_DOMAIN)));
-            type.add(new Radio("academic", new Model(LicenseType.ACADEMIC)));
-            type.add(new Radio("business", new Model(LicenseType.BUSINESS)));
+            type.add(new Radio<LicenseType>("nonCommercial", new Model<LicenseType>(LicenseType.NON_COMMERCIAL)));
+            type.add(new Radio<LicenseType>("commercial", new Model<LicenseType>(LicenseType.COMMERCIAL)));
 
             FormComponentLabel typeLabel = new FormComponentLabel("typeLb", type);
             add(type,typeLabel);
+            
+            link = new TextField<String>("link");
+            link.setLabel(ResourceUtils.getModel("label.link"));
+            link.add(StringValidator.maximumLength(255));
+            link.add(new UrlValidator());
+            FormComponentLabel linkLabel = new FormComponentLabel("linkLb", link);
+            add(link, linkLabel);
 
-            final FileUploadField fileUpload = new FileUploadField("attachmentFileName");
+            fileUpload = new FileUploadField("attachmentFileName");
             FormComponentLabel fileLabel = new FormComponentLabel("attachmentFileNameLb",fileUpload);
 
             setMaxSize(Bytes.megabytes(15));
@@ -127,7 +125,7 @@ public class LicenseManageFormPage extends MenuPage {
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
 
                     License license = LicenseForm.this.getModelObject();
-                    if (license.getPrice()==null) license.setPrice(new BigDecimal(0));
+                    
                     FileUpload uploadedFile = fileUpload.getFileUpload();
 
                     if (uploadedFile != null) {
@@ -140,9 +138,7 @@ public class LicenseManageFormPage extends MenuPage {
                     }
 
                     if (license.getLicenseId() == 0) {
-                        license.setTemplate(true);
                         licenseFacade.create(license);
-
                     } else {
                         if (uploadedFile == null) {
                             license.setAttachmentFileName(licenseFacade.read(license.getLicenseId()).getAttachmentFileName());
@@ -161,6 +157,16 @@ public class LicenseManageFormPage extends MenuPage {
             add(submit);
 
         }
+    
+        
+        @Override
+        protected void onValidate() {
+            super.onValidate();
+            
+            if ((link.getInput() == null || link.getInput().isEmpty()) && fileUpload.getFileUpload() == null)
+                error(getString("error.license.linkOrFile"));
+        }
+        
     }
 
 }

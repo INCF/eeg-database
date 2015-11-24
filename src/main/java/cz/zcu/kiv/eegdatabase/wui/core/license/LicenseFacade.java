@@ -123,22 +123,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public boolean addLicenseToPerson(License license, Person person);
 
 	/**
-	 * Adds a public license to the person.
-	 *
-	 * @param person person
-	 * @return true if success, false if not (e.g. person already has the
-	 * license)
-	 */
-	public boolean addPublicLicenseToPerson(Person person);
-
-	/**
-	 * Returns the one global public License object.
-	 * @return global shared public license.
-	 */
-	public License getPublicLicense();
-	public byte[] getPublicLicenseFile();
-
-	/**
 	 * Returns all licenses of a given type for specified group.
 	 * @param group Group to get licenses for
 	 * @param type Fetch only licenses of this type.
@@ -155,13 +139,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
 
 	/**
-	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
-	 * @param group Whose license to fetch.
-	 * @return Group's owner license.
-	 */
-	public License getOwnerLicense(ResearchGroup group);
-
-	/**
 	 * List all licenses the package has been published under.
 	 *
 	 * @param pckg the package
@@ -175,12 +152,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return
 	 */
 	public List<License> getUsersLicenses(Person person);
-
-	/**
-	 *
-	 * @return list of licenses saved as templates for new
-	 */
-	public List<License> getLicenseTemplates(ResearchGroup group);
 	
 	public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId);
 	
@@ -196,5 +167,4 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 
     public List<License> getPersonLicenses(int personId);
 
-    public List<License> getLicenseTemplates();
 }

@@ -22,24 +22,21 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
-import java.math.BigDecimal;
-import java.util.Currency;
-
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.convert.IConverter;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.model.MoneyFormatConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
+
 
 public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
 
@@ -51,11 +48,16 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
     private boolean inCart = false;
     private boolean isDownloadable = false;
 
-    private ExperimentPackage experimentPck;
+    private IModel<ExperimentPackageLicense> model;
+    private ExperimentPackage experimentPackage;
+    
+    private Link<Void> addToCartLink;
+    
 
-    public ExperimentPackageBuyDownloadLinkPanel(String id, IModel<ExperimentPackage> model) {
+    public ExperimentPackageBuyDownloadLinkPanel(String id, ExperimentPackage pckg, IModel<ExperimentPackageLicense> model) {
         super(id);
-        experimentPck = model.getObject();
+        this.experimentPackage = pckg;
+        this.model = model;
         
         // XXX price hidden for now.
         /*
@@ -69,22 +71,35 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             }
         });
         */
-        add(new Link<Void>("addToCartLink") {
+        
+        // "Add to cart" link
+        // rendered only for packages that haven't been placed in the cart yet
+        addToCartLink = new Link<Void>("addToCartLink") {
 
             private static final long serialVersionUID = 1L;
 
             @Override
             public void onClick() {
-                EEGDataBaseSession.get().getShoppingCart().addToCart(experimentPck);
+                EEGDataBaseSession.get().getShoppingCart().addToCart(ExperimentPackageBuyDownloadLinkPanel.this.model.getObject());
                 setResponsePage(getPage());
             }
 
             @Override
             public boolean isVisible() {
-                return !inCart && !isDownloadable;
+                return (ExperimentPackageBuyDownloadLinkPanel.this.model.getObject() != null)
+                        && !inCart && !isDownloadable;
             }
-        });
-
+            
+            @Override
+            public boolean isEnabled() {
+                return (ExperimentPackageBuyDownloadLinkPanel.this.model.getObject() != null);
+            }
+            
+        };
+        add(addToCartLink);
+        
+        
+        // label showing that the package is already in the cart
         add(new Label("inCart", ResourceUtils.getModel("text.inCart")) {
 
             private static final long serialVersionUID = 1L;
@@ -96,9 +111,11 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
 
         });
 
-        // "Add to Cart" links are rendered only for experiments that haven't been places in the cart yet.
-        BookmarkablePageLink<Void> downloadLink = new BookmarkablePageLink<Void>("downloadLink", ExperimentsPackageDownloadPage.class,
-                PageParametersUtils.getDefaultPageParameters(experimentPck.getExperimentPackageId())) {
+        
+        // "Download" link for purchased packages
+        BookmarkablePageLink<ExperimentsPackageDownloadPage> downloadLink = 
+                new BookmarkablePageLink<ExperimentsPackageDownloadPage>("downloadLink", ExperimentsPackageDownloadPage.class,
+                            PageParametersUtils.getDefaultPageParameters(pckg.getExperimentPackageId())) {
 
             private static final long serialVersionUID = 1L;
 
@@ -108,20 +125,34 @@ public class ExperimentPackageBuyDownloadLinkPanel extends Panel {
             }
         };
         add(downloadLink);
-
+        
+    }
+    
+    
+    public void setModelObject(ExperimentPackageLicense experimentPackageLicense) {
+        model.setObject(experimentPackageLicense);
+    }
+    
+    
+    public void setExperimentPackage(ExperimentPackage experimentPackage) {
+        this.experimentPackage = experimentPackage;
     }
 
+    
     @Override
     protected void onConfigure() {
-        inCart = inCart(experimentPck);
-        isDownloadable = isDownloadable(experimentPck);
+        inCart = inCart(experimentPackage);
+        isDownloadable = isDownloadable(experimentPackage);
     }
 
+    
     private boolean isDownloadable(final ExperimentPackage experimentPck) {
         return EEGDataBaseSession.get().isExperimentPackagePurchased(experimentPck.getExperimentPackageId());
     }
 
+    
     private boolean inCart(final ExperimentPackage experimentPck) {
         return EEGDataBaseSession.get().getShoppingCart().isInCart(experimentPck);
     }
+    
 }

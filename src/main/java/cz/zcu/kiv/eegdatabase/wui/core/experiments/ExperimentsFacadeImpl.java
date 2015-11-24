@@ -25,8 +25,10 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.beans.factory.annotation.Required;
@@ -180,9 +182,10 @@ public class ExperimentsFacadeImpl implements ExperimentsFacade {
 	public List<Experiment> getExperimentsWithoutPackage() {
 		return service.getExperimentsWithoutPackage();
 	}
-
-    @Override
-    public void changePrice(Experiment experiment) {
-        service.changePrice(experiment);
+	
+	@Override
+    public List<Experiment> getExperimentsWithoutPackageWithLicense(License license) {
+        return service.getExperimentsWithoutPackageWithLicense(license);
     }
+
 }

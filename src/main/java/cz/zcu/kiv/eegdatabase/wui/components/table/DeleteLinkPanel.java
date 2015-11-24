@@ -21,8 +21,6 @@ import java.lang.reflect.Member;
 /**
  * Created by Lichous on 21.4.15.
  */
-
-
 public class DeleteLinkPanel extends Panel {
 
     private static final long serialVersionUID = -4501432748937938302L;
@@ -36,15 +34,10 @@ public class DeleteLinkPanel extends Panel {
     @SpringBean
     LicenseFacade licenseFacade;
 
+    
     public DeleteLinkPanel(String id, final Class<? extends MenuPage> page,String propertyExpression, final IModel model, IModel<String> displayModel, String confirmMessage) {
-
         super(id);
         final PropertyModel paramModel = new PropertyModel(model, propertyExpression);
-
-        System.out.println((Integer)paramModel.getObject());
-        System.out.println(model.getClass());
-
-
 
         add(new AjaxConfirmLink<Void>("link", model, confirmMessage) {
             private static final long serialVersionUID = 1L;
@@ -60,12 +53,9 @@ public class DeleteLinkPanel extends Panel {
                     PromoCode code = promoCodeFacade.getPromoCodeById((Integer)paramModel.getObject());
                     code.setValid(false);
                     promoCodeFacade.update(code);
-                    //System.out.println(promoCodeFacade.getPromoCodeByKeyword("ABCK"));
-                    //System.out.println(promoCodeFacade.getPromoCodeByKeyword("FFDSFSDG"));
                 } else if (model.getObject().getClass() == License.class) {
                     License license = licenseFacade.read((Integer)paramModel.getObject());
                     licenseFacade.delete(license);
-
                 }
                 setResponsePage(page);
             }

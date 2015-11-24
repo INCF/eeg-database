@@ -26,18 +26,11 @@
  */
 package cz.zcu.kiv.eegdatabase.wui.core.license.impl;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.sql.Blob;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-
-import org.apache.commons.io.IOUtils;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.hibernate.HibernateException;
@@ -52,7 +45,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 
@@ -66,7 +58,7 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     private ExperimentPackageLicenseDao experimentPackageLicenseDao;
     private LicenseDao licenseDao;
-    private String publicLicenseFileName = "PublicLicense.pdf";
+
 
     public LicenseServiceImpl() {
     }
@@ -83,10 +75,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     public LicenseServiceImpl(GenericDao<License, Integer> dao) {
         super(dao);
-    }
-
-    public void setPublicLicenseFileName(String publicLicenseFileName) {
-        this.publicLicenseFileName = publicLicenseFileName;
     }
 
     @Override
@@ -116,25 +104,10 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
     @Override
     @Transactional
     public void addLicenseForPackage(License license, ExperimentPackage pack) {
-
         this.checkLicenseGroupValidity(license, pack.getResearchGroup());
-
-        License tmp;
-        if (license.isTemplate()) {
-            tmp = new License();
-            tmp.copyFromTemplate(license);
-        } else {
-            tmp = license;
-        }
-
-        if (tmp.getLicenseId() == 0) {
-            tmp.setResearchGroup(pack.getResearchGroup());
-            int res = this.licenseDao.create(tmp);
-            tmp.setLicenseId(res);
-        }
         ExperimentPackageLicense conn = new ExperimentPackageLicense();
         conn.setExperimentPackage(pack);
-        conn.setLicense(tmp);
+        conn.setLicense(license);
         this.experimentPackageLicenseDao.create(conn);
     }
 
@@ -146,20 +119,8 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     @Override
     @Transactional(readOnly = true)
-    public License getPublicLicense() {
-        return this.licenseDao.getPublicLicense();
-    }
-
-    @Override
-    @Transactional(readOnly = true)
     public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
         return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public License getOwnerLicense(ResearchGroup group) {
-        return this.getLicensesForGroup(group, LicenseType.OWNER).get(0);
     }
 
     @Override
@@ -183,26 +144,9 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     private void checkLicenseGroupValidity(License license, ResearchGroup group)
     {
-        if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.BUSINESS) {
+        if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.COMMERCIAL) {
             throw new InvalidLicenseForPackageException("Group " + group.getTitle() + " is not a paid account and can not create bussiness licenses");
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<License> getLicenseTemplates(ResearchGroup group) {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("template", true);
-        params.put("researchGroup.researchGroupId", group.getResearchGroupId());
-        return this.licenseDao.readByParameter(params);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<License> getLicenseTemplates() {
-        Map<String, Object> params = new HashMap<String, Object>();
-        params.put("template", true);
-        return this.licenseDao.readByParameter(params);
     }
 
     @Override
@@ -235,31 +179,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         } catch (IOException e) {
             log.error(e.getMessage(), e);
         }
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public byte[] getPublicLicenseFile() {
-
-        byte[] data = new byte[0];
-        try {
-            File file = ResourceUtils.getFile(publicLicenseFileName);
-            if (file.exists()) {
-                data = IOUtils.toByteArray(new FileInputStream(file));
-            }
-            return data;
-        } catch (FileNotFoundException e) {
-            log.error(e.getMessage(), e);
-            return data;
-        } catch (IOException e) {
-            log.error(e.getMessage(), e);
-            return data;
-        }
-    }
-    
-    @Override
-    public String getPublicLicenseFileName() {
-        return publicLicenseFileName;
     }
 
     @Override

@@ -42,10 +42,6 @@ This file is part of the EEG-database project
           <td wicket:id="experimentId"></td>
         </tr>
         <tr>
-          <th><wicket:message key="label.price" /></th>
-          <td wicket:id="price"></td>
-        </tr>
-        <tr>
           <th><wicket:message key="label.beginningOfMeasuration" /></th>
           <td wicket:id="startTime"></td>
         </tr>
@@ -94,12 +90,14 @@ This file is part of the EEG-database project
         </tr>
       </table>
       
-      <h2>
-        <wicket:message key="label.metadata"></wicket:message>
-      </h2>
-      <div wicket:id="sections">
-        <div wicket:id="section"></div>
-      </div>
+      <wicket:enclosure child="sections">
+	      <h2>
+	        <wicket:message key="label.metadata"></wicket:message>
+	      </h2>
+	      <div wicket:id="sections">
+	        <div wicket:id="section"></div>
+	      </div>
+      </wicket:enclosure>
 
       <h2>
           <wicket:message key="dataTable.heading.licenses" />
@@ -110,7 +108,7 @@ This file is part of the EEG-database project
               <th style="width: 250px;"><wicket:message key="dataTable.heading.title" /></th>
               <th style="width: 250px;"><wicket:message key="dataTable.heading.type" /></th>
               <th style="width: 250px;"><wicket:message key="dataTable.heading.price" /></th>
-              <th style="width: 250px;"><wicket:message key="dataTable.heading.attachmentFile" /></th>
+              <!-- <th style="width: 250px;"><wicket:message key="dataTable.heading.attachmentFile" /></th> -->
               <th>
                   <!-- column with link for detail -->
               </th>
@@ -120,10 +118,10 @@ This file is part of the EEG-database project
           </tr>
           </thead>
           <tr wicket:id="licenseList">
-              <td wicket:id="title"></td>
-              <td wicket:id="licenseType"></td>
-              <td wicket:id="price"></td>
-              <td wicket:id="attachmentFileName"></td>
+              <td wicket:id="license.title"></td>
+              <td wicket:id="license.licenseType"></td>
+              <td><span wicket:id="price" /> <wicket:message key="label.price.currency" /></td>
+              <!-- <td wicket:id="license.attachmentFileName"></td> -->
               <td wicket:id="detail"></td>
               <td><a href="#" wicket:id="deleteLink"><wicket:message key="link.delete"></wicket:message></a></td>
 

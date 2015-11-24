@@ -1,7 +1,6 @@
 package cz.zcu.kiv.eegdatabase.wui.ui.licenses;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
@@ -10,9 +9,11 @@ import cz.zcu.kiv.eegdatabase.wui.core.UserRole;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdminManageLicensesPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.administration.AdministrationPageLeftMenu;
+
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.ExternalLink;
 import org.apache.wicket.markup.html.link.ResourceLink;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.request.resource.ByteArrayResource;
@@ -22,7 +23,6 @@ import org.apache.wicket.util.string.StringValue;
 /**
  * Created by Lichous on 4.5.15.
  */
-
 @AuthorizeInstantiation(value = { "ROLE_READER", "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
 public class LicenseDetailPage extends MenuPage {
 
@@ -48,8 +48,12 @@ public class LicenseDetailPage extends MenuPage {
         final License license = licenseFacade.read(licenseId);
         add(new Label("title",license.getTitle()));
         add(new Label("description", license.getDescription()));
-        add(new Label("price", license.getPrice()));
         add(new Label("type", license.getLicenseType().toString()));
+        
+        ExternalLink link = new ExternalLink("link", license.getLink(), license.getLink());
+        link.setVisible(license.getLink() != null);
+        add(link);
+        
         add(new Label("attachmentFileName", license.getAttachmentFileName()));
 
         boolean isContent = license != null && license.getAttachmentFileName() != null;

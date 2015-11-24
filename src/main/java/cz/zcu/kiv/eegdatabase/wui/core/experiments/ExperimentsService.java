@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
@@ -67,7 +68,7 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
      * @param packageId id of the package
      * @return list of experiments or empty list
      */
-    public List<Experiment> getExperimentsByPackage(int packageId);
+    List<Experiment> getExperimentsByPackage(int packageId);
 
     /**
      * Returns list of experiments that are not members of the given package.
@@ -77,12 +78,16 @@ public interface ExperimentsService extends GenericService<Experiment, Integer> 
     List<Experiment> getExperimentsWithoutPackage(int researchGroupId, int packageId);
 
 	/**
-	 * List all experiments that arent in any package.
+	 * List all experiments that aren't in any package.
 	 * @return 
 	 */
 	List<Experiment> getExperimentsWithoutPackage();
 	
-	void changePrice(Experiment experiment);
+	/**
+     * List all experiments that aren't in any package and are available under the specified license.
+     * @return 
+     */
+    List<Experiment> getExperimentsWithoutPackageWithLicense(License license);
 	
 	boolean deleteAndCreateExperimentIndexInES();
 	

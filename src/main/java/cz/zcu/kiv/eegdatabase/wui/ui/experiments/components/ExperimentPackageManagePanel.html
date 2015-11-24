@@ -30,17 +30,18 @@ This file is part of the EEG-database project
 		<wicket:container wicket:id="packageTitle"/>
 
 		<a wicket:id="removePackageLink"><wicket:container wicket:id="label"/></a>
-		<div>
-			<span style="font-size: 0.8em; font-weight: bold; display: inline"><wicket:message key="heading.license.list"/></span>
-			<ul style="display: inline">
-				<li wicket:id="licenseView" style="display: inline">
-					<a wicket:id="licenseItem"><wicket:container wicket:id="licenseItemLabel"/></a>
+		<div id="packageLicensesList">
+			<span id="licensesLabel"><wicket:message key="heading.license.list"/></span>
+			<ul>
+				<li wicket:id="licenseView">
+					<a wicket:id="licenseItem"><wicket:container wicket:id="licenseItemLabel"/></a> 
+					(<span wicket:id="price" /> <wicket:message key="label.price.currency" />)
 				</li>
-				<li style="display: inline">
-					<a style="font-weight: bold" wicket:id="addLicenseLink"><wicket:message key="button.add.license"/></a>
+				<li>
+					<a class="bold" wicket:id="addLicenseLink"><wicket:message key="button.add.license"/></a>
 				</li>
 			</ul>
-			
+			<div class="clear"></div>
 		</div>
       </h2>
       <div class="itemBox">
@@ -58,11 +59,9 @@ This file is part of the EEG-database project
 		<a wicket:id="addExperimentsLink"><wicket:container wicket:id="label"/></a>
 		<a wicket:id="removeSelectedLink"><wicket:container wicket:id="label"/></a>
 	  </div>
-      <div wicket:id="addExperimentsWindow"/>
-	  <div wicket:id="addLicenseWindow"/>
-	  <div wicket:id="privateLicenseWindow"/>
-	  <div wicket:id="publicLicenseWindow"/>
-      <div wicket:id="viewLicenseWindow"/>
+      <div wicket:id="addExperimentsWindow"></div>
+	  <div wicket:id="addLicenseWindow"></div>
+      <div wicket:id="viewLicenseWindow"></div>
   </wicket:panel>
 </body>
 </html>
