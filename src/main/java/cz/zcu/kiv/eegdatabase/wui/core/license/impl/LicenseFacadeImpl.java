@@ -68,11 +68,6 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public void addLicenseForPackage(License license, ExperimentPackage pack) {
-		this.licenseService.addLicenseForPackage(license, pack);
-	}
-
-	@Override
 	public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
 		this.licenseService.removeLicenseFromPackage(license, pack);
 	}

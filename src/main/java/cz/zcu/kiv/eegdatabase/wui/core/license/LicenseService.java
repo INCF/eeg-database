@@ -39,21 +39,6 @@ import java.util.List;
 public interface LicenseService extends GenericService<License, Integer> {
 
 	/**
-	 * Saves the license into the database and pairs the newly created license with the specified 
-	 * experiment package
-	 * @param license
-	 * @param group 
-	 */
-	public void addLicenseForPackage(License license, ExperimentPackage group);
-	
-	/**
-	 * Detaches License object from given ExperimentPackage. Deletes from database only the connection, both objects remain stored.
-	 * @param license
-	 * @param group 
-	 */
-	public void removeLicenseFromPackage(License license, ExperimentPackage group);
-
-	/**
 	 * Returns all licenses of a given type.
 	 * @param type Fetch only licenses of this type.
 	 * @return list of licenses that match the given criteria.
@@ -86,5 +71,12 @@ public interface LicenseService extends GenericService<License, Integer> {
     public List<License> getLicensesForExperiment(int experimentId);
 
     public List<License> getPersonLicenses(int personId);
+    
+    /**
+     * Detaches License object from given ExperimentPackage. Deletes from database only the connection, both objects remain stored.
+     * @param license
+     * @param pckg 
+     */
+    public void removeLicenseFromPackage(License license, ExperimentPackage pckg);
     
 }

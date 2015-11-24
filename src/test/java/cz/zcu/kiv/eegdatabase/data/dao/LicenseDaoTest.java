@@ -36,11 +36,6 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
     @Autowired
     private LicenseDao licenseDao;
 
-    @Autowired
-    private ResearchGroupDao researchGroupDao;
-    @Autowired
-    private PersonDao personDao;
-
     private License license;
 
     @BeforeMethod(groups = "unit")
@@ -75,7 +70,7 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
     }
 
     @Test(groups = "unit")
-    public void testGetLicenseType() {
+    public void testGetLicenseByType() {
         int count = licenseDao.getCountRecords();
         
         licenseDao.create(license);
