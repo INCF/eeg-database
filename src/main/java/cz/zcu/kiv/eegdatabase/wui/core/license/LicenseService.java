@@ -29,7 +29,6 @@ package cz.zcu.kiv.eegdatabase.wui.core.license;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import java.util.List;
 
@@ -55,20 +54,18 @@ public interface LicenseService extends GenericService<License, Integer> {
 	public void removeLicenseFromPackage(License license, ExperimentPackage group);
 
 	/**
-	 * Returns all licenses of a given type for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of a given type.
 	 * @param type Fetch only licenses of this type.
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
+	public List<License> getLicensesByType(LicenseType type);
 
 	/**
-	 * Returns all licenses of a given types for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of given types.
 	 * @param type Fetch only licenses of specified types
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
+	public List<License> getLicensesByType(List<LicenseType> type);
 	
 	/**
 	 * List all licenses the package has been published under.

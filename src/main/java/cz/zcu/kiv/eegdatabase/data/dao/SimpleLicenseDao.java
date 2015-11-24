@@ -50,17 +50,16 @@ public class SimpleLicenseDao extends SimpleGenericDao<License, Integer> impleme
     }
 
 	@Override
-	public List<License> getLicensesByType(int researchGroupId, LicenseType licenseType) {
+	public List<License> getLicensesByType(LicenseType licenseType) {
 		List<LicenseType> types = new ArrayList<LicenseType>(1);
 		types.add(licenseType);
-		return this.getLicensesByType(researchGroupId, types);
+		return this.getLicensesByType(types);
 	}
 
 	@Override
-	public List<License> getLicensesByType(int reseachGroupId, List<LicenseType> licenseType) {
-		String hqlQuery = "select l from License l where l.licenseType IN (:licenseType) and l.researchGroup=:researchGroup";
-
-		return this.getSession().createQuery(hqlQuery).setInteger("researchGroup", reseachGroupId).setParameterList("licenseType", licenseType).list();
+	public List<License> getLicensesByType(List<LicenseType> licenseType) {
+		String hqlQuery = "select l from License l where l.licenseType IN (:licenseType)";
+		return this.getSession().createQuery(hqlQuery).setParameterList("licenseType", licenseType).list();
 	}
 
 	@Override

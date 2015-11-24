@@ -103,13 +103,13 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
-		return licenseService.getLicensesForGroup(group, type);
+	public List<License> getLicensesByType(LicenseType type) {
+		return licenseService.getLicensesByType(type);
 	}
 
 	@Override
-	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
-		return licenseService.getLicensesForGroup(group, type);
+	public List<License> getLicensesByType(List<LicenseType> type) {
+		return licenseService.getLicensesByType(type);
 	}
 
 	@Override

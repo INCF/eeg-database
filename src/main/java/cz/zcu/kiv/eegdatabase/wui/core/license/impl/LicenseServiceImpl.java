@@ -119,14 +119,14 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     @Override
     @Transactional(readOnly = true)
-    public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
-        return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
+    public List<License> getLicensesByType(LicenseType type) {
+        return this.licenseDao.getLicensesByType(type);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
-        return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
+    public List<License> getLicensesByType(List<LicenseType> type) {
+        return this.licenseDao.getLicensesByType(type);
     }
 
     @Override

@@ -37,20 +37,20 @@ import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
  */
 public interface LicenseDao extends GenericDao<License, Integer> {
 	
-	public List<License> getLicensesByType(int reseachGroupId, LicenseType licenseType);
+	List<License> getLicensesByType(LicenseType licenseType);
 
-	public List<License> getLicensesByType(int reseachGroupId, List<LicenseType> licenseType);
+	List<License> getLicensesByType(List<LicenseType> licenseType);
 	
-	public byte[] getLicenseAttachmentContent(int licenseId);
+	byte[] getLicenseAttachmentContent(int licenseId);
 	
-	public List<License> getLicenseForPackageAndOwnedByPerson(int personId, int packageId);
+	List<License> getLicenseForPackageAndOwnedByPerson(int personId, int packageId);
 	
-	public License getLicenseForPurchasedExperiment(int experimentId, int personId);
+	License getLicenseForPurchasedExperiment(int experimentId, int personId);
 	
-	public License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId);
+	License getLicenseForPurchasedExpPackage(int experimentPackageId, int personId);
 
-    public List<License> getLicensesForExperiment(int experimentId);
+    List<License> getLicensesForExperiment(int experimentId);
 
-    public List<License> getPersonLicenses(int personId);
+    List<License> getPersonLicenses(int personId);
 
 }

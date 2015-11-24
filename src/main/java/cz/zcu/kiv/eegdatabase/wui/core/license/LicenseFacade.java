@@ -123,20 +123,18 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public boolean addLicenseToPerson(License license, Person person);
 
 	/**
-	 * Returns all licenses of a given type for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of a given type.
 	 * @param type Fetch only licenses of this type.
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
+	public List<License> getLicensesByType(LicenseType type);
 
 	/**
-	 * Returns all licenses of a given types for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of given types.
 	 * @param type Fetch only licenses of specified types.
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
+	public List<License> getLicensesByType(List<LicenseType> type);
 
 	/**
 	 * List all licenses the package has been published under.
