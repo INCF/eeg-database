@@ -27,12 +27,9 @@
  */
 package cz.zcu.kiv.eegdatabase.data.nosql;
 
-import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
-
-import javax.annotation.Resource;
-
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.elasticsearch.index.query.IdsQueryBuilder;
@@ -41,20 +38,11 @@ import org.hibernate.type.Type;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
-import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
-import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
-import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
-import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
-import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
-import cz.zcu.kiv.eegdatabase.data.pojo.Digitization;
-import cz.zcu.kiv.eegdatabase.data.pojo.Disease;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.Hardware;
-import cz.zcu.kiv.eegdatabase.data.pojo.Pharmaceutical;
-import cz.zcu.kiv.eegdatabase.data.pojo.ProjectType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Software;
-import cz.zcu.kiv.eegdatabase.data.pojo.Weather;
+import javax.annotation.Resource;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 
@@ -115,14 +103,14 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     @Override
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
-        if (entity instanceof Experiment) {
-            Experiment e = (Experiment) entity;
-            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-            if (elastic.size() > 0 && elastic.get(0) != null) {
-                e.setElasticExperiment(elastic.get(0));
-            }
-        }
+//        if (entity instanceof Experiment) {
+//            Experiment e = (Experiment) entity;
+//            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+//            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+//            if (elastic.size() > 0 && elastic.get(0) != null) {
+//                e.setElasticExperiment(elastic.get(0));
+//            }
+//        }
 
         return res;
     }
