@@ -27,6 +27,7 @@
  */
 package cz.zcu.kiv.eegdatabase.data.nosql;
 
+import cz.zcu.kiv.eegdatabase.data.nosql.entities.ExperimentElastic;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.nosql.entities.ParameterAttribute;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
@@ -38,6 +39,8 @@ import org.hibernate.type.Type;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 import org.springframework.data.elasticsearch.core.query.DeleteQuery;
 import org.springframework.data.elasticsearch.core.query.IndexQuery;
+import org.springframework.data.elasticsearch.core.query.NativeSearchQueryBuilder;
+import org.springframework.data.elasticsearch.core.query.SearchQuery;
 
 import javax.annotation.Resource;
 import java.io.Serializable;
@@ -103,14 +106,21 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     @Override
     public boolean onLoad(Object entity, Serializable id, Object[] state, String[] propertyNames, Type[] types) {
         boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
-//        if (entity instanceof Experiment) {
-//            Experiment e = (Experiment) entity;
-//            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-//            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-//            if (elastic.size() > 0 && elastic.get(0) != null) {
-//                e.setElasticExperiment(elastic.get(0));
+        if (entity instanceof Experiment) {
+            Experiment e = (Experiment) entity;
+           // try {
+                e.getDataFiles();
+                //If there are data files, the experiment is red for details, so metadata is needed
+                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+                if (elastic.size() > 0 && elastic.get(0) != null) {
+                    e.setElasticExperiment(elastic.get(0));
+                }
+//            } catch (LazyInitializationException ex) {
+//                return res;
 //            }
-//        }
+
+        }
 
         return res;
     }
