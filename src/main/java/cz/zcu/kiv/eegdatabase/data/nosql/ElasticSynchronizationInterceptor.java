@@ -109,7 +109,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
            // try {
-                e.getDataFiles();
+                //e.getDataFiles();
                 //If there are data files, the experiment is red for details, so metadata is needed
                 SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
                 List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
