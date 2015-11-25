@@ -106,16 +106,14 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
 
     @Test(groups = "unit")
     public void testCreateExperimentPackage() {
-
         int countBefore = experimentPackageService.getCountRecords();
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         assertEquals(countBefore + 1, experimentPackageService.getCountRecords());
     }
 
     @Test(groups = "unit")
     public void testCreateExperimentPackageConnection() {
-
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         int countBefore = experimentPackageConnectionService.getCountRecords();
@@ -128,8 +126,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
 
     @Test(groups = "unit")
     public void testAddExperimentToPackage() {
-
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         if (experimentPackage.getExperimentPackageConnections() != null) {
@@ -152,7 +149,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
     @Test(groups = "unit", enabled = false)
     public void testRemoveExperimentFromPackage() {
 
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         int countBefore = experimentPackageService.listExperimentPackagesByGroup(researchGroup.getResearchGroupId()).size();

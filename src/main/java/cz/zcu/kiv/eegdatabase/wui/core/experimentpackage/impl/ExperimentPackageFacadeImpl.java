@@ -24,7 +24,6 @@ package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
@@ -32,7 +31,6 @@ import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageConnectionService;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
@@ -45,7 +43,6 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 
     private ExperimentPackageService experimentPackageService;
     private ExperimentPackageConnectionService experimentPackageConnectionService;
-	private LicenseService licenseServise;
 
     public ExperimentPackageFacadeImpl() {
     }
@@ -62,11 +59,6 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
     @Required
     public void setExperimentPackageConnectionService(ExperimentPackageConnectionService experimentPackageConnectionService) {
 	this.experimentPackageConnectionService = experimentPackageConnectionService;
-    }
-	
-	@Required
-    public void setLicenseService(LicenseService licenseServise) {
-		this.licenseServise = licenseServise;
     }
 
     @Override
@@ -109,12 +101,6 @@ public class ExperimentPackageFacadeImpl extends GenericFacadeImpl<ExperimentPac
 	}
 	return i;
     }
-
-	@Override
-	public void createExperimentPackage(ExperimentPackage pckg, License license) {
-		experimentPackageService.create(pckg, license);
-		
-	}
 
 	@Override
 	public void removeExperimentPackage(ExperimentPackage pckg) {

@@ -44,7 +44,6 @@ import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
 
@@ -101,32 +100,17 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
 
     }
 
-    @Override
-    @Transactional
-    public void addLicenseForPackage(License license, ExperimentPackage pack) {
-        this.checkLicenseGroupValidity(license, pack.getResearchGroup());
-        ExperimentPackageLicense conn = new ExperimentPackageLicense();
-        conn.setExperimentPackage(pack);
-        conn.setLicense(license);
-        this.experimentPackageLicenseDao.create(conn);
-    }
 
     @Override
-    @Transactional
-    public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
-        this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
+    @Transactional(readOnly = true)
+    public List<License> getLicensesByType(LicenseType type) {
+        return this.licenseDao.getLicensesByType(type);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
-        return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
-    }
-
-    @Override
-    @Transactional(readOnly = true)
-    public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
-        return this.licenseDao.getLicensesByType(group.getResearchGroupId(), type);
+    public List<License> getLicensesByType(List<LicenseType> type) {
+        return this.licenseDao.getLicensesByType(type);
     }
 
     @Override
@@ -140,13 +124,6 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         }
 
         return ret;
-    }
-
-    private void checkLicenseGroupValidity(License license, ResearchGroup group)
-    {
-        if (!group.isPaidAccount() && license.getLicenseType() == LicenseType.COMMERCIAL) {
-            throw new InvalidLicenseForPackageException("Group " + group.getTitle() + " is not a paid account and can not create bussiness licenses");
-        }
     }
 
     @Override
@@ -205,4 +182,10 @@ public class LicenseServiceImpl extends GenericServiceImpl<License, Integer> imp
         return licenseDao.getPersonLicenses(personId);
     }
 
+    @Override
+    @Transactional
+    public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
+        this.experimentPackageLicenseDao.removeLicenseFromPackage(pack.getExperimentPackageId(), license.getLicenseId());
+    }
+    
 }

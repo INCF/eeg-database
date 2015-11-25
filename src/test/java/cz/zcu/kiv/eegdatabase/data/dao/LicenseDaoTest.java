@@ -23,13 +23,8 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
-import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.logic.Util;
-
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.testng.annotations.BeforeMethod;
@@ -40,11 +35,6 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
 
     @Autowired
     private LicenseDao licenseDao;
-
-    @Autowired
-    private ResearchGroupDao researchGroupDao;
-    @Autowired
-    private PersonDao personDao;
 
     private License license;
 
@@ -80,26 +70,18 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
     }
 
     @Test(groups = "unit")
-    public void testGetLicenseType() {
-        Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
+    public void testGetLicenseByType() {
         int count = licenseDao.getCountRecords();
-        personDao.create(person);
-
-        ResearchGroup researchGroup = new ResearchGroup();
-        researchGroup.setDescription("test-description");
-        researchGroup.setTitle("test-title");
-        researchGroup.setPerson(person);
-        researchGroupDao.create(researchGroup);
+        
         licenseDao.create(license);
         License license2 = new License();
         license2.setLicenseId(-231);
         license2.setTitle("title");
         license2.setLicenseType(LicenseType.COMMERCIAL);
         licenseDao.create(license2);
+        
         assertEquals(count + 2, licenseDao.getCountRecords());
-       // assertEquals(count + 1, licenseDao.getLicensesByType(researchGroup.getResearchGroupId(), LicenseType.COMMERCIAL).size());
-
-
+        assertEquals(count + 1, licenseDao.getLicensesByType(LicenseType.COMMERCIAL).size());
     }
 
     @Test(groups = "unit")

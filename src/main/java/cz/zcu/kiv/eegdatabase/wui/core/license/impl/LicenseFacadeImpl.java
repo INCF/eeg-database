@@ -68,11 +68,6 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public void addLicenseForPackage(License license, ExperimentPackage pack) {
-		this.licenseService.addLicenseForPackage(license, pack);
-	}
-
-	@Override
 	public void removeLicenseFromPackage(License license, ExperimentPackage pack) {
 		this.licenseService.removeLicenseFromPackage(license, pack);
 	}
@@ -103,13 +98,13 @@ public class LicenseFacadeImpl extends GenericFacadeImpl<License, Integer> imple
 	}
 
 	@Override
-	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type) {
-		return licenseService.getLicensesForGroup(group, type);
+	public List<License> getLicensesByType(LicenseType type) {
+		return licenseService.getLicensesByType(type);
 	}
 
 	@Override
-	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type) {
-		return licenseService.getLicensesForGroup(group, type);
+	public List<License> getLicensesByType(List<LicenseType> type) {
+		return licenseService.getLicensesByType(type);
 	}
 
 	@Override
