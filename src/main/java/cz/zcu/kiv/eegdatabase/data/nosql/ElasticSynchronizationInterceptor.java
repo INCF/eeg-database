@@ -108,14 +108,16 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-           // try {
-                e.getDataFiles();
-                //If there are data files, the experiment is red for details, so metadata is needed
-                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-                if (elastic.size() > 0 && elastic.get(0) != null) {
-                    e.setElasticExperiment(elastic.get(0));
-                }
+          // try {
+                if (e.getDataFiles().isEmpty()) {
+
+//                If there are data files, the experiment is red for details, so metadata is needed
+                   SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+                   List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+                   if (elastic.size() > 0 && elastic.get(0) != null) {
+                       e.setElasticExperiment(elastic.get(0));
+                   }
+               }
 //            } catch (LazyInitializationException ex) {
 //                return res;
 //            }
