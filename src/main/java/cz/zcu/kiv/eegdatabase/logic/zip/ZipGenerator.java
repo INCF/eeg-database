@@ -94,7 +94,7 @@ public class ZipGenerator implements Generator {
                 IOUtils.copyLarge(new ByteArrayInputStream(licenseFile), zipOutputStream);
                 zipOutputStream.closeEntry();
             }
-            
+
             if (mc.isScenFile() && scen.getScenarioFile() != null) {
                 try {
 
@@ -105,7 +105,7 @@ public class ZipGenerator implements Generator {
                     zipOutputStream.closeEntry();
 
                 } catch (Exception ex) {
-                    ex.printStackTrace();
+                    log.error(ex);
                 }
             }
 
