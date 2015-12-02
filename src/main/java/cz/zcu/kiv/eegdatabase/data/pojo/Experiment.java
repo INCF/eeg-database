@@ -469,10 +469,6 @@ public class Experiment implements Serializable {
 		}
 	}
 
-    @PostLoad
-    public void setElasticMetadata() {
-        this.getDataFiles().isEmpty();
-    }
 
 	@Transient
 	public Date getStartDate() {

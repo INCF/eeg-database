@@ -51,6 +51,8 @@
 		<constructor-arg name="client" ref="client"/>
         <constructor-arg name="entityMapper" ref="customEntityMapper"/>
 	</bean>
+
+    <bean id="postLoadListener" class="cz.zcu.kiv.eegdatabase.data.persistent.PostLoadListener" />
 	
 <!--	<elasticsearch:repositories base-package="cz.zcu.kiv.eegdatabase.data.nosql.repositories" />-->
 
@@ -112,6 +114,12 @@
 		<property name="entityInterceptor">
 			<ref bean="elasticSynchronizationInterceptor"/>
 		</property>
+        
+        <property name="eventListeners">
+            <map>
+                <entry key="post-load"><ref local="postLoadListener" /></entry>
+            </map>
+        </property>
 		
 		<property name="hibernateProperties">
 			<props>
