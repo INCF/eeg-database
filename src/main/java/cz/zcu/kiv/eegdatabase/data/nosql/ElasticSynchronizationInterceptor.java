@@ -48,7 +48,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author bydga
  */
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
@@ -71,7 +71,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
             this.elasticsearchTemplate.index(indexQuery);
 
         }
-        
+
         return res;
     }
 
@@ -88,7 +88,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
             this.elasticsearchTemplate.index(indexQuery);
 
         }
-        
+
         return res;
     }
 
@@ -108,13 +108,11 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         boolean res = super.onLoad(entity, id, state, propertyNames, types); // To change body of generated methods, choose Tools | Templates.
         if (entity instanceof Experiment) {
             Experiment e = (Experiment) entity;
-                 if (!e.getDataFiles().isEmpty()) {   //  If there are data files, the experiment is red for details, so metadata is needed
-                   SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-                   List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-                   if (elastic.size() > 0 && elastic.get(0) != null) {
-                       e.setElasticExperiment(elastic.get(0));
-                   }
-               }
+            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+            if (elastic.size() > 0 && elastic.get(0) != null) {
+                e.setElasticExperiment(elastic.get(0));
+            }
 
 
         }
@@ -125,11 +123,11 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     /**
      * Just temporal method. Keeps synced specific params that are stored in ES with its originals in relational DB. As soon as the bussiness code will be completely switched to
      * GenericParameters, all original experiment properties will be dropped and this method will not be necessary.
-     * 
+     *
      * @param e
      */
     private void syncExperimentParams(Experiment e) {
-        
+
         List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
         syncedParams.addAll(getGenericParamaters("software", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("diesease", e.getGenericParameters()));
@@ -138,12 +136,12 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         syncedParams.addAll(getGenericParamaters("temperature", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("weather", e.getGenericParameters()));
         log.trace("synced parameters " + syncedParams.size());
-        
+
         GenericParameter param;
         log.trace("before remove all parameters " + e.getGenericParameters().size());
         e.getGenericParameters().removeAll(syncedParams);
         log.trace("after remove all parameters " + e.getGenericParameters().size());
-        
+
         e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
         e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
 
@@ -218,7 +216,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
 	}
-	
+
 	public List<GenericParameter> getGenericParamaters(String paramName, List<GenericParameter> params) {
         List<GenericParameter> out = new ArrayList<GenericParameter>();
         for (GenericParameter p : params) {
