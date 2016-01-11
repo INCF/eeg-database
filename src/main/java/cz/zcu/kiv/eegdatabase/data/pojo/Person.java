@@ -22,28 +22,15 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
+import cz.zcu.kiv.formgen.annotation.*;
+import org.hibernate.annotations.GenericGenerator;
+
+import javax.persistence.*;
 import java.io.Serializable;
 import java.sql.Timestamp;
 import java.util.HashSet;
 import java.util.Set;
-
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.FetchType;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
-import javax.persistence.Transient;
-
-import cz.zcu.kiv.formgen.annotation.*;
-import org.hibernate.annotations.GenericGenerator;
-
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.converters.IAutoCompletable;
 
 // Generated 2.12.2013 0:56:28 by Hibernate Tools 3.4.0.CR1
 
@@ -80,6 +67,13 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private String username;
 	private String password;
 	private String authority;
+    private String title;
+    private String address;
+    private String city;
+    private String state;
+    private String zipCode;
+    private String url;
+    private String phone;
 	private Timestamp registrationDate;
 	private boolean confirmed;
 	private boolean lock = false;
@@ -88,6 +82,20 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 	private ResearchGroup defaultGroup;
 	@FormItem
 	private EducationLevel educationLevel;
+
+    private String organizationType;
+    private String organization;
+    private String jobTitle;
+    private String orgAddress;
+    private String orgCity;
+    private String orgState;
+    private String orgZipCode;
+    private String orgUrl;
+    private String orgPhone;
+    private String VAT;
+    private String country;
+    private String orgCountry;
+
 	private Set<Experiment> experiments = new HashSet<Experiment>(0);
 	private Set<ResearchGroupMembership> researchGroupMemberships = new HashSet<ResearchGroupMembership>(
 					0);
@@ -214,7 +222,7 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.surname = surname;
 	}
 
-	@Column(name = "DATE_OF_BIRTH", length = 7, nullable = false)
+	@Column(name = "DATE_OF_BIRTH", length = 7, nullable = true)
 	public Timestamp getDateOfBirth() {
 		return this.dateOfBirth;
 	}
@@ -295,7 +303,178 @@ public class Person implements Serializable, Comparable<Person>, IAutoCompletabl
 		this.registrationDate = registrationDate;
 	}
 
-	@Column(name = "CONFIRMED")
+    @Column(name = "TITLE")
+    public String getTitle() {
+        return title;
+    }
+
+    public void setTitle(String title) {
+        this.title = title;
+    }
+
+    @Column(name = "ADDRESS")
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Column(name = "CITY")
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    @Column(name = "STATE")
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
+
+    @Column(name = "ZIP_CODE")
+    public String getZipCode() {
+        return zipCode;
+    }
+
+    public void setZipCode(String zipCode) {
+        this.zipCode = zipCode;
+    }
+
+    @Column(name = "URL")
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+    }
+
+    @Column(name = "PHONE")
+    public String getPhone() {
+        return phone;
+    }
+
+    public void setPhone(String phone) {
+        this.phone = phone;
+    }
+
+    @Column(name = "ORGANIZATION_TYPE")
+    public String getOrganizationType() {
+        return organizationType;
+    }
+
+    public void setOrganizationType(String organizationType) {
+        this.organizationType = organizationType;
+    }
+
+    @Column(name = "ORGANIZATION")
+    public String getOrganization() {
+        return organization;
+    }
+
+    public void setOrganization(String organization) {
+        this.organization = organization;
+    }
+
+    @Column(name = "JOB_TITLE")
+    public String getJobTitle() {
+        return jobTitle;
+    }
+
+    public void setJobTitle(String jobTitle) {
+        this.jobTitle = jobTitle;
+    }
+
+    @Column(name = "ORG_ADDRESS")
+    public String getOrgAddress() {
+        return orgAddress;
+    }
+
+    public void setOrgAddress(String orgAddress) {
+        this.orgAddress = orgAddress;
+    }
+
+    @Column(name = "ORG_CITY")
+    public String getOrgCity() {
+        return orgCity;
+    }
+
+    public void setOrgCity(String orgCity) {
+        this.orgCity = orgCity;
+    }
+
+    @Column(name = "ORG_STATE")
+    public String getOrgState() {
+        return orgState;
+    }
+
+    public void setOrgState(String orgState) {
+        this.orgState = orgState;
+    }
+
+    @Column(name = "ORG_ZIP_CODE")
+    public String getOrgZipCode() {
+        return orgZipCode;
+    }
+
+    public void setOrgZipCode(String orgZipCode) {
+        this.orgZipCode = orgZipCode;
+    }
+
+    @Column(name = "ORG_URL")
+    public String getOrgUrl() {
+        return orgUrl;
+    }
+
+    public void setOrgUrl(String orgUrl) {
+        this.orgUrl = orgUrl;
+    }
+
+    @Column(name = "ORG_PHONE")
+    public String getOrgPhone() {
+        return orgPhone;
+    }
+
+    public void setOrgPhone(String orgPhone) {
+        this.orgPhone = orgPhone;
+    }
+
+    @Column(name = "VAT")
+    public String getVAT() {
+        return VAT;
+    }
+
+    public void setVAT(String VAT) {
+        this.VAT = VAT;
+    }
+
+    @Column(name = "COUNTRY")
+    public String getCountry() {
+        return country;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    @Column(name = "ORG_COUNTRY")
+    public String getOrgCountry() {
+        return orgCountry;
+    }
+
+    public void setOrgCountry(String orgCountry) {
+        this.orgCountry = orgCountry;
+    }
+
+    @Column(name = "CONFIRMED")
 	public boolean isConfirmed() {
 		return this.confirmed;
 	}

@@ -32,7 +32,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.ApplicationContextAware;
 import org.springframework.scheduling.annotation.Async;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.social.linkedin.api.Post;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
@@ -163,7 +162,6 @@ public class IndexingServiceImpl implements IndexingService, ApplicationContextA
      * @throws ClassNotFoundException
      */
 
-    @Scheduled(cron = "${solr.indexingPeriod}")
     @Transactional(propagation=Propagation.REQUIRED)
     public void indexAll() {
 //        log.info("Starting indexing data");

@@ -45,7 +45,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * 
+ *
  * @author bydga
  */
 public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
@@ -68,7 +68,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
             this.elasticsearchTemplate.index(indexQuery);
 
         }
-        
+
         return res;
     }
 
@@ -85,7 +85,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
             this.elasticsearchTemplate.index(indexQuery);
 
         }
-        
+
         return res;
     }
 
@@ -118,11 +118,11 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
     /**
      * Just temporal method. Keeps synced specific params that are stored in ES with its originals in relational DB. As soon as the bussiness code will be completely switched to
      * GenericParameters, all original experiment properties will be dropped and this method will not be necessary.
-     * 
+     *
      * @param e
      */
     private void syncExperimentParams(Experiment e) {
-        
+
         List<GenericParameter> syncedParams = getGenericParamaters("hardware", e.getGenericParameters());
         syncedParams.addAll(getGenericParamaters("software", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("diesease", e.getGenericParameters()));
@@ -131,12 +131,12 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
         syncedParams.addAll(getGenericParamaters("temperature", e.getGenericParameters()));
         syncedParams.addAll(getGenericParamaters("weather", e.getGenericParameters()));
         log.trace("synced parameters " + syncedParams.size());
-        
+
         GenericParameter param;
         log.trace("before remove all parameters " + e.getGenericParameters().size());
         e.getGenericParameters().removeAll(syncedParams);
         log.trace("after remove all parameters " + e.getGenericParameters().size());
-        
+
         e.getElasticExperiment().setGroupId(e.getResearchGroup().getResearchGroupId());
         e.getElasticExperiment().setUserId(e.getPersonByOwnerId().getPersonId());
 
@@ -211,7 +211,7 @@ public class ElasticSynchronizationInterceptor extends EmptyInterceptor {
 
 		e.getGenericParameters().add(new GenericParameter("temperature", (double)e.getTemperature()));
 	}
-	
+
 	public List<GenericParameter> getGenericParamaters(String paramName, List<GenericParameter> params) {
         List<GenericParameter> out = new ArrayList<GenericParameter>();
         for (GenericParameter p : params) {

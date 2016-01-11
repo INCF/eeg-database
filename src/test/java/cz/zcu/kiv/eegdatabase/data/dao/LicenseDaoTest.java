@@ -22,20 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.data.dao;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.AbstractDataAccessTest;
-import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.data.pojo.ResearchGroup;
-import cz.zcu.kiv.eegdatabase.logic.Util;
-
-import org.junit.Before;
 import org.testng.annotations.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.annotations.BeforeMethod;
 
 import static org.testng.Assert.*;
@@ -45,11 +36,6 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
     @Autowired
     private LicenseDao licenseDao;
 
-    @Autowired
-    private ResearchGroupDao researchGroupDao;
-    @Autowired
-    private PersonDao personDao;
-
     private License license;
 
     @BeforeMethod(groups = "unit")
@@ -57,10 +43,8 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OWNER);
-
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
     }
 
     @Test(groups = "unit")
@@ -77,38 +61,27 @@ public class LicenseDaoTest extends AbstractDataAccessTest {
         assertNotNull(licenseDao.read(id));
 
         license = licenseDao.read(id);
-        license.setLicenseType(LicenseType.ACADEMIC);
+        license.setLicenseType(LicenseType.COMMERCIAL);
         licenseDao.update(license);
 
         license = licenseDao.read(id);
 
-        assertEquals(LicenseType.ACADEMIC, license.getLicenseType());
+        assertEquals(LicenseType.COMMERCIAL, license.getLicenseType());
     }
 
     @Test(groups = "unit")
-    public void testGetLicenseType() {
-        Person person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_ADMIN);
+    public void testGetLicenseByType() {
         int count = licenseDao.getCountRecords();
-        personDao.create(person);
-
-        ResearchGroup researchGroup = new ResearchGroup();
-        researchGroup.setDescription("test-description");
-        researchGroup.setTitle("test-title");
-        researchGroup.setPerson(person);
-        researchGroupDao.create(researchGroup);
-        license.setResearchGroup(researchGroup);
+        
         licenseDao.create(license);
         License license2 = new License();
         license2.setLicenseId(-231);
-        license2.setPrice(BigDecimal.valueOf(-1000f));
         license2.setTitle("title");
-        license2.setLicenseType(LicenseType.ACADEMIC);
-        license2.setResearchGroup(researchGroup);
+        license2.setLicenseType(LicenseType.COMMERCIAL);
         licenseDao.create(license2);
+        
         assertEquals(count + 2, licenseDao.getCountRecords());
-        assertEquals(count + 1, licenseDao.getLicensesByType(researchGroup.getResearchGroupId(), LicenseType.ACADEMIC).size());
-
-
+        assertEquals(count + 1, licenseDao.getLicensesByType(LicenseType.COMMERCIAL).size());
     }
 
     @Test(groups = "unit")

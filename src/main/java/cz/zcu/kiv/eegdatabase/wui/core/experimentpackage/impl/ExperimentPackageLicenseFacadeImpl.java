@@ -1,9 +1,14 @@
 package cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.impl;
 
+import java.util.List;
+
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackageLicense;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacadeImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageLicenseService;
+
 import org.springframework.beans.factory.annotation.Required;
 
 /**
@@ -19,8 +24,19 @@ public class ExperimentPackageLicenseFacadeImpl extends GenericFacadeImpl<Experi
     }
 
     @Required
-    public void setService( ExperimentPackageLicenseService service) {
+    public void setService(ExperimentPackageLicenseService service) {
         this.service = service;
+    }
+
+    
+    @Override
+    public List<ExperimentPackageLicense> getExperimentPackageLicensesForPackage(ExperimentPackage pckg) {
+        return this.service.getExperimentPackageLicensesForPackage(pckg);
+    }
+
+    @Override
+    public ExperimentPackageLicense getExperimentPackageLicense(ExperimentPackage pckg, License license) {
+        return this.service.getExperimentPackageLicense(pckg, license);
     }
 
 

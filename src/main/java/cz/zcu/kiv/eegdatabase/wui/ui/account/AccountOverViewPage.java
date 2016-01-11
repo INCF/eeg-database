@@ -70,7 +70,7 @@ public class AccountOverViewPage extends MenuPage {
 
         add(new ButtonPageMenu("leftMenu", MyAccountPageLeftMenu.values()));
 
-        Person user = EEGDataBaseSession.get().getLoggedUser();
+        Person user = personFacade.getPerson(EEGDataBaseSession.get().getLoggedUser().getUsername());
 
         if (user == null)
             throw new RestartResponseAtInterceptPageException(HomePage.class);
@@ -79,6 +79,13 @@ public class AccountOverViewPage extends MenuPage {
         add(new Label("userName", new PropertyModel<String>(user, "email")));
         add(new Label("fullName", user.getGivenname() + " " + user.getSurname()));
         add(new Label("authority", new PropertyModel<String>(user, "authority")));
+
+        add(new Label("phone", user.getPhone()));
+        add(new Label("address", (user.getAddress() == null ? "" : user.getAddress() + ", ")
+                + (user.getZipCode() == null ? "" : user.getZipCode() + ", ")
+                + (user.getCity() == null ? "" : user.getCity())));
+        //add(new Label("address", user.getAddress()));
+        add(new Label("country", user.getCountry()));
 
         List<ResearchGroupAccountInfo> groupDataForAccountOverview = researchGroupFacade.getGroupDataForAccountOverview(user);
         boolean emptyGroups = groupDataForAccountOverview.isEmpty();

@@ -111,7 +111,27 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 		return getExperimentsWhereOwner(person, 0, limit);
 	}
 
-	@Override
+    @Override
+    public int getCountForExperimentsWhereOwnerOrExperimenter(Person person) {
+        String query = "select count(e) from Experiment e left join e.persons p where e.personByOwnerId.personId = :personId or " +
+                "p.personId = :personId";
+        return ((Long) getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).uniqueResult()).intValue();
+    }
+
+    @Override
+    public List<Experiment> getMyExperiments(Person person, int start, int limit) {
+        String query = "select distinct e from Experiment e left join fetch e.scenario left join fetch e.persons p where e.personByOwnerId.personId = :personId or " +
+                "p.personId = :personId order by e.startTime desc";
+        return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).
+                setFirstResult(start).setMaxResults(limit).list();
+    }
+
+    @Override
+    public List<Experiment> getMyExperiments(Person person, int limit) {
+        return getMyExperiments(person, 0, limit);
+    }
+
+    @Override
 	public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit) {
 		String query = "from Experiment e left join fetch e.scenario where e.personByOwnerId.personId = :personId order by e.startTime desc";
 		return getSessionFactory().getCurrentSession().createQuery(query).setParameter("personId", person.getPersonId()).setFirstResult(start).setMaxResults(limit).list();
@@ -137,7 +157,8 @@ public class SimpleExperimentDao extends SimpleGenericDao<Experiment, Integer> i
 	public Experiment getExperimentForDetail(int experimentId) {
 		String query = "from Experiment e left join fetch e.dataFiles left join fetch e.hardwares left join fetch e.experimentOptParamVals left join fetch e.scenario "
 				+ "left join fetch e.weather left join fetch e.projectTypes left join fetch e.diseases left join fetch e.pharmaceuticals pharmaceuticals "
-				+ "left join fetch e.softwares left join fetch e.persons left join fetch e.experimentPackageConnections where e.experimentId = :experimentId";
+				+ "left join fetch e.softwares left join fetch e.persons left join fetch e.experimentPackageConnections left join fetch e.experimentLicences "
+				+ "where e.experimentId = :experimentId";
 		return (Experiment) getSessionFactory().getCurrentSession().createQuery(query).setParameter("experimentId", experimentId).uniqueResult();
 	}
 

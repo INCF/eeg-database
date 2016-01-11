@@ -24,8 +24,6 @@ package cz.zcu.kiv.eegdatabase.services;
 
 import static org.testng.Assert.assertEquals;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.ExperimentGenerator;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
@@ -101,25 +99,21 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
         license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OWNER);
-        license.setResearchGroup(researchGroup);
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseDao.create(license);
     }
 
     @Test(groups = "unit")
     public void testCreateExperimentPackage() {
-
         int countBefore = experimentPackageService.getCountRecords();
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         assertEquals(countBefore + 1, experimentPackageService.getCountRecords());
     }
 
     @Test(groups = "unit")
     public void testCreateExperimentPackageConnection() {
-
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         int countBefore = experimentPackageConnectionService.getCountRecords();
@@ -132,8 +126,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
 
     @Test(groups = "unit")
     public void testAddExperimentToPackage() {
-
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         if (experimentPackage.getExperimentPackageConnections() != null) {
@@ -156,7 +149,7 @@ public class ExperimentPackageServiceTest extends AbstractServicesTest{
     @Test(groups = "unit", enabled = false)
     public void testRemoveExperimentFromPackage() {
 
-        experimentPackageService.create(experimentPackage, license);
+        experimentPackageService.create(experimentPackage);
         experimentDao.create(experiment);
 
         int countBefore = experimentPackageService.listExperimentPackagesByGroup(researchGroup.getResearchGroupId()).size();

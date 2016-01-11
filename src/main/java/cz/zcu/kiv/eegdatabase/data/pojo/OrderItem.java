@@ -45,11 +45,9 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
     @ManyToOne
     @JoinColumn(name = "PROMOCODE")
     private PromoCode promoCode;
-
-    //why was this public?
-    private OrderItem() {
-
-    }
+    
+    
+    public OrderItem() { }
 
     public OrderItem(MembershipPlan plan, Order order) {
         this.membershipPlan = plan;
@@ -64,16 +62,18 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         this.price = plan.getPrice() != null ? plan.getPrice() : BigDecimal.ZERO;
     }
 
-    public OrderItem(Experiment experiment, Order order) {
-        this.experiment = experiment;
+    public OrderItem(ExperimentLicence experimentLicense, Order order) {
+        this.experiment = experimentLicense.getExperiment();
+        this.license = experimentLicense.getLicense();
+        this.price = experimentLicense.getPrice();
         this.order = order;
-        this.price = experiment.getPrice() != null ? experiment.getPrice() : BigDecimal.ZERO;
     }
 
-    public OrderItem(ExperimentPackage experimentPackage, Order order) {
-        this.experimentPackage = experimentPackage;
+    public OrderItem(ExperimentPackageLicense experimentPackageLicense, Order order) {
+        this.experimentPackage = experimentPackageLicense.getExperimentPackage();
+        this.license = experimentPackageLicense.getLicense();
+        this.price = experimentPackageLicense.getPrice();
         this.order = order;
-        this.price = experimentPackage.getPrice() != null ? experimentPackage.getPrice() : BigDecimal.ZERO;
     }
 
     public ResearchGroup getResearchGroup() {
@@ -182,15 +182,6 @@ public class OrderItem implements Serializable, Comparable<OrderItem> {
         }
 
         return (id < o.getId()) ? -1 : ((id == o.getId()) ? 0 : 1);
-    }
-
-    public void setPriceFromItem() {
-        
-        if(experiment != null) {
-            price = experiment.getPrice();
-        } else {
-            price = experimentPackage.getPrice();
-        }
     }
 
 }

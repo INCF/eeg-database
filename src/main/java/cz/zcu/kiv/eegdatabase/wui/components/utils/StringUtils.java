@@ -22,12 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
-import java.sql.Timestamp;
-
-import com.ibm.icu.util.Calendar;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-
 /**
  * Utilities class for string.
  * 
@@ -37,6 +31,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 public class StringUtils {
     
     public static String REGEX_ONLY_LETTERS = "[a-zA-Z][a-zA-Z\\s]*";
+    public static String REGEX_ALPHANUMERIC = "[a-zA-Z0-9][a-zA-Z0-9\\s]*";
     public static String DATE_TIME_FORMAT_PATTER = "dd.MM.yyyy, HH:mm:ss";
     public static String DATE_FORMAT_PATTER = "dd.MM.yyyy";
     public static String DATE_TIME_FORMAT_PATTER_ONLY_YEAR = "yyyy";

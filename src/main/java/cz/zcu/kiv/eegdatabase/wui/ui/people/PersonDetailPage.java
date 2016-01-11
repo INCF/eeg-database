@@ -22,19 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.people;
 
-import java.util.ArrayList;
-
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.markup.html.basic.EnumLabel;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.PersonOptParamVal;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
@@ -50,6 +37,18 @@ import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonAddParamFormPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.form.PersonFormPage;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.EnumLabel;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.link.BookmarkablePageLink;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+
+import java.util.ArrayList;
 
 /**
  * Page of detail for person.
@@ -84,8 +83,10 @@ public class PersonDetailPage extends MenuPage {
         Person person = personFacade.getPersonForDetail(personId);
         
         add(new EnumLabel<Gender>("gender", Gender.getGenderByShortcut(person.getGender())));
+        add(new Label("title", person.getTitle()));
         add(new Label("name", person.getGivenname() + " " + person.getSurname()));
         add(new Label("email", person.getUsername()));
+        add(new Label("country", person.getCountry()));
         add(new Label("note", person.getNote()));
         add(new Label("phone", person.getPhoneNumber()));
         add(new TimestampLabel("dateOfBirth", person.getDateOfBirth(), StringUtils.DATE_FORMAT_PATTER));

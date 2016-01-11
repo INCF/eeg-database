@@ -22,11 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.components.utils;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.IOException;
-
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.request.IRequestCycle;
@@ -37,7 +33,9 @@ import org.apache.wicket.util.io.IOUtils;
 import org.apache.wicket.util.resource.FileResourceStream;
 import org.apache.wicket.util.resource.IResourceStream;
 
-import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
+import java.io.*;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Utilities class for files.
@@ -103,6 +101,24 @@ public class FileUtils {
             }
         }
 
+    }
+    public static List<String> getFileLines(File file) throws IOException {
+        List<String> lines = new ArrayList<String>();
+        FileInputStream fstream = new FileInputStream(file);
+        BufferedReader br = new BufferedReader(new InputStreamReader(fstream));
+
+        String strLine;
+
+//Read File Line By Line
+        while ((strLine = br.readLine()) != null)   {
+            // Print the content on the console
+            lines.add(strLine);
+        }
+
+//Close the input stream
+        br.close();
+
+        return lines;
     }
 
     public static boolean deleteOnExitQuietly(File file) {

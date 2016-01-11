@@ -5,11 +5,14 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
 import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
+
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Lichous on 28.4.15.
@@ -33,4 +36,24 @@ public class ExperimentLicenseServiceImpl extends GenericServiceImpl<ExperimentL
     public void remove(Experiment experiment, License license) {
         dao.remove(experiment,license);
     }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<ExperimentLicence> getExperimentLicensesForExperiment(Experiment experiment) {
+        return dao.readByParameter("experiment.experimentId", experiment.getExperimentId());
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public ExperimentLicence getExperimentLicense(Experiment experiment, License license) {
+        Map<String, Object> params = new HashMap<String, Object>(2);
+        params.put("experiment.experimentId", experiment.getExperimentId());
+        params.put("license.licenseId", license.getLicenseId());
+        List<ExperimentLicence> result = dao.readByParameter(params);
+        if (!result.isEmpty())
+            return result.get(0);
+        else
+            return null;
+    }
+    
 }

@@ -1,0 +1,234 @@
+<!--
+This file is part of the EEG-database project
+
+  ==========================================
+
+  Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
+
+ ***********************************************************************************************************************
+
+  Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
+  the License. You may obtain a copy of the License at
+
+      http://www.apache.org/licenses/LICENSE-2.0
+
+  Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
+  an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
+  specific language governing permissions and limitations under the License.
+
+ ***********************************************************************************************************************
+
+  PersonFormPanel.html, 2015/10/07 00:01 Jan Stebetak
+-->
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:wicket="http://wicket.apache.org/dtds.data/wicket-xhtml1.4-strict.dtd" xml:lang="en"
+      lang="en">
+<body>
+<wicket:panel>
+    <h2>
+        <wicket:message key="label.personalDetails"/>
+    </h2>
+
+    <div class="itemBox">
+        <label for="title" class="textFieldLabel">
+            <wicket:message
+                    key="label.title"></wicket:message>
+            *</label> <select
+            wicket:id="title" id="selectTitle" class="selectBox"></select>
+    </div>
+
+    <div class="itemBox">
+        <label for="givenname" class="textFieldLabel">
+            <wicket:message
+                    key="general.name">[name]
+            </wicket:message>
+            *</label> <input wicket:id="givenname" class="textField"
+                             type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="surname" class="textFieldLabel">
+            <wicket:message
+                    key="general.surname">[surname]
+            </wicket:message>
+            *</label> <input wicket:id="surname"
+                             class="textField" type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="dateOfBirth" class="textFieldLabel">
+            <wicket:message
+                    key="general.dateofbirth">[date of birth]
+            </wicket:message>
+        </label> <input
+            wicket:id="dateOfBirth" class="textField dateField" type="text"/>
+        <span class="note"><wicket:message key="form.note.dateFormatDDMMYYYY"/></span>
+    </div>
+
+    <div class="itemBox">
+        <label for="address" class="textFieldLabel">
+            <wicket:message
+                    key="label.address"></wicket:message>
+        </label> <input wicket:id="address" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="city" class="textFieldLabel">
+            <wicket:message
+                    key="label.city"></wicket:message>
+        </label> <input wicket:id="city" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="state" class="textFieldLabel">
+            <wicket:message
+                    key="label.state"></wicket:message>
+        </label> <input wicket:id="state" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="zipCode" class="textFieldLabel">
+            <wicket:message
+                    key="label.zipCode"></wicket:message>
+        </label> <input wicket:id="zipCode" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="country" class="textFieldLabel">
+            <wicket:message
+                    key="label.country"></wicket:message>
+            *</label> <select
+            wicket:id="country" id="selectCountry" class="selectBox"></select>
+    </div>
+
+    <div class="itemBox">
+        <label for="url" class="textFieldLabel">
+            <wicket:message
+                    key="label.url"></wicket:message>
+        </label> <input wicket:id="url" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="phone" class="textFieldLabel">
+            <wicket:message
+                    key="label.phoneNumber"></wicket:message>
+        </label> <input wicket:id="phone" class="textField"
+                        type="text"/>
+    </div>
+
+
+    <div class="itemBox">
+        <label for="educationLevel" class="textFieldLabel">
+            <wicket:message
+                    key="general.educationlevel">[education level]
+            </wicket:message>
+        </label> <select
+            wicket:id="educationLevel" id="selectEducationLevel" class="selectBox"></select>
+    </div>
+
+    <div class="itemBox">
+        <label for="laterality" wicket:id="lateralityLb" class="textFieldLabel">
+            <wicket:message key="label.laterality">[laterality]</wicket:message>
+        </label> <select wicket:id="laterality" id="selectLaterality" class="selectBox"></select>
+    </div>
+
+    <h2>
+        <wicket:message key="label.professionalDetails"/>
+    </h2>
+
+    <div class="itemBox">
+        <label for="organizationType" class="textFieldLabel">
+            <wicket:message
+                    key="label.organizationType"></wicket:message>
+            *</label> <select
+            wicket:id="organizationType" id="selectOrganizationType" class="selectBox"></select>
+    </div>
+
+    <div class="itemBox">
+        <label for="organization" class="textFieldLabel">
+            <wicket:message
+                    key="label.organization"></wicket:message>
+        </label> <input wicket:id="organization" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="jobTitle" class="textFieldLabel">
+            <wicket:message
+                    key="label.jobTitle"></wicket:message>
+        </label> <input wicket:id="jobTitle" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgAddress" class="textFieldLabel">
+            <wicket:message
+                    key="label.address"></wicket:message>
+        </label> <input wicket:id="orgAddress" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgCity" class="textFieldLabel">
+            <wicket:message
+                    key="label.city"></wicket:message>
+        </label> <input wicket:id="orgCity" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgState" class="textFieldLabel">
+            <wicket:message
+                    key="label.state"></wicket:message>
+        </label> <input wicket:id="orgState" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgZipCode" class="textFieldLabel">
+            <wicket:message
+                    key="label.zipCode"></wicket:message>
+        </label> <input wicket:id="orgZipCode" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgCountry" class="textFieldLabel">
+            <wicket:message
+                    key="label.country"></wicket:message>
+        </label> <select
+            wicket:id="orgCountry" id="selectOrgCountry" class="selectBox"></select>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgUrl" class="textFieldLabel">
+            <wicket:message
+                    key="label.url"></wicket:message>
+        </label> <input wicket:id="orgUrl" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="orgPhone" class="textFieldLabel">
+            <wicket:message
+                    key="label.phoneNumber"></wicket:message>
+        </label> <input wicket:id="orgPhone" class="textField"
+                        type="text"/>
+    </div>
+
+    <div class="itemBox">
+        <label for="VAT" class="textFieldLabel">
+            <wicket:message
+                    key="label.VAT"></wicket:message>
+        </label> <input wicket:id="VAT" class="textField"
+                        type="text"/>
+    </div>
+</wicket:panel>
+</body>
+</html>

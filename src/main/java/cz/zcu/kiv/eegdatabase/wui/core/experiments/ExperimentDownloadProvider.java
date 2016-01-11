@@ -25,7 +25,6 @@ package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
-import java.io.IOException;
 import java.sql.Timestamp;
 import java.util.Calendar;
 import java.util.Collection;
@@ -52,6 +51,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.zip.ZipGenerator;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
@@ -140,7 +140,9 @@ public class ExperimentDownloadProvider {
             // prepared history log
             createHistoryRecordAboutDownload(experiment);
 
-            file = zipGenerator.generate(experiment, mc, newFiles, licenseService.getPublicLicenseFile(), licenseService.getPublicLicenseFileName());
+            License license = licenseService.getLicenseForPurchasedExperiment(exp.getExperimentId(), EEGDataBaseSession.get().getLoggedUser().getPersonId());
+            byte[] licenseFile = licenseService.getLicenseAttachmentContent(license.getLicenseId());
+            file = zipGenerator.generate(experiment, mc, newFiles, licenseFile, license.getAttachmentFileName());
 
             FileDTO dto = new FileDTO();
             dto.setFile(file);
@@ -196,10 +198,8 @@ public class ExperimentDownloadProvider {
                 } else
                     experimentDirPrefix = "Experiment_data_" + exp.getExperimentId() + "/";
                 // generate temp zip file with experiment
-                byte[] licenseFile = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFile() : licenseService
-                        .getLicenseAttachmentContent(license.getLicenseId());
-                String licenseFileName = license.getLicenseId() == licenseService.getPublicLicense().getLicenseId() ? licenseService.getPublicLicenseFileName() : license.getAttachmentFileName();
-                file = zipGenerator.generate(exp, mc, exp.getDataFiles(), licenseFile, licenseFileName);
+                byte[] licenseFile = licenseService.getLicenseAttachmentContent(license.getLicenseId());
+                file = zipGenerator.generate(exp, mc, exp.getDataFiles(), licenseFile, license.getAttachmentFileName());
                 in = new ZipInputStream(new FileInputStream(file));
                 ZipEntry entryIn = null;
 

@@ -57,7 +57,7 @@ public class SimplePersonalLicenseDao extends SimpleGenericDao<PersonalLicense, 
 			Criteria criteria = this.getSession().createCriteria(PersonalLicense.class);
 			criteria.add(Restrictions.eq("licenseState", state));
 			criteria.createAlias("license", "l");
-			criteria.add(Restrictions.ne("l.licenseType", LicenseType.OWNER));
+			//criteria.add(Restrictions.ne("l.licenseType", LicenseType.OWNER));
 			criteria.add(Restrictions.eq("l.researchGroup.researchGroupId", group.getResearchGroupId()));
 			return criteria.list();
 		} else {

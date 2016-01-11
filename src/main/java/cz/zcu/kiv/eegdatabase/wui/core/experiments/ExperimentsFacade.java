@@ -27,6 +27,7 @@ import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
+import cz.zcu.kiv.eegdatabase.data.pojo.License;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
@@ -45,11 +46,17 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
 
     List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
 
+    List<Experiment> getMyExperiments(Person person, int limit);
+
+    List<Experiment> getMyExperiments(Person person, int start, int limit);
+
     List<Experiment> getExperimentsWhereSubject(Person person, int limit);
 
     List<Experiment> getExperimentsWhereSubject(Person person, int start, int limit);
 
     int getCountForExperimentsWhereOwner(Person loggedUser);
+
+    int getCountForExperimentsWhereOwnerOrExperimenter(Person loggedUser);
 
     int getCountForExperimentsWhereSubject(Person person);
 
@@ -72,10 +79,15 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
     List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg);
 
 	/**
-	 * List all experiments that arent in any package.
+	 * List all experiments that aren't in any package.
 	 * @return 
 	 */
 	List<Experiment> getExperimentsWithoutPackage();
 	
-	void changePrice(Experiment experiment);
+	/**
+     * List all experiments that aren't in any package and are available under the specified license.
+     * @return 
+     */
+    List<Experiment> getExperimentsWithoutPackageWithLicense(License license);
+
 }

@@ -1,7 +1,9 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import javax.persistence.*;
+
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 /**
  * ********************************************************************************************************************
@@ -46,6 +48,9 @@ public class ExperimentLicence implements Serializable {
     @ManyToOne
     @JoinColumn(name = "LICENSE")
     private License license;
+    
+    @Column(name = "PRICE", precision = 19, scale = 2)
+    private BigDecimal price;
 
     public int getExperimentLicenseId() {
         return experimentLicenseId;
@@ -59,6 +64,10 @@ public class ExperimentLicence implements Serializable {
         return experiment;
     }
 
+    public BigDecimal getPrice() {
+        return price;
+    }
+
     public void setExperimentLicenseId(int experimentLicenseId) {
         this.experimentLicenseId = experimentLicenseId;
     }
@@ -70,6 +79,11 @@ public class ExperimentLicence implements Serializable {
     public void setLicense(License license) {
         this.license = license;
     }
+    
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+    
 }
 
 

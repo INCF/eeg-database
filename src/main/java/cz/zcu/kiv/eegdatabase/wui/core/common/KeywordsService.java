@@ -22,12 +22,17 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.common;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
 import cz.zcu.kiv.eegdatabase.data.pojo.Keywords;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
+
+import java.util.List;
 
 public interface KeywordsService extends GenericService<Keywords, Integer> {
 
     String getKeywords(int groupId);
 
     int getID(int groupId);
+
+    public List<Integer> getKeywordsFromPackage(ExperimentPackage pck);
 }

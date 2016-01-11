@@ -56,7 +56,7 @@
         <param name="SMTPHost" value="smtp.zcu.cz" />
         <param name="From" value="eeg-base@kiv.zcu.cz" />
 <!--         Comma separated target address -->
-        <param name="To" value="jezekp@kiv.zcu.cz,rinkesj@students.zcu.cz" />
+        <param name="To" value="jezekp@kiv.zcu.cz,stebjan@kiv.zcu.cz" />
         <param name="Subject" value="EEGDatabase - exception in application" />
         <layout class="org.apache.log4j.PatternLayout">
             <param name="ConversionPattern" value="%d [%t] %C %p - %m%n" />

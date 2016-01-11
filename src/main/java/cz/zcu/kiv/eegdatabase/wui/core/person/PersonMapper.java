@@ -22,14 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.person;
 
-import java.sql.Timestamp;
-import java.util.Date;
-
-import org.joda.time.DateTime;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.dto.FullPersonDTO;
+import cz.zcu.kiv.eegdatabase.wui.ui.security.components.PersonFormObject;
+import org.joda.time.DateTime;
+
+import java.sql.Timestamp;
 
 public class PersonMapper {
 
@@ -37,10 +36,10 @@ public class PersonMapper {
 
         FullPersonDTO dto = new FullPersonDTO();
         dto.setId(person.getPersonId());
-        dto.setName(person.getGivenname());
+        dto.setGivenname(person.getGivenname());
         dto.setSurname(person.getSurname());
         dto.setDateOfBirth(person.getDateOfBirth() == null ? null : person.getDateOfBirth());
-        dto.setEmail(person.getUsername().toLowerCase());
+        //dto.setEmail(person.getUsername().toLowerCase());
         dto.setUsername(person.getUsername());
         dto.setGender(Gender.getGenderByShortcut(person.getGender()));
         dto.setConfirmed(person.isConfirmed());
@@ -53,22 +52,62 @@ public class PersonMapper {
         return dto;
     }
 
-    public Person convertToEntity(FullPersonDTO dto, Person person) {
+    public Person convertToEntity(PersonFormObject reg, Person person) {
 
+        FullPersonDTO dto = reg.getPanelPerson();
+        person = convertToEntity(dto, person);
+
+        person.setUsername(reg.getEmail().toLowerCase());
+        person.setEmail(reg.getEmail().toLowerCase());
+        //person.setGender(dto.getGender().getShortcut());
+
+        person.setPassword(reg.getPassword());
+
+        return person;
+    }
+
+    public Person convertToEntity(FullPersonDTO dto, Person person) {
         person.setPersonId(dto.getId());
-        person.setGivenname(dto.getName());
+        person.setGivenname(dto.getGivenname());
         person.setSurname(dto.getSurname());
         person.setDateOfBirth(new Timestamp(dto.getDateOfBirth().getTime()));
-        person.setUsername(dto.getEmail().toLowerCase());
-        person.setEmail(dto.getEmail().toLowerCase());
-        person.setGender(dto.getGender().getShortcut());
+
+        //person.setGender(dto.getGender().getShortcut());
         person.setConfirmed(dto.isConfirmed());
         person.setRegistrationDate(new Timestamp(dto.getRegistrationDate().getMillis()));
         person.setLaterality(dto.getLaterality());
         person.setAuthority(dto.getAuthority());
-        person.setPassword(dto.getPassword());
+
         person.setEducationLevel(dto.getEducationLevel());
 
+        person.setTitle(dto.getTitle());
+        if (dto.getTitle().equals("Mr.")) {
+            person.setGender('M');
+        } else {
+            person.setGender('F');
+        }
+        person.setAddress(dto.getAddress());
+        person.setCity(dto.getCity());
+        person.setState(dto.getState());
+        person.setZipCode(dto.getZipCode());
+        person.setCountry(dto.getCountry());
+        person.setUrl(dto.getUrl());
+        person.setPhoneNumber(dto.getPhone());
+
+        person.setOrganizationType(dto.getOrganizationType());
+        person.setOrganization(dto.getOrganization());
+        person.setJobTitle(dto.getJobTitle());
+        person.setOrgAddress(dto.getOrgAddress());
+        person.setOrgCity(dto.getOrgCity());
+        person.setOrgState(dto.getOrgState());
+        person.setOrgZipCode(dto.getOrgZipCode());
+        person.setOrgUrl(dto.getOrgUrl());
+        person.setOrgCountry(dto.getOrgCountry());
+        person.setVAT(dto.getVAT());
+        person.setOrgPhone(dto.getOrgPhone());
+
+
         return person;
+
     }
 }

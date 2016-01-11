@@ -27,13 +27,9 @@ import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageDao;
 import cz.zcu.kiv.eegdatabase.data.dao.ExperimentPackageLicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.LicenseType;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericServiceImpl;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentpackage.ExperimentPackageService;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseService;
-import cz.zcu.kiv.eegdatabase.wui.core.license.impl.InvalidLicenseForPackageException;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
@@ -47,8 +43,6 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
     private ExperimentPackageDao experimentPackageDao;
     private ExperimentPackageLicenseDao experimentPackageLicenseDao;
     private ExperimentPackageConnectionDao experimentPackageConnectionDao;
-	
-    private LicenseService licenseService;
 
     public ExperimentPackageServiceImpl() {
     }
@@ -72,36 +66,11 @@ public class ExperimentPackageServiceImpl extends GenericServiceImpl<ExperimentP
 		this.experimentPackageConnectionDao = experimentPackageConnectionDao;
 	}
 
-	@Required
-	public void setLicenseService(LicenseService licenseService) {
-		this.licenseService = licenseService;
-	}
-
     @Override
     @Transactional(readOnly = true)
     public List<ExperimentPackage> listExperimentPackagesByGroup(int researchGroupId) {
 	return experimentPackageDao.readByParameter("researchGroup.researchGroupId", researchGroupId);
     }
-
-	@Override
-	@Transactional
-	public Integer create(ExperimentPackage pack, License license) {
-		int id = this.create(pack);
-		pack.setExperimentPackageId(id);
-		
-		//create default owner license
-		License ownerLicense = this.licenseService.getOwnerLicense(pack.getResearchGroup());
-		licenseService.addLicenseForPackage(ownerLicense, pack);
-		
-		if (license != null && license.getLicenseType() != LicenseType.OWNER) {
-			licenseService.addLicenseForPackage(license, pack);
-		}
-		else if (!pack.getResearchGroup().isPaidAccount()) { //specifying that only private will be available but group doesn't have rights to do this
-			throw new InvalidLicenseForPackageException("Group " + pack.getResearchGroup().getTitle() + " cannot have private packages");
-		}
-		
-		return id;
-	}
 
 	@Override
 	@Transactional

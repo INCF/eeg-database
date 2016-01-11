@@ -66,19 +66,18 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "");
-        tester.setTextField("surname", "");
-        tester.setTextField("dateOfBirth", "");
+        tester.setTextField("panelPerson:givenname", "");
+        tester.setTextField("panelPerson:surname", "");
+        tester.setTextField("panelPerson:dateOfBirth", "");
         tester.setTextField("username", "");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
-
+        tester.assertTextPresent("Field 'Title' is required.");
         tester.assertTextPresent("Field 'Name' is required.");
         tester.assertTextPresent("Field 'Surname' is required.");
-        tester.assertTextPresent("Field 'Date of birth' is required.");
-        tester.assertTextPresent("Field 'Gender' is required.");
+       // tester.assertTextPresent("Field 'Gender' is required.");
         tester.assertTextPresent("Field 'E-mail' is required.");
-        //   tester.assertTextPresent("Field 'Education Level' is required");  TODO need to be fixed in form
+        tester.assertTextPresent("Field 'Country' is required.");
 
         tester.clickLinkWithText(getProperty("action.logout"));
 
@@ -90,10 +89,13 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2010");
+        tester.selectOption("panelPerson:title", "Mr.");
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
         tester.setTextField("username", "xxx");
+        tester.selectOption("panelPerson:country", "Angola");
+        tester.selectOption("panelPerson:organizationType", "Commercial");
         tester.clickButtonWithText("Save");
         Thread.sleep(waitForAjax);
 
@@ -104,12 +106,6 @@ public class PersonTestIT extends AbstractUITest{
         Thread.sleep(waitForAjax);
 
         tester.assertTextPresent("'E-mail' is not a valid email address.");
-
-        tester.setTextField("username", "xxx@xxx.com");
-        tester.clickButtonWithText(getProperty("button.save"));
-        Thread.sleep(waitForAjax);
-
-        tester.assertTextNotPresent("'E-mail'" + getProperty("EmailAddressValidator"));
 
 
         tester.clickLinkWithText(getProperty("action.logout"));
@@ -123,10 +119,13 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2010");
-        tester.clickRadioOption("gender", "0");//"Male"
+        tester.selectOption("panelPerson:title", "Mr.");
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2010");
+        tester.selectOption("panelPerson:country", "Angola");
+        tester.selectOption("panelPerson:organizationType", "Commercial");
+       // tester.clickRadioOption("gender", "0");//"Male"
         tester.setTextField("username", "jan.stebetak2@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);
@@ -142,10 +141,13 @@ public class PersonTestIT extends AbstractUITest{
         tester.clickLinkWithText(getProperty("menuItem.people"));
         tester.assertLinkPresentWithText(getProperty("button.addPerson"));
         tester.clickLinkWithText(getProperty("button.addPerson"));
-        tester.setTextField("givenname", "Test");
-        tester.setTextField("surname", "Test");
-        tester.setTextField("dateOfBirth", "10/10/2016"); //is in the future
-        tester.clickRadioOption("gender", "0");//"Male"
+        tester.selectOption("panelPerson:title", "Mr.");
+        tester.setTextField("panelPerson:givenname", "Test");
+        tester.setTextField("panelPerson:surname", "Test");
+        tester.setTextField("panelPerson:dateOfBirth", "10/10/2016"); //is in the future
+       // tester.clickRadioOption("gender", "0");//"Male"
+        tester.selectOption("panelPerson:country", "Angola");
+        tester.selectOption("panelPerson:organizationType", "Commercial");
         tester.setTextField("username", "personAdded@seznam.cz");
         tester.clickButtonWithText(getProperty("button.save"));
         Thread.sleep(waitForAjax);

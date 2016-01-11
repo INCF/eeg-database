@@ -101,14 +101,15 @@ public class PersonalLicenseServiceImpl extends GenericServiceImpl<PersonalLicen
 		personalLicense.setLicenseState(PersonalLicenseState.APPLICATION);
 		this.personalLicenseDao.create(personalLicense);
 		
-		ResearchGroup group = groupService.getResearchGroupById(personalLicense.getLicense().getResearchGroup().getResearchGroupId());
+		// XXX kuba licence
+		/*ResearchGroup group = groupService.getResearchGroupById(personalLicense.getLicense().getResearchGroup().getResearchGroupId());
 		
 		this.mailService.sendLicenseRequestToApplicantEmail(personalLicense.getEmail(), personalLicense.getLicense().getTitle());
 		this.mailService.sendLicenseRequestToGroupEmail(
 				group.getPerson().getUsername(),
 				personalLicense.getFirstName() + " " + personalLicense.getLastName(),
 				personalLicense.getEmail(),
-				personalLicense.getLicense().getTitle());
+				personalLicense.getLicense().getTitle());*/
 	}
 	
     @Override

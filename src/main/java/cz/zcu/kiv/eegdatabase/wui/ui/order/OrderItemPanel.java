@@ -180,8 +180,8 @@ public class OrderItemPanel extends Panel {
         }
 
         // add components for package container
-        packageContainer.add(new Label("packageText1", ResourceUtils.getModel("text.order.item.package1", Integer.toString(packageId), name)));
-        packageContainer.add(new Label("packageText2", ResourceUtils.getModel("text.order.item.package2", group)));
+        packageContainer.add(new Label("packageText1", ResourceUtils.getModel("text.order.item.package1", name)));
+        //packageContainer.add(new Label("packageText2", ResourceUtils.getModel("text.order.item.package2", group)));
 
         // add component for list of experiments in package
         final PropertyListView<Experiment> packageExperimentList = new PropertyListView<Experiment>("experiments", facade.getExperimentsByPackage(packageId)) {

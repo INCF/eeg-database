@@ -22,15 +22,14 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.List;
-
-import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
-import org.apache.wicket.model.IModel;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.wui.components.repeater.BasicDataProvider;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import org.apache.wicket.extensions.markup.html.repeater.data.sort.SortOrder;
+import org.apache.wicket.model.IModel;
+
+import java.util.List;
 
 /**
  * Dataprovider implementation used in table on ListExperimentPage.
@@ -55,8 +54,8 @@ public class ListExperimentsDataProvider extends BasicDataProvider<Experiment> {
 
 		int size;
 			if (owner) {
-				size = facade.getCountForExperimentsWhereOwner(person);
-				list = facade.getExperimentsWhereOwner(person, (int) 0, size);
+				size = facade.getCountForExperimentsWhereOwnerOrExperimenter(person);
+				list = facade.getMyExperiments(person, (int) 0, size);
 			} else if (subject) {
 				size = facade.getCountForExperimentsWhereSubject(person);
 				list = facade.getExperimentsWhereSubject(person, (int) 0, size);

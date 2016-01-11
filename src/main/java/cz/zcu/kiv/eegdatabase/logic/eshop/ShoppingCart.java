@@ -76,20 +76,21 @@ public class ShoppingCart implements Serializable {
         }
     }
 
-    public void addToCart(Experiment experiment) {
-
-        if (!isInCart(experiment)) {
-            order.getItems().add(new OrderItem(experiment, order));
+    
+    public void addToCart(ExperimentLicence experimentLicense) {
+        if (!isInCart(experimentLicense.getExperiment())) {
+            order.getItems().add(new OrderItem(experimentLicense, order));
         }
     }
 
-    public void addToCart(ExperimentPackage expPackage) {
-
-        if (!isInCart(expPackage)) {
-            order.getItems().add(new OrderItem(expPackage, order));
+    
+    public void addToCart(ExperimentPackageLicense expPackageLicense) {
+        if (!isInCart(expPackageLicense.getExperimentPackage())) {
+            order.getItems().add(new OrderItem(expPackageLicense, order));
         }
     }
 
+    
     public boolean isInCart(MembershipPlan plan, ResearchGroup group) {
 
         for (OrderItem tmp : order.getItems()) {

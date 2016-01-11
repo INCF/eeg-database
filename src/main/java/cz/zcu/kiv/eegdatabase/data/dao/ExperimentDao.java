@@ -32,10 +32,9 @@ import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-
-import java.io.Serializable;
-import java.util.List;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
+
+import java.util.List;
 
 /**
  * DAO for fetching and saving experiments.
@@ -53,6 +52,12 @@ public interface ExperimentDao extends GenericDao<Experiment, Integer> {
 	public Experiment getExperimentForDetail(int experimentId);
 
 	public List<Experiment> getExperimentsWhereOwner(Person person, int limit);
+
+    public List<Experiment> getMyExperiments(Person person, int start, int limit);
+
+    public int getCountForExperimentsWhereOwnerOrExperimenter(Person person);
+
+    public List<Experiment> getMyExperiments(Person person, int limit);
 
 	public List<Experiment> getExperimentsWhereOwner(Person person, int start, int limit);
 

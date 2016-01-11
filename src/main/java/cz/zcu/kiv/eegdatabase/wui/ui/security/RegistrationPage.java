@@ -25,6 +25,8 @@ package cz.zcu.kiv.eegdatabase.wui.ui.security;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
 
+import java.io.IOException;
+
 /**
  * Page for registration new user.
  * 
@@ -35,7 +37,7 @@ public class RegistrationPage extends MenuPage {
 
     private static final long serialVersionUID = -2862552856622208298L;
 
-    public RegistrationPage() {
+    public RegistrationPage() throws IOException {
 
         add(new RegistrationForm("registration", getFeedback()));
 

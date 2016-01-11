@@ -23,20 +23,11 @@
 package cz.zcu.kiv.eegdatabase.data.pojo;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToMany;
-import javax.persistence.Table;
+import javax.persistence.*;
+
 
 /**
  *
@@ -62,11 +53,11 @@ public class ExperimentPackage implements Serializable {
 	@OneToMany(mappedBy= "experimentPackage")
 	private Set<ExperimentPackageLicense> experimentPackageLicenses;
 
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "experimentPackage")
+    private Set<Keywords> keywords = new HashSet<Keywords>(0);
+
 	@OneToMany(mappedBy = "experimentPackage")
 	private Set<ExperimentPackageConnection> experimentPackageConnections;
-	
-	@Column(name = "PRICE", precision = 19, scale = 2)
-    private BigDecimal price;
 
 	public int getExperimentPackageId() {
 		return experimentPackageId;
@@ -104,16 +95,17 @@ public class ExperimentPackage implements Serializable {
 		return experimentPackageConnections;
 	}
 
-	public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
+    public Set<Keywords> getKeywords() {
+        return keywords;
+    }
+
+    public void setKeywords(Set<Keywords> keywords) {
+        this.keywords = keywords;
+    }
+
+    public void setExperimentPackageConnections(Set<ExperimentPackageConnection> experimentPackageConnections) {
 		this.experimentPackageConnections = experimentPackageConnections;
+
 	}
-	
-	public BigDecimal getPrice() {
-        return price;
-    }
-	
-	public void setPrice(BigDecimal price) {
-        this.price = price;
-    }
 	
 }

@@ -22,50 +22,38 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.people.form;
 
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.form.AjaxButton;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.yui.calendar.DatePicker;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.ChoiceRenderer;
-import org.apache.wicket.markup.html.form.DropDownChoice;
-import org.apache.wicket.markup.html.form.EmailTextField;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.FormComponentLabel;
-import org.apache.wicket.markup.html.form.RadioChoice;
-import org.apache.wicket.markup.html.form.TextArea;
-import org.apache.wicket.markup.html.form.TextField;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.convert.IConverter;
-import org.apache.wicket.util.lang.Classes;
-import org.apache.wicket.util.string.StringValue;
-import org.apache.wicket.validation.validator.PatternValidator;
-import org.apache.wicket.validation.validator.StringValidator;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.EducationLevel;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.Util;
-import cz.zcu.kiv.eegdatabase.wui.components.form.input.DateTimeFieldPicker;
+import cz.zcu.kiv.eegdatabase.wui.components.form.PersonFormPanel;
 import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampConverter;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.Gender;
-import cz.zcu.kiv.eegdatabase.wui.core.Laterality;
 import cz.zcu.kiv.eegdatabase.wui.core.educationlevel.EducationLevelFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.ListPersonPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonPageLeftMenu;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.form.AjaxButton;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.EmailTextField;
+import org.apache.wicket.markup.html.form.Form;
+import org.apache.wicket.markup.html.form.FormComponentLabel;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+
+import java.io.IOException;
+import java.sql.Timestamp;
+import java.util.Date;
 
 /**
  * Page add / edit action of person.
@@ -87,17 +75,19 @@ public class PersonFormPage extends MenuPage {
     @SpringBean
     SecurityFacade securityFacade;
 
-    public PersonFormPage() {
+    public PersonFormPage() throws IOException {
 
         setPageTitle(ResourceUtils.getModel("pageTitle.addPerson"));
         add(new Label("title", ResourceUtils.getModel("pageTitle.addPerson")));
 
         add(new ButtonPageMenu("leftMenu", PersonPageLeftMenu.values()));
+        Person person = new Person();
+        person.setDateOfBirth(new Timestamp(new Date().getTime()));
 
-        add(new PersonForm("form", new Model<Person>(new Person()), educationFacade, facade, getFeedback()));
+        add(new PersonForm("form", new Model<Person>(person), educationFacade, facade, getFeedback()));
     }
 
-    public PersonFormPage(PageParameters parameters) {
+    public PersonFormPage(PageParameters parameters) throws IOException {
 
         StringValue paramId = parameters.get(DEFAULT_PARAM_ID);
 
@@ -122,37 +112,8 @@ public class PersonFormPage extends MenuPage {
 
         private static final long serialVersionUID = 1L;
 
-        public PersonForm(String id, IModel<Person> model, final EducationLevelFacade educationFacade, final PersonFacade personFacade, final FeedbackPanel feedback) {
+        public PersonForm(String id, IModel<Person> model, final EducationLevelFacade educationFacade, final PersonFacade personFacade, final FeedbackPanel feedback) throws IOException {
             super(id, new CompoundPropertyModel<Person>(model));
-
-            TextField<String> name = new TextField<String>("givenname");
-            name.setLabel(ResourceUtils.getModel("label.name"));
-            name.setRequired(true);
-            name.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-            FormComponentLabel nameLabel = new FormComponentLabel("nameLb", name);
-            add(name, nameLabel);
-
-            TextField<String> surname = new TextField<String>("surname");
-            surname.setLabel(ResourceUtils.getModel("label.surname"));
-            surname.setRequired(true);
-            surname.add(new PatternValidator(StringUtils.REGEX_ONLY_LETTERS));
-            FormComponentLabel surnameLabel = new FormComponentLabel("surnameLb", surname);
-            add(surname, surnameLabel);
-
-            DateTimeFieldPicker date = new DateTimeFieldPicker("dateOfBirth") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public <C> IConverter<C> getConverter(Class<C> type) {
-                    return (IConverter<C>) new TimestampConverter();
-                }
-            };
-
-            date.setLabel(ResourceUtils.getModel("label.dateOfBirth"));
-            date.setRequired(true);
-            FormComponentLabel dateLabel = new FormComponentLabel("dateLb", date);
-            add(date, dateLabel);
 
             EmailTextField email = new EmailTextField("username");
             email.setLabel(ResourceUtils.getModel("label.email"));
@@ -160,66 +121,8 @@ public class PersonFormPage extends MenuPage {
             FormComponentLabel emailLabel = new FormComponentLabel("emailLb", email);
             add(email, emailLabel);
 
-            TextField<String> phoneNumber = new TextField<String>("phoneNumber");
-            phoneNumber.setLabel(ResourceUtils.getModel("label.phoneNumber"));
-            FormComponentLabel phoneNumberLabel = new FormComponentLabel("phoneNumberLb", phoneNumber);
-            add(phoneNumber, phoneNumberLabel);
-
-            RadioChoice<Character> gender = new RadioChoice<Character>("gender", Gender.getShortcutList(), new ChoiceRenderer<Character>() {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public Object getDisplayValue(Character object) {
-                    Gender enumValue = Gender.getGenderByShortcut(object);
-                    return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
-                }
-
-            });
-            gender.setSuffix("\n");
-            gender.setRequired(true);
-            gender.setLabel(ResourceUtils.getModel("label.gender"));
-            FormComponentLabel genderLabel = new FormComponentLabel("genderLb", gender);
-            add(gender, genderLabel);
-
-            TextArea<String> note = new TextArea<String>("note");
-            note.setLabel(ResourceUtils.getModel("label.note"));
-            note.add(StringValidator.maximumLength(255));
-            FormComponentLabel noteLabel = new FormComponentLabel("noteLb", note);
-            add(note, noteLabel);
-
-            DropDownChoice<Character> laterality = new DropDownChoice<Character>("laterality", Laterality.getShortcutList(),
-                    new ChoiceRenderer<Character>() {
-
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public Object getDisplayValue(Character object) {
-                            Laterality enumValue = Laterality.getLateralityByShortcut(object);
-                            return getString(Classes.simpleName(enumValue.getDeclaringClass()) + '.' + enumValue.name());
-                        }
-
-                    });
-
-            laterality.setLabel(ResourceUtils.getModel("label.laterality"));
-            FormComponentLabel lateralityLabel = new FormComponentLabel("lateralityLb", laterality);
-            add(laterality, lateralityLabel);
-
-            DropDownChoice<EducationLevel> educationLevel = new DropDownChoice<EducationLevel>("educationLevel", educationFacade.getAllRecords(),
-                    new ChoiceRenderer<EducationLevel>("title", "educationLevelId") {
-
-                        private static final long serialVersionUID = 1L;
-
-                        @Override
-                        public Object getDisplayValue(EducationLevel object) {
-                            return object.getEducationLevelId() + " " + super.getDisplayValue(object);
-                        }
-
-                    });
-
-            educationLevel.setLabel(ResourceUtils.getModel("label.educationLevel"));
-            FormComponentLabel educationLevelLabel = new FormComponentLabel("educationLevelLb", educationLevel);
-            add(educationLevel, educationLevelLabel);
+            final PersonFormPanel<Person> panelPerson = new PersonFormPanel<Person>("panelPerson", model, educationFacade);
+            add(panelPerson);
 
             AjaxButton submit = new AjaxButton("submit", ResourceUtils.getModel("button.save"), this) {
 
@@ -232,7 +135,8 @@ public class PersonFormPage extends MenuPage {
 
                 @Override
                 protected void onSubmit(AjaxRequestTarget target, Form<?> form) {
-                    Person user = PersonForm.this.getModelObject();
+                    Person user = panelPerson.getModelObject();
+                    user.setUsername(PersonForm.this.getModelObject().getUsername());
                     user.setEmail(user.getUsername().toLowerCase());
                     boolean isEdit = user.getPersonId() > 0;
 
@@ -261,7 +165,8 @@ public class PersonFormPage extends MenuPage {
                 validate = false;
             }
 
-            if (user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
+            if
+                (user.getDateOfBirth() != null && user.getDateOfBirth().getTime() >= System.currentTimeMillis()) {
                 error(ResourceUtils.getString("invalid.dateOfBirth"));
                 validate = false;
             }

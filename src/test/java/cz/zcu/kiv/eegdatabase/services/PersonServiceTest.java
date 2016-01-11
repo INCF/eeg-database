@@ -22,8 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.services;
 
-import java.math.BigDecimal;
-
 import cz.zcu.kiv.eegdatabase.data.TestUtils;
 import cz.zcu.kiv.eegdatabase.data.dao.LicenseDao;
 import cz.zcu.kiv.eegdatabase.data.dao.PersonDao;
@@ -67,17 +65,13 @@ public class PersonServiceTest extends AbstractServicesTest {
 
     @BeforeMethod(groups = "unit")
     public void setUp() {
-
         person = TestUtils.createPersonForTesting("test@test.com", Util.ROLE_READER);
         License license = new License();
         license.setDescription("junit@test.description");
         license.setLicenseId(-231);
-        license.setPrice(BigDecimal.valueOf(-1000f));
         license.setTitle("title");
-        license.setLicenseType(LicenseType.OPEN_DOMAIN);
+        license.setLicenseType(LicenseType.NON_COMMERCIAL);
         licenseDao.create(license);
-
-
     }
 
     @Test(groups = "unit")

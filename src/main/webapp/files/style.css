@@ -9,6 +9,7 @@
 @import "bookingRoom.css";
 @import "visualization.css";
 @import "metadata.css";
+@import "experiments.css";
 
 @media screen, projection {
     .page {
@@ -567,6 +568,7 @@ li.comment li li li {
 
 .packageList li {
     list-style: none;
+    padding-bottom: 20px;
 }
 
 .headerWithLinks a {

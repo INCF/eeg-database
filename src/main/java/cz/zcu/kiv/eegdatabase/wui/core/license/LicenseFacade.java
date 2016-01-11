@@ -45,18 +45,11 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public void updatePersonalLicense(PersonalLicense license);
 	
 	/**
-	 * Adds specified license to the ExperimentPackage. Saves the license into database and creates the necessary connection.
-	 * @param license New License object to be attached to the ExperimentPackage.
-	 * @param group 
-	 */
-	public void addLicenseForPackage(License license, ExperimentPackage group);
-	
-	/**
 	 * Detaches License object from given ExperimentPackage. Deletes from database only the connection, both objects remain stored.
 	 * @param license
-	 * @param group 
+	 * @param pckg 
 	 */
-	public void removeLicenseFromPackage(License license, ExperimentPackage group);
+	public void removeLicenseFromPackage(License license, ExperimentPackage pckg);
 	
 	/**
 	 * Saves into database new PersonalLicense (only yet inactive request).
@@ -123,43 +116,18 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	public boolean addLicenseToPerson(License license, Person person);
 
 	/**
-	 * Adds a public license to the person.
-	 *
-	 * @param person person
-	 * @return true if success, false if not (e.g. person already has the
-	 * license)
-	 */
-	public boolean addPublicLicenseToPerson(Person person);
-
-	/**
-	 * Returns the one global public License object.
-	 * @return global shared public license.
-	 */
-	public License getPublicLicense();
-	public byte[] getPublicLicenseFile();
-
-	/**
-	 * Returns all licenses of a given type for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of a given type.
 	 * @param type Fetch only licenses of this type.
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, LicenseType type);
+	public List<License> getLicensesByType(LicenseType type);
 
 	/**
-	 * Returns all licenses of a given types for specified group.
-	 * @param group Group to get licenses for
+	 * Returns all licenses of given types.
 	 * @param type Fetch only licenses of specified types.
 	 * @return list of licenses that match the given criteria.
 	 */
-	public List<License> getLicensesForGroup(ResearchGroup group, List<LicenseType> type);
-
-	/**
-	 * Returns group specific owner license. This licese is used to share experiments inside ResearchGroup.
-	 * @param group Whose license to fetch.
-	 * @return Group's owner license.
-	 */
-	public License getOwnerLicense(ResearchGroup group);
+	public List<License> getLicensesByType(List<LicenseType> type);
 
 	/**
 	 * List all licenses the package has been published under.
@@ -175,12 +143,6 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 	 * @return
 	 */
 	public List<License> getUsersLicenses(Person person);
-
-	/**
-	 *
-	 * @return list of licenses saved as templates for new
-	 */
-	public List<License> getLicenseTemplates(ResearchGroup group);
 	
 	public byte[] getPersonalLicenseAttachmentContent(int personalLicenseId);
 	
@@ -196,5 +158,4 @@ public interface LicenseFacade extends GenericFacade<License, Integer> {
 
     public List<License> getPersonLicenses(int personId);
 
-    public List<License> getLicenseTemplates();
 }
