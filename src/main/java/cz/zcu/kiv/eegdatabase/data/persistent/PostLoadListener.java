@@ -29,13 +29,14 @@ public class PostLoadListener implements PostLoadEventListener {
         Object obj = event.getEntity();
         if (obj instanceof Experiment) {
             Experiment e = (Experiment) obj;
-            if (e.getDataFiles().size() > 0) {
+
+            e.getDataFiles().size();
                 SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
                 List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
                 if (elastic.size() > 0 && elastic.get(0) != null) {
                     e.setElasticExperiment(elastic.get(0));
                 }
             }
-        }
+
     }
 }
