@@ -42,7 +42,6 @@ import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
 import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
 import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
 import org.apache.wicket.markup.html.basic.Label;
@@ -90,7 +89,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
     private void setupComponents(int packageId) {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.chooseMetadata"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.downloadPackage"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
         ExperimentPackage experimentPackage = expPckFacade.read(packageId);
@@ -148,71 +147,71 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
             add(group);
 
             // checkbox for group of checkboxes about person
-            add(new AjaxCheckBox("person") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onUpdate(AjaxRequestTarget target) {
-
-                    target.add(ExperimentPackageDownloadForm.this);
-                }
-            });
-            // checkbox for group of checkboxes about scenario
-            add(new AjaxCheckBox("scenario") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onUpdate(AjaxRequestTarget target) {
-
-                    target.add(ExperimentPackageDownloadForm.this);
-                }
-            });
-            // checkbox for group of checkboxes about measuration
-            add(new AjaxCheckBox("measuration") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onUpdate(AjaxRequestTarget target) {
-
-                    target.add(ExperimentPackageDownloadForm.this);
-                }
-            });
-
-            // personal info is hidded bud if u check all its checked in data too.
-            // so before generate file is this unchecked in command manualy
-            // all checkboxes in checkbox groups.
-
-            add(new CheckBox("name").setVisibilityAllowed(canSeePersonInfoAboutUser));
-            add(new CheckBox("birth").setVisibilityAllowed(canSeePersonInfoAboutUser));
-            add(new CheckBox("gender"));
-            add(new CheckBox("phoneNumber").setVisibilityAllowed(canSeePersonInfoAboutUser));
-            add(new CheckBox("email").setVisibilityAllowed(canSeePersonInfoAboutUser));
-            add(new CheckBox("note"));
-            add(new CheckBox("personAddParams"));
-            add(new CheckBox("title"));
-            add(new CheckBox("length"));
-            add(new CheckBox("description"));
-            add(new CheckBox("scenFile"));
-            add(new CheckBox("times"));
-            add(new CheckBox("temperature"));
-            add(new CheckBox("weather"));
-            add(new CheckBox("weatherNote"));
-            add(new CheckBox("hardware"));
-            add(new CheckBox("measurationAddParams"));
-
-            // chooseAll checkbox indicate via metadatacommand information - all data is checked and ajax update page.
-            add(new AjaxCheckBox("chooseAll") {
-
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected void onUpdate(AjaxRequestTarget target) {
-                    target.add(ExperimentPackageDownloadForm.this);
-                }
-            });
+//            add(new AjaxCheckBox("person") {
+//
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                protected void onUpdate(AjaxRequestTarget target) {
+//
+//                    target.add(ExperimentPackageDownloadForm.this);
+//                }
+//            });
+//            // checkbox for group of checkboxes about scenario
+//            add(new AjaxCheckBox("scenario") {
+//
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                protected void onUpdate(AjaxRequestTarget target) {
+//
+//                    target.add(ExperimentPackageDownloadForm.this);
+//                }
+//            });
+//            // checkbox for group of checkboxes about measuration
+//            add(new AjaxCheckBox("measuration") {
+//
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                protected void onUpdate(AjaxRequestTarget target) {
+//
+//                    target.add(ExperimentPackageDownloadForm.this);
+//                }
+//            });
+//
+//            // personal info is hidded bud if u check all its checked in data too.
+//            // so before generate file is this unchecked in command manualy
+//            // all checkboxes in checkbox groups.
+//
+//            add(new CheckBox("name").setVisibilityAllowed(canSeePersonInfoAboutUser));
+//            add(new CheckBox("birth").setVisibilityAllowed(canSeePersonInfoAboutUser));
+//            add(new CheckBox("gender"));
+//            add(new CheckBox("phoneNumber").setVisibilityAllowed(canSeePersonInfoAboutUser));
+//            add(new CheckBox("email").setVisibilityAllowed(canSeePersonInfoAboutUser));
+//            add(new CheckBox("note"));
+//            add(new CheckBox("personAddParams"));
+//            add(new CheckBox("title"));
+//            add(new CheckBox("length"));
+//            add(new CheckBox("description"));
+//            add(new CheckBox("scenFile"));
+//            add(new CheckBox("times"));
+//            add(new CheckBox("temperature"));
+//            add(new CheckBox("weather"));
+//            add(new CheckBox("weatherNote"));
+//            add(new CheckBox("hardware"));
+//            add(new CheckBox("measurationAddParams"));
+//
+//            // chooseAll checkbox indicate via metadatacommand information - all data is checked and ajax update page.
+//            add(new AjaxCheckBox("chooseAll") {
+//
+//                private static final long serialVersionUID = 1L;
+//
+//                @Override
+//                protected void onUpdate(AjaxRequestTarget target) {
+//                    target.add(ExperimentPackageDownloadForm.this);
+//                }
+//            });
 
             final boolean uncheckPersonInfo = canSeePersonInfoAboutUser;
             SubmitLink submit = new SubmitLink("submit") {
