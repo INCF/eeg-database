@@ -89,7 +89,7 @@ public class ExperimentsPackageDownloadPage extends MenuPage {
 
     private void setupComponents(int packageId) {
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.chooseMetadata"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.downloadPackage"));
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
         ExperimentPackage experimentPackage = expPckFacade.read(packageId);
