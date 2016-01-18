@@ -22,15 +22,35 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import odml.core.Section;
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
+import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
+import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.Gender;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
+import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.ViewMetadataSectionPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.LicenseDetailPage;
-
+import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
+import odml.core.Section;
 import org.apache.wicket.RestartResponseAtInterceptPageException;
 import org.apache.wicket.ajax.AjaxRequestTarget;
 import org.apache.wicket.ajax.attributes.AjaxCallListener;
@@ -50,27 +70,8 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.table.TimestampLabel;
-import cz.zcu.kiv.eegdatabase.wui.components.table.ViewLinkPanel;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.Gender;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.data.AddDataFilePage;
-import cz.zcu.kiv.eegdatabase.wui.ui.data.DataFileDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.MetadataFormPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.metadata.ViewMetadataSectionPanel;
-import cz.zcu.kiv.eegdatabase.wui.ui.people.PersonDetailPage;
-import cz.zcu.kiv.eegdatabase.wui.ui.scenarios.ScenarioDetailPage;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Page of detail on experiment. 
@@ -156,7 +157,10 @@ public class ExperimentsDetailPage extends MenuPage {
 
             @Override
             protected void populateItem(ListItem<Section> item) {
-                item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+                if (!item.getModel().getObject().getName().equals("Experimentators")) {
+                    item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+                }
+
             }
         };
         
