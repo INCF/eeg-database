@@ -5,6 +5,7 @@ import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.elasticsearch.index.query.IdsQueryBuilder;
+import org.hibernate.LazyInitializationException;
 import org.hibernate.event.PostLoadEvent;
 import org.hibernate.event.PostLoadEventListener;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
@@ -29,10 +30,14 @@ public class PostLoadListener implements PostLoadEventListener {
         Object obj = event.getEntity();
         if (obj instanceof Experiment) {
             Experiment e = (Experiment) obj;
-            SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
-            List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
-            if (elastic.size() > 0 && elastic.get(0) != null) {
-                e.setElasticExperiment(elastic.get(0));
+            try {
+                e.getDataFiles().size();
+            } catch (LazyInitializationException ex) {
+                SearchQuery searchQuery = new NativeSearchQueryBuilder().withQuery(new IdsQueryBuilder("experiment").addIds("" + e.getExperimentId())).build();
+                List<ExperimentElastic> elastic = elasticsearchTemplate.queryForList(searchQuery, ExperimentElastic.class);
+                if (elastic.size() > 0 && elastic.get(0) != null) {
+                    e.setElasticExperiment(elastic.get(0));
+                }
             }
         }
     }
