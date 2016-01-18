@@ -22,44 +22,7 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.Map;
-import java.util.Set;
-
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.apache.wicket.RestartResponseAtInterceptPageException;
-import org.apache.wicket.ajax.AjaxRequestTarget;
-import org.apache.wicket.ajax.markup.html.AjaxLink;
-import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
-import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
-import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
-import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.form.Check;
-import org.apache.wicket.markup.html.form.CheckBox;
-import org.apache.wicket.markup.html.form.CheckGroup;
-import org.apache.wicket.markup.html.form.Form;
-import org.apache.wicket.markup.html.form.SubmitLink;
-import org.apache.wicket.markup.html.list.ListItem;
-import org.apache.wicket.markup.html.list.ListView;
-import org.apache.wicket.markup.html.list.PropertyListView;
-import org.apache.wicket.markup.html.panel.FeedbackPanel;
-import org.apache.wicket.model.CompoundPropertyModel;
-import org.apache.wicket.model.IModel;
-import org.apache.wicket.model.LoadableDetachableModel;
-import org.apache.wicket.model.Model;
-import org.apache.wicket.request.mapper.parameter.PageParameters;
-import org.apache.wicket.spring.injection.annot.SpringBean;
-import org.apache.wicket.util.string.StringValue;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -77,6 +40,29 @@ import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.person.PersonFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.security.SecurityFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.licenses.components.ViewLicensePanel;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+import org.apache.wicket.RestartResponseAtInterceptPageException;
+import org.apache.wicket.ajax.AjaxRequestTarget;
+import org.apache.wicket.ajax.markup.html.AjaxLink;
+import org.apache.wicket.ajax.markup.html.form.AjaxCheckBox;
+import org.apache.wicket.authroles.authorization.strategies.role.annotations.AuthorizeInstantiation;
+import org.apache.wicket.extensions.ajax.markup.html.modal.ModalWindow;
+import org.apache.wicket.markup.html.basic.Label;
+import org.apache.wicket.markup.html.form.*;
+import org.apache.wicket.markup.html.list.ListItem;
+import org.apache.wicket.markup.html.list.ListView;
+import org.apache.wicket.markup.html.list.PropertyListView;
+import org.apache.wicket.markup.html.panel.FeedbackPanel;
+import org.apache.wicket.model.CompoundPropertyModel;
+import org.apache.wicket.model.IModel;
+import org.apache.wicket.model.LoadableDetachableModel;
+import org.apache.wicket.model.Model;
+import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.apache.wicket.spring.injection.annot.SpringBean;
+import org.apache.wicket.util.string.StringValue;
+
+import java.util.*;
 
 /**
  * Page for download experiment file.
@@ -116,7 +102,7 @@ public class ExperimentsDownloadPage extends MenuPage {
 
         int experimentId = parseParameters(parameters);
 
-        setPageTitle(ResourceUtils.getModel("pageTitle.chooseMetadata"));
+        setPageTitle(ResourceUtils.getModel("pageTitle.downloadPackage"));
 
         add(new ButtonPageMenu("leftMenu", ExperimentsPageLeftMenu.values()));
 
