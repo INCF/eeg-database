@@ -31,27 +31,22 @@ package cz.zcu.kiv.eegdatabase.logic.zip;
  * @author Jan Štěbeták
  */
 
-import java.io.ByteArrayOutputStream;
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.OutputStream;
-import java.sql.SQLException;
-import java.util.Set;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipException;
-import java.util.zip.ZipOutputStream;
-
-import org.apache.activemq.util.ByteArrayInputStream;
-import org.apache.commons.io.IOUtils;
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.logic.xml.DataTransformer;
+import org.apache.activemq.util.ByteArrayInputStream;
+import org.apache.commons.io.IOUtils;
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
+
+import java.io.*;
+import java.sql.SQLException;
+import java.util.Set;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipException;
+import java.util.zip.ZipOutputStream;
 
 public class ZipGenerator implements Generator {
 
@@ -109,13 +104,13 @@ public class ZipGenerator implements Generator {
                 }
             }
 
-            if (xmlMetadata != null) {
-                log.debug("saving xml file of metadata to zip file");
-                entry = new ZipEntry(getMetadata() + ".xml");
-                zipOutputStream.putNextEntry(entry);
-                zipOutputStream.write(xmlMetadata);
-                zipOutputStream.closeEntry();
-            }
+//            if (xmlMetadata != null) {
+//                log.debug("saving xml file of metadata to zip file");
+//                entry = new ZipEntry(getMetadata() + ".xml");
+//                zipOutputStream.putNextEntry(entry);
+//                zipOutputStream.write(xmlMetadata);
+//                zipOutputStream.closeEntry();
+//            }
 
             for (DataFile dataFile : dataFiles) {
                 entry = new ZipEntry(getDataZip() + "/" + dataFile.getFilename());

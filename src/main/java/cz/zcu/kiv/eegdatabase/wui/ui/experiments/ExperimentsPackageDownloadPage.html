@@ -43,86 +43,86 @@ This file is part of the EEG-database project
       
 
       <form class="standardInputForm" wicket:id="form">
-        <table style="width: 27%;" class="standardValueTable">
-          <tr>
-            <th class="multiple"><wicket:message key="label.chooseAll" /></th>
-            <td><input wicket:id="chooseAll" type="checkbox" /></td>
-          </tr>
-        </table>
-        <table id="personsTable" class="standardValueTable">
-          <tr>
-            <th class="multiple" colspan="3"><wicket:message key="label.person" /></th>
-            <td><input wicket:id="person" type="checkbox" /></td>
-          </tr>
-          <wicket:enclosure child="name">
-            <tr>
-              <th><wicket:message key="label.name" /></th>
-              <td><input type="checkbox" wicket:id="name" /></td>
-              <th><wicket:message key="label.phoneNumber" /></th>
-              <td><input type="checkbox" wicket:id="phoneNumber" /></td>
-            </tr>
-            <tr>
-              <th><wicket:message key="label.email" /></th>
-              <td><input type="checkbox" wicket:id="email" /></td>
-              <th><wicket:message key="label.dateOfBirth" /></th>
-              <td><input type="checkbox" wicket:id="birth" /></td>
-            </tr>
-          </wicket:enclosure>
-          <tr>
-            <th><wicket:message key="label.gender" /></th>
-            <td><input type="checkbox" wicket:id="gender" /></td>
-            <th><wicket:message key="label.note" /></th>
-            <td><input type="checkbox" wicket:id="note" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.addParams" /></th>
-            <td><input type="checkbox" wicket:id="personAddParams" /></td>
-          </tr>
-        </table>
+        <!--<table style="width: 27%;" class="standardValueTable">-->
+          <!--<tr>-->
+            <!--<th class="multiple"><wicket:message key="label.chooseAll" /></th>-->
+            <!--<td><input wicket:id="chooseAll" type="checkbox" /></td>-->
+          <!--</tr>-->
+        <!--</table>-->
+        <!--<table id="personsTable" class="standardValueTable">-->
+          <!--<tr>-->
+            <!--<th class="multiple" colspan="3"><wicket:message key="label.person" /></th>-->
+            <!--<td><input wicket:id="person" type="checkbox" /></td>-->
+          <!--</tr>-->
+          <!--<wicket:enclosure child="name">-->
+            <!--<tr>-->
+              <!--<th><wicket:message key="label.name" /></th>-->
+              <!--<td><input type="checkbox" wicket:id="name" /></td>-->
+              <!--<th><wicket:message key="label.phoneNumber" /></th>-->
+              <!--<td><input type="checkbox" wicket:id="phoneNumber" /></td>-->
+            <!--</tr>-->
+            <!--<tr>-->
+              <!--<th><wicket:message key="label.email" /></th>-->
+              <!--<td><input type="checkbox" wicket:id="email" /></td>-->
+              <!--<th><wicket:message key="label.dateOfBirth" /></th>-->
+              <!--<td><input type="checkbox" wicket:id="birth" /></td>-->
+            <!--</tr>-->
+          <!--</wicket:enclosure>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.gender" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="gender" /></td>-->
+            <!--<th><wicket:message key="label.note" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="note" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.addParams" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="personAddParams" /></td>-->
+          <!--</tr>-->
+        <!--</table>-->
 
-        <table id="scenariosTable" class="standardValueTable">
-          <tr>
-            <th class="multiple" colspan="3"><wicket:message key="label.scenario" /></th>
-            <td><input type="checkbox" wicket:id="scenario" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.scenarioTitle" /></th>
-            <td><input type="checkbox" wicket:id="title" /></td>
-            <th><wicket:message key="label.scenarioLength" /></th>
-            <td><input type="checkbox" wicket:id="length" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.scenarioDescription" /></th>
-            <td><input type="checkbox" wicket:id="description" /></td>
-            <th><wicket:message key="label.scenarioFile" /></th>
-            <td><input type="checkbox" wicket:id="scenFile" /></td>
-          </tr>
-        </table>
-        <table id="measurationTable" class="standardValueTable">
-          <tr>
-            <th class="multiple" colspan="3"><wicket:message key="label.measuration" /></th>
-            <td><input type="checkbox" wicket:id="measuration" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.times" /></th>
-            <td><input type="checkbox" wicket:id="times" /></td>
-            <th><wicket:message key="label.temperature" /></th>
-            <td><input type="checkbox" wicket:id="temperature" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.weather" /></th>
-            <td><input type="checkbox" wicket:id="weather" /></td>
-            <th><wicket:message key="label.weatherNote" /></th>
-            <td><input type="checkbox" wicket:id="weatherNote" /></td>
-          </tr>
-          <tr>
-            <th><wicket:message key="label.hardware" /></th>
-            <td><input type="checkbox" wicket:id="hardware" /></td>
-            <th><wicket:message key="label.addParams" /></th>
-            <td><input type="checkbox" wicket:id="measurationAddParams" /></td>
-          </tr>
+        <!--<table id="scenariosTable" class="standardValueTable">-->
+          <!--<tr>-->
+            <!--<th class="multiple" colspan="3"><wicket:message key="label.scenario" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="scenario" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.scenarioTitle" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="title" /></td>-->
+            <!--<th><wicket:message key="label.scenarioLength" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="length" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.scenarioDescription" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="description" /></td>-->
+            <!--<th><wicket:message key="label.scenarioFile" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="scenFile" /></td>-->
+          <!--</tr>-->
+        <!--</table>-->
+        <!--<table id="measurationTable" class="standardValueTable">-->
+          <!--<tr>-->
+            <!--<th class="multiple" colspan="3"><wicket:message key="label.measuration" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="measuration" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.times" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="times" /></td>-->
+            <!--<th><wicket:message key="label.temperature" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="temperature" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.weather" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="weather" /></td>-->
+            <!--<th><wicket:message key="label.weatherNote" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="weatherNote" /></td>-->
+          <!--</tr>-->
+          <!--<tr>-->
+            <!--<th><wicket:message key="label.hardware" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="hardware" /></td>-->
+            <!--<th><wicket:message key="label.addParams" /></th>-->
+            <!--<td><input type="checkbox" wicket:id="measurationAddParams" /></td>-->
+          <!--</tr>-->
 
-        </table>
+        <!--</table>-->
         
         <h2>
             <wicket:message key="label.chooseExperiments"></wicket:message>
