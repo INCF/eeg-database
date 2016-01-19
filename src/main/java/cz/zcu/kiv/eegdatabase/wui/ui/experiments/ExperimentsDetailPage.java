@@ -157,9 +157,9 @@ public class ExperimentsDetailPage extends MenuPage {
 
             @Override
             protected void populateItem(ListItem<Section> item) {
-                if (item.getModel().getObject().getName().equals("Experimentators")) {
-                    item.add(new ViewMetadataSectionPanel("section", item.getModel()).setVisible(false));
-                }
+
+                item.add(new ViewMetadataSectionPanel("section", item.getModel()));
+
 
             }
         };
