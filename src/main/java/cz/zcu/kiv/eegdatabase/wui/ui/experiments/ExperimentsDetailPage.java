@@ -150,8 +150,22 @@ public class ExperimentsDetailPage extends MenuPage {
         /* XXX #66 Java Heap Space Exception : working with big data file in memory.
             final ExperimentSignalViewCanvasPanel experimentViewPanel = new ExperimentSignalViewCanvasPanel("view", experiment);
          */
+
+        //Removing experimenters section
+        PropertyModel<List<Section>> model = new PropertyModel<List<Section>>(experiment.getElasticExperiment().getMetadata(), "sections");
+        List<Section> list = model.getObject();
+        Section toRemove = null;
+        for (Section s: list) {
+            if (s.getName().equals("Experimentators")) {
+                toRemove = s;
+                break;
+            }
+        }
+        list.remove(toRemove);
+
         
-        PropertyListView<Section> metadata = new PropertyListView<Section>("sections", new PropertyModel<List<Section>>(experiment.getElasticExperiment().getMetadata(), "sections")) {
+       // PropertyListView<Section> metadata = new PropertyListView<Section>("sections", new PropertyModel<List<Section>>(experiment.getElasticExperiment().getMetadata(), "sections")) {
+        PropertyListView<Section> metadata = new PropertyListView<Section>("sections", new ListModel<Section>(list)) {
 
             private static final long serialVersionUID = 1L;
 
