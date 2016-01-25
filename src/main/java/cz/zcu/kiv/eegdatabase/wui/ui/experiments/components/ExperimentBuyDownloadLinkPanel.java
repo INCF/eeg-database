@@ -24,6 +24,7 @@ package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
 import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
@@ -36,6 +37,9 @@ import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
+
+import java.util.HashMap;
+import java.util.Set;
 
 public class ExperimentBuyDownloadLinkPanel extends Panel {
 
@@ -127,7 +131,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
             public void onClick() {
                 MetadataCommand command = new MetadataCommand();
                 command.setScenario(true);
-                FileDTO outputFile = downloadProvider.generate(experiment, command, experiment.getDataFiles(), null);
+                FileDTO outputFile = downloadProvider.generate(experiment, command, experiment.getDataFiles(),
+                        new HashMap<Integer, Set<FileMetadataParamVal>>());
 
                 if (outputFile == null || outputFile.getFile() == null)
                     error("Error while file is generated. Can't be downloaded. " + experiment.getDataFiles().size());
