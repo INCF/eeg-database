@@ -267,8 +267,10 @@ public class ExperimentDownloadProvider {
                 Set<FileMetadataParamVal> newVals = new HashSet<FileMetadataParamVal>();
                 // get from map of selected parameters collection for actual file
                 Set<FileMetadataParamVal> list = params.get(item.getDataFileId());
-                for (FileMetadataParamVal paramVal : list) {
-                    newVals.add(paramVal);
+                if (list != null) {
+                    for (FileMetadataParamVal paramVal : list) {
+                        newVals.add(paramVal);
+                    }
                 }
 
                 newItem.setFileMetadataParamVals(newVals);
