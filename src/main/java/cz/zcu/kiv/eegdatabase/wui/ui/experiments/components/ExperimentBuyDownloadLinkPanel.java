@@ -22,6 +22,10 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 import org.apache.wicket.markup.html.basic.Label;
 import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
@@ -43,7 +47,8 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
     @SpringBean
     private OrderFacade facade;
-
+    @SpringBean
+    ExperimentDownloadProvider downloadProvider;
     private IModel<ExperimentLicence> model;
     private Experiment experiment;
 
@@ -51,7 +56,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     private boolean isDownloadable = false;
 
     
-    public ExperimentBuyDownloadLinkPanel(String id, Experiment experiment, IModel<ExperimentLicence> model) {
+    public ExperimentBuyDownloadLinkPanel(String id, final Experiment experiment, IModel<ExperimentLicence> model) {
         super(id);
         this.experiment = experiment;
         this.model = model;
@@ -109,12 +114,31 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
         
         // "Download" link for purchased experiments
-        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink = 
-                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class, 
-                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
+//        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink =
+//                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class,
+//                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
+//
+//            private static final long serialVersionUID = 1L;
+//
+//            @Override
+//            public boolean isVisible() {
+//                return isDownloadable;
+//            }
+//        };
 
-            private static final long serialVersionUID = 1L;
+        Link<Void> downloadLink = new Link<Void>("downloadLink") {
+            @Override
+            public void onClick() {
+                MetadataCommand command = new MetadataCommand();
+                command.setScenario(true);
+                FileDTO outputFile = downloadProvider.generate(experiment, command, experiment.getDataFiles(), null);
 
+                if (outputFile == null || outputFile.getFile() == null)
+                    error("Error while file is generated. Can't be downloaded.");
+                else {
+                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
+                }
+            }
             @Override
             public boolean isVisible() {
                 return isDownloadable;
