@@ -117,7 +117,7 @@ public class ExperimentDownloadProvider {
      * @return
      */
     @Transactional
-    public FileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) throws Exception{
+    public FileDTO generate(Experiment exp, MetadataCommand mc, Collection<DataFile> files, Map<Integer, Set<FileMetadataParamVal>> params) {
         File file = null;
         try {
             Experiment experiment = service.getExperimentForDetail(exp.getExperimentId());
@@ -142,11 +142,11 @@ public class ExperimentDownloadProvider {
 
             return dto;
 
-//        } catch (Exception e) {
-//e.printStackTrace();
-//            log.error(e.getMessage(), e);
-//            FileUtils.deleteQuietly(file);
-//            return null;
+        } catch (Exception e) {
+            log.error(e.getMessage(), e);
+            FileUtils.deleteQuietly(file);
+            throw new RuntimeException(e);
+            //return null;
 
         } finally {
             FileUtils.deleteOnExitQuietly(file);
