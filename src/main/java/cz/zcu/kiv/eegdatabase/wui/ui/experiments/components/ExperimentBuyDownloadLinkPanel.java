@@ -22,20 +22,24 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments.components;
 
+import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
+import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
+import cz.zcu.kiv.eegdatabase.data.pojo.FileMetadataParamVal;
+import cz.zcu.kiv.eegdatabase.logic.controller.experiment.MetadataCommand;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.FileUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentDownloadProvider;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
+import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
 import org.apache.wicket.markup.html.basic.Label;
-import org.apache.wicket.markup.html.link.BookmarkablePageLink;
 import org.apache.wicket.markup.html.link.Link;
 import org.apache.wicket.markup.html.panel.Panel;
 import org.apache.wicket.model.IModel;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentLicence;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.order.OrderFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDownloadPage;
+import java.util.HashMap;
+import java.util.Set;
 
 public class ExperimentBuyDownloadLinkPanel extends Panel {
 
@@ -44,6 +48,9 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     @SpringBean
     private OrderFacade facade;
 
+    @SpringBean
+    ExperimentDownloadProvider downloadProvider;
+
     private IModel<ExperimentLicence> model;
     private Experiment experiment;
 
@@ -51,7 +58,7 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
     private boolean isDownloadable = false;
 
     
-    public ExperimentBuyDownloadLinkPanel(String id, Experiment experiment, IModel<ExperimentLicence> model) {
+    public ExperimentBuyDownloadLinkPanel(String id, final Experiment experiment, IModel<ExperimentLicence> model) {
         super(id);
         this.experiment = experiment;
         this.model = model;
@@ -109,12 +116,32 @@ public class ExperimentBuyDownloadLinkPanel extends Panel {
 
         
         // "Download" link for purchased experiments
-        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink = 
-                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class, 
-                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
+//        BookmarkablePageLink<ExperimentsDownloadPage> downloadLink =
+//                new BookmarkablePageLink<ExperimentsDownloadPage>("downloadLink", ExperimentsDownloadPage.class,
+//                            PageParametersUtils.getDefaultPageParameters(experiment.getExperimentId())) {
+//
+//            private static final long serialVersionUID = 1L;
+//
+//            @Override
+//            public boolean isVisible() {
+//                return isDownloadable;
+//            }
+//        };
+//        add(downloadLink);
+        Link<Void> downloadLink = new Link<Void>("downloadLink") {
+            @Override
+            public void onClick() {
+                MetadataCommand command = new MetadataCommand();
+                command.setScenario(true);
+                FileDTO outputFile = downloadProvider.generate(experiment, command, experiment.getDataFiles(),
+                        new HashMap<Integer, Set<FileMetadataParamVal>>());
 
-            private static final long serialVersionUID = 1L;
-
+                if (outputFile == null || outputFile.getFile() == null)
+                    error("Error while file is generated. Can't be downloaded.");
+                else {
+                    getRequestCycle().scheduleRequestHandlerAfterCurrent(FileUtils.prepareDownloadFile(outputFile));
+                }
+            }
             @Override
             public boolean isVisible() {
                 return isDownloadable;
