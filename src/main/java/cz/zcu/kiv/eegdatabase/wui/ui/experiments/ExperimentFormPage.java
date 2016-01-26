@@ -22,7 +22,6 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
 import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
 import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
@@ -32,9 +31,6 @@ import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
 import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
 import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.common.ElectrodeConfService;
-import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
@@ -79,17 +75,6 @@ public class ExperimentFormPage extends MenuPage {
     private FileFacade fileFacade;
 
     @SpringBean
-    private DigitizationFacade digitizationFacade;
-
-    @SpringBean
-    private WeatherFacade weatherFacade;
-
-    @SpringBean(name = "subjectGroupDao")
-    private GenericDao<SubjectGroup, Integer> subjectGroupFacade;
-
-    @SpringBean
-    private ElectrodeConfService electrodeConfService;
-    @SpringBean
     private LicenseFacade licenseFacade;
 
     @SpringBean
@@ -132,31 +117,9 @@ public class ExperimentFormPage extends MenuPage {
 
             @Override
             public void onFinish() {
-                if (digitizationFacade.getCountRecords() == 0) {
-                    Digitization dig = new Digitization();
-                    dig.setSamplingRate(1000f);
-                    dig.setGain(1f);
-                    dig.setFilter("filter");
-                    digitizationFacade.create(dig);
-                }
-                if (electrodeConfService.getCountRecords() == 0) {
-                    ElectrodeConf conf = new ElectrodeConf();
-                    conf.setImpedance(10);
-                    electrodeConfService.create(conf);
-                }
-
-                if (subjectGroupFacade.getCountRecords() == 0) {
-                    SubjectGroup group = new SubjectGroup();
-                    group.setDescription("xxx");
-                    group.setTitle("Title");
-                    subjectGroupFacade.create(group);
-                }
 
                 Experiment experiment = model.getObject();
-                experiment.setDigitization(digitizationFacade.read(1));
-                experiment.setElectrodeConf(electrodeConfService.read(1));
-                experiment.setSubjectGroup(subjectGroupFacade.read(1));
-                experiment.setWeather(weatherFacade.read(1));
+
 
                 ResearchGroup group = experiment.getResearchGroup();
                 if (group != null && group.isLock()) {
