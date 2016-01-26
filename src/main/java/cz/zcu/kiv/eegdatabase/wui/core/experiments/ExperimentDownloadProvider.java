@@ -145,8 +145,7 @@ public class ExperimentDownloadProvider {
         } catch (Exception e) {
             log.error(e.getMessage(), e);
             FileUtils.deleteQuietly(file);
-            throw new RuntimeException(e);
-            //return null;
+            return null;
 
         } finally {
             FileUtils.deleteOnExitQuietly(file);

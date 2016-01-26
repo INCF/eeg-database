@@ -32,6 +32,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.PromoCodePopupForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.StringWrapper;
@@ -72,7 +74,7 @@ public class OrderItemPanel extends Panel {
 
     private boolean malleable;
 
-    public OrderItemPanel(String id, final IModel<OrderItem> model, boolean malleable) {
+    public OrderItemPanel(String id, final IModel<OrderItem> model, final boolean malleable) {
         super(id, new CompoundPropertyModel<OrderItem>(model));
 
         this.malleable = malleable;
@@ -159,6 +161,9 @@ public class OrderItemPanel extends Panel {
         experimentContainer.add(new Label("experimentText1", ResourceUtils.getModel("text.order.item.experiment1", Integer.toString(experimentId), scenarioTitle)));
         experimentContainer.add(new Label("experimentText2", ResourceUtils.getModel("text.order.item.experiment2", date)));
         experimentContainer.add(new BookmarkablePageLink<Void>("detail", ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId)));
+        ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", experiment, new Model<ExperimentLicence>());
+        downloadExpLink.setVisible(EEGDataBaseSession.get().isExperimentPurchased(experimentId));
+        experimentContainer.add(downloadExpLink);
 
         membershipPlanContainer.add(new Label("membershipPlanText1", membershipPlanName + researchGroupName));
         membershipPlanContainer.add(new BookmarkablePageLink<Void>("detail", MembershipPlansDetailPage.class, PageParametersUtils.getDefaultPageParameters(membershipPlanID)));
@@ -166,7 +171,7 @@ public class OrderItemPanel extends Panel {
 
 
         // prepare texts for package container
-        int packageId;
+        final int packageId;
         String name;
         String group;
         if (experimentPackage != null) {
@@ -219,6 +224,17 @@ public class OrderItemPanel extends Panel {
         showHideLink.add(showHideLinkLabel);
         packageContainer.add(showHideLink);
         packageContainer.add(packageExperimentList);
+        packageContainer.add(
+                new BookmarkablePageLink<ExperimentsPackageDownloadPage>("downloadLink", ExperimentsPackageDownloadPage.class,
+                        PageParametersUtils.getDefaultPageParameters(packageId)) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public boolean isVisible() { return !malleable; }
+
+                });
+
         packageExperimentList.setVisible(false);
 
         experimentContainer.setOutputMarkupId(true);

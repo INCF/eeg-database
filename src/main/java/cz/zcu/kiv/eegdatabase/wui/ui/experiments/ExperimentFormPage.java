@@ -22,8 +22,25 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.experiments;
 
-import java.util.*;
-
+import cz.zcu.kiv.eegdatabase.data.dao.GenericDao;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
+import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
+import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
+import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
+import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
+import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
+import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
+import cz.zcu.kiv.eegdatabase.wui.core.common.DigitizationFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.common.ElectrodeConfService;
+import cz.zcu.kiv.eegdatabase.wui.core.common.WeatherFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
+import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
 import org.apache.wicket.Component;
@@ -42,21 +59,10 @@ import org.apache.wicket.request.mapper.parameter.PageParameters;
 import org.apache.wicket.spring.injection.annot.SpringBean;
 import org.apache.wicket.util.string.StringValue;
 
-import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.wui.app.EEGDataBaseApplication;
-import cz.zcu.kiv.eegdatabase.wui.app.session.EEGDataBaseSession;
-import cz.zcu.kiv.eegdatabase.wui.components.form.AjaxWizardButtonBar;
-import cz.zcu.kiv.eegdatabase.wui.components.menu.button.ButtonPageMenu;
-import cz.zcu.kiv.eegdatabase.wui.components.page.BasePage;
-import cz.zcu.kiv.eegdatabase.wui.components.page.MenuPage;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.PageParametersUtils;
-import cz.zcu.kiv.eegdatabase.wui.components.utils.ResourceUtils;
-import cz.zcu.kiv.eegdatabase.wui.core.experimentLicense.ExperimentLicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.file.FileFacade;
-import cz.zcu.kiv.eegdatabase.wui.core.license.LicenseFacade;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentResultsForm;
-import cz.zcu.kiv.eegdatabase.wui.ui.experiments.forms.wizard.AddExperimentScenarioForm;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 
 @AuthorizeInstantiation(value = { "ROLE_USER", "ROLE_EXPERIMENTER", "ROLE_ADMIN" })
@@ -72,6 +78,17 @@ public class ExperimentFormPage extends MenuPage {
     @SpringBean
     private FileFacade fileFacade;
 
+    @SpringBean
+    private DigitizationFacade digitizationFacade;
+
+    @SpringBean
+    private WeatherFacade weatherFacade;
+
+    @SpringBean(name = "subjectGroupDao")
+    private GenericDao<SubjectGroup, Integer> subjectGroupFacade;
+
+    @SpringBean
+    private ElectrodeConfService electrodeConfService;
     @SpringBean
     private LicenseFacade licenseFacade;
 
@@ -115,8 +132,31 @@ public class ExperimentFormPage extends MenuPage {
 
             @Override
             public void onFinish() {
+                if (digitizationFacade.getCountRecords() == 0) {
+                    Digitization dig = new Digitization();
+                    dig.setSamplingRate(1000f);
+                    dig.setGain(1f);
+                    dig.setFilter("filter");
+                    digitizationFacade.create(dig);
+                }
+                if (electrodeConfService.getCountRecords() == 0) {
+                    ElectrodeConf conf = new ElectrodeConf();
+                    conf.setImpedance(10);
+                    electrodeConfService.create(conf);
+                }
+
+                if (subjectGroupFacade.getCountRecords() == 0) {
+                    SubjectGroup group = new SubjectGroup();
+                    group.setDescription("xxx");
+                    group.setTitle("Title");
+                    subjectGroupFacade.create(group);
+                }
 
                 Experiment experiment = model.getObject();
+                experiment.setDigitization(digitizationFacade.read(1));
+                experiment.setElectrodeConf(electrodeConfService.read(1));
+                experiment.setSubjectGroup(subjectGroupFacade.read(1));
+                experiment.setWeather(weatherFacade.read(1));
 
                 ResearchGroup group = experiment.getResearchGroup();
                 if (group != null && group.isLock()) {
