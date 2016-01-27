@@ -48,7 +48,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.ScenarioSchemasDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 
 public class ScenariosServiceImpl implements ScenariosService {

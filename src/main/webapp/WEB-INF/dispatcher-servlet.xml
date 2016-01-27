@@ -33,16 +33,16 @@
 
     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver"/>
 
-    <bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-        <property name="prefix" value="/WEB-INF/jsp/"/>
-        <property name="suffix" value=".jsp"/>
-    </bean>
+    <!--<bean id="beanNameViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">-->
+        <!--<property name="prefix" value="/WEB-INF/jsp/"/>-->
+        <!--<property name="suffix" value=".jsp"/>-->
+    <!--</bean>-->
 
-    <bean id="downloadMetadataZipView" class="cz.zcu.kiv.eegdatabase.view.DownloadMetadataZipView"/>
+    <!--<bean id="downloadMetadataZipView" class="cz.zcu.kiv.eegdatabase.view.DownloadMetadataZipView"/>-->
 
-    <bean id="binaryView" class="cz.zcu.kiv.eegdatabase.view.MeasurationDataView"/>
+    <!--<bean id="binaryView" class="cz.zcu.kiv.eegdatabase.view.MeasurationDataView"/>-->
 
-    <bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>
+    <!--<bean id="scenarioXMLDownloadView" class="cz.zcu.kiv.eegdatabase.view.ScenarioXMLDownloadView"/>-->
 
     <bean name="/captcha.html" class="com.octo.captcha.service.image.DefaultManageableImageCaptchaService"
           id="imageCaptchaService"/>

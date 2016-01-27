@@ -31,7 +31,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import cz.zcu.kiv.eegdatabase.data.dao.*;
 import cz.zcu.kiv.eegdatabase.data.pojo.*;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 
 
 public class ExperimentsServiceImpl implements ExperimentsService {

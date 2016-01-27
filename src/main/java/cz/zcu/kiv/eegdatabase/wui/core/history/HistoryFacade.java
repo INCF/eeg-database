@@ -22,13 +22,13 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.history;
 
-import java.util.List;
-
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+
+import java.util.List;
 
 public interface HistoryFacade extends GenericFacade<History, Integer>{
     

@@ -29,8 +29,8 @@ package cz.zcu.kiv.eegdatabase.data.dao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
-import java.io.Serializable;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
+
 import java.util.List;
 
 /**

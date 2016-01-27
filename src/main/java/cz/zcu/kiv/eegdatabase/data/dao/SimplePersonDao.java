@@ -23,7 +23,7 @@
 package cz.zcu.kiv.eegdatabase.data.dao;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.util.ControllerUtils;
 import org.springframework.dao.support.DataAccessUtils;
 import org.springframework.transaction.annotation.Transactional;

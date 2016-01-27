@@ -22,15 +22,11 @@
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.core.experiments;
 
-import java.util.List;
-
-import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
-import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
-import cz.zcu.kiv.eegdatabase.data.pojo.ExperimentPackage;
-import cz.zcu.kiv.eegdatabase.data.pojo.License;
-import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.data.pojo.*;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
+
+import java.util.List;
 
 public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
 
@@ -73,7 +69,6 @@ public interface ExperimentsFacade extends GenericFacade<Experiment, Integer> {
 
     /**
      * Returns list of experiments that are not members of the given package.
-     * @param packageId id of the package
      * @return list of experiments or empty list
      */
     List<Experiment> getExperimentsWithoutPackage(ExperimentPackage pckg);

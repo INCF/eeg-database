@@ -26,7 +26,7 @@ import cz.zcu.kiv.eegdatabase.data.dao.HistoryDao;
 import cz.zcu.kiv.eegdatabase.data.pojo.History;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.ChoiceHistory;
 import cz.zcu.kiv.eegdatabase.logic.controller.history.DownloadStatistic;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import org.springframework.beans.factory.annotation.Required;
 import org.springframework.transaction.annotation.Transactional;
 

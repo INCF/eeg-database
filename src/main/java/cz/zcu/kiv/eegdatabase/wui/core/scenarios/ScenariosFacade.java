@@ -32,7 +32,7 @@ import java.util.List;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.data.pojo.Scenario;
 import cz.zcu.kiv.eegdatabase.data.pojo.ScenarioSchemas;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.file.FileDTO;
 

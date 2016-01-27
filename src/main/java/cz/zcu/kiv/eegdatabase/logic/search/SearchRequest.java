@@ -18,29 +18,55 @@
  *  
  *  ***********************************************************************************************************************
  *  
- *   AddExperimentOptParamDefValidator.java, 2013/10/02 00:01 Jakub Rinkes
+ *   SearchRequest.java, 2013/10/02 00:01 Jakub Rinkes
  ******************************************************************************/
-package cz.zcu.kiv.eegdatabase.logic.controller.list.experimentoptparamdef;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 
-import org.apache.commons.logging.Log;
-import org.apache.commons.logging.LogFactory;
-import org.springframework.validation.Errors;
-import org.springframework.validation.ValidationUtils;
-import org.springframework.validation.Validator;
+package cz.zcu.kiv.eegdatabase.logic.search;
 
 /**
- * @author JiPER
+ * @author Honza
  */
-public class AddExperimentOptParamDefValidator implements Validator {
+public class SearchRequest {
 
-    private Log log = LogFactory.getLog(getClass());
+    private String condition;
+    private String source;
+    private String choice;
 
-    public boolean supports(Class clazz) {
-        return clazz.equals(AddExperimentOptParamDefCommand.class);
+    public SearchRequest() {
     }
 
-    public void validate(Object command, Errors errors) {
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paramName", "required.field");
-        ValidationUtils.rejectIfEmptyOrWhitespace(errors, "paramDataType", "required.field");
+    public SearchRequest(String condition, String value, String choice) {
+        this.condition = condition;
+        this.source = value;
+        this.choice = choice;
+    }
+
+
+    public String getChoice() {
+        return choice;
+    }
+
+    public void setChoice(String choice) {
+        this.choice = choice;
+    }
+
+    public String getCondition() {
+        return condition;
+    }
+
+    public void setCondition(String condition) {
+        this.condition = condition;
+    }
+
+    public String getSource() {
+        return source;
+    }
+
+    public void setSource(String source) {
+        this.source = source;
     }
 }

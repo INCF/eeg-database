@@ -31,7 +31,7 @@ import cz.zcu.kiv.eegdatabase.data.nosql.entities.GenericParameter;
 import cz.zcu.kiv.eegdatabase.data.pojo.DataFile;
 import cz.zcu.kiv.eegdatabase.data.pojo.Experiment;
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import org.springframework.data.elasticsearch.core.ElasticsearchTemplate;
 
 import java.util.List;

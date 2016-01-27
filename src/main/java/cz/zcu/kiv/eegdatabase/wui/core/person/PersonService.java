@@ -28,7 +28,7 @@ import java.util.Map;
 
 import cz.zcu.kiv.eegdatabase.data.pojo.Person;
 import cz.zcu.kiv.eegdatabase.logic.controller.person.AddPersonCommand;
-import cz.zcu.kiv.eegdatabase.logic.controller.search.SearchRequest;
+import cz.zcu.kiv.eegdatabase.logic.search.SearchRequest;
 import cz.zcu.kiv.eegdatabase.logic.controller.social.SocialUser;
 import cz.zcu.kiv.eegdatabase.wui.core.GenericService;
 
