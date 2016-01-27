@@ -1,23 +1,23 @@
 /*******************************************************************************
  * This file is part of the EEG-database project
- * 
+ *
  *   ==========================================
- *  
+ *
  *   Copyright (C) 2013 by University of West Bohemia (http://www.zcu.cz/en/)
- *  
+ *
  *  ***********************************************************************************************************************
- *  
+ *
  *   Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  *   the License. You may obtain a copy of the License at
- *  
+ *
  *       http://www.apache.org/licenses/LICENSE-2.0
- *  
+ *
  *   Unless required by applicable law or agreed to in writing, software distributed under the License is distributed on
  *   an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  *   specific language governing permissions and limitations under the License.
- *  
+ *
  *  ***********************************************************************************************************************
- *  
+ *
  *   OrderItemPanel.java, 2014/14/09 00:01 Jakub Rinkes
  ******************************************************************************/
 package cz.zcu.kiv.eegdatabase.wui.ui.order;
@@ -32,6 +32,8 @@ import cz.zcu.kiv.eegdatabase.wui.components.utils.StringUtils;
 import cz.zcu.kiv.eegdatabase.wui.core.experiments.ExperimentsFacade;
 import cz.zcu.kiv.eegdatabase.wui.core.promocode.PromoCodeFacade;
 import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsDetailPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.ExperimentsPackageDownloadPage;
+import cz.zcu.kiv.eegdatabase.wui.ui.experiments.components.ExperimentBuyDownloadLinkPanel;
 import cz.zcu.kiv.eegdatabase.wui.ui.memberships.MembershipPlansDetailPage;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.PromoCodePopupForm;
 import cz.zcu.kiv.eegdatabase.wui.ui.order.components.StringWrapper;
@@ -72,7 +74,7 @@ public class OrderItemPanel extends Panel {
 
     private boolean malleable;
 
-    public OrderItemPanel(String id, final IModel<OrderItem> model, boolean malleable) {
+    public OrderItemPanel(String id, final IModel<OrderItem> model, final boolean malleable) {
         super(id, new CompoundPropertyModel<OrderItem>(model));
 
         this.malleable = malleable;
@@ -159,6 +161,9 @@ public class OrderItemPanel extends Panel {
         experimentContainer.add(new Label("experimentText1", ResourceUtils.getModel("text.order.item.experiment1", Integer.toString(experimentId), scenarioTitle)));
         experimentContainer.add(new Label("experimentText2", ResourceUtils.getModel("text.order.item.experiment2", date)));
         experimentContainer.add(new BookmarkablePageLink<Void>("detail", ExperimentsDetailPage.class, PageParametersUtils.getDefaultPageParameters(experimentId)));
+        ExperimentBuyDownloadLinkPanel downloadExpLink = new ExperimentBuyDownloadLinkPanel("downloadExpLink", experiment, new Model<ExperimentLicence>());
+        downloadExpLink.setVisible(EEGDataBaseSession.get().isExperimentPurchased(experimentId));
+        experimentContainer.add(downloadExpLink);
 
         membershipPlanContainer.add(new Label("membershipPlanText1", membershipPlanName + researchGroupName));
         membershipPlanContainer.add(new BookmarkablePageLink<Void>("detail", MembershipPlansDetailPage.class, PageParametersUtils.getDefaultPageParameters(membershipPlanID)));
@@ -166,7 +171,7 @@ public class OrderItemPanel extends Panel {
 
 
         // prepare texts for package container
-        int packageId;
+        final int packageId;
         String name;
         String group;
         if (experimentPackage != null) {
@@ -219,6 +224,17 @@ public class OrderItemPanel extends Panel {
         showHideLink.add(showHideLinkLabel);
         packageContainer.add(showHideLink);
         packageContainer.add(packageExperimentList);
+        packageContainer.add(
+                new BookmarkablePageLink<ExperimentsPackageDownloadPage>("downloadLink", ExperimentsPackageDownloadPage.class,
+                        PageParametersUtils.getDefaultPageParameters(packageId)) {
+
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public boolean isVisible() { return !malleable; }
+
+                });
+
         packageExperimentList.setVisible(false);
 
         experimentContainer.setOutputMarkupId(true);
@@ -237,7 +253,7 @@ public class OrderItemPanel extends Panel {
         popup.setWidthUnit("px");
         popup.showUnloadConfirmation(false);
 
-       PromoCodePopupForm popupForm = new PromoCodePopupForm(popup.getContentId(), new Model<StringWrapper>(new StringWrapper())) {
+        PromoCodePopupForm popupForm = new PromoCodePopupForm(popup.getContentId(), new Model<StringWrapper>(new StringWrapper())) {
 
             @Override
             protected void onSubmitAction(IModel<StringWrapper> strWrapper, AjaxRequestTarget target, Form<?> form)

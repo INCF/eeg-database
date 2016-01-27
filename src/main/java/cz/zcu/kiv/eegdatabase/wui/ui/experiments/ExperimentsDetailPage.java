@@ -157,10 +157,11 @@ public class ExperimentsDetailPage extends MenuPage {
         Section toRemove = null;
         if (list != null) {
             for (Section s: list) {
-                if (s.getName().equals("Experimenters")) {
+                if (s.getName().equals("Experiment")) {
                     toRemove = s;
                     break;
                 }
+
             }
             list.remove(toRemove);
         }
